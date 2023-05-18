@@ -9,6 +9,7 @@ export class CatalogComponentHeaderTitle extends LitElement {
 
   static styles = css`
     :host {
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;

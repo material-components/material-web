@@ -10,6 +10,7 @@ import { EASING } from '@material/web/motion/animation.js';
 export class NavDrawer extends SignalElement(LitElement) {
   static styles = css`
     :host {
+      --_max-width: 1760px;
       --_drawer-width: var(--drawer-width, 300px);
       --_item-border-radius: var(--md-dialog-container-shape, 28px);
       --_border-radius: calc(var(--_item-border-radius) + 12px);
@@ -42,11 +43,17 @@ export class NavDrawer extends SignalElement(LitElement) {
 
     .content {
       flex-grow: 1;
+      display: flex;
+      justify-content: center;
       box-sizing: border-box;
       padding-inline: var(--_content-padding);
-      max-width: calc(
-        100vw - var(--_drawer-width) - 2 * var(--_content-padding)
-      );
+      max-width: calc(100vw - var(--_drawer-width));
+    }
+
+    .content slot {
+      display: block;
+      width: 100%;
+      max-width: min(100%, var(--_max-width));
     }
 
     aside {
@@ -82,7 +89,7 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
 
       .content {
-        max-width: calc(100vw - 2 * var(--_content-padding));
+        max-width: 100vw;
         padding-inline: var(--_content-padding);
       }
 
@@ -114,9 +121,7 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
 
       .root:has(.open) {
-        --top-app-bar-color-background: var(
-          --md-sys-color-surface-variant
-        );
+        --top-app-bar-color-background: var(--md-sys-color-surface-variant);
         --top-app-bar-color-on-background: var(
           --md-sys-color-on-surface-variant
         );

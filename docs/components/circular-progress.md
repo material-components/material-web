@@ -3,7 +3,7 @@ name: Circular Progress
 dirname: circularprogress
 -----><!-- catalog-only-end -->
 
-<catalog-component-header image-align="end">
+<catalog-component-header>
 <catalog-component-header-title slot="title">
 
 # Circular progress

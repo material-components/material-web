@@ -1,3 +1,11 @@
+<!-- catalog-only-start --><!-- ---
+name: Buttons
+dirname: button
+-----><!-- catalog-only-end -->
+
+<catalog-component-header>
+<catalog-component-header-title slot="title">
+
 # Buttons
 
 <!--*
@@ -5,6 +13,10 @@
 freshness: { owner: 'lizmitchell' reviewed: '2023-01-26' }
 tag: 'docType:reference'
 *-->
+
+<!-- go/md-circular-progress -->
+
+<!-- [TOC] -->
 
 <!-- go/md-button -->
 
@@ -14,17 +26,24 @@ tag: 'docType:reference'
 initiate actions, from sending an email, to sharing a document, to liking a
 post.
 
-There are five types of common buttons: elevated, filled, filled tonal,
-outlined, and text.
+</catalog-component-header-title>
 
 ![The 5 types of common buttons](images/button/hero.png "Elevated, filled, filled tonal, outlined, and text buttons")
+
+</catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/buttons) <!-- {.external} -->
 *   API Documentation (*coming soon*)
 *   [Source code](https://github.com/material-components/material-web/tree/main/button)
     <!-- {.external} -->
 
+
 ## Types
+
+There are five types of common buttons: elevated, filled, filled tonal,
+outlined, and text.
+
+![The 5 types of common buttons](images/button/types.png "Elevated, filled, filled tonal, outlined, and text buttons")
 
 1.  [Elevated button](#elevated-button)
 1.  [Filled button](#filled-button)

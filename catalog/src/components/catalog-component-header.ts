@@ -1,15 +1,14 @@
 import { LitElement, css, html } from 'lit';
-import { property } from 'lit/decorators.js';
 import { customElement } from 'lit/decorators.js';
 
 @customElement('catalog-component-header')
 export class CatalogComponentHeader extends LitElement {
-  @property({ attribute: 'image-align' }) imageAlign = 'start';
-
   render() {
-    return html`<div class="${this.imageAlign}">
+    return html`<div class="">
       <slot class="title" name="title"></slot>
-      <slot class="image"></slot>
+      <slot
+        class="image"
+      ></slot>
     </div>`;
   }
 
@@ -19,6 +18,10 @@ export class CatalogComponentHeader extends LitElement {
       --catalog-image-border-radius: 24px;
       container: host / inline-size;
       position: relative;
+    }
+
+    slot {
+      height: 100%;
     }
 
     slot,
@@ -33,23 +36,37 @@ export class CatalogComponentHeader extends LitElement {
       align-items: end;
     }
 
+    .center slot,
+    .center .image::slotted(*) {
+      align-items: center;
+    }
+
     .image {
       background-color: var(--md-sys-color-surface-container);
       border-radius: var(--catalog-image-border-radius);
       overflow: hidden;
       margin-block-start: 16px;
-      aspect-ratio: 2 / 1;
+      aspect-ratio: 3 / 2;
+      max-width: 100%;
+    }
+
+    ::slotted(*) {
+      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
     }
 
     .image::slotted(*) {
       --catalog-image-border-radius: 0px;
+      --catalog-header-image-height: 100%;
+      --catalog-header-image-width: auto;
       display: flex;
-      width: 100%;
+      justify-content: center;
     }
 
     /* clean-css ignore:start */
     @container (width > 1200px) {
-    /* clean-css ignore:end */
+      /* clean-css ignore:end */
       div {
         display: grid;
         grid-gap: 8px;
@@ -58,23 +75,17 @@ export class CatalogComponentHeader extends LitElement {
         grid-auto-flow: row;
       }
 
-      ::slotted(*) {
-        box-sizing: border-box;
-        height: 100%;
-      }
-
       .image {
         margin-block-start: 0;
         aspect-ratio: unset;
-        min-height: 544px;
-        --catalog-header-image-height: 100%;
-        --catalog-header-image-width: auto;
       }
 
+      .image,
       .image::slotted(*) {
+        min-height: 100%;
         max-height: 544px;
       }
-    /* clean-css ignore:start */
+      /* clean-css ignore:start */
     }
     /* clean-css ignore:end */
   `;
