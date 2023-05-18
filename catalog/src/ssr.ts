@@ -13,3 +13,8 @@ import '@material/web/circularprogress/circular-progress.js';
 import '@material/web/tabs/tabs.js';
 import '@material/web/tabs/tab.js';
 import '@material/web/iconbutton/outlined-icon-button.js';
+import '@material/web/button/elevated-button.js';
+import '@material/web/button/filled-button.js';
+import '@material/web/button/tonal-button.js';
+import '@material/web/button/outlined-button.js';
+import '@material/web/button/text-button.js';
