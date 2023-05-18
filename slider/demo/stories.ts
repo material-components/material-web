@@ -13,10 +13,12 @@ import {css, html} from 'lit';
 /** Knob types for slider stories. */
 export interface StoryKnobs {
   value: number;
-  'multivalue.value': string;
+  valueStart: number;
+  valueEnd: number;
   min: number;
   max: number;
   step: number;
+  range: boolean;
   withTickMarks: boolean;
   withLabel: boolean;
   disabled: boolean;
@@ -36,10 +38,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     return html`
       <label>label
         <md-slider
-            value=${knobs.value}
+            .value=${knobs.value}
+            .valueStart=${knobs.valueStart}
+            .valueEnd=${knobs.valueEnd}
             .min=${knobs.min}
             .max=${knobs.max}
             .step=${knobs.step ?? 1}
+            .range=${knobs.range}
             .withTickMarks=${knobs.withTickMarks}
             .withLabel=${knobs.withLabel ?? false}
             .disabled=${knobs.disabled ?? false}
@@ -54,12 +59,10 @@ const multiValue: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <label>label
-        <!--
-          Value can be a [number, number]|number but can convert string
-          attribtues separated by commas
-        -->
         <md-slider
-          value=${(knobs['multivalue.value']) as unknown as number}
+          range
+          .valueStart=${(knobs.valueStart)}
+          .valueEnd=${(knobs.valueEnd)}
           .min=${knobs.min}
           .max=${knobs.max}
           .step=${knobs.step ?? 1}
@@ -117,21 +120,21 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
     }
     function updateLabel(event: Event) {
       const target = event.target as MdSlider;
-      const {valueAsFraction} = target;
-      const hasValueRange = Array.isArray(valueAsFraction);
-      target.valueLabel = hasValueRange ?
-          [labelFor(valueAsFraction[0]), labelFor(valueAsFraction[1])] :
-          labelFor(valueAsFraction);
+      const {min, max, valueStart, valueEnd} = target;
+      const range = max - min;
+      const fractionStart = valueStart / range;
+      const fractionEnd = valueEnd / range;
+      target.valueStartLabel = labelFor(fractionStart);
+      target.valueEndLabel = labelFor(fractionEnd);
     }
     return html`
       <label>label
-        <!--
-          Value can be a [number, number]|number but can convert string
-          attribtues separated by commas
-        -->
         <md-slider
-          value=${(knobs['multivalue.value']) as unknown as number}
-          valueLabel=${`😔, 😌`}
+          range
+          .valueStart=${(knobs.valueStart)}
+          .valueEnd=${(knobs.valueEnd)}
+          .valueStartLabel=${'😔'}
+          .valueEndLabel=${'😌'}
           withTickMarks
           withLabel
           .min=${knobs.min}

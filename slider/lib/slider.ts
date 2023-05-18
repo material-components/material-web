@@ -34,25 +34,6 @@ function inBounds({x, y}: PointerEvent, element?: HTMLElement|null) {
   return x >= left && x <= right && y >= top && y <= bottom;
 }
 
-// parse values like: foo or foo,bar
-function tupleConverter(attr: string|null) {
-  const [, v, e] =
-      attr?.match(/\s*\[?\s*([^,]+)(?:(?:\s*$)|(?:\s*,\s*(.*)\s*))/) ?? [];
-  return e !== undefined ? [v, e] : v;
-}
-
-function toNumber(value: string) {
-  return Number(value) || 0;
-}
-
-function tupleAsString(value: unknown|[unknown, unknown]) {
-  return Array.isArray(value) ? value.join() : String(value ?? '');
-}
-
-function valueConverter(attr: string|null) {
-  const value = tupleConverter(attr);
-  return Array.isArray(value) ? value.map(i => toNumber(i)) : toNumber(value);
-}
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
@@ -98,21 +79,40 @@ export class Slider extends LitElement {
   /**
    * The slider maximum value
    */
-  @property({type: Number}) max = 10;
+  @property({type: Number}) max = 100;
 
   /**
-   * The slider value, can be a single number, or an array tuple indicating
-   * a start and end value.
+   * The slider value displayed when range is false.
    */
-  @property({converter: valueConverter}) value: number|[number, number] = 0;
+  @property({type: Number}) value = 50;
 
   /**
-   * An optinoal label for the slider's value; if not set, the label is the
-   * value itself. This can be a string or string tuple when start and end
-   * values are used.
+   * The slider start value displayed when range is true.
    */
-  @property({converter: tupleConverter})
-  valueLabel?: string|[string, string]|undefined;
+  @property({type: Number}) valueStart = 25;
+
+  /**
+   * The slider end value displayed when range is true.
+   */
+  @property({type: Number}) valueEnd = 75;
+
+  /**
+   * An optional label for the slider's value displayed when range is
+   * false; if not set, the label is the value itself.
+   */
+  @property() valueLabel?: string|undefined;
+
+  /**
+   * An optional label for the slider's start value displayed when
+   * range is true; if not set, the label is the valueStart itself.
+   */
+  @property() valueStartLabel?: string|undefined;
+
+  /**
+   * An optional label for the slider's end value displayed when
+   * range is true; if not set, the label is the valueEnd itself.
+   */
+  @property() valueEndLabel?: string|undefined;
 
   /**
    * The step between values.
@@ -130,6 +130,13 @@ export class Slider extends LitElement {
   @property({type: Boolean}) withLabel = false;
 
   /**
+   * Whether or not to show a value range. When false, the slider displays
+   * a slideable handle for the value property; when true, it displays
+   * slideable handles for the valueStart and valueEnd properties.
+   */
+  @property({type: Boolean}) range = false;
+
+  /**
    * The HTML name to use in form submission.
    */
   @property({reflect: true, converter: stringConverter}) name = '';
@@ -139,17 +146,6 @@ export class Slider extends LitElement {
    */
   get form() {
     return this.closest('form');
-  }
-
-
-  /**
-   * Read only computed value representing the fraction between 0 and 1
-   * respresenting the value's position between min and max. This is a
-   * single fraction or a tuple if the value specifies start and end values.
-   */
-  get valueAsFraction() {
-    const {lowerFraction, upperFraction} = this.getMetrics();
-    return this.allowRange ? [lowerFraction, upperFraction] : upperFraction;
   }
 
   private getMetrics() {
@@ -210,17 +206,11 @@ export class Slider extends LitElement {
     this.inputB?.focus();
   }
 
-  get valueAsString() {
-    return tupleAsString(this.value);
-  }
-
   // value coerced to a string
   [getFormValue]() {
-    return this.valueAsString;
+    return this.range ? `${this.valueStart}, ${this.valueEnd}` :
+                                 `${this.value}`;
   }
-
-  // If range should be allowed (detected via value format).
-  private allowRange = false;
 
   // indicates input values are crossed over each other from initial rendering.
   private isFlipped() {
@@ -228,20 +218,14 @@ export class Slider extends LitElement {
   }
 
   protected override willUpdate(changed: PropertyValues) {
-    if (changed.has('value') || changed.has('min') || changed.has('max') ||
-        changed.has('step')) {
-      this.allowRange = Array.isArray(this.value);
-      const step = Math.max(this.step, 1);
-      let lower =
-          this.allowRange ? (this.value as [number, number])[0] : this.min;
-      lower = clamp(lower - (lower % step), this.min, this.max);
-      let upper = this.allowRange ? (this.value as [number, number])[1] :
-                                    this.value as number;
-      upper = clamp(upper - (upper % step), this.min, this.max);
-      const isFlipped = this.isFlipped() && this.allowRange;
-      this.valueA = isFlipped ? upper : lower;
-      this.valueB = isFlipped ? lower : upper;
-    }
+    const step = Math.max(this.step, 1);
+    let lower = this.range ? this.valueStart : this.min;
+    lower = clamp(lower - (lower % step), this.min, this.max);
+    let upper = this.range ? this.valueEnd : this.value;
+    upper = clamp(upper - (upper % step), this.min, this.max);
+    const isFlipped = this.isFlipped() && this.range;
+    this.valueA = isFlipped ? upper : lower;
+    this.valueB = isFlipped ? lower : upper;
 
     // manually handle ripple hover state since the handle is pointer events
     // none.
@@ -255,7 +239,7 @@ export class Slider extends LitElement {
   }
 
   protected override async updated(changed: PropertyValues) {
-    if (changed.has('value') || changed.has('valueA') ||
+    if (changed.has('range') || changed.has('valueA') ||
         changed.has('valueB')) {
       await this.updateComplete;
       this.handlesOverlapping = isOverlapping(this.handleA, this.handleB);
@@ -272,14 +256,19 @@ export class Slider extends LitElement {
       // for generating tick marks
       '--slider-tick-count': String(range / step),
     };
-    const containerClasses = {ranged: this.allowRange};
+    const containerClasses = {ranged: this.range};
 
     // optional label values to show in place of the value.
-    const labelA = String(this.valueLabel?.[isFlipped ? 1 : 0] ?? this.valueA);
-    const labelB = String(
-        (this.allowRange ? this.valueLabel?.[isFlipped ? 0 : 1] :
-                           this.valueLabel) ??
-        this.valueB);
+    let labelA = String(this.valueA);
+    let labelB = String(this.valueB);
+    if (this.range) {
+      const a = isFlipped ? this.valueEndLabel : this.valueStartLabel;
+      const b = isFlipped ? this.valueStartLabel : this.valueEndLabel;
+      labelA = a ?? labelA;
+      labelB = b ?? labelB;
+    } else {
+      labelB = this.valueLabel ?? labelB;
+    }
 
     const inputAProps = {
       id: 'a',
@@ -322,13 +311,14 @@ export class Slider extends LitElement {
         class="container ${classMap(containerClasses)}"
         style=${styleMap(containerStyles)}
       >
-        ${when(this.allowRange, () => this.renderInput(inputAProps))}
+        ${when(this.range, () => this.renderInput(inputAProps))}
         ${this.renderInput(inputBProps)}
         ${this.renderTrack()}
         <div class="handleContainerPadded">
           <div class="handleContainerBlock">
             <div class="handleContainer ${classMap(handleContainerClasses)}">
-              ${when(this.allowRange, () => this.renderHandle(handleAProps))}
+              ${
+        when(this.range, () => this.renderHandle(handleAProps))}
               ${this.renderHandle(handleBProps)}
             </div>
           </div>
@@ -379,7 +369,7 @@ export class Slider extends LitElement {
   }) {
     // when ranged, ensure announcement includes value info.
     const ariaLabelDescriptor =
-        this.allowRange ? ` - ${lesser ? `start` : `end`} handle` : '';
+        this.range ? ` - ${lesser ? `start` : `end`} handle` : '';
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`<input type="range"
@@ -507,7 +497,12 @@ export class Slider extends LitElement {
     // update value only on interaction
     const lower = Math.min(this.valueA, this.valueB);
     const upper = Math.max(this.valueA, this.valueB);
-    this.value = this.allowRange ? [lower, upper] : this.valueB;
+    if (this.range) {
+      this.valueStart = lower;
+      this.valueEnd = upper;
+    } else {
+      this.value = this.valueB;
+    }
   }
 
   private handleChange(event: Event) {

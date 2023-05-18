@@ -13,13 +13,19 @@ import {SliderHarness} from './harness.js';
 import {MdSlider} from './slider.js';
 
 interface SliderTestProps {
-  value: [number, number]|number;
+  range?: boolean;
+  value?: number;
+  valueStart?: number;
+  valueEnd?: number;
 }
 
 function getSliderTemplate(props?: SliderTestProps) {
   return html`
     <md-slider
-      value=${props?.value ?? 0}
+      .range=${props?.range ?? false}
+      .value=${props?.value ?? 0}
+      .valueStart=${props?.valueStart ?? 0}
+      .valueEnd=${props?.valueEnd ?? 0}
     ></md-slider>`;
 }
 
@@ -39,24 +45,8 @@ describe('<md-slider>', () => {
     createTokenTests(MdSlider.styles);
   });
 
-  describe('basic', () => {
-    it('initializes as an md-slider', async () => {
-      const {harness} = await setupTest();
-      expect(harness.element).toBeInstanceOf(MdSlider);
-      const inputs = harness.getInputs();
-      expect(inputs[0]).toBeInstanceOf(HTMLInputElement);
-    });
-  });
-
-  describe('properties', () => {
-    it('gets/sets value', async () => {
-      const {harness} = await setupTest();
-      harness.element.value = 2;
-      await harness.element.updateComplete;
-      expect(harness.element.value).toEqual(2);
-    });
-
-    it('value updates via interaction', async () => {
+  describe('rendering value', () => {
+    it('updates via interaction', async () => {
       const {harness} = await setupTest();
       await harness.simulateValueInteraction(1);
       expect(harness.element.value).toEqual(1);
@@ -64,14 +54,14 @@ describe('<md-slider>', () => {
       expect(harness.element.value).toEqual(9);
     });
 
-    it('value is not validated when set', async () => {
+    it('not validated when set', async () => {
       const {harness} = await setupTest();
       harness.element.value = -1000;
       await harness.element.updateComplete;
       expect(harness.element.value).toEqual(-1000);
     });
 
-    it('value is validated on interaction', async () => {
+    it('validated on interaction', async () => {
       const {harness} = await setupTest();
       harness.element.value = -1000;
       await harness.element.updateComplete;
@@ -80,7 +70,7 @@ describe('<md-slider>', () => {
       expect(harness.element.value).toEqual(1);
     });
 
-    it('setting min updates value only after interaction', async () => {
+    it('setting min validates only after interaction', async () => {
       const {harness} = await setupTest({value: 1});
       await harness.element.updateComplete;
       expect(harness.element.value).toEqual(1);
@@ -91,7 +81,7 @@ describe('<md-slider>', () => {
       expect(harness.element.value).toEqual(2);
     });
 
-    it('setting max updates value only after interaction', async () => {
+    it('setting max validates only after interaction', async () => {
       const {harness} = await setupTest({value: 9});
       await harness.element.updateComplete;
       expect(harness.element.value).toEqual(9);
@@ -102,7 +92,7 @@ describe('<md-slider>', () => {
       expect(harness.element.value).toEqual(8);
     });
 
-    it('setting step updates value only after interaction', async () => {
+    it('setting step validates only after interaction', async () => {
       const {harness} = await setupTest({value: 5});
       await harness.element.updateComplete;
       expect(harness.element.value).toEqual(5);
@@ -114,10 +104,10 @@ describe('<md-slider>', () => {
     });
   });
 
-  describe('properties, when ranged', () => {
-    it('renders inputs and handles when ranged', async () => {
-      const {harness} = await setupTest();
-      harness.element.value = [2, 6];
+  describe('rendering valueStart/valueEnd (range = true)', () => {
+    it('renders inputs and handles', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
       await harness.element.updateComplete;
       const inputs = harness.getInputs();
       expect(inputs[0]).not.toBeNull();
@@ -127,67 +117,79 @@ describe('<md-slider>', () => {
       expect(handles[1]).not.toBeNull();
     });
 
-    it('gets/sets value', async () => {
-      const {harness} = await setupTest();
-      const testValue = [2, 6] as [number, number];
-      harness.element.value = testValue;
-      await harness.element.updateComplete;
-      expect(harness.element.value).toEqual(testValue);
-    });
-
-    it('value updates via interaction', async () => {
-      const {harness} = await setupTest({value: [2, 6]});
+    it('update via interaction', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
+      expect(harness.element.value).toEqual(0);
       const [endInput, startInput] = harness.getInputs();
       await harness.simulateValueInteraction(7, endInput);
-      expect(harness.element.value).toEqual([2, 7]);
+      expect(harness.element.valueStart).toEqual(2);
+      expect(harness.element.valueEnd).toEqual(7);
       await harness.simulateValueInteraction(1, startInput);
-      expect(harness.element.value).toEqual([1, 7]);
+      expect(harness.element.valueStart).toEqual(1);
+      expect(harness.element.valueEnd).toEqual(7);
     });
 
-    it('value is not validated when set', async () => {
-      const {harness} = await setupTest({value: [2, 6]});
-      const testValue = [-1000, -900] as [number, number];
-      harness.element.value = testValue;
+    it('not validated when set', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
+      const testValueStart = -1000;
+      const testValueEnd = -900;
+      harness.element.valueStart = testValueStart;
+      harness.element.valueEnd = testValueEnd;
       await harness.element.updateComplete;
-      expect(harness.element.value).toEqual(testValue);
+      expect(harness.element.valueStart).toEqual(testValueStart);
+      expect(harness.element.valueEnd).toEqual(testValueEnd);
     });
 
-    it('value is validated on interaction', async () => {
-      const {harness} = await setupTest({value: [2, 6]});
-      harness.element.value = [-1000, -900] as [number, number];
+    it('validated on interaction', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
+      const testValueStart = -1000;
+      const testValueEnd = -900;
+      harness.element.valueStart = testValueStart;
+      harness.element.valueEnd = testValueEnd;
       await harness.element.updateComplete;
       await harness.simulateValueInteraction(1000);
-      expect(harness.element.value).toEqual([0, 10]);
+      expect(harness.element.valueStart).toEqual(harness.element.min);
+      expect(harness.element.valueEnd).toEqual(harness.element.max);
     });
 
-    it('setting min updates value only after interaction', async () => {
-      const {harness} = await setupTest({value: [2, 6]});
+    it('setting min validates only after interaction', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
       harness.element.min = 3;
       await harness.element.updateComplete;
-      expect(harness.element.value).toEqual([2, 6]);
+      expect(harness.element.valueStart).toEqual(2);
+      expect(harness.element.valueEnd).toEqual(6);
       const startInput = harness.getInputs()[1];
       await harness.simulateValueInteraction(0, startInput);
-      expect(harness.element.value).toEqual([3, 6]);
+      expect(harness.element.valueStart).toEqual(3);
+      expect(harness.element.valueEnd).toEqual(6);
     });
 
-    it('setting max updates value only after interaction', async () => {
-      const {harness} = await setupTest({value: [2, 6]});
-      await harness.element.updateComplete;
+    it('setting max validates only after interaction', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
       harness.element.max = 5;
       await harness.element.updateComplete;
-      expect(harness.element.value).toEqual([2, 6]);
+      expect(harness.element.valueStart).toEqual(2);
+      expect(harness.element.valueEnd).toEqual(6);
       await harness.simulateValueInteraction(111);
-      expect(harness.element.value).toEqual([2, 5]);
+      expect(harness.element.valueStart).toEqual(2);
+      expect(harness.element.valueEnd).toEqual(5);
     });
 
-    it('setting step updates value only after interaction', async () => {
-      const {harness} = await setupTest({value: [2, 6]});
+    it('setting step validates only after interaction', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
       harness.element.step = 2;
       await harness.element.updateComplete;
       const [endInput, startInput] = harness.getInputs();
       await harness.simulateValueInteraction(7, endInput);
       await harness.simulateValueInteraction(5, startInput);
-      expect(harness.element.value).toEqual([6, 8]);
+      expect(harness.element.valueStart).toEqual(6);
+      expect(harness.element.valueEnd).toEqual(8);
     });
   });
 
