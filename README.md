@@ -4,17 +4,14 @@
 > until 1.0 release.
 
 Material Web is Google’s UI toolkit for building beautiful, accessible web
-applications. Material Web is implemented as a collection of
+applications.
+
+Material Web is implemented as a collection of
 [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 [Material 3](https://m3.material.io/) is the latest version of Google’s
 open-source design system.
 
-> Note: Looking for Material 2? `<mwc-*` components are now on the
-> [`mwc` branch](https://github.com/material-components/material-web/tree/mwc).
-
-## Links
-
-- [Quick start](docs/quick-start.md)
+> Tip: Check out the [quick start guide](docs/quick-start.md) to jump in.
 
 ## Roadmap
 
@@ -29,7 +26,7 @@ changes.
 -   🟡 In progress
 -   ✅ Complete
 
-### 1.0 Components
+### `v1.0.0` (2023)
 
 Component                     | Alpha | Beta | Stable
 ----------------------------- | :---: | :--: | :----:
@@ -56,9 +53,9 @@ Switch                        | ✅     | ✅    | ❌
 Tabs                          | ✅     | ✅    | ❌
 Text field                    | ✅     | ✅    | 🟡
 
-### 1.1+ Components
+### Future
 
-These components are planned for release after 1.0.
+These features are planned for a future release.
 
 Component         | Alpha | Beta | Stable
 ----------------- | :---: | :--: | :----:
