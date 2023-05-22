@@ -46,8 +46,8 @@ Use the `<component-name>` tag in HTML markup. Refer to the
   <md-checkbox checked></md-checkbox>
 </label>
 
-<md-outlined-button label="Back"></md-outlined-button>
-<md-filled-button label="Next"></md-filled-button>
+<md-outlined-button>Back</md-outlined-button>
+<md-filled-button>Next</md-filled-button>
 ```
 
 ## Building
