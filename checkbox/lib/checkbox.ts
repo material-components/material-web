@@ -27,7 +27,9 @@ export class Checkbox extends LitElement {
   }
 
   /** @nocollapse */
-  static formAssociated = true;
+  static get formAssociated() {
+    return true;
+  }
 
   /**
    * Whether or not the checkbox is selected.
