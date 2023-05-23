@@ -1,6 +1,5 @@
 import esbuild from 'esbuild';
 import gzipPlugin from '@luncheon/esbuild-plugin-gzip';
-import { minifyHTMLLiteralsPlugin } from 'esbuild-plugin-minify-html-literals';
 import tinyGlob from 'tiny-glob';
 import { copyFileSync } from 'fs';
 import { join } from 'path';
@@ -8,12 +7,14 @@ import { createRequire } from 'node:module';
 
 // dev mode build
 const DEV = process.env.NODE_ENV === 'DEV';
+// Output folder for TS files
 const jsFolder = DEV ? 'lib' : 'build';
 
 // can use glob syntax. this will create a bundle for those specific files.
 // you want to add SSR'd files here so that you can hydrate them later with
-// <is-land import="js/components/element-definition.js"></is-land>
+// <lit-island import="js/components/element-definition.js"></lit-island>
 const tsEntrypoints = [
+  // entrypoints for hydrating SSR'd components
   './src/hydration-entrypoints/*.ts',
   // also include a bundle for each individual page
   './src/pages/*.ts',
@@ -24,6 +25,7 @@ const tsEntrypoints = [
 const filesPromises = tsEntrypoints.map(async (entry) => tinyGlob(entry));
 const entryPoints = (await Promise.all(filesPromises)).flat();
 
+// Shared esbuild config values
 let config = {
   bundle: true,
   outdir: jsFolder,
@@ -65,6 +67,7 @@ if (DEV) {
       //     return (
       //       !!tag &&
       //       (tag.includes('html') || tag.includes('svg')) &&
+      //       // tag name interpolations break
       //       tag !== 'statichtml'
       //     );
       //   },
@@ -73,6 +76,7 @@ if (DEV) {
         gzip: true,
       }),
     ],
+    // Needs to be off per the gzipPlugin docs
     write: false,
     splitting: true,
   };
@@ -96,8 +100,10 @@ const ssrBuild = esbuild
   })
   .catch(() => process.exit(1));
 
+// Glob of files that will be inlined on the page in <script> tags
 const tsInlineEntrypoints = [
   './src/ssr-utils/dsd-polyfill.ts',
+  // Anything in this directory will be inlined
   './src/inline/*.ts',
 ];
 const inlineFilesPromises = tsInlineEntrypoints.map(async (entry) =>
@@ -117,7 +123,7 @@ const inlineBuild = esbuild
 
 await Promise.all([componentsBuild, ssrBuild, inlineBuild]);
 
-// Copy the playground worker to the build folder
+// Copy the playground-elements worker to the build folder
 const require = createRequire(import.meta.url);
 copyFileSync(
   require.resolve('playground-elements/playground-typescript-worker.js'),

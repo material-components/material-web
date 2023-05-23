@@ -1,4 +1,4 @@
-import { cp } from 'fs';
+import { cp } from 'fs/promises';
 import { parse, join } from 'path';
 import tinyGlob from 'tiny-glob';
 
