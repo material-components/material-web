@@ -2,7 +2,7 @@
   "name": "material-web-catalog",
   "version": "0.0.1",
   "description": "The Material Web Catalog.",
-  "main": "index.js",
+  "main": "_prod/index.html",
   "scripts": {
     "start": "npm run serve",
     "dev": "npm run serve:dev --watch",
@@ -149,23 +149,7 @@
       ]
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/e111077/11ty-lit.git"
-  },
-  "keywords": [
-    "11ty",
-    "eleventy",
-    "lit",
-    "lit-element",
-    "SSR"
-  ],
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/e111077/11ty-lit/issues"
-  },
-  "homepage": "https://github.com/e111077/11ty-lit#readme",
+  "license": "Apache-2.0",
   "dependencies": {
     "@11ty/is-land": "^3.0.0",
     "@lit-labs/ssr-client": "^1.1.1",
