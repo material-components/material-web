@@ -54,7 +54,7 @@ declare global {
  *         <md-menu-item
  *           header="This is an item inside a submenu"></md-menu-item>
  *       </md-menu>
- *     </md-sub-menu>
+ *     </md-sub-menu-item>
  *   </md-menu>
  * </div>
  * ```
