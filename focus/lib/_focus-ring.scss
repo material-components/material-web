@@ -44,37 +44,80 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     --_shape-end-end: var(--md-focus-ring-shape-end-end, var(--_shape));
     --_shape-end-start: var(--md-focus-ring-shape-end-start, var(--_shape));
 
-    animation-duration: var(--_duration);
+    animation-delay: 0s, calc(var(--_duration) * 0.25);
+    animation-duration: calc(var(--_duration) * 0.25),
+      calc(var(--_duration) * 0.75);
     animation-timing-function: map.get($_md-sys-motion, 'easing-emphasized');
-    border-end-end-radius: calc(var(--_offset) + var(--_shape-end-end));
-    border-end-start-radius: calc(var(--_offset) + var(--_shape-end-start));
-    border-start-end-radius: calc(var(--_offset) + var(--_shape-start-end));
-    border-start-start-radius: calc(var(--_offset) + var(--_shape-start-start));
-    box-shadow: inset 0 0 0 0 currentColor;
     box-sizing: border-box;
     color: var(--_color);
     display: none;
-    inset: calc(-1 * (var(--_offset) + 1px));
-    // NOTE: this 1px offset hides a transparent ring between the outline and
-    // offset when border-radius is large
-    outline-offset: -1px;
-    outline: var(--_width) solid currentColor;
     pointer-events: none;
     position: absolute;
   }
 
   :host([visible]) {
     display: flex;
-    animation-name: focus-ring;
   }
 
-  @keyframes focus-ring {
+  :host(:not([inward])) {
+    animation-name: outward-grow, outward-shrink;
+    border-end-end-radius: calc(var(--_shape-end-end) + var(--_outward-offset));
+    border-end-start-radius: calc(
+      var(--_shape-end-start) + var(--_outward-offset)
+    );
+    border-start-end-radius: calc(
+      var(--_shape-start-end) + var(--_outward-offset)
+    );
+    border-start-start-radius: calc(
+      var(--_shape-start-start) + var(--_outward-offset)
+    );
+    inset: calc(-1 * (var(--_outward-offset)));
+    outline: var(--_width) solid currentColor;
+  }
+
+  :host([inward]) {
+    animation-name: inward-grow, inward-shrink;
+    border-end-end-radius: calc(var(--_shape-end-end) - var(--_inward-offset));
+    border-end-start-radius: calc(
+      var(--_shape-end-start) - var(--_inward-offset)
+    );
+    border-start-end-radius: calc(
+      var(--_shape-start-end) - var(--_inward-offset)
+    );
+    border-start-start-radius: calc(
+      var(--_shape-start-start) - var(--_inward-offset)
+    );
+    border: var(--_width) solid currentColor;
+    inset: var(--_inward-offset);
+  }
+
+  @keyframes outward-grow {
     from {
-      outline-width: 0px;
+      outline-width: 0;
     }
-    25% {
-      box-shadow: inset 0 0 0 calc(var(--_active-width) / 2) currentColor;
-      outline-width: calc(var(--_active-width) / 2);
+    to {
+      outline-width: var(--_active-width);
+    }
+  }
+
+  @keyframes outward-shrink {
+    from {
+      outline-width: var(--_active-width);
+    }
+  }
+
+  @keyframes inward-grow {
+    from {
+      border-width: 0;
+    }
+    to {
+      border-width: var(--_active-width);
+    }
+  }
+
+  @keyframes inward-shrink {
+    from {
+      border-width: var(--_active-width);
     }
   }
 

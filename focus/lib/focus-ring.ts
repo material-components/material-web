@@ -15,6 +15,7 @@ export class FocusRing extends LitElement {
    * Makes the focus ring visible.
    */
   @property({type: Boolean, reflect: true}) visible = false;
+  @property({type: Boolean, reflect: true}) inward = false;
 
   /**
    * Reflects the value of the `for` attribute, which is the ID of the focus

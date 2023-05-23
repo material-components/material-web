@@ -12,7 +12,7 @@
     // Adjust the focus ring padding to account for the 1px border in HCM.
     @include focus-ring.theme(
       (
-        'offset': 3px,
+        'outward-offset': 3px,
       )
     );
     border: 1px solid ButtonText;

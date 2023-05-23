@@ -52,8 +52,9 @@ export class NavigationTab extends LitElement implements NavigationTabState {
         aria-label=${ariaLabel || nothing}
         tabindex="${this.active ? 0 : -1}"
         @click="${this.handleClick}"
-      ${ripple(this.getRipple)}>
-        <md-focus-ring></md-focus-ring>
+        ${ripple(this.getRipple)}
+      >
+        <md-focus-ring inward></md-focus-ring>
         ${when(this.showRipple, this.renderRipple)}
         <span aria-hidden="true" class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"

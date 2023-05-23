@@ -115,7 +115,7 @@ export class Tab extends LitElement {
         aria-label=${this.ariaLabel || nothing}
         ${ripple(this.getRipple)}
       >
-        <md-focus-ring></md-focus-ring>
+        <md-focus-ring inward></md-focus-ring>
         <md-elevation></md-elevation>
         ${when(this.showRipple, this.renderRipple)}
         <span class="touch"></span>

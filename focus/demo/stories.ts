@@ -11,9 +11,11 @@ import {css, html} from 'lit';
 
 /** Knob types for focus ring stories. */
 export interface StoryKnobs {
+  inward: boolean;
   '--md-focus-ring-width': string;
-  '--md-focus-ring-offset': string;
   '--md-focus-ring-active-width': string;
+  '--md-focus-ring-outward-offset': string;
+  '--md-focus-ring-inward-offset': string;
 }
 
 const standard: MaterialStoryInit<StoryKnobs> = {
@@ -22,7 +24,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     button {
       appearance: none;
       background: var(--md-sys-color-surface);
-      border: 1px solid var(--md-sys-color-outline);
+      border: none;
       border-radius: 16px;
       --md-focus-ring-shape: 16px;
       height: 64px;
@@ -33,20 +35,28 @@ const standard: MaterialStoryInit<StoryKnobs> = {
       width: 64px;
     }
 
+    button::before {
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: inherit;
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
+
     button:focus {
       background: var(--md-sys-color-surface-variant);
     }
   `,
-  render() {
+  render({inward}) {
     return html`
       <button aria-label="A button with a focus ring">
-        <md-focus-ring></md-focus-ring>
+        <md-focus-ring ?inward=${inward}></md-focus-ring>
       </button>
       <button aria-label="A button with a focus ring">
-        <md-focus-ring></md-focus-ring>
+        <md-focus-ring ?inward=${inward}></md-focus-ring>
       </button>
       <button aria-label="A button with a focus ring">
-        <md-focus-ring></md-focus-ring>
+        <md-focus-ring ?inward=${inward}></md-focus-ring>
       </button>
     `;
   }
@@ -59,7 +69,6 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
       align-items: center;
       appearance: none;
       background: var(--md-sys-color-surface);
-      border: 1px solid var(--md-sys-color-outline);
       border-radius: 16px;
       --md-focus-ring-shape: 16px;
       display: flex;
@@ -94,17 +103,25 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
     }
 
     #secondary {
-      border: 1px solid var(--md-sys-color-outline);
       height: 32px;
       width: 32px;
       border-radius: 32px;
       --md-focus-ring-shape: 32px;
     }
+
+    [role="list"]::before,
+    #secondary::before {
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: inherit;
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
   `,
-  render() {
+  render({inward}) {
     return html`
       <div role="list">
-        <md-focus-ring for="primary"></md-focus-ring>
+        <md-focus-ring for="primary" ?inward=${inward}></md-focus-ring>
 
         <div role="listitem">
           <button id="primary" aria-label="The primary action for a multi-action component">
@@ -115,7 +132,7 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
         <div role="listitem">
           <button id="secondary" aria-label="The secondary action for a multi-action component">
             X
-            <md-focus-ring></md-focus-ring>
+            <md-focus-ring ?inward=${inward}></md-focus-ring>
           </button>
         </div>
       </div>

@@ -159,7 +159,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * Handles rendering of the focus ring.
    */
   protected renderFocusRing() {
-    return html`<md-focus-ring class="focus-ring" for="item"></md-focus-ring>`;
+    return html`<md-focus-ring class="focus-ring" for="item" inward></md-focus-ring>`;
   }
 
   /**

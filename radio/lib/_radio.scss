@@ -45,7 +45,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
     @include focus-ring.theme(
       (
-        'offset': -2px,
+        'outward-offset': -2px,
       )
     );
 

@@ -54,12 +54,13 @@
 
     @include focus-ring.theme(
       (
-        // desired border-radius is 8px and it's internally calc'd as sum
-        // of shape + offset (-7 + 15)
-        shape: 15px,
-        offset: -7px
+        'shape': 8px,
       )
     );
+  }
+
+  :host([selected]) md-focus-ring {
+    margin-bottom: calc(var(--_active-indicator-height) + 1px);
   }
 
   .button {
