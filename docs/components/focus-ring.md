@@ -2,7 +2,7 @@
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-05-08' }
+freshness: { owner: 'lizmitchell' reviewed: '2023-05-23' }
 tag: 'docType:reference'
 *-->
 
@@ -27,6 +27,8 @@ to determine when they are visible.
 
 Focus rings display on keyboard navigation. They may be attached to a control in
 one of three ways.
+
+![An element with a focus ring.](images/focus/usage.gif "A focus ring.")
 
 1.  Attached to the parent element
 
@@ -79,15 +81,36 @@ one of three ways.
 
 > Note: focus rings must be placed within a `position: relative` container.
 
+### Inward
+
+Focus rings can be changed to animate inwards by adding an `inward` attribute.
+This is useful for components like list items.
+
+![An element with a focus ring that animates inward.](images/focus/usage-inward.gif "A focus ring animating inward.")
+
+```html
+<style>
+  .container {
+    position: relative;
+    --md-focus-ring-shape: 8px;
+  }
+</style>
+<button class="container">
+  <md-focus-ring inward></md-focus-ring>
+</button>
+```
+
 ### Animation
 
 The focus ring animation may be customized or disabled using CSS custom
 properties.
 
+![An element with a focus ring that does not animate.](images/focus/usage-animation.gif "A focus ring with disabled animations.")
+
 ```html
 <style>
   :root {
-    --md-focus-ring-duration: 0; /* disabled animation */
+    --md-focus-ring-duration: 0s; /* disabled animation */
   }
 </style>
 ```
@@ -107,7 +130,6 @@ terms of color and shape.
 Token                    | Default value
 ------------------------ | --------------------------
 `--md-focus-ring-color`  | `--md-sys-color-secondary`
-`--md-focus-ring-offset` | `2px`
 `--md-focus-ring-shape`  | `9999px`
 `--md-focus-ring-width`  | `3px`
 
@@ -116,13 +138,14 @@ Token                    | Default value
 
 ### Example
 
-![Image of a focus ring with a different theme applied](images/focus/theming.png "Focus ring theming example.")
+![Image of a focus ring with a different theme applied](images/focus/theming.gif "Focus ring theming example.")
 
 ```html
 <style>
 :root {
   --md-focus-ring-shape: 0px;
   --md-focus-ring-width: 2px;
+  --md-focus-ring-active-width: 4px;
   --md-sys-color-secondary: #4A6363;
 }
 </style>
