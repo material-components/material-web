@@ -22,7 +22,7 @@
   );
 
   @each $token, $value in $tokens {
-    @if list.index($supported-tokens, $token) {
+    @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
     }
 
