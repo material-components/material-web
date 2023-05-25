@@ -37,6 +37,7 @@ describe('focus ring', () => {
     }
 
     return {
+      root,
       button,
       focusRing,
       harness: new Harness(button),
@@ -62,6 +63,28 @@ describe('focus ring', () => {
 
       expect(focusRing.control).withContext('focusRing.control').toBe(button);
     });
+
+    it('should update a referenced element when for attribute changes',
+       async () => {
+         const {root, focusRing} = setupTest(html`
+          <button id="first"></button>
+          <button id="second"></button>
+          <test-focus-ring for="first"></test-focus-ring>
+        `);
+
+         const secondButton = root.querySelector<HTMLElement>('#second');
+         if (!secondButton) {
+           throw new Error('Could not query rendered <button id="second">');
+         }
+
+         focusRing.setAttribute('for', 'second');
+         expect(focusRing.control)
+             .withContext('focusRing.control')
+             .toBe(secondButton);
+         await new Harness(secondButton).focusWithKeyboard();
+
+         expect(focusRing.visible).withContext('focusRing.visible').toBeTrue();
+       });
 
     it('should be able to be imperatively attached', () => {
       const {button, focusRing} = setupTest(html`
