@@ -5,6 +5,7 @@
  */
 
 import '@material/web/button/tonal-button.js';
+import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/circularprogress/circular-progress.js';
 
@@ -53,8 +54,8 @@ const iconButton: MaterialStoryInit<StoryKnobs> = {
           .fourColor=${fourColor}
       >
         <md-standard-icon-button toggle @change=${toggle}>
-          <span>play_arrow</span>
-          <span slot="selectedIcon">pause</span>
+          <md-icon>play_arrow</md-icon>
+          <md-icon slot="selectedIcon">pause</md-icon>
         </md-standard-icon-button>
       </md-circular-progress>`;
   }
