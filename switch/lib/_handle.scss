@@ -135,12 +135,10 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     transform: translate(-50%, -50%);
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
+  }
 
-    @include ripple.theme(
-      (
-        'shape': var(--_state-layer-shape),
-      )
-    );
+  md-ripple {
+    border-radius: var(--_state-layer-shape);
   }
 
   .switch--selected .ripple {

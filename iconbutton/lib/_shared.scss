@@ -72,7 +72,6 @@
 
   md-ripple {
     z-index: -1; // Place behind content
-    // TODO(b/263517885): replace with ripple.theme(container-shape)
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);

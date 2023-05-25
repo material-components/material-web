@@ -7,17 +7,30 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../tokens';
+@use './md-sys-color';
+@use './md-sys-shape';
+@use './md-sys-state';
+@use './values';
 // go/keep-sorted end
 
-$_default-deps: (
-  'md-sys-color': tokens.md-sys-color-values-light(),
-  'md-sys-shape': tokens.md-sys-shape-values(),
-  'md-sys-state': tokens.md-sys-state-values(),
+$supported-tokens: (
+  // go/keep-sorted start
+  'focus-color',
+  'focus-opacity',
+  'hover-color',
+  'hover-opacity',
+  'pressed-color',
+  'pressed-opacity',
+  // go/keep-sorted end
 );
 
-@function values($deps: $_default-deps) {
-  @return (
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-state': md-sys-state.values(),
+);
+
+@function values($deps: $_default) {
+  $tokens: (
     'focus-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'focus-opacity': map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'hover-color': map.get($deps, 'md-sys-color', 'on-surface'),
@@ -25,6 +38,7 @@ $_default-deps: (
     'pressed-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'pressed-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
-    'shape': map.get($deps, 'md-sys-shape', 'corner-none')
   );
+
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
 }

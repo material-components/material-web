@@ -57,7 +57,6 @@
         hover-opacity: var(--_unselected-hover-state-layer-opacity),
         pressed-color: var(--_unselected-pressed-state-layer-color),
         pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
-        shape: var(--_state-layer-shape),
       )
     );
 
@@ -76,6 +75,10 @@
     &:disabled {
       color: var(--_disabled-icon-color);
     }
+  }
+
+  md-ripple {
+    border-radius: var(--_state-layer-shape);
   }
 
   .standard:disabled .icon {

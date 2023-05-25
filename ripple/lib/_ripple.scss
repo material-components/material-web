@@ -4,32 +4,35 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../sass/theme';
 @use '../../tokens';
-@use './md-comp-ripple';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(md-comp-ripple.values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, ripple);
+  $supported-tokens: tokens.$md-comp-ripple-supported-tokens;
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
 
-  @include theme.emit-theme-vars($tokens);
+    @if $value {
+      --md-ripple-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
-  $tokens: md-comp-ripple.values();
-  $tokens: theme.create-theme-vars($tokens, ripple);
+  $tokens: tokens.md-comp-ripple-values();
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-ripple-#{$token}, #{$value});
     }
-  }
 
-  :host {
     display: flex;
   }
 
@@ -39,6 +42,7 @@
 
   :host,
   .surface {
+    border-radius: inherit;
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -46,11 +50,6 @@
   }
 
   .surface {
-    // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
-    // Remove Safari workaround for incorrect ripple overflow when addressed.
-    // This addresses `hover` and `pressed` state oveflow.
-    will-change: transform;
-    border-radius: var(--_shape);
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
@@ -95,15 +94,6 @@
     // press ripple fade-in
     opacity: var(--_pressed-opacity);
     transition-duration: 105ms;
-  }
-
-  .unbounded {
-    $unbounded: (
-      shape: map.get(tokens.md-sys-shape-values(), 'corner-full'),
-    );
-    $unbounded: theme.create-theme-vars($unbounded, ripple);
-
-    --_shape: #{map.get($unbounded, 'shape')};
   }
 
   @media screen and (forced-colors: active) {

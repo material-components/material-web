@@ -169,6 +169,7 @@ $_checkmark-bottom-left: 7px, -14px;
   // Ripple
 
   md-ripple {
+    border-radius: var(--_state-layer-shape);
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
 
@@ -180,7 +181,6 @@ $_checkmark-bottom-left: 7px, -14px;
         hover-opacity: var(--_unselected-hover-state-layer-opacity),
         pressed-color: var(--_unselected-pressed-state-layer-color),
         pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
-        shape: var(--_state-layer-shape),
       )
     );
   }
