@@ -94,7 +94,7 @@ export class StoryKnobPanel extends LitElement {
           aria-label=${iconLabel}
           @click=${this.onDragIconClick}
         >
-          ${iconSvg}
+          <md-icon>${iconSvg}</md-icon>
         </md-standard-icon-button>
       `;
     }

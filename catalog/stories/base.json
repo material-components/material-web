@@ -9,6 +9,9 @@
     "components/story-knob-panel.ts": {
       "hidden": true
     },
+    "components/knob-ui-components.ts": {
+      "hidden": true
+    },
     "index.ts": {
       "hidden": true
     },
