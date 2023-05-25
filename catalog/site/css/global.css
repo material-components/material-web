@@ -31,6 +31,7 @@
   --catalog-title-m-font-size: 16px;
   --catalog-title-s-font-size: 14px;
   --catalog-body-l-font-size: 16px;
+  --catalog-body-m-font-size: 14px;
 }
 
 @media screen and (max-width: 600px) {
@@ -38,12 +39,13 @@
     --catalog-display-xl-font-size: 55px;
     --catalog-title-l-font-size: 16px;
     --catalog-body-l-font-size: 14px;
+    --catalog-body-m-font-size: 12px;
   }
 }
 
 body {
   margin: 0;
-  font-size: var(--catalog0body-l-font-size);
+  font-size: var(--catalog-body-l-font-size);
 }
 
 a {

@@ -1,5 +1,5 @@
 :root {
-  --__code-block-font-size: var(--catalog-body-l-font-size);
+  --__code-block-font-size: var(--catalog-body-m-font-size);
 }
 
 .example {
