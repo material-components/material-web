@@ -64,9 +64,7 @@ export class CatalogComponentHeader extends LitElement {
       justify-content: center;
     }
 
-    /* clean-css ignore:start */
-    @container (width > 1200px) {
-      /* clean-css ignore:end */
+    @container (width > 1100px) {
       div {
         display: grid;
         grid-gap: 8px;
@@ -85,8 +83,6 @@ export class CatalogComponentHeader extends LitElement {
         min-height: 100%;
         max-height: 544px;
       }
-      /* clean-css ignore:start */
     }
-    /* clean-css ignore:end */
   `;
 }

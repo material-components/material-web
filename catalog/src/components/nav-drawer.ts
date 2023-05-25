@@ -83,7 +83,7 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1500px) {
       .spacer {
         min-width: 0px;
       }
@@ -201,7 +201,7 @@ export class NavDrawer extends SignalElement(LitElement) {
   }
 
   firstUpdated() {
-    const mql = window.matchMedia('(max-width: 900px)');
+    const mql = window.matchMedia('(max-width: 1500px)');
     this.isMobile = mql.matches;
     mql.addEventListener('change', (e) => {
       this.isMobile = e.matches;

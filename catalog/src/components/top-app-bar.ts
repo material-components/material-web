@@ -92,7 +92,7 @@ export class TopAppBar extends SignalElement(LitElement) {
       position: relative;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1500px) {
       .start .home-button {
         display: none;
       }

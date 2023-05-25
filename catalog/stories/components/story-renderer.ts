@@ -1,13 +1,10 @@
 import { Story } from '../story.js';
 import {
   css,
-  CSSResultGroup,
-  CSSResultOrNative,
-  html,
   LitElement,
   PropertyValues,
 } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 /**
  * Renders a single story inside its own shadow root for style isolation.
