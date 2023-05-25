@@ -25,7 +25,6 @@ function cssCustomPropertyAsNumber(
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Ripple', [
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
-      new Knob('unbounded', {ui: boolInput(), defaultValue: false}),
       new Knob(
           '--md-ripple-pressed-color',
           {ui: colorPicker(), wiring: cssCustomProperty}),

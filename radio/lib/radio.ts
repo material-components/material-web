@@ -162,7 +162,7 @@ export class Radio extends LitElement {
   };
 
   private readonly renderRipple = () => {
-    return html`<md-ripple unbounded ?disabled=${this.disabled}></md-ripple>`;
+    return html`<md-ripple ?disabled=${this.disabled}></md-ripple>`;
   };
 
   /** @private */

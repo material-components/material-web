@@ -184,7 +184,7 @@ export class Checkbox extends LitElement {
   };
 
   private readonly renderRipple = () => {  // bind to this
-    return html`<md-ripple ?disabled=${this.disabled} unbounded></md-ripple>`;
+    return html`<md-ripple ?disabled=${this.disabled}></md-ripple>`;
   };
 
   /** @private */

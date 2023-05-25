@@ -74,14 +74,6 @@ const TOUCH_DELAY_MS = 150;
  * A ripple component.
  */
 export class Ripple extends LitElement {
-  // TODO(https://bugs.webkit.org/show_bug.cgi?id=247546)
-  // Remove Safari workaround that requires reflecting `unbounded` so
-  // it can be styled against.
-  /**
-   * Sets the ripple to be an unbounded circle.
-   */
-  @property({type: Boolean, reflect: true}) unbounded = false;
-
   /**
    * Disables the ripple.
    */
@@ -222,7 +214,6 @@ export class Ripple extends LitElement {
       'hovered': this.hovered,
       'focused': this.focused,
       'pressed': this.pressed,
-      'unbounded': this.unbounded,
     };
 
     return html`<div class="surface ${classMap(classes)}"></div>`;
@@ -247,21 +238,13 @@ export class Ripple extends LitElement {
     const softEdgeSize =
         Math.max(SOFT_EDGE_CONTAINER_RATIO * maxDim, SOFT_EDGE_MINIMUM_SIZE);
 
-
-    let maxRadius = maxDim;
-    let initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
-
+    const initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
     const hypotenuse = Math.sqrt(width ** 2 + height ** 2);
-    maxRadius = hypotenuse + PADDING;
-
-    // ensure `initialSize` is even for unbounded
-    if (this.unbounded) {
-      initialSize = initialSize - (initialSize % 2);
-    }
+    const maxRadius = hypotenuse + PADDING;
 
     this.initialSize = initialSize;
     this.rippleScale = `${(maxRadius + softEdgeSize) / initialSize}`;
-    this.rippleSize = `${this.initialSize}px`;
+    this.rippleSize = `${initialSize}px`;
   }
 
   private getNormalizedPointerEventCoords(pointerEvent: PointerEvent):

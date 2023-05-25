@@ -16,10 +16,11 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
 @mixin styles() {
   .handle-container {
+    display: grid;
+    place-items: center;
     position: relative;
     // this easing is custom to perform the "overshoot" animation
     transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: flex;
   }
 
   $margin: calc(var(--_track-width) - var(--_track-height));
@@ -127,21 +128,14 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     opacity: var(--_disabled-unselected-handle-opacity);
   }
 
-  .ripple {
-    position: absolute;
-    display: inline-flex;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  md-ripple {
+    border-radius: var(--_state-layer-shape);
     height: var(--_state-layer-size);
+    inset: unset;
     width: var(--_state-layer-size);
   }
 
-  md-ripple {
-    border-radius: var(--_state-layer-shape);
-  }
-
-  .switch--selected .ripple {
+  .switch--selected md-ripple {
     @include ripple.theme(
       (
         'hover-color': var(--_selected-hover-state-layer-color),
@@ -154,7 +148,7 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     );
   }
 
-  .switch--unselected .ripple {
+  .switch--unselected md-ripple {
     @include ripple.theme(
       (
         'hover-color': var(--_unselected-hover-state-layer-color),

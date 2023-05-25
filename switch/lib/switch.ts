@@ -152,14 +152,7 @@ export class Switch extends LitElement {
   }
 
   private readonly renderRipple = () => {
-    return html`
-      <span class="ripple">
-        <md-ripple
-          ?disabled="${this.disabled}"
-          unbounded>
-        </md-ripple>
-      </span>
-    `;
+    return html`<md-ripple ?disabled="${this.disabled}"></md-ripple>`;
   };
 
   private readonly getRipple = () => {

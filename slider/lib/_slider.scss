@@ -468,6 +468,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   md-ripple {
+    border-radius: 50%;
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
   }

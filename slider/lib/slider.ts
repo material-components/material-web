@@ -209,7 +209,7 @@ export class Slider extends LitElement {
   // value coerced to a string
   [getFormValue]() {
     return this.range ? `${this.valueStart}, ${this.valueEnd}` :
-                                 `${this.value}`;
+                        `${this.value}`;
   }
 
   // indicates input values are crossed over each other from initial rendering.
@@ -317,8 +317,7 @@ export class Slider extends LitElement {
         <div class="handleContainerPadded">
           <div class="handleContainerBlock">
             <div class="handleContainer ${classMap(handleContainerClasses)}">
-              ${
-        when(this.range, () => this.renderHandle(handleAProps))}
+              ${when(this.range, () => this.renderHandle(handleAProps))}
               ${this.renderHandle(handleBProps)}
             </div>
           </div>
@@ -396,8 +395,8 @@ export class Slider extends LitElement {
       ${ripple(getRipple)}>`;
   }
 
-  private readonly renderRipple = (id: string) => html`<md-ripple class=${
-      id} ?disabled=${this.disabled} unbounded></md-ripple>`;
+  private readonly renderRipple = (id: string) =>
+      html`<md-ripple class=${id} ?disabled=${this.disabled}></md-ripple>`;
 
   private readonly getRippleA = () => {  // bind to this
     if (!this.handleAHover) {
