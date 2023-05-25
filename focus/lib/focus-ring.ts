@@ -15,6 +15,10 @@ export class FocusRing extends LitElement {
    * Makes the focus ring visible.
    */
   @property({type: Boolean, reflect: true}) visible = false;
+
+  /**
+   * Makes the focus ring animate inwards instead of outwards.
+   */
   @property({type: Boolean, reflect: true}) inward = false;
 
   /**
