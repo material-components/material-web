@@ -21,8 +21,6 @@ $supported-tokens: (
   'disabled-icon-color',
   'disabled-icon-opacity',
   'focus-icon-color',
-  'focus-state-layer-color',
-  'focus-state-layer-opacity',
   'hover-icon-color',
   'hover-state-layer-color',
   'hover-state-layer-opacity',
@@ -33,20 +31,27 @@ $supported-tokens: (
   'pressed-state-layer-opacity',
   'selected-container-color',
   'toggle-selected-focus-icon-color',
-  'toggle-selected-focus-state-layer-color',
   'toggle-selected-hover-icon-color',
   'toggle-selected-hover-state-layer-color',
   'toggle-selected-icon-color',
   'toggle-selected-pressed-icon-color',
   'toggle-selected-pressed-state-layer-color',
   'toggle-unselected-focus-icon-color',
-  'toggle-unselected-focus-state-layer-color',
   'toggle-unselected-hover-icon-color',
   'toggle-unselected-hover-state-layer-color',
   'toggle-unselected-icon-color',
   'toggle-unselected-pressed-icon-color',
   'toggle-unselected-pressed-state-layer-color',
   'unselected-container-color',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
+  'toggle-selected-focus-state-layer-color',
+  'toggle-unselected-focus-state-layer-color',
   // go/keep-sorted end
 );
 
@@ -59,7 +64,8 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: values.validate(
     md-comp-filled-icon-button.values($deps, $exclude-hardcoded-values),
-    $supported-tokens: $supported-tokens
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
   );
 
   @return $tokens;

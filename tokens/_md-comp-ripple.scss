@@ -15,8 +15,6 @@
 
 $supported-tokens: (
   // go/keep-sorted start
-  'focus-color',
-  'focus-opacity',
   'hover-color',
   'hover-opacity',
   'pressed-color',
@@ -31,8 +29,6 @@ $_default: (
 
 @function values($deps: $_default) {
   $tokens: (
-    'focus-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'focus-opacity': map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'hover-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'hover-opacity': map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
     'pressed-color': map.get($deps, 'md-sys-color', 'on-surface'),

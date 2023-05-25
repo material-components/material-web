@@ -51,8 +51,6 @@
 
     @include ripple.theme(
       (
-        focus-color: var(--_unselected-focus-state-layer-color),
-        focus-opacity: var(--_unselected-focus-state-layer-opacity),
         hover-color: var(--_unselected-hover-state-layer-color),
         hover-opacity: var(--_unselected-hover-state-layer-opacity),
         pressed-color: var(--_unselected-pressed-state-layer-color),
@@ -104,8 +102,6 @@
 
     @include ripple.theme(
       (
-        focus-color: var(--_selected-focus-state-layer-color),
-        focus-opacity: var(--_selected-focus-state-layer-opacity),
         hover-color: var(--_selected-hover-state-layer-color),
         hover-opacity: var(--_selected-hover-state-layer-opacity),
         pressed-color: var(--_selected-pressed-state-layer-color),

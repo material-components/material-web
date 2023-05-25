@@ -23,8 +23,6 @@
 
     @include ripple.theme(
       (
-        'focus-color': var(--_focus-state-layer-color),
-        'focus-opacity': var(--_focus-state-layer-opacity),
         'hover-color': var(--_hover-state-layer-color),
         'hover-opacity': var(--_hover-state-layer-opacity),
         'pressed-color': var(--_pressed-state-layer-color),

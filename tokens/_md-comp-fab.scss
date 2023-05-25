@@ -36,8 +36,6 @@ $supported-tokens: (
   'focus-container-elevation',
   'focus-icon-color',
   'focus-label-text-color',
-  'focus-state-layer-color',
-  'focus-state-layer-opacity',
   'hover-container-elevation',
   'hover-icon-color',
   'hover-label-text-color',
@@ -64,7 +62,6 @@ $supported-tokens: (
   'primary-container-color',
   'primary-focus-icon-color',
   'primary-focus-label-text-color',
-  'primary-focus-state-layer-color',
   'primary-hover-icon-color',
   'primary-hover-label-text-color',
   'primary-hover-state-layer-color',
@@ -76,7 +73,6 @@ $supported-tokens: (
   'secondary-container-color',
   'secondary-focus-icon-color',
   'secondary-focus-label-text-color',
-  'secondary-focus-state-layer-color',
   'secondary-hover-icon-color',
   'secondary-hover-label-text-color',
   'secondary-hover-state-layer-color',
@@ -92,7 +88,6 @@ $supported-tokens: (
   'tertiary-container-color',
   'tertiary-focus-icon-color',
   'tertiary-focus-label-text-color',
-  'tertiary-focus-state-layer-color',
   'tertiary-hover-icon-color',
   'tertiary-hover-label-text-color',
   'tertiary-hover-state-layer-color',
@@ -101,6 +96,13 @@ $supported-tokens: (
   'tertiary-pressed-icon-color',
   'tertiary-pressed-label-text-color',
   'tertiary-pressed-state-layer-color',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
   // go/keep-sorted end
 );
 
@@ -157,8 +159,6 @@ $supported-tokens: (
     'primary-focus-icon-color': map.get($primary-tokens, 'focus-icon-color'),
     'primary-focus-label-text-color':
       map.get($extended-primary-tokens, 'focus-label-text-color'),
-    'primary-focus-state-layer-color':
-      map.get($primary-tokens, 'focus-state-layer-color'),
     'primary-hover-icon-color': map.get($primary-tokens, 'hover-icon-color'),
     'primary-hover-label-text-color':
       map.get($extended-primary-tokens, 'hover-label-text-color'),
@@ -176,8 +176,6 @@ $supported-tokens: (
     'secondary-focus-icon-color': map.get($secondary-tokens, 'focus-icon-color'),
     'secondary-focus-label-text-color':
       map.get($extended-secondary-tokens, 'focus-label-text-color'),
-    'secondary-focus-state-layer-color':
-      map.get($secondary-tokens, 'focus-state-layer-color'),
     'secondary-hover-icon-color': map.get($secondary-tokens, 'hover-icon-color'),
     'secondary-hover-label-text-color':
       map.get($extended-secondary-tokens, 'hover-label-text-color'),
@@ -200,8 +198,6 @@ $supported-tokens: (
     'tertiary-focus-icon-color': map.get($tertiary-tokens, 'focus-icon-color'),
     'tertiary-focus-label-text-color':
       map.get($extended-tertiary-tokens, 'focus-label-text-color'),
-    'tertiary-focus-state-layer-color':
-      map.get($tertiary-tokens, 'focus-state-layer-color'),
     'tertiary-hover-icon-color': map.get($tertiary-tokens, 'hover-icon-color'),
     'tertiary-hover-label-text-color':
       map.get($extended-tertiary-tokens, 'hover-label-text-color'),
@@ -234,6 +230,7 @@ $_default: (
   $tokens: values.validate(
     $tokens,
     $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
     $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values)
   );
 

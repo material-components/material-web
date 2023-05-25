@@ -199,10 +199,8 @@ $_custom-property-prefix: 'navigation-bar';
     @include ripple.theme(
       (
         hover-color: var(--_active-hover-state-layer-color),
-        focus-color: var(--_active-focus-state-layer-color),
         pressed-color: var(--_active-pressed-state-layer-color),
         hover-opacity: var(--_hover-state-layer-opacity),
-        focus-opacity: var(--_focus-state-layer-opacity),
         pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
@@ -250,10 +248,8 @@ $_custom-property-prefix: 'navigation-bar';
     @include ripple.theme(
       (
         hover-color: var(--_inactive-hover-state-layer-color),
-        focus-color: var(--_inactive-focus-state-layer-color),
         pressed-color: var(--_inactive-pressed-state-layer-color),
         hover-opacity: var(--_hover-state-layer-opacity),
-        focus-opacity: var(--_focus-state-layer-opacity),
         pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );

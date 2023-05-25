@@ -4,38 +4,42 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../motion/animation';
 @use '../../ripple/ripple';
-@use '../../sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-radio-button-values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'radio');
+  $supported-tokens: tokens.$md-comp-radio-button-supported-tokens;
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-radio-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-radio-button-values();
-  $tokens: theme.create-theme-vars($tokens, 'radio');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-radio-#{$token}, #{$value});
     }
 
     @include ripple.theme(
       (
-        focus-color: var(--_unselected-focus-state-layer-color),
-        focus-opacity: var(--_unselected-focus-state-layer-opacity),
         hover-color: var(--_unselected-hover-state-layer-color),
         hover-opacity: var(--_unselected-hover-state-layer-opacity),
         pressed-color: var(--_unselected-pressed-state-layer-color),
@@ -61,8 +65,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   :host([checked]) {
     @include ripple.theme(
       (
-        focus-color: var(--_selected-focus-state-layer-color),
-        focus-opacity: var(--_selected-focus-state-layer-opacity),
         hover-color: var(--_selected-hover-state-layer-color),
         hover-opacity: var(--_selected-hover-state-layer-opacity),
         pressed-color: var(--_selected-pressed-state-layer-color),

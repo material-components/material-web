@@ -80,7 +80,6 @@ export class Ripple extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   @state() private hovered = false;
-  @state() private focused = false;
   @state() private pressed = false;
 
   @query('.surface') private readonly mdRoot!: HTMLElement|null;
@@ -111,14 +110,6 @@ export class Ripple extends LitElement {
     if (this.state !== State.INACTIVE) {
       this.endPressAnimation();
     }
-  }
-
-  handleFocusin() {
-    this.focused = true;
-  }
-
-  handleFocusout() {
-    this.focused = false;
   }
 
   handlePointerup(event: PointerEvent) {
@@ -212,7 +203,6 @@ export class Ripple extends LitElement {
   protected override render() {
     const classes = {
       'hovered': this.hovered,
-      'focused': this.focused,
       'pressed': this.pressed,
     };
 
@@ -222,7 +212,6 @@ export class Ripple extends LitElement {
   protected override update(changedProps: PropertyValues<this>) {
     if (changedProps.has('disabled') && this.disabled) {
       this.hovered = false;
-      this.focused = false;
       this.pressed = false;
     }
     super.update(changedProps);

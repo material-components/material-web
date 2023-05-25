@@ -28,8 +28,6 @@ $supported-tokens: (
   'container-width',
   'focus-container-elevation',
   'focus-label-text-color',
-  'focus-state-layer-color',
-  'focus-state-layer-opacity',
   'hover-container-elevation',
   'hover-label-text-color',
   'hover-state-layer-color',
@@ -50,6 +48,13 @@ $supported-tokens: (
   'pressed-label-text-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
   // go/keep-sorted end
 );
 
@@ -91,6 +96,7 @@ $_default: (
   $tokens: values.validate(
     md-comp-fab-branded.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
     $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values)
   );
 

@@ -15,8 +15,6 @@ $supported-tokens: (
   // go/keep-sorted start
   'container-shape',
   'container-size',
-  'error-focus-state-layer-color',
-  'error-focus-state-layer-opacity',
   'error-hover-state-layer-color',
   'error-hover-state-layer-opacity',
   'error-pressed-state-layer-color',
@@ -36,8 +34,6 @@ $supported-tokens: (
   'selected-error-pressed-icon-color',
   'selected-focus-container-color',
   'selected-focus-icon-color',
-  'selected-focus-state-layer-color',
-  'selected-focus-state-layer-opacity',
   'selected-hover-container-color',
   'selected-hover-icon-color',
   'selected-hover-state-layer-color',
@@ -58,8 +54,6 @@ $supported-tokens: (
   'unselected-error-pressed-outline-color',
   'unselected-focus-outline-color',
   'unselected-focus-outline-width',
-  'unselected-focus-state-layer-color',
-  'unselected-focus-state-layer-opacity',
   'unselected-hover-outline-color',
   'unselected-hover-outline-width',
   'unselected-hover-state-layer-color',
@@ -75,11 +69,18 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'error-focus-state-layer-color',
+  'error-focus-state-layer-opacity',
   'selected-disabled-container-outline-width',
   'selected-focus-outline-width',
+  'selected-focus-state-layer-color',
+  'selected-focus-state-layer-opacity',
   'selected-hover-outline-width',
   'selected-outline-width',
-  'selected-pressed-outline-width' // go/keep-sorted end
+  'selected-pressed-outline-width',
+  'unselected-focus-state-layer-color',
+  'unselected-focus-state-layer-opacity',
+  // go/keep-sorted end
 );
 
 $_default: (

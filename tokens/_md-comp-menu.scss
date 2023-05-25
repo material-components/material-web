@@ -16,10 +16,13 @@
 @use './values';
 // go/keep-sorted end
 
-$_default: (
-  'md-sys-color': md-sys-color.values-light(),
-  'md-sys-elevation': md-sys-elevation.values(),
-  'md-sys-shape': md-sys-shape.values(),
+$supported-tokens: (
+  // go/keep-sorted start
+  'container-color',
+  'container-elevation',
+  'container-shadow-color',
+  'container-shape',
+  // go/keep-sorted end
 );
 
 $unsupported-tokens: (
@@ -28,13 +31,10 @@ $unsupported-tokens: (
   // go/keep-sorted end
 );
 
-$supported-tokens: (
-  // go/keep-sorted start
-  'container-color',
-  'container-elevation',
-  'container-shadow-color',
-  'container-shape',
-  // go/keep-sorted end
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {

@@ -21,7 +21,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     @include ripple.theme(
       (
         hover-opacity: var(--_hover-state-layer-opacity),
-        focus-opacity: var(--_focus-state-layer-opacity),
         pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
@@ -113,7 +112,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     @include fab.color(
       (
         'container-color': var(--_container-color),
-        'focus-state-layer-color': var(--_focus-state-layer-color),
         'hover-state-layer-color': var(--_hover-state-layer-color),
         'pressed-state-layer-color': var(--_pressed-state-layer-color),
         'label-text-color': var(--_label-text-color),

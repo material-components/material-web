@@ -30,8 +30,6 @@ $supported-tokens: (
   'disabled-label-text-opacity',
   'focus-container-elevation',
   'focus-label-text-color',
-  'focus-state-layer-color',
-  'focus-state-layer-opacity',
   'hover-container-elevation',
   'hover-label-text-color',
   'hover-state-layer-color',
@@ -60,6 +58,8 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',

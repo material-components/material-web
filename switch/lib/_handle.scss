@@ -139,10 +139,8 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     @include ripple.theme(
       (
         'hover-color': var(--_selected-hover-state-layer-color),
-        'focus-color': var(--_selected-focus-state-layer-color),
         'pressed-color': var(--_selected-pressed-state-layer-color),
         'hover-opacity': var(--_selected-hover-state-layer-opacity),
-        'focus-opacity': var(--_selected-focus-state-layer-opacity),
         'pressed-opacity': var(--_selected-pressed-state-layer-opacity),
       )
     );
@@ -152,10 +150,8 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     @include ripple.theme(
       (
         'hover-color': var(--_unselected-hover-state-layer-color),
-        'focus-color': var(--_unselected-focus-state-layer-color),
         'pressed-color': var(--_unselected-pressed-state-layer-color),
         'hover-opacity': var(--_unselected-hover-state-layer-opacity),
-        'focus-opacity': var(--_unselected-focus-state-layer-opacity),
         'pressed-opacity': var(--_unselected-pressed-state-layer-opacity),
       )
     );

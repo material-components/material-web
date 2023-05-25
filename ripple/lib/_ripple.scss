@@ -88,12 +88,6 @@
     opacity: var(--_hover-opacity);
   }
 
-  .focused::before {
-    background-color: var(--_focus-color);
-    opacity: var(--_focus-opacity);
-    transition-duration: 75ms;
-  }
-
   .pressed::after {
     // press ripple fade-in
     opacity: var(--_pressed-opacity);

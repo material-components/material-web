@@ -30,8 +30,6 @@ $supported-tokens: (
   // go/keep-sorted start
   'primary-tab-active-focus-icon-color',
   'primary-tab-active-focus-label-text-color',
-  'primary-tab-active-focus-state-layer-color',
-  'primary-tab-active-focus-state-layer-opacity',
   'primary-tab-active-hover-icon-color',
   'primary-tab-active-hover-label-text-color',
   'primary-tab-active-hover-state-layer-color',
@@ -53,8 +51,6 @@ $supported-tokens: (
   'primary-tab-divider-thickness',
   'primary-tab-focus-icon-color',
   'primary-tab-focus-label-text-color',
-  'primary-tab-focus-state-layer-color',
-  'primary-tab-focus-state-layer-opacity',
   'primary-tab-hover-icon-color',
   'primary-tab-hover-label-text-color',
   'primary-tab-hover-state-layer-color',
@@ -69,8 +65,6 @@ $supported-tokens: (
   'primary-tab-pressed-state-layer-opacity',
   'secondary-tab-active-focus-icon-color',
   'secondary-tab-active-focus-label-text-color',
-  'secondary-tab-active-focus-state-layer-color',
-  'secondary-tab-active-focus-state-layer-opacity',
   'secondary-tab-active-hover-icon-color',
   'secondary-tab-active-hover-label-text-color',
   'secondary-tab-active-hover-state-layer-color',
@@ -92,8 +86,6 @@ $supported-tokens: (
   'secondary-tab-divider-thickness',
   'secondary-tab-focus-icon-color',
   'secondary-tab-focus-label-text-color',
-  'secondary-tab-focus-state-layer-color',
-  'secondary-tab-focus-state-layer-opacity',
   'secondary-tab-hover-icon-color',
   'secondary-tab-hover-label-text-color',
   'secondary-tab-hover-state-layer-color',
@@ -123,7 +115,13 @@ $unsupported-tokens: (
   'secondary-tab-label-text-line-height',
   'secondary-tab-label-text-size',
   'secondary-tab-label-text-tracking',
-  'secondary-tab-label-text-weight'
+  'secondary-tab-label-text-weight',
+  'primary-tab-active-focus-state-layer-color',
+  'primary-tab-active-focus-state-layer-opacity',
+  'primary-tab-focus-state-layer-color',
+  'primary-tab-focus-state-layer-opacity',
+  'secondary-tab-focus-state-layer-color',
+  'secondary-tab-focus-state-layer-opacity'
 );
 
 // Note, this combines the raw primary and secondary tab variant tokens
@@ -265,10 +263,6 @@ $unsupported-tokens: (
       'active-focus-icon-color': map.get($tokens, 'icon-color'),
       'active-focus-label-text-color':
         map.get($tokens, 'active-label-text-color'),
-      'active-focus-state-layer-color':
-        map.get($tokens, 'focus-state-layer-color'),
-      'active-focus-state-layer-opacity':
-        map.get($tokens, 'focus-state-layer-opacity'),
       'active-hover-icon-color': map.get($tokens, 'icon-color'),
       'active-hover-label-text-color':
         map.get($tokens, 'active-label-text-color'),

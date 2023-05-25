@@ -16,7 +16,6 @@ import {Ripple} from './ripple.js';
 
 enum RippleStateClasses {
   HOVERED = 'hovered',
-  FOCUSED = 'focused',
   PRESSED = 'pressed',
 }
 
@@ -40,9 +39,7 @@ describe('Ripple', () => {
   async function setupTest() {
     const rippleRef = createRef<TestRipple>();
     const root = env.render(html`
-      <div ${ripple(() => rippleRef.value || null)}
-          @focusin=${() => rippleRef.value?.handleFocusin()}
-          @focusout=${() => rippleRef.value?.handleFocusout()}>
+      <div ${ripple(() => rippleRef.value || null)}>
         <test-ripple ${ref(rippleRef)}></test-ripple>
       </div>
     `);
@@ -98,23 +95,6 @@ describe('Ripple', () => {
       expect(surface).not.toHaveClass(RippleStateClasses.PRESSED);
     });
 
-    it('sets focused class on focus', async () => {
-      const {harness, surface} = await setupTest();
-      await harness.focusWithKeyboard();
-      await env.waitForStability();
-
-      expect(surface).toHaveClass(RippleStateClasses.FOCUSED);
-    });
-
-    it('removes focused class on blur', async () => {
-      const {harness, surface} = await setupTest();
-      await harness.focusWithKeyboard();
-      await harness.blur();
-      await env.waitForStability();
-
-      expect(surface).not.toHaveClass(RippleStateClasses.FOCUSED);
-    });
-
     it('sets hover class on pointer enter', async () => {
       const {harness, surface} = await setupTest();
       await harness.startHover();
@@ -142,6 +122,7 @@ describe('Ripple', () => {
 
       expect(surface).not.toHaveClass(RippleStateClasses.HOVERED);
     });
+
     it('responds to keyboard click after mouse click', async () => {
       const {instance, harness} = await setupTest();
       const STATE_INACTIVE = 0;
