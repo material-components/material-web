@@ -8,7 +8,7 @@ import './index.js';
 import './material-collection.js';
 
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
-import {boolInput, colorPicker, cssCustomProperty, Knob, numberInput} from './index.js';
+import {colorPicker, cssCustomProperty, Knob, numberInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 
@@ -24,7 +24,6 @@ function cssCustomPropertyAsNumber(
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Ripple', [
-      new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob(
           '--md-ripple-pressed-color',
           {ui: colorPicker(), wiring: cssCustomProperty}),

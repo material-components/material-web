@@ -7,14 +7,10 @@
 import '@material/web/ripple/ripple.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {ripple} from '@material/web/ripple/directive.js';
-import {MdRipple} from '@material/web/ripple/ripple.js';
 import {css, html} from 'lit';
-import {createRef, ref} from 'lit/directives/ref.js';
 
 /** Knob types for ripple stories. */
 export interface StoryKnobs {
-  disabled: boolean;
   '--md-ripple-pressed-color': string;
   '--md-ripple-pressed-opacity': number;
   '--md-ripple-hover-color': string;
@@ -32,11 +28,10 @@ const bounded: MaterialStoryInit<StoryKnobs> = {
       width: 64px;
     }
   `,
-  render({disabled}) {
-    const rippleRef = createRef<MdRipple>();
+  render() {
     return html`
-      <div class="container" ${ripple(() => rippleRef.value || null)}>
-        <md-ripple ?disabled=${disabled} ${ref(rippleRef)}></md-ripple>
+      <div class="container">
+        <md-ripple></md-ripple>
       </div>
     `;
   }
@@ -76,12 +71,11 @@ const unbounded: MaterialStoryInit<StoryKnobs> = {
       width: 40px;
     }
   `,
-  render({disabled}) {
-    const rippleRef = createRef<MdRipple>();
+  render() {
     return html`
-      <div class="container" ${ripple(() => rippleRef.value || null)}>
+      <div id="touch" class="container">
         <div class="icon anchor">
-          <md-ripple ?disabled=${disabled} ${ref(rippleRef)}></md-ripple>
+          <md-ripple for="touch"></md-ripple>
         </div>
         <div class="icon"></div>
       </div>

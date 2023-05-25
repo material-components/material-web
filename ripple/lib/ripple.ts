@@ -8,6 +8,7 @@ import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {Attachable, AttachableController} from '../../controller/attachable-controller.js';
 import {EASING} from '../../motion/animation.js';
 
 const PRESS_GROW_MS = 450;
@@ -65,6 +66,14 @@ enum State {
 }
 
 /**
+ * Events that the ripple listens to.
+ */
+const EVENTS = [
+  'click', 'contextmenu', 'pointercancel', 'pointerdown', 'pointerenter',
+  'pointerleave', 'pointerup'
+];
+
+/**
  * Delay reacting to touch so that we do not show the ripple for a swipe or
  * scroll interaction.
  */
@@ -73,11 +82,23 @@ const TOUCH_DELAY_MS = 150;
 /**
  * A ripple component.
  */
-export class Ripple extends LitElement {
+export class Ripple extends LitElement implements Attachable {
   /**
    * Disables the ripple.
    */
   @property({type: Boolean, reflect: true}) disabled = false;
+
+  get htmlFor() {
+    return this.attachableController.htmlFor;
+  }
+
+  set htmlFor(htmlFor: string|null) {
+    this.attachableController.htmlFor = htmlFor;
+  }
+
+  get control() {
+    return this.attachableController.control;
+  }
 
   @state() private hovered = false;
   @state() private pressed = false;
@@ -90,6 +111,21 @@ export class Ripple extends LitElement {
   private state = State.INACTIVE;
   private rippleStartEvent?: PointerEvent;
   private checkBoundsAfterContextMenu = false;
+  private readonly attachableController =
+      new AttachableController(this, this.onControlChange.bind(this));
+
+  // TODO(b/265337232): Remove once ripple directive is removed. This is used to
+  // prevent two animations while migrating ripples from the directive to the
+  // new attachment syntax.
+  private lastHandledEvent?: Event;
+
+  attach(control: HTMLElement) {
+    this.attachableController.attach(control);
+  }
+
+  detach() {
+    this.attachableController.detach();
+  }
 
   handlePointerenter(event: PointerEvent) {
     if (!this.shouldReactToEvent(event)) {
@@ -366,5 +402,46 @@ export class Ripple extends LitElement {
 
   private isTouch({pointerType}: PointerEvent) {
     return pointerType === 'touch';
+  }
+
+  /** @private */
+  async handleEvent(event: Event) {
+    if (this.lastHandledEvent === event) {
+      return;
+    }
+
+    this.lastHandledEvent = event;
+    switch (event.type) {
+      case 'click':
+        this.handleClick();
+        break;
+      case 'contextmenu':
+        this.handleContextmenu();
+        break;
+      case 'pointercancel':
+        this.handlePointercancel(event as PointerEvent);
+        break;
+      case 'pointerdown':
+        await this.handlePointerdown(event as PointerEvent);
+        break;
+      case 'pointerenter':
+        this.handlePointerenter(event as PointerEvent);
+        break;
+      case 'pointerleave':
+        this.handlePointerleave(event as PointerEvent);
+        break;
+      case 'pointerup':
+        this.handlePointerup(event as PointerEvent);
+        break;
+      default:
+        break;
+    }
+  }
+
+  private onControlChange(prev: HTMLElement|null, next: HTMLElement|null) {
+    for (const event of EVENTS) {
+      prev?.removeEventListener(event, this);
+      next?.addEventListener(event, this);
+    }
   }
 }

@@ -38,31 +38,8 @@ class RippleDirective extends Directive {
     if (!ripple) {
       return;
     }
-    switch (event.type) {
-      case 'click':
-        ripple.handleClick();
-        break;
-      case 'contextmenu':
-        ripple.handleContextmenu();
-        break;
-      case 'pointercancel':
-        ripple.handlePointercancel(event as PointerEvent);
-        break;
-      case 'pointerdown':
-        await ripple.handlePointerdown(event as PointerEvent);
-        break;
-      case 'pointerenter':
-        ripple.handlePointerenter(event as PointerEvent);
-        break;
-      case 'pointerleave':
-        ripple.handlePointerleave(event as PointerEvent);
-        break;
-      case 'pointerup':
-        ripple.handlePointerup(event as PointerEvent);
-        break;
-      default:
-        break;
-    }
+
+    await ripple.handleEvent(event);
   }
 
   override update(part: ElementPart, [ripple]: DirectiveParameters<this>) {
