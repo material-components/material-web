@@ -182,7 +182,10 @@ export class KnobValues<Knobs extends PolymorphicArrayOfKnobs> extends
     knob.imperativelySet(newValue);
   }
 
-  keys<SearchName extends KnobKeys<Knobs>>(): IterableIterator<SearchName> {
+  /**
+   * Returns an iterator of all the knob names.
+   */
+  names<SearchName extends KnobKeys<Knobs>>() {
     return this.byName.keys() as IterableIterator<SearchName>;
   }
 

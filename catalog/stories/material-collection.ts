@@ -1,37 +1,17 @@
-export { LitCollection as MaterialCollection } from './story.js';
-import { CSSResult, TemplateResult, css, html } from 'lit';
-import { Knob, KnobUi, KnobValues } from './knobs.js';
-import { LitStoryInit, LitCollection } from './story.js';
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-export type KnobTypesToKnobs<
-  T extends { [name: string]: any },
-  U extends Extract<keyof T, string> = Extract<keyof T, string>
-> = ReadonlyArray<U extends any ? Knob<T[U], U> : never>;
+/* Slimmed down version of material-collection */
 
-export interface MaterialStoryInit<T extends { [name: string]: any }> {
-  name: string;
-  render: (knobs: T) => TemplateResult | Promise<TemplateResult>;
-  styles?: CSSResult | CSSResult[];
-}
+import {css, CSSResult, html, TemplateResult} from 'lit';
 
-export function materialInitsToStoryInits<T extends { [name: string]: any }>(
-  inits: MaterialStoryInit<T>[]
-): LitStoryInit<KnobValues<KnobTypesToKnobs<T>>>[] {
-  return inits.map((init) => {
-    return {
-      name: init.name,
-      litStyles: init.styles,
-      renderLit(knobMap) {
-        const knobKeys = knobMap.keys();
-        const knobs = {} as T;
-        for (const key of knobKeys) {
-          knobs[key] = knobMap.get(key)! as (typeof knobs)[typeof key];
-        }
-        return init.render(knobs);
-      },
-    };
-  });
-}
+import {Knob, KnobUi, KnobValues} from './knobs.js';
+import {LitCollection, LitStoryInit} from './story.js';
+
+export {LitCollection as MaterialCollection} from './story.js';
 
 /**
  * Material styling for labels.
@@ -47,14 +27,89 @@ export const labelStyles = css`
 `;
 
 /**
- * A subtitble knob for labelling sections in the knob UI.
+ * A subtitle knob for labelling sections in the knob UI.
  */
 export function title(): KnobUi<void> {
   return {
     render(knob) {
-      return html` <h3 style="font-family: sans-serif;">${knob.name}</h3> `;
+      return html` <h3 style="font-family: system-ui;">${knob.name}</h3> `;
     },
   };
+}
+
+/**
+ * Converts an interface of `{[knobName: string]: unknown}` to something
+ * ingestable by MaterialCollection.
+ *
+ * @example
+ * ```ts
+ * // demo.ts
+ * import {StoryKnobs} from './stories';
+ * import {MaterialCollection, KnobTypesToKnobs} from
+ * '@material/web/demo/stories/material-collection';
+ *
+ * const stories = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(...);
+ * ```
+ */
+export type KnobTypesToKnobs<
+    // tslint:disable-next-line:no-any No way to represent this type clearly.
+    T extends {[name: string]: any},
+              Names extends Extract<keyof T, string> = Extract<keyof T, string>,
+    // tslint:disable-next-line:no-any We need to "map" the union type to knobs.
+    > = ReadonlyArray<Names extends any ? Knob<T[Names], Names>: never>;
+
+/**
+ * An init object for Material Stories. This should be exposed to the user.
+ *
+ * @example
+ * ```ts
+ * import {MaterialStoryInit} from
+ * '@material/web/demo/stories/material-collection';
+ * // stories.ts
+ * export interface StoryKnobs {
+ *   checked: boolean;
+ *   disabled: boolean;
+ * }
+ *
+ * export const stories: Array<MaterialStoryInit<StoryKnobs>> = [
+ *   {
+ *     name: Checkbox,
+ *     styles: css`...`,
+ *     render: ({checked, disabled}) => {
+ *       return html`...`;
+ *     }
+ *   }
+ * ]
+ * ```
+ */
+// tslint:disable-next-line:no-any No way to represent this type clearly.
+export interface MaterialStoryInit<T extends {[name: string]: any}> {
+  name: string;
+  render: (knobs: T) => TemplateResult | Promise<TemplateResult>;
+  styles?: CSSResult|CSSResult[];
+}
+
+/**
+ * Converts an array of `MaterialStoryInit`s to a `LitStoryInit`.
+ */
+// tslint:disable-next-line:no-any No way to represent this type clearly.
+export function materialInitsToStoryInits<T extends {[name: string]: any}>(
+    inits: Array<MaterialStoryInit<T>>):
+    Array<LitStoryInit<KnobValues<KnobTypesToKnobs<T>>>> {
+  return inits.map((init) => {
+    return {
+      name: init.name,
+      litStyles: init.styles,
+      renderLit(knobMap) {
+        const knobNames = knobMap.names();
+        const knobs: T = {} as unknown as T;
+        for (const name of knobNames) {
+          knobs[name] = knobMap.get(name)! as (typeof knobs)[typeof name];
+        }
+        return init.render(knobs);
+      },
+    };
+  });
 }
 
 /**

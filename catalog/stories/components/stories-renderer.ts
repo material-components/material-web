@@ -1,10 +1,19 @@
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Slimmed down version of Lit stories stories-renderer without IE renderer */
+
 import './story-knob-panel.js';
 import './story-renderer.js';
 
-import { KnobValues, PolymorphicArrayOfKnobs } from '../knobs.js';
-import { Collection, Story } from '../story.js';
-import { html, LitElement, TemplateResult, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {css, html, LitElement, TemplateResult} from 'lit';
+import {customElement, property, state} from 'lit/decorators.js';
+
+import {KnobValues, PolymorphicArrayOfKnobs} from '../knobs.js';
+import {Collection, Story} from '../story.js';
 
 /**
  * Renders a sequence of stories, one after another, optionally with
@@ -50,18 +59,17 @@ export class StoriesRenderer extends LitElement {
   ];
 
   /** If true, will not show the UI for any knobs on this collection. */
-  @property({ type: Boolean }) hideKnobs: boolean = false;
-  @property({ attribute: false })
-  focusStories: readonly Story[] | undefined = undefined;
-  @property({ attribute: false }) collection: Collection | undefined =
-    undefined;
-  @property({ type: Boolean }) hideLabels = false;
-  @property({ type: Boolean, reflect: true }) hasKnobs = false;
+  @property({type: Boolean}) hideKnobs: boolean = false;
+  @property({attribute: false})
+  focusStories?: readonly Story[];
+  @property({attribute: false}) collection?: Collection;
+  @property({type: Boolean}) hideLabels = false;
+  @property({type: Boolean, reflect: true}) hasKnobs = false;
   @state() knobsOpen = true;
-  @state() knobsPanelType: 'modal' | 'inline' = 'inline';
+  @state() knobsPanelType: 'modal'|'inline' = 'inline';
 
-  private observedKnobs: undefined | KnobValues<PolymorphicArrayOfKnobs> =
-    undefined;
+  private observedKnobs: undefined|KnobValues<PolymorphicArrayOfKnobs> =
+      undefined;
 
   override render() {
     const collection = this.collection;
@@ -82,12 +90,11 @@ export class StoriesRenderer extends LitElement {
 
   private renderStories(stories: Story[]): TemplateResult[] {
     return stories.map((story) => {
-      let label: string | TemplateResult = '';
+      let label: string|TemplateResult = '';
 
       if (!this.hideLabels) {
-        const description = story.description
-          ? html`<small>${story.description}</small>`
-          : '';
+        const description =
+            story.description ? html`<small>${story.description}</small>` : '';
         label = html`
           <h3 class="m-headline5">${story.name}</h3>
           ${description}
@@ -106,12 +113,12 @@ export class StoriesRenderer extends LitElement {
   private renderKnobs(collection: Collection) {
     const knobs = collection.knobs;
 
-    let knobsSection: string | TemplateResult = '';
+    let knobsSection: string|TemplateResult = '';
 
     this.hasKnobs = !this.hideKnobs && !knobs.empty;
 
     if (!knobs.empty && !this.hideKnobs) {
-      const onOpenChanged = (event: CustomEvent<{ open: boolean }>) => {
+      const onOpenChanged = (event: CustomEvent<{open: boolean}>) => {
         this.knobsOpen = event.detail.open;
       };
 
@@ -156,7 +163,7 @@ export class StoriesRenderer extends LitElement {
 
   private updateObservedKnobs() {
     if (this.collection?.knobs === this.observedKnobs) {
-      return; // nothing to do;
+      return;  // nothing to do;
     }
     // Stop watching the knobs that we're currently observing.
     this.unobserveKnobs();
@@ -176,9 +183,8 @@ export class StoriesRenderer extends LitElement {
       for (const story of this.focusStories) {
         if (!allowedStories.has(story)) {
           console.error(
-            `A stories renderer can only render stories ` +
-              `from its collection.`
-          );
+              `A stories renderer can only render stories ` +
+              `from its collection.`);
         } else {
           storiesToRender.push(story);
         }
@@ -193,9 +199,7 @@ export class StoriesRenderer extends LitElement {
   private unobserveKnobs() {
     if (this.observedKnobs !== undefined) {
       this.observedKnobs.removeEventListener(
-        'changed',
-        this.boundRequestUpdate
-      );
+          'changed', this.boundRequestUpdate);
     }
   }
 
