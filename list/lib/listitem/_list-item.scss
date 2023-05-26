@@ -157,6 +157,9 @@
 
   .label-text {
     display: flex;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
     color: var(--_list-item-label-text-color);
     font: var(--_list-item-label-text-type);
 

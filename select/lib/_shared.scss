@@ -30,8 +30,15 @@
   }
 
   .field,
+  .select,
+  md-menu {
+    min-width: 100%;
+    max-width: inherit;
+  }
+
+  .field,
   .select {
-    min-width: inherit;
+    width: 100%;
   }
 
   :host {
