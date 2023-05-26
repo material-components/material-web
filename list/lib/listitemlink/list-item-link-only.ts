@@ -15,7 +15,7 @@ export class ListItemLinkOnly extends ListItemLink {
    * Removes the hover and click ripples from the item when true. Clicking the
    * link will still cause link navigation.
    */
-  @property() noninteractive = false;
+  @property({type: Boolean}) noninteractive = false;
 
   override getRenderClasses() {
     return {
@@ -26,5 +26,9 @@ export class ListItemLinkOnly extends ListItemLink {
 
   override renderRipple() {
     return this.noninteractive ? nothing : super.renderRipple();
+  }
+
+  override renderFocusRing() {
+    return this.noninteractive ? nothing : super.renderFocusRing();
   }
 }
