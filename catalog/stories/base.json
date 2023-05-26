@@ -1,0 +1,34 @@
+{
+  "files": {
+    "components/story-renderer.ts": {
+      "hidden": true
+    },
+    "components/stories-renderer.ts": {
+      "hidden": true
+    },
+    "components/story-knob-panel.ts": {
+      "hidden": true
+    },
+    "components/knob-ui-components.ts": {
+      "hidden": true
+    },
+    "index.ts": {
+      "hidden": true
+    },
+    "knobs.ts": {
+      "hidden": true
+    },
+    "material-collection.ts": {
+      "hidden": true
+    },
+    "story.ts": {
+      "hidden": true
+    },
+    "index.html": {
+      "hidden": true
+    },
+    "theme-loader.ts": {
+      "hidden": true
+    }
+  }
+}
