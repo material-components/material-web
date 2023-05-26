@@ -12,6 +12,5 @@ export function applyThemeString(
   }
 
   sheet.replaceSync(themeString);
-
-  localStorage.setItem('theme-string', themeString);
+  localStorage.setItem(ssName, themeString);
 }

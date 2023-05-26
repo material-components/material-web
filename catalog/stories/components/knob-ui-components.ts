@@ -5,17 +5,17 @@
  */
 
 // These imports are resolved by Lit playground's unpkg loader
-import '@material/web/button/outlined-button';
-import '@material/web/checkbox/checkbox';
-import '@material/web/radio/radio';
-import '@material/web/select/filled-select';
-import '@material/web/select/select-option';
-import '@material/web/textfield/filled-text-field';
+import '@material/web/button/outlined-button.js';
+import '@material/web/checkbox/checkbox.js';
+import '@material/web/radio/radio.js';
+import '@material/web/select/filled-select.js';
+import '@material/web/select/select-option.js';
+import '@material/web/textfield/filled-text-field.js';
 
 import {css, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators';
-import {classMap} from 'lit/directives/class-map';
-import {StyleInfo, styleMap} from 'lit/directives/style-map';
+import {customElement, property} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
 
 import {Knob, KnobUi} from '../knobs';
 

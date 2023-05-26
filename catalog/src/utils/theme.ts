@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-if (!localStorage.getItem('theme-string')) {
+if (!localStorage.getItem('material-theme')) {
   changeColorAndMode('#81ea6c', 'auto');
 }
 
@@ -81,8 +81,13 @@ window
     changeColor(lastSeedColor);
   });
 
-const actualColorMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-const lastAutoColorMode = localStorage.getItem('last-auto-color-mode') as 'light' | 'dark';
+const actualColorMode = window.matchMedia('(prefers-color-scheme: dark)')
+  .matches
+  ? 'dark'
+  : 'light';
+const lastAutoColorMode = localStorage.getItem('last-auto-color-mode') as
+  | 'light'
+  | 'dark';
 const isAuto = localStorage.getItem('color-mode') === 'auto';
 
 if (isAuto && actualColorMode !== lastAutoColorMode) {

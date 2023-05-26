@@ -41,7 +41,7 @@ async function handhsakePostdoc() {
   async function onMessage(e: MessageEvent) {
     if (e.data === 'request-theme') {
       await postdoc.handshake;
-      postdoc.postMessage(localStorage.getItem('theme-string'));
+      postdoc.postMessage(localStorage.getItem('material-theme'));
     }
   }
 
@@ -62,7 +62,7 @@ async function handhsakePostdoc() {
 
   window.addEventListener('theme-changed', async () => {
     await postdoc.handshake;
-    postdoc.postMessage(localStorage.getItem('theme-string'));
+    postdoc.postMessage(localStorage.getItem('material-theme'));
   });
 }
 
