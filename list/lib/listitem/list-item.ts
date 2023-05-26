@@ -7,15 +7,15 @@
 import '../../../ripple/ripple.js';
 import '../../../focus/focus-ring.js';
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict, ARIARole} from '../../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../aria/delegate.js';
 import {ripple} from '../../../ripple/directive.js';
 import {MdRipple} from '../../../ripple/ripple.js';
-import { TemplateResult } from 'lit';
+
 interface ListItemSelf {
   active: boolean;
   disabled: boolean;
