@@ -7,14 +7,12 @@
 import '../../../ripple/ripple.js';
 import '../../../focus/focus-ring.js';
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict, ARIARole} from '../../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../aria/delegate.js';
-import {ripple} from '../../../ripple/directive.js';
-import {MdRipple} from '../../../ripple/ripple.js';
 
 interface ListItemSelf {
   active: boolean;
@@ -82,11 +80,8 @@ export class ListItemEl extends LitElement implements ListItem {
   @property({type: Boolean, attribute: 'md-list-item', reflect: true})
   isListItem = true;
 
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
   @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
   protected readonly listItemRole: ARIARole = 'listitem';
-
-  @state() private showRipple = false;
 
   /**
    * Only meant to be overriden by subclassing and not by the user. This is
@@ -94,11 +89,6 @@ export class ListItemEl extends LitElement implements ListItem {
    * focus on <md-autocomplete-item> but enabling it for <md-menu-item>.
    */
   protected focusOnActivation = true;
-
-  protected readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
 
   protected isFirstUpdate = true;
 
@@ -122,7 +112,8 @@ export class ListItemEl extends LitElement implements ListItem {
         ${this.renderEnd()}
         ${this.renderRipple()}
         ${this.renderFocusRing()}
-      </div>`);
+      </div>
+    `);
   }
 
   /**
@@ -133,26 +124,25 @@ export class ListItemEl extends LitElement implements ListItem {
   protected renderListItem(content: unknown) {
     return html`
       <li
-          id="item"
-          tabindex=${this.disabled ? -1 : this.itemTabIndex}
-          role=${this.listItemRole}
-          aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
-          aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
-          class="list-item ${classMap(this.getRenderClasses())}"
-          @click=${this.onClick}
-          @pointerenter=${this.onPointerenter}
-          @pointerleave=${this.onPointerleave}
-          @keydown=${this.onKeydown}
-          ${ripple(this.getRipple)}>${content}</li>`;
+        id="item"
+        tabindex=${this.disabled ? -1 : this.itemTabIndex}
+        role=${this.listItemRole}
+        aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
+        aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
+        class="list-item ${classMap(this.getRenderClasses())}"
+        @click=${this.onClick}
+        @pointerenter=${this.onPointerenter}
+        @pointerleave=${this.onPointerleave}
+        @keydown=${this.onKeydown}
+      >${content}</li>
+    `;
   }
 
   /**
    * Handles rendering of the ripple element.
    */
-  protected renderRipple() {
-    return this.showRipple ?
-        html`<md-ripple ?disabled="${this.disabled}"></md-ripple>` :
-        nothing;
+  protected renderRipple(): TemplateResult|typeof nothing {
+    return html`<md-ripple for="item" ?disabled=${this.disabled}></md-ripple>`;
   }
 
   /**

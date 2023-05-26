@@ -8,14 +8,11 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
-import {property, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * SegmentedButton is a web component implementation of the Material Design
@@ -35,10 +32,8 @@ export class SegmentedButton extends LitElement {
   @property({type: Boolean}) hasIcon = false;
 
   @state() private animState = '';
-  @state() private showRipple = false;
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly iconElement!: HTMLElement[];
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
   protected override update(props: PropertyValues<SegmentedButton>) {
     this.animState = this.nextAnimationState(props);
@@ -82,9 +77,10 @@ export class SegmentedButton extends LitElement {
         ?disabled=${this.disabled}
         @click="${this.handleClick}"
         class="md3-segmented-button ${classMap(this.getRenderClasses())}"
-        ${ripple(this.getRipple)}>
+      >
         <md-focus-ring class="md3-segmented-button__focus-ring"></md-focus-ring>
-        ${when(this.showRipple, this.renderRipple)}
+        <md-ripple ?disabled="${
+        this.disabled}" class="md3-segmented-button__ripple"></md-ripple>
         ${this.renderOutline()}
         ${this.renderLeading()}
         ${this.renderLabel()}
@@ -106,16 +102,6 @@ export class SegmentedButton extends LitElement {
       'md3-segmented-button--deselecting': this.animState === 'deselecting',
     };
   }
-
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  private readonly renderRipple = () => {
-    return html`<md-ripple ?disabled="${
-        this.disabled}" class="md3-segmented-button__ripple"> </md-ripple>`;
-  };
 
   protected renderOutline(): TemplateResult|typeof nothing {
     return nothing;

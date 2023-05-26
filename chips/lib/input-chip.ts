@@ -8,7 +8,6 @@ import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
-import {ripple} from '../../ripple/directive.js';
 
 import {Chip} from './chip.js';
 import {renderRemoveButton} from './trailing-actions.js';
@@ -23,13 +22,13 @@ export class InputChip extends Chip {
   @property({type: Boolean, attribute: 'remove-only'}) removeOnly = false;
   @property({type: Boolean}) selected = false;
 
-  protected get focusFor() {
+  protected get primaryId() {
     if (this.href) {
       return 'link';
     }
 
     if (this.removeOnly) {
-      return 'text';
+      return '';
     }
 
     return 'button';
@@ -59,17 +58,15 @@ export class InputChip extends Chip {
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
-          ${ripple(this.getRipple)}
         >${this.renderContent()}</a>
       `;
     }
 
     if (this.removeOnly) {
       return html`
-        <span class="primary action"
-          id="text"
-          aria-label=${ariaLabel || nothing}
-        >${this.renderContent()}</span>
+        <span class="primary action" aria-label=${ariaLabel || nothing}>
+          ${this.renderContent()}
+        </span>
       `;
     }
 
@@ -79,7 +76,6 @@ export class InputChip extends Chip {
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled}
         type="button"
-        ${ripple(this.getRipple)}
       >${this.renderContent()}</button>
     `;
   }

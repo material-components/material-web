@@ -8,16 +8,13 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, LitElement, nothing} from 'lit';
-import {property, queryAsync, state} from 'lit/decorators.js';
+import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {isRtl} from '../../controller/is-rtl.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
@@ -66,21 +63,7 @@ export class IconButton extends LitElement {
    */
   @property({type: Boolean, reflect: true}) selected = false;
 
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
-
-  @state() private showRipple = false;
-
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
-
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  private readonly renderRipple = () => {
-    return html`<md-ripple ?disabled="${
-    !this.href && this.disabled}"></md-ripple>`;
-  };
 
   /**
    * Link buttons cannot be disabled.
@@ -111,10 +94,9 @@ export class IconButton extends LitElement {
         aria-expanded="${!this.href && ariaExpanded || nothing}"
         aria-pressed="${ariaPressedValue}"
         ?disabled="${!this.href && this.disabled}"
-        @click="${this.handleClick}"
-        ${ripple(this.getRipple)}>
+        @click="${this.handleClick}">
         ${this.renderFocusRing()}
-        ${when(this.showRipple, this.renderRipple)}
+        ${this.renderRipple()}
         ${!this.selected ? this.renderIcon() : nothing}
         ${this.selected ? this.renderSelectedIcon() : nothing}
         ${this.renderTouchTarget()}
@@ -131,7 +113,6 @@ export class IconButton extends LitElement {
         href="${this.href}"
         target="${this.target as LinkTarget || nothing}"
         aria-label="${ariaLabel || nothing}"
-        ${ripple(this.getRipple)}
       ></a>
     `;
   }
@@ -159,6 +140,13 @@ export class IconButton extends LitElement {
   private renderFocusRing() {
     return html`<md-focus-ring for=${
         this.href ? 'link' : 'button'}></md-focus-ring>`;
+  }
+
+  private renderRipple() {
+    return html`<md-ripple
+      for=${this.href ? 'link' : nothing}
+      ?disabled="${!this.href && this.disabled}"
+    ></md-ripple>`;
   }
 
   override connectedCallback() {

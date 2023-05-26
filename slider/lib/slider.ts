@@ -19,7 +19,6 @@ import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {stringConverter} from '../../controller/string-converter.js';
-import {ripple} from '../../ripple/directive.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 
@@ -176,9 +175,6 @@ export class Slider extends LitElement {
   @state() private valueA = 0;
   @state() private valueB = 0;
 
-  @state() private rippleAShowing = false;
-  @state() private rippleBShowing = false;
-
   // handle hover/pressed states are set manually since the handle
   // does not receive pointer events so that the native inputs are
   // interaction targets.
@@ -230,10 +226,8 @@ export class Slider extends LitElement {
     // manually handle ripple hover state since the handle is pointer events
     // none.
     if (changed.get('handleAHover') !== undefined) {
-      this.rippleAShowing = true;
       this.toggleRippleHover(this.rippleA, this.handleAHover);
     } else if (changed.get('handleBHover') !== undefined) {
-      this.rippleBShowing = true;
       this.toggleRippleHover(this.rippleB, this.handleBHover);
     }
   }
@@ -275,7 +269,6 @@ export class Slider extends LitElement {
       lesser: !isFlipped,
       value: this.valueA,
       label: labelA,
-      getRipple: this.getRippleA
     };
 
     const inputBProps = {
@@ -283,24 +276,13 @@ export class Slider extends LitElement {
       lesser: isFlipped,
       value: this.valueB,
       label: labelB,
-      getRipple: this.getRippleB
     };
 
-    const handleAProps = {
-      id: 'a',
-      lesser: !isFlipped,
-      showRipple: this.rippleAShowing,
-      hover: this.handleAHover,
-      label: labelA
-    };
+    const handleAProps =
+        {id: 'a', lesser: !isFlipped, hover: this.handleAHover, label: labelA};
 
-    const handleBProps = {
-      id: 'b',
-      lesser: isFlipped,
-      showRipple: this.rippleBShowing,
-      hover: this.handleBHover,
-      label: labelB
-    };
+    const handleBProps =
+        {id: 'b', lesser: isFlipped, hover: this.handleBHover, label: labelB};
 
     const handleContainerClasses = {
       hover: this.handleAHover || this.handleBHover
@@ -336,13 +318,9 @@ export class Slider extends LitElement {
       </div>`;
   }
 
-  private renderHandle({id, lesser, showRipple, hover, label}: {
-    id: string,
-    lesser: boolean,
-    showRipple: boolean,
-    hover: boolean,
-    label: string
-  }) {
+  private renderHandle(
+      {id, lesser, hover, label}:
+          {id: string, lesser: boolean, hover: boolean, label: string}) {
     const onTop = !this.disabled && id === this.onTopId;
     const isOverlapping = !this.disabled && this.handlesOverlapping;
     return html`<div class="handle ${classMap({
@@ -354,17 +332,16 @@ export class Slider extends LitElement {
     })}">
         <div class="handleNub"><md-elevation></md-elevation></div>
         ${when(this.withLabel, () => this.renderLabel(label))}
-      ${when(showRipple, () => this.renderRipple(id))}
       <md-focus-ring for=${id}></md-focus-ring>
+      <md-ripple for=${id} class=${id} ?disabled=${this.disabled}></md-ripple>
     </div>`;
   }
 
-  private renderInput({id, lesser, value, label, getRipple}: {
+  private renderInput({id, lesser, value, label}: {
     id: string,
     lesser: boolean,
     value: number,
     label: string,
-    getRipple: () => Promise<MdRipple|null>| null
   }) {
     // when ranged, ensure announcement includes value info.
     const ariaLabelDescriptor =
@@ -391,28 +368,8 @@ export class Slider extends LitElement {
       .value=${String(value)}
       .tabIndex=${lesser ? 1 : 0}
       aria-label=${`${ariaLabel}${ariaLabelDescriptor}` || nothing}
-      aria-valuetext=${label}
-      ${ripple(getRipple)}>`;
+      aria-valuetext=${label}>`;
   }
-
-  private readonly renderRipple = (id: string) =>
-      html`<md-ripple class=${id} ?disabled=${this.disabled}></md-ripple>`;
-
-  private readonly getRippleA = () => {  // bind to this
-    if (!this.handleAHover) {
-      return null;
-    }
-    this.rippleAShowing = true;
-    return this.rippleA;
-  };
-
-  private readonly getRippleB = () => {  // bind to this
-    if (!this.handleBHover) {
-      return null;
-    }
-    this.rippleBShowing = true;
-    return this.rippleB;
-  };
 
   private async toggleRippleHover(
       ripple: Promise<MdRipple|null>, hovering: boolean) {

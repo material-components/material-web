@@ -8,14 +8,11 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * @fires input {InputEvent} Fired whenever `selected` changes due to user
@@ -57,11 +54,6 @@ export class Switch extends LitElement {
    * overrides the behavior of the `icons` property.
    */
   @property({type: Boolean}) showOnlySelectedIcon = false;
-
-  @state() private showRipple = false;
-
-  // Ripple
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
 
   // Button
   @query('button') private readonly button!: HTMLButtonElement|null;
@@ -127,6 +119,7 @@ export class Switch extends LitElement {
     // children, which includes custom elements, but not `div`s
     return html`
       <button
+        id="switch"
         type="button"
         class="switch ${classMap(this.getRenderClasses())}"
         role="switch"
@@ -134,7 +127,6 @@ export class Switch extends LitElement {
         aria-label=${(this as ARIAMixin).ariaLabel || nothing}
         ?disabled=${this.disabled}
         @click=${this.handleClick}
-        ${ripple(this.getRipple)}
       >
         <md-focus-ring></md-focus-ring>
         <span class="track">
@@ -151,22 +143,13 @@ export class Switch extends LitElement {
     };
   }
 
-  private readonly renderRipple = () => {
-    return html`<md-ripple ?disabled="${this.disabled}"></md-ripple>`;
-  };
-
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
   private renderHandle() {
     const classes = {
       'with-icon': this.icons || (this.showOnlySelectedIcon && this.selected),
     };
     return html`
       <span class="handle-container">
-        ${when(this.showRipple, this.renderRipple)}
+        <md-ripple for="switch" ?disabled="${this.disabled}"></md-ripple>
         <span class="handle ${classMap(classes)}">
           ${this.shouldShowIcons() ? this.renderIcons() : html``}
         </span>

@@ -9,14 +9,11 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, LitElement, nothing} from 'lit';
-import {property, queryAsync, state} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * Sizes variants available to non-extended FABs.
@@ -58,30 +55,22 @@ export abstract class SharedFab extends LitElement {
    */
   @property({type: Boolean}) reducedTouchTarget = false;
 
-  @state() private showRipple = false;
-
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
-
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
   protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button
-          class="fab ${classMap(this.getRenderClasses())}"
-          aria-label=${ariaLabel || nothing}
-          ${ripple(this.getRipple)}>
+        class="fab ${classMap(this.getRenderClasses())}"
+        aria-label=${ariaLabel || nothing}
+      >
         <md-elevation></md-elevation>
         <md-focus-ring></md-focus-ring>
-        ${when(this.showRipple, this.renderRipple)}
+        <md-ripple class="ripple"></md-ripple>
         ${this.renderTouchTarget()}
         ${this.renderIcon()}
         ${this.renderLabel()}
-      </button>`;
+      </button>
+    `;
   }
 
   protected getRenderClasses() {
@@ -108,8 +97,4 @@ export abstract class SharedFab extends LitElement {
         <slot name="icon"></slot>
       </span>`;
   }
-
-  private readonly renderRipple = () => {
-    return html`<md-ripple class="ripple"></md-ripple>`;
-  };
 }

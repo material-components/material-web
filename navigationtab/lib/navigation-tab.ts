@@ -9,14 +9,11 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, LitElement, nothing, PropertyValues} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 import {NavigationTabState} from './state.js';
 
@@ -35,11 +32,7 @@ export class NavigationTab extends LitElement implements NavigationTabState {
   @property() badgeValue = '';
   @property({type: Boolean}) showBadge = false;
 
-  @state() private showRipple = false;
-
   @query('button') buttonElement!: HTMLElement|null;
-
-  @queryAsync('md-ripple') ripple!: Promise<MdRipple|null>;
 
   protected override render() {
     // Needed for closure conformance
@@ -52,10 +45,10 @@ export class NavigationTab extends LitElement implements NavigationTabState {
         aria-label=${ariaLabel || nothing}
         tabindex="${this.active ? 0 : -1}"
         @click="${this.handleClick}"
-        ${ripple(this.getRipple)}
       >
         <md-focus-ring inward></md-focus-ring>
-        ${when(this.showRipple, this.renderRipple)}
+        <md-ripple ?disabled="${
+        this.disabled}" class="md3-navigation-tab__ripple"></md-ripple>
         <span aria-hidden="true" class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
             ></span><span class="md3-navigation-tab__icon"
@@ -74,16 +67,6 @@ export class NavigationTab extends LitElement implements NavigationTabState {
       'md3-navigation-tab--active': this.active,
     };
   }
-
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  private readonly renderRipple = () => {
-    return html`<md-ripple ?disabled="${
-        this.disabled}" class="md3-navigation-tab__ripple"></md-ripple>`;
-  };
 
   private renderBadge() {
     return this.showBadge ?

@@ -8,11 +8,10 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, LitElement, nothing, TemplateResult} from 'lit';
-import {property, queryAsync, state} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * A chip component.
@@ -26,9 +25,9 @@ export abstract class Chip extends LitElement {
   @property() label = '';
 
   /**
-   * The `id` of the action the primary focus ring is for.
+   * The `id` of the action the primary focus ring and ripple are for.
    */
-  protected abstract readonly focusFor: string;
+  protected abstract readonly primaryId: string;
 
   /**
    * Whether or not the primary ripple is disabled (defaults to `disabled`).
@@ -38,19 +37,13 @@ export abstract class Chip extends LitElement {
     return this.disabled;
   }
 
-  @state() private showRipple = false;
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
-
   protected override render() {
-    const ripple = this.showRipple ?
-        html`<md-ripple ?disabled=${this.rippleDisabled}></md-ripple>` :
-        nothing;
-
     return html`
       <div class="container ${classMap(this.getContainerClasses())}">
         ${this.renderOutline()}
-        <md-focus-ring for=${this.focusFor}></md-focus-ring>
-        ${ripple}
+        <md-focus-ring for=${this.primaryId}></md-focus-ring>
+        <md-ripple for=${this.primaryId}
+          ?disabled=${this.rippleDisabled}></md-ripple>
         ${this.renderPrimaryAction()}
         ${this.renderTrailingAction?.() || nothing}
       </div>
@@ -84,9 +77,4 @@ export abstract class Chip extends LitElement {
   protected renderLeadingIcon(): TemplateResult {
     return html`<slot name="icon"></slot>`;
   }
-
-  protected getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
 }

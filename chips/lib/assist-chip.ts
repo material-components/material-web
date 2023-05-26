@@ -10,7 +10,6 @@ import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
-import {ripple} from '../../ripple/directive.js';
 
 import {Chip} from './chip.js';
 
@@ -22,7 +21,7 @@ export class AssistChip extends Chip {
   @property() href = '';
   @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
-  protected get focusFor() {
+  protected get primaryId() {
     return this.href ? 'link' : 'button';
   }
 
@@ -49,7 +48,6 @@ export class AssistChip extends Chip {
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
-          ${ripple(this.getRipple)}
         >${this.renderContent()}</a>
       `;
     }
@@ -60,7 +58,6 @@ export class AssistChip extends Chip {
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled}
         type="button"
-        ${ripple(this.getRipple)}
       >${this.renderContent()}</button>
     `;
   }

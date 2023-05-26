@@ -8,15 +8,12 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * A checkbox component.
@@ -87,9 +84,7 @@ export class Checkbox extends LitElement {
   @state() private prevChecked = false;
   @state() private prevDisabled = false;
   @state() private prevIndeterminate = false;
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
   @query('input') private readonly input!: HTMLInputElement|null;
-  @state() private showRipple = false;
   private readonly internals =
       (this as HTMLElement /* needed for closure */).attachInternals();
 
@@ -151,7 +146,7 @@ export class Checkbox extends LitElement {
         <div class="outline"></div>
         <div class="background"></div>
         <md-focus-ring for="input"></md-focus-ring>
-        ${when(this.showRipple, this.renderRipple)}
+        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
         <svg class="icon" viewBox="0 0 18 18">
           <rect class="mark short" />
           <rect class="mark long" />
@@ -165,7 +160,6 @@ export class Checkbox extends LitElement {
         .indeterminate=${this.indeterminate}
         .checked=${this.checked}
         @change=${this.handleChange}
-        ${ripple(this.getRipple)}
       >
     `;
   }
@@ -177,15 +171,6 @@ export class Checkbox extends LitElement {
 
     redispatchEvent(this, event);
   }
-
-  private readonly getRipple = () => {  // bind to this
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  private readonly renderRipple = () => {  // bind to this
-    return html`<md-ripple ?disabled=${this.disabled}></md-ripple>`;
-  };
 
   /** @private */
   formResetCallback() {

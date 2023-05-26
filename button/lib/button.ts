@@ -8,16 +8,13 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
-import {property, query, queryAssignedElements, queryAsync, state} from 'lit/decorators.js';
+import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * A button component.
@@ -68,10 +65,6 @@ export abstract class Button extends LitElement {
 
   @query('.md3-button') private readonly buttonElement!: HTMLElement|null;
 
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
-
-  @state() private showRipple = false;
-
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
 
@@ -107,11 +100,10 @@ export abstract class Button extends LitElement {
         href=${this.href || nothing}
         target=${this.target || nothing}
         @click="${this.handleClick}"
-        ${ripple(this.getRipple)}
       >
         ${this.renderFocusRing()}
         ${this.renderElevation()}
-        ${when(this.showRipple, this.renderRipple)}
+        ${this.renderRipple()}
         ${this.renderOutline()}
         ${this.renderTouchTarget()}
         ${this.renderLeadingIcon()}
@@ -149,15 +141,10 @@ export abstract class Button extends LitElement {
     dispatchActivationClick(this.buttonElement);
   };
 
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  private readonly renderRipple = () => {
+  private renderRipple() {
     return html`<md-ripple class="md3-button__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
-  };
+  }
 
   private renderFocusRing() {
     return html`<md-focus-ring></md-focus-ring>`;

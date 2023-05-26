@@ -10,7 +10,6 @@ import {html, nothing, PropertyValues, svg} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
-import {ripple} from '../../ripple/directive.js';
 
 import {Chip} from './chip.js';
 import {renderRemoveButton} from './trailing-actions.js';
@@ -23,7 +22,7 @@ export class FilterChip extends Chip {
   @property({type: Boolean}) removable = false;
   @property({type: Boolean}) selected = false;
 
-  protected get focusFor() {
+  protected get primaryId() {
     return 'option';
   }
 
@@ -63,7 +62,6 @@ export class FilterChip extends Chip {
         aria-selected=${this.selected}
         ?disabled=${this.disabled || nothing}
         role="option"
-        ${ripple(this.getRipple)}
       >${this.renderContent()}</button>
     `;
   }

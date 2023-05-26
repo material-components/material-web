@@ -9,14 +9,11 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {when} from 'lit/directives/when.js';
 
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 /**
  * An element that can select items.
@@ -76,15 +73,11 @@ export class Tab extends LitElement {
 
   @query('.button') private readonly button!: HTMLElement|null;
 
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
-
   // note, this is public so it can participate in selection animation.
   /**
    * Selection indicator element.
    */
   @query('.indicator') readonly indicator!: HTMLElement;
-
-  @state() private showRipple = false;
 
   constructor() {
     super();
@@ -113,11 +106,10 @@ export class Tab extends LitElement {
         aria-selected=${this.selected ? 'true' : 'false'}
         ?disabled=${this.disabled}
         aria-label=${this.ariaLabel || nothing}
-        ${ripple(this.getRipple)}
       >
         <md-focus-ring inward></md-focus-ring>
         <md-elevation></md-elevation>
-        ${when(this.showRipple, this.renderRipple)}
+        <md-ripple ?disabled=${this.disabled}></md-ripple>
         <span class="touch"></span>
         <div class="content ${classMap(contentClasses)}">
           <slot name="icon"></slot>
@@ -141,15 +133,6 @@ export class Tab extends LitElement {
     }
     this.focus();
     dispatchActivationClick(this.button);
-  };
-
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  private readonly renderRipple = () => {
-    return html`<md-ripple ?disabled="${this.disabled}"></md-ripple>`;
   };
 
   private get tabs() {

@@ -8,14 +8,11 @@ import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
-import {when} from 'lit/directives/when.js';
+import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
-import {ripple} from '../../ripple/directive.js';
-import {MdRipple} from '../../ripple/ripple.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 
@@ -94,9 +91,7 @@ export class Radio extends LitElement {
   }
 
   @query('input') private readonly input!: HTMLInputElement|null;
-  @queryAsync('md-ripple') private readonly ripple!: Promise<MdRipple|null>;
   private readonly selectionController = new SingleSelectionController(this);
-  @state() private showRipple = false;
   private readonly internals =
       (this as HTMLElement /* needed for closure */).attachInternals();
 
@@ -122,7 +117,7 @@ export class Radio extends LitElement {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      ${when(this.showRipple, this.renderRipple)}
+      <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
       <md-focus-ring for="input"></md-focus-ring>
       <svg class="icon" viewBox="0 0 20 20">
         <mask id="cutout">
@@ -141,7 +136,6 @@ export class Radio extends LitElement {
         .value=${this.value}
         ?disabled=${this.disabled}
         @change=${this.handleChange}
-        ${ripple(this.getRipple)}
       >
     `;
   }
@@ -155,15 +149,6 @@ export class Radio extends LitElement {
     this.checked = true;
     redispatchEvent(this, event);
   }
-
-  private readonly getRipple = () => {
-    this.showRipple = true;
-    return this.ripple;
-  };
-
-  private readonly renderRipple = () => {
-    return html`<md-ripple ?disabled=${this.disabled}></md-ripple>`;
-  };
 
   /** @private */
   formResetCallback() {
