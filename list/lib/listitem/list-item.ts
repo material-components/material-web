@@ -15,7 +15,7 @@ import {ARIAMixinStrict, ARIARole} from '../../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../aria/delegate.js';
 import {ripple} from '../../../ripple/directive.js';
 import {MdRipple} from '../../../ripple/ripple.js';
-
+import { TemplateResult } from 'lit';
 interface ListItemSelf {
   active: boolean;
   disabled: boolean;
@@ -158,7 +158,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Handles rendering of the focus ring.
    */
-  protected renderFocusRing() {
+  protected renderFocusRing(): TemplateResult|typeof nothing {
     return html`<md-focus-ring class="focus-ring" for="item" inward></md-focus-ring>`;
   }
 
