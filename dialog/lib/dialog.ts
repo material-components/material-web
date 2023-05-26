@@ -102,7 +102,7 @@ export class Dialog extends LitElement {
   @property({type: Boolean}) stacked = false;
 
   /**
-   * When the dialog is closed it disptaches `closing` and `closed` events.
+   * When the dialog is closed it dispatches `closing` and `closed` events.
    * These events have an action property which has a default value of
    * the value of this property. Specific actions have explicit values but when
    * a value is not specified, the default is used. For example, clicking the
@@ -118,7 +118,7 @@ export class Dialog extends LitElement {
    * the dialog. If an element has an action attribute set, clicking it will
    * close the dialog and the `closing` and `closed` events dispatched will
    * have their action property set the the value of this attribute on the
-   * clicked element.The default valus is `dialogAction`. For example,
+   * clicked element.The default value is `dialogAction`. For example,
    *
    *   <md-dialog>
    *    Content
@@ -186,7 +186,7 @@ export class Dialog extends LitElement {
   // used to determine container size for dragging
   @query(`.container`, true)
   private readonly containerElement!: HTMLDivElement|null;
-  // used to determin where users can drag from.
+  // used to determine where users can drag from.
   @query(`.header`, true) private readonly headerElement!: HTMLDivElement|null;
 
   /**
