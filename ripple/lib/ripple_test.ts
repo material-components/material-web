@@ -6,11 +6,9 @@
 
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {createRef, ref} from 'lit/directives/ref.js';
 
 import {Environment} from '../../testing/environment.js';
 import {Harness} from '../../testing/harness.js';
-import {ripple} from '../directive.js';
 
 import {Ripple} from './ripple.js';
 
@@ -37,10 +35,9 @@ describe('Ripple', () => {
   const env = new Environment();
 
   async function setupTest() {
-    const rippleRef = createRef<TestRipple>();
     const root = env.render(html`
-      <div ${ripple(() => rippleRef.value || null)}>
-        <test-ripple ${ref(rippleRef)}></test-ripple>
+      <div>
+        <test-ripple></test-ripple>
       </div>
     `);
 

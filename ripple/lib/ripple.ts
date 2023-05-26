@@ -114,11 +114,6 @@ export class Ripple extends LitElement implements Attachable {
   private readonly attachableController =
       new AttachableController(this, this.onControlChange.bind(this));
 
-  // TODO(b/265337232): Remove once ripple directive is removed. This is used to
-  // prevent two animations while migrating ripples from the directive to the
-  // new attachment syntax.
-  private lastHandledEvent?: Event;
-
   attach(control: HTMLElement) {
     this.attachableController.attach(control);
   }
@@ -406,11 +401,6 @@ export class Ripple extends LitElement implements Attachable {
 
   /** @private */
   async handleEvent(event: Event) {
-    if (this.lastHandledEvent === event) {
-      return;
-    }
-
-    this.lastHandledEvent = event;
     switch (event.type) {
       case 'click':
         this.handleClick();
