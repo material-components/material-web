@@ -19,12 +19,12 @@
 }
 
 :root {
-  font-family: 'Google Sans', Roboto, sans-serif;
+  font-family: 'Google Sans', Roboto, system-ui;
   background-color: var(--md-sys-color-background);
   color: var(--md-sys-color-on-background);
-  --top-app-bar-height: 48px;
-  --top-app-bar-padding-block: 12px;
-  scroll-padding-block-start: calc(var(--top-app-bar-height) + var(--top-app-bar-padding-block) * 2);
+  --catalog-top-app-bar-height: 48px;
+  --catalog-top-app-bar-padding-block: 12px;
+  scroll-padding-block-start: calc(var(--catalog-top-app-bar-height) + var(--catalog-top-app-bar-padding-block) * 2);
   --catalog-display-xl-font-size: 88px;
   --catalog-display-m-font-size: 45px;
   --catalog-title-l-font-size: 22px;

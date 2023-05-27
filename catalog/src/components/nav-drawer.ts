@@ -11,7 +11,7 @@ export class NavDrawer extends SignalElement(LitElement) {
   static styles = css`
     :host {
       --_max-width: 1760px;
-      --_drawer-width: var(--drawer-width, 300px);
+      --_drawer-width: var(--catalog-drawer-width, 300px);
       --_item-border-radius: var(--md-dialog-container-shape, 28px);
       --_border-radius: calc(var(--_item-border-radius) + 12px);
       --_content-padding: 24px;
@@ -61,7 +61,7 @@ export class NavDrawer extends SignalElement(LitElement) {
       position: fixed;
       isolation: isolate;
       inset: calc(
-          var(--top-app-bar-height) + 2 * var(--top-app-bar-padding-block)
+          var(--catalog-top-app-bar-height) + 2 * var(--catalog-top-app-bar-padding-block)
         )
         0 0 0;
       z-index: 12;

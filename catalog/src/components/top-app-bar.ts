@@ -17,14 +17,14 @@ export class TopAppBar extends SignalElement(LitElement) {
     :host,
     header {
       display: block;
-      height: var(--top-app-bar-height);
-      padding: var(--top-app-bar-padding-block) 8px;
+      height: var(--catalog-top-app-bar-height);
+      padding: var(--catalog-top-app-bar-padding-block) 8px;
     }
 
     header {
       position: fixed;
       inset: 0 0 auto 0;
-      padding-block-start: var(--top-app-bar-padding-block);
+      padding-block-start: var(--catalog-top-app-bar-padding-block);
       background-color: var(
         --top-app-bar-color-background,
         var(--md-sys-color-background)
