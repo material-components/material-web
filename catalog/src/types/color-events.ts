@@ -1,25 +1,39 @@
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/**
+ * A theme mapping of token name (not custom property name) to stringified CSS
+ * value.
+ */
 export interface Theme {
   [tokenName: string]: string;
 }
 
+/**
+ * Requests the global theme listener change the theme due to a color change.
+ */
 export class ChangeColorEvent extends Event {
-  theme: Theme | null = null;
+  /**
+   * @param color The new source color to apply.
+   */
   constructor(public color: string) {
-    super('change-color', { bubbles: true, composed: true });
+    super('change-color', {bubbles: true, composed: true});
   }
 }
 
+/**
+ * Requests the global theme listener change the theme due to a dark mode
+ * change.
+ */
 export class ChangeDarkModeEvent extends Event {
-  theme: Theme | null = null;
-  constructor(public mode: 'light' | 'dark' | 'auto') {
-    super('change-mode', { bubbles: true, composed: true });
-  }
-}
-
-export class ChangeColorAndModeEvent extends Event {
-  theme: Theme | null = null;
-  constructor(public color: string, public mode: 'light' | 'dark' | 'auto') {
-    super('change-color-and-mode', { bubbles: true, composed: true });
+  /**
+   * @param mode The new color mode to apply.
+   */
+  constructor(public mode: 'light'|'dark'|'auto') {
+    super('change-mode', {bubbles: true, composed: true});
   }
 }
 
@@ -27,6 +41,5 @@ declare global {
   interface HTMLElementEventMap {
     'change-color': ChangeColorEvent;
     'change-mode': ChangeDarkModeEvent;
-    'change-color-and-mode': ChangeColorAndModeEvent;
   }
 }
