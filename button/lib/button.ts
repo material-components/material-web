@@ -14,7 +14,7 @@ import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
-import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
+import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
 
 /**
  * A button component.
@@ -22,6 +22,11 @@ import {dispatchActivationClick, isActivationClick} from '../../controller/event
 export abstract class Button extends LitElement {
   static {
     requestUpdateOnAriaChange(this);
+  }
+
+  /** @nocollapse */
+  static get formAssociated() {
+    return true;
   }
 
   static override shadowRootOptions:
@@ -63,10 +68,23 @@ export abstract class Button extends LitElement {
    */
   @property({type: Boolean}) preventClickDefault = false;
 
+  /**
+   * Specifies the type of button, used for controlling forms. When type
+   * is `submit`, the containing form is submitted; when it is `reset` the
+   * form is reset.
+   */
+  @property() type: ''|'submit'|'reset' = '';
+
   @query('.md3-button') private readonly buttonElement!: HTMLElement|null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
+
+  private readonly internals =
+      (this as HTMLElement /* needed for closure */).attachInternals();
+
+  // flag to avoid processing redispatched event.
+  private isRedispatchingEvent = false;
 
   constructor() {
     super();
@@ -168,8 +186,32 @@ export abstract class Button extends LitElement {
   }
 
   private handleClick(e: MouseEvent) {
+    if (this.isRedispatchingEvent) {
+      return;
+    }
     if (this.preventClickDefault) {
       e.preventDefault();
+    }
+    // based on type, trigger form action.
+    const {type, internals: {form}} = this;
+    if (!form) {
+      return;
+    }
+    const isSubmit = type === 'submit', isReset = type === 'reset';
+    if (!(isSubmit || isReset)) {
+      return;
+    }
+    e.stopPropagation();
+    this.isRedispatchingEvent = true;
+    const prevented = !redispatchEvent(this, e);
+    this.isRedispatchingEvent = false;
+    if (prevented) {
+      return;
+    }
+    if (isSubmit) {
+      form.requestSubmit();
+    } else if (isReset) {
+      form.reset();
     }
   }
 
