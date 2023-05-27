@@ -49,6 +49,14 @@ function isOverlapping(elA: Element|null, elB: Element|null) {
       a.left > b.right);
 }
 
+interface Action {
+  canFlip: boolean;
+  flipped: boolean;
+  target: HTMLInputElement;
+  fixed: HTMLInputElement;
+  values: Map<HTMLInputElement|undefined, number|undefined>;
+}
+
 /**
  * Slider component.
  */
@@ -150,8 +158,8 @@ export class Slider extends LitElement {
   private getMetrics() {
     const step = Math.max(this.step, 1);
     const range = Math.max(this.max - this.min, step);
-    const lower = Math.min(this.valueA, this.valueB);
-    const upper = Math.max(this.valueA, this.valueB);
+    const lower = this.valueA;
+    const upper = this.valueB;
     const lowerFraction = (lower - this.min) / range;
     const upperFraction = (upper - this.min) / range;
     return {
@@ -208,20 +216,14 @@ export class Slider extends LitElement {
                         `${this.value}`;
   }
 
-  // indicates input values are crossed over each other from initial rendering.
-  private isFlipped() {
-    return this.valueA > this.valueB;
-  }
-
   protected override willUpdate(changed: PropertyValues) {
     const step = Math.max(this.step, 1);
     let lower = this.range ? this.valueStart : this.min;
     lower = clamp(lower - (lower % step), this.min, this.max);
     let upper = this.range ? this.valueEnd : this.value;
     upper = clamp(upper - (upper % step), this.min, this.max);
-    const isFlipped = this.isFlipped() && this.range;
-    this.valueA = isFlipped ? upper : lower;
-    this.valueB = isFlipped ? lower : upper;
+    this.valueA = lower;
+    this.valueB = upper;
 
     // manually handle ripple hover state since the handle is pointer events
     // none.
@@ -242,7 +244,6 @@ export class Slider extends LitElement {
 
   protected override render() {
     const {step, range, lowerFraction, upperFraction} = this.getMetrics();
-    const isFlipped = this.isFlipped();
     const containerStyles = {
       // for clipping inputs and active track.
       '--slider-lower-fraction': String(lowerFraction),
@@ -253,36 +254,29 @@ export class Slider extends LitElement {
     const containerClasses = {ranged: this.range};
 
     // optional label values to show in place of the value.
-    let labelA = String(this.valueA);
-    let labelB = String(this.valueB);
-    if (this.range) {
-      const a = isFlipped ? this.valueEndLabel : this.valueStartLabel;
-      const b = isFlipped ? this.valueStartLabel : this.valueEndLabel;
-      labelA = a ?? labelA;
-      labelB = b ?? labelB;
-    } else {
-      labelB = this.valueLabel ?? labelB;
-    }
+    const labelA = this.valueStartLabel ?? String(this.valueA);
+    const labelB = (this.range ? this.valueEndLabel : this.valueLabel) ??
+        String(this.valueB);
 
     const inputAProps = {
       id: 'a',
-      lesser: !isFlipped,
+      lesser: true,
       value: this.valueA,
       label: labelA,
     };
 
     const inputBProps = {
       id: 'b',
-      lesser: isFlipped,
+      lesser: false,
       value: this.valueB,
       label: labelB,
     };
 
     const handleAProps =
-        {id: 'a', lesser: !isFlipped, hover: this.handleAHover, label: labelA};
+        {id: 'a', lesser: true, hover: this.handleAHover, label: labelA};
 
     const handleBProps =
-        {id: 'b', lesser: isFlipped, hover: this.handleBHover, label: labelB};
+        {id: 'b', lesser: false, hover: this.handleBHover, label: labelB};
 
     const handleContainerClasses = {
       hover: this.handleAHover || this.handleBHover
@@ -355,9 +349,12 @@ export class Slider extends LitElement {
     })}"
       @focus=${this.handleFocus}
       @pointerdown=${this.handleDown}
+      @pointerup=${this.handleUp}
       @pointerenter=${this.handleEnter}
       @pointermove=${this.handleMove}
       @pointerleave=${this.handleLeave}
+      @keydown=${this.handleKeydown}
+      @keyup=${this.handleKeyup}
       @input=${this.handleInput}
       @change=${this.handleChange}
       id=${id}
@@ -392,25 +389,68 @@ export class Slider extends LitElement {
   }
 
   private handleFocus(e: Event) {
-    this.updateOnTop(e);
+    this.updateOnTop(e.target as HTMLInputElement);
   }
 
   // used in synthetic events generated to control ripple hover state.
   private ripplePointerId = 1;
 
+  // flag to prvent processing of re-dispatched input event.
+  private isRedisptchingEvent = false;
+
+  private action?: Action;
+
+  private startAction(e: Event) {
+    const target = e.target as HTMLInputElement;
+    const fixed = (target === this.inputA) ? this.inputB! : this.inputA!;
+    this.action = {
+      canFlip: e.type === 'pointerdown',
+      flipped: false,
+      target,
+      fixed,
+      values: new Map(
+          [[target, target.valueAsNumber], [fixed, fixed?.valueAsNumber]])
+    };
+  }
+
+  private finishAction(e: Event) {
+    this.action = undefined;
+  }
+
+  private handleKeydown(e: KeyboardEvent) {
+    this.startAction(e);
+  }
+
+  private handleKeyup(e: KeyboardEvent) {
+    this.finishAction(e);
+  }
+
   private handleDown(e: PointerEvent) {
+    this.startAction(e);
     this.ripplePointerId = e.pointerId;
     const isA = this.isEventOnA(e);
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
     this.handleAHover = !this.disabled && isA && Boolean(this.handleA);
     this.handleBHover = !this.disabled && !isA && Boolean(this.handleB);
-    // Force Safari to focus input so the label stays displayed; note,
-    // Macs don't normally focus non-text type inputs.
-    const target = (e.target as HTMLElement);
-    requestAnimationFrame(() => {
+  }
+
+  private async handleUp(e: PointerEvent) {
+    const {target, values, flipped} = this.action ?? {};
+    //  Async here for Firefox because input can be after pointerup
+    //  when value is calmped.
+    await new Promise(requestAnimationFrame);
+    if (target !== undefined) {
+      // Ensure Safari focuses input so label renders.
+      // Ensure any flipped input is focused so the tab order is right.
       target.focus();
-    });
+      // When action is flipped, change must be fired manually since the
+      // real event target did not change.
+      if (flipped && target.valueAsNumber !== values!.get(target)!) {
+        target.dispatchEvent(new Event('change', {bubbles: true}));
+      }
+    }
+    this.finishAction(e);
   }
 
   /**
@@ -440,28 +480,105 @@ export class Slider extends LitElement {
     this.handleBHover = false;
   }
 
-  private updateOnTop(e: Event) {
-    this.onTopId = (e.target as Element).classList.contains('a') ? 'a' : 'b';
+  private updateOnTop(input: HTMLInputElement) {
+    this.onTopId = input.classList.contains('a') ? 'a' : 'b';
+  }
+
+  private needsClamping() {
+    const {target, fixed} = this.action!;
+    const isStart = target === this.inputA;
+    return isStart ? target.valueAsNumber > fixed.valueAsNumber :
+                     target.valueAsNumber < fixed.valueAsNumber;
+  }
+
+  // if start/end start coincident and the first drag input would e.g. move
+  // start > end, avoid clamping and "flip" to use the other input
+  // as the action target.
+  private isActionFlipped() {
+    const action = this.action!;
+    const {target, fixed, values} = action;
+    if (action.canFlip) {
+      const coincident = values.get(target) === values.get(fixed);
+      if (coincident && this.needsClamping()) {
+        action.canFlip = false;
+        action.flipped = true;
+        action.target = fixed;
+        action.fixed = target;
+      }
+    }
+    return action.flipped;
+  }
+
+  // when flipped, apply the drag input to the flipped target and reset
+  // the actual target.
+  private flipAction() {
+    const {target, fixed, values} = this.action!;
+    const changed = target.valueAsNumber !== fixed.valueAsNumber;
+    target.valueAsNumber = fixed.valueAsNumber;
+    fixed.valueAsNumber = values.get(fixed)!;
+    return changed;
+  }
+
+  // clamp such that start does not move beyond end and visa versa.
+  private clampAction() {
+    if (!this.needsClamping()) {
+      return false;
+    }
+    const {target, fixed} = this.action!;
+    target.valueAsNumber = fixed.valueAsNumber;
+    return true;
   }
 
   private handleInput(e: InputEvent) {
-    if (this.inputA) {
-      this.valueA = this.inputA.valueAsNumber ?? 0;
+    // avoid processing a re-dispatched event
+    if (this.isRedisptchingEvent) {
+      return;
+    }
+    let stopPropagation = false, redispatch = false;
+    if (this.range) {
+      if (this.isActionFlipped()) {
+        stopPropagation = true;
+        redispatch = this.flipAction();
+      }
+      if (this.clampAction()) {
+        stopPropagation = true;
+        redispatch = false;
+      }
+      this.valueA = this.inputA!.valueAsNumber;
     }
     this.valueB = this.inputB!.valueAsNumber;
-    this.updateOnTop(e);
+    const {target} = this.action!;
+    this.updateOnTop(target);
     // update value only on interaction
-    const lower = Math.min(this.valueA, this.valueB);
-    const upper = Math.max(this.valueA, this.valueB);
     if (this.range) {
-      this.valueStart = lower;
-      this.valueEnd = upper;
+      this.valueStart = this.valueA;
+      this.valueEnd = this.valueB;
     } else {
       this.value = this.valueB;
     }
+    // control external visibility of input event
+    if (stopPropagation) {
+      e.stopPropagation();
+    }
+    // ensure event path is correct when flipped.
+    if (redispatch) {
+      this.isRedisptchingEvent = true;
+      redispatchEvent(target, e);
+      this.isRedisptchingEvent = false;
+    }
   }
 
-  private handleChange(event: Event) {
-    redispatchEvent(this, event);
+  private handleChange(e: Event) {
+    // prevent keyboard triggered changes from dispatching for
+    // clamped values; note, this only occurs for keyboard
+    const changeTarget = e.target as HTMLInputElement;
+    const {target, values} = this.action ?? {};
+    const squelch =
+        (target && (target.valueAsNumber === values!.get(changeTarget)!));
+    if (!squelch) {
+      redispatchEvent(this, e);
+    }
+    // ensure keyboard triggered change clears action.
+    this.finishAction(e);
   }
 }

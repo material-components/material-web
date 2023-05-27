@@ -191,6 +191,85 @@ describe('<md-slider>', () => {
       expect(harness.element.valueStart).toEqual(6);
       expect(harness.element.valueEnd).toEqual(8);
     });
+
+    it('clamps moving start > end and end < start', async () => {
+      const props = {range: true, valueStart: 2, valueEnd: 6};
+      const {harness} = await setupTest(props);
+      await harness.element.updateComplete;
+      const [endInput, startInput] = harness.getInputs();
+      await harness.simulateValueInteraction(7, startInput);
+      expect(harness.element.valueStart).toEqual(6);
+      await harness.simulateValueInteraction(4, startInput);
+      expect(harness.element.valueStart).toEqual(4);
+      await harness.simulateValueInteraction(3, endInput);
+      expect(harness.element.valueEnd).toEqual(4);
+    });
+
+    it('when starting coincident, can move start > end and end < start',
+       async () => {
+         const props = {range: true, valueStart: 2, valueEnd: 6};
+         const {harness} = await setupTest(props);
+         await harness.element.updateComplete;
+         const [endInput, startInput] = harness.getInputs();
+         await harness.simulateValueInteraction(6, startInput);
+         expect(harness.element.valueStart).toEqual(6);
+         await harness.simulateValueInteraction(8, startInput);
+         expect(harness.element.valueStart).toEqual(6);
+         expect(harness.element.valueEnd).toEqual(8);
+         await harness.simulateValueInteraction(8, startInput);
+         expect(harness.element.valueStart).toEqual(8);
+         expect(harness.element.valueEnd).toEqual(8);
+         await harness.simulateValueInteraction(4, endInput);
+         expect(harness.element.valueStart).toEqual(4);
+         expect(harness.element.valueEnd).toEqual(8);
+       });
+  });
+
+  describe('dispatches input and change events', () => {
+    it('when range = false', async () => {
+      const {harness} = await setupTest();
+      await harness.element.updateComplete;
+      const inputHandler = jasmine.createSpy('input');
+      const changeHandler = jasmine.createSpy('change');
+      harness.element.addEventListener('input', inputHandler);
+      harness.element.addEventListener('change', changeHandler);
+      await harness.simulateValueInteraction(8);
+      expect(inputHandler).toHaveBeenCalledTimes(1);
+      expect(changeHandler).toHaveBeenCalledTimes(1);
+      await harness.simulateValueInteraction(80);
+      expect(inputHandler).toHaveBeenCalledTimes(2);
+      expect(changeHandler).toHaveBeenCalledTimes(2);
+    });
+
+    it('when range = true', async () => {
+      const {harness} = await setupTest({range: true});
+      await harness.element.updateComplete;
+      const inputHandler = jasmine.createSpy('input');
+      const changeHandler = jasmine.createSpy('change');
+      harness.element.addEventListener('input', inputHandler);
+      harness.element.addEventListener('change', changeHandler);
+      const [endInput, startInput] = harness.getInputs();
+      await harness.simulateValueInteraction(8, startInput);
+      await harness.simulateValueInteraction(80, endInput);
+      expect(inputHandler).toHaveBeenCalledTimes(2);
+      expect(changeHandler).toHaveBeenCalledTimes(2);
+      // input of start > end should be prevented,
+      // but change to end value should occur
+      await harness.simulateValueInteraction(85, startInput);
+      expect(inputHandler).toHaveBeenCalledTimes(2);
+      expect(changeHandler).toHaveBeenCalledTimes(3);
+      // starting coincident, so input should now be ok.
+      await harness.simulateValueInteraction(85, startInput);
+      expect(inputHandler).toHaveBeenCalledTimes(3);
+      expect(changeHandler).toHaveBeenCalledTimes(4);
+      // validate same on end side
+      await harness.simulateValueInteraction(40, endInput);
+      expect(inputHandler).toHaveBeenCalledTimes(3);
+      expect(changeHandler).toHaveBeenCalledTimes(5);
+      await harness.simulateValueInteraction(40, endInput);
+      expect(inputHandler).toHaveBeenCalledTimes(4);
+      expect(changeHandler).toHaveBeenCalledTimes(6);
+    });
   });
 
   describe('value label', () => {

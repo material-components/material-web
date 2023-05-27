@@ -320,8 +320,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     transform: scale(0);
   }
 
+  // note, `:has` needed only for Safari; it's wrapped in a "forgiving"
+  // `:where` since the syntax isn't supported yet in Firefox.
   :host(:focus-within) .label,
-  .handleContainer.hover .label {
+  .handleContainer.hover .label,
+  :where(:has(input:active)) .label {
     transform: scale(1);
   }
 

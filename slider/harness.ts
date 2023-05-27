@@ -50,8 +50,10 @@ export class SliderHarness extends Harness<Slider> {
       el = (this.getInputs())[0];
     }
     el.focus();
+    el.dispatchEvent(new Event('pointerdown', {bubbles: true, composed: true}));
     el.value = String(value);
     el.dispatchEvent(new Event('input', {bubbles: true, composed: true}));
+    el.dispatchEvent(new Event('pointerup', {bubbles: true, composed: true}));
     el.dispatchEvent(new Event('change', {bubbles: true}));
     await this.element.updateComplete;
   }
