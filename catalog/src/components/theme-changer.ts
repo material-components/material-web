@@ -1,23 +1,215 @@
-import { LitElement, css, html } from 'lit';
-import { customElement, query, state, queryAll } from 'lit/decorators.js';
-import { live } from 'lit/directives/live.js';
-import {
-  ChangeColorEvent,
-  ChangeDarkModeEvent,
-} from '../types/color-events.js';
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import '@material/web/segmentedbuttonset/outlined-segmented-button-set.js';
 import '@material/web/segmentedbutton/outlined-segmented-button.js';
-import type { MdOutlinedSegmentedButton } from '@material/web/segmentedbutton/outlined-segmented-button.js';
 import '@material/web/icon/icon.js';
 import './hct-slider.js';
-import { hctFromHex, hexFromHct } from '../utils/material-color-helpers.js';
-import type { HCTSlider } from './hct-slider.js';
 import '@material/web/focus/focus-ring.js';
 
-type ColorMode = 'light' | 'dark' | 'auto';
+import type {MdOutlinedSegmentedButton} from '@material/web/segmentedbutton/outlined-segmented-button.js';
+import {css, html, LitElement} from 'lit';
+import {customElement, query, queryAll, state} from 'lit/decorators.js';
+import {live} from 'lit/directives/live.js';
 
+import {ChangeColorEvent, ChangeDarkModeEvent,} from '../types/color-events.js';
+import {hctFromHex, hexFromHct} from '../utils/material-color-helpers.js';
+import {getCurrentMode, getCurrentSeedColor} from '../utils/theme.js';
+
+import type {HCTSlider} from './hct-slider.js';
+
+type ColorMode = 'light'|'dark'|'auto';
+
+/**
+ * A small set of controls that allows the user to change the theme and preview
+ * color values.
+ */
 @customElement('theme-changer')
 export class ThemeChanger extends LitElement {
+  /**
+   * The currently selected color mode.
+   */
+  @state() selectedColorMode: ColorMode|null = null;
+
+  /**
+   * The currently selected hex color.
+   *
+   * NOTE: Hex colors are in the srgb color space and HCT has a much larger, so
+   * this value is a clipped value of HCT.
+   */
+  @state() hexColor: string = '';
+
+  /**
+   * The current hue value of the hue slider.
+   */
+  @state() hue: number = 0;
+
+  /**
+   * The crrent value of the chroma slider.
+   */
+  @state() chroma: number = 0;
+
+  /**
+   * The current value of the tone slider.
+   */
+  @state() tone: number = 0;
+
+  /**
+   * Whether or not to show the focus ring on the hex picker.
+   */
+  @state() showHexPickerFocusRing = false;
+
+  @query('input') private inputEl!: HTMLInputElement;
+  @queryAll('hct-slider') private sliders!: HCTSlider[];
+
+  render() {
+    return html`
+      <h2>Theme Controls</h2>
+      ${this.renderHexPicker()}
+      ${this.renderHctPicker()}
+      ${this.renderColorModePicker()}
+    `;
+  }
+
+  /**
+   * Renders a circular native color picker with a focus ring.
+   */
+  protected renderHexPicker() {
+    return html`<div>
+      <label id="hex">
+        <span class="label">Hex Source Color</span>
+        <span class="input-wrapper">
+          <div class="overflow">
+            <input
+                @input=${this.onHexPickerInput}
+                @blur=${() => {
+      this.showHexPickerFocusRing = false;
+    }}
+                type="color"
+                .value=${live(this.hexColor)}
+            />
+          </div>
+          <md-focus-ring
+            .visible=${this.showHexPickerFocusRing}
+          ></md-focus-ring>
+        </span>
+      </label>
+    </div>`;
+  }
+
+  /**
+   * Renders the three hct color pickers.
+   */
+  private renderHctPicker() {
+    return html`<div class="sliders">
+      <hct-slider
+          .value=${live(this.hue)}
+          type="hue"
+          label="Hue"
+          max="360"
+          @input=${this.onSliderInput}
+      ></hct-slider>
+      <hct-slider
+          .value=${live(this.chroma)}
+          .color=${this.hexColor}
+          type="chroma"
+          label="Chroma"
+          max="150"
+          @input=${this.onSliderInput}
+      ></hct-slider>
+      <hct-slider
+          .value=${live(this.tone)}
+          type="tone"
+          label="Tone"
+          max="100"
+          @input=${this.onSliderInput}
+      ></hct-slider>
+    </div>`;
+  }
+
+  /**
+   * Renders the color mode segmented button set picker.
+   */
+  private renderColorModePicker() {
+    return html`<md-outlined-segmented-button-set
+        @segmented-button-set-selection=${this.onColorModeSelection}
+    >
+      ${this.renderModeButton('dark', 'dark_mode')}
+      ${this.renderModeButton('auto', 'brightness_medium')}
+      ${this.renderModeButton('light', 'light_mode')}
+    </md-outlined-segmented-button-set>`;
+  }
+
+  /**
+   * Renders a color mode segmented button.
+   *
+   * @param mode Sets the value and the title of the button to the given color
+   *     mode.
+   * @param icon The icon to display in the button.
+   */
+  private renderModeButton(mode: ColorMode, icon: string) {
+    return html`<md-outlined-segmented-button
+      data-value=${mode}
+      title=${mode}
+      .selected=${this.selectedColorMode === mode}
+    >
+      <md-icon slot="icon">${icon}</md-icon>
+    </md-outlined-segmented-button>`;
+  }
+
+  private onSliderInput() {
+    for (const slider of this.sliders) {
+      this[slider.type] = slider.value;
+    }
+
+    this.hexColor = hexFromHct(this.hue, this.chroma, this.tone);
+    this.dispatchEvent(new ChangeColorEvent(this.hexColor));
+  }
+
+  /**
+   * Updates the HCT sliders by converting a hex color to HCT.
+   *
+   * @param hexColor The hex color to convert to HCT and update the sliders.
+   */
+  private updateHctFromHex(hexColor: string) {
+    const hct = hctFromHex(hexColor);
+    this.hue = hct.hue;
+    this.chroma = hct.chroma;
+    this.tone = hct.tone;
+  }
+
+  private onHexPickerInput() {
+    this.hexColor = this.inputEl.value;
+    this.updateHctFromHex(this.hexColor);
+    this.dispatchEvent(new ChangeColorEvent(this.hexColor));
+  }
+
+  async firstUpdated() {
+    if (!this.selectedColorMode) {
+      // localStorage is not available on server so must do this here.
+      this.selectedColorMode = getCurrentMode();
+    }
+
+    if (!this.hexColor) {
+      // localStorage is not available on server so must do this here.
+      this.hexColor = getCurrentSeedColor()!;
+    }
+
+    this.updateHctFromHex(this.hexColor);
+  }
+
+  private onColorModeSelection(e: CustomEvent<{
+    button: MdOutlinedSegmentedButton; selected: boolean; index: number;
+  }>) {
+    const {button} = e.detail;
+    const value = button.dataset.value as ColorMode;
+    this.selectedColorMode = value;
+    this.dispatchEvent(new ChangeDarkModeEvent(value));
+  }
+
   static styles = css`
     :host {
       display: flex;
@@ -45,7 +237,9 @@ export class ThemeChanger extends LitElement {
 
       background-color: var(--md-sys-color-secondary-container);
       color: var(--md-sys-color-on-secondary-container);
-      --md-sys-color-surface-container-highest: var(
+
+      /* Default track color is inaccessible in a secondary-container */
+      --md-slider-inactive-track-color: var(
         --md-sys-color-on-secondary-container
       );
     }
@@ -103,150 +297,6 @@ export class ThemeChanger extends LitElement {
       }
     }
   `;
-
-  @state() selected: ColorMode | null = null;
-  @state() color: string = '';
-  @state() hue: number = 0;
-  @state() chroma: number = 0;
-  @state() tone: number = 0;
-  @state() showHexPickerFocusRing = false;
-
-  @query('input')
-  inputEl!: HTMLInputElement;
-
-  @queryAll('hct-slider')
-  sliders!: HCTSlider[];
-
-  render() {
-    return html`
-      <h2>Theme Controls</h2>
-      ${this.renderHexPicker()} ${this.renderHctPicker()}
-      ${this.renderDarkModePicker()}
-    `;
-  }
-
-  protected renderHexPicker() {
-    return html`<div>
-      <label
-        id="hex"
-      >
-        <span class="label">Hex Source Color</span>
-        <span class="input-wrapper">
-          <div class="overflow">
-            <input
-              @input=${this.onNativeInputInput}
-              @blur=${() => {
-                this.showHexPickerFocusRing = false;
-              }}
-              type="color"
-              .value=${live(this.color)}
-            />
-          </div>
-          <md-focus-ring
-            .visible=${this.showHexPickerFocusRing}
-          ></md-focus-ring>
-        </span>
-      </label>
-    </div>`;
-  }
-
-  private renderHctPicker() {
-    // not defined in SSR and will throw in child if not defined
-    const hue = this.hue ?? 0;
-    const chroma = this.chroma ?? 0;
-    const tone = this.tone ?? 0;
-
-    return html`<div class="sliders">
-      <hct-slider
-        .value=${live(hue)}
-        type="hue"
-        label="Hue"
-        max="360"
-        @input=${this.onInput}
-      ></hct-slider>
-      <hct-slider
-        .value=${live(chroma)}
-        .color=${this.color}
-        type="chroma"
-        label="Chroma"
-        max="150"
-        @input=${this.onInput}
-      ></hct-slider>
-      <hct-slider
-        .value=${live(tone)}
-        type="tone"
-        label="Tone"
-        max="100"
-        @input=${this.onInput}
-      ></hct-slider>
-    </div>`;
-  }
-
-  private renderDarkModePicker() {
-    return html`<md-outlined-segmented-button-set
-      @segmented-button-set-selection=${this.onSelection}
-    >
-      ${this.renderModeButton('dark', 'dark_mode')}
-      ${this.renderModeButton('auto', 'brightness_medium')}
-      ${this.renderModeButton('light', 'light_mode')}
-    </md-outlined-segmented-button-set>`;
-  }
-
-  private renderModeButton(mode: ColorMode, icon: string) {
-    return html`<md-outlined-segmented-button
-      data-value=${mode}
-      title=${mode}
-      .selected=${this.selected === mode}
-    >
-      <md-icon slot="icon">${icon}</md-icon>
-    </md-outlined-segmented-button>`;
-  }
-
-  private onInput() {
-    for (const slider of this.sliders) {
-      this[slider.type] = slider.value;
-    }
-
-    this.color = hexFromHct(this.hue, this.chroma, this.tone);
-    this.dispatchEvent(new ChangeColorEvent(this.color));
-  }
-
-  private onNativeInputInput() {
-    this.color = this.inputEl.value;
-    const hct = hctFromHex(this.color);
-    this.hue = hct.hue;
-    this.chroma = hct.chroma;
-    this.tone = hct.tone;
-    this.dispatchEvent(new ChangeColorEvent(this.color));
-  }
-
-  async firstUpdated() {
-    await this.updateComplete;
-    if (!this.selected) {
-      this.selected = localStorage.getItem('color-mode') as ColorMode | null;
-    }
-
-    if (!this.color) {
-      this.color = localStorage.getItem('seed-color')!;
-    }
-    const hct = hctFromHex(this.color);
-    this.hue = hct.hue;
-    this.chroma = hct.chroma;
-    this.tone = hct.tone;
-  }
-
-  private onSelection(
-    e: CustomEvent<{
-      button: MdOutlinedSegmentedButton;
-      selected: boolean;
-      index: number;
-    }>
-  ) {
-    const { button } = e.detail;
-    const value = button.dataset.value as ColorMode;
-    this.selected = value;
-    this.dispatchEvent(new ChangeDarkModeEvent(value));
-  }
 }
 
 declare global {
