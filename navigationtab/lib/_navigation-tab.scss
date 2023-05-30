@@ -10,10 +10,10 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../badge/badge';
 @use '../../focus/focus-ring';
 @use '../../internal/motion/animation';
 @use '../../internal/sass/theme';
+@use '../../labs/badge/badge';
 @use '../../ripple/ripple';
 @use '../../tokens';
 // go/keep-sorted end

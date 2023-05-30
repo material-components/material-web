@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../badge/badge.js';
+import '../../labs/badge/badge.js';
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
