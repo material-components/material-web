@@ -23,10 +23,11 @@ export class Checkbox extends LitElement {
     requestUpdateOnAriaChange(this);
   }
 
-  /** @nocollapse */
-  static get formAssociated() {
-    return true;
-  }
+  /**
+   * @nocollapse
+   * @export
+   */
+  static formAssociated = true;
 
   /**
    * Whether or not the checkbox is selected.

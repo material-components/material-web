@@ -29,10 +29,11 @@ export class Radio extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
-  /** @nocollapse */
-  static get formAssociated() {
-    return true;
-  }
+  /**
+   * @nocollapse
+   * @export
+   */
+  static formAssociated = true;
 
   /**
    * Whether or not the radio is selected.

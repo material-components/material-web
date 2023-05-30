@@ -68,10 +68,11 @@ export class Slider extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
-  /** @nocollapse */
-  static get formAssociated() {
-    return true;
-  }
+  /**
+   * @nocollapse
+   * @export
+   */
+  static formAssociated = true;
 
   /**
    * Whether or not the slider is disabled.
