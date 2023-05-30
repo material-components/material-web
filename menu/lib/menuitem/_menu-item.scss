@@ -9,9 +9,9 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../../internal/sass/theme';
 @use '../../../list/list-item';
 @use '../../../ripple/ripple';
-@use '../../../sass/theme';
 @use '../../../tokens';
 // go/keep-sorted end
 

@@ -9,7 +9,7 @@
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../internal/motion/animation';
-@use '../../sass/theme';
+@use '../../internal/sass/theme';
 // go/keep-sorted end
 
 $curve: animation.$standard-easing;

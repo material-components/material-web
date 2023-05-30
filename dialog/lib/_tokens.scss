@@ -8,8 +8,8 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../sass/string-ext';
-@use '../../sass/theme';
+@use '../../internal/sass/string-ext';
+@use '../../internal/sass/theme';
 @use '../../tokens';
 // go/keep-sorted end
 
