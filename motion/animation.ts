@@ -93,7 +93,7 @@ export function createAnimationSignal(): AnimationSignal {
 /**
  * Returns a function which can be used to throttle function calls
  * mapped to a key via a given function that should produce a promise that
- * determines the throtle amount (defaults to requestAnimationFrame).
+ * determines the throttle amount (defaults to requestAnimationFrame).
  */
 export function createThrottle() {
   const stack = new Set();

@@ -37,7 +37,7 @@ describe('<md-radio>', () => {
   const env = new Environment();
 
   // Note, this would be better in the harness, but waiting in the test setup
-  // can be flakey without access to the test `env`.
+  // can be flaky without access to the test `env`.
   async function simulateKeyDown(element: HTMLElement, key: string) {
     const event = new KeyboardEvent('keydown', {key, bubbles: true});
     element.dispatchEvent(event);

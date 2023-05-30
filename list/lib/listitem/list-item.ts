@@ -49,7 +49,7 @@ export class ListItemEl extends LitElement implements ListItem {
   @property({type: Boolean}) multiLineSupportingText = false;
 
   /**
-   * The supporting text placed at the end of the item. Overriden by elements
+   * The supporting text placed at the end of the item. Overridden by elements
    * slotted into the `end` slot.
    */
   @property() trailingSupportingText = '';
@@ -62,7 +62,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * The tabindex of the underlying item.
    *
-   * __NOTE:__ this is overriden by the keyboard behavior of `md-list` and by
+   * __NOTE:__ this is overridden by the keyboard behavior of `md-list` and by
    * setting `selected`.
    */
   @property({type: Number}) itemTabIndex = -1;
@@ -84,7 +84,7 @@ export class ListItemEl extends LitElement implements ListItem {
   protected readonly listItemRole: ARIARole = 'listitem';
 
   /**
-   * Only meant to be overriden by subclassing and not by the user. This is
+   * Only meant to be overridden by subclassing and not by the user. This is
    * so that we have control over focus on specific variants such as disabling
    * focus on <md-autocomplete-item> but enabling it for <md-menu-item>.
    */
@@ -119,7 +119,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Renders the root list item.
    *
-   * @param content {unkown} the child content of the list item.
+   * @param content the child content of the list item.
    */
   protected renderListItem(content: unknown) {
     return html`

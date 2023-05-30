@@ -117,7 +117,7 @@ export class Dialog extends LitElement {
    * The name of an attribute which can be placed on any element slotted into
    * the dialog. If an element has an action attribute set, clicking it will
    * close the dialog and the `closing` and `closed` events dispatched will
-   * have their action property set the the value of this attribute on the
+   * have their action property set the value of this attribute on the
    * clicked element.The default valus is `dialogAction`. For example,
    *
    *   <md-dialog>
@@ -186,7 +186,7 @@ export class Dialog extends LitElement {
   // used to determine container size for dragging
   @query(`.container`, true)
   private readonly containerElement!: HTMLDivElement|null;
-  // used to determin where users can drag from.
+  // used to determine where users can drag from.
   @query(`.header`, true) private readonly headerElement!: HTMLDivElement|null;
 
   /**

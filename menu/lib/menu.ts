@@ -538,7 +538,7 @@ export abstract class Menu extends LitElement {
     const SURFACE_OPACITY_DELAY = FULL_DURATION - SURFACE_OPACITY_DURATION;
     const ITEM_OPACITY_DURATION = 50;
     const ITEM_OPACITY_INITIAL_DELAY = 50;
-    const END_HEIGHT_PRECENTAGE = .35;
+    const END_HEIGHT_PERCENTAGE = .35;
 
     // We want to fit every child fade-out animation within the full duration of
     // the animation.
@@ -550,7 +550,7 @@ export abstract class Menu extends LitElement {
     const surfaceHeightAnimation = surfaceEl.animate(
         [
           {height: `${height}px`},
-          {height: `${height * END_HEIGHT_PRECENTAGE}px`}
+          {height: `${height * END_HEIGHT_PERCENTAGE}px`}
         ],
         {
           duration: FULL_DURATION,
@@ -564,7 +564,7 @@ export abstract class Menu extends LitElement {
         [
           {transform: ''}, {
             transform: closingDownwards ?
-                `translateY(-${height * (1 - END_HEIGHT_PRECENTAGE)}px)` :
+                `translateY(-${height * (1 - END_HEIGHT_PERCENTAGE)}px)` :
                 ''
           }
         ],

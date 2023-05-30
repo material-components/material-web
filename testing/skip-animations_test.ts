@@ -22,7 +22,7 @@ describe('skip-animations test', () => {
     uninstallFunction();
   });
 
-  it('does not skip animations befor installing', () => {
+  it('does not skip animations before installing', () => {
     // Act
     element.animate(
         [

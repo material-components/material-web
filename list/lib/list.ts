@@ -183,7 +183,7 @@ export class List extends LitElement {
    *
    * @param items {Array<ListItem>} The items from which to deactivate the
    * active item.
-   * @returns A record of the deleselcted activated item including the item and
+   * @return A record of the deleselcted activated item including the item and
    * the index of the item or `null` if none are deactivated.
    */
   static deactivateActiveItem<T extends ListItem>(items: T[]) {
@@ -199,10 +199,10 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the the first activated item of a given array of items.
+   * Retrieves the first activated item of a given array of items.
    *
    * @param items {Array<ListItem>} The items to search.
-   * @returns A record of the first activated item including the item and the
+   * @return A record of the first activated item including the item and the
    * index of the item or `null` if none are activated.
    */
   static getActiveItem<T extends ListItem>(items: T[]) {
@@ -219,11 +219,11 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the the first non-disabled item of a given array of items. This
+   * Retrieves the first non-disabled item of a given array of items. This
    * the first item that is not disabled.
    *
    * @param items {Array<ListItem>} The items to search.
-   * @returns The first activatable item or `null` if none are activatable.
+   * @return The first activatable item or `null` if none are activatable.
    */
   static getFirstActivatableItem<T extends ListItem>(items: T[]) {
     for (const item of items) {
@@ -236,10 +236,10 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the the last non-disabled item of a given array of items.
+   * Retrieves the last non-disabled item of a given array of items.
    *
    * @param items {Array<ListItem>} The items to search.
-   * @returns The last activatable item or `null` if none are activatable.
+   * @return The last activatable item or `null` if none are activatable.
    */
   static getLastActivatableItem<T extends ListItem>(items: T[]) {
     for (let i = items.length - 1; i >= 0; i--) {
@@ -253,11 +253,11 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the the next non-disabled item of a given array of items.
+   * Retrieves the next non-disabled item of a given array of items.
    *
    * @param items {Array<ListItem>} The items to search.
    * @param index {{index: number}} The index to search from.
-   * @returns The next activatable item or `null` if none are activatable.
+   * @return The next activatable item or `null` if none are activatable.
    */
   private static getNextItem<T extends ListItem>(items: T[], index: number) {
     for (let i = 1; i < items.length; i++) {
@@ -271,11 +271,11 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the the previous non-disabled item of a given array of items.
+   * Retrieves the previous non-disabled item of a given array of items.
    *
    * @param items {Array<ListItem>} The items to search.
    * @param index {{index: number}} The index to search from.
-   * @returns The previous activatable item or `null` if none are activatable.
+   * @return The previous activatable item or `null` if none are activatable.
    */
   private static getPrevItem<T extends ListItem>(items: T[], index: number) {
     for (let i = 1; i < items.length; i++) {

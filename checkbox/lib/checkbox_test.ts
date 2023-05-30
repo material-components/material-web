@@ -42,7 +42,7 @@ describe('checkbox', () => {
   }
 
   describe('basic', () => {
-    it('initializes as an checkbox', async () => {
+    it('initializes as a checkbox', async () => {
       const {harness} = await setupTest();
       expect(harness.element).toBeInstanceOf(Checkbox);
       expect(harness.element.checked).toEqual(false);

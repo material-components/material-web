@@ -66,7 +66,7 @@ describe('Ripple', () => {
   }
 
   describe('basic', () => {
-    it('initializes as an test-ripple', async () => {
+    it('initializes as a test-ripple', async () => {
       const {instance} = await setupTest();
       expect(instance).toBeInstanceOf(TestRipple);
     });

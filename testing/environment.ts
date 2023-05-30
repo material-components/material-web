@@ -42,7 +42,7 @@ export class Environment {
   }
 
   /**
-   * This marks the enviroment to run without web animations. This is useful
+   * This marks the environment to run without web animations. This is useful
    * when the tested code calls `.animate`.
    */
   withoutWebAnimations() {
