@@ -122,6 +122,27 @@ export class Ripple extends LitElement implements Attachable {
     this.attachableController.detach();
   }
 
+  protected override render() {
+    const classes = {
+      'hovered': this.hovered,
+      'pressed': this.pressed,
+    };
+
+    return html`<div class="surface ${classMap(classes)}"></div>`;
+  }
+
+  protected override update(changedProps: PropertyValues<this>) {
+    if (changedProps.has('disabled') && this.disabled) {
+      this.hovered = false;
+      this.pressed = false;
+    }
+    super.update(changedProps);
+  }
+
+  /**
+   * TODO(b/269799771): make private
+   * @private only public for slider
+   */
   handlePointerenter(event: PointerEvent) {
     if (!this.shouldReactToEvent(event)) {
       return;
@@ -130,6 +151,10 @@ export class Ripple extends LitElement implements Attachable {
     this.hovered = true;
   }
 
+  /**
+   * TODO(b/269799771): make private
+   * @private only public for slider
+   */
   handlePointerleave(event: PointerEvent) {
     if (!this.shouldReactToEvent(event)) {
       return;
@@ -143,7 +168,7 @@ export class Ripple extends LitElement implements Attachable {
     }
   }
 
-  handlePointerup(event: PointerEvent) {
+  private handlePointerup(event: PointerEvent) {
     if (!this.shouldReactToEvent(event)) {
       return;
     }
@@ -160,7 +185,7 @@ export class Ripple extends LitElement implements Attachable {
     }
   }
 
-  async handlePointerdown(event: PointerEvent) {
+  private async handlePointerdown(event: PointerEvent) {
     if (!this.shouldReactToEvent(event)) {
       return;
     }
@@ -195,7 +220,7 @@ export class Ripple extends LitElement implements Attachable {
     this.startPressAnimation(event);
   }
 
-  handleClick() {
+  private handleClick() {
     // Click is a MouseEvent in Firefox and Safari, so we cannot use
     // `shouldReactToEvent`
     if (this.disabled) {
@@ -214,7 +239,7 @@ export class Ripple extends LitElement implements Attachable {
     }
   }
 
-  handlePointercancel(event: PointerEvent) {
+  private handlePointercancel(event: PointerEvent) {
     if (!this.shouldReactToEvent(event)) {
       return;
     }
@@ -222,30 +247,13 @@ export class Ripple extends LitElement implements Attachable {
     this.endPressAnimation();
   }
 
-  handleContextmenu() {
+  private handleContextmenu() {
     if (this.disabled) {
       return;
     }
 
     this.checkBoundsAfterContextMenu = true;
     this.endPressAnimation();
-  }
-
-  protected override render() {
-    const classes = {
-      'hovered': this.hovered,
-      'pressed': this.pressed,
-    };
-
-    return html`<div class="surface ${classMap(classes)}"></div>`;
-  }
-
-  protected override update(changedProps: PropertyValues<this>) {
-    if (changedProps.has('disabled') && this.disabled) {
-      this.hovered = false;
-      this.pressed = false;
-    }
-    super.update(changedProps);
   }
 
   private getDimensions() {
