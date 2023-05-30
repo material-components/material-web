@@ -16,7 +16,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {ARIAMixinStrict, ARIARole} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {List} from '../../list/lib/list.js';
-import {createAnimationSignal, EASING} from '../../motion/animation.js';
+import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
 
 import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';

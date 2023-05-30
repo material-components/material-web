@@ -9,7 +9,7 @@ import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {SurfacePositionTarget} from '../../menu/lib/surfacePositionController.js';
 
-import {EASING} from '../../motion/animation.js';
+import {EASING} from '../../internal/motion/animation.js';
 
 /**
  * A field component.

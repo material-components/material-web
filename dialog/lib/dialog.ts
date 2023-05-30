@@ -10,7 +10,7 @@ import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {createThrottle, msFromTimeCSSValue} from '../../motion/animation.js';
+import {createThrottle, msFromTimeCSSValue} from '../../internal/motion/animation.js';
 
 // This is required for decorators.
 // tslint:disable:no-new-decorators
