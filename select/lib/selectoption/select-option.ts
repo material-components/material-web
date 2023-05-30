@@ -7,7 +7,7 @@
 import {PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
-import {ARIARole} from '../../../aria/aria.js';
+import {ARIARole} from '../../../internal/aria/aria.js';
 import {MenuItemEl} from '../../../menu/lib/menuitem/menu-item.js';
 import {RequestDeselectionEvent, RequestSelectionEvent, SelectOption} from '../shared.js';
 

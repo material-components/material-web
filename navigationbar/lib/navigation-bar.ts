@@ -9,8 +9,8 @@ import '../../elevation/elevation.js';
 import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
-import {ARIAMixinStrict} from '../../aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {isRtl} from '../../controller/is-rtl.js';
 import {NavigationTab} from '../../navigationtab/lib/navigation-tab.js';
 

@@ -7,8 +7,8 @@
 import {html, LitElement, nothing} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
-import {ARIAMixinStrict} from '../../aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button.js';
 
 /**

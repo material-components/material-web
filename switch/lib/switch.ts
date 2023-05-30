@@ -11,7 +11,7 @@ import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} fro
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 
 /**

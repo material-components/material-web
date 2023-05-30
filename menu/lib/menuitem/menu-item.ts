@@ -6,7 +6,7 @@
 
 import {property} from 'lit/decorators.js';
 
-import {ARIARole} from '../../../aria/aria.js';
+import {ARIARole} from '../../../internal/aria/aria.js';
 import {ListItemEl} from '../../../list/lib/listitem/list-item.js';
 import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem} from '../shared.js';
 

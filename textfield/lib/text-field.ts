@@ -11,8 +11,8 @@ import {live} from 'lit/directives/live.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
-import {ARIAMixinStrict} from '../../aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../controller/events.js';
 import {FormController, getFormValue} from '../../controller/form-controller.js';
 import {stringConverter} from '../../controller/string-converter.js';

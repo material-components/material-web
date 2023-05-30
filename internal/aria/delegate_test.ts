@@ -9,7 +9,7 @@
 import {html, LitElement, nothing} from 'lit';
 import {customElement, queryAsync} from 'lit/decorators.js';
 
-import {Environment} from '../testing/environment.js';
+import {Environment} from '../../testing/environment.js';
 
 import {requestUpdateOnAriaChange} from './delegate.js';
 

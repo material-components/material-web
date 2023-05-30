@@ -12,8 +12,8 @@ import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
 
-import {ARIAMixinStrict} from '../../aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {isRtl} from '../../controller/is-rtl.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';

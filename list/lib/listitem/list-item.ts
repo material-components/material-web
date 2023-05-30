@@ -11,8 +11,8 @@ import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {ARIAMixinStrict, ARIARole} from '../../../aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../aria/delegate.js';
+import {ARIAMixinStrict, ARIARole} from '../../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 
 interface ListItemSelf {
   active: boolean;

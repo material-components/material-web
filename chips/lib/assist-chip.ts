@@ -9,7 +9,7 @@ import '../../elevation/elevation.js';
 import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 
-import {ARIAMixinStrict} from '../../aria/aria.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
 import {Chip} from './chip.js';
 

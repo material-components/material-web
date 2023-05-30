@@ -12,7 +12,7 @@ import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
 
 /**

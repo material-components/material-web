@@ -11,8 +11,8 @@ import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {ARIAMixinStrict} from '../../aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 
 /**
  * SegmentedButton is a web component implementation of the Material Design

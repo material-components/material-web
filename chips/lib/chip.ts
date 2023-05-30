@@ -11,7 +11,7 @@ import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {requestUpdateOnAriaChange} from '../../aria/delegate.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 
 /**
  * A chip component.
