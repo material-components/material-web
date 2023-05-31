@@ -186,12 +186,10 @@ Token                                    | Default value
     .styled-example {
       background-color: white;
       border-radius: 28px;
-
       /* System tokens */
       --md-sys-color-primary: #006a6a;
       --md-sys-color-on-primary: #ffffff;
       --md-sys-color-on-surface-variant: #3f4948;
-
       /* Component tokens */
       --md-checkbox-container-shape: 0px;
     }

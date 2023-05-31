@@ -21,8 +21,9 @@
  */
 export function applyThemeString(
   doc: DocumentOrShadowRoot, themeString: string, ssName = 'material-theme') {
+  type WithStylesheet = typeof globalThis & {[stylesheetName:string]: CSSStyleSheet|undefined};
 // Get constructable stylesheet
-let sheet = (globalThis as any)[ssName] as CSSStyleSheet | undefined;
+let sheet = (globalThis as WithStylesheet)[ssName];
 
 // Create a new sheet if it doesn't exist already and save it globally.
 if (!sheet) {

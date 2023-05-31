@@ -127,7 +127,7 @@ await Promise.all([componentsBuild, ssrBuild, inlineBuild]);
 const require = createRequire(import.meta.url);
 copyFileSync(
   require.resolve('playground-elements/playground-typescript-worker.js'),
-  join(jsFolder, 'playground-typescript-worker.js')
+  join(jsFolder, 'hydration-entrypoints/playground-typescript-worker.js')
 );
 
 process.exit(0);

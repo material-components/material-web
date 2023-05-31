@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /* latin */
 @font-face {
   font-family: 'Google Sans';
@@ -25,6 +31,8 @@
   --catalog-top-app-bar-height: 48px;
   --catalog-top-app-bar-padding-block: 12px;
   scroll-padding-block-start: calc(var(--catalog-top-app-bar-height) + var(--catalog-top-app-bar-padding-block) * 2);
+
+  /* These values are copied from mio */
   --catalog-display-xl-font-size: 88px;
   --catalog-display-m-font-size: 45px;
   --catalog-title-l-font-size: 22px;
