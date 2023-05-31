@@ -5,7 +5,7 @@
  */
 
 import {animate, fadeIn, fadeOut} from '@lit-labs/motion';
-import {EASING} from '@material/web/motion/animation.js';
+import {EASING} from '@material/web/internal/motion/animation.js';
 import {css, html, LitElement, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 
