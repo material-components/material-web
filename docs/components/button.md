@@ -1,3 +1,11 @@
+<!-- catalog-only-start --><!-- ---
+name: Buttons
+dirname: button
+-----><!-- catalog-only-end -->
+
+<catalog-component-header>
+<catalog-component-header-title slot="title">
+
 # Buttons
 
 <!--*
@@ -17,14 +25,108 @@ post.
 There are five types of common buttons: elevated, filled, filled tonal,
 outlined, and text.
 
-![The 5 types of common buttons](images/button/hero.png "Elevated, filled, filled tonal, outlined, and text buttons")
+</catalog-component-header-title>
+
+<img
+    class="hero"
+    alt="A phone showing a payment screen with a green filled button that says 'Make
+payment'"
+    title="There are 5 types of common buttons"
+    src="images/button/hero.png">
+
+</catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/buttons) <!-- {.external} -->
 *   API Documentation (*coming soon*)
 *   [Source code](https://github.com/material-components/material-web/tree/main/button)
     <!-- {.external} -->
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Types
+
+<!-- github-only-start -->
+
+![The 5 types of common buttons](images/button/types.png "Elevated, filled, filled tonal, outlined, and text buttons")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      class="types-image"
+      style="justify-content:center;"
+      title="Elevated, filled, filled tonal, outlined, and text buttons"
+      aria-label="The 5 types of common buttons">
+    <style>
+      .types-image .wrapper,
+      .types-image .wrapper > * {
+        display: flex;
+        padding: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .types-image .wrapper > * {
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 16px;
+      }
+      .types-image span {
+        display: inline-flex;
+        background-color: var(--md-sys-color-inverse-surface);
+        color: var(--md-sys-color-inverse-on-surface);
+        padding: 8px;
+        margin-block-start: 8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <div inert class="wrapper">
+      <div>
+        <md-elevated-button hasicon>
+          <md-icon slot="icon">add</md-icon>
+          Elevated
+        </md-elevated-button>
+        <span>1</span>
+      </div>
+      <div>
+        <md-filled-button>Filled</md-filled-button>
+        <span>2</span>
+      </div>
+      <div>
+        <md-tonal-button>Tonal</md-tonal-button>
+        <span>3</span>
+      </div>
+      <div>
+        <md-outlined-button>Outlined</md-outlined-button>
+        <span>4</span>
+      </div>
+      <div>
+        <md-text-button>Text</md-text-button>
+        <span>5</span>
+      </div>
+    </div>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 1.  [Elevated button](#elevated-button)
 1.  [Filled button](#filled-button)
@@ -37,7 +139,29 @@ outlined, and text.
 Buttons have label text that describes the action that will occur if a user taps
 a button.
 
-![Accessibility text](images/button/usage.png "Optional caption text")
+<!-- github-only-start -->
+
+![An outlined button with the text "Back" next to a filled button with the text
+"Complete"](images/button/usage.png "Outlined and filled buttons.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;gap: 8px;"
+      title="Outlined and filled buttons."
+      aria-label="An outlined button with the text \"Back\" next to a filled button with the text \"Complete\"">
+    <md-outlined-button inert>Back</md-outlined-button>
+    <md-filled-button inert>Complete</md-filled-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-outlined-button>Back</md-outlined-button>
@@ -49,7 +173,37 @@ a button.
 An icon may optionally be added to a button to help communicate the button's
 action and help draw attention.
 
-![Accessibility text](images/button/usage-icon.png "Optional caption text")
+<!-- github-only-start -->
+
+![A tonal button with a right arrow send icon with text 'send' and a text button
+with the text 'open' with a trailing icon arrow
+box](images/button/usage-icon.png "Slot in icons to the appropriate slots")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;gap: 8px;"
+      title="Outlined and filled buttons."
+      aria-label="An outlined button with the text \"Back\" next to a filled button with the text \"Complete\"">
+    <md-tonal-button inert>
+      Send
+      <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
+    </md-tonal-button>
+
+    <md-text-button inert trailingicon>
+      Open
+      <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
+    </md-text-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-tonal-button>
@@ -82,7 +236,26 @@ are essentially filled tonal buttons with a shadow. To prevent shadow creep,
 only use them when absolutely necessary, such as when the button requires visual
 separation from a patterned background.
 
+<!-- github-only-start -->
+
 ![An elevated button](images/button/usage-elevated-button.png)
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      aria-label="An elevated button.">
+    <md-elevated-button inert>Elevated</md-elevated-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-elevated-button>Elevated</md-elevated-button>
@@ -96,7 +269,22 @@ separation from a patterned background.
 have the most visual impact after the FAB, and should be used for important,
 final actions that complete a flow, like Save, Join now, or Confirm.
 
-![A filled button](images/button/usage-filled-button.png)
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      aria-label="A filled button.">
+    <md-filled-button inert>Filled</md-filled-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-filled-button>Filled</md-filled-button>
@@ -112,7 +300,26 @@ is an alternative middle ground between filled and outlined buttons. They're
 useful in contexts where a lower-priority button requires slightly more emphasis
 than an outline would give, such as "Next" in an onboarding flow.
 
+<!-- github-only-start -->
+
 ![A filled tonal button](images/button/usage-filled-tonal-button.png)
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      aria-label="A tonal button.">
+    <md-tonal-button inert>Tonal</md-tonal-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-tonal-button>Tonal</md-tonal-button>
@@ -126,7 +333,26 @@ than an outline would give, such as "Next" in an onboarding flow.
 are medium-emphasis buttons. They contain actions that are important, but aren’t
 the primary action in an app.
 
+<!-- github-only-start -->
+
 ![An outlined button](images/button/usage-outlined-button.png)
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      aria-label="An outlined button.">
+    <md-outlined-button inert>Outlined</md-outlined-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-outlined-button>Outlined</md-outlined-button>
@@ -140,7 +366,26 @@ the primary action in an app.
 are used for the lowest priority actions, especially when presenting multiple
 options.
 
+<!-- github-only-start -->
+
 ![A text button](images/button/usage-text-button.png)
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      aria-label="A text button.">
+    <md-text-button inert>Text</md-text-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <md-text-button>Text</md-text-button>
@@ -154,7 +399,7 @@ of color, typography, and shape.
 ### Elevated button tokens
 
 Token                                   | Default value
---------------------------------------- | ---------------------------
+--------------------------------------- | -------------------------------
 `--md-elevated-button-container-color`  | `--md-sys-color-surface`
 `--md-elevated-button-container-shape`  | `9999px`
 `--md-elevated-button-label-text-color` | `--md-sys-color-on-surface`
@@ -165,15 +410,46 @@ Token                                   | Default value
 
 ### Elevated button example
 
+<!-- github-only-start -->
+
 ![Image of an elevated button with a different theme applied](images/button/theming-elevated-button.png "Elevated button theming example.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      class="styled-example"
+      title="Elevated button theming example."
+      aria-label="Image of an elevated button with a different theme applied">
+    <style>
+      .styled-example {
+        background-color: white;
+        --md-elevated-button-container-shape: 0px;
+        --md-elevated-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-sys-color-surface-container-low: #FAFDFC;
+        --md-sys-color-primary: #191C1C;
+      }
+    </style>
+
+    <md-elevated-button>Elevated</md-elevated-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <style>
 :root {
   --md-elevated-button-container-shape: 0px;
   --md-elevated-button-label-text-type: 500 0.875rem/1.25rem system-ui;
-  --md-sys-color-surface: #FAFDFC;
-  --md-sys-color-on-surface: #191C1C;
+  --md-sys-color-surface-container-low: #FAFDFC;
+  --md-sys-color-primary: #191C1C;
 }
 </style>
 
@@ -183,7 +459,7 @@ Token                                   | Default value
 ### Filled button tokens
 
 Token                                 | Default value
-------------------------------------- | ---------------------------
+------------------------------------- | -------------------------------
 `--md-filled-button-container-color`  | `--md-sys-color-primary`
 `--md-filled-button-container-shape`  | `9999px`
 `--md-filled-button-label-text-color` | `--md-sys-color-on-primary`
@@ -194,7 +470,38 @@ Token                                 | Default value
 
 ### Filled button example
 
+<!-- github-only-start -->
+
 ![Image of a filled button with a different theme applied](images/button/theming-filled-button.png "Filled button theming example.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      class="styled-example"
+      title="Filled button theming example."
+      aria-label="Image of a filled button with a different theme applied">
+    <style>
+      .styled-example {
+        background-color: white;
+        --md-filled-button-container-shape: 0px;
+        --md-filled-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-sys-color-primary: #006A6A;
+        --md-sys-color-on-primary: #FFFFFF;
+      }
+    </style>
+
+    <md-filled-button>Filled</md-filled-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <style>
@@ -223,7 +530,38 @@ Token                                | Default value
 
 ### Filled tonal button example
 
+<!-- github-only-start -->
+
 ![Image of a filled tonal button with a different theme applied](images/button/theming-filled-tonal-button.png "Filled tonal button theming example.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      class="styled-example"
+      title="Tonal button theming example."
+      aria-label="Image of a tonal button with a different theme applied">
+    <style>
+      .styled-example {
+        background-color: white;
+        --md-tonal-button-container-shape: 0px;
+        --md-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-sys-color-secondary-container: #CCE8E7;
+        --md-sys-color-on-secondary-container: #051F1F;
+      }
+    </style>
+
+    <md-tonal-button>Tonal</md-tonal-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <style>
@@ -241,7 +579,7 @@ Token                                | Default value
 ### Outlined button tokens
 
 Token                                   | Default value
---------------------------------------- | ------------------------
+--------------------------------------- | -------------------------------
 `--md-outlined-button-outline-color`    | `--md-sys-color-outline`
 `--md-outlined-button-container-shape`  | `9999px`
 `--md-outlined-button-label-text-color` | `--md-sys-color-primary`
@@ -252,7 +590,38 @@ Token                                   | Default value
 
 ### Outlined button example
 
+<!-- github-only-start -->
+
 ![Image of an outlined button with a different theme applied](images/button/theming-outlined-button.png "Outlined button theming example.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      class="styled-example"
+      title="Outlined button theming example."
+      aria-label="Image of a outlined button with a different theme applied">
+    <style>
+      .styled-example {
+        background-color: white;
+        --md-outlined-button-container-shape: 0px;
+        --md-outlined-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-sys-color-primary: #006A6A;
+        --md-sys-color-outline: #6F7979;
+      }
+    </style>
+
+    <md-outlined-button>Outlined</md-outlined-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <style>
@@ -270,7 +639,7 @@ Token                                   | Default value
 ### Text button tokens
 
 Token                               | Default value
------------------------------------ | ------------------------
+----------------------------------- | -------------------------------
 `--md-text-button-label-text-color` | `--md-sys-color-primary`
 `--md-text-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
@@ -279,7 +648,36 @@ Token                               | Default value
 
 ### Text button example
 
+<!-- github-only-start -->
+
 ![Image of a text button with a different theme applied](images/button/theming-text-button.png "Text button theming example.")
+
+<!-- github-only-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;align-items:center;"
+      class="styled-example"
+      title="Text button theming example."
+      aria-label="Image of a text button with a different theme applied">
+    <style>
+      .styled-example {
+        background-color: white;
+        --md-text-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-sys-color-primary: #006A6A;
+      }
+    </style>
+
+    <md-text-button inert>Text</md-text-button>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <style>
