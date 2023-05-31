@@ -457,10 +457,10 @@ export class Dialog extends LitElement {
   private handleDialogDismiss(e: Event) {
     if (e.type === 'cancel') {
       this.currentAction = this.escapeKeyAction;
-	  if (this.currentAction === '') {
-		e.preventDefault();
-		return;
-	  }
+      if (this.currentAction === '') {
+        e.preventDefault();
+        return;
+      }
     }
     this.dialogClosedResolver?.();
     this.dialogClosedResolver = undefined;
