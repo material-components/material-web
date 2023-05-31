@@ -28,9 +28,14 @@ export function SignalElement<T extends ReactiveElementConstructor>(Base: T):
         return;
       }
       this._disposeEffect?.();
+      let performingUpdate = true;
       this._disposeEffect = effect(() => {
-        this.isUpdatePending = true;
-        super.performUpdate();
+        if (performingUpdate) {
+          performingUpdate = false;
+          super.performUpdate();
+        } else {
+          this.requestUpdate();
+        }
       });
     }
   };
