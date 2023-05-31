@@ -17,6 +17,9 @@ interface SliderTestProps {
   value?: number;
   valueStart?: number;
   valueEnd?: number;
+  step?: number;
+  min?: number;
+  max?: number;
 }
 
 function getSliderTemplate(props?: SliderTestProps) {
@@ -26,6 +29,9 @@ function getSliderTemplate(props?: SliderTestProps) {
       .value=${props?.value ?? 0}
       .valueStart=${props?.valueStart ?? 0}
       .valueEnd=${props?.valueEnd ?? 0}
+      .step=${props?.step ?? 1}
+      .min=${props?.min ?? 0}
+      .max=${props?.max ?? 100}
     ></md-slider>`;
 }
 
@@ -101,6 +107,26 @@ describe('<md-slider>', () => {
       expect(harness.element.value).toEqual(5);
       await harness.simulateValueInteraction(3);
       expect(harness.element.value).toEqual(4);
+    });
+
+    it('step rounds values from min', async () => {
+      const props = {value: 2, min: 1, step: 5};
+      const {harness} = await setupTest(props);
+      expect(harness.element.value).toEqual(2);
+      await harness.simulateValueInteraction(3);
+      expect(harness.element.value).toEqual(1);
+      await harness.simulateValueInteraction(4);
+      expect(harness.element.value).toEqual(6);
+    });
+
+    it('step can be non-integer', async () => {
+      const props = {value: 2, step: 0.1};
+      const {harness} = await setupTest(props);
+      expect(harness.element.value).toEqual(2);
+      await harness.simulateValueInteraction(3.2);
+      expect(harness.element.value).toEqual(3.2);
+      await harness.simulateValueInteraction(70.55);
+      expect(harness.element.value).toEqual(70.6);
     });
   });
 

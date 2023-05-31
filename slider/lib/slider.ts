@@ -33,11 +33,6 @@ function inBounds({x, y}: PointerEvent, element?: HTMLElement|null) {
   return x >= left && x <= right && y >= top && y <= bottom;
 }
 
-
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
-}
-
 function isOverlapping(elA: Element|null, elB: Element|null) {
   if (!(elA && elB)) {
     return false;
@@ -108,19 +103,31 @@ export class Slider extends LitElement {
    * An optional label for the slider's value displayed when range is
    * false; if not set, the label is the value itself.
    */
-  @property() valueLabel?: string|undefined;
+  @property() valueLabel?: string;
 
   /**
    * An optional label for the slider's start value displayed when
    * range is true; if not set, the label is the valueStart itself.
    */
-  @property() valueStartLabel?: string|undefined;
+  @property() valueStartLabel?: string;
 
   /**
    * An optional label for the slider's end value displayed when
    * range is true; if not set, the label is the valueEnd itself.
    */
-  @property() valueEndLabel?: string|undefined;
+  @property() valueEndLabel?: string;
+
+  /**
+   * Aria label for the slider's start value displayed when
+   * range is true.
+   */
+  @property({attribute: 'aria-label-start'}) ariaLabelStart?: string;
+
+  /**
+   * Aria label for the slider's end value displayed when
+   * range is true.
+   */
+  @property({attribute: 'aria-label-end'}) ariaLabelEnd?: string;
 
   /**
    * The step between values.
@@ -156,23 +163,6 @@ export class Slider extends LitElement {
     return this.closest('form');
   }
 
-  private getMetrics() {
-    const step = Math.max(this.step, 1);
-    const range = Math.max(this.max - this.min, step);
-    const lower = this.valueA;
-    const upper = this.valueB;
-    const lowerFraction = (lower - this.min) / range;
-    const upperFraction = (upper - this.min) / range;
-    return {
-      step,
-      range,
-      lower,
-      upper,
-      lowerFraction,
-      upperFraction,
-    };
-  }
-
   @query('input.a') private readonly inputA!: HTMLInputElement|null;
   @query('.handle.a') private readonly handleA!: HTMLDivElement|null;
   @queryAsync('md-ripple.a') private readonly rippleA!: Promise<MdRipple|null>;
@@ -180,9 +170,6 @@ export class Slider extends LitElement {
   @query('input.b') private readonly inputB!: HTMLInputElement|null;
   @query('.handle.b') private readonly handleB!: HTMLDivElement|null;
   @queryAsync('md-ripple.b') private readonly rippleB!: Promise<MdRipple|null>;
-
-  @state() private valueA = 0;
-  @state() private valueB = 0;
 
   // handle hover/pressed states are set manually since the handle
   // does not receive pointer events so that the native inputs are
@@ -192,6 +179,17 @@ export class Slider extends LitElement {
 
   @state() private onTopId = 'b';
   @state() private handlesOverlapping = false;
+
+  @state() private renderValueStart = 0;
+  @state() private renderValueEnd = 0;
+
+  // used in synthetic events generated to control ripple hover state.
+  private ripplePointerId = 1;
+
+  // flag to prvent processing of re-dispatched input event.
+  private isRedisptchingEvent = false;
+
+  private action?: Action;
 
   constructor() {
     super();
@@ -218,14 +216,14 @@ export class Slider extends LitElement {
   }
 
   protected override willUpdate(changed: PropertyValues) {
-    const step = Math.max(this.step, 1);
-    let lower = this.range ? this.valueStart : this.min;
-    lower = clamp(lower - (lower % step), this.min, this.max);
-    let upper = this.range ? this.valueEnd : this.value;
-    upper = clamp(upper - (upper % step), this.min, this.max);
-    this.valueA = lower;
-    this.valueB = upper;
-
+    this.renderValueStart = changed.has('valueStart') ?
+        this.valueStart :
+        (this.inputA?.valueAsNumber ?? 0);
+    const endValueChanged =
+        (changed.has('valueEnd') && this.range) || changed.has('value');
+    this.renderValueEnd = endValueChanged ?
+        (this.range ? this.valueEnd : this.value) :
+        (this.inputB?.valueAsNumber ?? 0);
     // manually handle ripple hover state since the handle is pointer events
     // none.
     if (changed.get('handleAHover') !== undefined) {
@@ -235,16 +233,30 @@ export class Slider extends LitElement {
     }
   }
 
-  protected override async updated(changed: PropertyValues) {
-    if (changed.has('range') || changed.has('valueA') ||
-        changed.has('valueB')) {
-      await this.updateComplete;
+  protected override updated(changed: PropertyValues) {
+    // Validate input rendered value and re-render if necessary. This ensures
+    // the rendred handle stays in sync with the input thumb which is used for
+    // interaction. These can get out of sync if a supplied value does not
+    // map to an exactly stepped value between min and max.
+    if (this.range) {
+      this.renderValueStart = this.inputA!.valueAsNumber;
+    }
+    this.renderValueEnd = this.inputB!.valueAsNumber;
+    if (changed.has('range') || changed.has('renderValueStart') ||
+        changed.has('renderValueEnd') || this.isUpdatePending) {
       this.handlesOverlapping = isOverlapping(this.handleA, this.handleB);
     }
+    // called to finish the update imediately;
+    // note, this is a no-op unless an update is scheduled
+    this.performUpdate();
   }
 
   protected override render() {
-    const {step, range, lowerFraction, upperFraction} = this.getMetrics();
+    const step = this.step === 0 ? 1 : this.step;
+    const range = Math.max(this.max - this.min, step);
+    const lowerFraction =
+        this.range ? ((this.renderValueStart - this.min) / range) : 0;
+    const upperFraction = (this.renderValueEnd - this.min) / range;
     const containerStyles = {
       // for clipping inputs and active track.
       '--slider-lower-fraction': String(lowerFraction),
@@ -255,21 +267,21 @@ export class Slider extends LitElement {
     const containerClasses = {ranged: this.range};
 
     // optional label values to show in place of the value.
-    const labelA = this.valueStartLabel ?? String(this.valueA);
+    const labelA = this.valueStartLabel ?? String(this.renderValueStart);
     const labelB = (this.range ? this.valueEndLabel : this.valueLabel) ??
-        String(this.valueB);
+        String(this.renderValueEnd);
 
     const inputAProps = {
       id: 'a',
       lesser: true,
-      value: this.valueA,
+      value: this.renderValueStart,
       label: labelA,
     };
 
     const inputBProps = {
       id: 'b',
       lesser: false,
-      value: this.valueB,
+      value: this.renderValueEnd,
       label: labelB,
     };
 
@@ -339,10 +351,12 @@ export class Slider extends LitElement {
     label: string,
   }) {
     // when ranged, ensure announcement includes value info.
-    const ariaLabelDescriptor =
-        this.range ? ` - ${lesser ? `start` : `end`} handle` : '';
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    let {ariaLabel} = this as ARIAMixinStrict;
+    const {range, ariaLabelStart, ariaLabelEnd} = this;
+    if (range) {
+      ariaLabel = (lesser ? ariaLabelStart : ariaLabelEnd) ?? null;
+    }
     return html`<input type="range"
       class="${classMap({
       lesser,
@@ -365,7 +379,7 @@ export class Slider extends LitElement {
       .step=${String(this.step)}
       .value=${String(value)}
       .tabIndex=${lesser ? 1 : 0}
-      aria-label=${`${ariaLabel}${ariaLabelDescriptor}` || nothing}
+      aria-label=${ariaLabel || nothing}
       aria-valuetext=${label}>`;
   }
 
@@ -392,14 +406,6 @@ export class Slider extends LitElement {
   private handleFocus(e: Event) {
     this.updateOnTop(e.target as HTMLInputElement);
   }
-
-  // used in synthetic events generated to control ripple hover state.
-  private ripplePointerId = 1;
-
-  // flag to prvent processing of re-dispatched input event.
-  private isRedisptchingEvent = false;
-
-  private action?: Action;
 
   private startAction(e: Event) {
     const target = e.target as HTMLInputElement;
@@ -545,17 +551,15 @@ export class Slider extends LitElement {
         stopPropagation = true;
         redispatch = false;
       }
-      this.valueA = this.inputA!.valueAsNumber;
     }
-    this.valueB = this.inputB!.valueAsNumber;
     const {target} = this.action!;
     this.updateOnTop(target);
     // update value only on interaction
     if (this.range) {
-      this.valueStart = this.valueA;
-      this.valueEnd = this.valueB;
+      this.valueStart = this.inputA!.valueAsNumber;
+      this.valueEnd = this.inputB!.valueAsNumber;
     } else {
-      this.value = this.valueB;
+      this.value = this.inputB!.valueAsNumber;
     }
     // control external visibility of input event
     if (stopPropagation) {
