@@ -87,5 +87,5 @@ md-list-item-link:first-of-type {
 }
 
 h1 {
-  font-size: 48px;
+  font-size: var(--catalog-display-xl-font-size);
 }
