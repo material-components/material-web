@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ReactiveController, ReactiveControllerHost} from 'lit';
+import {ReactiveController, ReactiveControllerHost, isServer} from 'lit';
 
 /**
  * An element that can be attached to an associated controlling element.
@@ -73,19 +73,23 @@ interface AttachableControllerHost extends ReactiveControllerHost, HTMLElement {
   [ATTACHABLE_CONTROLLER]?: AttachableController;
 }
 
-/**
- * A global `MutationObserver` that reacts to `for` attribute changes on
- * `Attachable` elements. If the `for` attribute changes, the controller will
- * re-attach to the new referenced element.
- */
-const FOR_ATTRIBUTE_OBSERVER = new MutationObserver(records => {
-  for (const record of records) {
-    // When a control's `for` attribute changes, inform its
-    // `AttachableController` to update to a new control.
-    (record.target as AttachableControllerHost)[ATTACHABLE_CONTROLLER]
-        ?.hostConnected();
-  }
-});
+let FOR_ATTRIBUTE_OBSERVER: MutationObserver|undefined;
+
+if (!isServer) {
+  /**
+   * A global `MutationObserver` that reacts to `for` attribute changes on
+   * `Attachable` elements. If the `for` attribute changes, the controller will
+   * re-attach to the new referenced element.
+   */
+  FOR_ATTRIBUTE_OBSERVER = new MutationObserver(records => {
+    for (const record of records) {
+      // When a control's `for` attribute changes, inform its
+      // `AttachableController` to update to a new control.
+      (record.target as AttachableControllerHost)[ATTACHABLE_CONTROLLER]
+          ?.hostConnected();
+    }
+  });
+}
 
 /**
  * A controller that provides an implementation for `Attachable` elements.
@@ -150,7 +154,7 @@ export class AttachableController implements ReactiveController, Attachable {
           (prev: HTMLElement|null, next: HTMLElement|null) => void) {
     host.addController(this);
     host[ATTACHABLE_CONTROLLER] = this;
-    FOR_ATTRIBUTE_OBSERVER.observe(host, {attributeFilter: ['for']});
+    FOR_ATTRIBUTE_OBSERVER?.observe(host, {attributeFilter: ['for']});
   }
 
   attach(control: HTMLElement) {
