@@ -10,9 +10,9 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../elevation/elevation';
-@use '../../internal/motion/animation';
-@use '../../internal/sass/theme';
+@use '../../../elevation/elevation';
+@use '../../../internal/motion/animation';
+@use '../../../internal/sass/theme';
 // go/keep-sorted end
 
 $_curve: animation.$standard-easing;

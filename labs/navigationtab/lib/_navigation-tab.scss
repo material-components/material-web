@@ -10,12 +10,12 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../focus/focus-ring';
-@use '../../internal/motion/animation';
-@use '../../internal/sass/theme';
-@use '../../labs/badge/badge';
-@use '../../ripple/ripple';
-@use '../../tokens';
+@use '../../../focus/focus-ring';
+@use '../../../internal/motion/animation';
+@use '../../../internal/sass/theme';
+@use '../../../ripple/ripple';
+@use '../../../tokens';
+@use '../../badge/badge';
 // go/keep-sorted end
 
 $animation-duration: 100ms;

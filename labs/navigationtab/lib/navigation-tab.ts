@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../labs/badge/badge.js';
-import '../../focus/focus-ring.js';
-import '../../ripple/ripple.js';
+import '../../../focus/focus-ring.js';
+import '../../../ripple/ripple.js';
+import '../../badge/badge.js';
 
 import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 
 import {NavigationTabState} from './state.js';
 

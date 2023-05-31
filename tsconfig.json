@@ -28,6 +28,6 @@
   },
   "exclude": [
     "catalog",
-    "*/demo"
+    "**/demo"
   ]
 }

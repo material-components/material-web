@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
+import '../../../elevation/elevation.js';
 
 import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {isRtl} from '../../controller/is-rtl.js';
+import {isRtl} from '../../../controller/is-rtl.js';
+import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 import {NavigationTab} from '../../navigationtab/lib/navigation-tab.js';
 
 import {NavigationTabInteractionEvent} from './constants.js';

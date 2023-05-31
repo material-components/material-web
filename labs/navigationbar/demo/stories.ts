@@ -5,8 +5,8 @@
  */
 
 import '@material/web/icon/icon.js';
-import '@material/web/navigationbar/navigation-bar.js';
-import '@material/web/navigationtab/navigation-tab.js';
+import '@material/web/labs/navigationbar/navigation-bar.js';
+import '@material/web/labs/navigationtab/navigation-tab.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {html, css} from 'lit';

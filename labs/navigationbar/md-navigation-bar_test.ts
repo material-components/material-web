@@ -8,9 +8,9 @@ import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
+import {Environment} from '../../testing/environment.js';
 import {NavigationTabHarness} from '../navigationtab/harness.js';
 import {MdNavigationTab} from '../navigationtab/navigation-tab.js';
-import {Environment} from '../testing/environment.js';
 
 import {NavigationBarHarness} from './harness.js';
 import {MdNavigationBar} from './navigation-bar.js';

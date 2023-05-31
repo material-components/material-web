@@ -7,7 +7,7 @@
 import {html, render} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {Environment} from '../testing/environment.js';
+import {Environment} from '../../testing/environment.js';
 
 import {NavigationTabHarness} from './harness.js';
 import {MdNavigationTab} from './navigation-tab.js';
