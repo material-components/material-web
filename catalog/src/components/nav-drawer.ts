@@ -1,13 +1,110 @@
-import { LitElement, css, html, nothing } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import { SignalElement } from '../signals/signal-element.js';
-import { drawerOpenSignal } from '../signals/drawer-open-state.js';
-import { inertContentSignal, inertSidebarSignal } from '../signals/inert.js';
-import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
-import { EASING } from '@material/web/motion/animation.js';
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-@customElement('nav-drawer')
-export class NavDrawer extends SignalElement(LitElement) {
+import {animate, fadeIn, fadeOut} from '@lit-labs/motion';
+import {EASING} from '@material/web/motion/animation.js';
+import {css, html, LitElement, nothing} from 'lit';
+import {customElement, state} from 'lit/decorators.js';
+
+import {drawerOpenSignal} from '../signals/drawer-open-state.js';
+import {inertContentSignal, inertSidebarSignal} from '../signals/inert.js';
+import {SignalElement} from '../signals/signal-element.js';
+
+/**
+ * A layout element that positions the top-app-bar, the main page content, and
+ * the side navigation drawer.
+ *
+ * The drawer will automatically set itself as collapsible at narrower page
+ * widths, and position itself inline with the page at wider page widths. Most
+ * importantly, this sidebar is SSR compatible.
+ */
+@customElement('nav-drawer') export class NavDrawer extends SignalElement
+(LitElement) {
+  /**
+   * Whether or not the side drawer is collapsible or inline.
+   */
+  @state() private isCollapsible = false;
+
+  render() {
+    const showModal = this.isCollapsible && drawerOpenSignal.value;
+
+    // Values taken from internal material motion spec
+    const drawerSlideAnimationDuration = showModal ? 500 : 150;
+    const drawerContentOpacityDuration = showModal ? 300 : 150;
+    const scrimOpacityDuration = 150;
+
+    const drawerSlideAnimationEasing =
+        showModal ? EASING.EMPHASIZED : EASING.EMPHASIZED_ACCELERATE;
+
+    return html`
+      <div class="root">
+        <slot name="top-app-bar"></slot>
+        <div class="body  ${drawerOpenSignal.value ? 'open' : ''}">
+          <div class="spacer" ?inert=${inertSidebarSignal.value}>
+            ${showModal
+              ? html`<div
+                  class="scrim"
+                  @click=${this.onScrimClick}
+                  ${animate({
+                    properties: ['opacity'],
+                    keyframeOptions: {
+                      duration: scrimOpacityDuration,
+                      easing: 'linear',
+                    },
+                    in: fadeIn,
+                    out: fadeOut,
+                  })}
+                ></div>`
+              : nothing}
+            <aside
+              ?inert=${this.isCollapsible && !drawerOpenSignal.value}
+              ${animate({
+                properties: ['transform'],
+                keyframeOptions: {
+                  duration: drawerSlideAnimationDuration,
+                  easing: drawerSlideAnimationEasing,
+                },
+              })}
+            >
+              <slot
+                ${animate({
+                  properties: ['opacity'],
+                  keyframeOptions: {
+                    duration: drawerContentOpacityDuration,
+                    easing: 'linear',
+                  },
+                })}
+              ></slot>
+            </aside>
+          </div>
+          <div class="content" ?inert=${showModal || inertContentSignal.value}>
+            <slot name="app-content"></slot>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * Closes the drawer on scrim click.
+   */
+  private onScrimClick() {
+    drawerOpenSignal.value = false;
+  }
+
+  firstUpdated() {
+    const mql = window.matchMedia('(max-width: 1500px)');
+    this.isCollapsible = mql.matches;
+
+    // Listen for page resizes to mark the drawer as collapsible.
+    mql.addEventListener('change', (e) => {
+      this.isCollapsible = e.matches;
+    });
+  }
+
   static styles = css`
     :host {
       --_max-width: 1760px;
@@ -135,76 +232,4 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
     }
   `;
-
-  @state() private isMobile = false;
-
-  render() {
-    const showModal = this.isMobile && drawerOpenSignal.value;
-    const durationIn = 500;
-    const contentOpacityDurationIn = 300;
-    const durationOut = 150;
-    return html`
-      <div class="root">
-        <slot name="top-app-bar"></slot>
-        <div class="body  ${drawerOpenSignal.value ? 'open' : ''}">
-          <div class="spacer" ?inert=${inertSidebarSignal.value}>
-            ${showModal
-              ? html`<div
-                  class="scrim"
-                  @click=${this.onScrimClick}
-                  ${animate({
-                    properties: ['opacity'],
-                    keyframeOptions: {
-                      duration: 150,
-                      easing: 'linear',
-                    },
-                    in: fadeIn,
-                    out: fadeOut,
-                  })}
-                ></div>`
-              : nothing}
-            <aside
-              ?inert=${this.isMobile && !drawerOpenSignal.value}
-              ${animate({
-                properties: ['transform'],
-                keyframeOptions: {
-                  duration: showModal ? durationIn : durationOut,
-                  easing: showModal
-                    ? EASING.EMPHASIZED
-                    : EASING.EMPHASIZED_ACCELERATE,
-                },
-              })}
-            >
-              <slot
-                ${animate({
-                  properties: ['opacity'],
-                  keyframeOptions: {
-                    duration: showModal
-                      ? contentOpacityDurationIn
-                      : durationOut,
-                    easing: 'linear',
-                  },
-                })}
-              ></slot>
-            </aside>
-          </div>
-          <div class="content" ?inert=${showModal || inertContentSignal.value}>
-            <slot name="app-content"></slot>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  private onScrimClick() {
-    drawerOpenSignal.value = false;
-  }
-
-  firstUpdated() {
-    const mql = window.matchMedia('(max-width: 1500px)');
-    this.isMobile = mql.matches;
-    mql.addEventListener('change', (e) => {
-      this.isMobile = e.matches;
-    });
-  }
 }

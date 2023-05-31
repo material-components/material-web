@@ -1,18 +1,117 @@
-import { LitElement, css, html, isServer } from 'lit';
-import { live } from 'lit/directives/live.js';
-import { customElement, property, query, state } from 'lit/decorators.js';
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import '@material/web/focus/focus-ring.js';
-import { SignalElement } from '../signals/signal-element.js';
-import { drawerOpenSignal } from '../signals/drawer-open-state.js';
-import type { MdStandardIconButton } from '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/icon/icon.js';
 import '@material/web/focus/focus-ring.js';
-import { materialDesign } from '../svg/material-design-logo.js';
-import { inertContentSignal, inertSidebarSignal } from '../signals/inert.js';
 
-@customElement('top-app-bar')
-export class TopAppBar extends SignalElement(LitElement) {
+import type {MdStandardIconButton} from '@material/web/iconbutton/standard-icon-button.js';
+import {css, html, LitElement} from 'lit';
+import {customElement, query, state} from 'lit/decorators.js';
+import {live} from 'lit/directives/live.js';
+
+import {drawerOpenSignal} from '../signals/drawer-open-state.js';
+import {inertContentSignal, inertSidebarSignal} from '../signals/inert.js';
+import {SignalElement} from '../signals/signal-element.js';
+import {materialDesign} from '../svg/material-design-logo.js';
+
+/**
+ * Top app bar of the catalog. It changes elevation and "floats" when the
+ * "is-sticky" class is set on it. (this is currently done in
+ * pages/global.ts)
+ */
+@customElement('top-app-bar') export class TopAppBar extends SignalElement
+(LitElement) {
+  /**
+   * Whether or not the color picker menu is open.
+   */
+  @state() private menuOpen = false;
+
+  @query('.end md-standard-icon-button')
+  private paletteButton!: MdStandardIconButton;
+
+  render() {
+    return html`
+      <header>
+        <div class="default-content">
+          <section class="start">
+            <md-standard-icon-button
+              toggle
+              class="menu-button"
+              .selected=${live(drawerOpenSignal.value)}
+              @input=${this.onMenuIconToggle}
+            >
+              <span><md-icon>menu</md-icon></span>
+              <span slot="selectedIcon"><md-icon>menu_open</md-icon></span>
+            </md-standard-icon-button>
+            <md-standard-icon-button href="/material-web/" class="home-button">
+              ${materialDesign}
+            </md-standard-icon-button>
+          </section>
+
+          <a href="/material-web/" id="home-link">
+            Material Web
+            <md-focus-ring for="home-link"></md-focus-ring>
+          </a>
+
+          <section class="end">
+            <lit-island
+              on:interaction="pointerenter,focusin,pointerdown"
+              import="/material-web/js/hydration-entrypoints/menu.js"
+              id="menu-island"
+            >
+              <md-menu
+                .anchor=${this.paletteButton}
+                menu-corner="START_END"
+                anchor-corner="END_END"
+                stay-open-on-focusout
+                .open=${this.menuOpen}
+                @closed=${this.onMenuClosed}
+              >
+                <theme-changer></theme-changer>
+              </md-menu>
+              <md-standard-icon-button @click="${this.onPaletteClick}">
+                <md-icon>palette</md-icon>
+              </md-standard-icon-button>
+            </lit-island>
+          </section>
+        </div>
+        <slot></slot>
+      </header>
+    `;
+  }
+
+  /**
+   * Opens the theme changer menu and inerts the rest of the page.
+   */
+  private onPaletteClick() {
+    this.menuOpen = true;
+    inertContentSignal.value = true;
+    inertSidebarSignal.value = true;
+    drawerOpenSignal.value = false;
+  }
+
+  /**
+   * Syncs current menu state with actual menu state and makes the rest of the
+   * page interactive again.
+   */
+  private onMenuClosed() {
+    this.menuOpen = false;
+    inertContentSignal.value = false;
+    inertSidebarSignal.value = false;
+  }
+
+  /**
+   * Toggles the sidebar's open state.
+   */
+  private onMenuIconToggle(e: InputEvent) {
+    drawerOpenSignal.value = (e.target as MdStandardIconButton).selected;
+  }
+
   static styles = css`
     :host,
     header {
@@ -108,88 +207,6 @@ export class TopAppBar extends SignalElement(LitElement) {
       }
     }
   `;
-
-  @state() private showFocusRing = false;
-  @state() private menuOpen = false;
-  @property() baseURI = '';
-  @query('.end md-standard-icon-button')
-  private palleteButton!: MdStandardIconButton;
-
-  render() {
-    return html`
-      <header>
-        <div class="default-content">
-          <section class="start">
-            <md-standard-icon-button
-              toggle
-              class="menu-button"
-              .selected=${live(drawerOpenSignal.value)}
-              @click=${this.onClick}
-              @input=${(e: InputEvent) => {
-                drawerOpenSignal.value = (
-                  e.target as MdStandardIconButton
-                ).selected;
-              }}
-            >
-              <span><md-icon>menu</md-icon></span>
-              <span slot="selectedIcon"><md-icon>menu_open</md-icon></span>
-            </md-standard-icon-button>
-            <md-standard-icon-button href="/material-web/" class="home-button">
-              ${materialDesign()}
-            </md-standard-icon-button>
-          </section>
-          <a href="/material-web/" @blur=${this.onBlur}>
-            Material Web
-            <md-focus-ring .visible=${this.showFocusRing}></md-focus-ring>
-          </a>
-
-          <section class="end">
-            <lit-island
-              on:interaction="pointerenter,focusin,pointerdown"
-              import="/material-web/js/hydration-entrypoints/menu.js"
-              id="menu-island"
-            >
-              <md-menu
-                .anchor=${this.palleteButton}
-                menu-corner="START_END"
-                anchor-corner="END_END"
-                stay-open-on-focusout
-                .open=${this.menuOpen}
-                @closed=${this.onMenuClosed}
-              >
-                <theme-changer></theme-changer>
-              </md-menu>
-              <md-standard-icon-button @click="${this.onPaletteClick}">
-                <md-icon>palette</md-icon>
-              </md-standard-icon-button>
-            </lit-island>
-          </section>
-        </div>
-        <slot></slot>
-      </header>
-    `;
-  }
-
-  private onClick() {
-    drawerOpenSignal.subscribe;
-  }
-
-  private async onBlur() {
-    this.showFocusRing = false;
-  }
-
-  private onPaletteClick() {
-    this.menuOpen = true;
-    inertContentSignal.value = true;
-    inertSidebarSignal.value = true;
-    drawerOpenSignal.value = false;
-  }
-
-  private onMenuClosed() {
-    this.menuOpen = false;
-    inertContentSignal.value = false;
-    inertSidebarSignal.value = false;
-  }
 }
 
 declare global {

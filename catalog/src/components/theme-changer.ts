@@ -10,18 +10,21 @@ import '@material/web/icon/icon.js';
 import './hct-slider.js';
 import '@material/web/focus/focus-ring.js';
 
-import type {MdOutlinedSegmentedButton} from '@material/web/segmentedbutton/outlined-segmented-button.js';
-import {css, html, LitElement} from 'lit';
-import {customElement, query, queryAll, state} from 'lit/decorators.js';
-import {live} from 'lit/directives/live.js';
+import type { MdOutlinedSegmentedButton } from '@material/web/segmentedbutton/outlined-segmented-button.js';
+import { css, html, LitElement } from 'lit';
+import { customElement, query, queryAll, state } from 'lit/decorators.js';
+import { live } from 'lit/directives/live.js';
 
-import {ChangeColorEvent, ChangeDarkModeEvent,} from '../types/color-events.js';
-import {hctFromHex, hexFromHct} from '../utils/material-color-helpers.js';
-import {getCurrentMode, getCurrentSeedColor} from '../utils/theme.js';
+import {
+  ChangeColorEvent,
+  ChangeDarkModeEvent,
+} from '../types/color-events.js';
+import { hctFromHex, hexFromHct } from '../utils/material-color-helpers.js';
+import { getCurrentMode, getCurrentSeedColor } from '../utils/theme.js';
 
-import type {HCTSlider} from './hct-slider.js';
+import type { HCTSlider } from './hct-slider.js';
 
-type ColorMode = 'light'|'dark'|'auto';
+type ColorMode = 'light' | 'dark' | 'auto';
 
 /**
  * A small set of controls that allows the user to change the theme and preview
@@ -32,7 +35,7 @@ export class ThemeChanger extends LitElement {
   /**
    * The currently selected color mode.
    */
-  @state() selectedColorMode: ColorMode|null = null;
+  @state() selectedColorMode: ColorMode | null = null;
 
   /**
    * The currently selected hex color.
@@ -57,19 +60,13 @@ export class ThemeChanger extends LitElement {
    */
   @state() tone: number = 0;
 
-  /**
-   * Whether or not to show the focus ring on the hex picker.
-   */
-  @state() showHexPickerFocusRing = false;
-
   @query('input') private inputEl!: HTMLInputElement;
   @queryAll('hct-slider') private sliders!: HCTSlider[];
 
   render() {
     return html`
       <h2>Theme Controls</h2>
-      ${this.renderHexPicker()}
-      ${this.renderHctPicker()}
+      ${this.renderHexPicker()} ${this.renderHctPicker()}
       ${this.renderColorModePicker()}
     `;
   }
@@ -84,17 +81,13 @@ export class ThemeChanger extends LitElement {
         <span class="input-wrapper">
           <div class="overflow">
             <input
-                @input=${this.onHexPickerInput}
-                @blur=${() => {
-      this.showHexPickerFocusRing = false;
-    }}
-                type="color"
-                .value=${live(this.hexColor)}
+              id="color-input"
+              @input=${this.onHexPickerInput}
+              type="color"
+              .value=${live(this.hexColor)}
             />
           </div>
-          <md-focus-ring
-            .visible=${this.showHexPickerFocusRing}
-          ></md-focus-ring>
+          <md-focus-ring for="color-input"></md-focus-ring>
         </span>
       </label>
     </div>`;
@@ -106,26 +99,26 @@ export class ThemeChanger extends LitElement {
   private renderHctPicker() {
     return html`<div class="sliders">
       <hct-slider
-          .value=${live(this.hue)}
-          type="hue"
-          label="Hue"
-          max="360"
-          @input=${this.onSliderInput}
+        .value=${live(this.hue)}
+        type="hue"
+        label="Hue"
+        max="360"
+        @input=${this.onSliderInput}
       ></hct-slider>
       <hct-slider
-          .value=${live(this.chroma)}
-          .color=${this.hexColor}
-          type="chroma"
-          label="Chroma"
-          max="150"
-          @input=${this.onSliderInput}
+        .value=${live(this.chroma)}
+        .color=${this.hexColor}
+        type="chroma"
+        label="Chroma"
+        max="150"
+        @input=${this.onSliderInput}
       ></hct-slider>
       <hct-slider
-          .value=${live(this.tone)}
-          type="tone"
-          label="Tone"
-          max="100"
-          @input=${this.onSliderInput}
+        .value=${live(this.tone)}
+        type="tone"
+        label="Tone"
+        max="100"
+        @input=${this.onSliderInput}
       ></hct-slider>
     </div>`;
   }
@@ -135,7 +128,7 @@ export class ThemeChanger extends LitElement {
    */
   private renderColorModePicker() {
     return html`<md-outlined-segmented-button-set
-        @segmented-button-set-selection=${this.onColorModeSelection}
+      @segmented-button-set-selection=${this.onColorModeSelection}
     >
       ${this.renderModeButton('dark', 'dark_mode')}
       ${this.renderModeButton('auto', 'brightness_medium')}
@@ -201,10 +194,14 @@ export class ThemeChanger extends LitElement {
     this.updateHctFromHex(this.hexColor);
   }
 
-  private onColorModeSelection(e: CustomEvent<{
-    button: MdOutlinedSegmentedButton; selected: boolean; index: number;
-  }>) {
-    const {button} = e.detail;
+  private onColorModeSelection(
+    e: CustomEvent<{
+      button: MdOutlinedSegmentedButton;
+      selected: boolean;
+      index: number;
+    }>
+  ) {
+    const { button } = e.detail;
     const value = button.dataset.value as ColorMode;
     this.selectedColorMode = value;
     this.dispatchEvent(new ChangeDarkModeEvent(value));
@@ -268,10 +265,14 @@ export class ThemeChanger extends LitElement {
       box-sizing: border-box;
       width: 48px;
       height: 48px;
-      border-radius: 24px;
       box-sizing: border-box;
       border: 1px solid var(--md-sys-color-on-secondary-container);
       position: relative;
+    }
+
+    #hex .input-wrapper,
+    #hex md-focus-ring {
+      border-radius: 50%;
     }
 
     .overflow {
