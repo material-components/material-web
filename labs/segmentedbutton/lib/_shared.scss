@@ -10,8 +10,8 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../internal/motion/animation';
-@use '../../ripple/ripple';
+@use '../../../internal/motion/animation';
+@use '../../../ripple/ripple';
 // go/keep-sorted end
 
 @mixin styles() {

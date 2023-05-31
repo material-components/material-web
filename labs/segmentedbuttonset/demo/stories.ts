@@ -5,8 +5,8 @@
  */
 
 import '@material/web/icon/icon.js';
-import '@material/web/segmentedbutton/outlined-segmented-button.js';
-import '@material/web/segmentedbuttonset/outlined-segmented-button-set.js';
+import '@material/web/labs/segmentedbutton/outlined-segmented-button.js';
+import '@material/web/labs/segmentedbuttonset/outlined-segmented-button-set.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {html} from 'lit';
