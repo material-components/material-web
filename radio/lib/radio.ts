@@ -12,7 +12,7 @@ import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
+import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 

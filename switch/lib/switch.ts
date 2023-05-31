@@ -12,7 +12,7 @@ import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
+import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
 
 /**
  * @fires input {InputEvent} Fired whenever `selected` changes due to user

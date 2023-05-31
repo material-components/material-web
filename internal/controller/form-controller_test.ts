@@ -9,8 +9,8 @@
 import {html, LitElement, TemplateResult} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 
-import {Environment} from '../testing/environment.js';
-import {Harness} from '../testing/harness.js';
+import {Environment} from '../../testing/environment.js';
+import {Harness} from '../../testing/harness.js';
 
 import {dispatchActivationClick, isActivationClick} from './events.js';
 import {FormController, FormElement, getFormValue} from './form-controller.js';

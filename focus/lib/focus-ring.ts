@@ -7,7 +7,7 @@
 import {LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
 
-import {Attachable, AttachableController} from '../../controller/attachable-controller.js';
+import {Attachable, AttachableController} from '../../internal/controller/attachable-controller.js';
 
 /**
  * Events that the focus ring listens to.

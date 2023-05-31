@@ -13,7 +13,7 @@ import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick} from '../../controller/events.js';
+import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
 
 /**
  * An element that can select items.

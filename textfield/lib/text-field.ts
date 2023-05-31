@@ -13,9 +13,9 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {redispatchEvent} from '../../controller/events.js';
-import {FormController, getFormValue} from '../../controller/form-controller.js';
-import {stringConverter} from '../../controller/string-converter.js';
+import {redispatchEvent} from '../../internal/controller/events.js';
+import {FormController, getFormValue} from '../../internal/controller/form-controller.js';
+import {stringConverter} from '../../internal/controller/string-converter.js';
 
 /**
  * Input types that are compatible with the text field.

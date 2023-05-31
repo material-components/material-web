@@ -8,7 +8,7 @@ import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {Attachable, AttachableController} from '../../controller/attachable-controller.js';
+import {Attachable, AttachableController} from '../../internal/controller/attachable-controller.js';
 import {EASING} from '../../internal/motion/animation.js';
 
 const PRESS_GROW_MS = 450;

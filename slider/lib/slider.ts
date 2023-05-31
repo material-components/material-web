@@ -14,12 +14,13 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {when} from 'lit/directives/when.js';
 
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../controller/events.js';
-import {FormController, getFormValue} from '../../controller/form-controller.js';
-import {stringConverter} from '../../controller/string-converter.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
+import {FormController, getFormValue} from '../../internal/controller/form-controller.js';
+import {stringConverter} from '../../internal/controller/string-converter.js';
 import {MdRipple} from '../../ripple/ripple.js';
+
 
 // Disable warning for classMap with destructuring
 // tslint:disable:quoted-properties-on-dictionary

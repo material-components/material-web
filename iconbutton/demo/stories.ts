@@ -10,7 +10,7 @@ import '@material/web/iconbutton/filled-tonal-icon-button.js';
 import '@material/web/iconbutton/outlined-icon-button.js';
 import '@material/web/iconbutton/standard-icon-button.js';
 
-import {isRtl} from '@material/web/controller/is-rtl.js';
+import {isRtl} from '@material/web/internal/controller/is-rtl.js';
 import {MaterialStoryInit} from './material-collection.js';
 import {html, nothing} from 'lit';
 import {ref} from 'lit/directives/ref.js';

@@ -14,7 +14,7 @@ import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {isRtl} from '../../controller/is-rtl.js';
+import {isRtl} from '../../internal/controller/is-rtl.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
