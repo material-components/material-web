@@ -26,7 +26,7 @@ const tsEntrypoints = [
   './src/pages/*.ts',
   // SSR stuff
   './src/ssr-utils/lit-hydrate-support.ts',
-  './src/ssr-utils/is-land.ts',
+  './src/ssr-utils/lit-island.ts',
 ];
 const filesPromises = tsEntrypoints.map(async (entry) => tinyGlob(entry));
 const entryPoints = (await Promise.all(filesPromises)).flat();
