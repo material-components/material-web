@@ -26,4 +26,8 @@ export class ListItemOnly extends ListItemEl {
   override renderRipple() {
     return this.noninteractive ? nothing : super.renderRipple();
   }
+
+  override renderFocusRing() {
+    return this.noninteractive ? nothing : super.renderFocusRing();
+  }
 }
