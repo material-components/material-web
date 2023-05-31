@@ -680,7 +680,7 @@ Token                               | Default value
       }
     </style>
 
-    <md-text-button>Text</md-text-button>
+    <md-text-button inert>Text</md-text-button>
   </figure>
 </div>
 
