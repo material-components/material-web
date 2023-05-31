@@ -203,7 +203,8 @@ export class Dialog extends LitElement {
    *
    * Defaults to grow-down.
    */
-  @property({reflect: true}) transition = 'grow-down';
+  @property({reflect: true})
+  transition: 'grow'|'shrink'|'grow-down'|'grow-up'|'grow-left'|'grow-right' = 'grow-down';
 
   private currentAction: string|undefined;
 
