@@ -23,6 +23,8 @@ export const CLOSE_ACTION = 'close';
 const OPENING_TRANSITION_PROP = '--_opening-transition-duration';
 const CLOSING_TRANSITION_PROP = '--_closing-transition-duration';
 
+export type DialogTransition = 'grow'|'shrink'|'grow-down'|'grow-up'|'grow-left'|'grow-right';
+
 /**
  * A dialog component.
  */
@@ -203,8 +205,7 @@ export class Dialog extends LitElement {
    *
    * Defaults to grow-down.
    */
-  @property({reflect: true})
-  transition: 'grow'|'shrink'|'grow-down'|'grow-up'|'grow-left'|'grow-right' = 'grow-down';
+  @property({reflect: true}) transition: DialogTransition = 'grow-down';
 
   private currentAction: string|undefined;
 
