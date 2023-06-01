@@ -21,7 +21,6 @@ import {FormController, getFormValue} from '../../internal/controller/form-contr
 import {stringConverter} from '../../internal/controller/string-converter.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
-
 // Disable warning for classMap with destructuring
 // tslint:disable:quoted-properties-on-dictionary
 
@@ -163,21 +162,24 @@ export class Slider extends LitElement {
     return this.closest('form');
   }
 
-  @query('input.a') private readonly inputA!: HTMLInputElement|null;
-  @query('.handle.a') private readonly handleA!: HTMLDivElement|null;
-  @queryAsync('md-ripple.a') private readonly rippleA!: Promise<MdRipple|null>;
+  @query('input.start') private readonly inputStart!: HTMLInputElement|null;
+  @query('.handle.start') private readonly handleStart!: HTMLDivElement|null;
+  @queryAsync('md-ripple.start')
+  private readonly rippleStart!: Promise<MdRipple|null>;
 
-  @query('input.b') private readonly inputB!: HTMLInputElement|null;
-  @query('.handle.b') private readonly handleB!: HTMLDivElement|null;
-  @queryAsync('md-ripple.b') private readonly rippleB!: Promise<MdRipple|null>;
+  @query('input.end') private readonly inputEnd!: HTMLInputElement|null;
+  @query('.handle.end') private readonly handleEnd!: HTMLDivElement|null;
+  @queryAsync('md-ripple.end')
+  private readonly rippleEnd!: Promise<MdRipple|null>;
+
 
   // handle hover/pressed states are set manually since the handle
   // does not receive pointer events so that the native inputs are
   // interaction targets.
-  @state() private handleAHover = false;
-  @state() private handleBHover = false;
+  @state() private handleStartHover = false;
+  @state() private handleEndHover = false;
 
-  @state() private onTopId = 'b';
+  @state() private startOnTop = false;
   @state() private handlesOverlapping = false;
 
   @state() private renderValueStart = 0;
@@ -196,17 +198,17 @@ export class Slider extends LitElement {
     this.addController(new FormController(this));
     if (!isServer) {
       this.addEventListener('click', (event: MouseEvent) => {
-        if (!isActivationClick(event) || !this.inputB) {
+        if (!isActivationClick(event) || !this.inputEnd) {
           return;
         }
         this.focus();
-        dispatchActivationClick(this.inputB);
+        dispatchActivationClick(this.inputEnd);
       });
     }
   }
 
   override focus() {
-    this.inputB?.focus();
+    this.inputEnd?.focus();
   }
 
   // value coerced to a string
@@ -218,18 +220,18 @@ export class Slider extends LitElement {
   protected override willUpdate(changed: PropertyValues) {
     this.renderValueStart = changed.has('valueStart') ?
         this.valueStart :
-        (this.inputA?.valueAsNumber ?? 0);
+        (this.inputStart?.valueAsNumber ?? 0);
     const endValueChanged =
         (changed.has('valueEnd') && this.range) || changed.has('value');
     this.renderValueEnd = endValueChanged ?
         (this.range ? this.valueEnd : this.value) :
-        (this.inputB?.valueAsNumber ?? 0);
+        (this.inputEnd?.valueAsNumber ?? 0);
     // manually handle ripple hover state since the handle is pointer events
     // none.
-    if (changed.get('handleAHover') !== undefined) {
-      this.toggleRippleHover(this.rippleA, this.handleAHover);
-    } else if (changed.get('handleBHover') !== undefined) {
-      this.toggleRippleHover(this.rippleB, this.handleBHover);
+    if (changed.get('handleStartHover') !== undefined) {
+      this.toggleRippleHover(this.rippleStart, this.handleStartHover);
+    } else if (changed.get('handleEndHover') !== undefined) {
+      this.toggleRippleHover(this.rippleEnd, this.handleEndHover);
     }
   }
 
@@ -239,12 +241,12 @@ export class Slider extends LitElement {
     // interaction. These can get out of sync if a supplied value does not
     // map to an exactly stepped value between min and max.
     if (this.range) {
-      this.renderValueStart = this.inputA!.valueAsNumber;
+      this.renderValueStart = this.inputStart!.valueAsNumber;
     }
-    this.renderValueEnd = this.inputB!.valueAsNumber;
+    this.renderValueEnd = this.inputEnd!.valueAsNumber;
     if (changed.has('range') || changed.has('renderValueStart') ||
         changed.has('renderValueEnd') || this.isUpdatePending) {
-      this.handlesOverlapping = isOverlapping(this.handleA, this.handleB);
+      this.handlesOverlapping = isOverlapping(this.handleStart, this.handleEnd);
     }
     // called to finish the update imediately;
     // note, this is a no-op unless an update is scheduled
@@ -254,45 +256,49 @@ export class Slider extends LitElement {
   protected override render() {
     const step = this.step === 0 ? 1 : this.step;
     const range = Math.max(this.max - this.min, step);
-    const lowerFraction =
+    const startFraction =
         this.range ? ((this.renderValueStart - this.min) / range) : 0;
-    const upperFraction = (this.renderValueEnd - this.min) / range;
+    const endFraction = (this.renderValueEnd - this.min) / range;
     const containerStyles = {
       // for clipping inputs and active track.
-      '--slider-lower-fraction': String(lowerFraction),
-      '--slider-upper-fraction': String(upperFraction),
+      '--slider-start-fraction': String(startFraction),
+      '--slider-end-fraction': String(endFraction),
       // for generating tick marks
       '--slider-tick-count': String(range / step),
     };
     const containerClasses = {ranged: this.range};
 
     // optional label values to show in place of the value.
-    const labelA = this.valueStartLabel ?? String(this.renderValueStart);
-    const labelB = (this.range ? this.valueEndLabel : this.valueLabel) ??
+    const labelStart = this.valueStartLabel ?? String(this.renderValueStart);
+    const labelEnd = (this.range ? this.valueEndLabel : this.valueLabel) ??
         String(this.renderValueEnd);
 
-    const inputAProps = {
-      id: 'a',
-      lesser: true,
+    const inputStartProps = {
+      start: true,
       value: this.renderValueStart,
-      label: labelA,
+      label: labelStart
     };
 
-    const inputBProps = {
-      id: 'b',
-      lesser: false,
+    const inputEndProps = {
+      start: false,
       value: this.renderValueEnd,
-      label: labelB,
+      label: labelEnd
     };
 
-    const handleAProps =
-        {id: 'a', lesser: true, hover: this.handleAHover, label: labelA};
+    const handleStartProps = {
+      start: true,
+      hover: this.handleStartHover,
+      label: labelStart
+    };
 
-    const handleBProps =
-        {id: 'b', lesser: false, hover: this.handleBHover, label: labelB};
+    const handleEndProps = {
+      start: false,
+      hover: this.handleEndHover,
+      label: labelEnd
+    };
 
     const handleContainerClasses = {
-      hover: this.handleAHover || this.handleBHover
+      hover: this.handleStartHover || this.handleEndHover
     };
 
     return html`
@@ -300,14 +306,14 @@ export class Slider extends LitElement {
         class="container ${classMap(containerClasses)}"
         style=${styleMap(containerStyles)}
       >
-        ${when(this.range, () => this.renderInput(inputAProps))}
-        ${this.renderInput(inputBProps)}
+        ${when(this.range, () => this.renderInput(inputStartProps))}
+        ${this.renderInput(inputEndProps)}
         ${this.renderTrack()}
         <div class="handleContainerPadded">
           <div class="handleContainerBlock">
             <div class="handleContainer ${classMap(handleContainerClasses)}">
-              ${when(this.range, () => this.renderHandle(handleAProps))}
-              ${this.renderHandle(handleBProps)}
+              ${when(this.range, () => this.renderHandle(handleStartProps))}
+              ${this.renderHandle(handleEndProps)}
             </div>
           </div>
         </div>
@@ -325,42 +331,42 @@ export class Slider extends LitElement {
       </div>`;
   }
 
-  private renderHandle(
-      {id, lesser, hover, label}:
-          {id: string, lesser: boolean, hover: boolean, label: string}) {
-    const onTop = !this.disabled && id === this.onTopId;
+  private renderHandle({start, hover, label}:
+                           {start: boolean, hover: boolean, label: string}) {
+    const onTop = !this.disabled && start === this.startOnTop;
     const isOverlapping = !this.disabled && this.handlesOverlapping;
+    const name = start ? 'start' : 'end';
     return html`<div class="handle ${classMap({
-      [id]: true,
-      lesser,
+      [name]: true,
       hover,
       onTop,
       isOverlapping
     })}">
         <div class="handleNub"><md-elevation></md-elevation></div>
         ${when(this.withLabel, () => this.renderLabel(label))}
-      <md-focus-ring for=${id}></md-focus-ring>
-      <md-ripple for=${id} class=${id} ?disabled=${this.disabled}></md-ripple>
+      <md-focus-ring for=${name}></md-focus-ring>
+      <md-ripple for=${name} class=${name} ?disabled=${
+        this.disabled}></md-ripple>
     </div>`;
   }
 
-  private renderInput({id, lesser, value, label}: {
-    id: string,
-    lesser: boolean,
+  private renderInput({start, value, label}: {
+    start: boolean,
     value: number,
     label: string,
   }) {
+    const name = start ? `start` : `end`;
     // when ranged, ensure announcement includes value info.
     // Needed for closure conformance
     let {ariaLabel} = this as ARIAMixinStrict;
     const {range, ariaLabelStart, ariaLabelEnd} = this;
     if (range) {
-      ariaLabel = (lesser ? ariaLabelStart : ariaLabelEnd) ?? null;
+      ariaLabel = (start ? ariaLabelStart : ariaLabelEnd) ?? null;
     }
     return html`<input type="range"
       class="${classMap({
-      lesser,
-      [id]: true
+      start,
+      end: !start
     })}"
       @focus=${this.handleFocus}
       @pointerdown=${this.handleDown}
@@ -372,13 +378,13 @@ export class Slider extends LitElement {
       @keyup=${this.handleKeyup}
       @input=${this.handleInput}
       @change=${this.handleChange}
-      id=${id}
+      id=${name}
       .disabled=${this.disabled}
       .min=${String(this.min)}
       .max=${String(this.max)}
       .step=${String(this.step)}
       .value=${String(value)}
-      .tabIndex=${lesser ? 1 : 0}
+      .tabIndex=${start ? 1 : 0}
       aria-label=${ariaLabel || nothing}
       aria-valuetext=${label}>`;
   }
@@ -399,17 +405,14 @@ export class Slider extends LitElement {
     }
   }
 
-  private isEventOnA({target}: Event) {
-    return target === this.inputA;
-  }
-
   private handleFocus(e: Event) {
     this.updateOnTop(e.target as HTMLInputElement);
   }
 
   private startAction(e: Event) {
     const target = e.target as HTMLInputElement;
-    const fixed = (target === this.inputA) ? this.inputB! : this.inputA!;
+    const fixed =
+        (target === this.inputStart) ? this.inputEnd! : this.inputStart!;
     this.action = {
       canFlip: e.type === 'pointerdown',
       flipped: false,
@@ -435,11 +438,12 @@ export class Slider extends LitElement {
   private handleDown(e: PointerEvent) {
     this.startAction(e);
     this.ripplePointerId = e.pointerId;
-    const isA = this.isEventOnA(e);
+    const isStart = e.target as HTMLInputElement === this.inputStart;
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
-    this.handleAHover = !this.disabled && isA && Boolean(this.handleA);
-    this.handleBHover = !this.disabled && !isA && Boolean(this.handleB);
+    this.handleStartHover =
+        !this.disabled && isStart && Boolean(this.handleStart);
+    this.handleEndHover = !this.disabled && !isStart && Boolean(this.handleEnd);
   }
 
   private async handleUp(e: PointerEvent) {
@@ -474,8 +478,8 @@ export class Slider extends LitElement {
    * slider is updated.
    */
   private handleMove(e: PointerEvent) {
-    this.handleAHover = !this.disabled && inBounds(e, this.handleA);
-    this.handleBHover = !this.disabled && inBounds(e, this.handleB);
+    this.handleStartHover = !this.disabled && inBounds(e, this.handleStart);
+    this.handleEndHover = !this.disabled && inBounds(e, this.handleEnd);
   }
 
   private handleEnter(e: PointerEvent) {
@@ -483,17 +487,17 @@ export class Slider extends LitElement {
   }
 
   private handleLeave() {
-    this.handleAHover = false;
-    this.handleBHover = false;
+    this.handleStartHover = false;
+    this.handleEndHover = false;
   }
 
   private updateOnTop(input: HTMLInputElement) {
-    this.onTopId = input.classList.contains('a') ? 'a' : 'b';
+    this.startOnTop = input.classList.contains('start');
   }
 
   private needsClamping() {
     const {target, fixed} = this.action!;
-    const isStart = target === this.inputA;
+    const isStart = target === this.inputStart;
     return isStart ? target.valueAsNumber > fixed.valueAsNumber :
                      target.valueAsNumber < fixed.valueAsNumber;
   }
@@ -556,10 +560,10 @@ export class Slider extends LitElement {
     this.updateOnTop(target);
     // update value only on interaction
     if (this.range) {
-      this.valueStart = this.inputA!.valueAsNumber;
-      this.valueEnd = this.inputB!.valueAsNumber;
+      this.valueStart = this.inputStart!.valueAsNumber;
+      this.valueEnd = this.inputEnd!.valueAsNumber;
     } else {
-      this.value = this.inputB!.valueAsNumber;
+      this.value = this.inputEnd!.valueAsNumber;
     }
     // control external visibility of input event
     if (stopPropagation) {

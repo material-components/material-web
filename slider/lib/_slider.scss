@@ -58,24 +58,24 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   $_active-track-max-clip: calc(
     100% - var(--_with-tick-marks-container-size) * 2
   );
-  // When the lower fraction is !0, add clipping by the tick container size
-  $_lower-fraction-not-zero: min(var(--slider-lower-fraction) * 1e9, 1);
+  // When the start fraction is !0, add clipping by the tick container size
+  $_start-fraction-not-zero: min(var(--slider-start-fraction) * 1e9, 1);
   $_active-track-start-offset: calc(
-    var(--_with-tick-marks-container-size) * $_lower-fraction-not-zero
+    var(--_with-tick-marks-container-size) * $_start-fraction-not-zero
   );
   $_active-track-start-clip: calc(
     $_active-track-start-offset + $_active-track-max-clip *
-      var(--slider-lower-fraction)
+      var(--slider-start-fraction)
   );
 
-  // When the upper fraction is !1, add clipping by the tick container size
-  $_upper-fraction-not-one: min((1 - var(--slider-upper-fraction)) * 1e9, 1);
+  // When the end fraction is !1, add clipping by the tick container size
+  $_end-fraction-not-one: min((1 - var(--slider-end-fraction)) * 1e9, 1);
   $_active-track-end-offset: calc(
-    var(--_with-tick-marks-container-size) * $_upper-fraction-not-one
+    var(--_with-tick-marks-container-size) * $_end-fraction-not-one
   );
   $_active-track-end-clip: calc(
     $_active-track-end-offset + $_active-track-max-clip *
-      (1 - var(--slider-upper-fraction))
+      (1 - var(--slider-end-fraction))
   );
 
   :host {
@@ -237,9 +237,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     position: absolute;
     inset-block-start: 0;
     inset-block-end: 0;
-    inset-inline-start: calc(100% * var(--slider-lower-fraction));
+    inset-inline-start: calc(100% * var(--slider-start-fraction));
     inline-size: calc(
-      100% * (var(--slider-upper-fraction) - var(--slider-lower-fraction))
+      100% * (var(--slider-end-fraction) - var(--slider-start-fraction))
     );
   }
 
@@ -265,8 +265,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background: var(--_disabled-handle-color);
   }
 
-  input.b:focus ~ .handleContainerPadded .handle.b > .handleNub,
-  input.a:focus ~ .handleContainerPadded .handle.a > .handleNub {
+  input.end:focus ~ .handleContainerPadded .handle.end > .handleNub,
+  input.start:focus ~ .handleContainerPadded .handle.start > .handleNub {
     background: var(--_focus-handle-color);
   }
 
@@ -276,8 +276,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   :host(:not([disabled])) {
-    input.b:active ~ .handleContainerPadded .handle.b > .handleNub,
-    input.a:active ~ .handleContainerPadded .handle.a > .handleNub {
+    input.end:active ~ .handleContainerPadded .handle.end > .handleNub,
+    input.start:active ~ .handleContainerPadded .handle.start > .handleNub {
       background: var(--_pressed-handle-color);
     }
   }
@@ -291,10 +291,10 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     }
   }
 
-  .handle.lesser {
+  .handle.start {
     inset-inline-start: calc(0px - var(--_state-layer-size) / 2);
   }
-  .handle:not(.lesser) {
+  .handle.end {
     inset-inline-end: calc(0px - var(--_state-layer-size) / 2);
   }
 
@@ -414,32 +414,32 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   $_clip-to-start: calc(
     var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
       (
-        var(--slider-lower-fraction) +
-          ((var(--slider-upper-fraction) - var(--slider-lower-fraction)) / 2)
+        var(--slider-start-fraction) +
+          ((var(--slider-end-fraction) - var(--slider-start-fraction)) / 2)
       )
   );
 
   $_clip-to-end: calc(100% - $_clip-to-start);
 
-  // clip left side of "lesser" input
-  .ranged input.lesser {
+  // clip left side of "start" input
+  .ranged input.start {
     clip-path: inset(0 $_clip-to-end 0 0);
   }
 
   // in 'rtl', clip right side of "lesser" input
-  @each $_rtl-selector in _get-rtl-selectors('.ranged input.lesser') {
+  @each $_rtl-selector in _get-rtl-selectors('.ranged input.start') {
     #{$_rtl-selector} {
       clip-path: inset(0 0 0 $_clip-to-end);
     }
   }
 
-  // clip right side of "greater" input
-  .ranged input:not(.lesser) {
+  // clip right side of "end" input
+  .ranged input.end {
     clip-path: inset(0 0 0 $_clip-to-start);
   }
 
   // in 'rtl', clip left side of "greater" input
-  @each $_rtl-selector in _get-rtl-selectors('.ranged input', ':not(.lesser)') {
+  @each $_rtl-selector in _get-rtl-selectors('.ranged input.end') {
     #{$_rtl-selector} {
       clip-path: inset(0 $_clip-to-start 0 0);
     }
