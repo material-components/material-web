@@ -112,7 +112,7 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
   }) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog transition="condense" style="--md-dialog-container-max-inline-size: 320px;"
+      <md-dialog transition="shrink" style="--md-dialog-container-max-inline-size: 320px;"
           .fullscreen=${fullscreen}
           .modeless=${modeless}
           .footerHidden=${footerHidden}
