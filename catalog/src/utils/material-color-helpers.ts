@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {argbFromHex, Hct, hexFromArgb, MaterialDynamicColors, SchemeTonalSpot} from '@material/material-color-utilities';
+import {argbFromHex, Hct, hexFromArgb, MaterialDynamicColors, SchemeContent} from '@material/material-color-utilities';
 
 import type {Theme} from '../types/color-events.js';
 
@@ -81,7 +81,8 @@ export function hexFromHct(hue: number, chroma: number, tone: number) {
 
 /**
  * Generates a theme object mapping of kebab-system-color-token to stringified
- * sRGB hex value in the Material TonalSpot color scheme given a single color.
+ * sRGB hex value in the Material SchemeContent color scheme given a single
+ * color.
  *
  * @param color A stringified hex color e.g. '#C01075'
  * @param isDark Whether or not to generate a dark mode theme.
@@ -89,8 +90,7 @@ export function hexFromHct(hue: number, chroma: number, tone: number) {
  *     custom property).
  */
 export function themeFromSourceColor(color: string, isDark: boolean): Theme {
-  const scheme =
-      new SchemeTonalSpot(Hct.fromInt(argbFromHex(color)), isDark, 0);
+  const scheme = new SchemeContent(Hct.fromInt(argbFromHex(color)), isDark, 0);
   const theme: {[key: string]: string} = {};
 
   for (const [key, value] of Object.entries(materialColors)) {
