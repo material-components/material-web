@@ -14,12 +14,12 @@ import '@material/web/button/text-button.js';
 import '@material/web/dialog/dialog.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {MdDialog} from '@material/web/dialog/dialog.js';
+import {MdDialog, DialogTransition} from '@material/web/dialog/dialog.js';
 import {css, html} from 'lit';
 
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
-  transition: string|undefined;
+  transition?: DialogTransition;
   fullscreen: boolean;
   modeless: boolean;
   footerHidden: boolean;
