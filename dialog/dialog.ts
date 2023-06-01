@@ -9,6 +9,8 @@ import {customElement} from 'lit/decorators.js';
 import {Dialog} from './lib/dialog.js';
 import {styles} from './lib/dialog-styles.css.js';
 
+export {DialogTransition} from './lib/dialog';
+
 declare global {
   interface HTMLElementTagNameMap {
     'md-dialog': MdDialog;
