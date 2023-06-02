@@ -62,7 +62,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     -webkit-tap-highlight-color: transparent;
   }
 
-  :host([checked]) {
+  .checked {
     @include ripple.theme(
       (
         hover-color: var(--_selected-hover-state-layer-color),
@@ -108,11 +108,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     transition: opacity 50ms linear;
   }
 
-  :host([checked]) .icon {
+  .checked .icon {
     fill: var(--_selected-icon-color);
   }
 
-  :host([checked]) .inner.circle {
+  .checked .inner.circle {
     animation: inner-circle-grow 300ms
       map.get($_md-sys-motion, easing-emphasized-decelerate);
     opacity: 1;
@@ -150,19 +150,19 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     opacity: var(--_disabled-unselected-icon-opacity);
   }
 
-  :host([checked]:hover) .icon {
+  :host(:hover) .checked .icon {
     fill: var(--_selected-hover-icon-color);
   }
 
-  :host([checked]:focus-within) .icon {
+  :host(:focus-within) .checked .icon {
     fill: var(--_selected-focus-icon-color);
   }
 
-  :host([checked]:active) .icon {
+  :host(:active) .checked .icon {
     fill: var(--_selected-pressed-icon-color);
   }
 
-  :host([checked][disabled]) .icon {
+  :host([disabled]) .checked .icon {
     fill: var(--_disabled-selected-icon-color);
     opacity: var(--_disabled-selected-icon-opacity);
   }

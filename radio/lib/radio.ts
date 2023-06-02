@@ -9,6 +9,7 @@ import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
@@ -115,29 +116,32 @@ export class Radio extends LitElement {
   }
 
   protected override render() {
+    const classes = {checked: this.checked};
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
-      <md-focus-ring for="input"></md-focus-ring>
-      <svg class="icon" viewBox="0 0 20 20">
-        <mask id="cutout">
-          <rect width="100%" height="100%" fill="white" />
-          <circle cx="10" cy="10" r="8" fill="black" />
-        </mask>
-        <circle class="outer circle" cx="10" cy="10" r="10" mask="url(#cutout)" />
-        <circle class="inner circle" cx="10" cy="10" r="5" />
-      </svg>
-      <input
-        id="input"
-        type="radio"
-        name=${this.name}
-        aria-label=${ariaLabel || nothing}
-        .checked=${this.checked}
-        .value=${this.value}
-        ?disabled=${this.disabled}
-        @change=${this.handleChange}
-      >
+      <div class=${classMap(classes)}>
+        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
+        <md-focus-ring for="input"></md-focus-ring>
+        <svg class="icon" viewBox="0 0 20 20">
+          <mask id="cutout">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="10" cy="10" r="8" fill="black" />
+          </mask>
+          <circle class="outer circle" cx="10" cy="10" r="10" mask="url(#cutout)" />
+          <circle class="inner circle" cx="10" cy="10" r="5" />
+        </svg>
+        <input
+          id="input"
+          type="radio"
+          name=${this.name}
+          aria-label=${ariaLabel || nothing}
+          .checked=${this.checked}
+          .value=${this.value}
+          ?disabled=${this.disabled}
+          @change=${this.handleChange}
+        >
+      </div>
     `;
   }
 
