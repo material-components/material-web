@@ -53,19 +53,19 @@ export abstract class Button extends LitElement {
    *
    * _Note:_ Link buttons cannot have trailing icons.
    */
-  @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
+  @property({type: Boolean, attribute: 'trailing-icon'}) trailingIcon = false;
 
   /**
    * Whether to display the icon or not.
    */
-  @property({type: Boolean}) hasIcon = false;
+  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
 
   /**
    * Whether `preventDefault()` should be called on the underlying button.
    * Useful for preventing certain native functionalities like preventing form
    * submissions.
    */
-  @property({type: Boolean}) preventClickDefault = false;
+  @property({type: Boolean, attribute: 'prevent-click-default'}) preventClickDefault = false;
 
   @query('.md3-button') private readonly buttonElement!: HTMLElement|null;
 
