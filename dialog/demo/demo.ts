@@ -15,9 +15,9 @@ import { DialogTransition } from '../dialog.js';
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Dialog', [
-      new Knob<Extract<DialogTransition, string>, "transition">('transition', {
-        defaultValue: 'grow-down',
-        ui: selectDropdown({
+      new Knob('transition', {
+        defaultValue: 'grow-down' as DialogTransition,
+        ui: selectDropdown<DialogTransition>({
           options: [
             {label: 'grow-down', value: 'grow-down'},
             {label: 'grow-up', value: 'grow-up'},
