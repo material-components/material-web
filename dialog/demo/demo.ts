@@ -11,10 +11,11 @@ import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDe
 import {boolInput, Knob, selectDropdown, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
+import { DialogTransition } from '../dialog.js';
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Dialog', [
-      new Knob('transition', {
+      new Knob<Extract<DialogTransition, string>, "transition">('transition', {
         defaultValue: 'grow-down',
         ui: selectDropdown({
           options: [

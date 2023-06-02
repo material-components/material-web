@@ -26,7 +26,7 @@ const CLOSING_TRANSITION_PROP = '--_closing-transition-duration';
 /**
  * Dialog transition type.
  */
-export type DialogTransition = 'grow'|'shrink'|'grow-down'|'grow-up'|'grow-left'|'grow-right';
+export type DialogTransition = 'grow'|'shrink'|'grow-down'|'grow-up'|'grow-left'|'grow-right'|'';
 
 /**
  * A dialog component.
