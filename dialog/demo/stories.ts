@@ -19,7 +19,7 @@ import {css, html} from 'lit';
 
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
-  transition?: DialogTransition;
+  transition: DialogTransition|undefined;
   fullscreen: boolean;
   modeless: boolean;
   footerHidden: boolean;
