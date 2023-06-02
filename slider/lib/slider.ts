@@ -17,39 +17,17 @@ import {when} from 'lit/directives/when.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
-import {FormController, getFormValue} from '../../internal/controller/form-controller.js';
-import {stringConverter} from '../../internal/controller/string-converter.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 // Disable warning for classMap with destructuring
 // tslint:disable:quoted-properties-on-dictionary
 
-function inBounds({x, y}: PointerEvent, element?: HTMLElement|null) {
-  if (!element) {
-    return false;
-  }
-  const {top, left, bottom, right} = element.getBoundingClientRect();
-  return x >= left && x <= right && y >= top && y <= bottom;
-}
-
-function isOverlapping(elA: Element|null, elB: Element|null) {
-  if (!(elA && elB)) {
-    return false;
-  }
-  const a = elA.getBoundingClientRect();
-  const b = elB.getBoundingClientRect();
-  return !(
-      a.top > b.bottom || a.right < b.left || a.bottom < b.top ||
-      a.left > b.right);
-}
-
-interface Action {
-  canFlip: boolean;
-  flipped: boolean;
-  target: HTMLInputElement;
-  fixed: HTMLInputElement;
-  values: Map<HTMLInputElement|undefined, number|undefined>;
-}
+/** The default value for a continuous slider. */
+const DEFAULT_VALUE = 50;
+/** The default start value for a range slider. */
+const DEFAULT_VALUE_START = 25;
+/** The default end value for a range slider. */
+const DEFAULT_VALUE_END = 75;
 
 /**
  * Slider component.
@@ -86,17 +64,19 @@ export class Slider extends LitElement {
   /**
    * The slider value displayed when range is false.
    */
-  @property({type: Number}) value = 50;
+  @property({type: Number}) value = DEFAULT_VALUE;
 
   /**
    * The slider start value displayed when range is true.
    */
-  @property({type: Number}) valueStart = 25;
+  @property({type: Number, attribute: 'value-start'})
+  valueStart = DEFAULT_VALUE_START;
 
   /**
    * The slider end value displayed when range is true.
    */
-  @property({type: Number}) valueEnd = 75;
+  @property({type: Number, attribute: 'value-end'})
+  valueEnd = DEFAULT_VALUE_END;
 
   /**
    * An optional label for the slider's value displayed when range is
@@ -153,13 +133,49 @@ export class Slider extends LitElement {
   /**
    * The HTML name to use in form submission.
    */
-  @property({reflect: true, converter: stringConverter}) name = '';
+  get name() {
+    return this.getAttribute('name') ?? '';
+  }
+  set name(name: string) {
+    this.setAttribute('name', name);
+  }
+
+  /**
+   * The HTML name to use in form submission for a range slider's starting
+   * value. Use `name` instead if both the start and end values should use the
+   * same name.
+   */
+  get nameStart() {
+    return this.getAttribute('name-start') ?? this.name;
+  }
+  set nameStart(name: string) {
+    this.setAttribute('name-start', name);
+  }
+
+  /**
+   * The HTML name to use in form submission for a range slider's ending value.
+   * Use `name` instead if both the start and end values should use the same
+   * name.
+   */
+  get nameEnd() {
+    return this.getAttribute('name-end') ?? this.nameStart;
+  }
+  set nameEnd(name: string) {
+    this.setAttribute('name-end', name);
+  }
 
   /**
    * The associated form element with which this element's value will submit.
    */
   get form() {
-    return this.closest('form');
+    return this.internals.form;
+  }
+
+  /**
+   * The labels this element is associated with.
+   */
+  get labels() {
+    return this.internals.labels;
   }
 
   @query('input.start') private readonly inputStart!: HTMLInputElement|null;
@@ -193,9 +209,11 @@ export class Slider extends LitElement {
 
   private action?: Action;
 
+  private readonly internals =
+      (this as HTMLElement /* needed for closure */).attachInternals();
+
   constructor() {
     super();
-    this.addController(new FormController(this));
     if (!isServer) {
       this.addEventListener('click', (event: MouseEvent) => {
         if (!isActivationClick(event) || !this.inputEnd) {
@@ -209,12 +227,6 @@ export class Slider extends LitElement {
 
   override focus() {
     this.inputEnd?.focus();
-  }
-
-  // value coerced to a string
-  [getFormValue]() {
-    return this.range ? `${this.valueStart}, ${this.valueEnd}` :
-                        `${this.value}`;
   }
 
   protected override willUpdate(changed: PropertyValues) {
@@ -233,6 +245,22 @@ export class Slider extends LitElement {
     } else if (changed.get('handleEndHover') !== undefined) {
       this.toggleRippleHover(this.rippleEnd, this.handleEndHover);
     }
+  }
+
+  protected override update(changed: PropertyValues<Slider>) {
+    if (changed.has('value') || changed.has('range') ||
+        changed.has('valueStart') || changed.has('valueEnd')) {
+      if (this.range) {
+        const data = new FormData();
+        data.append(this.nameStart, String(this.valueStart));
+        data.append(this.nameEnd, String(this.valueEnd));
+        this.internals.setFormValue(data);
+      } else {
+        this.internals.setFormValue(String(this.value));
+      }
+    }
+
+    super.update(changed);
   }
 
   protected override updated(changed: PropertyValues) {
@@ -590,4 +618,58 @@ export class Slider extends LitElement {
     // ensure keyboard triggered change clears action.
     this.finishAction(e);
   }
+
+  /** @private */
+  formResetCallback() {
+    if (this.range) {
+      this.valueStart =
+          Number(this.getAttribute('value-start') ?? DEFAULT_VALUE_START);
+      this.valueEnd =
+          Number(this.getAttribute('value-end') ?? DEFAULT_VALUE_END);
+      return;
+    }
+
+    this.value = Number(this.getAttribute('value') ?? DEFAULT_VALUE);
+  }
+
+  /** @private */
+  formStateRestoreCallback(state: string|Array<[string, string]>|null) {
+    if (Array.isArray(state)) {
+      const [[, valueStart], [, valueEnd]] = state;
+      this.valueStart = Number(valueStart ?? DEFAULT_VALUE_START);
+      this.valueEnd = Number(valueEnd ?? DEFAULT_VALUE_START);
+      this.range = true;
+      return;
+    }
+
+    this.value = Number(state ?? DEFAULT_VALUE);
+    this.range = false;
+  }
+}
+
+function inBounds({x, y}: PointerEvent, element?: HTMLElement|null) {
+  if (!element) {
+    return false;
+  }
+  const {top, left, bottom, right} = element.getBoundingClientRect();
+  return x >= left && x <= right && y >= top && y <= bottom;
+}
+
+function isOverlapping(elA: Element|null, elB: Element|null) {
+  if (!(elA && elB)) {
+    return false;
+  }
+  const a = elA.getBoundingClientRect();
+  const b = elB.getBoundingClientRect();
+  return !(
+      a.top > b.bottom || a.right < b.left || a.bottom < b.top ||
+      a.left > b.right);
+}
+
+interface Action {
+  canFlip: boolean;
+  flipped: boolean;
+  target: HTMLInputElement;
+  fixed: HTMLInputElement;
+  values: Map<HTMLInputElement|undefined, number|undefined>;
 }

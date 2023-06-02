@@ -199,6 +199,7 @@ export function createFormTests<T extends HTMLElement>(
     it(`it should pass the "${resetTest.name}" reset test`, async () => {
       const {form, control} = await setupTest(resetTest.render());
       resetTest.change(control);
+      await control?.updateComplete;
       form.reset();
       resetTest.assertReset(control);
     });
@@ -215,7 +216,8 @@ export function createFormTests<T extends HTMLElement>(
         // the form, add a new control, and simulate restoring the state and
         // value for that control.
         const [value, state] =
-            getInternals(control).setFormValue.calls.mostRecent()?.args ?? [null, null];
+            getInternals(control).setFormValue.calls.mostRecent()?.args ??
+            [null, null];
 
         const newControl = document.createElement(control.tagName) as
             ExpectedFormAssociatedElement;
@@ -223,7 +225,7 @@ export function createFormTests<T extends HTMLElement>(
         form.appendChild(newControl);
         let restoreState: FormState|null|FormData = state ?? value;
         if (restoreState instanceof FormData) {
-          restoreState = restoreState.entries();
+          restoreState = Array.from(restoreState.entries());
         }
 
         newControl?.formStateRestoreCallback(restoreState, 'restore');
@@ -261,8 +263,7 @@ interface ExpectedFormAssociatedElement extends HTMLElement {
  * `formStateRestoreCallback` type for `state`. May be a string, `File`,
  * `FormData` entries, or null.
  */
-type FormState =
-    FormDataEntryValue|IterableIterator<[string, FormDataEntryValue]>;
+type FormState = FormDataEntryValue|Array<[string, FormDataEntryValue]>;
 
 /**
  * A test for `FormData` values.

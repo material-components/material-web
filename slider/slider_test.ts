@@ -7,6 +7,7 @@
 import {html} from 'lit';
 
 import {Environment} from '../testing/environment.js';
+import {createFormTests} from '../testing/forms.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {SliderHarness} from './harness.js';
@@ -342,6 +343,142 @@ describe('<md-slider>', () => {
       harness.element.focus();
       const input = harness.getInputs()[0];
       expect(input.matches(':focus')).toBe(true);
+    });
+  });
+
+  describe('forms', () => {
+    createFormTests({
+      queryControl: root => root.querySelector('md-slider'),
+      valueTests: [
+        {
+          name: 'unnamed',
+          render: () => html`<md-slider></md-slider>`,
+          assertValue(formData) {
+            expect(formData)
+                .withContext('should not add anything to form without a name')
+                .toHaveSize(0);
+          }
+        },
+        {
+          name: 'single value',
+          render: () => html`<md-slider name="slider" value="10"></md-slider>`,
+          assertValue(formData) {
+            expect(formData.get('slider')).toBe('10');
+          }
+        },
+        {
+          name: 'multiple values same name',
+          render: () =>
+              html`<md-slider range name="slider" value-start="0" value-end="10"></md-slider>`,
+          assertValue(formData) {
+            expect(formData.getAll('slider')).toEqual(['0', '10']);
+          }
+        },
+        {
+          name: 'multiple values different names',
+          render: () =>
+              html`<md-slider range name-start="slider-start" name-end="slider-end" value-start="0" value-end="10"></md-slider>`,
+          assertValue(formData) {
+            expect(formData.get('slider-start')).toBe('0');
+            expect(formData.get('slider-end')).toBe('10');
+          }
+        },
+        {
+          name: 'disabled',
+          render: () =>
+              html`<md-slider name="slider" value="10" disabled></md-slider>`,
+          assertValue(formData) {
+            expect(formData)
+                .withContext('should not add anything to form when disabled')
+                .toHaveSize(0);
+          }
+        }
+      ],
+      resetTests: [
+        {
+          name: 'reset single value',
+          render: () => html`<md-slider name="slider" value="10"></md-slider>`,
+          change(slider) {
+            slider.value = 100;
+          },
+          assertReset(slider) {
+            expect(slider.value)
+                .withContext('slider.value after reset')
+                .toBe(10);
+          }
+        },
+        {
+          name: 'reset multiple values same name',
+          render: () =>
+              html`<md-slider range name="slider" value-start="0" value-end="10"></md-slider>`,
+          change(slider) {
+            slider.valueStart = 5;
+            slider.valueEnd = 5;
+          },
+          assertReset(slider) {
+            expect(slider.valueStart)
+                .withContext('slider.valueStart after reset')
+                .toEqual(0);
+            expect(slider.valueEnd)
+                .withContext('slider.valueEnd after reset')
+                .toEqual(10);
+          }
+        },
+        {
+          name: 'reset multiple values different names',
+          render: () =>
+              html`<md-slider range name-start="slider-start" name-end="slider-end" value-start="0" value-end="10"></md-slider>`,
+          change(slider) {
+            slider.valueStart = 5;
+            slider.valueEnd = 5;
+          },
+          assertReset(slider) {
+            expect(slider.valueStart)
+                .withContext('slider.valueStart after reset')
+                .toEqual(0);
+            expect(slider.valueEnd)
+                .withContext('slider.valueEnd after reset')
+                .toEqual(10);
+          }
+        },
+      ],
+      restoreTests: [
+        {
+          name: 'restore single value',
+          render: () => html`<md-slider name="checkbox" value="1"></md-slider>`,
+          assertRestored(slider) {
+            expect(slider.value)
+                .withContext('slider.value after restore')
+                .toBe(1);
+          }
+        },
+        {
+          name: 'restore multiple values same name',
+          render: () =>
+              html`<md-slider range name="slider" value-start="0" value-end="10"></md-slider>`,
+          assertRestored(slider) {
+            expect(slider.valueStart)
+                .withContext('slider.valueStart after restore')
+                .toEqual(0);
+            expect(slider.valueEnd)
+                .withContext('slider.valueEnd after restore')
+                .toEqual(10);
+          }
+        },
+        {
+          name: 'restore multiple values different names',
+          render: () =>
+              html`<md-slider range name-start="slider-start" name-end="slider-end" value-start="0" value-end="10"></md-slider>`,
+          assertRestored(slider) {
+            expect(slider.valueStart)
+                .withContext('slider.valueStart after restore')
+                .toEqual(0);
+            expect(slider.valueEnd)
+                .withContext('slider.valueEnd after restore')
+                .toEqual(10);
+          }
+        },
+      ]
     });
   });
 });
