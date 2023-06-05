@@ -30,10 +30,7 @@ export class Radio extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
-  /**
-   * @nocollapse
-   * @export
-   */
+  /** @nocollapse */
   static formAssociated = true;
 
   /**

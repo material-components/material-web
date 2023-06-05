@@ -45,10 +45,7 @@ export abstract class TextField extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
-  /**
-   * @nocollapse
-   * @export
-   */
+  /** @nocollapse  */
   static formAssociated = true;
 
   @property({type: Boolean, reflect: true}) disabled = false;

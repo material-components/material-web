@@ -23,10 +23,7 @@ export class Checkbox extends LitElement {
     requestUpdateOnAriaChange(this);
   }
 
-  /**
-   * @nocollapse
-   * @export
-   */
+  /** @nocollapse */
   static formAssociated = true;
 
   /**
