@@ -113,12 +113,12 @@ export class Slider extends LitElement {
   /**
    * Whether or not to show tick marks.
    */
-  @property({type: Boolean}) withTickMarks = false;
+  @property({type: Boolean}) tickmarks = false;
 
   /**
    * Whether or not to show a value label when activated.
    */
-  @property({type: Boolean}) withLabel = false;
+  @property({type: Boolean}) labeled = false;
 
   /**
    * Whether or not to show a value range. When false, the slider displays
@@ -346,7 +346,7 @@ export class Slider extends LitElement {
   }
 
   private renderTrack() {
-    const trackClasses = {'tickMarks': this.withTickMarks};
+    const trackClasses = {'tickmarks': this.tickmarks};
     return html`<div class="track ${classMap(trackClasses)}"></div>`;
   }
 
@@ -367,8 +367,8 @@ export class Slider extends LitElement {
       onTop,
       isOverlapping
     })}">
-        <div class="handleNub"><md-elevation></md-elevation></div>
-        ${when(this.withLabel, () => this.renderLabel(label))}
+      <div class="handleNub"><md-elevation></md-elevation></div>
+      ${when(this.labeled, () => this.renderLabel(label))}
       <md-focus-ring for=${name}></md-focus-ring>
       <md-ripple for=${name} class=${name} ?disabled=${
         this.disabled}></md-ripple>

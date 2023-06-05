@@ -19,8 +19,8 @@ export interface StoryKnobs {
   max: number;
   step: number;
   range: boolean;
-  withTickMarks: boolean;
-  withLabel: boolean;
+  tickmarks: boolean;
+  labeled: boolean;
   disabled: boolean;
 }
 
@@ -45,8 +45,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             .max=${knobs.max}
             .step=${knobs.step ?? 1}
             .range=${knobs.range}
-            .withTickMarks=${knobs.withTickMarks}
-            .withLabel=${knobs.withLabel ?? false}
+            .tickmarks=${knobs.tickmarks}
+            .labeled=${knobs.labeled ?? false}
             .disabled=${knobs.disabled ?? false}
         ></md-slider>
       </label>`;
@@ -66,8 +66,8 @@ const multiValue: MaterialStoryInit<StoryKnobs> = {
           .min=${knobs.min}
           .max=${knobs.max}
           .step=${knobs.step ?? 1}
-          .withTickMarks=${knobs.withTickMarks}
-          .withLabel=${knobs.withLabel ?? true}
+          .tickmarks=${knobs.tickmarks}
+          .labeled=${knobs.labeled ?? true}
           .disabled=${knobs.disabled ?? false}
         ></md-slider>
       </label>`;
@@ -135,8 +135,8 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
           .valueEnd=${(knobs.valueEnd)}
           .valueStartLabel=${'😔'}
           .valueEndLabel=${'😌'}
-          withTickMarks
-          withLabel
+          tickmarks
+          labeled
           .min=${knobs.min}
           .max=${knobs.max ?? 30}
           .step=${knobs.step ?? 1}

@@ -166,7 +166,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background-color: var(--_inactive-track-color);
   }
 
-  .track.tickMarks::before {
+  .track.tickmarks::before {
     background-image: _get-tick-image(
       'var(--_with-tick-marks-inactive-container-color)'
     );
@@ -197,7 +197,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     }
   }
 
-  .track.tickMarks::after {
+  .track.tickmarks::after {
     background-image: _get-tick-image(
       'var(--_with-tick-marks-active-container-color)'
     );
@@ -207,8 +207,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background-color: var(--_disabled-active-track-color);
   }
 
-  :host([disabled]) .track.tickMarks::before,
-  :host([disabled]) .track.tickMarks::after {
+  :host([disabled]) .track.tickmarks::before,
+  :host([disabled]) .track.tickmarks::after {
     background-image: _get-tick-image(
       'var(--_with-tick-marks-disabled-container-color)'
     );

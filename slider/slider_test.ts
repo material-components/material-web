@@ -300,15 +300,15 @@ describe('<md-slider>', () => {
   });
 
   describe('value label', () => {
-    it('shows on focus when withLabel is true', async () => {
+    it('shows on focus when labeled is true', async () => {
       const {harness} = await setupTest();
-      harness.element.withLabel = true;
+      harness.element.labeled = true;
       await harness.element.updateComplete;
       harness.element.focus();
       expect(harness.isLabelShowing()).toBeTrue();
     });
 
-    it('does now show when withLabel is false', async () => {
+    it('does now show when labeled is false', async () => {
       const {harness} = await setupTest();
       await harness.element.updateComplete;
       harness.element.focus();
@@ -317,7 +317,7 @@ describe('<md-slider>', () => {
 
     it('hides after blur', async () => {
       const {harness} = await setupTest();
-      harness.element.withLabel = true;
+      harness.element.labeled = true;
       await harness.element.updateComplete;
       harness.element.focus();
       expect(harness.isLabelShowing()).toBeTrue();
@@ -327,7 +327,7 @@ describe('<md-slider>', () => {
 
     it('shows value label on hover', async () => {
       const {harness} = await setupTest();
-      harness.element.withLabel = true;
+      harness.element.labeled = true;
       await harness.element.updateComplete;
       await harness.startHover();
       expect(harness.isLabelShowing()).toBeTrue();
