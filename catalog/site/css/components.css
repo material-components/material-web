@@ -40,7 +40,6 @@ figure {
 
 catalog-component-header img {
   height: var(--catalog-header-image-height, 50%);
-  width: var(--catalog-header-image-width, 100%);
 }
 
 .figure-wrapper {
@@ -97,7 +96,7 @@ tr th:last-of-type {
 th {
   background-color: var(--md-sys-color-surface-container);
   text-shadow: 0 1px 1px var(--md-sys-color-surface-container-lowest);
-  color: var(--md-sys-color-on-surface-container);
+  color: var(--md-sys-color-on-surface);
   font-size: 1.25em;
 }
 
@@ -111,19 +110,19 @@ th {
 }
 
 tr th:first-of-type {
-  border-start-start-radius: 28px;
+  border-start-start-radius: var(--catalog-shape-xl);
 }
 
 tr th:last-of-type {
-  border-start-end-radius: 28px;
+  border-start-end-radius: var(--catalog-shape-xl);
 }
 
 tr:last-of-type td:first-of-type {
-  border-end-start-radius: 28px;
+  border-end-start-radius: var(--catalog-shape-xl);
 }
 
 tr:last-of-type td:last-of-type {
-  border-end-end-radius: 28px;
+  border-end-end-radius: var(--catalog-shape-xl);
 }
 
 /* Hides offscreen accesible text for h1,2,3 hover links. */
@@ -158,7 +157,7 @@ a .offscreen {
   align-items: center;
   position: absolute;
   inset: 0;
-  inset-inline-start: calc(-1 * var(--_content-padding) + 4px);
+  inset-inline-start: calc(-1 * var(--catalog-spacing-xl) + 4px);
   opacity: 0;
   font-size: calc(1.5em - 4px);
   transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);

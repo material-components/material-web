@@ -205,11 +205,11 @@ export class ThemeChanger extends LitElement {
     :host {
       display: flex;
       flex-direction: column;
-      margin: 12px 24px;
+      margin: var(--catalog-spacing-m) var(--catalog-spacing-l);
     }
 
     :host > * {
-      margin-block-end: 24px;
+      margin-block-end: var(--catalog-spacing-l);
     }
 
     :host > *:last-child {
@@ -223,16 +223,13 @@ export class ThemeChanger extends LitElement {
 
     .sliders,
     #hex {
-      padding-inline: 12px;
-      border-radius: 22px;
+      padding-inline: var(--catalog-spacing-m);
+      border-radius: var(--catalog-shape-l);
+      background-color: var(--md-sys-color-surface-variant);
+      color: var(--md-sys-color-on-surface-variant);
 
-      background-color: var(--md-sys-color-secondary-container);
-      color: var(--md-sys-color-on-secondary-container);
-
-      /* Default track color is inaccessible in a secondary-container */
-      --md-slider-inactive-track-color: var(
-        --md-sys-color-on-secondary-container
-      );
+      /* Default track color is inaccessible in a surface-variant */
+      --md-slider-inactive-track-color: var(--md-sys-color-on-surface-variant);
     }
 
     hct-slider {
@@ -263,7 +260,7 @@ export class ThemeChanger extends LitElement {
       border: 1px solid var(--md-sys-color-on-secondary-container);
       position: relative;
     }
-      
+
     #hex .input-wrapper,
     #hex md-focus-ring {
       border-radius: 50%;

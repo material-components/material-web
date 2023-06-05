@@ -7,4 +7,5 @@
  h1,
 .subtitle {
   text-align: center;
+  margin-block-start: 0;
 }

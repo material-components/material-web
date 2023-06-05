@@ -26,12 +26,8 @@
 
 :root {
   font-family: 'Google Sans', Roboto, system-ui;
-  background-color: var(--md-sys-color-background);
-  color: var(--md-sys-color-on-background);
-  --catalog-top-app-bar-height: 48px;
-  --catalog-top-app-bar-padding-block: 12px;
-  scroll-padding-block-start: calc(var(--catalog-top-app-bar-height) + var(--catalog-top-app-bar-padding-block) * 2);
-
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
   /* These values are copied from mio */
   --catalog-display-xl-font-size: 88px;
   --catalog-display-m-font-size: 45px;
@@ -40,6 +36,17 @@
   --catalog-title-s-font-size: 14px;
   --catalog-body-l-font-size: 16px;
   --catalog-body-m-font-size: 14px;
+  --catalog-shape-xl: 28px;
+  --catalog-shape-l: 16px;
+  --catalog-shape-m: 12px;
+  --catalog-shape-s: 8px;
+  --catalog-shape-xs: 4px;
+  --catalog-spacing-xl: 28px;
+  --catalog-spacing-l: 16px;
+  --catalog-spacing-m: 12px;
+  --catalog-spacing-s: 8px;
+  --catalog-top-app-bar-height: calc(48px + 2 * var(--catalog-spacing-m));
+  scroll-padding-block-start: calc(var(--catalog-top-app-bar-height) + var(--catalog-top-app-bar-padding-block) * 2);
 }
 
 @media screen and (max-width: 600px) {
@@ -48,6 +55,8 @@
     --catalog-title-l-font-size: 16px;
     --catalog-body-l-font-size: 14px;
     --catalog-body-m-font-size: 12px;
+    /* Mostly to accommodate content padding on small screens */
+    --catalog-spacing-xl: 16px;
   }
 }
 
@@ -70,15 +79,27 @@ nav-drawer md-list-item-link[selected] {
   --md-list-item-list-item-container-color: var(--md-sys-color-surface-container-highest);
 }
 
+@media (forced-colors: active) {
+  nav-drawer md-list-item-link[selected] {
+    border: 4px double CanvasText;
+  }
+
+  nav-drawer md-list-item-link {
+    border-radius: var(--catalog-shape-xl);
+    border: 1px solid CanvasText;
+  }
+}
+
 md-list {
   --md-list-container-color: transparent;
+  --md-list-item-list-item-container-color: transparent;
   display: block;
-  margin-inline: 12px;
+  margin-inline: var(--catalog-spacing-m);
   min-width: unset;
 }
 
 md-list-item-link {
-  margin-block: 12px;
+  margin-block: var(--catalog-spacing-m);
   display: block;
 }
 

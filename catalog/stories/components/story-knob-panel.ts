@@ -222,7 +222,7 @@ export class StoryKnobPanel extends LitElement {
         background-color: white;
         --mdc-typography-headline-color: black;
         background-color: var(--md-sys-color-surface-container);
-        color: var(--md-sys-color-on-surface-container);
+        color: var(--md-sys-color-on-surface);
         --md-elevation-level: 1;
         position: relative;
       }
@@ -260,7 +260,7 @@ export class StoryKnobPanel extends LitElement {
 
       :host([draggable]) {
         background-color: var(--md-sys-color-surface-container-high);
-        color: var(--md-sys-color-on-surface-container-high);
+        color: var(--md-sys-color-on-surface);
         --md-elevation-level: 2;
         position: fixed;
         margin: 0;

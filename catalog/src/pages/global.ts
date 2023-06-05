@@ -15,31 +15,6 @@
 import {changeColor, changeColorAndMode, changeColorMode, getCurrentMode, getCurrentSeedColor, getCurrentThemeString, getLastSavedAutoColorMode, isModeDark} from '../utils/theme.js';
 
 /**
- * Determines whether the top app bar and nav drawers should be sticky, and then
- * listens to scroll events to determine at runtime.
- */
-function applyStickyScrollListener() {
-  const topAppBar = document.querySelector('top-app-bar')!;
-  const navDrawer = document.querySelector('nav-drawer')!;
-
-  const updateSticky = () => {
-    if (globalThis.scrollY > 0) {
-      topAppBar.classList.add('is-sticky');
-      navDrawer.classList.add('is-sticky');
-    } else {
-      topAppBar.classList.remove('is-sticky');
-      navDrawer.classList.remove('is-sticky');
-    }
-  };
-
-  globalThis.addEventListener('scroll', () => {
-    updateSticky();
-  }, {passive: true});
-
-  updateSticky();
-}
-
-/**
  * Applies theme-based event listeners such as changing color, mode, and
  * listening to system mode changes.
  */
@@ -99,7 +74,6 @@ function determinePageNavigationAutoMode() {
   }
 }
 
-applyStickyScrollListener();
 applyColorThemeListeners();
 initializeTheme();
 determinePageNavigationAutoMode();

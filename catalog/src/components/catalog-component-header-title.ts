@@ -27,8 +27,11 @@ export class CatalogComponentHeaderTitle extends LitElement {
       justify-content: center;
       border-radius: var(--catalog-image-border-radius);
       padding: 56px;
-      background-color: var(--md-sys-color-surface-container);
-      color: var(--md-sys-color-on-surface-container);
+      /* It has no border so we need it to be a different color from the top app
+       * bar and nav drawer.
+       */
+      background-color: var(--md-sys-color-surface-variant);
+      color: var(--md-sys-color-on-surface-variant);
     }
 
     slot::slotted(h1) {

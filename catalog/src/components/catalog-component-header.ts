@@ -29,7 +29,7 @@ export class CatalogComponentHeader extends LitElement {
   static styles = css`
     :host {
       display: block;
-      --catalog-image-border-radius: 24px;
+      --catalog-image-border-radius: var(--catalog-shape-xl);
       container: host / inline-size;
       position: relative;
     }
@@ -56,7 +56,8 @@ export class CatalogComponentHeader extends LitElement {
     }
 
     .image {
-      background-color: var(--md-sys-color-surface-container);
+      /* Color needs to differ from top-app-bar and sidebar */
+      background-color: var(--md-sys-color-surface-variant);
       border-radius: var(--catalog-image-border-radius);
       overflow: hidden;
       margin-block-start: 16px;
@@ -78,7 +79,8 @@ export class CatalogComponentHeader extends LitElement {
       justify-content: center;
     }
 
-    @container (width > 1100px) {
+    /* fit ipad pro at least */
+    @container (width > 1000px) {
       div {
         display: grid;
         grid-gap: 8px;

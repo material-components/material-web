@@ -20,9 +20,7 @@ import {SignalElement} from '../signals/signal-element.js';
 import {materialDesign} from '../svg/material-design-logo.js';
 
 /**
- * Top app bar of the catalog. It changes elevation and "floats" when the
- * "is-sticky" class is set on it. (this is currently done in
- * pages/global.ts)
+ * Top app bar of the catalog.
  */
 @customElement('top-app-bar') export class TopAppBar extends SignalElement
 (LitElement) {
@@ -117,39 +115,25 @@ import {materialDesign} from '../svg/material-design-logo.js';
     header {
       display: block;
       height: var(--catalog-top-app-bar-height);
-      padding: var(--catalog-top-app-bar-padding-block) 8px;
     }
 
     header {
       position: fixed;
       inset: 0 0 auto 0;
-      padding-block-start: var(--catalog-top-app-bar-padding-block);
-      background-color: var(
-        --top-app-bar-color-background,
-        var(--md-sys-color-background)
-      );
-      color: var(
-        --top-app-bar-color-on-background,
-        var(--md-sys-color-on-background)
-      );
-      transition: background 0.3s linear;
+      display: flex;
+      align-items: center;
+      padding-block-start: var(--catalog-spacing-m);
+      box-sizing: border-box;
+      padding: var(--catalog-spacing-m) var(--catalog-spacing-s);
+      background-color: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface);
       z-index: 12;
     }
 
     .default-content {
+      width: 100%;
       display: flex;
       align-items: center;
-    }
-
-    :host(.is-sticky) header {
-      background-color: var(
-        --top-app-bar-color-background,
-        var(--md-sys-color-surface-container-highest)
-      );
-      color: var(
-        --top-app-bar-color-on-background,
-        var(--md-sys-color-on-surface-container)
-      );
     }
 
     md-standard-icon-button:not(:defined) {
@@ -198,12 +182,6 @@ import {materialDesign} from '../svg/material-design-logo.js';
 
       .start .menu-button {
         display: flex;
-      }
-    }
-
-    @media (forced-colors: active) {
-      header {
-        border-block-end: 1px solid CanvasText;
       }
     }
   `;
