@@ -256,12 +256,8 @@ export class Ripple extends LitElement implements Attachable {
     this.endPressAnimation();
   }
 
-  private getDimensions() {
-    return (this.parentElement ?? this).getBoundingClientRect();
-  }
-
   private determineRippleSize() {
-    const {height, width} = this.getDimensions();
+    const {height, width} = this.getBoundingClientRect();
     const maxDim = Math.max(height, width);
     const softEdgeSize =
         Math.max(SOFT_EDGE_CONTAINER_RATIO * maxDim, SOFT_EDGE_MINIMUM_SIZE);
@@ -278,7 +274,7 @@ export class Ripple extends LitElement implements Attachable {
   private getNormalizedPointerEventCoords(pointerEvent: PointerEvent):
       {x: number, y: number} {
     const {scrollX, scrollY} = window;
-    const {left, top} = this.getDimensions();
+    const {left, top} = this.getBoundingClientRect();
     const documentX = scrollX + left;
     const documentY = scrollY + top;
     const {pageX, pageY} = pointerEvent;
@@ -286,7 +282,7 @@ export class Ripple extends LitElement implements Attachable {
   }
 
   private getTranslationCoordinates(positionEvent?: Event) {
-    const {height, width} = this.getDimensions();
+    const {height, width} = this.getBoundingClientRect();
     // end in the center
     const endPoint = {
       x: (width - this.initialSize) / 2,

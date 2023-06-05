@@ -17,71 +17,70 @@ export interface StoryKnobs {
   '--md-ripple-hover-opacity': number;
 }
 
-const bounded: MaterialStoryInit<StoryKnobs> = {
-  name: 'Bounded',
+const ripples: MaterialStoryInit<StoryKnobs> = {
+  name: 'Ripples',
   styles: css`
-    .container {
-      border-radius: 16px;
-      height: 64px;
-      outline: 1px solid var(--md-sys-color-outline);
-      position: relative;
-      width: 64px;
+    .row {
+      align-items: center;
+      display: flex;
+      gap: 32px;
     }
-  `,
-  render() {
-    return html`
-      <div class="container">
-        <md-ripple></md-ripple>
-      </div>
-    `;
-  }
-};
 
-const unbounded: MaterialStoryInit<StoryKnobs> = {
-  name: 'Unbounded',
-  styles: css`
     .container {
       align-items: center;
       border-radius: 24px;
       display: flex;
-      gap: 16px;
-      height: 48px;
-      outline: 1px dashed var(--md-sys-color-outline);
+      height: 64px;
+      justify-content: center;
+      outline: 1px solid var(--md-sys-color-outline);
       padding: 16px;
+      position: relative;
+      width: 64px;
     }
 
-    .icon {
-      border: 1px solid var(--md-sys-color-outline);
+    .container:has(.unbounded) {
       border-radius: 50%;
-      display: grid;
-      height: 24px;
-      place-items: center;
-      position: relative;
-      width: 24px;
+      outline-style: dashed;
     }
 
     .anchor {
       background: var(--md-sys-color-primary-container);
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: 50%;
+      height: 24px;
+      width: 24px;
+
+      /* Recommended styles for an unbounded ripple's anchor. */
+      display: grid;
+      place-items: center;
+      position: relative;
     }
 
-    md-ripple {
+    md-ripple.unbounded {
+      height: 64px;
+      width: 64px;
+
+      /* Recommended styles for an unbounded ripple. */
       border-radius: 50%;
-      height: 40px;
       inset: unset;
-      width: 40px;
     }
   `,
   render() {
     return html`
-      <div id="touch" class="container">
-        <div class="icon anchor">
-          <md-ripple for="touch"></md-ripple>
+      <div class="row">
+        <div class="container">
+          <md-ripple></md-ripple>
         </div>
-        <div class="icon"></div>
+
+        <div class="container" id="touch">
+          <div class="anchor">
+            <md-ripple for="touch" class="unbounded"></md-ripple>
+          </div>
+        </div>
       </div>
     `;
   }
 };
 
 /** Ripple stories. */
-export const stories = [bounded, unbounded];
+export const stories = [ripples];
