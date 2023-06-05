@@ -1,5 +1,43 @@
 # Changelog
 
+## [1.0.0-pre.10](https://github.com/material-components/material-web/compare/v1.0.0-pre.9...v1.0.0-pre.10) (2023-06-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ripple:** Remove ripple directives and attach like focus rings (parent, `for` attribute, or with `.attach()`
+* **all:** Remove any *-focus-state-layer-* custom properties (they don't do anything)
+* **ripple:** Set `border-radius: 50%` and remove `unbounded` attribute
+
+### Features
+
+* add labs and internal folders for non-client code ([4b0c98c](https://github.com/material-components/material-web/commit/4b0c98c1aaf1166c1d12734097812b123e48da4e))
+* **button:** adds `type` property to support form submit and reset ([545ce0d](https://github.com/material-components/material-web/commit/545ce0d8959ae408dd3d84ae459d7e994532cee7))
+* **ripple:** add semantic and imperative attaching ([d65327d](https://github.com/material-components/material-web/commit/d65327d21b6e7f930eb45a9a40f177a6e2de2da2))
+* **slider:** add full form association support ([ae70f1e](https://github.com/material-components/material-web/commit/ae70f1ea05f1f93b482f37dc2a94a5ca5c99d83a))
+* **textfield:** add form association support ([e842f79](https://github.com/material-components/material-web/commit/e842f793115b3b65a650d9cb49caf02575a69a91))
+
+
+### Bug Fixes
+
+* **all:** remove focus state layer tokens ([933fc2e](https://github.com/material-components/material-web/commit/933fc2e0131393e96883ff21fb7475ecd7e45ed7))
+* **focus:** split attachable logic into separate controller ([fbd680a](https://github.com/material-components/material-web/commit/fbd680a9fe7d6021f668716f746a080b6e2e8f30))
+* **radio:** checked styles not displaying ([8fb5cd8](https://github.com/material-components/material-web/commit/8fb5cd8ae8221a9362cb80edc92b1b5cc0b2ab55)), closes [#4347](https://github.com/material-components/material-web/issues/4347)
+* **ripple:** remove ripple directive ([33daf19](https://github.com/material-components/material-web/commit/33daf19c73ae1599a10286dada80edf288b52011))
+* **ripple:** remove unbounded ([b69e242](https://github.com/material-components/material-web/commit/b69e24241e490ca3e83ca605b404cb20f74b02df))
+* **ripple:** restrict manually controllable methods ([ea2f04a](https://github.com/material-components/material-web/commit/ea2f04a9e99c2c6d3020590321c23ee9ea8e0f5e))
+* **ripple:** wrong start point for pressing unbounded ripples ([88b5cfe](https://github.com/material-components/material-web/commit/88b5cfeb21fcacc49f745dde00cfef459a4b5df6))
+* **select:** inherit width of the host ([086565c](https://github.com/material-components/material-web/commit/086565cc8c0e6463a6be60162a22014955b23adb))
+* **slider:** improve step support for non-integer values and stepping from min ([68c2721](https://github.com/material-components/material-web/commit/68c27212a12d3082a73029e63f24daf4eb6435d7))
+* **slider:** prevent lower handle moving beyond upper and visa versa ([f9da935](https://github.com/material-components/material-web/commit/f9da93553bd64e7e8475f8acb8ee12206af12ac4))
+* **slider:** renames `withTickMarks` to `tickmarks` and `withLabel` to `labeled` ([0e94e28](https://github.com/material-components/material-web/commit/0e94e286568492d9917bb1594c9cc1ebbb25d2f8))
+* **ssr:** make "for" attribute watcher SSR compatible ([f47bdc3](https://github.com/material-components/material-web/commit/f47bdc39258fe4ba38a4cdebe1810e2385f72811))
+
+
+### Miscellaneous Chores
+
+* update next version ([25ee94b](https://github.com/material-components/material-web/commit/25ee94b1a7f95374ec5e27dfcf9da85a0ffb71e9))
+
 ## [1.0.0-pre.9](https://github.com/material-components/material-web/compare/v1.0.0-pre.8...v1.0.0-pre.9) (2023-05-25)
 
 
