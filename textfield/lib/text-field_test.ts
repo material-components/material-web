@@ -12,6 +12,7 @@ import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
 import {Environment} from '../../testing/environment.js';
+import {createFormTests} from '../../testing/forms.js';
 import {Harness} from '../../testing/harness.js';
 import {TextFieldHarness} from '../harness.js';
 
@@ -634,36 +635,87 @@ describe('TextField', () => {
     });
   });
 
-  describe('form submission', () => {
-    async function setupFormTest(propsInit: Partial<TestTextField> = {}) {
-      const template = html`
-        <form>
-          <md-test-text-field
-            ?disabled=${propsInit.disabled === true}
-            .name=${propsInit.name ?? ''}
-            .value=${propsInit.value ?? ''}>
-          </md-test-text-field>
-        </form>`;
-      return setupTest(template);
-    }
-
-    it('does not submit if disabled', async () => {
-      const {harness} = await setupFormTest({name: 'foo', disabled: true});
-      const formData = await harness.submitForm();
-      expect(formData.get('foo')).toBeNull();
-    });
-
-    it('does not submit if name is not provided', async () => {
-      const {harness} = await setupFormTest();
-      const formData = await harness.submitForm();
-      const keys = Array.from(formData.keys());
-      expect(keys.length).toEqual(0);
-    });
-
-    it('submits under correct conditions', async () => {
-      const {harness} = await setupFormTest({name: 'foo', value: 'bar'});
-      const formData = await harness.submitForm();
-      expect(formData.get('foo')).toEqual('bar');
+  describe('forms', () => {
+    createFormTests({
+      queryControl: root => root.querySelector('md-test-text-field'),
+      valueTests: [
+        {
+          name: 'unnamed',
+          render: () =>
+              html`<md-test-text-field value="Value"></md-test-text-field>`,
+          assertValue(formData) {
+            expect(formData)
+                .withContext('should not add anything to form without a name')
+                .toHaveSize(0);
+          }
+        },
+        {
+          name: 'should add empty value',
+          render: () =>
+              html`<md-test-text-field name="input"></md-test-text-field>`,
+          assertValue(formData) {
+            expect(formData.get('input')).toBe('');
+          }
+        },
+        {
+          name: 'with value',
+          render: () =>
+              html`<md-test-text-field name="input" value="Value"></md-test-text-field>`,
+          assertValue(formData) {
+            expect(formData.get('input')).toBe('Value');
+          }
+        },
+        {
+          name: 'disabled',
+          render: () =>
+              html`<md-test-text-field name="input" value="Value" disabled></md-test-text-field>`,
+          assertValue(formData) {
+            expect(formData)
+                .withContext('should not add anything to form when disabled')
+                .toHaveSize(0);
+          }
+        }
+      ],
+      resetTests: [
+        {
+          name: 'reset to empty value',
+          render: () =>
+              html`<md-test-text-field name="input"></md-test-text-field>`,
+          change(textField) {
+            textField.value = 'Value';
+          },
+          assertReset(textField) {
+            expect(textField.value)
+                .withContext('textField.value after reset')
+                .toBe('');
+          }
+        },
+        {
+          name: 'reset value',
+          render: () =>
+              html`<md-test-text-field name="input" value="First"></md-test-text-field>`,
+          change(textField) {
+            textField.value = 'Second';
+          },
+          assertReset(textField) {
+            expect(textField.value)
+                .withContext('textField.value after reset')
+                .toBe('First');
+          }
+        },
+      ],
+      restoreTests: [
+        {
+          name: 'restore value',
+          render: () =>
+              html`<md-test-text-field name="input" value="Value"></md-test-text-field>`,
+          assertRestored(textField) {
+            expect(textField.value)
+                .withContext('textField.value after restore')
+                .toBe('Value');
+          }
+        },
+      ]
     });
   });
 });

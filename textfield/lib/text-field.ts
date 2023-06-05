@@ -14,7 +14,6 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
-import {FormController, getFormValue} from '../../internal/controller/form-controller.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
 
 /**
@@ -45,6 +44,12 @@ export abstract class TextField extends LitElement {
 
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  /**
+   * @nocollapse
+   * @export
+   */
+  static formAssociated = true;
 
   @property({type: Boolean, reflect: true}) disabled = false;
   /**
@@ -95,15 +100,28 @@ export abstract class TextField extends LitElement {
    */
   @property() textDirection = '';
 
-  // FormElement
+  /**
+   * The associated form element with which this element's value will submit.
+   */
   get form() {
-    return this.closest('form');
+    return this.internals.form;
   }
 
-  @property({reflect: true, converter: stringConverter}) name = '';
+  /**
+   * The labels this element is associated with.
+   */
+  get labels() {
+    return this.internals.labels;
+  }
 
-  [getFormValue]() {
-    return this.value;
+  /**
+   * The HTML name to use in form submission.
+   */
+  get name() {
+    return this.getAttribute('name') ?? '';
+  }
+  set name(name: string) {
+    this.setAttribute('name', name);
   }
 
   // <input> properties
@@ -276,10 +294,11 @@ export abstract class TextField extends LitElement {
   private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailingicon'})
   private readonly trailingIcons!: Element[];
+  private readonly internals =
+      (this as HTMLElement /* needed for closure */).attachInternals();
 
   constructor() {
     super();
-    this.addController(new FormController(this));
     if (!isServer) {
       this.addEventListener('click', this.focus);
       this.addEventListener('focusin', this.handleFocusin);
@@ -474,6 +493,7 @@ export abstract class TextField extends LitElement {
     // If a property such as `type` changes and causes the internal <input>
     // value to change without dispatching an event, re-sync it.
     const value = this.getInput().value;
+    this.internals.setFormValue(value);
     if (this.value !== value) {
       // Note this is typically inefficient in updated() since it schedules
       // another update. However, it is needed for the <input> to fully render
@@ -698,5 +718,15 @@ export abstract class TextField extends LitElement {
   private handleIconChange() {
     this.hasLeadingIcon = this.leadingIcons.length > 0;
     this.hasTrailingIcon = this.trailingIcons.length > 0;
+  }
+
+  /** @private */
+  formResetCallback() {
+    this.reset();
+  }
+
+  /** @private */
+  formStateRestoreCallback(state: string) {
+    this.value = state;
   }
 }
