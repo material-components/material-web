@@ -43,10 +43,14 @@ import {materialDesign} from '../svg/material-design-logo.js';
               .selected=${live(drawerOpenSignal.value)}
               @input=${this.onMenuIconToggle}
             >
-              <span><md-icon>menu</md-icon></span>
-              <span slot="selectedIcon"><md-icon>menu_open</md-icon></span>
+              <span>
+                <md-icon aria-label="open menu">menu</md-icon>
+              </span>
+              <span slot="selectedIcon">
+                <md-icon aria-label="close menu">menu_open</md-icon>
+              </span>
             </md-standard-icon-button>
-            <md-standard-icon-button href="/material-web/" class="home-button">
+            <md-standard-icon-button href="/material-web/" class="home-button" aria-label="home">
               ${materialDesign}
             </md-standard-icon-button>
           </section>
@@ -66,14 +70,19 @@ import {materialDesign} from '../svg/material-design-logo.js';
                 .anchor=${this.paletteButton}
                 menu-corner="START_END"
                 anchor-corner="END_END"
+                id="menu"
                 stay-open-on-focusout
                 .open=${this.menuOpen}
                 @closed=${this.onMenuClosed}
               >
                 <theme-changer></theme-changer>
               </md-menu>
-              <md-standard-icon-button @click="${this.onPaletteClick}">
-                <md-icon>palette</md-icon>
+              <md-standard-icon-button
+                  @click="${this.onPaletteClick}"
+                  aria-haspopup="true"
+                  aria-controls="menu"
+                  aria-expanded="${this.menuOpen}">
+                <md-icon aria-label="Theme changer">palette</md-icon>
               </md-standard-icon-button>
             </lit-island>
           </section>

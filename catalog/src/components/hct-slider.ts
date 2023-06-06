@@ -65,6 +65,7 @@ export class HCTSlider extends LitElement {
       <md-slider
           id="source"
           withLabel
+          aria-label=${this.label}
           .min=${range[0]}
           .max=${range[1]}
           .value=${this.value}

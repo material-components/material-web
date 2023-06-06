@@ -48,14 +48,19 @@
           <!-- unrelated change to components -->
           {% block content %}{{ content | safe }}{% endblock %}
         </main>
-          <md-list listtabindex="-1">
+          <md-list
+              listtabindex="-1"
+              type="navigation"
+              aria-label="site navigation">
             {% for component in collections.component|filtersort('data.name') %}
               <li>
                 <md-list-item-link
                   href="/material-web{{ component.url }}"
                   headline="{{ component.data.name }}"
+                  listitemrole="link"
                   {% if component.url == page.url %}selected{% endif %}
-                  data-role=""
+                  {% if component.url == page.url %}aria-current="page"{% endif %}
+                  {% if component.url != page.url %}aria-current="false"{% endif %}
                   itemtabindex="0"
                 ></md-list-item-link>
               </li>

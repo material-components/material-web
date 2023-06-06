@@ -57,6 +57,14 @@
     min-width: 300px;
   }
 
+  slot {
+    @include focus-ring.theme(
+      (
+        'shape': unset,
+      )
+    );
+  }
+
   .menu {
     border-radius: var(--_container-shape);
     display: none;

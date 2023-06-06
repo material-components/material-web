@@ -145,6 +145,7 @@ export class ThemeChanger extends LitElement {
     return html`<md-outlined-segmented-button
       data-value=${mode}
       title=${mode}
+      aria-label="${mode} color mode"
       .selected=${this.selectedColorMode === mode}
     >
       <md-icon slot="icon">${icon}</md-icon>
