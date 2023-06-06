@@ -239,6 +239,7 @@ Token                    | Default value
 </div>
 
 -->
+<!-- catalog-only-end -->
 
 ```html
 <style>
