@@ -1,0 +1,12 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin styles() {
+  :host {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

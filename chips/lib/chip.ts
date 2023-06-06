@@ -21,6 +21,11 @@ export abstract class Chip extends LitElement {
     requestUpdateOnAriaChange(this);
   }
 
+  static override shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true
+  };
+
   @property({type: Boolean}) disabled = false;
   @property() label = '';
 

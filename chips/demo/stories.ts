@@ -5,6 +5,7 @@
  */
 
 import '@material/web/icon/icon.js';
+import '@material/web/chips/chip-set.js';
 import '@material/web/chips/assist-chip.js';
 import '@material/web/chips/filter-chip.js';
 import '@material/web/chips/input-chip.js';
@@ -34,18 +35,20 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Assist chips',
   render({label, elevated, disabled}) {
     return html`
-      <md-assist-chip
-        label=${label || 'Assist chip'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-      ></md-assist-chip>
-      <md-assist-chip
-        label=${label || 'Assist chip with icon'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-      >
-        <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
-      </md-assist-chip>
+      <md-chip-set>
+        <md-assist-chip
+          label=${label || 'Assist chip'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+        ></md-assist-chip>
+        <md-assist-chip
+          label=${label || 'Assist chip with icon'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+        >
+          <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
+        </md-assist-chip>
+      </md-chip-set>
     `;
   }
 };
@@ -54,13 +57,15 @@ const links: MaterialStoryInit<StoryKnobs> = {
   name: 'Assist link chips',
   render({label, elevated, disabled}) {
     return html`
-      <md-assist-chip
-        label=${label || 'Assist link chip'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-        href="https://google.com"
-        target="_blank"
-      >${GOOGLE_LOGO}</md-assist-chip>
+      <md-chip-set>
+        <md-assist-chip
+          label=${label || 'Assist link chip'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+          href="https://google.com"
+          target="_blank"
+        >${GOOGLE_LOGO}</md-assist-chip>
+      </md-chip-set>
     `;
   }
 };
@@ -69,68 +74,74 @@ const filters: MaterialStoryInit<StoryKnobs> = {
   name: 'Filter chips',
   render({label, elevated, disabled}) {
     return html`
-      <md-filter-chip
-        label=${label || 'Filter chip'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-      ></md-filter-chip>
-      <md-filter-chip
-        label=${label || 'Filter chip with icon'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-      >
-        <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
-      </md-filter-chip>
-      <md-filter-chip
-        label=${label || 'Removable filter chip'}
-        ?disabled=${disabled}
-        ?elevated=${elevated ?? false}
-        removable
-      ></md-filter-chip>
+      <md-chip-set>
+        <md-filter-chip
+          label=${label || 'Filter chip'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+        ></md-filter-chip>
+        <md-filter-chip
+          label=${label || 'Filter chip with icon'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+        >
+          <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
+        </md-filter-chip>
+        <md-filter-chip
+          label=${label || 'Removable filter chip'}
+          ?disabled=${disabled}
+          ?elevated=${elevated ?? false}
+          removable
+        ></md-filter-chip>
+      </md-chip-set>
     `;
   }
 };
 
 const inputs: MaterialStoryInit<StoryKnobs> = {
   name: 'Input chips',
-  render({label, elevated, disabled}) {
+  render({label, disabled}) {
     return html`
-      <md-input-chip
-        label=${label || 'Input chip'}
-        ?disabled=${disabled ?? false}
-      ></md-input-chip>
-      <md-input-chip
-        label=${label || 'Input chip with icon'}
-        ?disabled=${disabled ?? false}
-      >
-        <md-icon slot="icon">local_laundry_service</md-icon>
-      </md-input-chip>
-      <md-input-chip
-        label=${label || 'Input chip with avatar'}
-        ?disabled=${disabled ?? false}
-        avatar
-      >
-        <img slot="icon" src="https://lh3.googleusercontent.com/a/default-user=s48">
-      </md-input-chip>
-      <md-input-chip
-        label=${label || 'Remove-only input chip'}
-        ?disabled=${disabled ?? false}
-        remove-only
-      ></md-input-chip>
+      <md-chip-set>
+        <md-input-chip
+          label=${label || 'Input chip'}
+          ?disabled=${disabled ?? false}
+        ></md-input-chip>
+        <md-input-chip
+          label=${label || 'Input chip with icon'}
+          ?disabled=${disabled ?? false}
+        >
+          <md-icon slot="icon">local_laundry_service</md-icon>
+        </md-input-chip>
+        <md-input-chip
+          label=${label || 'Input chip with avatar'}
+          ?disabled=${disabled ?? false}
+          avatar
+        >
+          <img slot="icon" src="https://lh3.googleusercontent.com/a/default-user=s48">
+        </md-input-chip>
+        <md-input-chip
+          label=${label || 'Remove-only input chip'}
+          ?disabled=${disabled ?? false}
+          remove-only
+        ></md-input-chip>
+      </md-chip-set>
     `;
   }
 };
 
 const inputLinks: MaterialStoryInit<StoryKnobs> = {
   name: 'Input link chips',
-  render({label, elevated, disabled}) {
+  render({label, disabled}) {
     return html`
-      <md-input-chip
-        label=${label || 'Input link chip'}
-        ?disabled=${disabled ?? false}
-        href="https://google.com"
-        target="_blank"
-      >${GOOGLE_LOGO}</md-input-chip>
+      <md-chip-set>
+        <md-input-chip
+          label=${label || 'Input link chip'}
+          ?disabled=${disabled ?? false}
+          href="https://google.com"
+          target="_blank"
+        >${GOOGLE_LOGO}</md-input-chip>
+      </md-chip-set>
     `;
   }
 };
@@ -139,18 +150,20 @@ const suggestions: MaterialStoryInit<StoryKnobs> = {
   name: 'Suggestion chips',
   render({label, elevated, disabled}) {
     return html`
-      <md-suggestion-chip
-        label=${label || 'Suggestion chip'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-      ></md-suggestion-chip>
-      <md-suggestion-chip
-        label=${label || 'Suggestion chip with icon'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-      >
-        <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
-      </md-suggestion-chip>
+      <md-chip-set>
+        <md-suggestion-chip
+          label=${label || 'Suggestion chip'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+        ></md-suggestion-chip>
+        <md-suggestion-chip
+          label=${label || 'Suggestion chip with icon'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+        >
+          <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
+        </md-suggestion-chip>
+      </md-chip-set>
     `;
   }
 };
@@ -159,13 +172,15 @@ const suggestionLinks: MaterialStoryInit<StoryKnobs> = {
   name: 'Suggestion link chips',
   render({label, elevated, disabled}) {
     return html`
-      <md-suggestion-chip
-        label=${label || 'Suggestion link chip'}
-        ?disabled=${disabled ?? false}
-        ?elevated=${elevated ?? false}
-        href="https://google.com"
-        target="_blank"
-      >${GOOGLE_LOGO}</md-suggestion-chip>
+      <md-chip-set>
+        <md-suggestion-chip
+          label=${label || 'Suggestion link chip'}
+          ?disabled=${disabled ?? false}
+          ?elevated=${elevated ?? false}
+          href="https://google.com"
+          target="_blank"
+        >${GOOGLE_LOGO}</md-suggestion-chip>
+      </md-chip-set>
     `;
   }
 };
