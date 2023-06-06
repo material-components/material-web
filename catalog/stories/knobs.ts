@@ -212,6 +212,9 @@ export class KnobValues<Knobs extends PolymorphicArrayOfKnobs> extends
    */
   connectWiring(container: HTMLElement|DocumentFragment) {
     for (const knob of this.byName.values()) {
+      if (container instanceof DocumentFragment) {
+        container = container.firstElementChild as HTMLElement;
+      }
       knob.connectWiring(container);
     }
   }

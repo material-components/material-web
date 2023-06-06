@@ -11,10 +11,10 @@ import '@material/web/radio/radio.js';
 import '@material/web/select/filled-select.js';
 import '@material/web/select/select-option.js';
 import '@material/web/textfield/filled-text-field.js';
+import '@material/web/ripple/ripple.js';
 
 import {css, html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
 import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
 
 import {Knob, KnobUi} from '../knobs.js';
@@ -55,16 +55,25 @@ export class KnobColorSelector extends LitElement {
     :host {
       display: inline-block;
       position: relative;
+      margin-inline-end: 16px;
+      --md-outlined-button-spacing-leading: 8px;
+      --md-outlined-button-spacing-trailing: 8px;
+      --md-outlined-button-container-height: 32px;
+      /* md-checkbox sizes */
+      --_component-size: 40px;
+      --_color-picker-size: 14px;
+      --_color-picker-border-width: 2px;
     }
-    input:not(.alpha) {
+
+    input {
       box-sizing: content-box;
-      width: 14px;
-      height: 14px;
-      margin: 11px;
+      width: var(--_color-picker-size);
+      height: var(--_color-picker-size);
+      margin: calc((var(--_component-size) - var(--_color-picker-size) - var(--_color-picker-border-width) * 2) / 2);
       padding: 0;
       cursor: pointer;
-      border-radius: 2px;
-      border: 2px solid rgba(0, 0, 0, 0.54);
+      border-radius: var(--_color-picker-border-width);
+      border: var(--_color-picker-border-width) solid var(--md-sys-color-outline);
       outline: none;
     }
 
@@ -81,30 +90,11 @@ export class KnobColorSelector extends LitElement {
       display: inline-block;
     }
 
-    :host(:hover) input:not(.alpha)::before,
-    input:not(.alpha):focus::before,
-    :host(:hover) input:not(.alpha)::after,
-    input:not(.alpha):focus::after {
-      background-color: var(--mdc-ripple-color, black);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      content: '';
+    md-ripple {
+      inset: unset;
+      width: var(--_component-size);
+      height: var(--_component-size);
       border-radius: 50%;
-      opacity: 0.04;
-    }
-
-    :host(:hover) input:not(.alpha)::after,
-    input:not(.alpha):focus::after {
-      background-color: transparent;
-      border: 1px solid black;
-      opacity: 0.12;
-    }
-
-    input:not(.alpha):focus::before {
-      opacity: 0.12;
     }
 
     #wrapper {
@@ -129,32 +119,44 @@ export class KnobColorSelector extends LitElement {
   }
 
   override render() {
-    const inputStyles = styleMap({
-      '--mdc-ripple-color': this.value ?? 'black',
-    });
-
-    const value = (this.value ?? null) as string;
-    return html` <span id="wrapper">
+    return html`<span id="wrapper">
       <span>
-        <input
-          class="${classMap({
-      alpha: this.hasAlpha,
-    })}"
-          type="${this.hasAlpha ? 'text' : 'color'}"
-          style=${inputStyles}
-          .value="${value}"
-          @change=${this.propagateEvt}
-          @input=${this.onInput}
-        />
+        ${this.hasAlpha ? this.renderTextInput() : this.renderColorInput()}
       </span>
-      <button
+      <md-outlined-button
         @click=${() => {
       this.hasAlpha = !this.hasAlpha;
     }}
       >
         ${this.hasAlpha ? 'rgba' : 'rgb'}
-      </button>
+      </md-outlined-button>
     </span>`;
+  }
+
+  private renderTextInput() {
+    return html`<md-filled-text-field
+      style=${styleMap(sharedTextFieldStyles)}
+      .value=${this.value}
+      @change=${this.propagateEvt}
+      @input=${this.onInput}
+    ></md-filled-text-field>`;
+  }
+
+  private renderColorInput() {
+    const rippleStyles = styleMap({
+      '--md-sys-color-on-surface': this.value || 'black',
+    });
+
+    return html`
+      <md-ripple for="color-picker" style=${rippleStyles}></md-ripple>
+      <input
+        type="color"
+        id="color-picker"
+        .value=${this.value}
+        @change=${this.propagateEvt}
+        @input=${this.onInput}
+      />
+    `;
   }
 
   private onInput(e: Event) {
@@ -172,13 +174,15 @@ export class KnobColorSelector extends LitElement {
   }
 
   override click() {
-    const input = this.shadowRoot!.querySelector('input')!;
+    const input = this.renderRoot!.querySelector(
+                      'input,md-filled-text-field') as HTMLElement;
     input.click();
     input.focus();
   }
 
   override focus() {
-    const input = this.shadowRoot!.querySelector('input')!;
+    const input = this.renderRoot!.querySelector(
+                      'input,md-filled-text-field') as HTMLElement;
     input.focus();
   }
 }
@@ -218,9 +222,8 @@ export function colorPicker(opts?: ColorPickerOpts): KnobUi<string> {
               .value="${knob.latestValue ?? ''}"
               .hasAlpha="${config.hasAlpha}"
               @input=${valueChanged}
-            >
-              ${knob.name}
-            </knob-color-selector>
+            ></knob-color-selector>
+            ${knob.name}
           </label>
         </div>
       `;
@@ -301,7 +304,7 @@ export function numberInput(opts?: NumberInputOpts): KnobUi<number> {
         <div>
           <label>
             <md-filled-text-field
-              style="margin-inline-end:16px;--md-filled-field-container-padding-horizontal:8px;--md-filled-field-container-padding-vertical:4px;width:150px;min-width:150px;"
+              style=${styleMap(sharedTextFieldStyles)}
               type="number"
               step="${config.step}"
               .value="${knob.latestValue ? knob.latestValue.toString() : '0'}"
@@ -360,7 +363,7 @@ export function radioSelector<T extends string>({
             @change="${valueChanged}"
             ?checked="${knob.latestValue === option.value}"
           ></md-radio>
-        ${option.label}
+          ${option.label}
         </label>`;
       });
       return html` <div>${radioOptions}</div> `;
@@ -393,8 +396,7 @@ export function selectDropdown<T extends string>({
           <md-filled-select
               @change="${valueChanged}"
               menuFixed
-              style=${styleMap(sharedTextFieldStyles)}
-              >
+              style=${styleMap(sharedTextFieldStyles)}>
             ${listItems}
           </md-filled-select>
           ${knob.name}
