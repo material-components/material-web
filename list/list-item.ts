@@ -10,6 +10,8 @@ import {styles as forcedColors} from './lib/listitem/forced-colors-styles.css.js
 import {ListItemOnly as ListItem} from './lib/listitem/list-item-only.js';
 import {styles} from './lib/listitem/list-item-styles.css.js';
 
+export {ListItemRole} from './lib/listitem/list-item.js';
+
 declare global {
   interface HTMLElementTagNameMap {
     'md-list-item': MdListItem;

@@ -11,8 +11,13 @@ import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {ARIAMixinStrict, ARIARole} from '../../../internal/aria/aria.js';
+import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+
+/**
+ * Supported roles for a list item.
+ */
+export type ListItemRole = 'listitem'|'menuitem'|'option'|'link'|'none';
 
 interface ListItemSelf {
   active: boolean;
@@ -75,13 +80,18 @@ export class ListItemEl extends LitElement implements ListItem {
   @property({type: Boolean, reflect: true}) active = false;
 
   /**
+   * Sets the role of the list item. Set to '' to clear the role.
+   */
+  @property()
+  type: ListItemRole = 'listitem';
+
+  /**
    * READONLY. Sets the `md-list-item` attribute on the element.
    */
   @property({type: Boolean, attribute: 'md-list-item', reflect: true})
   isListItem = true;
 
   @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
-  protected readonly listItemRole: ARIARole = 'listitem';
 
   /**
    * Only meant to be overridden by subclassing and not by the user. This is
@@ -126,7 +136,7 @@ export class ListItemEl extends LitElement implements ListItem {
       <li
         id="item"
         tabindex=${this.disabled ? -1 : this.itemTabIndex}
-        role=${this.listItemRole}
+        role=${this.type === 'none' ? nothing : this.type}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"

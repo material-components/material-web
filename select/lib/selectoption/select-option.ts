@@ -7,8 +7,7 @@
 import {PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
-import {ARIARole} from '../../../internal/aria/aria.js';
-import {MenuItemEl} from '../../../menu/lib/menuitem/menu-item.js';
+import {ListItemRole, MenuItemEl} from '../../../menu/lib/menuitem/menu-item.js';
 import {RequestDeselectionEvent, RequestSelectionEvent, SelectOption} from '../shared.js';
 
 /**
@@ -30,7 +29,7 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
    */
   @property({type: Boolean, reflect: true}) selected = false;
 
-  protected override readonly listItemRole: ARIARole = 'option';
+  override readonly type: ListItemRole = 'option';
 
   override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('selected')) {

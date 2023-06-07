@@ -9,7 +9,7 @@ import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {ListItemEl} from '../listitem/list-item.js';
+import {ListItemEl, ListItemRole} from '../listitem/list-item.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
@@ -20,6 +20,8 @@ export class ListItemLink extends ListItemEl {
    */
   @property() href!: string;
 
+  override type: ListItemRole = 'none';
+
   /**
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute.
    */
@@ -29,7 +31,7 @@ export class ListItemLink extends ListItemEl {
       <a
         id="item"
         tabindex=${this.disabled ? -1 : this.itemTabIndex}
-        role=${this.listItemRole}
+        role=${this.type === 'none' ? nothing : this.type}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"
