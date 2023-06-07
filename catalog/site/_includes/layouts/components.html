@@ -6,4 +6,10 @@
   <link rel="stylesheet" href="/material-web/css/syntax-highlight.css" />
 {% endblock %}
 
-{% block content %}{{ content | safe }}{% endblock %}
+{% block toc%}
+{{ content | toc | safe }}
+{% endblock %}
+
+{% block content %}
+{{ content | safe }}
+{% endblock %}

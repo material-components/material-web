@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-:root {
+ :root {
   --catalog-image-border-radius: 22px;
 }
 
@@ -12,6 +12,10 @@ summary {
   display: flex;
   align-items: center;
   overflow-y: hidden;
+}
+
+summary::-webkit-details-marker {
+  display: none;
 }
 
 details[open] summary {
@@ -22,8 +26,7 @@ details summary md-outlined-icon-button {
   margin-inline-end: 8px;
 }
 
-details:not([open])
-#top-app-bar-nav {
+details:not([open]) #top-app-bar-nav {
   display: contents;
 }
 
@@ -59,13 +62,13 @@ div:has(> table) {
   justify-content: center;
 }
 
-p:has(>img) {
+p:has(> img) {
   display: flex;
   justify-content: center;
 }
 
-main>* {
-  max-width: min(100%, 1760px);
+main > :not(catalog-component-header) {
+  max-width: min(100%, 980px);
   margin-inline: auto;
   box-sizing: border-box;
   overflow-x: auto;
@@ -100,7 +103,7 @@ th {
   font-size: 1.25em;
 }
 
-:not(pre)>code {
+:not(pre) > code {
   display: inline-flex;
   background-color: var(--md-sys-color-surface-variant);
   text-shadow: 0 1px 1px var(--md-sys-color-surface-variant);

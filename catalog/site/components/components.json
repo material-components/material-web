@@ -2,5 +2,6 @@
   "layout": "layouts/components.html",
   "tags": [
     "component"
-  ]
+  ],
+  "hasToc": true
 }

@@ -7,7 +7,7 @@
 import {animate, fadeIn, fadeOut} from '@lit-labs/motion';
 import {EASING} from '@material/web/internal/motion/animation.js';
 import {css, html, LitElement, nothing} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
+import {customElement, property, state} from 'lit/decorators.js';
 
 import {drawerOpenSignal} from '../signals/drawer-open-state.js';
 import {inertContentSignal, inertSidebarSignal} from '../signals/inert.js';
@@ -28,6 +28,13 @@ import {SignalElement} from '../signals/signal-element.js';
    */
   @state() private isCollapsible = false;
 
+  /**
+   * Whether or not the TOC should be rendered.
+   */
+  @property({type: Boolean, attribute: 'has-toc'}) hasToc = false;
+
+  @property({attribute: 'page-title'}) pageTitle = '';
+
   render() {
     const showModal = this.isCollapsible && drawerOpenSignal.value;
 
@@ -40,7 +47,7 @@ import {SignalElement} from '../signals/signal-element.js';
         showModal ? EASING.EMPHASIZED : EASING.EMPHASIZED_ACCELERATE;
 
     return html`
-      <div class="root" data-animation-speed=${showModal ? 'long' : 'short'}>
+      <div class="root">
         <slot name="top-app-bar"></slot>
         <div class="body  ${drawerOpenSignal.value ? 'open' : ''}">
           <div class="spacer" ?inert=${inertSidebarSignal.value}>
@@ -80,17 +87,37 @@ import {SignalElement} from '../signals/signal-element.js';
               ></slot>
             </aside>
           </div>
-          <div class="pane">
-            <div
-              class="content"
-              ?inert=${showModal || inertContentSignal.value}
-            >
-              <slot name="app-content"></slot>
-            </div>
+          <div class="panes">
+            ${this.renderTocPane(showModal)}
+            ${this.renderContent(showModal)}
           </div>
         </div>
       </div>
     `;
+  }
+
+  private renderContent(showModal: boolean) {
+    return html`
+      <div
+          class="pane content-pane"
+          ?inert=${showModal || inertContentSignal.value}>
+        <div class="content">
+          <slot name="app-content"></slot>
+        </div>
+      </div>`;
+  }
+
+  private renderTocPane(showModal: boolean) {
+    if (!this.hasToc) {
+      return nothing;
+    }
+
+    return html`
+      <div class="pane toc" ?inert=${showModal || inertContentSignal.value}>
+        <p>On this page:</p>
+        <h2>${this.pageTitle}</h2>
+        <slot name="toc"></slot>
+      </div>`;
   }
 
   /**
@@ -112,12 +139,12 @@ import {SignalElement} from '../signals/signal-element.js';
 
   static styles = css`
     :host {
-      --_max-width: 1760px;
       --_drawer-width: var(--catalog-drawer-width, 300px);
       /* When in wide mode inline start margin is handled by the sidebar */
-      --_pane-margin-inline-start: 0;
+      --_pane-margin-inline-start: 0px;
       --_pane-margin-inline-end: var(--catalog-spacing-xl);
       --_pane-margin-block-end: var(--catalog-spacing-xl);
+      --_toc-pane-width: 250px;
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
@@ -156,17 +183,45 @@ import {SignalElement} from '../signals/signal-element.js';
       background-color: var(--md-sys-color-surface);
       border-radius: var(--catalog-shape-xl);
       padding-block: var(--catalog-spacing-xl);
-      margin-inline: var(--_pane-margin-inline-start) var(--_pane-margin-inline-end);
-      /* emphasized – duration matching render fn for sidebar */
-      transition: 0.5s cubic-bezier(0.3, 0, 0, 1);
-      transition-property: margin, height, border-radius;
     }
 
-    [data-animation-speed='short'] .pane {
-      /* duration matching render function for sidebar */
-      transition-duration: 0.15s;
-      /* emphasize-accelerate */
-      transition-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15);
+    .pane,
+    .panes {
+      /* emphasized – duration matching render fn for sidebar */
+      transition: 0.5s cubic-bezier(0.3, 0, 0, 1);
+      transition-property: margin, height, border-radius, max-width, width;;
+    }
+
+    .panes {
+      display: flex;
+      justify-content: start;
+      flex-direction: row-reverse;
+      gap: var(--_pane-margin-inline-end);
+      margin-inline: var(--_pane-margin-inline-start) var(--_pane-margin-inline-end);
+      width: 100%;
+      max-width: calc(100% - var(--_drawer-width) - var(--_pane-margin-inline-start) - var(--_pane-margin-inline-end));
+    }
+
+    .pane.content-pane {
+      flex-grow: 1;
+    }
+
+    .pane.toc {
+      width: auto;
+      box-sizing: border-box;
+      padding-inline: var(--catalog-spacing-xl);
+      width: var(--_toc-pane-width);
+    }
+
+    .pane.toc p {
+      margin-block: 0;
+      font-size: var(--catalog-label-s-font-size);
+    }
+
+    .pane.toc h2 {
+      white-space: nowrap;
+      margin-block: var(--catalog-spacing-s) var(--catalog-spacing-m);
+      font-size: var(--catalog-headline-s-font-size);
     }
 
     .content {
@@ -175,7 +230,7 @@ import {SignalElement} from '../signals/signal-element.js';
       justify-content: center;
       box-sizing: border-box;
       padding-inline: var(--catalog-spacing-xl);
-      max-width: calc(100vw - var(--_drawer-width));
+      width: 100%;
     }
 
     .content slot {
@@ -201,9 +256,20 @@ import {SignalElement} from '../signals/signal-element.js';
       background-color: var(--md-dialog-scrim-color, rgba(0, 0, 0, 0.32));
     }
 
+    @media (max-width: 900px) {
+      .pane.toc {
+        display: none;
+      }
+    }
+
     @media (max-width: 1500px) {
       .spacer {
         min-width: 0px;
+      }
+
+      .panes {
+
+      max-width: calc(100% - var(--_pane-margin-inline-start) - var(--_pane-margin-inline-end));
       }
 
       .content {
@@ -222,7 +288,7 @@ import {SignalElement} from '../signals/signal-element.js';
         border-radius: 0 var(--catalog-shape-xl) var(--catalog-shape-xl) 0;
       }
 
-      .pane {
+      :host {
         --_pane-margin-inline-start: var(--catalog-spacing-xl);
       }
 
@@ -248,9 +314,12 @@ import {SignalElement} from '../signals/signal-element.js';
       .pane {
         border-end-start-radius: 0;
         border-end-end-radius: 0;
-        --_pane-margin-inline-start: 0;
-        --_pane-margin-inline-end: 0;
-        --_pane-margin-block-end: 0;
+      }
+
+      :host {
+        --_pane-margin-block-end: 0px;
+        --_pane-margin-inline-start: 0px;
+        --_pane-margin-inline-end: 0px;
       }
     }
 

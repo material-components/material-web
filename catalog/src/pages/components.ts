@@ -55,7 +55,6 @@ async function syncPlaygroundThemeWithPage() {
     return;
   }
 
-
   await customElements.whenDefined('playground-preview');
   await updateMessageTargetOnIframeLoad(postdoc, previewEl);
   await postdoc.handshake;
@@ -78,10 +77,8 @@ function demoDropdown() {
   // tslint:disable:no-unnecessary-type-assertion TSC externally seems to differ
   // from internal here and needs these type assertions
   const expandButton =
-      document.querySelector('summary md-outlined-icon-button') as
+      detailsEl?.querySelector('summary md-outlined-icon-button') as
       MdOutlinedIconButton;
-  const summary = document.querySelector(
-                      'summary:has(md-outlined-icon-button)') as HTMLElement;
   // tslint:enable:no-unnecessary-type-assertion
 
   // Synchronize details open state with toggle button
@@ -89,9 +86,15 @@ function demoDropdown() {
     expandButton!.selected = detailsEl.open;
   });
 
-  // Click the summary element because buttons "eat up" the <summary> click.
+  // Toggles the details element because buttons "eat up" the <summary> click
+  // except on Safari. So we have to setTimeout to check if the details element
+  // has updated.
   expandButton?.addEventListener('click', () => {
-    summary.click();
+    setTimeout(() => {
+      if (detailsEl?.open !== expandButton.selected) {
+        detailsEl!.toggleAttribute('open');
+      }
+    });
   });
 }
 
