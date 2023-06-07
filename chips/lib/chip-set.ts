@@ -15,8 +15,7 @@ import {Chip} from './chip.js';
 export class ChipSet extends LitElement {
   get chips() {
     return this.childElements.filter(
-        (child => child instanceof Chip) as (child: HTMLElement) =>
-            child is Chip);
+        (child): child is MaybeMultiActionChip => child instanceof Chip);
   }
 
   @queryAssignedElements({flatten: true})
@@ -57,7 +56,7 @@ export class ChipSet extends LitElement {
 
     if (isHome || isEnd) {
       const index = isHome ? 0 : chips.length - 1;
-      chips[index].focus();
+      chips[index].focus({trailing: isEnd});
       this.updateTabIndices();
       return;
     }
@@ -70,7 +69,7 @@ export class ChipSet extends LitElement {
       // If there is not already a chip focused, select the first or last chip
       // based on the direction we're traveling.
       const nextChip = forwards ? chips[0] : chips[chips.length - 1];
-      nextChip.focus();
+      nextChip.focus({trailing: !forwards});
       this.updateTabIndices();
       return;
     }
@@ -101,7 +100,7 @@ export class ChipSet extends LitElement {
         continue;
       }
 
-      nextChip.focus();
+      nextChip.focus({trailing: !forwards});
       this.updateTabIndices();
       break;
     }
@@ -123,4 +122,8 @@ export class ChipSet extends LitElement {
       chips[0]?.removeAttribute('tabindex');
     }
   }
+}
+
+interface MaybeMultiActionChip extends Chip {
+  focus(options?: FocusOptions&{trailing?: boolean}): void;
 }

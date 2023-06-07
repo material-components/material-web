@@ -5,17 +5,17 @@
  */
 
 import {html, nothing} from 'lit';
-import {property} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
-import {Chip} from './chip.js';
+import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-actions.js';
 
 /**
  * An input chip component.
  */
-export class InputChip extends Chip {
+export class InputChip extends MultiActionChip {
   @property({type: Boolean}) avatar = false;
   @property() href = '';
   @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
@@ -38,6 +38,19 @@ export class InputChip extends Chip {
     // Link chips cannot be disabled
     return !this.href && this.disabled;
   }
+
+  protected get primaryAction() {
+    // Don't use @query() since a remove-only input chip still has a span that
+    // has "primary action" classes.
+    if (this.removeOnly) {
+      return null;
+    }
+
+    return this.renderRoot.querySelector<HTMLElement>('.primary.action');
+  }
+
+  @query('.trailing.action')
+  protected readonly trailingAction!: HTMLElement|null;
 
   protected override getContainerClasses() {
     return {

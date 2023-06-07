@@ -7,17 +7,17 @@
 import '../../elevation/elevation.js';
 
 import {html, nothing, PropertyValues, svg} from 'lit';
-import {property} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
-import {Chip} from './chip.js';
+import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-actions.js';
 
 /**
  * A filter chip component.
  */
-export class FilterChip extends Chip {
+export class FilterChip extends MultiActionChip {
   @property({type: Boolean}) elevated = false;
   @property({type: Boolean}) removable = false;
   @property({type: Boolean}) selected = false;
@@ -25,6 +25,10 @@ export class FilterChip extends Chip {
   protected get primaryId() {
     return 'option';
   }
+
+  @query('.primary.action') protected readonly primaryAction!: HTMLElement|null;
+  @query('.trailing.action')
+  protected readonly trailingAction!: HTMLElement|null;
 
   constructor() {
     super();

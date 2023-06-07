@@ -7,7 +7,7 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, LitElement, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -49,8 +49,7 @@ export abstract class Chip extends LitElement {
         <md-focus-ring for=${this.primaryId}></md-focus-ring>
         <md-ripple for=${this.primaryId}
           ?disabled=${this.rippleDisabled}></md-ripple>
-        ${this.renderPrimaryAction()}
-        ${this.renderTrailingAction?.() || nothing}
+        ${this.renderAction()}
       </div>
     `;
   }
@@ -71,9 +70,7 @@ export abstract class Chip extends LitElement {
     `;
   }
 
-  protected abstract renderPrimaryAction(): TemplateResult;
-
-  protected renderTrailingAction?(): TemplateResult|typeof nothing;
+  protected abstract renderAction(): TemplateResult;
 
   protected renderOutline() {
     return html`<span class="outline"></span>`;

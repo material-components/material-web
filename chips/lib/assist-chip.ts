@@ -39,7 +39,7 @@ export class AssistChip extends Chip {
     };
   }
 
-  protected override renderPrimaryAction() {
+  protected override renderAction() {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
       return html`
