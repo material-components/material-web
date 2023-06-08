@@ -32,7 +32,7 @@ Button                        | ✅     | ✅    | ❌
 FAB                           | ✅     | ✅    | ❌
 Icon button                   | ✅     | ✅    | ❌
 Checkbox                      | ✅     | ✅    | ❌
-Chips                         | 🟡     | ❌    | ❌
+Chips                         | ✅     | 🟡    | ❌
 Dialog                        | ✅     | ✅    | ❌
 Divider                       | ✅     | ✅    | ✅
 Elevation                     | ✅     | ✅    | ✅
