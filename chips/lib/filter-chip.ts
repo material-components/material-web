@@ -12,7 +12,7 @@ import {property, query} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
 import {MultiActionChip} from './multi-action-chip.js';
-import {renderRemoveButton} from './trailing-actions.js';
+import {renderRemoveButton} from './trailing-icons.js';
 
 /**
  * A filter chip component.

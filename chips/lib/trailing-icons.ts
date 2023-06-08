@@ -15,7 +15,7 @@ import {Chip} from './chip.js';
 export function renderRemoveButton({disabled}: {disabled: boolean}) {
   return html`
     <button class="trailing action"
-      ?disabled=${disabled ?? false}
+      ?disabled=${disabled}
       @click=${handleRemoveClick}
     >
       <md-focus-ring></md-focus-ring>

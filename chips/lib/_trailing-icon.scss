@@ -9,7 +9,8 @@
 
 @mixin styles() {
   .trailing.action {
-    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0 8px;
 
     // Note: the trailing action's shape only follows the trailing end of the
@@ -29,8 +30,6 @@
   .trailing.action md-ripple {
     border-radius: 50%;
     height: calc(4 / 3 * var(--_icon-size)); // 24px default
-    inset: 50% 0 0 50%;
-    transform: translateX(-50%) translateY(-50%);
     width: calc(4 / 3 * var(--_icon-size)); // 24px default
   }
 
