@@ -20,6 +20,7 @@ export interface StoryKnobs {
   label: string;
   elevated: boolean;
   disabled: boolean;
+  singleSelect: boolean;
   scrolling: boolean;
 }
 
@@ -89,10 +90,10 @@ const links: MaterialStoryInit<StoryKnobs> = {
 const filters: MaterialStoryInit<StoryKnobs> = {
   name: 'Filter chips',
   styles,
-  render({label, elevated, disabled, scrolling}) {
+  render({label, elevated, disabled, scrolling, singleSelect}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)}>
+      <md-chip-set class=${classMap(classes)} ?single-select=${singleSelect}>
         <md-filter-chip
           label=${label || 'Filter chip'}
           ?disabled=${disabled}

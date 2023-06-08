@@ -41,11 +41,10 @@ export class FilterChip extends MultiActionChip {
     });
   }
 
-  protected override updated(changedProperties: PropertyValues<FilterChip>) {
-    if (changedProperties.has('selected') &&
-        changedProperties.get('selected') !== undefined) {
+  protected override updated(changed: PropertyValues<this>) {
+    if (changed.has('selected') && changed.get('selected') !== undefined) {
       // Dispatch when `selected` changes, except for the first update.
-      this.dispatchEvent(new Event('change', {bubbles: true}));
+      this.dispatchEvent(new Event('selected', {bubbles: true}));
     }
   }
 

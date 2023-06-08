@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, isServer, LitElement} from 'lit';
-import {queryAssignedElements} from 'lit/decorators.js';
+import {html, isServer, LitElement, PropertyValues} from 'lit';
+import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {Chip} from './chip.js';
 
@@ -15,8 +15,10 @@ import {Chip} from './chip.js';
 export class ChipSet extends LitElement {
   get chips() {
     return this.childElements.filter(
-        (child): child is MaybeMultiActionChip => child instanceof Chip);
+        (child): child is Chip => child instanceof Chip);
   }
+
+  @property({type: Boolean, attribute: 'single-select'}) singleSelect = false;
 
   @queryAssignedElements({flatten: true})
   private readonly childElements!: HTMLElement[];
@@ -26,6 +28,23 @@ export class ChipSet extends LitElement {
     if (!isServer) {
       this.addEventListener('focusin', this.updateTabIndices.bind(this));
       this.addEventListener('keydown', this.handleKeyDown.bind(this));
+      this.addEventListener('selected', this.handleSelected.bind(this));
+    }
+  }
+
+  protected override updated(changed: PropertyValues<this>) {
+    if (changed.has('singleSelect') && this.singleSelect) {
+      let hasSelectedChip = false;
+      for (const chip of this.chips as MaybeSelectableChip[]) {
+        if (chip.selected === true) {
+          if (!hasSelectedChip) {
+            hasSelectedChip = true;
+            continue;
+          }
+
+          chip.selected = false;
+        }
+      }
     }
   }
 
@@ -48,7 +67,7 @@ export class ChipSet extends LitElement {
     // Prevent default interactions, such as scrolling.
     event.preventDefault();
 
-    const {chips} = this;
+    const {chips} = this as {chips: MaybeMultiActionChip[]};
     // Don't try to select another chip if there aren't any.
     if (chips.length < 2) {
       return;
@@ -122,8 +141,26 @@ export class ChipSet extends LitElement {
       chips[0]?.removeAttribute('tabindex');
     }
   }
+
+  private handleSelected(event: Event) {
+    if (!this.singleSelect) {
+      return;
+    }
+
+    if ((event.target as MaybeSelectableChip).selected === true) {
+      for (const chip of this.chips as MaybeSelectableChip[]) {
+        if (chip !== event.target && chip.selected) {
+          chip.selected = false;
+        }
+      }
+    }
+  }
 }
 
 interface MaybeMultiActionChip extends Chip {
   focus(options?: FocusOptions&{trailing?: boolean}): void;
+}
+
+interface MaybeSelectableChip extends Chip {
+  selected?: boolean;
 }
