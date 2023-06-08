@@ -36,7 +36,7 @@ import '@material/web/checkbox/checkbox.js';
 Use the `<component-name>` tag in HTML markup. Refer to the
 [component docs](components/) for more guidance on using each component.
 
-[Playground](https://lit.dev/playground/#gist=37d28012c5ec6de30809bdf4a6e26cb6)<!-- {.external} -->
+[Playground](https://lit.dev/playground/#gist=f3deccf807cdff551fa7ee172a7062c4)<!-- {.external} -->
 
 ```html
 <script type="module" src="./index.js"></script>
