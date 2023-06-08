@@ -17,6 +17,7 @@ const collection =
       new Knob('label', {defaultValue: '', ui: textInput()}),
       new Knob('elevated', {defaultValue: false, ui: boolInput()}),
       new Knob('disabled', {defaultValue: false, ui: boolInput()}),
+      new Knob('scrolling', {defaultValue: false, ui: boolInput()}),
     ]);
 
 collection.addStories(...materialInitsToStoryInits(stories));

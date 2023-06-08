@@ -12,13 +12,15 @@ import '@material/web/chips/input-chip.js';
 import '@material/web/chips/suggestion-chip.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {html, svg} from 'lit';
+import {css, html, svg} from 'lit';
+import {classMap} from 'lit/directives/class-map.js';
 
 /** Knob types for chips stories. */
 export interface StoryKnobs {
   label: string;
   elevated: boolean;
   disabled: boolean;
+  scrolling: boolean;
 }
 
 const GOOGLE_LOGO = svg`
@@ -31,20 +33,32 @@ const GOOGLE_LOGO = svg`
   </svg>
 `;
 
+const styles = css`
+  md-chip-set.scrolling {
+    flex-wrap: nowrap;
+    max-width: 512px;
+    overflow: scroll;
+    /** Add room for focus ring. */
+    padding: 8px;
+  }
+`;
+
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Assist chips',
-  render({label, elevated, disabled}) {
+  styles,
+  render({label, elevated, disabled, scrolling}) {
+    const classes = {scrolling};
     return html`
-      <md-chip-set>
+      <md-chip-set class=${classMap(classes)}>
         <md-assist-chip
           label=${label || 'Assist chip'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
         ></md-assist-chip>
         <md-assist-chip
           label=${label || 'Assist chip with icon'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
         >
           <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
         </md-assist-chip>
@@ -55,13 +69,15 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 
 const links: MaterialStoryInit<StoryKnobs> = {
   name: 'Assist link chips',
-  render({label, elevated, disabled}) {
+  styles,
+  render({label, elevated, disabled, scrolling}) {
+    const classes = {scrolling};
     return html`
-      <md-chip-set>
+      <md-chip-set class=${classMap(classes)}>
         <md-assist-chip
           label=${label || 'Assist link chip'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
           href="https://google.com"
           target="_blank"
         >${GOOGLE_LOGO}</md-assist-chip>
@@ -72,25 +88,27 @@ const links: MaterialStoryInit<StoryKnobs> = {
 
 const filters: MaterialStoryInit<StoryKnobs> = {
   name: 'Filter chips',
-  render({label, elevated, disabled}) {
+  styles,
+  render({label, elevated, disabled, scrolling}) {
+    const classes = {scrolling};
     return html`
-      <md-chip-set>
+      <md-chip-set class=${classMap(classes)}>
         <md-filter-chip
           label=${label || 'Filter chip'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
         ></md-filter-chip>
         <md-filter-chip
           label=${label || 'Filter chip with icon'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
         >
           <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
         </md-filter-chip>
         <md-filter-chip
           label=${label || 'Removable filter chip'}
           ?disabled=${disabled}
-          ?elevated=${elevated ?? false}
+          ?elevated=${elevated}
           removable
         ></md-filter-chip>
       </md-chip-set>
@@ -100,29 +118,31 @@ const filters: MaterialStoryInit<StoryKnobs> = {
 
 const inputs: MaterialStoryInit<StoryKnobs> = {
   name: 'Input chips',
-  render({label, disabled}) {
+  styles,
+  render({label, disabled, scrolling}) {
+    const classes = {scrolling};
     return html`
-      <md-chip-set>
+      <md-chip-set class=${classMap(classes)}>
         <md-input-chip
           label=${label || 'Input chip'}
-          ?disabled=${disabled ?? false}
+          ?disabled=${disabled}
         ></md-input-chip>
         <md-input-chip
           label=${label || 'Input chip with icon'}
-          ?disabled=${disabled ?? false}
+          ?disabled=${disabled}
         >
           <md-icon slot="icon">local_laundry_service</md-icon>
         </md-input-chip>
         <md-input-chip
           label=${label || 'Input chip with avatar'}
-          ?disabled=${disabled ?? false}
+          ?disabled=${disabled}
           avatar
         >
           <img slot="icon" src="https://lh3.googleusercontent.com/a/default-user=s48">
         </md-input-chip>
         <md-input-chip
           label=${label || 'Remove-only input chip'}
-          ?disabled=${disabled ?? false}
+          ?disabled=${disabled}
           remove-only
         ></md-input-chip>
       </md-chip-set>
@@ -132,12 +152,14 @@ const inputs: MaterialStoryInit<StoryKnobs> = {
 
 const inputLinks: MaterialStoryInit<StoryKnobs> = {
   name: 'Input link chips',
-  render({label, disabled}) {
+  styles,
+  render({label, disabled, scrolling}) {
+    const classes = {scrolling};
     return html`
-      <md-chip-set>
+      <md-chip-set class=${classMap(classes)}>
         <md-input-chip
           label=${label || 'Input link chip'}
-          ?disabled=${disabled ?? false}
+          ?disabled=${disabled}
           href="https://google.com"
           target="_blank"
         >${GOOGLE_LOGO}</md-input-chip>
@@ -148,18 +170,20 @@ const inputLinks: MaterialStoryInit<StoryKnobs> = {
 
 const suggestions: MaterialStoryInit<StoryKnobs> = {
   name: 'Suggestion chips',
-  render({label, elevated, disabled}) {
+  styles,
+  render({label, elevated, disabled, scrolling}) {
+    const classes = {scrolling};
     return html`
-      <md-chip-set>
+      <md-chip-set class=${classMap(classes)}>
         <md-suggestion-chip
           label=${label || 'Suggestion chip'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
         ></md-suggestion-chip>
         <md-suggestion-chip
           label=${label || 'Suggestion chip with icon'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
         >
           <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
         </md-suggestion-chip>
@@ -170,13 +194,15 @@ const suggestions: MaterialStoryInit<StoryKnobs> = {
 
 const suggestionLinks: MaterialStoryInit<StoryKnobs> = {
   name: 'Suggestion link chips',
-  render({label, elevated, disabled}) {
+  styles,
+  render({label, elevated, disabled, scrolling}) {
+    const classes = {scrolling};
     return html`
-      <md-chip-set>
+      <md-chip-set class=${classMap(classes)}>
         <md-suggestion-chip
           label=${label || 'Suggestion link chip'}
-          ?disabled=${disabled ?? false}
-          ?elevated=${elevated ?? false}
+          ?disabled=${disabled}
+          ?elevated=${elevated}
           href="https://google.com"
           target="_blank"
         >${GOOGLE_LOGO}</md-suggestion-chip>
