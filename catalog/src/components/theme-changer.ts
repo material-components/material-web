@@ -8,6 +8,7 @@ import '@material/web/labs/segmentedbuttonset/outlined-segmented-button-set.js';
 import '@material/web/labs/segmentedbutton/outlined-segmented-button.js';
 import '@material/web/icon/icon.js';
 import './hct-slider.js';
+import './copy-code-button.js';
 import '@material/web/focus/focus-ring.js';
 
 import type {MdOutlinedSegmentedButton} from '@material/web/labs/segmentedbutton/outlined-segmented-button.js';
@@ -17,7 +18,7 @@ import {live} from 'lit/directives/live.js';
 
 import {ChangeColorEvent, ChangeDarkModeEvent,} from '../types/color-events.js';
 import {hctFromHex, hexFromHct} from '../utils/material-color-helpers.js';
-import {getCurrentMode, getCurrentSeedColor} from '../utils/theme.js';
+import {getCurrentMode, getCurrentSeedColor, getCurrentThemeString} from '../utils/theme.js';
 
 import type {HCTSlider} from './hct-slider.js';
 
@@ -62,7 +63,14 @@ export class ThemeChanger extends LitElement {
 
   render() {
     return html`
-      <h2>Theme Controls</h2>
+      <h2>
+        Theme Controls
+        <copy-code-button
+            button-title="Copy current theme to clipboard"
+            label="Copy current theme"
+            .getCopyText=${getCurrentThemeString}>
+        </copy-code-button>
+      </h2>
       ${this.renderHexPicker()}
       ${this.renderHctPicker()}
       ${this.renderColorModePicker()}
@@ -203,6 +211,12 @@ export class ThemeChanger extends LitElement {
 
   static styles = css`
     :host {
+      /* These are the default values, but we don't want the alignment to break
+       * in case the token values are updated.
+       */
+      --_copy-button-button-size: 40px;
+      --_copy-button-icon-size: 24px;
+      position: relative;
       display: flex;
       flex-direction: column;
       margin: var(--catalog-spacing-m) var(--catalog-spacing-l);
@@ -240,6 +254,23 @@ export class ThemeChanger extends LitElement {
     h2 {
       margin: 0;
       text-align: center;
+      position: relative;
+      height: var(--_copy-button-icon-size);
+    }
+
+    copy-code-button {
+      --md-icon-button-icon-size: var(--_copy-button-icon-size);
+      --md-icon-button-state-layer-size: var(--_copy-button-button-size);
+      /*
+       * Center the copy icon with the h2 text
+       * -(icon button size - intrinsic icon size) / 2
+       */
+      --_inline-block-inset: calc(
+        -1 * (var(--_copy-button-button-size) - var(--_copy-button-icon-size)) /
+          2
+      );
+      --catalog-copy-code-button-inset: var(--_inline-block-inset) 0 auto auto;
+      position: static;
     }
 
     #hex {
