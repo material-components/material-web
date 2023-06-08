@@ -13,6 +13,8 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const pluginTOC = require('eleventy-plugin-nesting-toc');
 const permalinks = require('./eleventy-helpers/plugins/permalinks.cjs');
 const filterSort = require('./eleventy-helpers/filters/filter-sort.cjs');
+const copyCodeButtonPlugin = require('./eleventy-helpers/plugins/copy-code-button.cjs');
+const markdownIt = require('markdown-it');
 
 // dev mode build
 const DEV = process.env.NODE_ENV === 'DEV';
@@ -57,8 +59,19 @@ module.exports = function (eleventyConfig) {
   // install code syntax highlighting
   eleventyConfig.addPlugin(syntaxHighlight);
 
+  const md = markdownIt({
+    html: true,
+    breaks: false, // 2 newlines for paragraph break instead of 1
+    linkify: true,
+  });
+
   // permalink markdown plugin
-  permalinks(eleventyConfig);
+  permalinks(md);
+
+  // copy code button plugin
+  copyCodeButtonPlugin(md);
+
+  eleventyConfig.setLibrary('md', md);
 
   // Add a TOC plugin (implementation is TODO for now)
   eleventyConfig.addPlugin(pluginTOC, {

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const markdownIt = require('markdown-it');
 const markdownItAnchor = require('markdown-it-anchor');
 const slugifyLib = require('slugify');
 
@@ -12,9 +11,9 @@ const slugifyLib = require('slugify');
  * An 11ty plugin that integrates `markdown-it-anchor` to 11ty's markdown
  * engine. This allows us to inject an <a> around our <h*> elements.
  *
- * @param eleventyConfig The 11ty config in which to attach this plugin.
+ * @param markdownIt The markdown-it instance to use.
  */
-function permalinks(eleventyConfig) {
+function permalinks(markdownIt) {
   // Use the same slugify as 11ty for markdownItAnchor.
   const slugify = (s) => slugifyLib(s, { lower: true });
 
@@ -64,18 +63,13 @@ function permalinks(eleventyConfig) {
   };
 
   // Apply the anchor plugin to markdownit
-  const md = markdownIt({
-    html: true,
-    breaks: false, // 2 newlines for paragraph break instead of 1
-    linkify: true,
-  }).use(markdownItAnchor, {
+  markdownIt.use(markdownItAnchor, {
     slugify,
     permalink: linkAfterHeaderWithWrapper,
     permalinkClass: 'anchor',
     permalinkSymbol: '#',
     level: [2, 3, 4], // only apply to h2 h3 and h4
   });
-  eleventyConfig.setLibrary('md', md);
 }
 
 module.exports = permalinks;
