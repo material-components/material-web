@@ -32,6 +32,7 @@ export class CatalogComponentHeader extends LitElement {
       --catalog-image-border-radius: var(--catalog-shape-xl);
       container: host / inline-size;
       position: relative;
+      margin-inline: auto;
     }
 
     slot {
