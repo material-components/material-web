@@ -1,8 +1,5 @@
 # Material Web
 
-> IMPORTANT: Material Web is a work in progress and subject to major changes
-> until 1.0 release.
-
 Material Web is Google’s UI toolkit for building beautiful, accessible web
 applications.
 
@@ -18,7 +15,8 @@ open-source design system.
 **Alpha** components are in-development and may have many frequent breaking
 changes.
 
-**Beta** components are mostly polished and ready for use.
+**Beta** components are mostly polished and ready for use, but may still have
+breaking changes.
 
 **Stable** components are reviewed, documented, and API complete.
 
