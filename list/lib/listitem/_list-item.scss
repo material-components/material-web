@@ -47,7 +47,7 @@
 
     @include focus-ring.theme(
       (
-        'shape': 8px,
+        'shape': var(--_list-item-focus-ring-shape),
       )
     );
     @include ripple.theme(

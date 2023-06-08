@@ -138,6 +138,7 @@ $_default: (
   // Values pulled from b/198759625 spreadsheet
   @return (
     // go/keep-sorted start
+    'list-item-focus-ring-shape': if($exclude-hardcoded-values, null, 8px),
     'list-item-leading-element-leading-space':
       if($exclude-hardcoded-values, null, 16px),
     'list-item-leading-space': if($exclude-hardcoded-values, null, 16px),
