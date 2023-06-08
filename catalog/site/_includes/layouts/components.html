@@ -11,5 +11,12 @@
 {% endblock %}
 
 {% block content %}
+{% if not ssrOnly %}
+<!-- Loads page JS on idle callback at src/hydration-entrypoints/components/md-file-name.ts -->
+<lit-island
+    on:idle
+    import="/material-web/js/hydration-entrypoints{{ page.filePathStem }}.js">
+</lit-island>
+{% endif %}
 {{ content | safe }}
 {% endblock %}

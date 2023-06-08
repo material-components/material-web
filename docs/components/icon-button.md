@@ -93,7 +93,7 @@ people take supplementary actions with a single tap.
         gap: 8px;
       }
     </style>
-    <div inert class="wrapper">
+    <div class="wrapper">
       <div>
         <div>
           <md-standard-icon-button>
@@ -159,16 +159,16 @@ the icon font.
       style="justify-content:center;gap: 8px;"
       title="Icon buttons can be used within other components, such as a bottom app bar"
       aria-label="A row of icon buttons">
-    <md-standard-icon-button inert>
+    <md-standard-icon-button>
       <md-icon>check</md-icon>
     </md-standard-icon-button>
-    <md-filled-icon-button inert>
+    <md-filled-icon-button>
       <md-icon>check</md-icon>
     </md-filled-icon-button>
-    <md-filled-tonal-icon-button inert>
+    <md-filled-tonal-icon-button>
       <md-icon>check</md-icon>
     </md-filled-tonal-icon-button>
-    <md-outlined-icon-button inert>
+    <md-outlined-icon-button>
       <md-icon>check</md-icon>
     </md-outlined-icon-button>
   </figure>
@@ -224,7 +224,7 @@ selected](images/iconbutton/usage-toggle.png "Unselected and Selected Icon Butto
   <figure
       style="gap:8px;flex-direction:column;padding-block:8px;"
       aria-label="Two rows of toggling icon buttons, the top row is unselected and the bottom row is selected">
-    <div style="display:flex;gap:8px;" inert>
+    <div style="display:flex;gap:8px;">
       <md-standard-icon-button toggle>
         <md-icon>close</md-icon>
         <md-icon slot="selectedIcon">check</md-icon>
@@ -242,7 +242,7 @@ selected](images/iconbutton/usage-toggle.png "Unselected and Selected Icon Butto
         <md-icon slot="selectedIcon">check</md-icon>
       </md-outlined-icon-button>
     </div>
-    <div style="display:flex;gap:8px;" inert>
+    <div style="display:flex;gap:8px;">
       <md-standard-icon-button toggle selected>
         <md-icon>close</md-icon>
         <md-icon slot="selectedIcon">check</md-icon>
@@ -361,7 +361,7 @@ Icon buttons can be grouped together or they can stand alone.
       style="justify-content:center;gap: 8px;"
       title="Standard Icon Button with Check icon"
       aria-label="A check icon">
-    <md-standard-icon-button inert>
+    <md-standard-icon-button>
       <md-icon>check</md-icon>
     </md-standard-icon-button>
   </figure>
@@ -395,7 +395,7 @@ Icon buttons can be grouped together or they can stand alone.
       style="justify-content:center;gap: 8px;"
       title="Filled Icon Button"
       aria-label="A circular button with a check icon">
-    <md-filled-icon-button inert>
+    <md-filled-icon-button>
       <md-icon>check</md-icon>
     </md-filled-icon-button>
   </figure>
@@ -432,7 +432,7 @@ actions.
       style="justify-content:center;gap: 8px;"
       title="Filled Tonal Icon Button"
       aria-label="A filled tonal icon button with a check icon">
-    <md-filled-tonal-icon-button inert>
+    <md-filled-tonal-icon-button>
       <md-icon>check</md-icon>
     </md-filled-tonal-icon-button>
   </figure>
@@ -471,7 +471,7 @@ high emphasis action.
       style="justify-content:center;gap: 8px;"
       title="Outlined Icon button"
       aria-label="An outlined circular icon button with a check icon">
-    <md-outlined-icon-button inert>
+    <md-outlined-icon-button>
       <md-icon>check</md-icon>
     </md-outlined-icon-button>
   </figure>
@@ -596,7 +596,7 @@ Token                                              | Default value
         padding-block: 8px;
       }
       </style>
-      <md-filled-icon-button inert>
+      <md-filled-icon-button>
         <md-icon>check</md-icon>
       </md-filled-icon-button>
   </figure>
@@ -655,7 +655,7 @@ Token                                                    | Default value
         padding-block: 8px;
       }
       </style>
-      <md-filled-tonal-icon-button inert>
+      <md-filled-tonal-icon-button>
         <md-icon>check</md-icon>
       </md-filled-tonal-icon-button>
   </figure>
@@ -715,7 +715,7 @@ Token                                                | Default value
         padding-block: 8px;
       }
       </style>
-      <md-outlined-icon-button inert>
+      <md-outlined-icon-button>
         <md-icon>check</md-icon>
       </md-outlined-icon-button>
   </figure>

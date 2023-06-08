@@ -1,6 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Circular Progress
 dirname: circularprogress
+ssrOnly: true
 -----><!-- catalog-only-end -->
 
 <catalog-component-header image-align="end">
@@ -74,9 +75,9 @@ indeterminate.](images/circularprogress/usage.gif "Determinate and indeterminate
       aria-label="Two circular progress indicators, one with three quarters of the track full
 and the other
 indeterminate.">
-    <md-circular-progress inert progress="0.75"></md-circular-progress>
+    <md-circular-progress progress="0.75"></md-circular-progress>
 
-    <md-circular-progress inert indeterminate></md-circular-progress>
+    <md-circular-progress indeterminate></md-circular-progress>
   </figure>
 </div>
 
@@ -109,7 +110,7 @@ Indeterminate circular progress indicators may cycle between four colors
       style="justify-content:center;"
       title="A four-color indeterminate circular progress indicator"
       aria-label="An indeterminate circular progress indicator that cycles between four colors.">
-    <md-circular-progress inert four-color indeterminate></md-circular-progress>
+    <md-circular-progress four-color indeterminate></md-circular-progress>
   </figure>
 </div>
 
@@ -178,7 +179,7 @@ Token                                           | Default value
       }
     </style>
 
-    <md-circular-progress inert progress="0.5"></md-circular-progress>
+    <md-circular-progress progress="0.5"></md-circular-progress>
   </figure>
 </div>
 

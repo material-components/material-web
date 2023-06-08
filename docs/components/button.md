@@ -96,7 +96,7 @@ payment'"
         align-items: center;
       }
     </style>
-    <div inert class="wrapper">
+    <div class="wrapper">
       <div>
         <md-elevated-button hasicon>
           <md-icon slot="icon">add</md-icon>
@@ -154,8 +154,8 @@ a button.
       style="justify-content:center;gap: 8px;"
       title="Outlined and filled buttons."
       aria-label="An outlined button with the text 'Back' next to a filled button with the text 'Complete'">
-    <md-outlined-button inert>Back</md-outlined-button>
-    <md-filled-button inert>Complete</md-filled-button>
+    <md-outlined-button>Back</md-outlined-button>
+    <md-filled-button>Complete</md-filled-button>
   </figure>
 </div>
 
@@ -189,12 +189,12 @@ box](images/button/usage-icon.png "Slot in icons to the appropriate slots")
       style="justify-content:center;gap: 8px;"
       title="Outlined and filled buttons."
       aria-label="An outlined button with the text 'Back' next to a filled button with the text 'Complete'">
-    <md-tonal-button inert>
+    <md-tonal-button>
       Send
       <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
     </md-tonal-button>
 
-    <md-text-button inert trailingicon>
+    <md-text-button trailingicon>
       Open
       <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
     </md-text-button>
@@ -249,7 +249,7 @@ separation from a patterned background.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="An elevated button.">
-    <md-elevated-button inert>Elevated</md-elevated-button>
+    <md-elevated-button>Elevated</md-elevated-button>
   </figure>
 </div>
 
@@ -278,7 +278,7 @@ final actions that complete a flow, like Save, Join now, or Confirm.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="A filled button.">
-    <md-filled-button inert>Filled</md-filled-button>
+    <md-filled-button>Filled</md-filled-button>
   </figure>
 </div>
 
@@ -313,7 +313,7 @@ than an outline would give, such as "Next" in an onboarding flow.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="A tonal button.">
-    <md-tonal-button inert>Tonal</md-tonal-button>
+    <md-tonal-button>Tonal</md-tonal-button>
   </figure>
 </div>
 
@@ -346,7 +346,7 @@ the primary action in an app.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="An outlined button.">
-    <md-outlined-button inert>Outlined</md-outlined-button>
+    <md-outlined-button>Outlined</md-outlined-button>
   </figure>
 </div>
 
@@ -379,7 +379,7 @@ options.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="A text button.">
-    <md-text-button inert>Text</md-text-button>
+    <md-text-button>Text</md-text-button>
   </figure>
 </div>
 
@@ -671,7 +671,7 @@ Token                               | Default value
       }
     </style>
 
-    <md-text-button inert>Text</md-text-button>
+    <md-text-button>Text</md-text-button>
   </figure>
 </div>
 

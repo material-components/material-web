@@ -1,6 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Ripple
 dirname: ripple
+ssrOnly: true
 -----><!-- catalog-only-end -->
 
 <catalog-component-header image-align="start">
