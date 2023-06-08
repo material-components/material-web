@@ -122,8 +122,8 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
       const target = event.target as MdSlider;
       const {min, max, valueStart, valueEnd} = target;
       const range = max - min;
-      const fractionStart = valueStart / range;
-      const fractionEnd = valueEnd / range;
+      const fractionStart = valueStart! / range;
+      const fractionEnd = valueEnd! / range;
       target.valueStartLabel = labelFor(fractionStart);
       target.valueEndLabel = labelFor(fractionEnd);
     }

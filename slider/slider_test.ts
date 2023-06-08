@@ -27,9 +27,9 @@ function getSliderTemplate(props?: SliderTestProps) {
   return html`
     <md-slider
       .range=${props?.range ?? false}
-      .value=${props?.value ?? 0}
-      .valueStart=${props?.valueStart ?? 0}
-      .valueEnd=${props?.valueEnd ?? 0}
+      .value=${props?.value}
+      .valueStart=${props?.valueStart}
+      .valueEnd=${props?.valueEnd}
       .step=${props?.step ?? 1}
       .min=${props?.min ?? 0}
       .max=${props?.max ?? 100}
@@ -147,7 +147,6 @@ describe('<md-slider>', () => {
     it('update via interaction', async () => {
       const props = {range: true, valueStart: 2, valueEnd: 6};
       const {harness} = await setupTest(props);
-      expect(harness.element.value).toEqual(0);
       const [endInput, startInput] = harness.getInputs();
       await harness.simulateValueInteraction(7, endInput);
       expect(harness.element.valueStart).toEqual(2);
@@ -346,6 +345,21 @@ describe('<md-slider>', () => {
     });
   });
 
+  describe('default values', () => {
+    it('defaults value to midway between min/max', async () => {
+      const {harness} = await setupTest({min: -100, max: -40});
+      await harness.element.updateComplete;
+      expect(harness.element.value).toBe(-70);
+    });
+
+    it('defaults valueStart/End to equidistant between min/max', async () => {
+      const {harness} = await setupTest({range: true, min: 80, max: 100});
+      await harness.element.updateComplete;
+      expect(harness.element.valueStart).toBe(87);
+      expect(harness.element.valueEnd).toBe(93);
+    });
+  });
+
   describe('forms', () => {
     createFormTests({
       queryControl: root => root.querySelector('md-slider'),
@@ -381,6 +395,36 @@ describe('<md-slider>', () => {
           assertValue(formData) {
             expect(formData.get('slider-start')).toBe('0');
             expect(formData.get('slider-end')).toBe('10');
+          }
+        },
+        {
+          name: 'single default value',
+          render: () => html`<md-slider name="slider"></md-slider>`,
+          assertValue(formData) {
+            expect(formData.get('slider')).toBe('50');
+          }
+        },
+        {
+          name: 'single default value with min/max',
+          render: () =>
+              html`<md-slider name="slider" min="100" max="300"></md-slider>`,
+          assertValue(formData) {
+            expect(formData.get('slider')).toBe('200');
+          }
+        },
+        {
+          name: 'multiple default values',
+          render: () => html`<md-slider range name="slider"></md-slider>`,
+          assertValue(formData) {
+            expect(formData.getAll('slider')).toEqual(['33', '67']);
+          }
+        },
+        {
+          name: 'multiple default values with min/max',
+          render: () =>
+              html`<md-slider range name="slider" min="100" max="300"></md-slider>`,
+          assertValue(formData) {
+            expect(formData.getAll('slider')).toEqual(['167', '233']);
           }
         },
         {

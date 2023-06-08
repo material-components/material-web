@@ -22,12 +22,6 @@ import {MdRipple} from '../../ripple/ripple.js';
 // Disable warning for classMap with destructuring
 // tslint:disable:quoted-properties-on-dictionary
 
-/** The default value for a continuous slider. */
-const DEFAULT_VALUE = 50;
-/** The default start value for a range slider. */
-const DEFAULT_VALUE_START = 25;
-/** The default end value for a range slider. */
-const DEFAULT_VALUE_END = 75;
 
 /**
  * Slider component.
@@ -61,19 +55,17 @@ export class Slider extends LitElement {
   /**
    * The slider value displayed when range is false.
    */
-  @property({type: Number}) value = DEFAULT_VALUE;
+  @property({type: Number}) value?: number;
 
   /**
    * The slider start value displayed when range is true.
    */
-  @property({type: Number, attribute: 'value-start'})
-  valueStart = DEFAULT_VALUE_START;
+  @property({type: Number, attribute: 'value-start'}) valueStart?: number;
 
   /**
    * The slider end value displayed when range is true.
    */
-  @property({type: Number, attribute: 'value-end'})
-  valueEnd = DEFAULT_VALUE_END;
+  @property({type: Number, attribute: 'value-end'}) valueEnd?: number;
 
   /**
    * An optional label for the slider's value displayed when range is
@@ -195,8 +187,8 @@ export class Slider extends LitElement {
   @state() private startOnTop = false;
   @state() private handlesOverlapping = false;
 
-  @state() private renderValueStart = 0;
-  @state() private renderValueEnd = 0;
+  @state() private renderValueStart?: number;
+  @state() private renderValueEnd?: number;
 
   // used in synthetic events generated to control ripple hover state.
   private ripplePointerId = 1;
@@ -229,12 +221,12 @@ export class Slider extends LitElement {
   protected override willUpdate(changed: PropertyValues) {
     this.renderValueStart = changed.has('valueStart') ?
         this.valueStart :
-        (this.inputStart?.valueAsNumber ?? 0);
+        this.inputStart?.valueAsNumber;
     const endValueChanged =
         (changed.has('valueEnd') && this.range) || changed.has('value');
     this.renderValueEnd = endValueChanged ?
         (this.range ? this.valueEnd : this.value) :
-        (this.inputEnd?.valueAsNumber ?? 0);
+        this.inputEnd?.valueAsNumber;
     // manually handle ripple hover state since the handle is pointer events
     // none.
     if (changed.get('handleStartHover') !== undefined) {
@@ -269,6 +261,26 @@ export class Slider extends LitElement {
       this.renderValueStart = this.inputStart!.valueAsNumber;
     }
     this.renderValueEnd = this.inputEnd!.valueAsNumber;
+    // update values if they are unset
+    // when using a range, default to equi-distant between
+    // min - valueStart - valueEnd - max
+    if (this.range) {
+      const segment = (this.max - this.min) / 3;
+      if (this.valueStart === undefined) {
+        this.inputStart!.valueAsNumber = this.min + segment;
+        // read actual value from input
+        const v = this.inputStart!.valueAsNumber;
+        this.valueStart = this.renderValueStart = v;
+      }
+      if (this.valueEnd === undefined) {
+        this.inputEnd!.valueAsNumber = this.min + 2 * segment;
+        // read actual value from input
+        const v = this.inputEnd!.valueAsNumber;
+        this.valueEnd = this.renderValueEnd = v;
+      }
+    } else {
+      this.value ??= this.renderValueEnd;
+    }
     if (changed.has('range') || changed.has('renderValueStart') ||
         changed.has('renderValueEnd') || this.isUpdatePending) {
       this.handlesOverlapping = isOverlapping(this.handleStart, this.handleEnd);
@@ -281,9 +293,10 @@ export class Slider extends LitElement {
   protected override render() {
     const step = this.step === 0 ? 1 : this.step;
     const range = Math.max(this.max - this.min, step);
-    const startFraction =
-        this.range ? ((this.renderValueStart - this.min) / range) : 0;
-    const endFraction = (this.renderValueEnd - this.min) / range;
+    const startFraction = this.range ?
+        (((this.renderValueStart ?? this.min) - this.min) / range) :
+        0;
+    const endFraction = ((this.renderValueEnd ?? this.min) - this.min) / range;
     const containerStyles = {
       // for clipping inputs and active track.
       '--slider-start-fraction': String(startFraction),
@@ -375,11 +388,8 @@ export class Slider extends LitElement {
     </div>`;
   }
 
-  private renderInput({start, value, label}: {
-    start: boolean,
-    value: number,
-    label: string,
-  }) {
+  private renderInput({start, value, label}:
+                          {start: boolean; value?: number; label: string;}) {
     const name = start ? `start` : `end`;
     // when ranged, ensure announcement includes value info.
     // Needed for closure conformance
@@ -619,27 +629,27 @@ export class Slider extends LitElement {
   /** @private */
   formResetCallback() {
     if (this.range) {
-      this.valueStart =
-          Number(this.getAttribute('value-start') ?? DEFAULT_VALUE_START);
-      this.valueEnd =
-          Number(this.getAttribute('value-end') ?? DEFAULT_VALUE_END);
+      const valueStart = this.getAttribute('value-start');
+      this.valueStart = valueStart !== null ? Number(valueStart) : undefined;
+      const valueEnd = this.getAttribute('value-end');
+      this.valueEnd = valueEnd !== null ? Number(valueEnd) : undefined;
       return;
     }
-
-    this.value = Number(this.getAttribute('value') ?? DEFAULT_VALUE);
+    const value = this.getAttribute('value');
+    this.value = value !== null ? Number(value) : undefined;
   }
 
   /** @private */
   formStateRestoreCallback(state: string|Array<[string, string]>|null) {
     if (Array.isArray(state)) {
       const [[, valueStart], [, valueEnd]] = state;
-      this.valueStart = Number(valueStart ?? DEFAULT_VALUE_START);
-      this.valueEnd = Number(valueEnd ?? DEFAULT_VALUE_START);
+      this.valueStart = Number(valueStart);
+      this.valueEnd = Number(valueEnd);
       this.range = true;
       return;
     }
 
-    this.value = Number(state ?? DEFAULT_VALUE);
+    this.value = Number(state);
     this.range = false;
   }
 }
