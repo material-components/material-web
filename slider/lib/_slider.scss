@@ -93,6 +93,13 @@ $_md-sys-shape: tokens.md-sys-shape-values();
         shadow-color: var(--_handle-shadow-color),
       )
     );
+    // Focus ring
+    @include focus-ring.theme(
+      (
+        'outward-offset': -2px,
+        shape: 9999px,
+      )
+    );
   }
 
   md-elevation {
@@ -447,15 +454,6 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
   .onTop {
     z-index: 1;
-  }
-
-  // Focus ring
-  md-focus-ring {
-    @include focus-ring.theme(
-      (
-        'outward-offset': -2px,
-      )
-    );
   }
 
   // Ripple
