@@ -39,7 +39,7 @@ fixed, visible track.
 
 <img
     class="hero"
-    src="images/linearprogress/hero.png"
+    src="images/linearprogress/hero.webp"
     alt="A mobile phone screen showing a card list of episode and a linear progress indicator nestled at the bottom of the top app bar showing a low loading progress"
     title="Linear progress can be used to show loading progress.">
 
