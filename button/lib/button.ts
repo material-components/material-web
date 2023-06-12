@@ -20,7 +20,6 @@ import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../..
  * A button component.
  */
 export abstract class Button extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

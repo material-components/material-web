@@ -20,7 +20,6 @@ type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class IconButton extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

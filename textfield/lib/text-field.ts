@@ -38,7 +38,6 @@ export type InvalidTextFieldType =
  * A text field component.
  */
 export abstract class TextField extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

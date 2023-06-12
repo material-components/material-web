@@ -63,7 +63,6 @@ function getFocusedElement(activeDoc: Document|ShadowRoot = document):
  * @fires closed Fired once the menu is closed, after any animations
  */
 export abstract class Menu extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

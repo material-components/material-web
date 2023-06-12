@@ -27,7 +27,6 @@ import {MdRipple} from '../../ripple/ripple.js';
  * Slider component.
  */
 export class Slider extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

@@ -37,7 +37,6 @@ export type Variant = Style|`${Style} ${Orientation}`|`${Orientation} ${Style}`;
  * Tab component.
  */
 export class Tab extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

@@ -23,7 +23,6 @@ const CHECKED = Symbol('checked');
  * A radio component.
  */
 export class Radio extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

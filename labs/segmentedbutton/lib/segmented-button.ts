@@ -21,7 +21,6 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
  * context.
  */
 export class SegmentedButton extends LitElement {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

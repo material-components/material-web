@@ -21,7 +21,6 @@ import {NavigationTabState} from './state.js';
  * TODO(b/265346501): add docs
  */
 export class NavigationTab extends LitElement implements NavigationTabState {
-  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
