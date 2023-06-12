@@ -15,6 +15,7 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
  * A circular progress component.
  */
 export class CircularProgress extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

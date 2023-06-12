@@ -29,10 +29,12 @@ function isNavigableKey(key: string): key is NavigatableValues {
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
 
+  /** @nocollapse */
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
@@ -154,6 +156,7 @@ export class List extends LitElement {
    *
    * @param items {Array<ListItem>} The items from which to activate the
    * first item.
+   * @nocollapse
    */
   static activateFirstItem<T extends ListItem>(items: T[]) {
     // NOTE: These selector functions are static and not on the instance such
@@ -170,6 +173,7 @@ export class List extends LitElement {
    *
    * @param items {Array<ListItem>} The items from which to activate the
    * last item.
+   * @nocollapse
    */
   static activateLastItem<T extends ListItem>(items: T[]) {
     const lastItem = List.getLastActivatableItem(items);
@@ -185,6 +189,7 @@ export class List extends LitElement {
    * active item.
    * @return A record of the deleselcted activated item including the item and
    * the index of the item or `null` if none are deactivated.
+   * @nocollapse
    */
   static deactivateActiveItem<T extends ListItem>(items: T[]) {
     const activeItem = List.getActiveItem(items);
@@ -204,6 +209,7 @@ export class List extends LitElement {
    * @param items {Array<ListItem>} The items to search.
    * @return A record of the first activated item including the item and the
    * index of the item or `null` if none are activated.
+   * @nocollapse
    */
   static getActiveItem<T extends ListItem>(items: T[]) {
     for (let i = 0; i < items.length; i++) {
@@ -224,6 +230,7 @@ export class List extends LitElement {
    *
    * @param items {Array<ListItem>} The items to search.
    * @return The first activatable item or `null` if none are activatable.
+   * @nocollapse
    */
   static getFirstActivatableItem<T extends ListItem>(items: T[]) {
     for (const item of items) {
@@ -240,6 +247,7 @@ export class List extends LitElement {
    *
    * @param items {Array<ListItem>} The items to search.
    * @return The last activatable item or `null` if none are activatable.
+   * @nocollapse
    */
   static getLastActivatableItem<T extends ListItem>(items: T[]) {
     for (let i = items.length - 1; i >= 0; i--) {

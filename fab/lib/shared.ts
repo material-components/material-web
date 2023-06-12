@@ -22,10 +22,12 @@ export type FabSize = 'medium'|'small'|'large';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export abstract class SharedFab extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
 
+  /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open' as const,
     delegatesFocus: true,

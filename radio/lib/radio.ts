@@ -23,10 +23,12 @@ const CHECKED = Symbol('checked');
  * A radio component.
  */
 export class Radio extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
 
+  /** @nocollapse */
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 

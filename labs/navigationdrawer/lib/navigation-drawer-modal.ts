@@ -15,6 +15,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
  * TODO(b/265346501): add docs
  */
 export class NavigationDrawerModal extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

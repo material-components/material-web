@@ -21,5 +21,6 @@ declare global {
  */
 @customElement('md-icon')
 export class MdIcon extends Icon {
+  /** @nocollapse */
   static override styles = [styles];
 }

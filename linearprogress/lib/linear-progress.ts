@@ -16,6 +16,7 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
  * A linear progress component.
  */
 export class LinearProgress extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

@@ -40,6 +40,7 @@ const NAVIGATION_KEYS = new Map([
  *
  */
 export class Tabs extends LitElement {
+  /** @nocollapse */
   static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true
@@ -266,7 +267,7 @@ export class Tabs extends LitElement {
   protected override render() {
     return html`
       <slot @slotchange=${this.handleSlotChange} @click=${
-        this.handleItemClick}></slot>  
+        this.handleItemClick}></slot>
     `;
   }
 

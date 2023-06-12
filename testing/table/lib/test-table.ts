@@ -28,6 +28,7 @@ export interface TestTableTemplate<S extends string = string> {
  * A test table component.
  */
 export class TestTable<S extends string = string> extends LitElement {
+  /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {mode: 'open'};
 
   @property() override title = 'Title';

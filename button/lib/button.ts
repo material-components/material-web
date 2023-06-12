@@ -20,6 +20,7 @@ import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../..
  * A button component.
  */
 export abstract class Button extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
@@ -29,6 +30,7 @@ export abstract class Button extends LitElement {
     return true;
   }
 
+  /** @nocollapse */
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 

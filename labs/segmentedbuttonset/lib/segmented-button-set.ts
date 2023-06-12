@@ -17,6 +17,7 @@ import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button.js';
  * used as children.
  */
 export class SegmentedButtonSet extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }

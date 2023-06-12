@@ -38,10 +38,12 @@ export type InvalidTextFieldType =
  * A text field component.
  */
 export abstract class TextField extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
 
+  /** @nocollapse */
   static override shadowRootOptions:
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 

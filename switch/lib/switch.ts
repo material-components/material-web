@@ -21,10 +21,12 @@ import {dispatchActivationClick, isActivationClick} from '../../internal/control
  * interaction (bubbles).
  */
 export class Switch extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
 
+  /** @nocollapse */
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 

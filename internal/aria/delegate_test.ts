@@ -21,6 +21,7 @@ declare global {
 
 @customElement('test-aria-delegate')
 class AriaDelegateElement extends LitElement {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(AriaDelegateElement);
   }

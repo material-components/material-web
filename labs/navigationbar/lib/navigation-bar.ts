@@ -21,6 +21,7 @@ import {NavigationBarState} from './state.js';
  * TODO(b/265346501): add docs
  */
 export class NavigationBar extends LitElement implements NavigationBarState {
+  /** @nocollapse */
   static {
     requestUpdateOnAriaChange(this);
   }
