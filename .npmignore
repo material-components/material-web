@@ -10,3 +10,4 @@ node_modules
 .wireit/
 docs/
 catalog/
+catalog/node_modules
