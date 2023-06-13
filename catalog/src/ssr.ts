@@ -28,3 +28,5 @@ import '@material/web/button/tonal-button.js';
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/text-button.js';
 import '@material/web/linearprogress/linear-progress.js';
+import '@material/web/fab/fab.js';
+import '@material/web/fab/branded-fab.js';

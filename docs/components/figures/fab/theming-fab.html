@@ -1,0 +1,21 @@
+<div class="figure-wrapper">
+  <figure
+      class="styled-example fab"
+      aria-label="Image of a fab with a different theme applied"
+      style="padding-block: 16px;">
+    <style>
+      .styled-example {
+        --md-sys-color-surface-container-high: #e3e9e9;
+        --md-sys-color-primary: #006a6a;
+        background-color: #f4fbfa;
+      }
+      .styled-example.fab {
+        --md-fab-icon-size: 36px;
+        --md-fab-container-shape: 0px;
+      }
+    </style>
+    <md-fab aria-label="Edit">
+      <md-icon slot="icon">edit</md-icon>
+    </md-fab>
+  </figure>
+</div>

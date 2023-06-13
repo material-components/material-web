@@ -1,0 +1,33 @@
+<div class="figure-wrapper">
+  <figure
+      class="styled-example branded"
+      aria-label="Image of two branded fabs, one regular, one extended with the visible label Add with a different theme applied"
+      style="padding-block: 16px;gap: 16px;display: flex;">
+    <style>
+      .styled-example.branded {
+        --md-sys-color-on-surface: #161d1d;
+        --md-fab-branded-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-fab-branded-icon-size: 48px;
+        --md-fab-branded-container-shape: 0px;
+      }
+    </style>
+    <md-branded-fab size="small" aria-label="Add">
+      <svg slot="icon" width="36" height="36" viewBox="0 0 36 36">
+        <path fill="#34A853" d="M16 16v14h4V20z"></path>
+        <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
+        <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
+        <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
+        <path fill="none" d="M0 0h36v36H0z"></path>
+      </svg>
+    </md-branded-fab>
+    <md-branded-fab size="small" label="Add">
+      <svg slot="icon" width="36" height="36" viewBox="0 0 36 36">
+        <path fill="#34A853" d="M16 16v14h4V20z"></path>
+        <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
+        <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
+        <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
+        <path fill="none" d="M0 0h36v36H0z"></path>
+      </svg>
+    </md-branded-fab>
+  </figure>
+</div>

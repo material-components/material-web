@@ -75,7 +75,7 @@ module.exports = function (eleventyConfig) {
 
   // Add a TOC plugin (implementation is TODO for now)
   eleventyConfig.addPlugin(pluginTOC, {
-    tags: ['h2', 'h3'],
+    tags: ['h2', 'h3', 'h4'],
     wrapper: 'div',
   });
 
