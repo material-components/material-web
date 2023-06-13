@@ -33,7 +33,8 @@
     "!**/test/**",
     "!**/testing/**",
     "!**/*_test.*",
-    "!.wireit/**"
+    "!.wireit/**",
+    "!catalog"
   ],
   "workspaces": [
     ".",
