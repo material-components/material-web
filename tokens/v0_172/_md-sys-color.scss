@@ -21,441 +21,56 @@ $_default-dark: (
 
 @function values-dark($deps: $_default-dark) {
   @return (
-    'background':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral6'),
-        var(
-          --md-sys-color-background,
-          map.get($deps, 'md-ref-palette', 'neutral6')
-        ),
-        null
-      ),
-    'error':
-      if(
-        map.get($deps, 'md-ref-palette', 'error80'),
-        var(--md-sys-color-error, map.get($deps, 'md-ref-palette', 'error80')),
-        null
-      ),
-    'error-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'error30'),
-        var(
-          --md-sys-color-error-container,
-          map.get($deps, 'md-ref-palette', 'error30')
-        ),
-        null
-      ),
-    'inverse-on-surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral20'),
-        var(
-          --md-sys-color-inverse-on-surface,
-          map.get($deps, 'md-ref-palette', 'neutral20')
-        ),
-        null
-      ),
-    'inverse-primary':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary40'),
-        var(
-          --md-sys-color-inverse-primary,
-          map.get($deps, 'md-ref-palette', 'primary40')
-        ),
-        null
-      ),
-    'inverse-surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral90'),
-        var(
-          --md-sys-color-inverse-surface,
-          map.get($deps, 'md-ref-palette', 'neutral90')
-        ),
-        null
-      ),
-    'on-background':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral90'),
-        var(
-          --md-sys-color-on-background,
-          map.get($deps, 'md-ref-palette', 'neutral90')
-        ),
-        null
-      ),
-    'on-error':
-      if(
-        map.get($deps, 'md-ref-palette', 'error20'),
-        var(
-          --md-sys-color-on-error,
-          map.get($deps, 'md-ref-palette', 'error20')
-        ),
-        null
-      ),
-    'on-error-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'error90'),
-        var(
-          --md-sys-color-on-error-container,
-          map.get($deps, 'md-ref-palette', 'error90')
-        ),
-        null
-      ),
-    'on-primary':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary20'),
-        var(
-          --md-sys-color-on-primary,
-          map.get($deps, 'md-ref-palette', 'primary20')
-        ),
-        null
-      ),
-    'on-primary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary90'),
-        var(
-          --md-sys-color-on-primary-container,
-          map.get($deps, 'md-ref-palette', 'primary90')
-        ),
-        null
-      ),
-    'on-primary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary10'),
-        var(
-          --md-sys-color-on-primary-fixed,
-          map.get($deps, 'md-ref-palette', 'primary10')
-        ),
-        null
-      ),
-    'on-primary-fixed-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary30'),
-        var(
-          --md-sys-color-on-primary-fixed-variant,
-          map.get($deps, 'md-ref-palette', 'primary30')
-        ),
-        null
-      ),
-    'on-secondary':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary20'),
-        var(
-          --md-sys-color-on-secondary,
-          map.get($deps, 'md-ref-palette', 'secondary20')
-        ),
-        null
-      ),
-    'on-secondary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary90'),
-        var(
-          --md-sys-color-on-secondary-container,
-          map.get($deps, 'md-ref-palette', 'secondary90')
-        ),
-        null
-      ),
-    'on-secondary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary10'),
-        var(
-          --md-sys-color-on-secondary-fixed,
-          map.get($deps, 'md-ref-palette', 'secondary10')
-        ),
-        null
-      ),
+    'background': map.get($deps, 'md-ref-palette', 'neutral6'),
+    'error': map.get($deps, 'md-ref-palette', 'error80'),
+    'error-container': map.get($deps, 'md-ref-palette', 'error30'),
+    'inverse-on-surface': map.get($deps, 'md-ref-palette', 'neutral20'),
+    'inverse-primary': map.get($deps, 'md-ref-palette', 'primary40'),
+    'inverse-surface': map.get($deps, 'md-ref-palette', 'neutral90'),
+    'on-background': map.get($deps, 'md-ref-palette', 'neutral90'),
+    'on-error': map.get($deps, 'md-ref-palette', 'error20'),
+    'on-error-container': map.get($deps, 'md-ref-palette', 'error90'),
+    'on-primary': map.get($deps, 'md-ref-palette', 'primary20'),
+    'on-primary-container': map.get($deps, 'md-ref-palette', 'primary90'),
+    'on-primary-fixed': map.get($deps, 'md-ref-palette', 'primary10'),
+    'on-primary-fixed-variant': map.get($deps, 'md-ref-palette', 'primary30'),
+    'on-secondary': map.get($deps, 'md-ref-palette', 'secondary20'),
+    'on-secondary-container': map.get($deps, 'md-ref-palette', 'secondary90'),
+    'on-secondary-fixed': map.get($deps, 'md-ref-palette', 'secondary10'),
     'on-secondary-fixed-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary30'),
-        var(
-          --md-sys-color-on-secondary-fixed-variant,
-          map.get($deps, 'md-ref-palette', 'secondary30')
-        ),
-        null
-      ),
-    'on-surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral90'),
-        var(
-          --md-sys-color-on-surface,
-          map.get($deps, 'md-ref-palette', 'neutral90')
-        ),
-        null
-      ),
-    'on-surface-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant80'),
-        var(
-          --md-sys-color-on-surface-variant,
-          map.get($deps, 'md-ref-palette', 'neutral-variant80')
-        ),
-        null
-      ),
-    'on-tertiary':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary20'),
-        var(
-          --md-sys-color-on-tertiary,
-          map.get($deps, 'md-ref-palette', 'tertiary20')
-        ),
-        null
-      ),
-    'on-tertiary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary90'),
-        var(
-          --md-sys-color-on-tertiary-container,
-          map.get($deps, 'md-ref-palette', 'tertiary90')
-        ),
-        null
-      ),
-    'on-tertiary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary10'),
-        var(
-          --md-sys-color-on-tertiary-fixed,
-          map.get($deps, 'md-ref-palette', 'tertiary10')
-        ),
-        null
-      ),
-    'on-tertiary-fixed-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary30'),
-        var(
-          --md-sys-color-on-tertiary-fixed-variant,
-          map.get($deps, 'md-ref-palette', 'tertiary30')
-        ),
-        null
-      ),
-    'outline':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant60'),
-        var(
-          --md-sys-color-outline,
-          map.get($deps, 'md-ref-palette', 'neutral-variant60')
-        ),
-        null
-      ),
-    'outline-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant30'),
-        var(
-          --md-sys-color-outline-variant,
-          map.get($deps, 'md-ref-palette', 'neutral-variant30')
-        ),
-        null
-      ),
-    'primary':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary80'),
-        var(
-          --md-sys-color-primary,
-          map.get($deps, 'md-ref-palette', 'primary80')
-        ),
-        null
-      ),
-    'primary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary30'),
-        var(
-          --md-sys-color-primary-container,
-          map.get($deps, 'md-ref-palette', 'primary30')
-        ),
-        null
-      ),
-    'primary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary90'),
-        var(
-          --md-sys-color-primary-fixed,
-          map.get($deps, 'md-ref-palette', 'primary90')
-        ),
-        null
-      ),
-    'primary-fixed-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary80'),
-        var(
-          --md-sys-color-primary-fixed-dim,
-          map.get($deps, 'md-ref-palette', 'primary80')
-        ),
-        null
-      ),
-    'scrim':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral0'),
-        var(--md-sys-color-scrim, map.get($deps, 'md-ref-palette', 'neutral0')),
-        null
-      ),
-    'secondary':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary80'),
-        var(
-          --md-sys-color-secondary,
-          map.get($deps, 'md-ref-palette', 'secondary80')
-        ),
-        null
-      ),
-    'secondary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary30'),
-        var(
-          --md-sys-color-secondary-container,
-          map.get($deps, 'md-ref-palette', 'secondary30')
-        ),
-        null
-      ),
-    'secondary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary90'),
-        var(
-          --md-sys-color-secondary-fixed,
-          map.get($deps, 'md-ref-palette', 'secondary90')
-        ),
-        null
-      ),
-    'secondary-fixed-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary80'),
-        var(
-          --md-sys-color-secondary-fixed-dim,
-          map.get($deps, 'md-ref-palette', 'secondary80')
-        ),
-        null
-      ),
-    'shadow':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral0'),
-        var(
-          --md-sys-color-shadow,
-          map.get($deps, 'md-ref-palette', 'neutral0')
-        ),
-        null
-      ),
-    'surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral6'),
-        var(
-          --md-sys-color-surface,
-          map.get($deps, 'md-ref-palette', 'neutral6')
-        ),
-        null
-      ),
-    'surface-bright':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral24'),
-        var(
-          --md-sys-color-surface-bright,
-          map.get($deps, 'md-ref-palette', 'neutral24')
-        ),
-        null
-      ),
-    'surface-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral12'),
-        var(
-          --md-sys-color-surface-container,
-          map.get($deps, 'md-ref-palette', 'neutral12')
-        ),
-        null
-      ),
-    'surface-container-high':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral17'),
-        var(
-          --md-sys-color-surface-container-high,
-          map.get($deps, 'md-ref-palette', 'neutral17')
-        ),
-        null
-      ),
-    'surface-container-highest':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral22'),
-        var(
-          --md-sys-color-surface-container-highest,
-          map.get($deps, 'md-ref-palette', 'neutral22')
-        ),
-        null
-      ),
-    'surface-container-low':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral10'),
-        var(
-          --md-sys-color-surface-container-low,
-          map.get($deps, 'md-ref-palette', 'neutral10')
-        ),
-        null
-      ),
-    'surface-container-lowest':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral4'),
-        var(
-          --md-sys-color-surface-container-lowest,
-          map.get($deps, 'md-ref-palette', 'neutral4')
-        ),
-        null
-      ),
-    'surface-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral6'),
-        var(
-          --md-sys-color-surface-dim,
-          map.get($deps, 'md-ref-palette', 'neutral6')
-        ),
-        null
-      ),
-    'surface-tint':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary80'),
-        var(
-          --md-sys-color-primary,
-          map.get($deps, 'md-ref-palette', 'primary80')
-        ),
-        null
-      ),
-    'surface-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant30'),
-        var(
-          --md-sys-color-surface-variant,
-          map.get($deps, 'md-ref-palette', 'neutral-variant30')
-        ),
-        null
-      ),
-    'tertiary':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary80'),
-        var(
-          --md-sys-color-tertiary,
-          map.get($deps, 'md-ref-palette', 'tertiary80')
-        ),
-        null
-      ),
-    'tertiary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary30'),
-        var(
-          --md-sys-color-tertiary-container,
-          map.get($deps, 'md-ref-palette', 'tertiary30')
-        ),
-        null
-      ),
-    'tertiary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary90'),
-        var(
-          --md-sys-color-tertiary-fixed,
-          map.get($deps, 'md-ref-palette', 'tertiary90')
-        ),
-        null
-      ),
-    'tertiary-fixed-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary80'),
-        var(
-          --md-sys-color-tertiary-fixed-dim,
-          map.get($deps, 'md-ref-palette', 'tertiary80')
-        ),
-        null
-      )
+      map.get($deps, 'md-ref-palette', 'secondary30'),
+    'on-surface': map.get($deps, 'md-ref-palette', 'neutral90'),
+    'on-surface-variant': map.get($deps, 'md-ref-palette', 'neutral-variant80'),
+    'on-tertiary': map.get($deps, 'md-ref-palette', 'tertiary20'),
+    'on-tertiary-container': map.get($deps, 'md-ref-palette', 'tertiary90'),
+    'on-tertiary-fixed': map.get($deps, 'md-ref-palette', 'tertiary10'),
+    'on-tertiary-fixed-variant': map.get($deps, 'md-ref-palette', 'tertiary30'),
+    'outline': map.get($deps, 'md-ref-palette', 'neutral-variant60'),
+    'outline-variant': map.get($deps, 'md-ref-palette', 'neutral-variant30'),
+    'primary': map.get($deps, 'md-ref-palette', 'primary80'),
+    'primary-container': map.get($deps, 'md-ref-palette', 'primary30'),
+    'primary-fixed': map.get($deps, 'md-ref-palette', 'primary90'),
+    'primary-fixed-dim': map.get($deps, 'md-ref-palette', 'primary80'),
+    'scrim': map.get($deps, 'md-ref-palette', 'neutral0'),
+    'secondary': map.get($deps, 'md-ref-palette', 'secondary80'),
+    'secondary-container': map.get($deps, 'md-ref-palette', 'secondary30'),
+    'secondary-fixed': map.get($deps, 'md-ref-palette', 'secondary90'),
+    'secondary-fixed-dim': map.get($deps, 'md-ref-palette', 'secondary80'),
+    'shadow': map.get($deps, 'md-ref-palette', 'neutral0'),
+    'surface': map.get($deps, 'md-ref-palette', 'neutral6'),
+    'surface-bright': map.get($deps, 'md-ref-palette', 'neutral24'),
+    'surface-container': map.get($deps, 'md-ref-palette', 'neutral12'),
+    'surface-container-high': map.get($deps, 'md-ref-palette', 'neutral17'),
+    'surface-container-highest': map.get($deps, 'md-ref-palette', 'neutral22'),
+    'surface-container-low': map.get($deps, 'md-ref-palette', 'neutral10'),
+    'surface-container-lowest': map.get($deps, 'md-ref-palette', 'neutral4'),
+    'surface-dim': map.get($deps, 'md-ref-palette', 'neutral6'),
+    'surface-tint': map.get($deps, 'md-ref-palette', 'primary80'),
+    'surface-variant': map.get($deps, 'md-ref-palette', 'neutral-variant30'),
+    'tertiary': map.get($deps, 'md-ref-palette', 'tertiary80'),
+    'tertiary-container': map.get($deps, 'md-ref-palette', 'tertiary30'),
+    'tertiary-fixed': map.get($deps, 'md-ref-palette', 'tertiary90'),
+    'tertiary-fixed-dim': map.get($deps, 'md-ref-palette', 'tertiary80')
   );
 }
 
@@ -465,440 +80,55 @@ $_default-light: (
 
 @function values-light($deps: $_default-light) {
   @return (
-    'background':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral98'),
-        var(
-          --md-sys-color-background,
-          map.get($deps, 'md-ref-palette', 'neutral98')
-        ),
-        null
-      ),
-    'error':
-      if(
-        map.get($deps, 'md-ref-palette', 'error40'),
-        var(--md-sys-color-error, map.get($deps, 'md-ref-palette', 'error40')),
-        null
-      ),
-    'error-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'error90'),
-        var(
-          --md-sys-color-error-container,
-          map.get($deps, 'md-ref-palette', 'error90')
-        ),
-        null
-      ),
-    'inverse-on-surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral95'),
-        var(
-          --md-sys-color-inverse-on-surface,
-          map.get($deps, 'md-ref-palette', 'neutral95')
-        ),
-        null
-      ),
-    'inverse-primary':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary80'),
-        var(
-          --md-sys-color-inverse-primary,
-          map.get($deps, 'md-ref-palette', 'primary80')
-        ),
-        null
-      ),
-    'inverse-surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral20'),
-        var(
-          --md-sys-color-inverse-surface,
-          map.get($deps, 'md-ref-palette', 'neutral20')
-        ),
-        null
-      ),
-    'on-background':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral10'),
-        var(
-          --md-sys-color-on-background,
-          map.get($deps, 'md-ref-palette', 'neutral10')
-        ),
-        null
-      ),
-    'on-error':
-      if(
-        map.get($deps, 'md-ref-palette', 'error100'),
-        var(
-          --md-sys-color-on-error,
-          map.get($deps, 'md-ref-palette', 'error100')
-        ),
-        null
-      ),
-    'on-error-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'error10'),
-        var(
-          --md-sys-color-on-error-container,
-          map.get($deps, 'md-ref-palette', 'error10')
-        ),
-        null
-      ),
-    'on-primary':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary100'),
-        var(
-          --md-sys-color-on-primary,
-          map.get($deps, 'md-ref-palette', 'primary100')
-        ),
-        null
-      ),
-    'on-primary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary10'),
-        var(
-          --md-sys-color-on-primary-container,
-          map.get($deps, 'md-ref-palette', 'primary10')
-        ),
-        null
-      ),
-    'on-primary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary10'),
-        var(
-          --md-sys-color-on-primary-fixed,
-          map.get($deps, 'md-ref-palette', 'primary10')
-        ),
-        null
-      ),
-    'on-primary-fixed-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary30'),
-        var(
-          --md-sys-color-on-primary-fixed-variant,
-          map.get($deps, 'md-ref-palette', 'primary30')
-        ),
-        null
-      ),
-    'on-secondary':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary100'),
-        var(
-          --md-sys-color-on-secondary,
-          map.get($deps, 'md-ref-palette', 'secondary100')
-        ),
-        null
-      ),
-    'on-secondary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary10'),
-        var(
-          --md-sys-color-on-secondary-container,
-          map.get($deps, 'md-ref-palette', 'secondary10')
-        ),
-        null
-      ),
-    'on-secondary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary10'),
-        var(
-          --md-sys-color-on-secondary-fixed,
-          map.get($deps, 'md-ref-palette', 'secondary10')
-        ),
-        null
-      ),
+    'background': map.get($deps, 'md-ref-palette', 'neutral98'),
+    'error': map.get($deps, 'md-ref-palette', 'error40'),
+    'error-container': map.get($deps, 'md-ref-palette', 'error90'),
+    'inverse-on-surface': map.get($deps, 'md-ref-palette', 'neutral95'),
+    'inverse-primary': map.get($deps, 'md-ref-palette', 'primary80'),
+    'inverse-surface': map.get($deps, 'md-ref-palette', 'neutral20'),
+    'on-background': map.get($deps, 'md-ref-palette', 'neutral10'),
+    'on-error': map.get($deps, 'md-ref-palette', 'error100'),
+    'on-error-container': map.get($deps, 'md-ref-palette', 'error10'),
+    'on-primary': map.get($deps, 'md-ref-palette', 'primary100'),
+    'on-primary-container': map.get($deps, 'md-ref-palette', 'primary10'),
+    'on-primary-fixed': map.get($deps, 'md-ref-palette', 'primary10'),
+    'on-primary-fixed-variant': map.get($deps, 'md-ref-palette', 'primary30'),
+    'on-secondary': map.get($deps, 'md-ref-palette', 'secondary100'),
+    'on-secondary-container': map.get($deps, 'md-ref-palette', 'secondary10'),
+    'on-secondary-fixed': map.get($deps, 'md-ref-palette', 'secondary10'),
     'on-secondary-fixed-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary30'),
-        var(
-          --md-sys-color-on-secondary-fixed-variant,
-          map.get($deps, 'md-ref-palette', 'secondary30')
-        ),
-        null
-      ),
-    'on-surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral10'),
-        var(
-          --md-sys-color-on-surface,
-          map.get($deps, 'md-ref-palette', 'neutral10')
-        ),
-        null
-      ),
-    'on-surface-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant30'),
-        var(
-          --md-sys-color-on-surface-variant,
-          map.get($deps, 'md-ref-palette', 'neutral-variant30')
-        ),
-        null
-      ),
-    'on-tertiary':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary100'),
-        var(
-          --md-sys-color-on-tertiary,
-          map.get($deps, 'md-ref-palette', 'tertiary100')
-        ),
-        null
-      ),
-    'on-tertiary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary10'),
-        var(
-          --md-sys-color-on-tertiary-container,
-          map.get($deps, 'md-ref-palette', 'tertiary10')
-        ),
-        null
-      ),
-    'on-tertiary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary10'),
-        var(
-          --md-sys-color-on-tertiary-fixed,
-          map.get($deps, 'md-ref-palette', 'tertiary10')
-        ),
-        null
-      ),
-    'on-tertiary-fixed-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary30'),
-        var(
-          --md-sys-color-on-tertiary-fixed-variant,
-          map.get($deps, 'md-ref-palette', 'tertiary30')
-        ),
-        null
-      ),
-    'outline':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant50'),
-        var(
-          --md-sys-color-outline,
-          map.get($deps, 'md-ref-palette', 'neutral-variant50')
-        ),
-        null
-      ),
-    'outline-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant80'),
-        var(
-          --md-sys-color-outline-variant,
-          map.get($deps, 'md-ref-palette', 'neutral-variant80')
-        ),
-        null
-      ),
-    'primary':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary40'),
-        var(
-          --md-sys-color-primary,
-          map.get($deps, 'md-ref-palette', 'primary40')
-        ),
-        null
-      ),
-    'primary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary90'),
-        var(
-          --md-sys-color-primary-container,
-          map.get($deps, 'md-ref-palette', 'primary90')
-        ),
-        null
-      ),
-    'primary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary90'),
-        var(
-          --md-sys-color-primary-fixed,
-          map.get($deps, 'md-ref-palette', 'primary90')
-        ),
-        null
-      ),
-    'primary-fixed-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary80'),
-        var(
-          --md-sys-color-primary-fixed-dim,
-          map.get($deps, 'md-ref-palette', 'primary80')
-        ),
-        null
-      ),
-    'scrim':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral0'),
-        var(--md-sys-color-scrim, map.get($deps, 'md-ref-palette', 'neutral0')),
-        null
-      ),
-    'secondary':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary40'),
-        var(
-          --md-sys-color-secondary,
-          map.get($deps, 'md-ref-palette', 'secondary40')
-        ),
-        null
-      ),
-    'secondary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary90'),
-        var(
-          --md-sys-color-secondary-container,
-          map.get($deps, 'md-ref-palette', 'secondary90')
-        ),
-        null
-      ),
-    'secondary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary90'),
-        var(
-          --md-sys-color-secondary-fixed,
-          map.get($deps, 'md-ref-palette', 'secondary90')
-        ),
-        null
-      ),
-    'secondary-fixed-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'secondary80'),
-        var(
-          --md-sys-color-secondary-fixed-dim,
-          map.get($deps, 'md-ref-palette', 'secondary80')
-        ),
-        null
-      ),
-    'shadow':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral0'),
-        var(
-          --md-sys-color-shadow,
-          map.get($deps, 'md-ref-palette', 'neutral0')
-        ),
-        null
-      ),
-    'surface':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral98'),
-        var(
-          --md-sys-color-surface,
-          map.get($deps, 'md-ref-palette', 'neutral98')
-        ),
-        null
-      ),
-    'surface-bright':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral98'),
-        var(
-          --md-sys-color-surface-bright,
-          map.get($deps, 'md-ref-palette', 'neutral98')
-        ),
-        null
-      ),
-    'surface-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral94'),
-        var(
-          --md-sys-color-surface-container,
-          map.get($deps, 'md-ref-palette', 'neutral94')
-        ),
-        null
-      ),
-    'surface-container-high':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral92'),
-        var(
-          --md-sys-color-surface-container-high,
-          map.get($deps, 'md-ref-palette', 'neutral92')
-        ),
-        null
-      ),
-    'surface-container-highest':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral90'),
-        var(
-          --md-sys-color-surface-container-highest,
-          map.get($deps, 'md-ref-palette', 'neutral90')
-        ),
-        null
-      ),
-    'surface-container-low':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral96'),
-        var(
-          --md-sys-color-surface-container-low,
-          map.get($deps, 'md-ref-palette', 'neutral96')
-        ),
-        null
-      ),
-    'surface-container-lowest':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral100'),
-        var(
-          --md-sys-color-surface-container-lowest,
-          map.get($deps, 'md-ref-palette', 'neutral100')
-        ),
-        null
-      ),
-    'surface-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral87'),
-        var(
-          --md-sys-color-surface-dim,
-          map.get($deps, 'md-ref-palette', 'neutral87')
-        ),
-        null
-      ),
-    'surface-tint':
-      if(
-        map.get($deps, 'md-ref-palette', 'primary40'),
-        var(
-          --md-sys-color-primary,
-          map.get($deps, 'md-ref-palette', 'primary40')
-        ),
-        null
-      ),
-    'surface-variant':
-      if(
-        map.get($deps, 'md-ref-palette', 'neutral-variant90'),
-        var(
-          --md-sys-color-surface-variant,
-          map.get($deps, 'md-ref-palette', 'neutral-variant90')
-        ),
-        null
-      ),
-    'tertiary':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary40'),
-        var(
-          --md-sys-color-tertiary,
-          map.get($deps, 'md-ref-palette', 'tertiary40')
-        ),
-        null
-      ),
-    'tertiary-container':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary90'),
-        var(
-          --md-sys-color-tertiary-container,
-          map.get($deps, 'md-ref-palette', 'tertiary90')
-        ),
-        null
-      ),
-    'tertiary-fixed':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary90'),
-        var(
-          --md-sys-color-tertiary-fixed,
-          map.get($deps, 'md-ref-palette', 'tertiary90')
-        ),
-        null
-      ),
-    'tertiary-fixed-dim':
-      if(
-        map.get($deps, 'md-ref-palette', 'tertiary80'),
-        var(
-          --md-sys-color-tertiary-fixed-dim,
-          map.get($deps, 'md-ref-palette', 'tertiary80')
-        ),
-        null
-      )
+      map.get($deps, 'md-ref-palette', 'secondary30'),
+    'on-surface': map.get($deps, 'md-ref-palette', 'neutral10'),
+    'on-surface-variant': map.get($deps, 'md-ref-palette', 'neutral-variant30'),
+    'on-tertiary': map.get($deps, 'md-ref-palette', 'tertiary100'),
+    'on-tertiary-container': map.get($deps, 'md-ref-palette', 'tertiary10'),
+    'on-tertiary-fixed': map.get($deps, 'md-ref-palette', 'tertiary10'),
+    'on-tertiary-fixed-variant': map.get($deps, 'md-ref-palette', 'tertiary30'),
+    'outline': map.get($deps, 'md-ref-palette', 'neutral-variant50'),
+    'outline-variant': map.get($deps, 'md-ref-palette', 'neutral-variant80'),
+    'primary': map.get($deps, 'md-ref-palette', 'primary40'),
+    'primary-container': map.get($deps, 'md-ref-palette', 'primary90'),
+    'primary-fixed': map.get($deps, 'md-ref-palette', 'primary90'),
+    'primary-fixed-dim': map.get($deps, 'md-ref-palette', 'primary80'),
+    'scrim': map.get($deps, 'md-ref-palette', 'neutral0'),
+    'secondary': map.get($deps, 'md-ref-palette', 'secondary40'),
+    'secondary-container': map.get($deps, 'md-ref-palette', 'secondary90'),
+    'secondary-fixed': map.get($deps, 'md-ref-palette', 'secondary90'),
+    'secondary-fixed-dim': map.get($deps, 'md-ref-palette', 'secondary80'),
+    'shadow': map.get($deps, 'md-ref-palette', 'neutral0'),
+    'surface': map.get($deps, 'md-ref-palette', 'neutral98'),
+    'surface-bright': map.get($deps, 'md-ref-palette', 'neutral98'),
+    'surface-container': map.get($deps, 'md-ref-palette', 'neutral94'),
+    'surface-container-high': map.get($deps, 'md-ref-palette', 'neutral92'),
+    'surface-container-highest': map.get($deps, 'md-ref-palette', 'neutral90'),
+    'surface-container-low': map.get($deps, 'md-ref-palette', 'neutral96'),
+    'surface-container-lowest': map.get($deps, 'md-ref-palette', 'neutral100'),
+    'surface-dim': map.get($deps, 'md-ref-palette', 'neutral87'),
+    'surface-tint': map.get($deps, 'md-ref-palette', 'primary40'),
+    'surface-variant': map.get($deps, 'md-ref-palette', 'neutral-variant90'),
+    'tertiary': map.get($deps, 'md-ref-palette', 'tertiary40'),
+    'tertiary-container': map.get($deps, 'md-ref-palette', 'tertiary90'),
+    'tertiary-fixed': map.get($deps, 'md-ref-palette', 'tertiary90'),
+    'tertiary-fixed-dim': map.get($deps, 'md-ref-palette', 'tertiary80')
   );
 }

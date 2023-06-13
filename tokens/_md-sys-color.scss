@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-ref-palette';
 @use './v0_172/md-sys-color';
 // go/keep-sorted end
@@ -13,7 +16,15 @@ $_default-dark: (
 );
 
 @function values-dark($deps: $_default-dark) {
-  @return md-sys-color.values-dark($deps);
+  $tokens: md-sys-color.values-dark($deps);
+
+  // Create --md-sys-color-* custom properties
+  @each $token, $value in $tokens {
+    $var: var(--md-sys-color-#{$token}, #{$value});
+    $tokens: map.set($tokens, $token, $var);
+  }
+
+  @return $tokens;
 }
 
 $_default-light: (
@@ -21,5 +32,13 @@ $_default-light: (
 );
 
 @function values-light($deps: $_default-light) {
-  @return md-sys-color.values-light($deps);
+  $tokens: md-sys-color.values-light($deps);
+
+  // Create --md-sys-color-* custom properties
+  @each $token, $value in $tokens {
+    $var: var(--md-sys-color-#{$token}, #{$value});
+    $tokens: map.set($tokens, $token, $var);
+  }
+
+  @return $tokens;
 }
