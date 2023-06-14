@@ -90,14 +90,13 @@ $dark-theme: tokens.md-comp-test-table-values(
     border-color: var(--_outline-color);
   }
 
-  .md3-test-table--dark {
-    $dark: tokens.md-sys-color-values-dark();
+  :host([dark]) {
+    $dark: tokens.md-sys-color-values-dark(
+      $exclude-custom-properties: true,
+    );
 
-    --_cell-color: #{map.get($dark, 'surface-container-lowest')};
-    --_cell-text-color: #{map.get($dark, 'on-surface-container')};
-    --_cell-grid-color: #{map.get($dark, 'surface-variant')};
-    --_header-cell-color: #{map.get($dark, 'surface-variant')};
-    --_header-cell-text-color: #{map.get($dark, 'on-surface-variant')};
-    --_outline-color: #{map.get($dark, 'outline')};
+    @each $token, $value in $dark {
+      --md-sys-color-#{$token}: #{$value};
+    }
   }
 }

@@ -6,7 +6,6 @@
 
 import {LitElement, render, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
 import {guard} from 'lit/directives/guard.js';
 import {html, literal} from 'lit/static-html.js';
 
@@ -34,11 +33,11 @@ export class TestTable<S extends string = string> extends LitElement {
   @property() override title = 'Title';
   @property({type: Array}) states: S[] = [];
   @property({type: Array}) templates: Array<TestTableTemplate<S>> = [];
-  @property({type: Boolean}) dark = false;
+  @property({type: Boolean, reflect: true}) dark = false;
 
   protected override render() {
     return html`
-      <table class="md3-test-table ${classMap(this.getRenderClasses())}">
+      <table class="md3-test-table">
         <thead>
           <tr>
             <th class="md3-test-table__header"></th>
@@ -53,12 +52,6 @@ export class TestTable<S extends string = string> extends LitElement {
         <caption class="md3-test-table__header">${this.title}</caption>
       </table>
     `;
-  }
-
-  protected getRenderClasses() {
-    return {
-      'md3-test-table--dark': this.dark,
-    };
   }
 
   protected renderTemplates() {
