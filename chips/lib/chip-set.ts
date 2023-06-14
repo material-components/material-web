@@ -4,20 +4,33 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, isServer, LitElement, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+
 import {Chip} from './chip.js';
+
+/**
+ * The type of chip a chip set controls.
+ */
+export type ChipSetType = 'assist'|'suggestion'|'filter'|'input'|'';
 
 /**
  * A chip set component.
  */
 export class ChipSet extends LitElement {
+  static {
+    requestUpdateOnAriaChange(this);
+  }
+
   get chips() {
     return this.childElements.filter(
         (child): child is Chip => child instanceof Chip);
   }
 
+  @property() type: ChipSetType = '';
   @property({type: Boolean, attribute: 'single-select'}) singleSelect = false;
 
   @queryAssignedElements({flatten: true})
@@ -49,7 +62,18 @@ export class ChipSet extends LitElement {
   }
 
   protected override render() {
-    return html`<slot @slotchange=${this.updateTabIndices}></slot>`;
+    const {ariaLabel} = this as ARIAMixinStrict;
+    const isFilter = this.type === 'filter';
+    const role = isFilter ? 'listbox' : 'grid';
+    const multiselectable = isFilter ? !this.singleSelect : nothing;
+    return html`
+      <div class="content"
+          role=${role}
+          aria-label=${ariaLabel || nothing}
+          aria-multiselectable=${multiselectable}>
+        <slot @slotchange=${this.updateTabIndices}></slot>
+      </div>
+    `;
   }
 
   private handleKeyDown(event: KeyboardEvent) {

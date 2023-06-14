@@ -7,8 +7,8 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
@@ -43,14 +43,21 @@ export abstract class Chip extends LitElement {
     return this.disabled;
   }
 
+  /**
+   * The aria role of the container. Defaults to `row` for grid chip sets.
+   * Listbox chip sets should remove this since they do not contain cells.
+   */
+  @state() protected containerRole?: 'row' = 'row';
+
   protected override render() {
     return html`
-      <div class="container ${classMap(this.getContainerClasses())}">
+      <div class="container ${classMap(this.getContainerClasses())}"
+          role=${this.containerRole || nothing}>
         ${this.renderOutline()}
         <md-focus-ring for=${this.primaryId}></md-focus-ring>
         <md-ripple for=${this.primaryId}
           ?disabled=${this.rippleDisabled}></md-ripple>
-        ${this.renderAction()}
+        ${this.renderActions()}
       </div>
     `;
   }
@@ -61,17 +68,30 @@ export abstract class Chip extends LitElement {
     };
   }
 
+  protected renderActions() {
+    return this.renderActionCell(this.renderAction());
+  }
+
+  protected renderActionCell(content: TemplateResult|
+                             typeof nothing): TemplateResult|typeof nothing {
+    if (content === nothing) {
+      return content;
+    }
+
+    return html`<div class="cell" role="cell">${content}</div>`;
+  }
+
+  protected abstract renderAction(): TemplateResult;
+
   protected renderContent() {
     return html`
-      <span class="leading icon">
+      <span class="leading icon" aria-hidden="true">
         ${this.renderLeadingIcon()}
       </span>
       <span class="label">${this.label}</span>
       <span class="touch"></span>
     `;
   }
-
-  protected abstract renderAction(): TemplateResult;
 
   protected renderOutline() {
     return html`<span class="outline"></span>`;

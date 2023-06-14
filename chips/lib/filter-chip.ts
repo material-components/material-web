@@ -6,7 +6,7 @@
 
 import '../../elevation/elevation.js';
 
-import {html, nothing, PropertyValues, svg} from 'lit';
+import {html, nothing, PropertyValues, svg, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
@@ -32,6 +32,9 @@ export class FilterChip extends MultiActionChip {
 
   constructor() {
     super();
+    // Remove the `row` role from the container, since filter chips do not use a
+    // `grid` navigation model.
+    this.containerRole = undefined;
     this.addEventListener('click', () => {
       if (this.disabled) {
         return;
@@ -56,7 +59,13 @@ export class FilterChip extends MultiActionChip {
     };
   }
 
-  protected override renderPrimaryAction() {
+  protected override renderActionCell(content: TemplateResult|typeof nothing) {
+    // Filter chips use a `listbox`/`option` model, and do not need `gridcell`
+    // wrappers around their actions.
+    return content;
+  }
+
+  protected override renderAction() {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button class="primary action"
@@ -83,7 +92,8 @@ export class FilterChip extends MultiActionChip {
 
   protected override renderTrailingAction() {
     if (this.removable) {
-      return renderRemoveButton({disabled: this.disabled});
+      return renderRemoveButton(
+          {ariaLabel: this.ariaLabelRemove, disabled: this.disabled});
     }
 
     return nothing;

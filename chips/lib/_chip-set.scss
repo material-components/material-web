@@ -9,4 +9,10 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+
+  .content {
+    display: flex;
+    flex-wrap: inherit;
+    gap: inherit;
+  }
 }

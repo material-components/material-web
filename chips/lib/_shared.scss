@@ -66,6 +66,10 @@
     pointer-events: none;
   }
 
+  .cell {
+    display: flex;
+  }
+
   .action {
     align-items: baseline;
     appearance: none;

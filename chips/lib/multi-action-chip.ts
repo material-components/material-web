@@ -6,12 +6,39 @@
 
 import {html, isServer, nothing, TemplateResult} from 'lit';
 
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+
 import {Chip} from './chip.js';
+
+const ARIA_LABEL_REMOVE = 'aria-label-remove';
 
 /**
  * A chip component with multiple actions.
  */
 export abstract class MultiActionChip extends Chip {
+  get ariaLabelRemove(): string {
+    if (this.hasAttribute(ARIA_LABEL_REMOVE)) {
+      return this.getAttribute(ARIA_LABEL_REMOVE)!;
+    }
+
+    const {ariaLabel} = this as ARIAMixinStrict;
+    return `Remove ${ariaLabel || this.label}`;
+  }
+  set ariaLabelRemove(ariaLabel: string|null) {
+    const prev = this.ariaLabelRemove;
+    if (ariaLabel === prev) {
+      return;
+    }
+
+    if (ariaLabel === null) {
+      this.removeAttribute(ARIA_LABEL_REMOVE);
+    } else {
+      this.setAttribute(ARIA_LABEL_REMOVE, ariaLabel);
+    }
+
+    this.requestUpdate();
+  }
+
   protected abstract readonly primaryAction: HTMLElement|null;
   protected abstract readonly trailingAction: HTMLElement|null;
 
@@ -37,14 +64,12 @@ export abstract class MultiActionChip extends Chip {
     this.updateTabIndices();
   }
 
-  protected override renderAction() {
+  protected override renderActions() {
     return html`
-      ${this.renderPrimaryAction()}
-      ${this.renderTrailingAction()}
+      ${super.renderActions()}
+      ${this.renderActionCell(this.renderTrailingAction())}
     `;
   }
-
-  protected abstract renderPrimaryAction(): TemplateResult;
 
   protected abstract renderTrailingAction(): TemplateResult|typeof nothing;
 

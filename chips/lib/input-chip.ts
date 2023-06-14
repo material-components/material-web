@@ -71,7 +71,7 @@ export class InputChip extends MultiActionChip {
     };
   }
 
-  protected override renderPrimaryAction() {
+  protected override renderAction() {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
       return html`
@@ -103,6 +103,9 @@ export class InputChip extends MultiActionChip {
   }
 
   protected override renderTrailingAction() {
-    return renderRemoveButton({disabled: this.disabled});
+    return renderRemoveButton({
+      ariaLabel: this.ariaLabelRemove,
+      disabled: this.disabled,
+    });
   }
 }

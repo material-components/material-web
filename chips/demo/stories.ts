@@ -50,7 +50,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)}>
+      <md-chip-set type="assist" class=${classMap(classes)}
+          aria-label="Assist chips">
         <md-assist-chip
           label=${label || 'Assist chip'}
           ?disabled=${disabled}
@@ -74,7 +75,8 @@ const links: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)}>
+      <md-chip-set type="assist" class=${classMap(classes)}
+          aria-label="Assist link chips">
         <md-assist-chip
           label=${label || 'Assist link chip'}
           ?disabled=${disabled}
@@ -93,7 +95,9 @@ const filters: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling, singleSelect}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)} ?single-select=${singleSelect}>
+      <md-chip-set type="filter" class=${classMap(classes)}
+          aria-label="Filter chips"
+          ?single-select=${singleSelect}>
         <md-filter-chip
           label=${label || 'Filter chip'}
           ?disabled=${disabled}
@@ -123,7 +127,8 @@ const inputs: MaterialStoryInit<StoryKnobs> = {
   render({label, disabled, scrolling}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)}>
+      <md-chip-set type="input" class=${classMap(classes)}
+          aria-label="Input chips">
         <md-input-chip
           label=${label || 'Input chip'}
           ?disabled=${disabled}
@@ -157,7 +162,8 @@ const inputLinks: MaterialStoryInit<StoryKnobs> = {
   render({label, disabled, scrolling}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)}>
+      <md-chip-set type="input" class=${classMap(classes)}
+          aria-label="Input link chips">
         <md-input-chip
           label=${label || 'Input link chip'}
           ?disabled=${disabled}
@@ -175,7 +181,8 @@ const suggestions: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)}>
+      <md-chip-set type="suggestion" class=${classMap(classes)}
+          aria-label="Suggestion chips">
         <md-suggestion-chip
           label=${label || 'Suggestion chip'}
           ?disabled=${disabled}
@@ -199,7 +206,8 @@ const suggestionLinks: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling}) {
     const classes = {scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)}>
+      <md-chip-set type="suggestion" class=${classMap(classes)}
+          aria-label="Suggestion link chips">
         <md-suggestion-chip
           label=${label || 'Suggestion link chip'}
           ?disabled=${disabled}

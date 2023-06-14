@@ -11,10 +11,17 @@ import {html} from 'lit';
 
 import {Chip} from './chip.js';
 
+interface RemoveButtonProperties {
+  ariaLabel: string;
+  disabled: boolean;
+}
+
 /** @protected */
-export function renderRemoveButton({disabled}: {disabled: boolean}) {
+export function renderRemoveButton(
+    {ariaLabel, disabled}: RemoveButtonProperties) {
   return html`
     <button class="trailing action"
+      aria-label=${ariaLabel}
       ?disabled=${disabled}
       @click=${handleRemoveClick}
     >
