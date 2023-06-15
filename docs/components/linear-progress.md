@@ -38,9 +38,8 @@ fixed, visible track.
 </catalog-component-header-title>
 
 <img
-    class="hero"
     src="images/linearprogress/hero.webp"
-    alt="A mobile phone screen showing a card list of episode and a linear progress indicator nestled at the bottom of the top app bar showing a low loading progress"
+    alt="A linear progress animating in the indeterimate state."
     title="Linear progress can be used to show loading progress.">
 
 </catalog-component-header>
@@ -70,7 +69,8 @@ for an unspecified amount of progress.
 
 <!-- github-only-start -->
 
-![Two linear progress indicators, one with half the track full and the other indeterminate.](images/linearprogress/usage.gif "Determinate and indeterminate linear progress indicators.")
+![Two linear progress indicators, one with half the track full and the other
+indeterminate.](images/linearprogress/usage.gif "Determinate and indeterminate linear progress indicators.")
 
 <!-- github-only-end -->
 <!-- catalog-only-start -->
