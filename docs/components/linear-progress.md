@@ -17,7 +17,7 @@ tag: 'docType:reference'
 
 <!-- github-only-start -->
 
-<!-- go/md-checkbox -->
+<!-- go/md-linear-progress -->
 
 <!-- [TOC] -->
 
