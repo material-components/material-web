@@ -41,7 +41,8 @@ function handleRemoveClick(this: Chip, event: Event) {
   }
 
   event.stopPropagation();
-  const preventDefault = !this.dispatchEvent(new Event('remove'));
+  const preventDefault =
+      !this.dispatchEvent(new Event('remove', {cancelable: true}));
   if (preventDefault) {
     return;
   }
