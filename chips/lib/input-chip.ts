@@ -106,6 +106,7 @@ export class InputChip extends MultiActionChip {
     return renderRemoveButton({
       ariaLabel: this.ariaLabelRemove,
       disabled: this.disabled,
+      tabbable: this.removeOnly,
     });
   }
 }

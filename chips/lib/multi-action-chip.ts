@@ -45,8 +45,6 @@ export abstract class MultiActionChip extends Chip {
   constructor() {
     super();
     if (!isServer) {
-      this.addEventListener('focusin', this.updateTabIndices.bind(this));
-      this.addEventListener('focusout', this.updateTabIndices.bind(this));
       this.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
   }
@@ -58,10 +56,6 @@ export abstract class MultiActionChip extends Chip {
     }
 
     super.focus(options);
-  }
-
-  protected override firstUpdated() {
-    this.updateTabIndices();
   }
 
   protected override renderActions() {
@@ -103,25 +97,5 @@ export abstract class MultiActionChip extends Chip {
     event.stopPropagation();
     const actionToFocus = forwards ? this.trailingAction : this.primaryAction;
     actionToFocus.focus();
-    this.updateTabIndices();
-  }
-
-  private updateTabIndices() {
-    const {primaryAction, trailingAction} = this;
-    if (!primaryAction || !trailingAction) {
-      // Does not have multiple actions.
-      primaryAction?.removeAttribute('tabindex');
-      trailingAction?.removeAttribute('tabindex');
-      return;
-    }
-
-    if (trailingAction.matches(':focus-within')) {
-      trailingAction.removeAttribute('tabindex');
-      primaryAction.tabIndex = -1;
-      return;
-    }
-
-    primaryAction.removeAttribute('tabindex');
-    trailingAction.tabIndex = -1;
   }
 }

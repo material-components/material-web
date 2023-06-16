@@ -7,22 +7,24 @@
 import '../../focus/focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html} from 'lit';
+import {html, nothing} from 'lit';
 
 import {Chip} from './chip.js';
 
 interface RemoveButtonProperties {
   ariaLabel: string;
   disabled: boolean;
+  tabbable?: boolean;
 }
 
 /** @protected */
 export function renderRemoveButton(
-    {ariaLabel, disabled}: RemoveButtonProperties) {
+    {ariaLabel, disabled, tabbable = false}: RemoveButtonProperties) {
   return html`
     <button class="trailing action"
       aria-label=${ariaLabel}
       ?disabled=${disabled}
+      tabindex=${!tabbable ? -1 : nothing}
       @click=${handleRemoveClick}
     >
       <md-focus-ring></md-focus-ring>
