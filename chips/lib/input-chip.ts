@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, nothing, PropertyValues} from 'lit';
+import {html, nothing} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
@@ -51,15 +51,6 @@ export class InputChip extends MultiActionChip {
 
   @query('.trailing.action')
   protected readonly trailingAction!: HTMLElement|null;
-
-  protected override update(changed: PropertyValues<this>) {
-    if (changed.has('selected') && changed.get('selected') !== undefined) {
-      // Dispatch when `selected` changes, except for the first update.
-      this.dispatchEvent(new Event('selected', {bubbles: true}));
-    }
-
-    super.update(changed);
-  }
 
   protected override getContainerClasses() {
     return {
