@@ -6,8 +6,8 @@
 
 // import 'jasmine'; (google3-only)
 
-import {html} from 'lit';
-import {customElement, query} from 'lit/decorators.js';
+import {html, nothing} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
 
 import {Environment} from '../../testing/environment.js';
 import {Harness} from '../../testing/harness.js';
@@ -19,6 +19,7 @@ import {renderRemoveButton} from './trailing-icons.js';
 class TestMultiActionChip extends MultiActionChip {
   @query('#primary') primaryAction!: HTMLElement;
   @query('.trailing.action') trailingAction!: HTMLElement;
+  @property() noTrailingAction = false;
 
   protected primaryId = 'primary';
 
@@ -27,6 +28,10 @@ class TestMultiActionChip extends MultiActionChip {
   }
 
   protected override renderTrailingAction() {
+    if (this.noTrailingAction) {
+      return nothing;
+    }
+
     return renderRemoveButton(
         {ariaLabel: this.ariaLabelRemove, disabled: this.disabled});
   }
@@ -41,6 +46,130 @@ describe('Multi-action chips', () => {
     await env.waitForStability();
     return chip;
   }
+
+  describe('navigation', () => {
+    it('should move internal focus forwards', async () => {
+      const chip = await setupTest();
+      const primaryHarness = new Harness(chip.primaryAction);
+
+      await primaryHarness.focusWithKeyboard();
+      expect(chip.primaryAction.matches(':focus'))
+          .withContext('primary action is focused')
+          .toBeTrue();
+
+      await primaryHarness.keypress('ArrowRight');
+      expect(chip.trailingAction.matches(':focus'))
+          .withContext('trailing action is focused')
+          .toBeTrue();
+    });
+
+    it('should move internal focus forwards in rtl', async () => {
+      const chip = await setupTest();
+      chip.style.direction = 'rtl';
+      const primaryHarness = new Harness(chip.primaryAction);
+
+      await primaryHarness.focusWithKeyboard();
+      expect(chip.primaryAction.matches(':focus'))
+          .withContext('primary action is focused')
+          .toBeTrue();
+
+      await primaryHarness.keypress('ArrowLeft');
+      expect(chip.trailingAction.matches(':focus'))
+          .withContext('trailing action is focused')
+          .toBeTrue();
+    });
+
+    it('should move internal focus backwards', async () => {
+      const chip = await setupTest();
+      const trailingHarness = new Harness(chip.trailingAction);
+
+      await trailingHarness.focusWithKeyboard();
+      expect(chip.trailingAction.matches(':focus'))
+          .withContext('trailing action is focused')
+          .toBeTrue();
+
+      await trailingHarness.keypress('ArrowLeft');
+      expect(chip.primaryAction.matches(':focus'))
+          .withContext('primary action is focused')
+          .toBeTrue();
+    });
+
+    it('should move internal focus backwards in rtl', async () => {
+      const chip = await setupTest();
+      chip.style.direction = 'rtl';
+      const trailingHarness = new Harness(chip.trailingAction);
+
+      await trailingHarness.focusWithKeyboard();
+      expect(chip.trailingAction.matches(':focus'))
+          .withContext('trailing action is focused')
+          .toBeTrue();
+
+      await trailingHarness.keypress('ArrowRight');
+      expect(chip.primaryAction.matches(':focus'))
+          .withContext('primary action is focused')
+          .toBeTrue();
+    });
+
+    it('should not bubble when navigating internally', async () => {
+      const chip = await setupTest();
+      const primaryHarness = new Harness(chip.primaryAction);
+      const keydownHandler = jasmine.createSpy();
+      if (!chip.parentElement) {
+        throw new Error('Expected chip to have a parentElement for test.');
+      }
+
+      chip.parentElement.addEventListener('keydown', keydownHandler);
+
+      await primaryHarness.focusWithKeyboard();
+      await primaryHarness.keypress('ArrowRight');
+      expect(keydownHandler).not.toHaveBeenCalled();
+    });
+
+    it('should bubble event when navigating forward past trailing action',
+       async () => {
+         const chip = await setupTest();
+         const trailingHarness = new Harness(chip.trailingAction);
+         const keydownHandler = jasmine.createSpy();
+         if (!chip.parentElement) {
+           throw new Error('Expected chip to have a parentElement for test.');
+         }
+
+         chip.parentElement.addEventListener('keydown', keydownHandler);
+
+         await trailingHarness.focusWithKeyboard();
+         await trailingHarness.keypress('ArrowRight');
+         expect(keydownHandler).toHaveBeenCalledTimes(1);
+       });
+
+    it('should bubble event when navigating backward before primary action',
+       async () => {
+         const chip = await setupTest();
+         const primaryHarness = new Harness(chip.primaryAction);
+         const keydownHandler = jasmine.createSpy();
+         if (!chip.parentElement) {
+           throw new Error('Expected chip to have a parentElement for test.');
+         }
+
+         chip.parentElement.addEventListener('keydown', keydownHandler);
+
+         await primaryHarness.focusWithKeyboard();
+         await primaryHarness.keypress('ArrowLeft');
+         expect(keydownHandler).toHaveBeenCalledTimes(1);
+       });
+
+    it('should do nothing if it does not have multiple actions', async () => {
+      const chip = await setupTest();
+      chip.noTrailingAction = true;
+      await env.waitForStability();
+
+      const primaryHarness = new Harness(chip.primaryAction);
+      await primaryHarness.focusWithKeyboard();
+      await primaryHarness.keypress('ArrowLeft');
+      expect(chip.primaryAction.matches(':focus'))
+          .withContext('primary action is still focused')
+          .toBeTrue();
+    });
+  });
 
   describe('remove action', () => {
     it('should remove chip from DOM when remove button clicked', async () => {
