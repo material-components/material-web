@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.0.0-pre.11](https://github.com/material-components/material-web/compare/v1.0.0-pre.10...v1.0.0-pre.11) (2023-06-16)
+
+
+### Features
+
+* **chips:** add basic chip set component ([919a9d3](https://github.com/material-components/material-web/commit/919a9d3e9152dcdbb9be09c7f898dcc5168da543))
+* **chips:** add multi-action chip navigation ([2444734](https://github.com/material-components/material-web/commit/24447343a5fa240967ea32a53f625da173cb9557))
+* **chips:** add scrolling chip set example ([938bf38](https://github.com/material-components/material-web/commit/938bf384a488addf0acf576cf6e2b3556b80e2ff))
+* **chips:** add single select filter chip set ([f8bb2f1](https://github.com/material-components/material-web/commit/f8bb2f18f0141f1e2d4ef5ca0b18fc569fb6276f))
+* **list:** expose list item role ([2be1b78](https://github.com/material-components/material-web/commit/2be1b7824159760c91f577cea68905b3791a2831))
+
+
+### Bug Fixes
+
+* **chips:** add aria grid/listbox models to chip set ([fcdb126](https://github.com/material-components/material-web/commit/fcdb126f2fcccf696e199e617c5df3f696e79c4b))
+* **chips:** misaligned trailing action ripple ([9c0336a](https://github.com/material-components/material-web/commit/9c0336aa12405bd3a926109d2ae29a418bb97e03))
+* **chips:** remove selected event from input chips ([a33fcbb](https://github.com/material-components/material-web/commit/a33fcbb3771fe1f77664f501aa25d76e292db099))
+* **slider:** default values to between min and max to better match native input ([2ef3606](https://github.com/material-components/material-web/commit/2ef3606bfe66fd700d803812b524b95c22ea4028))
+* **slider:** fix slider focus ring inheritance weakness ([e44c903](https://github.com/material-components/material-web/commit/e44c903484d1beb351dfc5ff9e9ea653cc35f6ba))
+* **testing:** use sys-color-* theming for dark mode tests ([b1172d8](https://github.com/material-components/material-web/commit/b1172d8470c33124556b71c93ba84b7b3b906dcf))
+
+
+### Miscellaneous Chores
+
+* update next version ([3d7612e](https://github.com/material-components/material-web/commit/3d7612e7617e1496641ada9ce7a97d03ac5a1842))
+
 ## [1.0.0-pre.10](https://github.com/material-components/material-web/compare/v1.0.0-pre.9...v1.0.0-pre.10) (2023-06-05)
 
 
