@@ -10,7 +10,7 @@ import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Environment} from '../../testing/environment.js';
-import {Harness} from '../../testing/harness.js';
+import {ChipHarness} from '../harness.js';
 
 import {FilterChip} from './filter-chip.js';
 
@@ -26,7 +26,7 @@ describe('Filter chip', () => {
     const chip = new TestFilterChip();
     env.render(html`${chip}`);
     await env.waitForStability();
-    return {chip, harness: new Harness(chip.primaryAction)};
+    return {chip, harness: new ChipHarness(chip)};
   }
 
   describe('selection', () => {

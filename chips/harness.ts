@@ -6,16 +6,12 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {MdAssistChip} from './assist-chip.js';
-import {MdFilterChip} from './filter-chip.js';
-import {MdInputChip} from './input-chip.js';
-import {MdSuggestionChip} from './suggestion-chip.js';
+import {Chip} from './lib/chip.js';
 
 /**
  * Test harness for chips.
  */
-export class ChipHarness extends
-    Harness<MdAssistChip|MdFilterChip|MdInputChip|MdSuggestionChip> {
+export class ChipHarness extends Harness<Chip> {
   action: 'primary'|'trailing' = 'primary';
 
   protected override async getInteractiveElement() {

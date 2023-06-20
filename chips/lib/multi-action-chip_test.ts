@@ -10,7 +10,7 @@ import {html, nothing} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 
 import {Environment} from '../../testing/environment.js';
-import {Harness} from '../../testing/harness.js';
+import {ChipHarness} from '../harness.js';
 
 import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-icons.js';
@@ -50,7 +50,7 @@ describe('Multi-action chips', () => {
   describe('navigation', () => {
     it('should move internal focus forwards', async () => {
       const chip = await setupTest();
-      const primaryHarness = new Harness(chip.primaryAction);
+      const primaryHarness = new ChipHarness(chip);
 
       await primaryHarness.focusWithKeyboard();
       expect(chip.primaryAction.matches(':focus'))
@@ -66,7 +66,7 @@ describe('Multi-action chips', () => {
     it('should move internal focus forwards in rtl', async () => {
       const chip = await setupTest();
       chip.style.direction = 'rtl';
-      const primaryHarness = new Harness(chip.primaryAction);
+      const primaryHarness = new ChipHarness(chip);
 
       await primaryHarness.focusWithKeyboard();
       expect(chip.primaryAction.matches(':focus'))
@@ -81,7 +81,8 @@ describe('Multi-action chips', () => {
 
     it('should move internal focus backwards', async () => {
       const chip = await setupTest();
-      const trailingHarness = new Harness(chip.trailingAction);
+      const trailingHarness = new ChipHarness(chip);
+      trailingHarness.action = 'trailing';
 
       await trailingHarness.focusWithKeyboard();
       expect(chip.trailingAction.matches(':focus'))
@@ -97,7 +98,8 @@ describe('Multi-action chips', () => {
     it('should move internal focus backwards in rtl', async () => {
       const chip = await setupTest();
       chip.style.direction = 'rtl';
-      const trailingHarness = new Harness(chip.trailingAction);
+      const trailingHarness = new ChipHarness(chip);
+      trailingHarness.action = 'trailing';
 
       await trailingHarness.focusWithKeyboard();
       expect(chip.trailingAction.matches(':focus'))
@@ -112,7 +114,7 @@ describe('Multi-action chips', () => {
 
     it('should not bubble when navigating internally', async () => {
       const chip = await setupTest();
-      const primaryHarness = new Harness(chip.primaryAction);
+      const primaryHarness = new ChipHarness(chip);
       const keydownHandler = jasmine.createSpy();
       if (!chip.parentElement) {
         throw new Error('Expected chip to have a parentElement for test.');
@@ -128,7 +130,8 @@ describe('Multi-action chips', () => {
     it('should bubble event when navigating forward past trailing action',
        async () => {
          const chip = await setupTest();
-         const trailingHarness = new Harness(chip.trailingAction);
+         const trailingHarness = new ChipHarness(chip);
+         trailingHarness.action = 'trailing';
          const keydownHandler = jasmine.createSpy();
          if (!chip.parentElement) {
            throw new Error('Expected chip to have a parentElement for test.');
@@ -144,7 +147,7 @@ describe('Multi-action chips', () => {
     it('should bubble event when navigating backward before primary action',
        async () => {
          const chip = await setupTest();
-         const primaryHarness = new Harness(chip.primaryAction);
+         const primaryHarness = new ChipHarness(chip);
          const keydownHandler = jasmine.createSpy();
          if (!chip.parentElement) {
            throw new Error('Expected chip to have a parentElement for test.');
@@ -162,7 +165,7 @@ describe('Multi-action chips', () => {
       chip.noTrailingAction = true;
       await env.waitForStability();
 
-      const primaryHarness = new Harness(chip.primaryAction);
+      const primaryHarness = new ChipHarness(chip);
       await primaryHarness.focusWithKeyboard();
       await primaryHarness.keypress('ArrowLeft');
       expect(chip.primaryAction.matches(':focus'))
@@ -174,7 +177,8 @@ describe('Multi-action chips', () => {
   describe('remove action', () => {
     it('should remove chip from DOM when remove button clicked', async () => {
       const chip = await setupTest();
-      const harness = new Harness(chip.trailingAction);
+      const harness = new ChipHarness(chip);
+      harness.action = 'trailing';
 
       expect(chip.parentElement)
           .withContext('chip should be attached before removing')
@@ -187,7 +191,8 @@ describe('Multi-action chips', () => {
 
     it('should dispatch a "remove" event when removed', async () => {
       const chip = await setupTest();
-      const harness = new Harness(chip.trailingAction);
+      const harness = new ChipHarness(chip);
+      harness.action = 'trailing';
       const handler = jasmine.createSpy();
       chip.addEventListener('remove', handler);
 
@@ -198,7 +203,8 @@ describe('Multi-action chips', () => {
     it('should not remove chip if "remove" event is default prevented',
        async () => {
          const chip = await setupTest();
-         const harness = new Harness(chip.trailingAction);
+         const harness = new ChipHarness(chip);
+         harness.action = 'trailing';
          chip.addEventListener('remove', event => {
            event.preventDefault();
          });
