@@ -32,7 +32,8 @@
   .field,
   .select,
   md-menu {
-    min-width: 100%;
+    min-width: inherit;
+    width: inherit;
     max-width: inherit;
   }
 
