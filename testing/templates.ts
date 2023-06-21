@@ -22,6 +22,7 @@ export enum State {
   FOCUS = 'Focus',
   HOVER = 'Hover',
   PRESSED = 'Pressed',
+  SELECTED = 'Selected',
 }
 
 /**

@@ -56,6 +56,7 @@ export class FilterChip extends MultiActionChip {
       ...super.getContainerClasses(),
       elevated: this.elevated,
       selected: this.selected,
+      'has-trailing': this.removable,
     };
   }
 

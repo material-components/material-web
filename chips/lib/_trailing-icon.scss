@@ -33,7 +33,7 @@
     width: calc(4 / 3 * var(--_icon-size)); // 24px default
   }
 
-  :has(.trailing.action) .primary.action {
+  .has-trailing .primary.action {
     padding-inline-end: 0;
   }
 
