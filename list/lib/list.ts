@@ -19,6 +19,15 @@ const NAVIGABLE_KEYS = {
   End: 'End',
 } as const;
 
+/**
+ * A record that describes a list item in a list with metadata such a reference
+ * to the item and its index in the list.
+ */
+export interface ItemRecord {
+  item: ListItem;
+  index: number;
+}
+
 type NavigatableValues = typeof NAVIGABLE_KEYS[keyof typeof NAVIGABLE_KEYS];
 
 const navigableKeySet = new Set(Object.values(NAVIGABLE_KEYS));
@@ -116,23 +125,12 @@ export class List extends LitElement {
     switch (key) {
       // Activate the next item
       case NAVIGABLE_KEYS.ArrowDown:
-        if (activeItemRecord) {
-          const next = List.getNextItem(items, activeItemRecord.index);
-
-          if (next) next.active = true;
-        } else {
-          List.activateFirstItem(items);
-        }
+        this.activateNextItemInternal(items, activeItemRecord);
         break;
 
       // Activate the previous item
       case NAVIGABLE_KEYS.ArrowUp:
-        if (activeItemRecord) {
-          const prev = List.getPrevItem(items, activeItemRecord.index);
-          if (prev) prev.active = true;
-        } else {
-          items[items.length - 1].active = true;
-        }
+        this.activatePreviousItemInternal(items, activeItemRecord);
         break;
 
       // Activate the first item
@@ -150,6 +148,60 @@ export class List extends LitElement {
     }
   }
 
+  private activateNextItemInternal(
+      items: ListItem[], activeItemRecord: null|ItemRecord): ListItem|null {
+    if (activeItemRecord) {
+      const next = List.getNextItem(items, activeItemRecord.index);
+
+      if (next) next.active = true;
+
+      return next;
+    } else {
+      return List.activateFirstItem(items);
+    }
+  }
+
+  private activatePreviousItemInternal(
+      items: ListItem[], activeItemRecord: null|ItemRecord): ListItem|null {
+    if (activeItemRecord) {
+      const prev = List.getPrevItem(items, activeItemRecord.index);
+      if (prev) prev.active = true;
+      return prev;
+    } else {
+      return List.activateLastItem(items);
+    }
+  }
+
+  /**
+   * Activates the next item in the list. If at the end of the list, the first
+   * item will be activated.
+   *
+   * @return The activated list item or `null` if there are no items.
+   */
+  activateNextItem(): ListItem|null {
+    const items = this.items;
+    const activeItemRecord = List.getActiveItem(items);
+    if (activeItemRecord) {
+      activeItemRecord.item.active = false;
+    }
+    return this.activateNextItemInternal(items, activeItemRecord);
+  }
+
+  /**
+   * Activates the previous item in the list. If at the start of the list, the
+   * last item will be activated.
+   *
+   * @return The activated list item or `null` if there are no items.
+   */
+  activatePreviousItem(): ListItem|null {
+    const items = this.items;
+    const activeItemRecord = List.getActiveItem(items);
+    if (activeItemRecord) {
+      activeItemRecord.item.active = false;
+    }
+    return this.activatePreviousItemInternal(items, activeItemRecord);
+  }
+
   /**
    * Activates the first non-disabled item of a given array of items.
    *
@@ -165,6 +217,7 @@ export class List extends LitElement {
     if (firstItem) {
       firstItem.active = true;
     }
+    return firstItem;
   }
 
   /**
@@ -179,6 +232,7 @@ export class List extends LitElement {
     if (lastItem) {
       lastItem.active = true;
     }
+    return lastItem;
   }
 
   /**
@@ -217,7 +271,7 @@ export class List extends LitElement {
         return {
           item,
           index: i,
-        };
+        } as ItemRecord;
       }
     }
     return null;
@@ -274,7 +328,8 @@ export class List extends LitElement {
         return item;
       }
     }
-    return null;
+
+    return items[index] ? items[index] : null;
   }
 
   /**
@@ -293,6 +348,7 @@ export class List extends LitElement {
         return item;
       }
     }
-    return null;
+
+    return items[index] ? items[index] : null;
   }
 }

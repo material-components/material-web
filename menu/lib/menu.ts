@@ -15,8 +15,8 @@ import {styleMap} from 'lit/directives/style-map.js';
 
 import {ARIAMixinStrict, ARIARole} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {List} from '../../list/lib/list.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
+import {List} from '../../list/lib/list.js';
 
 import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
@@ -665,12 +665,12 @@ export abstract class Menu extends LitElement {
     this.typeaheadActive = true;
   }
 
-  private handleStayOpenOnFocusout(e:Event) {
+  private handleStayOpenOnFocusout(e: Event) {
     e.stopPropagation();
     this.stayOpenOnFocusout = true;
   }
 
-  private handleCloseOnFocusout(e:Event) {
+  private handleCloseOnFocusout(e: Event) {
     e.stopPropagation();
     this.stayOpenOnFocusout = false;
   }
@@ -688,5 +688,25 @@ export abstract class Menu extends LitElement {
 
   show() {
     this.open = true;
+  }
+
+  /**
+   * Activates the next item in the menu. If at the end of the menu, the first
+   * item will be activated.
+   *
+   * @return The activated menu item or `null` if there are no items.
+   */
+  activateNextItem() {
+    return this.listElement?.activateNextItem() as MenuItem ?? null;
+  }
+
+  /**
+   * Activates the previous item in the menu. If at the start of the menu, the
+   * last item will be activated.
+   *
+   * @return The activated menu item or `null` if there are no items.
+   */
+  activatePreviousItem() {
+    return this.listElement?.activatePreviousItem() as MenuItem ?? null;
   }
 }
