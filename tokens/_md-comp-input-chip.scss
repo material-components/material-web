@@ -199,5 +199,12 @@ $_default: (
     )
   );
 
+  // TODO(b/288199264): remove once input chip leading icon color is fixed
+  $tokens: map.set(
+    $tokens,
+    'leading-icon-color',
+    map.get($deps, 'md-sys-color', 'primary')
+  );
+
   @return $tokens;
 }
