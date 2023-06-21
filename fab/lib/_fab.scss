@@ -169,6 +169,18 @@
     }
   }
 
+  .fab:not(.hasIcon) {
+    padding-inline-start: 20px;
+  }
+
+  .fab:not(.hasIcon) .icon {
+    display: none;
+  }
+
+  .fab:not(.hasIcon) .label {
+    padding-inline-start: 0;
+  }
+
   .fab.small {
     width: var(--_small-container-width);
     height: var(--_small-container-height);

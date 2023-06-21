@@ -7,8 +7,8 @@
 import './index.js';
 import './material-collection.js';
 
-import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
 import {FabSize, Variant} from '@material/web/fab/fab.js';
+import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
 import {boolInput, Knob, selectDropdown, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
@@ -39,6 +39,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Fab', [
     })
   }),
   new Knob('reducedTouchTarget', {defaultValue: false, ui: boolInput()}),
+  new Knob('hasIcon', {defaultValue: true, ui: boolInput()}),
 ]);
 
 collection.addStories(...materialInitsToStoryInits(stories));

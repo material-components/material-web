@@ -8,8 +8,8 @@ import '@material/web/fab/fab.js';
 import '@material/web/icon/icon.js';
 import '@material/web/fab/branded-fab.js';
 
-import {MaterialStoryInit} from './material-collection.js';
 import {FabSize, Variant} from '@material/web/fab/fab.js';
+import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';
 
 /** Knob types for fab stories. */
@@ -20,6 +20,7 @@ export interface StoryKnobs {
   size: FabSize|undefined;
   variant: Variant|undefined;
   reducedTouchTarget: boolean;
+  hasIcon: boolean;
 }
 
 const styles = css`
@@ -31,7 +32,7 @@ const styles = css`
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: '<md-fab>',
   styles,
-  render({icon, label, lowered, size, variant, reducedTouchTarget}) {
+  render({icon, label, lowered, size, variant, reducedTouchTarget, hasIcon}) {
     return html`
       <md-fab
           class="fab"
@@ -39,7 +40,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           .reducedTouchTarget=${reducedTouchTarget}
           .lowered=${lowered}
           .label=${label}
-          .size=${size!}>
+          .size=${size!}
+          .hasIcon=${hasIcon}>
         <md-icon slot="icon">${icon}</md-icon>
       </md-fab>
     `;
@@ -49,14 +51,15 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 const branded: MaterialStoryInit<StoryKnobs> = {
   name: '<md-branded-fab>',
   styles,
-  render({icon, label, lowered, size, variant, reducedTouchTarget}) {
+  render({label, lowered, size, reducedTouchTarget, hasIcon}) {
     return html`
       <md-branded-fab
           class="fab"
           .reducedTouchTarget=${reducedTouchTarget}
           .lowered=${lowered}
-            .label=${label}
-          .size=${size!}>
+          .label=${label}
+          .size=${size!}
+          .hasIcon=${hasIcon}>
         <svg slot="icon" width="36" height="36" viewBox="0 0 36 36">
           <path fill="#34A853" d="M16 16v14h4V20z"></path>
           <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>

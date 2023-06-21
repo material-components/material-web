@@ -52,9 +52,18 @@ export abstract class SharedFab extends LitElement {
   @property({type: Boolean}) lowered = false;
 
   /**
+   * NOTE: For SSR use only as it will be overriden by icon slotchange event.
+   *
+   * Whether to display the icon or not in extended FAB. Does nothing on branded
+   * and non-extended FABs.
+   */
+  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
+
+  /**
    * Lowers the FAB's elevation and places it into the `lowered` state.
    */
-  @property({type: Boolean}) reducedTouchTarget = false;
+  @property({type: Boolean, attribute: 'reduced-touch-target'})
+  reducedTouchTarget = false;
 
   protected override render() {
     // Needed for closure conformance
@@ -81,6 +90,7 @@ export abstract class SharedFab extends LitElement {
       'small': this.size === 'small' && !isExtended,
       'large': this.size === 'large' && !isExtended,
       'extended': isExtended,
+      'hasIcon': !isExtended || this.hasIcon,
     };
   }
 
@@ -95,7 +105,13 @@ export abstract class SharedFab extends LitElement {
 
   private renderIcon() {
     return html`<span class="icon">
-        <slot name="icon"></slot>
+        <slot name="icon" @slotchange=${this.onSlotchange}></slot>
       </span>`;
+  }
+
+  private onSlotchange(e: Event) {
+    const slotEl = e.target as HTMLSlotElement;
+    const slottedEls = slotEl.assignedElements({flatten: true});
+    this.hasIcon = slottedEls.length !== 0;
   }
 }
