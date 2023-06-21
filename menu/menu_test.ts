@@ -5,6 +5,9 @@
  */
 
 // import 'jasmine'; (google3-only)
+import './menu.js';
+
+import {html, render} from 'lit';
 
 import {createTokenTests} from '../testing/tokens.js';
 
@@ -14,6 +17,51 @@ import {MdMenuItem} from './menu-item.js';
 describe('<md-menu>', () => {
   describe('.styles', () => {
     createTokenTests(MdMenu.styles);
+  });
+
+  let root: HTMLDivElement;
+
+  beforeEach(() => {
+    root = document.createElement('div');
+    document.body.appendChild(root);
+  });
+
+  afterEach(() => {
+    root?.remove();
+  });
+
+  it('escape on list root closes menu', async () => {
+    render(
+        html`
+      <button>OpenMenu</button>
+      <md-menu quick></md-menu>
+    `,
+        root);
+
+    const button = root.querySelector('button')!;
+    const menu = root.querySelector('md-menu')!;
+    menu.anchor = button;
+    menu.show();
+    await menu.updateComplete;
+    const listEl = menu.renderRoot.querySelector('md-list')!;
+    await listEl.updateComplete;
+    const listRoot = listEl.renderRoot.querySelector('ul')!;
+
+    expect(menu.open).toBeTrue();
+
+    const escapeKeydownEvent = new KeyboardEvent('keydown', {
+      key: 'Escape',
+      code: 'Escape',
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    });
+    listRoot.dispatchEvent(escapeKeydownEvent);
+
+    await menu.updateComplete;
+
+    expect(menu.open).toBeFalse();
+    expect(escapeKeydownEvent.defaultPrevented).toBeTrue();
   });
 });
 

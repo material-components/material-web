@@ -18,7 +18,7 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
 import {List} from '../../list/lib/list.js';
 
-import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isElementInSubtree, MenuItem} from './shared.js';
+import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isClosableKey, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
 import {TypeaheadController} from './typeaheadController.js';
 
@@ -340,6 +340,12 @@ export abstract class Menu extends LitElement {
   // and we don't want the menu item to close the menu.
   @eventOptions({capture: true})
   private handleListKeydown(e: KeyboardEvent) {
+    if (e.target === this.listElement && !e.defaultPrevented &&
+        isClosableKey(e.code)) {
+      e.preventDefault();
+      this.close();
+    }
+
     this.typeaheadController.onKeydown(e);
   }
 
