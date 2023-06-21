@@ -33,8 +33,7 @@ export class ChipSet extends LitElement {
   @property() type: ChipSetType = '';
   @property({type: Boolean, attribute: 'single-select'}) singleSelect = false;
 
-  @queryAssignedElements({flatten: true})
-  private readonly childElements!: HTMLElement[];
+  @queryAssignedElements() private readonly childElements!: HTMLElement[];
 
   constructor() {
     super();
@@ -88,14 +87,14 @@ export class ChipSet extends LitElement {
       return;
     }
 
-    // Prevent default interactions, such as scrolling.
-    event.preventDefault();
-
     const {chips} = this as {chips: MaybeMultiActionChip[]};
     // Don't try to select another chip if there aren't any.
     if (chips.length < 2) {
       return;
     }
+
+    // Prevent default interactions, such as scrolling.
+    event.preventDefault();
 
     if (isHome || isEnd) {
       const index = isHome ? 0 : chips.length - 1;
@@ -106,7 +105,7 @@ export class ChipSet extends LitElement {
 
     // Check if moving forwards or backwards
     const isRtl = getComputedStyle(this).direction === 'rtl';
-    const forwards = isRtl ? isLeft || isDown : isRight || isDown;
+    const forwards = isRtl ? isLeft || isUp : isRight || isDown;
     const focusedChip = chips.find(chip => chip.matches(':focus-within'));
     if (!focusedChip) {
       // If there is not already a chip focused, select the first or last chip

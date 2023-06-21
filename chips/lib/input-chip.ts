@@ -96,7 +96,7 @@ export class InputChip extends MultiActionChip {
   protected override renderTrailingAction() {
     return renderRemoveButton({
       ariaLabel: this.ariaLabelRemove,
-      disabled: this.disabled,
+      disabled: !this.href && this.disabled,
       tabbable: this.removeOnly,
     });
   }

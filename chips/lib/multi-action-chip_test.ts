@@ -6,7 +6,7 @@
 
 // import 'jasmine'; (google3-only)
 
-import {html, nothing} from 'lit';
+import {css, html, nothing} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 
 import {Environment} from '../../testing/environment.js';
@@ -17,6 +17,8 @@ import {renderRemoveButton} from './trailing-icons.js';
 
 @customElement('test-multi-action-chip')
 class TestMultiActionChip extends MultiActionChip {
+  static override styles = css`:host { position: relative; }`;
+
   @query('#primary') primaryAction!: HTMLElement;
   @query('.trailing.action') trailingAction!: HTMLElement;
   @property() noTrailingAction = false;
@@ -53,12 +55,12 @@ describe('Multi-action chips', () => {
       const primaryHarness = new ChipHarness(chip);
 
       await primaryHarness.focusWithKeyboard();
-      expect(chip.primaryAction.matches(':focus'))
+      expect(chip.primaryAction.matches(':focus-within'))
           .withContext('primary action is focused')
           .toBeTrue();
 
       await primaryHarness.keypress('ArrowRight');
-      expect(chip.trailingAction.matches(':focus'))
+      expect(chip.trailingAction.matches(':focus-within'))
           .withContext('trailing action is focused')
           .toBeTrue();
     });
@@ -69,12 +71,12 @@ describe('Multi-action chips', () => {
       const primaryHarness = new ChipHarness(chip);
 
       await primaryHarness.focusWithKeyboard();
-      expect(chip.primaryAction.matches(':focus'))
+      expect(chip.primaryAction.matches(':focus-within'))
           .withContext('primary action is focused')
           .toBeTrue();
 
       await primaryHarness.keypress('ArrowLeft');
-      expect(chip.trailingAction.matches(':focus'))
+      expect(chip.trailingAction.matches(':focus-within'))
           .withContext('trailing action is focused')
           .toBeTrue();
     });
@@ -85,12 +87,12 @@ describe('Multi-action chips', () => {
       trailingHarness.action = 'trailing';
 
       await trailingHarness.focusWithKeyboard();
-      expect(chip.trailingAction.matches(':focus'))
+      expect(chip.trailingAction.matches(':focus-within'))
           .withContext('trailing action is focused')
           .toBeTrue();
 
       await trailingHarness.keypress('ArrowLeft');
-      expect(chip.primaryAction.matches(':focus'))
+      expect(chip.primaryAction.matches(':focus-within'))
           .withContext('primary action is focused')
           .toBeTrue();
     });
@@ -102,12 +104,12 @@ describe('Multi-action chips', () => {
       trailingHarness.action = 'trailing';
 
       await trailingHarness.focusWithKeyboard();
-      expect(chip.trailingAction.matches(':focus'))
+      expect(chip.trailingAction.matches(':focus-within'))
           .withContext('trailing action is focused')
           .toBeTrue();
 
       await trailingHarness.keypress('ArrowRight');
-      expect(chip.primaryAction.matches(':focus'))
+      expect(chip.primaryAction.matches(':focus-within'))
           .withContext('primary action is focused')
           .toBeTrue();
     });
@@ -168,7 +170,7 @@ describe('Multi-action chips', () => {
       const primaryHarness = new ChipHarness(chip);
       await primaryHarness.focusWithKeyboard();
       await primaryHarness.keypress('ArrowLeft');
-      expect(chip.primaryAction.matches(':focus'))
+      expect(chip.primaryAction.matches(':focus-within'))
           .withContext('primary action is still focused')
           .toBeTrue();
     });
