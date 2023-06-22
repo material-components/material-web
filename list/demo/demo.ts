@@ -43,6 +43,8 @@ const collection =
       new Knob('noninteractive', {ui: boolInput(), defaultValue: false}),
       new Knob('active', {ui: boolInput(), defaultValue: false}),
       new Knob(
+          'multiLineHeadline', {ui: boolInput(), defaultValue: false}),
+      new Knob(
           'multiLineSupportingText', {ui: boolInput(), defaultValue: false}),
       new Knob('headline', {ui: textInput(), defaultValue: 'Headline'}),
       new Knob('supportingText', {ui: textInput(), defaultValue: ''}),

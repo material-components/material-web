@@ -21,6 +21,7 @@ export interface StoryKnobs {
   disabled: boolean;
   noninteractive: boolean;
   active: boolean;
+  multiLineHeadline: boolean;
   multiLineSupportingText: boolean;
   headline: string;
   supportingText: string;
@@ -68,6 +69,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
       disabled,
       noninteractive,
       active,
+      multiLineHeadline,
       multiLineSupportingText,
       headline,
       supportingText,
@@ -85,6 +87,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}
+              .multiLineHeadline=${multiLineHeadline}
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
@@ -96,6 +99,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}
+              .multiLineHeadline=${multiLineHeadline}
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
@@ -113,6 +117,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-list-item-link
               .headline=${headline}
               .supportingText=${supportingText}
+              .multiLineHeadline=${multiLineHeadline}
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
@@ -130,6 +135,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}
+              .multiLineHeadline=${multiLineHeadline}
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
@@ -142,6 +148,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}
+              .multiLineHeadline=${multiLineHeadline}
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
@@ -156,6 +163,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}
+              .multiLineHeadline=${multiLineHeadline}
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
@@ -168,6 +176,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}
+              .multiLineHeadline=${multiLineHeadline}
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}

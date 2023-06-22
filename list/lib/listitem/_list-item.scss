@@ -181,6 +181,12 @@
     }
   }
 
+  .label-text--multi-line {
+    text-overflow: unset;
+    overflow-x: unset;
+    white-space: normal;
+  }
+
   .supporting-text {
     text-overflow: ellipsis;
     white-space: normal;

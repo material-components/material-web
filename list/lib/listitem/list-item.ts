@@ -42,6 +42,11 @@ export class ListItemEl extends LitElement implements ListItem {
   @property() headline = '';
 
   /**
+   * Modifies `headline` to support multiple lines.
+   */
+  @property({type: Boolean}) multiLineHeadline = false;
+
+  /**
    * The one-line supporting text below the headline. Set
    * `multiLineSupportingText` to `true` to support multiple lines in the
    * supporting text.
@@ -191,7 +196,14 @@ export class ListItemEl extends LitElement implements ListItem {
         this.supportingText !== '' ? this.renderSupportingText() : '';
 
     return html`<div class="body"
-      ><span class="label-text">${this.headline}</span>${supportingText}</div>`;
+      ><span class="label-text ${classMap(this.getLabelClasses())}">${this.headline}</span>${supportingText}</div>`;
+  }
+
+  /**
+   * Gets the classes for the label node
+   */
+  protected getLabelClasses() {
+    return {'label-text--multi-line': this.multiLineHeadline};
   }
 
   /**
