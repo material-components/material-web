@@ -28,8 +28,8 @@ export class SegmentedButton extends LitElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) selected = false;
   @property() label = '';
-  @property({type: Boolean}) noCheckmark = false;
-  @property({type: Boolean}) hasIcon = false;
+  @property({type: Boolean, attribute: 'no-checkmark'}) noCheckmark = false;
+  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
 
   @state() private animState = '';
   @queryAssignedElements({slot: 'icon', flatten: true})

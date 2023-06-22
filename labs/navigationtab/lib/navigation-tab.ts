@@ -27,10 +27,11 @@ export class NavigationTab extends LitElement implements NavigationTabState {
 
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean, reflect: true}) active = false;
-  @property({type: Boolean}) hideInactiveLabel = false;
+  @property({type: Boolean, attribute: 'hide-inactive-label'})
+  hideInactiveLabel = false;
   @property() label?: string;
-  @property() badgeValue = '';
-  @property({type: Boolean}) showBadge = false;
+  @property({attribute: 'badge-value'}) badgeValue = '';
+  @property({type: Boolean, attribute: 'show-badge'}) showBadge = false;
 
   @query('button') buttonElement!: HTMLElement|null;
 
