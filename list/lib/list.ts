@@ -51,7 +51,7 @@ export class List extends LitElement {
   /**
    * The tabindex of the underlying list.
    */
-  @property({type: Number}) listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
 
   @query('.md3-list') listRoot!: HTMLElement|null;
 

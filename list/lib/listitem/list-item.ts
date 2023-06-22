@@ -46,18 +46,20 @@ export class ListItemEl extends LitElement implements ListItem {
    * `multiLineSupportingText` to `true` to support multiple lines in the
    * supporting text.
    */
-  @property() supportingText = '';
+  @property({attribute: 'supporting-text'}) supportingText = '';
 
   /**
    * Modifies `supportingText` to support multiple lines.
    */
-  @property({type: Boolean}) multiLineSupportingText = false;
+  @property({type: Boolean, attribute: 'multi-line-supporting-text'})
+  multiLineSupportingText = false;
 
   /**
    * The supporting text placed at the end of the item. Overridden by elements
    * slotted into the `end` slot.
    */
-  @property() trailingSupportingText = '';
+  @property({attribute: 'trailing-supporting-text'})
+  trailingSupportingText = '';
 
   /**
    * Disables the item and makes it non-selectable and non-interactive.
@@ -70,7 +72,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * __NOTE:__ this is overridden by the keyboard behavior of `md-list` and by
    * setting `selected`.
    */
-  @property({type: Number}) itemTabIndex = -1;
+  @property({type: Number, attribute: 'item-tabindex'}) itemTabIndex = -1;
 
   /**
    * Whether or not the element is actively being interacted with by md-list.
