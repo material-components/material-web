@@ -10,6 +10,11 @@ import type {Theme} from '../types/color-events.js';
 
 import {applyThemeString} from './apply-theme-string.js';
 
+interface WithTint {
+  surfaceTint: typeof MaterialDynamicColors.background;
+  surfaceTintColor: typeof MaterialDynamicColors.background;
+}
+
 /**
  * A Mapping of color token name to MCU HCT color function generator.
  */
@@ -33,7 +38,9 @@ const materialColors = {
   'outline-variant': MaterialDynamicColors.outlineVariant,
   shadow: MaterialDynamicColors.shadow,
   scrim: MaterialDynamicColors.scrim,
-  'surface-tint': MaterialDynamicColors.surfaceTint,
+  // TODO(b/288481318): clean up once MCU 0.2.7 is published on NPM.
+  'surface-tint': (MaterialDynamicColors as unknown as WithTint).surfaceTint ||
+      (MaterialDynamicColors as unknown as WithTint).surfaceTintColor,
   primary: MaterialDynamicColors.primary,
   'on-primary': MaterialDynamicColors.onPrimary,
   'primary-container': MaterialDynamicColors.primaryContainer,
