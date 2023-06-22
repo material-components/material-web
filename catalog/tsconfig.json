@@ -12,7 +12,8 @@
     "useDefineForClassFields": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": []
   },
   "include": ["src/**/*", "stories/*", "stories/components"],
   "exclude": []
