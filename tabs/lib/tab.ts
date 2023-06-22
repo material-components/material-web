@@ -70,7 +70,7 @@ export class Tab extends LitElement {
   /**
    * Whether or not the icon renders inline with label or stacked vertically.
    */
-  @property({type: Boolean}) inlineIcon = false;
+  @property({type: Boolean, attribute: 'inline-icon'}) inlineIcon = false;
 
   @query('.button') private readonly button!: HTMLElement|null;
 

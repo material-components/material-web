@@ -66,7 +66,8 @@ export class Tabs extends LitElement {
   /**
    * Whether or not to select an item when focused.
    */
-  @property({type: Boolean}) selectOnFocus = false;
+  @property({type: Boolean, attribute: 'select-on-focus'})
+  selectOnFocus = false;
 
   private previousSelected = -1;
   private orientation = 'horizontal';
