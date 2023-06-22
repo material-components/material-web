@@ -122,7 +122,7 @@ export abstract class Menu extends LitElement {
   /**
    * The tabindex of the underlying list element.
    */
-  @property({type: Number, attribute: 'list-tab-index'}) listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
   /**
    * The role of the underlying list element.
    */
@@ -132,7 +132,7 @@ export abstract class Menu extends LitElement {
    * it clears the typeahead buffer.
    */
   @property({type: Number, attribute: 'typeahead-delay'})
-  typeaheadBufferTime = DEFAULT_TYPEAHEAD_BUFFER_TIME;
+  typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
   /**
    * The corner of the anchor which to align the menu in the standard logical
    * property style of <block>_<inline>.
@@ -195,7 +195,7 @@ export abstract class Menu extends LitElement {
   typeaheadController = new TypeaheadController(() => {
     return {
       getItems: () => this.items,
-      typeaheadBufferTime: this.typeaheadBufferTime,
+      typeaheadBufferTime: this.typeaheadDelay,
       active: this.typeaheadActive
     };
   });

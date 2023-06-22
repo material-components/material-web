@@ -85,7 +85,7 @@ const collection =
         defaultValue: 0,
         ui: numberInput(),
       }),
-      new Knob('typeaheadBufferTime', {
+      new Knob('typeaheadDelay', {
         defaultValue: 200,
         ui: numberInput(),
       }),

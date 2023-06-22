@@ -286,7 +286,7 @@ export abstract class Select extends LitElement {
           .open=${this.open}
           .quick=${this.quick}
           .fixed=${this.menuFixed}
-          .typeaheadBufferTime=${this.typeaheadDelay}
+          .typeaheadDelay=${this.typeaheadDelay}
           @opening=${this.handleOpening}
           @closing=${this.handleClosing}
           @close-menu=${this.handleCloseMenu}

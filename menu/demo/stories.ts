@@ -34,7 +34,7 @@ export interface StoryKnobs {
   skipRestoreFocus: boolean;
   xOffset: number;
   yOffset: number;
-  typeaheadBufferTime: number;
+  typeaheadDelay: number;
   listTabIndex: number;
   ariaLabel: string;
 
@@ -227,7 +227,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
             .fixed=${knobs.fixed}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
-            .typeaheadBufferTime=${knobs.typeaheadBufferTime}
+            .typeaheadDelay=${knobs.typeaheadDelay}
             .stayOpenOnOutsideClick=${knobs.stayOpenOnOutsideClick}
             .stayOpenOnFocusout=${knobs.stayOpenOnFocusout}
             @close-menu=${displayCloseEvent(fourthOutputRef)}>
@@ -303,7 +303,7 @@ function renderSubMenu(
         .yOffset=${knobs.yOffset}
         .fixed=${knobs.fixed}
         .defaultFocus=${knobs.defaultFocus!}
-        .typeaheadBufferTime=${knobs.typeaheadBufferTime}>
+        .typeaheadDelay=${knobs.typeaheadDelay}>
       ${content}
       ${renderLinkableItems(['Link'], knobs)}
     </md-menu>`;
@@ -329,7 +329,7 @@ function renderMenu(
         .fixed=${knobs.fixed}
         .defaultFocus=${knobs.defaultFocus!}
         .skipRestoreFocus=${knobs.skipRestoreFocus}
-        .typeaheadBufferTime=${knobs.typeaheadBufferTime}
+        .typeaheadDelay=${knobs.typeaheadDelay}
         .stayOpenOnOutsideClick=${knobs.stayOpenOnOutsideClick}
         .stayOpenOnFocusout=${knobs.stayOpenOnFocusout}
         @close-menu=${onClose}>
