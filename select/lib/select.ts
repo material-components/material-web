@@ -48,7 +48,7 @@ export abstract class Select extends LitElement {
    * Calling `reportValidity()` will automatically update `errorText` to the
    * native `validationMessage`.
    */
-  @property({type: String}) errorText = '';
+  @property({type: String, attribute: 'error-text'}) errorText = '';
   /**
    * The floating label for the field.
    */
@@ -57,7 +57,7 @@ export abstract class Select extends LitElement {
    * Conveys additional information below the text field, such as how it should
    * be used.
    */
-  @property({type: String}) supportingText = '';
+  @property({type: String, attribute: 'supporting-text'}) supportingText = '';
   /**
    * Gets or sets whether or not the text field is in a visually invalid state.
    *
@@ -68,24 +68,27 @@ export abstract class Select extends LitElement {
    * Whether or not the underlying md-menu should be position: fixed to display
    * in a top-level manner.
    */
-  @property({type: Boolean}) menuFixed = false;
+  @property({type: Boolean, attribute: 'menu-fixed'}) menuFixed = false;
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
    * before it clears the typeahead buffer.
    */
-  @property({type: Number}) typeaheadBufferTime = DEFAULT_TYPEAHEAD_BUFFER_TIME;
+  @property({type: Number, attribute: 'typeahead-delay'})
+  typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
-  @property({type: Boolean}) hasLeadingIcon = false;
+  @property({type: Boolean, attribute: 'has-leading-icon'})
+  hasLeadingIcon = false;
   /**
    * Whether or not the text field has a trailing icon. Used for SSR.
    */
-  @property({type: Boolean}) hasTrailingIcon = false;
+  @property({type: Boolean, attribute: 'has-trailing-icon'})
+  hasTrailingIcon = false;
   /**
    * Text to display in the field. Only set for SSR.
    */
-  @property() displayText = '';
+  @property({attribute: 'display-text'}) displayText = '';
   /**
    * When set to true, the error text's `role="alert"` will be removed, then
    * re-added after an animation frame. This will re-announce an error message
@@ -131,7 +134,7 @@ export abstract class Select extends LitElement {
    * rather than setting `selectedIndex` setting `selectedIndex` will incur a
    * DOM query.
    */
-  @property({type: Number})
+  @property({type: Number, attribute: 'selected-index'})
   get selectedIndex(): number {
     // tslint:disable-next-line:enforce-name-casing
     const [_option, index] = (this.getSelectedOptions() ?? [])[0] ?? [];
@@ -283,7 +286,7 @@ export abstract class Select extends LitElement {
           .open=${this.open}
           .quick=${this.quick}
           .fixed=${this.menuFixed}
-          .typeaheadBufferTime=${this.typeaheadBufferTime}
+          .typeaheadBufferTime=${this.typeaheadDelay}
           @opening=${this.handleOpening}
           @closing=${this.handleClosing}
           @close-menu=${this.handleCloseMenu}

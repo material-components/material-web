@@ -16,7 +16,7 @@ import {html, nothing} from 'lit';
 export interface StoryKnobs {
   'md-select': void;
   label: string;
-  typeaheadBufferTime: number;
+  typeaheadDelay: number;
   quick: boolean;
   required: boolean;
   disabled: boolean;
@@ -42,7 +42,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
           .menuFixed=${knobs.menuFixed}
-          .typeaheadBufferTime=${knobs.typeaheadBufferTime}
+          .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>
         ${renderIcon(knobs['slot=leadingicon'], 'leadingicon')}
         ${renderIcon(knobs['slot=trailingicon'], 'trailingicon')}
@@ -64,7 +64,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
           .menuFixed=${knobs.menuFixed}
-          .typeaheadBufferTime=${knobs.typeaheadBufferTime}
+          .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>
         ${renderIcon(knobs['slot=leadingicon'], 'leadingicon')}
         ${renderIcon(knobs['slot=trailingicon'], 'trailingicon')}

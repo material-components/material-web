@@ -16,7 +16,7 @@ const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Select', [
       new Knob('md-select', {ui: title()}),
       new Knob('label', {ui: textInput(), defaultValue: ''}),
-      new Knob('typeaheadBufferTime', {ui: numberInput(), defaultValue: 200}),
+      new Knob('typeaheadDelay', {ui: numberInput(), defaultValue: 200}),
       new Knob('quick', {ui: boolInput(), defaultValue: false}),
       new Knob('required', {ui: boolInput(), defaultValue: false}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
