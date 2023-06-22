@@ -50,7 +50,7 @@ export class SelectHarness extends Harness<Select> {
       console.warn(
           'Internal menu is not open. Try calling SelectHarness.prototype.click()');
     }
-    this.getItems()[index].element.click();
+    (await this.getItems()[index].getInteractiveElement()).click();
   }
 }
 
