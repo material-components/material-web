@@ -37,7 +37,7 @@ const elevated: MaterialStoryInit<StoryKnobs> = {
         aria-label=${ariaLabelMsg('elevated', linkLabel)}
         href="https://google.com"
         target="_blank"
-        trailingicon
+        trailing-icon
       >
         ${linkLabel}
         <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
@@ -63,7 +63,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
         aria-label=${ariaLabelMsg('filled', linkLabel)}
         href="https://google.com"
         target="_blank"
-        trailingicon
+        trailing-icon
       >
         ${linkLabel}
         <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
@@ -89,7 +89,7 @@ const tonal: MaterialStoryInit<StoryKnobs> = {
         aria-label=${ariaLabelMsg('tonal', linkLabel)}
         href="https://google.com"
         target="_blank"
-        trailingicon
+        trailing-icon
       >
         ${linkLabel}
         <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
@@ -115,7 +115,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
         aria-label=${ariaLabelMsg('outlined', linkLabel)}
         href="https://google.com"
         target="_blank"
-        trailingicon
+        trailing-icon
       >
         ${linkLabel}
         <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
@@ -141,7 +141,7 @@ const text: MaterialStoryInit<StoryKnobs> = {
         aria-label=${ariaLabelMsg('text', linkLabel)}
         href="https://google.com"
         target="_blank"
-        trailingicon
+        trailing-icon
       >
         ${linkLabel}
         <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>

@@ -55,12 +55,12 @@ export abstract class Button extends LitElement {
    *
    * _Note:_ Link buttons cannot have trailing icons.
    */
-  @property({type: Boolean, attribute: 'trailingicon'}) trailingIcon = false;
+  @property({type: Boolean, attribute: 'trailing-icon'}) trailingIcon = false;
 
   /**
    * Whether to display the icon or not.
    */
-  @property({type: Boolean}) hasIcon = false;
+  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
 
   /**
    * Whether `preventDefault()` should be called on the underlying button.
