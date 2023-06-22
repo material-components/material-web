@@ -520,8 +520,8 @@ export abstract class TextField extends LitElement {
       ?disabled=${this.disabled}
       ?error=${this.hasError}
       ?focused=${this.focused}
-      ?hasEnd=${this.hasTrailingIcon}
-      ?hasStart=${this.hasLeadingIcon}
+      ?has-end=${this.hasTrailingIcon}
+      ?has-start=${this.hasLeadingIcon}
       .label=${this.label}
       ?populated=${!!this.value}
       ?required=${this.required}
