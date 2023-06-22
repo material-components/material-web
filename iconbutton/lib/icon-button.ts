@@ -32,7 +32,8 @@ export class IconButton extends LitElement {
   /**
    * Flips the icon if it is in an RTL context at startup.
    */
-  @property({type: Boolean}) flipIconInRtl = false;
+  @property({type: Boolean, attribute: 'flip-icon-in-rtl'})
+  flipIconInRtl = false;
 
   /**
    * Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
