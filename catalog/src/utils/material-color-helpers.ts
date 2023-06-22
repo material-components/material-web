@@ -33,7 +33,7 @@ const materialColors = {
   'outline-variant': MaterialDynamicColors.outlineVariant,
   shadow: MaterialDynamicColors.shadow,
   scrim: MaterialDynamicColors.scrim,
-  'surface-tint': MaterialDynamicColors.surfaceTintColor,
+  'surface-tint': MaterialDynamicColors.surfaceTint,
   primary: MaterialDynamicColors.primary,
   'on-primary': MaterialDynamicColors.onPrimary,
   'primary-container': MaterialDynamicColors.primaryContainer,
