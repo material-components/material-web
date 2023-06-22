@@ -52,7 +52,8 @@ export class Switch extends LitElement {
    * Shows only the selected icon, and not the deselected icon. If `true`,
    * overrides the behavior of the `icons` property.
    */
-  @property({type: Boolean}) showOnlySelectedIcon = false;
+  @property({type: Boolean, attribute: 'show-only-selected-icon'})
+  showOnlySelectedIcon = false;
 
   // Button
   @query('button') private readonly button!: HTMLButtonElement|null;
