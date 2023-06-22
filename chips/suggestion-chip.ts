@@ -9,6 +9,7 @@ import {customElement} from 'lit/decorators.js';
 import {styles as elevatedStyles} from './lib/elevated-styles.css.js';
 import {styles as sharedStyles} from './lib/shared-styles.css.js';
 import {SuggestionChip} from './lib/suggestion-chip.js';
+import {styles as forcedColorsStyles} from './lib/suggestion-forced-colors-styles.css.js';
 import {styles} from './lib/suggestion-styles.css.js';
 
 declare global {
@@ -25,5 +26,6 @@ declare global {
  */
 @customElement('md-suggestion-chip')
 export class MdSuggestionChip extends SuggestionChip {
-  static override styles = [sharedStyles, elevatedStyles, styles];
+  static override styles =
+      [sharedStyles, elevatedStyles, styles, forcedColorsStyles];
 }

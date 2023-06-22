@@ -63,4 +63,12 @@
   .selected:active .leading.icon {
     color: var(--_selected-pressed-leading-icon-color);
   }
+
+  @media (forced-colors: active) {
+    .selected:not(.elevated)::before {
+      // for forced-colors. Don't add it to elevated containers since elevation
+      // already have a border added.
+      border: 1px solid transparent;
+    }
+  }
 }

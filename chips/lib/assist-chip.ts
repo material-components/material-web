@@ -36,6 +36,7 @@ export class AssistChip extends Chip {
       // Link chips cannot be disabled
       disabled: !this.href && this.disabled,
       elevated: this.elevated,
+      link: !!this.href,
     };
   }
 

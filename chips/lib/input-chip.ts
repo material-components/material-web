@@ -58,6 +58,7 @@ export class InputChip extends MultiActionChip {
       avatar: this.avatar,
       // Link chips cannot be disabled
       disabled: !this.href && this.disabled,
+      link: !!this.href,
       selected: this.selected,
       'has-trailing': true,
     };

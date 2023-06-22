@@ -57,4 +57,18 @@
     background: var(--_elevated-disabled-container-color);
     opacity: var(--_elevated-disabled-container-opacity);
   }
+
+  @media (forced-colors: active) {
+    .elevated md-elevation {
+      border: 1px solid transparent;
+    }
+
+    .elevated.link md-elevation {
+      border-color: ActiveText;
+    }
+
+    .elevated.disabled md-elevation {
+      border-color: GrayText;
+    }
+  }
 }
