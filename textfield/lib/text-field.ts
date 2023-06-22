@@ -64,7 +64,7 @@ export abstract class TextField extends LitElement {
    * Calling `reportValidity()` will automatically update `errorText` to the
    * native `validationMessage`.
    */
-  @property() errorText = '';
+  @property({attribute: 'error-text'}) errorText = '';
   @property() label?: string;
   @property({type: Boolean, reflect: true}) required = false;
   /**
@@ -74,29 +74,31 @@ export abstract class TextField extends LitElement {
   /**
    * An optional prefix to display before the input value.
    */
-  @property() prefixText = '';
+  @property({attribute: 'prefix-text'}) prefixText = '';
   /**
    * An optional suffix to display after the input value.
    */
-  @property() suffixText = '';
+  @property({attribute: 'suffix-text'}) suffixText = '';
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
-  @property({type: Boolean}) hasLeadingIcon = false;
+  @property({type: Boolean, attribute: 'has-leading-icon'})
+  hasLeadingIcon = false;
   /**
    * Whether or not the text field has a trailing icon. Used for SSR.
    */
-  @property({type: Boolean}) hasTrailingIcon = false;
+  @property({type: Boolean, attribute: 'has-trailing-icon'})
+  hasTrailingIcon = false;
   /**
    * Conveys additional information below the text field, such as how it should
    * be used.
    */
-  @property() supportingText = '';
+  @property({attribute: 'supporting-text'}) supportingText = '';
   /**
    * Override the input text CSS `direction`. Useful for RTL languages that use
    * LTR notation for fractions.
    */
-  @property() textDirection = '';
+  @property({attribute: 'text-direction'}) textDirection = '';
 
   /**
    * The associated form element with which this element's value will submit.
