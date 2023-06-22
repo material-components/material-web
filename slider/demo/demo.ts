@@ -21,7 +21,7 @@ const collection =
       new Knob('min', {ui: numberInput(), defaultValue: 0}),
       new Knob('max', {ui: numberInput(), defaultValue: 100}),
       new Knob('step', {ui: numberInput(), defaultValue: 1}),
-      new Knob('tickmarks', {ui: boolInput(), defaultValue: false}),
+      new Knob('ticks', {ui: boolInput(), defaultValue: false}),
       new Knob('labeled', {ui: boolInput(), defaultValue: false}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
     ]);

@@ -72,19 +72,19 @@ export class Slider extends LitElement {
    * An optional label for the slider's value displayed when range is
    * false; if not set, the label is the value itself.
    */
-  @property() valueLabel?: string;
+  @property({attribute: 'value-label'}) valueLabel?: string;
 
   /**
    * An optional label for the slider's start value displayed when
    * range is true; if not set, the label is the valueStart itself.
    */
-  @property() valueStartLabel?: string;
+  @property({attribute: 'value-label-start'}) valueLabelStart?: string;
 
   /**
    * An optional label for the slider's end value displayed when
    * range is true; if not set, the label is the valueEnd itself.
    */
-  @property() valueEndLabel?: string;
+  @property({attribute: 'value-label-end'}) valueLabelEnd?: string;
 
   /**
    * Aria label for the slider's start value displayed when
@@ -106,7 +106,7 @@ export class Slider extends LitElement {
   /**
    * Whether or not to show tick marks.
    */
-  @property({type: Boolean}) tickmarks = false;
+  @property({type: Boolean}) ticks = false;
 
   /**
    * Whether or not to show a value label when activated.
@@ -308,8 +308,8 @@ export class Slider extends LitElement {
     const containerClasses = {ranged: this.range};
 
     // optional label values to show in place of the value.
-    const labelStart = this.valueStartLabel ?? String(this.renderValueStart);
-    const labelEnd = (this.range ? this.valueEndLabel : this.valueLabel) ??
+    const labelStart = this.valueLabelStart ?? String(this.renderValueStart);
+    const labelEnd = (this.range ? this.valueLabelEnd : this.valueLabel) ??
         String(this.renderValueEnd);
 
     const inputStartProps = {
@@ -360,7 +360,7 @@ export class Slider extends LitElement {
   }
 
   private renderTrack() {
-    const trackClasses = {'tickmarks': this.tickmarks};
+    const trackClasses = {'tickmarks': this.ticks};
     return html`<div class="track ${classMap(trackClasses)}"></div>`;
   }
 

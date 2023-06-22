@@ -19,7 +19,7 @@ export interface StoryKnobs {
   max: number;
   step: number;
   range: boolean;
-  tickmarks: boolean;
+  ticks: boolean;
   labeled: boolean;
   disabled: boolean;
 }
@@ -45,7 +45,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             .max=${knobs.max}
             .step=${knobs.step ?? 1}
             .range=${knobs.range}
-            .tickmarks=${knobs.tickmarks}
+            .ticks=${knobs.ticks}
             .labeled=${knobs.labeled ?? false}
             .disabled=${knobs.disabled ?? false}
         ></md-slider>
@@ -66,7 +66,7 @@ const multiValue: MaterialStoryInit<StoryKnobs> = {
           .min=${knobs.min}
           .max=${knobs.max}
           .step=${knobs.step ?? 1}
-          .tickmarks=${knobs.tickmarks}
+          .ticks=${knobs.ticks}
           .labeled=${knobs.labeled ?? true}
           .disabled=${knobs.disabled ?? false}
         ></md-slider>
@@ -124,8 +124,8 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
       const range = max - min;
       const fractionStart = valueStart! / range;
       const fractionEnd = valueEnd! / range;
-      target.valueStartLabel = labelFor(fractionStart);
-      target.valueEndLabel = labelFor(fractionEnd);
+      target.valueLabelStart = labelFor(fractionStart);
+      target.valueLabelEnd = labelFor(fractionEnd);
     }
     return html`
       <label>label
@@ -133,9 +133,9 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
           range
           .valueStart=${(knobs.valueStart)}
           .valueEnd=${(knobs.valueEnd)}
-          .valueStartLabel=${'😔'}
-          .valueEndLabel=${'😌'}
-          tickmarks
+          .valueLabelStart=${'😔'}
+          .valueLabelEnd=${'😌'}
+          ticks
           labeled
           .min=${knobs.min}
           .max=${knobs.max ?? 30}
