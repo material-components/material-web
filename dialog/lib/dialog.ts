@@ -87,13 +87,14 @@ export class Dialog extends LitElement {
    * By default, the dialog is shown fullscreen on screens less than 600px wide
    * or 400px tall.
    */
-  @property() fullscreenBreakpoint = '(max-width: 600px), (max-height: 400px)';
+  @property({attribute: 'fullscreen-breakpoint'})
+  fullscreenBreakpoint = '(max-width: 600px), (max-height: 400px)';
 
   /**
    * Hides the dialog footer, making any content slotted into the footer
    * inaccessible.
    */
-  @property({type: Boolean}) footerHidden = false;
+  @property({type: Boolean, attribute: 'footer-hidden'}) footerHidden = false;
 
   /**
    * Renders footer content in a vertically stacked alignment rather than the
@@ -111,23 +112,23 @@ export class Dialog extends LitElement {
    *
    * Defaults to `close`.
    */
-  @property() defaultAction = CLOSE_ACTION;
+  @property({attribute: 'default-action'}) defaultAction = CLOSE_ACTION;
 
   /**
    * The name of an attribute which can be placed on any element slotted into
    * the dialog. If an element has an action attribute set, clicking it will
    * close the dialog and the `closing` and `closed` events dispatched will
    * have their action property set the value of this attribute on the
-   * clicked element.The default valus is `dialogAction`. For example,
+   * clicked element.The default value is `dialog-action`. For example,
    *
    *   <md-dialog>
    *    Content
-   *     <md-filled-button slot="footer"dialogAction="buy">
+   *     <md-filled-button slot="footer" dialog-action="buy">
    *       Buy
    *     </md-filled-button>
    *   </md-dialog>
    */
-  @property() actionAttribute = 'dialogAction';
+  @property({attribute: 'action-attribute'}) actionAttribute = 'dialog-action';
 
   /**
    * When the dialog is opened, it will focus the first element which has
@@ -137,26 +138,26 @@ export class Dialog extends LitElement {
    *  <md-dialog>
    *    <md-filled-text-field
    *      label="Enter some text"
-   *      dialogFocus
+   *      dialog-focus
    *    >
    *    </md-filled-text-field>
    *  </md-dialog>
    */
-  @property() focusAttribute = 'dialogFocus';
+  @property({attribute: 'focus-attribute'}) focusAttribute = 'dialog-focus';
 
   /**
    * Clicking on the scrim surrounding the dialog closes the dialog.
    * The `closing` and `closed` events this produces have an `action` property
    * which is the value of this property and defaults to `close`.
    */
-  @property() scrimClickAction = CLOSE_ACTION;
+  @property({attribute: 'scrim-click-action'}) scrimClickAction = CLOSE_ACTION;
 
   /**
    * Pressing the `escape` key while the dialog is open closes the dialog.
    * The `closing` and `closed` events this produces have an `action` property
    * which is the value of this property and defaults to `close`.
    */
-  @property() escapeKeyAction = CLOSE_ACTION;
+  @property({attribute: 'escape-key-action'}) escapeKeyAction = CLOSE_ACTION;
 
   /**
    * When opened, the dialog is displayed modeless or non-modal. This

@@ -29,9 +29,9 @@ function getDialogTemplate(props?: DialogTestProps) {
         --md-dialog-closing-transition-duration: 0ms;
       ">
       <div class="content">Content
-        <input dialogFocus>
+        <input dialog-focus>
       </div>
-      <button slot="footer" dialogAction="button">Close</button>
+      <button slot="footer" dialog-action="button">Close</button>
     </md-dialog>`;
 }
 
@@ -60,7 +60,7 @@ describe('<md-dialog>', () => {
     const dialog = root.querySelector<MdDialog>('md-dialog')!;
     const harness = new DialogHarness(dialog);
     const contentElement = root.querySelector<HTMLElement>('.content')!;
-    const focusElement = root.querySelector<HTMLElement>('[dialogFocus]')!;
+    const focusElement = root.querySelector<HTMLElement>('[dialog-focus]')!;
     return {harness, root, contentElement, focusElement};
   }
 
@@ -163,7 +163,8 @@ describe('<md-dialog>', () => {
       const closedHandler = jasmine.createSpy('closedHandler');
       harness.element.addEventListener('closed', closedHandler);
       harness.element
-          .querySelector<HTMLButtonElement>('[dialogAction="button"]')!.click();
+          .querySelector<HTMLButtonElement>(
+              '[dialog-action="button"]')!.click();
       await harness.transitionComplete();
       expect(harness.element.open).toBeFalse();
       expect(closedHandler.calls.mostRecent().args[0].detail.action)
