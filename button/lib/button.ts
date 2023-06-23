@@ -63,13 +63,6 @@ export abstract class Button extends LitElement {
   @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
 
   /**
-   * Whether `preventDefault()` should be called on the underlying button.
-   * Useful for preventing certain native functionalities like preventing form
-   * submissions.
-   */
-  @property({type: Boolean}) preventClickDefault = false;
-
-  /**
    * Specifies the type of button, used for controlling forms. When type
    * is `submit`, the containing form is submitted; when it is `reset` the
    * form is reset.
@@ -189,9 +182,6 @@ export abstract class Button extends LitElement {
   private handleClick(e: MouseEvent) {
     if (this.isRedispatchingEvent) {
       return;
-    }
-    if (this.preventClickDefault) {
-      e.preventDefault();
     }
     // based on type, trigger form action.
     const {type, internals: {form}} = this;
