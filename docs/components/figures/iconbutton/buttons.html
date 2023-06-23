@@ -1,0 +1,66 @@
+<div class="figure-wrapper">
+  <figure
+      class="types-image"
+      style="justify-content:center;"
+      title="1 - Standard Icon Button. 2 - Contained Icon Button (including filled, filled tonal, and outlined styles)"
+      aria-label="Side by side view of standard and contained icon buttons">
+    <style>
+      .types-image .wrapper,
+      .types-image .wrapper > * {
+        display: flex;
+        padding: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .types-image .wrapper > * {
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 16px;
+      }
+      .types-image span {
+        display: inline-flex;
+        background-color: var(--md-sys-color-inverse-surface);
+        color: var(--md-sys-color-inverse-on-surface);
+        padding: 8px;
+        margin-block-start: 8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+      }
+      .types-image .wrapper > div > div {
+        display: flex;
+        gap: 8px;
+      }
+    </style>
+    <div class="wrapper">
+      <div>
+        <div>
+          <md-standard-icon-button>
+            <md-icon>favorite</md-icon>
+          </md-standard-icon-button>
+          <md-standard-icon-button toggle selected>
+            <md-icon slot="selectedIcon" class="filled">bookmark</md-icon>
+            <md-icon class="filled">bookmark</md-icon>
+          </md-standard-icon-button>
+        </div>
+        <span>1</span>
+      </div>
+      <div>
+        <div>
+          <md-filled-icon-button>
+            <md-icon>videocam</md-icon>
+          </md-filled-icon-button>
+          <md-filled-tonal-icon-button>
+            <md-icon>settings</md-icon>
+          </md-filled-tonal-icon-button>
+          <md-outlined-icon-button>
+            <md-icon>more_vert</md-icon>
+          </md-outlined-icon-button>
+        </div>
+        <span>2</span>
+      </div>
+    </div>
+  </figure>
+</div>
