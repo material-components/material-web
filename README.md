@@ -74,3 +74,20 @@ Snackbar          | ❌     | ❌    | ❌
 Time picker       | ❌     | ❌    | ❌
 Tooltip           | ❌     | ❌    | ❌
 Top app bar       | ❌     | ❌    | ❌
+
+## Browser support
+
+This project aims to support the latest two major versions of browsers at the
+time of each release.
+
+Current browsers and versions supported:
+
+Browser | Version
+------- | -------
+Chrome  | 112 +
+Edge    | 112 +
+Firefox | 113 +
+Safari* | 16.4 +
+
+*\* previous versions of Safari may be supported with an
+[`ElementInternals` polyfill](https://www.npmjs.com/package/element-internals-polyfill).*
