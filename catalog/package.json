@@ -22,7 +22,8 @@
     "build:dev": {
       "dependencies": [
         "build:dev:eleventy",
-        "build:dev:ts"
+        "build:dev:ts",
+        "build:type-check"
       ]
     },
     "build:dev:eleventy": {
@@ -66,12 +67,16 @@
       "clean": "if-file-deleted",
       "output": [
         "tsconfig.tsbuildinfo"
+      ],
+      "dependencies": [
+        "..:build"
       ]
     },
     "build:prod": {
       "dependencies": [
         "build:prod:eleventy",
-        "build:prod:ts"
+        "build:prod:ts",
+        "build:type-check"
       ]
     },
     "build:prod:eleventy": {

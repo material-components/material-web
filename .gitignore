@@ -21,3 +21,4 @@ catalog/site/components/images
 catalog/*.tsbuildinfo
 catalog/stories/*/
 !catalog/stories/components/
+!catalog/src/types/**/*.d.ts
