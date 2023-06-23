@@ -5,7 +5,7 @@
  */
 
 import {cp, readFile, writeFile} from 'fs/promises';
-import {join, relative} from 'path';
+import {dirname, join, relative} from 'path';
 import tinyGlob from 'tiny-glob';
 
 /**
@@ -65,6 +65,46 @@ const transforms = [
 ];
 
 /**
+ * Executes the `<!-- catalog-include "..." -->` file transform by fetching the
+ * file in quotes and simply injecting its contents into the Markdown.
+ *
+ * @param {string} filepath The filepath of the markdown file to transform. Used
+ *     for determining relative URLs.
+ * @param {string} fileContents The contents of the markdown filepath to
+ *     transform.
+ * @return The stringified transformed contents of the markdown file.
+ */
+async function fileIncludeTransform(filepath, fileContents) {
+  const catalogIncludeRegex = /<!--\s?catalog-include "(.+)"\s?-->/g;
+  const matches = [];
+  let match = catalogIncludeRegex.exec(fileContents);
+
+  // Collect all the regex matches
+  while (match) {
+    matches.push(match);
+    match = catalogIncludeRegex.exec(fileContents);
+  }
+
+  const fileDir = dirname(filepath);
+
+  // Iterate through the regex matches backward and splice in the file contents.
+  // Iterating backwards so that injecting won't affect match string indices.
+  for (let i = matches.length - 1; i >= 0; i--) {
+    const match = matches[i];
+    const matchedString = match[0];
+    const includePath = match[1];
+
+    console.log(`Injecting ${includePath} file contents into ${filepath}...`);
+    const includeContents = await readFile(join(fileDir, includePath), 'utf8');
+
+    fileContents = fileContents.slice(0, match.index) + includeContents +
+        fileContents.slice(match.index + matchedString.length);
+  }
+
+  return fileContents;
+}
+
+/**
  * Applies the transforms to readme files at the given filepaths and outputs the
  * result to /catalog/site/components/<component-name>.md
  *
@@ -78,6 +118,8 @@ async function transformReadmes(filepaths) {
     transforms.forEach((transform) => {
       readme = readme.replaceAll(transform.before, transform.after);
     });
+
+    readme = await fileIncludeTransform(entry, readme);
 
     // The `components/<component-name>.md` path.
     const localPath = relative(join('..', 'docs'), entry);
