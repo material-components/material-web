@@ -110,6 +110,8 @@
     max-inline-size: var(--_container-max-inline-size);
     padding-block-start: var(--_container-block-padding);
     padding-block-end: var(--_container-block-padding);
+
+    opacity: 0;
   }
 
   md-elevation {
@@ -192,7 +194,7 @@
   // Transitions for open/closed states
   .container {
     will-change: transform, opacity;
-    transition-property: transform;
+    transition-property: transform, opacity;
     overflow: hidden;
   }
 
