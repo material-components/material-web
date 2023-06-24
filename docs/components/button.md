@@ -268,7 +268,8 @@ separation from a patterned background.
 [Filled buttons](https://m3.material.io/components/buttons/guidelines#9ecffdb3-ef29-47e7-8d5d-f78b404fcafe)<!-- {.external} -->
 have the most visual impact after the FAB, and should be used for important,
 final actions that complete a flow, like Save, Join now, or Confirm.
-
+<!-- github-only-start -->
+![A filled button](images/button/usage-filled-button.png)
 <!-- github-only-end -->
 <!-- catalog-only-start -->
 
