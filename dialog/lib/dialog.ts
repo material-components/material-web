@@ -349,7 +349,11 @@ export class Dialog extends LitElement {
     }
     // Avoids dispatching initial state.
     const shouldDispatchAction = changed.get('open') !== undefined;
-    this.performTransition(shouldDispatchAction);
+
+    // Avoids performing unnecessary transition
+    if (changed.get('open') !== undefined && changed.get('open') !== this.open) {
+      this.performTransition(shouldDispatchAction);
+    }
   }
 
   /**
