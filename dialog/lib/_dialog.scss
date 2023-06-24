@@ -241,7 +241,7 @@
     transition-timing-function: var(--_closing-transition-easing);
   }
 
-  :host([trasition][closing]) .container > * {
+  :host([transition][closing]) .container > * {
     transform: none;
     opacity: 0;
   }
