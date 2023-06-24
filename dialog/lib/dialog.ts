@@ -393,7 +393,8 @@ export class Dialog extends LitElement {
     let promise = this.updateComplete;
     if (duration > 0) {
       promise = new Promise((r) => {
-        setTimeout(r, duration);
+        // setTimeout(r, duration);
+        this.containerElement.ontransitionend = () => r(null);
       });
     }
     await promise;
