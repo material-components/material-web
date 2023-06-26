@@ -144,6 +144,24 @@ Text Fields are used to collect user input. They typically appear in forms and d
 <md-filled-text-field label="Password"></md-filled-text-field>
 ```
 
+### Input types
+
+Text fields support a variety of input types, including text, password, `email`, `number`, `password`, `search`, `tel`, `text`, and `url`. The input type is specified with the `type` attribute.
+
+<!-- catalog-only-start -->
+
+```html
+<md-outlined-text-field label="Email" type="email"></md-outlined-text-field>
+<md-outlined-text-field label="Number" type="number"></md-outlined-text-field>
+<md-outlined-text-field label="Password" type="password"></md-outlined-text-field>
+<md-outlined-text-field label="Search" type="search"></md-outlined-text-field>
+<md-outlined-text-field label="Telephone" type="tel"></md-outlined-text-field>
+<md-outlined-text-field label="Text" type="text"></md-outlined-text-field>
+<md-outlined-text-field label="URL" type="url"></md-outlined-text-field>
+```
+
+
+
 ### Leading Icon
 
 A leading icon can be added to a text field to help users understand the type of input expected.
@@ -458,11 +476,11 @@ of color, typography, and shape.
 
 ### Outlined Text Field tokens
 
-| Token                                   | Default value                   |
-| --------------------------------------- | ------------------------------- |
-| `--md-outlined-text-field-container-shape`  | `4px`                        |
-| `--md-outlined-text-field-label-text-color`  | `--md-sys-color-on-surface-variant` |
-| `--md-outlined-text-field-outline-width`  | `1px` |
+| Token                                       | Default value                       |
+| ------------------------------------------- | ----------------------------------- |
+| `--md-outlined-text-field-container-shape`  | `4px`                               |
+| `--md-outlined-text-field-label-text-color` | `--md-sys-color-on-surface-variant` |
+| `--md-outlined-text-field-outline-width`    | `1px`                               |
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-outlined-text-field.scss)
     <!-- {.external} -->
@@ -510,15 +528,15 @@ of color, typography, and shape.
 
 ### Filled Text Field tokens
 
-| Token                                   | Default value                   |
-| --------------------------------------- | ------------------------------- |
-| `--md-outlined-text-field-container-shape-start-start`  | `4px`|
-| `--md-outlined-text-field-container-shape-start-end`  | `4px`|
-| `--md-outlined-text-field-container-shape-end-start`  | `0px`|
-| `--md-outlined-text-field-container-shape-end-end`  | `0px`|
-| `--md-outlined-text-field-container-color`  | `--md-sys-color-surface-container-highest` |
-| `--md-outlined-text-field-label-text-color`  | `--md-sys-color-on-surface-variant` |
-| `--md-outlined-text-field-outline-width`  | `1px` |
+| Token                                                  | Default value                              |
+| ------------------------------------------------------ | ------------------------------------------ |
+| `--md-outlined-text-field-container-shape-start-start` | `4px`                                      |
+| `--md-outlined-text-field-container-shape-start-end`   | `4px`                                      |
+| `--md-outlined-text-field-container-shape-end-start`   | `0px`                                      |
+| `--md-outlined-text-field-container-shape-end-end`     | `0px`                                      |
+| `--md-outlined-text-field-container-color`             | `--md-sys-color-surface-container-highest` |
+| `--md-outlined-text-field-label-text-color`            | `--md-sys-color-on-surface-variant`        |
+| `--md-outlined-text-field-outline-width`               | `1px`                                      |
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-text-field.scss)
     <!-- {.external} -->
 
