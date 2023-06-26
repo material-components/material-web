@@ -213,4 +213,40 @@ describe('<md-branded-fab>', () => {
       expect(button.classList.contains('large')).toBeFalse();
     });
   });
+
+  describe('accessibility', () => {
+    it('sets aria-hidden on the icon slot when aria-label is set', async () => {
+      const {button, harness} = await setupTest();
+      await env.waitForStability();
+
+      const iconSlot = button.querySelector('slot[name="icon"]')!;
+
+      expect(button.hasAttribute('aria-label')).toBeFalse();
+      expect(iconSlot.hasAttribute('aria-hidden')).toBeFalse();
+
+      const element = harness.element;
+      element.ariaLabel = 'foo';
+      await env.waitForStability();
+
+      expect(button.hasAttribute('aria-label')).toBeTrue();
+      expect(iconSlot.getAttribute('aria-hidden')).toEqual('true');
+    });
+
+    it('sets aria-hidden on the icon slot when label is set', async () => {
+      const {button, harness} = await setupTest();
+      await env.waitForStability();
+      const element = harness.element;
+
+      const iconSlot = button.querySelector('slot[name="icon"]')!;
+
+      expect(!!element.label).toBeFalse();
+      expect(iconSlot.hasAttribute('aria-hidden')).toBeFalse();
+
+      element.label = 'foo';
+      await env.waitForStability();
+
+      expect(!!element.label).toBeTrue();
+      expect(iconSlot.getAttribute('aria-hidden')).toEqual('true');
+    });
+  });
 });
