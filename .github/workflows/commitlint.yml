@@ -1,17 +1,1 @@
-name: commitlint
 
-on: [pull_request]
-
-jobs:
-  commitlint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - run: npm install -g commitlint @commitlint/config-conventional
-      - run: 'echo "${PR_TITLE}" | commitlint -x @commitlint/config-conventional'
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
