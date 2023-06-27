@@ -10,6 +10,7 @@ import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {redispatchEvent} from '../../internal/controller/events.js';
 import {createThrottle, msFromTimeCSSValue} from '../../internal/motion/animation.js';
 
 // This is required for decorators.
@@ -25,6 +26,12 @@ const CLOSING_TRANSITION_PROP = '--_closing-transition-duration';
 
 /**
  * A dialog component.
+ * 
+ * @fires opening Dispatched when the dialog is opening before any animations.
+ * @fires opened Dispatched when the dialog has opened after any animations.
+ * @fires closing Dispatched when the dialog is closing before any animations.
+ * @fires closed Dispatched when the dialog has closed after any animations.
+ * @fires cancel The native HTMLDialogElement cancel event.
  */
 export class Dialog extends LitElement {
   private static preventedScrollingCount = 0;
@@ -472,6 +479,7 @@ export class Dialog extends LitElement {
     this.open = false;
     this.opening = false;
     this.closing = false;
+    redispatchEvent(this, e);
   }
 
   private handleDialogClick(e: Event) {
