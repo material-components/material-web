@@ -1,6 +1,6 @@
 {
   "name": "@material/web",
-  "version": "1.0.0-pre.11",
+  "version": "1.0.0-pre.12",
   "publishConfig": {
     "access": "public"
   },
