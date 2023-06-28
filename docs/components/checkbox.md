@@ -163,7 +163,7 @@ Token                                    | Default value
 `--md-checkbox-selected-icon-color`      | `--md-sys-color-on-primary`
 `--md-checkbox-container-shape`          | `2px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/v0_160/_md-comp-checkbox.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-checkbox.scss)
     <!-- {.external} -->
 
 ### Example

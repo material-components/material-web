@@ -104,8 +104,14 @@ export abstract class SharedFab extends LitElement {
   }
 
   private renderIcon() {
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`<span class="icon">
-        <slot name="icon" @slotchange=${this.onSlotchange}></slot>
+        <slot
+            name="icon"
+            aria-hidden=${
+        ariaLabel || this.label ? 'true' : nothing as unknown as 'false'}
+            @slotchange=${this.onSlotchange}>
+        </slot>
       </span>`;
   }
 
