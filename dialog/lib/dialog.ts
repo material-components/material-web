@@ -348,7 +348,7 @@ export class Dialog extends LitElement {
       }
     }
     // Avoids dispatching initial closed state
-	 // and performing an unnecessary transition.
+    // and performing an unnecessary transition.
     const shouldTransition =
       !(changed.get('open') === undefined && this.open === false) &&
       changed.get('open') !== this.open;
