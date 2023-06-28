@@ -194,7 +194,9 @@
   // Transitions for open/closed states
   .container {
     will-change: transform, opacity;
+    // TODO: make opacity fade out content and container separately
     transition-property: transform, opacity;
+    transition-timing-function: var(--_closing-transition-easing), linear;
     overflow: hidden;
   }
 

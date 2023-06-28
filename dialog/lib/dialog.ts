@@ -347,12 +347,14 @@ export class Dialog extends LitElement {
         this.dialogElement!.showModal();
       }
     }
-    // Avoids dispatching initial state.
-    const shouldDispatchAction = changed.get('open') !== undefined;
+    // Avoids dispatching initial closed state
+	 // and performing an unnecessary transition.
+    const shouldTransition =
+      !(changed.get('open') === undefined && this.open === false) &&
+      changed.get('open') !== this.open;
 
-    // Avoids performing unnecessary transition
-    if (changed.get('open') !== undefined && changed.get('open') !== this.open) {
-      this.performTransition(shouldDispatchAction);
+    if (shouldTransition) {
+      this.performTransition();
     }
   }
 
@@ -380,21 +382,20 @@ export class Dialog extends LitElement {
 
   private dialogClosedResolver?: () => void;
 
-  private async performTransition(shouldDispatchAction: boolean) {
+  private async performTransition(/*shouldDispatchAction: boolean*/) {
     // TODO: pause here only to avoid a double update warning.
     await this.updateComplete;
     this.showingOpen = this.open;
-    if (shouldDispatchAction) {
+   //  if (shouldDispatchAction) {
       this.dispatchActionEvent(this.open ? 'opening' : 'closing');
-    }
+   //  }
     // Compute desired transition duration.
     const duration = msFromTimeCSSValue(getComputedStyle(this).getPropertyValue(
         this.open ? OPENING_TRANSITION_PROP : CLOSING_TRANSITION_PROP));
     let promise = this.updateComplete;
     if (duration > 0) {
       promise = new Promise((r) => {
-        // setTimeout(r, duration);
-        this.containerElement.ontransitionend = () => r(null);
+        setTimeout(r, duration);
       });
     }
     await promise;
@@ -424,9 +425,9 @@ export class Dialog extends LitElement {
     if (this.open) {
       this.focus();
     }
-    if (shouldDispatchAction) {
+   //  if (shouldDispatchAction) {
       this.dispatchActionEvent(this.open ? 'opened' : 'closed');
-    }
+   //  }
     this.currentAction = undefined;
   }
 
