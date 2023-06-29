@@ -5,8 +5,8 @@ dirname: textfield
 ----->
 <!-- catalog-only-end -->
 
-<catalog-component-header>
-<catalog-component-header-title slot="title">
+<!-- <catalog-component-header>
+<catalog-component-header-title slot="title"> -->
 
 # Text Fields
 
