@@ -146,7 +146,8 @@
       "command": "node scripts/copy-stories.mjs",
       "files": [
         "scripts/copy-stories.mjs",
-        "../*/demo"
+        "../*/demo",
+        "!../node_modules"
       ],
       "output": [
         "stories/*/**/*",
