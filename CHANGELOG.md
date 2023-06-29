@@ -1,5 +1,61 @@
 # Changelog
 
+## [1.0.0-pre.12](https://github.com/material-components/material-web/compare/v1.0.0-pre.11...v1.0.0-pre.12) (2023-06-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **button:** remove unnecessary property preventClickDefault
+* **slider:** change compound attribute names to kebab-case
+* **iconbutton:** rename attribute flipiconinrtl to flip-icon-in-rtl
+* **menu:** rename typeaheadBufferDelay and list-tab-index for consistency
+* **select:** change compound attribute names to kebab-case
+* **dialog:** change compound attribute names to kebab-case
+* **list:** change compound attribute names to kebab-case
+* **field:** change compound attribute names to kebab-case
+* **button:** normalize compound properties to have kebab-cased attributes
+* **textfield:** compound properties should have kebab-case attributes
+* **tabs:** change compound attribute names to kebab case
+* **switch:** change showonlyselectedicon to show-only-selected-icon
+
+### Features
+
+* **chips:** add high contrast support ([950cd4f](https://github.com/material-components/material-web/commit/950cd4ffc3efcb3a9e4a0d0c16ea97324d8ac69f))
+* **dialog:** redispatch the native cancel event ([826262f](https://github.com/material-components/material-web/commit/826262fb727c65f787a913ae41adb8c0612af542)), closes [#1583](https://github.com/material-components/material-web/issues/1583)
+* **fab:** add label only mode ([0fd4f45](https://github.com/material-components/material-web/commit/0fd4f45241cb67ae96e994b655ec95a9f022368a))
+* **fab:** set aria hidden on the icon slot if element has aria-label or label ([fb4d9c8](https://github.com/material-components/material-web/commit/fb4d9c8008e863f48feea91ef1f5b4c3c004dc3c))
+* **list,menu:** expose activate next and prev items ([30937ac](https://github.com/material-components/material-web/commit/30937acd18cba9376ea2745b6dfc4099ddbaeae3))
+
+
+### Bug Fixes
+
+* **button:** normalize compound properties to have kebab-cased attributes ([1a6fc29](https://github.com/material-components/material-web/commit/1a6fc291745f827dd055c9ac84ec432b09bcc071))
+* **button:** remove unnecessary property preventClickDefault ([9244524](https://github.com/material-components/material-web/commit/9244524471093a9727750a964d1ad1436737d22f))
+* **chips:** incorrect input leading icon color ([b13271b](https://github.com/material-components/material-web/commit/b13271b785224408173e0361bb91c929cab11e41))
+* **chips:** incorrect rtl up/down behavior and add unit tests ([2cd235d](https://github.com/material-components/material-web/commit/2cd235dcb4e65fb593197aaf43b839cb326a2524))
+* **dialog:** change compound attribute names to kebab-case ([82d17ca](https://github.com/material-components/material-web/commit/82d17ca172f009599f6863e9109bb7cbb0d68be5))
+* **dialog:** focus before animation to fix a11y ([61e5e87](https://github.com/material-components/material-web/commit/61e5e87106d09fd43ae82828f6645e0444ae1b10))
+* **field:** change compound attribute names to kebab-case ([2937aef](https://github.com/material-components/material-web/commit/2937aefa23c8b050b5c9f66b9b29432dae87be09))
+* **iconbutton:** rename attribute flipiconinrtl to flip-icon-in-rtl ([a5e4354](https://github.com/material-components/material-web/commit/a5e4354ed64e646b24b2f1a0ea1fe36807ae490a))
+* **labs:** compound properties should have kebab-case attributes ([28f897b](https://github.com/material-components/material-web/commit/28f897b5ea2d9a49d9754cd34d56720f79770bfc))
+* **list:** change compound attribute names to kebab-case ([0e3fe72](https://github.com/material-components/material-web/commit/0e3fe72f8f69413085170291e1f4a50607e3b5ca))
+* **menu:** close menu when escape is pressed on list root ([d5035db](https://github.com/material-components/material-web/commit/d5035db0c42d3e80f4ac61710109059a469d4666))
+* **menu:** rename typeaheadBufferDelay and list-tab-index for consistency ([3f22ed0](https://github.com/material-components/material-web/commit/3f22ed039120b39563d2566e0442f45867312151))
+* **repo:** remove "." from workspace config ([d436c8f](https://github.com/material-components/material-web/commit/d436c8fe5e31494654e2875215b7c0e52ae0ee91))
+* **select:** change compound attribute names to kebab-case ([224a73b](https://github.com/material-components/material-web/commit/224a73b0387160c9810899d55f647e8b1da9fc48))
+* **select:** fixed menu select not 100% window width ([a968759](https://github.com/material-components/material-web/commit/a968759b2747404ef0625f2c6d34e36899a599f9))
+* **slider:** change compound attribute names to kebab-case ([83d9ede](https://github.com/material-components/material-web/commit/83d9edea79c08fb068f04fe6410273e12ae26387))
+* **switch:** change showonlyselectedicon to show-only-selected-icon ([a8e489e](https://github.com/material-components/material-web/commit/a8e489e2d8c26cd35849b3f5d94ff7f58ea7016f))
+* **tabs:** change compound attribute names to kebab case ([a9d030a](https://github.com/material-components/material-web/commit/a9d030ad4252d3a14738b24a60eec060824b4d1c))
+* **textfield:** compound properties should have kebab-case attributes ([34dfcb4](https://github.com/material-components/material-web/commit/34dfcb4db1657db0fc13f23a5014fef234795a46))
+* wireit sass watch memory leak ([8b1507e](https://github.com/material-components/material-web/commit/8b1507e0b73298b02a8ce6d2023d8a82d305d25d))
+
+
+### Miscellaneous Chores
+
+* update next version ([399fa07](https://github.com/material-components/material-web/commit/399fa07eacc80678d522896cdc7161dffbe4e214))
+* update next version ([7dd2f3d](https://github.com/material-components/material-web/commit/7dd2f3d91ca548b2f5819c4b02fe24aded147a1b))
+
 ## [1.0.0-pre.11](https://github.com/material-components/material-web/compare/v1.0.0-pre.10...v1.0.0-pre.11) (2023-06-16)
 
 
