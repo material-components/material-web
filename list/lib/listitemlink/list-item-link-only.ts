@@ -27,4 +27,8 @@ export class ListItemLinkOnly extends ListItemLink {
   override renderRipple() {
     return this.noninteractive ? nothing : super.renderRipple();
   }
+
+  override renderFocusRing() {
+    return this.noninteractive ? nothing : super.renderFocusRing();
+  }
 }

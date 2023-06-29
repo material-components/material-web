@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {LitElement} from 'lit';
+
 import {FieldHarness} from '../field/harness.js';
 import {Field} from '../field/lib/field.js';
 import {Harness} from '../testing/harness.js';
@@ -28,13 +30,15 @@ export class SelectHarness extends Harness<Select> {
 
   override async startHover() {
     const field = await this.getField();
-    const element = await (new SelectFieldHardness(field)).getInteractiveElement();
+    const element =
+        await (new SelectFieldHardness(field)).getInteractiveElement();
     this.simulateStartHover(element);
   }
 
   /** @return ListItem harnesses for the menu's items. */
   getItems() {
-    return this.element.options.map((item) => new SelectOptionHarness(item));
+    return this.element.options.map(
+        (item) => new SelectOptionHarness(item as typeof item&LitElement));
   }
 
   async click(quick = true) {
