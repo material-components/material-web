@@ -101,8 +101,7 @@
     "build:sass": {
       "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
       "files": [
-        "**/*.scss",
-        "!catalog"
+        "**/*.scss"
       ],
       "output": [
         "**/*.css",
