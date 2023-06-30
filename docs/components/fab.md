@@ -16,18 +16,10 @@ tag: 'docType:reference'
 
 <!-- go/md-fab -->
 <!-- [TOC] -->
-<!-- github-only-start -->
-
-TODO: update link to live site
-
-**This documentation is fully rendered on the
-[Material web catalog](https://github.com/material-components/material-web/tree/main)<!-- {.external} -->.**
-
-<!-- github-only-end -->
 
 [The FAB](https://m3.material.io/components/floating-action-button)<!-- {.external} -->
 represents the most important action on a screen. It puts key actions within
-reach
+reach.
 
 [Extended FABs](https://m3.material.io/components/extended-fab) help people take
 primary actions. They're wider than FABs to accommodate a text label and larger
@@ -39,7 +31,6 @@ target area.
     class="hero"
     alt="A phone showing a payment screen with a green filled button that says 'Make
 payment'"
-    title="There are 5 types of common buttons"
     src="images/fab/hero.webp">
 
 </catalog-component-header>
@@ -89,7 +80,7 @@ payment'"
 <!-- github-only-end -->
 <!-- catalog-include "figures/fab/extended-fabs.html" -->
 
-1.  [Extended FAB with both icon and label text](#with-icon)
+1.  [Extended FAB with both icon and label text](#extended-fab-1)
 2.  [Extended FAB without icon](#without-icon)
 
 ## Usage
@@ -97,7 +88,7 @@ payment'"
 ### FAB
 
 FAB comes in two variants, icon-only and extended (icon with label). There are
-also three sub variants to each, surface, primary, secondary, tertiary, and
+also five sub variants to each, surface, primary, secondary, tertiary, and
 branded FAB.
 
 The icon-only surface variant is the default.
@@ -282,7 +273,7 @@ Extended fabs are the only fabs that can be used without an icon.
 ## Accessibility
 
 For each non-extended FAB, an `aria-label` should be provided as the icon text
-is not typcially considered accessible. If `aria-label` is not provided, the FAB
+is not typically considered accessible. If `aria-label` is not provided, the FAB
 will default to announcing its visible contents.
 
 ```html
@@ -293,7 +284,7 @@ will default to announcing its visible contents.
 
 ### Extended FAB
 
-For each extended FAB, accessiblity is handled by the `label` attribute. By
+For each extended FAB, accessibility is handled by the `label` attribute. By
 supplying the `label` attribute, the extended FAB will make sure that the icon
 is not announced.
 
