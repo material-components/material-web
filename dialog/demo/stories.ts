@@ -13,8 +13,8 @@ import '@material/web/button/filled-button.js';
 import '@material/web/button/text-button.js';
 import '@material/web/dialog/dialog.js';
 
-import {MaterialStoryInit} from './material-collection.js';
 import {MdDialog} from '@material/web/dialog/dialog.js';
+import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';
 
 /** Knob types for dialog stories. */
@@ -230,7 +230,7 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           .transition=${transition!}
       >
         <span slot="header">
-          <md-standard-icon-button dialog-action="close">close</md-standard-icon-button>
+          <md-standard-icon-button dialog-action="close"><md-icon>close</md-icon></md-standard-icon-button>
           <span class="headline">Create new contact</span>
         </span>
         <div class="contact-content">
@@ -276,7 +276,7 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
       >
       <span slot="header">
         <span style="flex: 1;">Floating Sheet</span>
-        <md-standard-icon-button dialog-action="close">close</md-standard-icon-button>
+        <md-standard-icon-button dialog-action="close"><md-icon>close</md-icon></md-standard-icon-button>
       </span>
       <div>This is a floating sheet with title.
         Floating sheets offer no action buttons at the bottom,
