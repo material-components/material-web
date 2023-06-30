@@ -61,7 +61,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
         <md-icon slot="headline-prefix">${icon}</md-icon>
         <span slot="headline">${headline}</span>
         <span>${supportingText}</span>
-        <md-text-button slot="footer" dialogAction="close">Close</md-text-button>
+        <md-text-button slot="footer" dialog-action="close">Close</md-text-button>
       </md-dialog>`;
   }
 };
@@ -92,7 +92,7 @@ const alert: MaterialStoryInit<StoryKnobs> = {
         >
           <span slot="header">Alert dialog</span>
           <span>This is a standard alert dialog. Alert dialogs interrupt users with urgent information, details, or actions.</span>
-          <md-text-button slot="footer" dialogAction="ok">OK</md-text-button>
+          <md-text-button slot="footer" dialog-action="ok">OK</md-text-button>
         </md-dialog>`;
   }
 };
@@ -125,8 +125,8 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
         <div>
           Deleting the selected photos will also remove them from all synced devices.
         </div>
-        <md-text-button slot="footer" dialogAction="delete">Delete</md-text-button>
-        <md-tonal-button slot="footer" dialogFocus dialogAction="cancel">Cancel</md-tonal-button>
+        <md-text-button slot="footer" dialog-action="delete">Delete</md-text-button>
+        <md-tonal-button slot="footer" dialog-focus dialog-action="cancel">Cancel</md-tonal-button>
       </md-dialog>`;
   }
 };
@@ -169,8 +169,8 @@ const choose: MaterialStoryInit<StoryKnobs> = {
         <label><md-radio name="pet" value="cats" checked></md-radio> Cats</label>
         <label><md-radio name="pet" value="dogs"></md-radio> Dogs</label>
         <label><md-radio name="pet" value="birds"></md-radio> Birds</label>
-        <md-text-button slot="footer" dialogAction="cancel">Cancel</md-text-button>
-        <md-text-button slot="footer" dialogFocus dialogAction="ok">OK</md-text-button>
+        <md-text-button slot="footer" dialog-action="cancel">Cancel</md-text-button>
+        <md-text-button slot="footer" dialog-focus dialog-action="ok">OK</md-text-button>
       </md-dialog>`;
   }
 };
@@ -230,12 +230,12 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           .transition=${transition!}
       >
         <span slot="header">
-          <md-standard-icon-button dialogAction="close">close</md-standard-icon-button>
+          <md-standard-icon-button dialog-action="close">close</md-standard-icon-button>
           <span class="headline">Create new contact</span>
         </span>
         <div class="contact-content">
           <div class="contact-row">
-            <md-filled-text-field dialogFocus label="First Name"></md-filled-text-field>
+            <md-filled-text-field dialog-focus label="First Name"></md-filled-text-field>
             <md-filled-text-field label="Last Name"></md-filled-text-field>
           </div>
           <div class="contact-row">
@@ -245,8 +245,8 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           <md-filled-text-field label="Email"></md-filled-text-field>
           <md-filled-text-field label="Phone"></md-filled-text-field>
         </div>
-        <md-text-button slot="footer" dialogAction="cancel">Cancel</md-text-button>
-        <md-text-button slot="footer" dialogAction="save">Save</md-text-button>
+        <md-text-button slot="footer" dialog-action="cancel">Cancel</md-text-button>
+        <md-text-button slot="footer" dialog-action="save">Save</md-text-button>
       </md-dialog>`;
   }
 };
@@ -276,7 +276,7 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
       >
       <span slot="header">
         <span style="flex: 1;">Floating Sheet</span>
-        <md-standard-icon-button dialogAction="close">close</md-standard-icon-button>
+        <md-standard-icon-button dialog-action="close">close</md-standard-icon-button>
       </span>
       <div>This is a floating sheet with title.
         Floating sheets offer no action buttons at the bottom,
