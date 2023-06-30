@@ -20,7 +20,7 @@ export class InputChip extends MultiActionChip {
   @property() href = '';
   @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
   @property({type: Boolean, attribute: 'remove-only'}) removeOnly = false;
-  @property({type: Boolean, refect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) selected = false;
 
   protected get primaryId() {
     if (this.href) {
