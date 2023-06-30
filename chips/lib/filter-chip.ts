@@ -20,7 +20,7 @@ import {renderRemoveButton} from './trailing-icons.js';
 export class FilterChip extends MultiActionChip {
   @property({type: Boolean}) elevated = false;
   @property({type: Boolean}) removable = false;
-  @property({type: Boolean}) selected = false;
+  @property({type: Boolean, reflect: true}) selected = false;
 
   protected get primaryId() {
     return 'option';
