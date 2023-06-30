@@ -37,6 +37,7 @@
     "!catalog"
   ],
   "workspaces": [
+    ".",
     "catalog"
   ],
   "dependencies": {
