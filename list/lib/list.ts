@@ -125,12 +125,12 @@ export class List extends LitElement {
     switch (key) {
       // Activate the next item
       case NAVIGABLE_KEYS.ArrowDown:
-        this.activateNextItemInternal(items, activeItemRecord);
+        List.activateNextItemInternal(items, activeItemRecord);
         break;
 
       // Activate the previous item
       case NAVIGABLE_KEYS.ArrowUp:
-        this.activatePreviousItemInternal(items, activeItemRecord);
+        List.activatePreviousItemInternal(items, activeItemRecord);
         break;
 
       // Activate the first item
@@ -148,7 +148,7 @@ export class List extends LitElement {
     }
   }
 
-  private activateNextItemInternal(
+  private static activateNextItemInternal(
       items: ListItem[], activeItemRecord: null|ItemRecord): ListItem|null {
     if (activeItemRecord) {
       const next = List.getNextItem(items, activeItemRecord.index);
@@ -161,7 +161,7 @@ export class List extends LitElement {
     }
   }
 
-  private activatePreviousItemInternal(
+  private static activatePreviousItemInternal(
       items: ListItem[], activeItemRecord: null|ItemRecord): ListItem|null {
     if (activeItemRecord) {
       const prev = List.getPrevItem(items, activeItemRecord.index);
@@ -184,7 +184,7 @@ export class List extends LitElement {
     if (activeItemRecord) {
       activeItemRecord.item.active = false;
     }
-    return this.activateNextItemInternal(items, activeItemRecord);
+    return List.activateNextItemInternal(items, activeItemRecord);
   }
 
   /**
@@ -199,7 +199,7 @@ export class List extends LitElement {
     if (activeItemRecord) {
       activeItemRecord.item.active = false;
     }
-    return this.activatePreviousItemInternal(items, activeItemRecord);
+    return List.activatePreviousItemInternal(items, activeItemRecord);
   }
 
   /**
