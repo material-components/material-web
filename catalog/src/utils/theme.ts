@@ -6,7 +6,7 @@
 
 import {applyMaterialTheme, themeFromSourceColor} from './material-color-helpers.js';
 
-type ColorMode = 'light'|'dark'|'auto';
+export type ColorMode = 'light'|'dark'|'auto';
 
 /**
  * Generates a Material Theme from a given color and dark mode boolean, and
