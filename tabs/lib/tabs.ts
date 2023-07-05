@@ -202,7 +202,9 @@ export class Tabs extends LitElement {
       Object.defineProperties(event, {
         'defaultPrevented': {value: false, writable: true, configurable: true},
         'preventDefault': {
-          value() {
+          // Type needed for closure conformance. Using the Event type results
+          // in a type error.
+          value(this: {defaultPrevented: boolean}) {
             this.defaultPrevented = true;
           },
           writable: true,

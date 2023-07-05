@@ -12,6 +12,7 @@ import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
 
@@ -99,6 +100,8 @@ export class Tab extends LitElement {
     const contentClasses = {
       'inline-icon': this.inlineIcon,
     };
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button
         class="button"
@@ -106,7 +109,7 @@ export class Tab extends LitElement {
         .tabIndex=${this.focusable && !this.disabled ? 0 : -1}
         aria-selected=${this.selected ? 'true' : 'false'}
         ?disabled=${this.disabled}
-        aria-label=${this.ariaLabel || nothing}
+        aria-label=${ariaLabel || nothing}
       >
         <md-focus-ring inward></md-focus-ring>
         <md-elevation></md-elevation>
