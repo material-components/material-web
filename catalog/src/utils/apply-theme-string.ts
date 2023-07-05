@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+type WithStylesheet =
+    typeof globalThis&{[stylesheetName: string]: CSSStyleSheet | undefined};
+
 /**
  * Applies a stringified CSS theme to a document or shadowroot by creating or
  * reusing a constructable stylesheet. It also saves the themeString to
@@ -21,16 +24,12 @@
  */
 export function applyThemeString(
     doc: DocumentOrShadowRoot, themeString: string, ssName = 'material-theme') {
-  type WithStylesheet =
-      typeof globalThis&{[stylesheetName: string]: CSSStyleSheet | undefined};
   // Get constructable stylesheet
   let sheet = (globalThis as WithStylesheet)[ssName];
-
   // Create a new sheet if it doesn't exist already and save it globally.
   if (!sheet) {
     sheet = new CSSStyleSheet();
-    (globalThis as unknown as {[ssName: string]: CSSStyleSheet})[ssName] =
-        sheet;
+    (globalThis as WithStylesheet)[ssName] = sheet;
     doc.adoptedStyleSheets.push(sheet);
   }
 

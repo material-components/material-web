@@ -19,10 +19,9 @@ import {live} from 'lit/directives/live.js';
 import {ChangeColorEvent, ChangeDarkModeEvent,} from '../types/color-events.js';
 import {hctFromHex, hexFromHct} from '../utils/material-color-helpers.js';
 import {getCurrentMode, getCurrentSeedColor, getCurrentThemeString} from '../utils/theme.js';
+import type {ColorMode} from '../utils/theme.js';
 
 import type {HCTSlider} from './hct-slider.js';
-
-type ColorMode = 'light'|'dark'|'auto';
 
 /**
  * A small set of controls that allows the user to change the theme and preview
