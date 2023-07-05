@@ -65,7 +65,7 @@ export abstract class TextField extends LitElement {
    * native `validationMessage`.
    */
   @property({attribute: 'error-text'}) errorText = '';
-  @property() label?: string;
+  @property() label = '';
   @property({type: Boolean, reflect: true}) required = false;
   /**
    * The current value of the text field. It is always a string.
@@ -522,7 +522,7 @@ export abstract class TextField extends LitElement {
       ?focused=${this.focused}
       ?has-end=${this.hasTrailingIcon}
       ?has-start=${this.hasLeadingIcon}
-      .label=${this.label}
+      label=${this.label}
       ?populated=${!!this.value}
       ?required=${this.required}
     >

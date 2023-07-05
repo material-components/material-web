@@ -7,9 +7,9 @@
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {SurfacePositionTarget} from '../../menu/lib/surfacePositionController.js';
 
 import {EASING} from '../../internal/motion/animation.js';
+import {SurfacePositionTarget} from '../../menu/lib/surfacePositionController.js';
 
 /**
  * A field component.
@@ -18,7 +18,7 @@ export class Field extends LitElement implements SurfacePositionTarget {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) error = false;
   @property({type: Boolean}) focused = false;
-  @property() label?: string;
+  @property() label = '';
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) resizable = false;
   @property({type: Boolean}) required = false;
@@ -110,9 +110,13 @@ export class Field extends LitElement implements SurfacePositionTarget {
 
   protected renderBackground?(): TemplateResult;
   protected renderIndicator?(): TemplateResult;
-  protected renderOutline?(floatingLabel: TemplateResult): TemplateResult;
+  protected renderOutline?(floatingLabel: unknown): TemplateResult;
 
   private renderLabel(isFloating: boolean) {
+    if (!this.label) {
+      return nothing;
+    }
+
     let visible: boolean;
     if (isFloating) {
       // Floating label is visible when focused/populated or when animating.
@@ -129,9 +133,8 @@ export class Field extends LitElement implements SurfacePositionTarget {
       'resting': !isFloating,
     };
 
-    let labelText = this.label ?? '';
     // Add '*' if a label is present and the field is required
-    labelText += this.required && labelText ? '*' : '';
+    const labelText = `${this.label}${this.required ? '*' : ''}`;
 
     return html`
       <span class="label ${classMap(classes)}"

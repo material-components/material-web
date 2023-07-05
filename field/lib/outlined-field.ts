@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, TemplateResult} from 'lit';
+import {html} from 'lit';
 
 import {Field} from './field.js';
 
@@ -12,7 +12,7 @@ import {Field} from './field.js';
  * An outlined field component.
  */
 export class OutlinedField extends Field {
-  protected override renderOutline(floatingLabel: TemplateResult) {
+  protected override renderOutline(floatingLabel: unknown) {
     return html`
       <div class="outline">
         <div class="outline-start"></div>

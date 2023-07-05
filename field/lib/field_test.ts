@@ -39,7 +39,7 @@ describe('Field', () => {
     // Variant type does not matter for shared tests
     const template = html`
       <md-test-field
-        .label=${props.label}
+        .label=${props.label ?? ''}
         ?disabled=${props.disabled ?? false}
         .error=${props.error ?? false}
         .populated=${props.populated ?? false}
