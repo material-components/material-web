@@ -546,10 +546,7 @@ export abstract class TextField extends LitElement {
     return html`
       <input
         style=${styleMap(style)}
-        aria-autocomplete=${
-        (this as ARIAMixinStrict).ariaAutoComplete || nothing}
         aria-describedby="description"
-        aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
         aria-invalid=${this.hasError}
         aria-label=${
         (this as ARIAMixinStrict).ariaLabel || this.label || nothing}
