@@ -33,14 +33,8 @@ class TestTextField extends TextField {
                'aria-invalid') === 'true';
   }
 
-  getSupportingTextValue() {
-    return this.renderRoot.querySelector<HTMLElement>('#support')?.innerText ||
-        '';
-  }
-
-  didErrorAnnounce() {
-    return this.renderRoot.querySelector('#support')?.getAttribute('role') ===
-        'alert';
+  getErrorTextValue() {
+    return this.renderRoot.querySelector('md-filled-field')?.errorText || '';
   }
 }
 
@@ -378,7 +372,7 @@ describe('TextField', () => {
             .toBeTrue();
       });
 
-      it('should update supporting text to validationMessage', async () => {
+      it('should update error text to validationMessage', async () => {
         const {testElement} = await setupTest();
         const errorMessage = 'Error message';
         testElement.setCustomValidity(errorMessage);
@@ -386,10 +380,10 @@ describe('TextField', () => {
         testElement.reportValidity();
 
         expect(testElement.validationMessage).toEqual(errorMessage);
-        expect(testElement.getSupportingTextValue()).toEqual(errorMessage);
+        expect(testElement.getErrorTextValue()).toEqual(errorMessage);
       });
 
-      it('should not update error or supporting text if invalid event is canceled',
+      it('should not update error or error text if invalid event is canceled',
          async () => {
            const {testElement} = await setupTest();
            testElement.addEventListener('invalid', e => {
@@ -404,7 +398,7 @@ describe('TextField', () => {
            expect(testElement.getHasError())
                .withContext('testElement.getHasError()')
                .toBeFalse();
-           expect(testElement.getSupportingTextValue()).toEqual('');
+           expect(testElement.getErrorTextValue()).toEqual('');
          });
 
       it('should be overridden by error and errorText', async () => {
@@ -418,7 +412,7 @@ describe('TextField', () => {
         expect(testElement.getHasError())
             .withContext('testElement.getHasError()')
             .toBeTrue();
-        expect(testElement.getSupportingTextValue()).toEqual(errorMessage);
+        expect(testElement.getErrorTextValue()).toEqual(errorMessage);
       });
     });
 
@@ -577,61 +571,6 @@ describe('TextField', () => {
       testElement.stepDown();
 
       expect(testElement.valueAsNumber).toEqual(5);
-    });
-  });
-
-  describe('error announcement', () => {
-    it('should announce errors when both error and errorText are set',
-       async () => {
-         const {testElement} = await setupTest();
-         testElement.error = true;
-         testElement.errorText = 'Error message';
-         await env.waitForStability();
-
-         expect(testElement.didErrorAnnounce())
-             .withContext('testElement.didErrorAnnounce()')
-             .toBeTrue();
-       });
-
-    it('should announce native errors', async () => {
-      const {testElement} = await setupTest();
-      testElement.required = true;
-      testElement.reportValidity();
-      await env.waitForStability();
-
-      expect(testElement.didErrorAnnounce())
-          .withContext('testElement.didErrorAnnounce()')
-          .toBeTrue();
-    });
-
-    it('should not announce supporting text', async () => {
-      const {testElement} = await setupTest();
-      testElement.error = true;
-      testElement.supportingText = 'Not an error';
-      await env.waitForStability();
-
-      expect(testElement.didErrorAnnounce())
-          .withContext('testElement.didErrorAnnounce()')
-          .toBeFalse();
-    });
-
-    it('should re-announce when reportValidity() is called', async () => {
-      const {testElement} = await setupTest();
-      testElement.error = true;
-      testElement.errorText = 'Error message';
-
-      testElement.reportValidity();
-      await env.waitForStability();
-      // After lit update, but before re-render refresh
-      expect(testElement.didErrorAnnounce())
-          .withContext('didErrorAnnounce() before refresh')
-          .toBeFalse();
-
-      // After the second lit update render refresh
-      await env.waitForStability();
-      expect(testElement.didErrorAnnounce())
-          .withContext('didErrorAnnounce() after refresh')
-          .toBeTrue();
     });
   });
 

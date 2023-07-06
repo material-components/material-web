@@ -26,6 +26,15 @@ class TestField extends Field {
     return this.renderRoot.querySelector('.label')?.textContent ?? '';
   }
 
+  get supportingTextContent() {
+    return this.renderRoot.querySelector('.supporting-text')?.textContent ?? '';
+  }
+
+  didErrorAnnounce() {
+    return this.renderRoot.querySelector('.supporting-text')
+               ?.getAttribute('role') === 'alert';
+  }
+
   // Ensure floating/resting labels are both rendered
   protected override renderOutline(floatingLabel: TemplateResult) {
     return floatingLabel;
@@ -44,6 +53,8 @@ describe('Field', () => {
         .error=${props.error ?? false}
         .populated=${props.populated ?? false}
         .required=${props.required ?? false}
+        .supportingText=${props.supportingText ?? ''}
+        .errorText=${props.errorText ?? ''}
       >
         <input>
       </md-test-field>
@@ -319,5 +330,56 @@ describe('Field', () => {
                  'label text should be empty string if label is not provided, even when required')
              .toBe('');
        });
+  });
+
+  describe('supporting text', () => {
+    it('should update to errorText when error is true', async () => {
+      const errorText = 'Error message';
+      const {instance} = await setupTest(
+          {error: true, supportingText: 'Supporting text', errorText});
+
+      expect(instance.supportingTextContent).toEqual(errorText);
+    });
+  });
+
+  describe('error announcement', () => {
+    it('should announce errors when both error and errorText are set',
+       async () => {
+         const {instance} =
+             await setupTest({error: true, errorText: 'Error message'});
+
+         expect(instance.didErrorAnnounce())
+             .withContext('instance.didErrorAnnounce()')
+             .toBeTrue();
+       });
+
+    it('should not announce supporting text', async () => {
+      const {instance} = await setupTest();
+      instance.error = true;
+      instance.supportingText = 'Not an error';
+      await env.waitForStability();
+
+      expect(instance.didErrorAnnounce())
+          .withContext('instance.didErrorAnnounce()')
+          .toBeFalse();
+    });
+
+    it('should re-announce when reannounceError() is called', async () => {
+      const {instance} =
+          await setupTest({error: true, errorText: 'Error message'});
+
+      instance.reannounceError();
+      await env.waitForStability();
+      // After lit update, but before re-render refresh
+      expect(instance.didErrorAnnounce())
+          .withContext('didErrorAnnounce() before refresh')
+          .toBeFalse();
+
+      // After the second lit update render refresh
+      await env.waitForStability();
+      expect(instance.didErrorAnnounce())
+          .withContext('didErrorAnnounce() after refresh')
+          .toBeTrue();
+    });
   });
 });

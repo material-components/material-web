@@ -32,10 +32,6 @@
     cursor: default;
   }
 
-  .counter {
-    white-space: nowrap;
-  }
-
   @include icon.styles;
   @include input.styles;
 }

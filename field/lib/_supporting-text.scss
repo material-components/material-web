@@ -7,26 +7,16 @@
   .supporting-text {
     color: var(--_supporting-text-color);
     display: flex;
+    gap: var(--_supporting-text-padding);
     justify-content: space-between;
-    padding: 0 var(--_supporting-text-padding);
+    padding: var(--_supporting-text-padding-top) var(--_supporting-text-padding)
+      0;
     font: var(--_supporting-text-type);
   }
 
-  .supporting-text-start,
-  .supporting-text-end {
-    // Can't be an inline display element (<span>) for padding-top to work.
-    display: flex;
-  }
-
-  .supporting-text-start ::slotted(:not(:empty)),
-  .supporting-text-end ::slotted(:not(:empty)) {
-    // Add padding to slotted elements instead of the wrappers so that it does not
-    // show when the supporting text is empty.
-    padding-top: var(--_supporting-text-padding-top);
-  }
-
-  .supporting-text-end ::slotted(:not(:empty)) {
-    padding-inline-start: var(--_supporting-text-padding);
+  // Don't shrink the counter when the supporting text is long and wraps
+  .supporting-text :nth-child(2) {
+    flex-shrink: 0;
   }
 
   :hover .supporting-text {

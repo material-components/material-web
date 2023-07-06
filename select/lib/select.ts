@@ -6,7 +6,7 @@
 
 import '../../menu/menu.js';
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {html, LitElement, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
@@ -89,12 +89,7 @@ export abstract class Select extends LitElement {
    * Text to display in the field. Only set for SSR.
    */
   @property({attribute: 'display-text'}) displayText = '';
-  /**
-   * When set to true, the error text's `role="alert"` will be removed, then
-   * re-added after an animation frame. This will re-announce an error message
-   * to screen readers.
-   */
-  @state() private refreshErrorAlert = false;
+
   @state() private focused = false;
   @state() private open = false;
   @query('.field') private readonly field!: Field|null;
@@ -195,6 +190,7 @@ export abstract class Select extends LitElement {
   }
 
   private renderField() {
+    // TODO(b/290078041): add aria-label/describedby
     return staticHtml`
       <${this.fieldTag}
           aria-haspopup="listbox"
@@ -210,6 +206,8 @@ export abstract class Select extends LitElement {
           .error=${this.error}
           .hasStart=${this.hasLeadingIcon}
           .hasEnd=${this.hasTrailingIcon}
+          supporting-text=${this.supportingText}
+          error-text=${this.errorText}
           @keydown =${this.handleKeydown}
           @click=${this.handleClick}
           @focus=${this.handleFocus}
@@ -223,7 +221,6 @@ export abstract class Select extends LitElement {
       this.renderLeadingIcon(),
       this.renderLabel(),
       this.renderTrailingIcon(),
-      this.renderSupportingText(),
     ];
   }
 
@@ -249,29 +246,6 @@ export abstract class Select extends LitElement {
     return html`<div
         id="label"
         class="label">${this.displayText || html`&nbsp;`}</div>`;
-  }
-
-  private renderSupportingText() {
-    const text = this.getSupportingText();
-    if (!text) {
-      return nothing;
-    }
-
-    return html`<span id="support"
-      slot="supporting-text"
-      role=${this.shouldErrorAnnounce() ? 'alert' : nothing}>${text}</span>`;
-  }
-
-  private getSupportingText() {
-    return this.error && this.errorText ? this.errorText : this.supportingText;
-  }
-
-  private shouldErrorAnnounce() {
-    // Announce if there is an error and error text visible.
-    // If refreshErrorAlert is true, do not announce. This will remove the
-    // role="alert" attribute. Another render cycle will happen after an
-    // animation frame to re-add the role.
-    return this.error && !!this.errorText && !this.refreshErrorAlert;
   }
 
   private renderMenu() {
@@ -439,18 +413,6 @@ export abstract class Select extends LitElement {
     }
 
     super.firstUpdated(changed);
-  }
-
-  protected override updated(changedProperties: PropertyValues) {
-    // Keep changedProperties arg so that subclasses may call it
-
-    if (this.refreshErrorAlert) {
-      // The past render cycle removed the role="alert" from the error message.
-      // Re-add it after an animation frame to re-announce the error.
-      requestAnimationFrame(() => {
-        this.refreshErrorAlert = false;
-      });
-    }
   }
 
   /**

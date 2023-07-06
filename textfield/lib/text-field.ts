@@ -11,6 +11,7 @@ import {live} from 'lit/directives/live.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
+import {Field} from '../../field/lib/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
@@ -270,12 +271,6 @@ export abstract class TextField extends LitElement {
   @state() private dirty = false;
   @state() private focused = false;
   /**
-   * When set to true, the error text's `role="alert"` will be removed, then
-   * re-added after an animation frame. This will re-announce an error message
-   * to screen readers.
-   */
-  @state() private refreshErrorAlert = false;
-  /**
    * Whether or not a native error has been reported via `reportValidity()`.
    */
   @state() private nativeError = false;
@@ -290,6 +285,7 @@ export abstract class TextField extends LitElement {
   }
 
   @query('input') private readonly input?: HTMLInputElement|null;
+  @query('.field') private readonly field?: Field|null;
   @queryAssignedElements({slot: 'leadingicon'})
   private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailingicon'})
@@ -359,10 +355,8 @@ export abstract class TextField extends LitElement {
       this.nativeError = !valid;
       this.nativeErrorText = this.validationMessage;
 
-      const needsRefresh =
-          this.shouldErrorAnnounce() && prevMessage === this.getErrorText();
-      if (needsRefresh) {
-        this.refreshErrorAlert = true;
+      if (prevMessage === this.getErrorText()) {
+        this.field?.reannounceError();
       }
     }
 
@@ -500,14 +494,6 @@ export abstract class TextField extends LitElement {
       // before checking its value.
       this.value = value;
     }
-
-    if (this.refreshErrorAlert) {
-      // The past render cycle removed the role="alert" from the error message.
-      // Re-add it after an animation frame to re-announce the error.
-      requestAnimationFrame(() => {
-        this.refreshErrorAlert = false;
-      });
-    }
   }
 
   private renderField() {
@@ -525,12 +511,14 @@ export abstract class TextField extends LitElement {
       label=${this.label}
       ?populated=${!!this.value}
       ?required=${this.required}
+      supporting-text=${this.supportingText}
+      error-text=${this.getErrorText()}
+      count=${this.value.length}
+      max=${this.maxLength}
     >
       ${this.renderLeadingIcon()}
       ${prefix}${input}${suffix}
       ${this.renderTrailingIcon()}
-      ${this.renderSupportingText()}
-      ${this.renderCounter()}
     </${this.fieldTag}>`;
   }
 
@@ -555,44 +543,34 @@ export abstract class TextField extends LitElement {
 
     // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
     // fixed
-    return html`<input
-       style=${styleMap(style)}
-       aria-autocomplete=${
+    return html`
+      <input
+        style=${styleMap(style)}
+        aria-autocomplete=${
         (this as ARIAMixinStrict).ariaAutoComplete || nothing}
-       aria-describedby=${this.getAriaDescribedBy() || nothing}
-       aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
-       aria-invalid=${this.hasError}
-       aria-label=${
+        aria-describedby="description"
+        aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
+        aria-invalid=${this.hasError}
+        aria-label=${
         (this as ARIAMixinStrict).ariaLabel || this.label || nothing}
-       ?disabled=${this.disabled}
-       max=${(this.max || nothing) as unknown as number}
-       maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
-       min=${(this.min || nothing) as unknown as number}
-       minlength=${this.minLength > -1 ? this.minLength : nothing}
-       pattern=${this.pattern || nothing}
-       placeholder=${this.placeholder || nothing}
-       ?readonly=${this.readOnly}
-       ?required=${this.required}
-       step=${(this.step || nothing) as unknown as number}
-       type=${this.type}
-       .value=${live(this.value)}
-       @change=${this.redispatchEvent}
-       @input=${this.handleInput}
-       @select=${this.redispatchEvent}
-     >`;
-  }
-
-  private getAriaDescribedBy() {
-    const ids: string[] = [];
-    if (this.getSupportingText()) {
-      ids.push('support');
-    }
-
-    if (this.getCounterText()) {
-      ids.push('counter');
-    }
-
-    return ids.join(' ');
+        ?disabled=${this.disabled}
+        max=${(this.max || nothing) as unknown as number}
+        maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
+        min=${(this.min || nothing) as unknown as number}
+        minlength=${this.minLength > -1 ? this.minLength : nothing}
+        pattern=${this.pattern || nothing}
+        placeholder=${this.placeholder || nothing}
+        ?readonly=${this.readOnly}
+        ?required=${this.required}
+        step=${(this.step || nothing) as unknown as number}
+        type=${this.type}
+        .value=${live(this.value)}
+        @change=${this.redispatchEvent}
+        @input=${this.handleInput}
+        @select=${this.redispatchEvent}
+      >
+      <div id="description" slot="aria-describedby"></div>
+    `;
   }
 
   private renderPrefix() {
@@ -616,49 +594,8 @@ export abstract class TextField extends LitElement {
     return html`<span class="${classMap(classes)}">${text}</span>`;
   }
 
-  private renderSupportingText() {
-    const text = this.getSupportingText();
-    if (!text) {
-      return nothing;
-    }
-
-    return html`<span id="support"
-      slot="supporting-text"
-      role=${this.shouldErrorAnnounce() ? 'alert' : nothing}>${text}</span>`;
-  }
-
-  private getSupportingText() {
-    const errorText = this.getErrorText();
-    return this.hasError && errorText ? errorText : this.supportingText;
-  }
-
   private getErrorText() {
     return this.error ? this.errorText : this.nativeErrorText;
-  }
-
-  private shouldErrorAnnounce() {
-    // Announce if there is an error and error text visible.
-    // If refreshErrorAlert is true, do not announce. This will remove the
-    // role="alert" attribute. Another render cycle will happen after an
-    // animation frame to re-add the role.
-    return this.hasError && !!this.getErrorText() && !this.refreshErrorAlert;
-  }
-
-  private renderCounter() {
-    const text = this.getCounterText();
-    if (!text) {
-      return nothing;
-    }
-
-    // TODO(b/244473435): add aria-label and announcements
-    return html`<span id="counter"
-       class="counter"
-       slot="supporting-text-end">${text}</span>`;
-  }
-
-  private getCounterText() {
-    return this.maxLength > -1 ? `${this.value.length} / ${this.maxLength}` :
-                                 '';
   }
 
   private handleFocusin() {

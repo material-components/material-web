@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import {html, LitElement, nothing, PropertyValues, render, TemplateResult} from 'lit';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {EASING} from '../../internal/motion/animation.js';
@@ -22,6 +22,10 @@ export class Field extends LitElement implements SurfacePositionTarget {
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) resizable = false;
   @property({type: Boolean}) required = false;
+  @property({attribute: 'supporting-text'}) supportingText = '';
+  @property({attribute: 'error-text'}) errorText = '';
+  @property({type: Number}) count = -1;
+  @property({type: Number}) max = -1;
 
   /**
    * Whether or not the field has leading content.
@@ -33,11 +37,43 @@ export class Field extends LitElement implements SurfacePositionTarget {
    */
   @property({type: Boolean, attribute: 'has-end'}) hasEnd = false;
 
+  @queryAssignedElements({slot: 'aria-describedby'})
+  private readonly slottedAriaDescribedBy!: HTMLElement[];
+
+  private get counterText() {
+    if (this.count < 0 || this.max < 0) {
+      return '';
+    }
+
+    return `${this.count} / ${this.max}`;
+  }
+
+  private get supportingOrErrorText() {
+    return this.error && this.errorText ? this.errorText : this.supportingText;
+  }
+
   @state() private isAnimating = false;
   private labelAnimation?: Animation;
+  /**
+   * When set to true, the error text's `role="alert"` will be removed, then
+   * re-added after an animation frame. This will re-announce an error message
+   * to screen readers.
+   */
+  @state() private refreshErrorAlert = false;
   @query('.label.floating') private readonly floatingLabelEl!: HTMLElement|null;
   @query('.label.resting') private readonly restingLabelEl!: HTMLElement|null;
   @query('.container') private readonly containerEl!: HTMLElement|null;
+
+  /**
+   * Re-announces the field's error supporting text to screen readers.
+   *
+   * Error text announces to screen readers anytime it is visible and changes.
+   * Use the method to re-announce the message when the text has not changed,
+   * but announcement is still needed (such as for `reportValidity()`).
+   */
+  reannounceError() {
+    this.refreshErrorAlert = true;
+  }
 
   protected override update(props: PropertyValues<Field>) {
     // Client-side property updates
@@ -95,22 +131,65 @@ export class Field extends LitElement implements SurfacePositionTarget {
             </div>
           </div>
         </div>
-
-        <div class="supporting-text">
-          <div class="supporting-text-start">
-            <slot name="supporting-text"></slot>
-          </div>
-          <div class="supporting-text-end">
-            <slot name="supporting-text-end"></slot>
-          </div>
-        </div>
+        ${this.renderSupportingText()}
       </div>
     `;
+  }
+
+  protected override updated(changed: PropertyValues<Field>) {
+    if (changed.has('supportingText') || changed.has('errorText') ||
+        changed.has('count') || changed.has('max')) {
+      this.updateSlottedAriaDescribedBy();
+    }
+
+    if (this.refreshErrorAlert) {
+      // The past render cycle removed the role="alert" from the error message.
+      // Re-add it after an animation frame to re-announce the error.
+      requestAnimationFrame(() => {
+        this.refreshErrorAlert = false;
+      });
+    }
   }
 
   protected renderBackground?(): TemplateResult;
   protected renderIndicator?(): TemplateResult;
   protected renderOutline?(floatingLabel: unknown): TemplateResult;
+
+  private renderSupportingText() {
+    const {supportingOrErrorText, counterText} = this;
+    if (!supportingOrErrorText && !counterText) {
+      return nothing;
+    }
+
+    // Always render the supporting text span so that our `space-around`
+    // container puts the counter at the end.
+    const start = html`<span>${supportingOrErrorText}</span>`;
+    // Conditionally render counter so we don't render the extra `gap`.
+    // TODO(b/244473435): add aria-label and announcements
+    const end = counterText ?
+        html`<span class="counter">${counterText}</span>` :
+        nothing;
+
+    // Announce if there is an error and error text visible.
+    // If refreshErrorAlert is true, do not announce. This will remove the
+    // role="alert" attribute. Another render cycle will happen after an
+    // animation frame to re-add the role.
+    const shouldErrorAnnounce =
+        this.error && this.errorText && !this.refreshErrorAlert;
+    const role = shouldErrorAnnounce ? 'alert' : nothing;
+    return html`
+      <div class="supporting-text" role=${role}>${start}${end}</div>
+      <slot name="aria-describedby" @slotchange=${
+        this.updateSlottedAriaDescribedBy}></slot>
+    `;
+  }
+
+  private updateSlottedAriaDescribedBy() {
+    for (const element of this.slottedAriaDescribedBy) {
+      render(html`${this.supportingOrErrorText} ${this.counterText}`, element);
+      element.setAttribute('hidden', '');
+    }
+  }
 
   private renderLabel(isFloating: boolean) {
     if (!this.label) {

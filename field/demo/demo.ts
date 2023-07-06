@@ -8,7 +8,7 @@ import './index.js';
 import './material-collection.js';
 
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
-import {boolInput, Knob, textInput} from './index.js';
+import {boolInput, Knob, numberInput, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 
@@ -18,7 +18,9 @@ const collection =
       new Knob(
           'Supporting text',
           {ui: textInput(), defaultValue: 'Supporting text'}),
-      new Knob('Supporting text (end)', {ui: textInput(), defaultValue: '?/?'}),
+      new Knob('Error text', {ui: textInput(), defaultValue: 'Error text'}),
+      new Knob('count', {ui: numberInput(), defaultValue: 0}),
+      new Knob('max', {ui: numberInput(), defaultValue: 0}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('error', {ui: boolInput(), defaultValue: false}),
       new Knob('focused', {ui: boolInput(), defaultValue: false}),
