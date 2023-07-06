@@ -138,6 +138,20 @@ describe('<md-radio>', () => {
       expect(a2.element.checked).withContext('prev radio checked').toBeFalse();
     });
 
+    it('dispatched a change event on user navigation', async () => {
+      const {harnesses, root} = await setupTest(radioGroupPreSelected);
+      const changeHandler = jasmine.createSpy('changeHandler');
+      root.addEventListener('change', changeHandler);
+      const [, a2] = harnesses;
+      expect(a2.element.checked)
+          .withContext('default checked radio')
+          .toBeTrue();
+
+      await simulateKeyDown(a2.element, 'ArrowRight');
+
+      expect(changeHandler).toHaveBeenCalledTimes(1);
+    });
+
     it('Using arrow right on the last radio should select the first radio in that group',
        async () => {
          const {harnesses} = await setupTest(radioGroupPreSelected);

@@ -215,10 +215,9 @@ export class SingleSelectionController implements ReactiveController {
         }
       }
 
-      // The next sibling should be checked and focused.
-      nextSibling.checked = true;
+      // The next sibling should be checked, focused and dispatch a change event
       nextSibling.removeAttribute('tabindex');
-      nextSibling.focus();
+      nextSibling.click();
       break;
     }
   };
