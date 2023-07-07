@@ -94,7 +94,7 @@
   }
 
   @each $token in map.keys($values) {
-    @if list.index($supported-tokens, $token) == 0 {
+    @if list.index($supported-tokens, $token) == null {
       @error 'values.validate($supported-tokens)) is missing the \'#{$token}\' token. Does it need adding to $unsupported-tokens?';
     }
   }
