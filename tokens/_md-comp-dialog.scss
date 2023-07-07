@@ -13,7 +13,22 @@
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_172/md-comp-dialog';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'container-color',
+  'container-elevation',
+  'container-shape',
+  'headline-color',
+  'headline-type',
+  'icon-color',
+  'icon-size',
+  'supporting-text-color',
+  'supporting-text-type',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -23,7 +38,26 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-$_unsupported-tokens: (
+// Note: currently ignoring tokens for `action-*-label-text` and
+// `action-*-state-layer` since actions are spec'd as standard text buttons.
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'action-focus-label-text-color',
+  'action-focus-state-layer-color',
+  'action-focus-state-layer-opacity',
+  'action-hover-label-text-color',
+  'action-hover-state-layer-color',
+  'action-hover-state-layer-opacity',
+  'action-label-text-color',
+  'action-label-text-font',
+  'action-label-text-line-height',
+  'action-label-text-size',
+  'action-label-text-tracking',
+  'action-label-text-type',
+  'action-label-text-weight',
+  'action-pressed-label-text-color',
+  'action-pressed-state-layer-color',
+  'action-pressed-state-layer-opacity',
   'headline-font',
   'headline-line-height',
   'headline-size',
@@ -33,18 +67,26 @@ $_unsupported-tokens: (
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-tracking',
-  'supporting-text-weight'
+  'supporting-text-weight',
+  // go/keep-sorted end
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: md-comp-dialog.values($deps, $exclude-hardcoded-values);
-  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  $tokens: values.validate(
+    md-comp-dialog.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: (
+      // Remove "with-*" prefixes (b/273534858)
+      'with-icon-icon-color': 'icon-color',
+      'with-icon-icon-size': 'icon-size'
+    )
+  );
+
   // TODO(b/271876162): remove when tokens compiler emits typescale tokens
   $tokens: map.merge(
     $tokens,
     (
-      'action-label-text-type':
-        map.get($deps, 'md-sys-typescale', 'label-large'),
       'headline-type': map.get($deps, 'md-sys-typescale', 'headline-small'),
     )
   );

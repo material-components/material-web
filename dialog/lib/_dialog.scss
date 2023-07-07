@@ -359,8 +359,8 @@
   // Slot styling
   [name='headline-prefix']::slotted(*),
   [name='headline-suffix']::slotted(*) {
-    color: var(--_with-icon-icon-color);
-    font-size: var(--_with-icon-icon-size);
+    color: var(--_icon-color);
+    font-size: var(--_icon-size);
   }
 
   [name='header']::slotted(*) {

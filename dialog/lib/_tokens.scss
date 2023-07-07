@@ -57,29 +57,12 @@ $_fullscreen-tokens: (
   fullscreen-container-block-padding: 8px,
 );
 
-@function _map-without-keys-with-prefix($map, $prefix) {
-  $filtered: ();
-  @each $prop, $value in $map {
-    @if not string-ext.has-prefix($prop, $prefix) {
-      $filtered: map.set($filtered, $prop, $value);
-    }
-  }
-  @return $filtered;
-}
-
-@function remove-unsupported-tokens($tokens) {
-  $remove-prefix: 'action-';
-  $tokens: _map-without-keys-with-prefix($tokens, $remove-prefix);
-
-  @return $tokens;
-}
-
 /**
- * Extended token set for dialog. Note, currently ignoring tokens for
- * `action-*-label-text` and `action-*-state-layer` since actions are
- * spec'd as standard text buttons.
+ * Extended token set for dialog.
  */
 @function md-comp-dialog-values() {
-  $tokens: remove-unsupported-tokens(tokens.md-comp-dialog-values());
-  @return map.merge(map.merge($tokens, $_tokens), $_fullscreen-tokens);
+  @return map.merge(
+    map.merge(tokens.md-comp-dialog-values(), $_tokens),
+    $_fullscreen-tokens
+  );
 }
