@@ -18,6 +18,7 @@ import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../..
 import {SingleSelectionController} from './single-selection-controller.js';
 
 const CHECKED = Symbol('checked');
+let maskId = 0;
 
 /**
  * A radio component.
@@ -33,6 +34,8 @@ export class Radio extends LitElement {
 
   /** @nocollapse */
   static formAssociated = true;
+
+  private maskId = `cutout${++maskId}`;
 
   /**
    * Whether or not the radio is selected.
@@ -122,11 +125,11 @@ export class Radio extends LitElement {
         <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
         <md-focus-ring for="input"></md-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
-          <mask id="cutout">
+          <mask id="${this.maskId}">
             <rect width="100%" height="100%" fill="white" />
             <circle cx="10" cy="10" r="8" fill="black" />
           </mask>
-          <circle class="outer circle" cx="10" cy="10" r="10" mask="url(#cutout)" />
+          <circle class="outer circle" cx="10" cy="10" r="10" mask="url(#${this.maskId})" />
           <circle class="inner circle" cx="10" cy="10" r="5" />
         </svg>
         <input
