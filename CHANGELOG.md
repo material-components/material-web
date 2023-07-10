@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.0.0-pre.13](https://github.com/material-components/material-web/compare/v1.0.0-pre.12...v1.0.0-pre.13) (2023-07-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **segmentedbutton:** remove with-* token prefixes
+* **button:** remove with-* prefix from tokens
+* **dialog:** remove with-icon prefix from with-icon-icon-color and with-icon-icon-size
+* **textfield:** remove autocomplete-specific features for now
+
+### Features
+
+* **field:** add supporting/error text logic ([b4b3e67](https://github.com/material-components/material-web/commit/b4b3e67ae6681210d38f5079ff876896f0c20fe2))
+
+
+### Bug Fixes
+
+* **button:** remove with-* prefix from tokens ([25be982](https://github.com/material-components/material-web/commit/25be9825685df91a6fc3e66c2dd7c9537a0a7829))
+* **dialog:** fire a change event when using arrow keys. ([65d31a6](https://github.com/material-components/material-web/commit/65d31a68c1c5904ebd258f00d531b6d46f31461a))
+* **dialog:** fix two close icons in demo ([dc0ac97](https://github.com/material-components/material-web/commit/dc0ac971ac52b9d47edcb1ce722d7fd8ec94f3e1))
+* **dialog:** remove with-icon prefix from with-icon-icon-color and with-icon-icon-size ([1893e08](https://github.com/material-components/material-web/commit/1893e08f545606d6e3112d25913bf4d52d0d4bb3))
+* **dialog:** use dialog-action and dialog-focus in demo ([332836c](https://github.com/material-components/material-web/commit/332836cacb5ad47af9561579753e040a8ba42a16))
+* **segmentedbutton:** remove with-* token prefixes ([cc786d1](https://github.com/material-components/material-web/commit/cc786d1f73950b324549392218177f3eb30a4a0f))
+* supported tokens were not being verified ([2922914](https://github.com/material-components/material-web/commit/292291426385c5114664c7759b095823ec43f549))
+* **tab:** add closure conformance types ([d80b7b5](https://github.com/material-components/material-web/commit/d80b7b55e92650eacc3aa31bdf343aba7c7196b7))
+* **textfield:** make label strict string type ([6762b00](https://github.com/material-components/material-web/commit/6762b0058871e2502626dc842a03efba047f3e31))
+* **textfield:** remove autocomplete-specific features for now ([8fee0a7](https://github.com/material-components/material-web/commit/8fee0a7ebd3081730d556488ff29fc5e2d416143))
+
+
+### Miscellaneous Chores
+
+* update next version ([b1077d8](https://github.com/material-components/material-web/commit/b1077d856bf8ec710b19c3027a030f9c63d75f37))
+
 ## [1.0.0-pre.12](https://github.com/material-components/material-web/compare/v1.0.0-pre.11...v1.0.0-pre.12) (2023-06-28)
 
 
