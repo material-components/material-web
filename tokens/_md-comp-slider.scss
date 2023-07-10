@@ -13,7 +13,49 @@
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_172/md-comp-slider';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'active-track-color',
+  'active-track-height',
+  'active-track-shape',
+  'disabled-active-track-color',
+  'disabled-active-track-opacity',
+  'disabled-handle-color',
+  'disabled-handle-elevation',
+  'disabled-inactive-track-color',
+  'disabled-inactive-track-opacity',
+  'focus-handle-color',
+  'handle-color',
+  'handle-elevation',
+  'handle-height',
+  'handle-shadow-color',
+  'handle-shape',
+  'handle-width',
+  'hover-handle-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'inactive-track-color',
+  'inactive-track-height',
+  'inactive-track-shape',
+  'label-container-color',
+  'label-container-height',
+  'label-label-text-color',
+  'label-label-text-type',
+  'pressed-handle-color',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
+  'state-layer-size',
+  'with-overlap-handle-outline-color',
+  'with-overlap-handle-outline-width',
+  'with-tick-marks-active-container-color',
+  'with-tick-marks-container-size',
+  'with-tick-marks-disabled-container-color',
+  'with-tick-marks-inactive-container-color',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -44,8 +86,11 @@ $_unsupported-tokens: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: md-comp-slider.values($deps, $exclude-hardcoded-values);
-  $tokens: map.remove($tokens, $_unsupported-tokens...);
+  $tokens: values.validate(
+    md-comp-slider.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $_unsupported-tokens
+  );
 
   // TODO(b/271876162): remove when tokens compiler emits typescale tokens
   $tokens: map.merge(
@@ -55,5 +100,6 @@ $_unsupported-tokens: (
         map.get($deps, 'md-sys-typescale', 'label-medium'),
     )
   );
+
   @return $tokens;
 }
