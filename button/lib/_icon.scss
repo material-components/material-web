@@ -16,27 +16,27 @@
       position: relative;
       writing-mode: horizontal-tb;
       fill: currentColor;
-      color: var(--_with-icon-icon-color);
-      font-size: var(--_with-icon-icon-size);
-      inline-size: var(--_with-icon-icon-size);
-      block-size: var(--_with-icon-icon-size);
+      color: var(--_icon-color);
+      font-size: var(--_icon-size);
+      inline-size: var(--_icon-size);
+      block-size: var(--_icon-size);
     }
 
     .md3-button:hover & {
-      color: var(--_with-icon-hover-icon-color);
+      color: var(--_hover-icon-color);
     }
 
     .md3-button:focus & {
-      color: var(--_with-icon-focus-icon-color);
+      color: var(--_focus-icon-color);
     }
 
     .md3-button:active & {
-      color: var(--_with-icon-pressed-icon-color);
+      color: var(--_pressed-icon-color);
     }
 
     .md3-button:disabled & {
-      color: var(--_with-icon-disabled-icon-color);
-      opacity: var(--_with-icon-disabled-icon-opacity);
+      color: var(--_disabled-icon-color);
+      opacity: var(--_disabled-icon-opacity);
     }
   }
 }

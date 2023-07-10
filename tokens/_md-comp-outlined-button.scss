@@ -19,33 +19,31 @@ $supported-tokens: (
   // go/keep-sorted start
   'container-height',
   'container-shape',
+  'disabled-icon-color',
+  'disabled-icon-opacity',
   'disabled-label-text-color',
   'disabled-label-text-opacity',
   'disabled-outline-color',
   'disabled-outline-opacity',
+  'focus-icon-color',
   'focus-label-text-color',
-  'focus-outline-color',
+  'hover-icon-color',
   'hover-label-text-color',
-  'hover-outline-color',
   'hover-state-layer-color',
   'hover-state-layer-opacity',
+  'icon-color',
+  'icon-size',
   'label-text-color',
   'label-text-type',
   'outline-color',
   'outline-width',
+  'pressed-icon-color',
   'pressed-label-text-color',
   'pressed-outline-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
   'spacing-leading',
   'spacing-trailing',
-  'with-icon-disabled-icon-color',
-  'with-icon-disabled-icon-opacity',
-  'with-icon-focus-icon-color',
-  'with-icon-hover-icon-color',
-  'with-icon-icon-color',
-  'with-icon-icon-size',
-  'with-icon-pressed-icon-color',
   'with-icon-spacing-leading',
   'with-icon-spacing-trailing',
   'with-trailing-icon-spacing-leading',
@@ -55,8 +53,10 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'focus-outline-color',
   'focus-state-layer-color',
   'focus-state-layer-opacity',
+  'hover-outline-color',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
@@ -89,6 +89,16 @@ $_default: (
       'with-trailing-icon-spacing-trailing':
         if($exclude-hardcoded-values, null, 16px),
       // go/keep-sorted end
+    ),
+    $renamed-tokens: (
+      // Remove "with-*" prefixes (b/273534858)
+      'with-icon-disabled-icon-color': 'disabled-icon-color',
+      'with-icon-disabled-icon-opacity': 'disabled-icon-opacity',
+      'with-icon-focus-icon-color': 'focus-icon-color',
+      'with-icon-hover-icon-color': 'hover-icon-color',
+      'with-icon-icon-color': 'icon-color',
+      'with-icon-icon-size': 'icon-size',
+      'with-icon-pressed-icon-color': 'pressed-icon-color'
     )
   );
 

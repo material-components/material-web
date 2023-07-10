@@ -44,6 +44,10 @@
       --_#{$token}: var(--md-outlined-button-#{$token}, #{$value});
     }
 
+    --_container-color: none;
+    --_disabled-container-color: none;
+    --_disabled-container-opacity: 0;
+
     // Support logical shape properties
     --_container-shape-start-start: var(
       --md-outlined-button-container-shape-start-start,
