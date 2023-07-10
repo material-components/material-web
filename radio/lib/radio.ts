@@ -35,7 +35,9 @@ export class Radio extends LitElement {
   /** @nocollapse */
   static formAssociated = true;
 
-  private maskId = `cutout${++maskId}`;
+  // Unique maskId is required because of a Safari bug that fail to persist 
+  // reference to the mask. This should be removed once the bug is fixed.
+  private readonly maskId = `cutout${++maskId}`;
 
   /**
    * Whether or not the radio is selected.
