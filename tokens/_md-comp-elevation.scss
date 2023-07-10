@@ -9,7 +9,15 @@
 // go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-elevation';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'level',
+  'shadow-color',
+  // go/keep-sorted end
+);
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -17,8 +25,9 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return (
+  $tokens: (
     'level': map.get($deps, 'md-sys-elevation', 'level0'),
-    'shadow-color': map.get($deps, 'md-sys-color', 'shadow')
+    'shadow-color': map.get($deps, 'md-sys-color', 'shadow'),
   );
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
 }
