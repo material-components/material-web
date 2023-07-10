@@ -16,54 +16,54 @@
 
 $supported-tokens: (
   // go/keep-sorted start
-  'container-height',
   'disabled-icon-color',
-  'disabled-icon-opacity',
   'disabled-label-text-color',
-  'disabled-label-text-opacity',
   'disabled-outline-color',
-  'disabled-outline-opacity',
-  'focus-state-layer-opacity',
   'hover-state-layer-opacity',
+  'icon-size',
   'label-text-type',
   'outline-color',
-  'outline-width',
   'pressed-state-layer-opacity',
   'selected-container-color',
   'selected-focus-icon-color',
   'selected-focus-label-text-color',
-  'selected-focus-state-layer-color',
   'selected-hover-icon-color',
   'selected-hover-label-text-color',
   'selected-hover-state-layer-color',
+  'selected-icon-color',
   'selected-label-text-color',
   'selected-pressed-icon-color',
   'selected-pressed-label-text-color',
   'selected-pressed-state-layer-color',
-  'selected-with-icon-icon-color',
-  'shape',
   'unselected-focus-icon-color',
   'unselected-focus-label-text-color',
-  'unselected-focus-state-layer-color',
   'unselected-hover-icon-color',
   'unselected-hover-label-text-color',
   'unselected-hover-state-layer-color',
+  'unselected-icon-color',
   'unselected-label-text-color',
   'unselected-pressed-icon-color',
   'unselected-pressed-label-text-color',
   'unselected-pressed-state-layer-color',
-  'unselected-with-icon-icon-color',
-  'with-icon-icon-size',
   // go/keep-sorted end
 );
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'container-height',
+  'disabled-icon-opacity',
+  'disabled-label-text-opacity',
+  'disabled-outline-opacity',
+  'focus-state-layer-opacity',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
   'label-text-tracking',
   'label-text-weight',
+  'outline-width',
+  'selected-focus-state-layer-color',
+  'shape',
+  'unselected-focus-state-layer-color',
   // go/keep-sorted end
 );
 
@@ -78,7 +78,13 @@ $_default: (
   $tokens: values.validate(
     md-comp-outlined-segmented-button.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: (
+      // Remove "with-*" prefixes (b/273534858)
+      'with-icon-icon-size': 'icon-size',
+      'selected-with-icon-icon-color': 'selected-icon-color',
+      'unselected-with-icon-icon-color': 'unselected-icon-color'
+    )
   );
 
   // TODO(b/271876162): remove when tokens compiler emits typescale tokens

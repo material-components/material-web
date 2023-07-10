@@ -73,9 +73,9 @@
     .md3-segmented-button__checkmark,
     .md3-segmented-button__icon,
     .md3-segmented-button__icon ::slotted([slot='icon']) {
-      height: var(--_with-icon-icon-size);
-      width: var(--_with-icon-icon-size);
-      font-size: var(--_with-icon-icon-size);
+      height: var(--_icon-size);
+      width: var(--_icon-size);
+      font-size: var(--_icon-size);
     }
 
     // Under the following conditions, we need to account for extra space between
@@ -98,7 +98,7 @@
     &.md3-segmented-button--selected.md3-segmented-button--without-label.md3-segmented-button--with-checkmark {
       .md3-segmented-button__graphic {
         // TODO(b/198759625): Use padding token instead of hardcoded 8px value.
-        width: calc(var(--_with-icon-icon-size) + 8px);
+        width: calc(var(--_icon-size) + 8px);
       }
     }
 
@@ -163,7 +163,7 @@
 
   .md3-segmented-button--unselected {
     .md3-segmented-button__icon {
-      color: var(--_unselected-with-icon-icon-color);
+      color: var(--_unselected-icon-color);
     }
 
     &:hover {
@@ -204,11 +204,11 @@
     background-color: var(--_selected-container-color);
 
     .md3-segmented-button__icon {
-      color: var(--_selected-with-icon-icon-color);
+      color: var(--_selected-icon-color);
     }
 
     .md3-segmented-button__checkmark-path {
-      stroke: var(--_selected-with-icon-icon-color);
+      stroke: var(--_selected-icon-color);
     }
 
     &:hover {
