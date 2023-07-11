@@ -134,8 +134,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   .field:not(.no-label) .container {
-    padding-bottom: var(--_with-label-container-padding-vertical);
-    padding-top: var(--_with-label-container-padding-vertical);
+    padding-bottom: var(--_with-label-bottom-space);
+    padding-top: var(--_with-label-top-space);
   }
 
   .field:not(.no-label) .middle {

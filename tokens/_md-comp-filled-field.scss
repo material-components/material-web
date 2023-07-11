@@ -19,8 +19,8 @@ $supported-tokens: (
   // go/keep-sorted start
   'active-indicator-color',
   'active-indicator-height',
+  'bottom-space',
   'container-color',
-  'container-padding-vertical',
   'container-shape',
   'content-color',
   'content-type',
@@ -86,9 +86,11 @@ $supported-tokens: (
   'supporting-text-top-space',
   'supporting-text-trailing-space',
   'supporting-text-type',
+  'top-space',
   'trailing-content-color',
   'trailing-space',
-  'with-label-container-padding-vertical',
+  'with-label-bottom-space',
+  'with-label-top-space',
   // go/keep-sorted end
 );
 
@@ -109,8 +111,8 @@ $_default: (
     // go/keep-sorted start
     'active-indicator-color': map.get($text-field, 'active-indicator-color'),
     'active-indicator-height': map.get($text-field, 'active-indicator-height'),
+    'bottom-space': if($exclude-hardcoded-values, null, 16px),
     'container-color': map.get($text-field, 'container-color'),
-    'container-padding-vertical': if($exclude-hardcoded-values, null, 16px),
     'container-shape': map.get($text-field, 'container-shape'),
     'content-color': map.get($text-field, 'input-text-color'),
     'content-type': map.get($text-field, 'input-text-type'),
@@ -220,10 +222,11 @@ $_default: (
     'supporting-text-top-space': if($exclude-hardcoded-values, null, 4px),
     'supporting-text-trailing-space': if($exclude-hardcoded-values, null, 16px),
     'supporting-text-type': map.get($text-field, 'supporting-text-type'),
+    'top-space': if($exclude-hardcoded-values, null, 16px),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
     'trailing-space': if($exclude-hardcoded-values, null, 16px),
-    'with-label-container-padding-vertical':
-      if($exclude-hardcoded-values, null, 8px),
+    'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
+    'with-label-top-space': if($exclude-hardcoded-values, null, 8px),
     // go/keep-sorted end
   );
 

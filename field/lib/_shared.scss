@@ -46,8 +46,8 @@
     flex: 1;
     min-width: min-content;
     overflow: hidden;
-    padding-top: var(--_container-padding-vertical);
-    padding-bottom: var(--_container-padding-vertical);
+    padding-top: var(--_top-space);
+    padding-bottom: var(--_bottom-space);
     position: relative;
   }
 

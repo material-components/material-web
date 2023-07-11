@@ -100,7 +100,8 @@ $unsupported-tokens: (
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-tracking',
-  'supporting-text-weight' // go/keep-sorted end
+  'supporting-text-weight',
+  // go/keep-sorted end
 );
 
 $_default: (

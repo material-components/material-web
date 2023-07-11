@@ -17,7 +17,7 @@
 
 $supported-tokens: (
   // go/keep-sorted start
-  'container-padding-vertical',
+  'bottom-space',
   'container-shape',
   'content-color',
   'content-type',
@@ -81,6 +81,7 @@ $supported-tokens: (
   'supporting-text-top-space',
   'supporting-text-trailing-space',
   'supporting-text-type',
+  'top-space',
   'trailing-content-color',
   'trailing-space',
   // go/keep-sorted end
@@ -101,7 +102,7 @@ $_default: (
 
   $tokens: (
     // go/keep-sorted start
-    'container-padding-vertical': if($exclude-hardcoded-values, null, 16px),
+    'bottom-space': if($exclude-hardcoded-values, null, 16px),
     'container-shape': map.get($text-field, 'container-shape'),
     'content-color': map.get($text-field, 'input-text-color'),
     'content-type': map.get($text-field, 'input-text-type'),
@@ -197,6 +198,7 @@ $_default: (
     'supporting-text-top-space': if($exclude-hardcoded-values, null, 4px),
     'supporting-text-trailing-space': if($exclude-hardcoded-values, null, 16px),
     'supporting-text-type': map.get($text-field, 'supporting-text-type'),
+    'top-space': if($exclude-hardcoded-values, null, 16px),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
     'trailing-space': if($exclude-hardcoded-values, null, 16px),
     // go/keep-sorted end
