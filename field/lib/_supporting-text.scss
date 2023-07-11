@@ -7,11 +7,12 @@
   .supporting-text {
     color: var(--_supporting-text-color);
     display: flex;
-    gap: var(--_supporting-text-padding);
-    justify-content: space-between;
-    padding: var(--_supporting-text-padding-top) var(--_supporting-text-padding)
-      0;
     font: var(--_supporting-text-type);
+    gap: 16px;
+    justify-content: space-between;
+    padding-inline-start: var(--_supporting-text-leading-space);
+    padding-inline-end: var(--_supporting-text-trailing-space);
+    padding-top: var(--_supporting-text-top-space);
   }
 
   // Don't shrink the counter when the supporting text is long and wraps

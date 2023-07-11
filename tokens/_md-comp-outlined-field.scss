@@ -77,8 +77,9 @@ $supported-tokens: (
   'outline-label-padding',
   'outline-width',
   'supporting-text-color',
-  'supporting-text-padding',
-  'supporting-text-padding-top',
+  'supporting-text-leading-space',
+  'supporting-text-top-space',
+  'supporting-text-trailing-space',
   'supporting-text-type',
   'trailing-content-color',
   // go/keep-sorted end
@@ -191,8 +192,9 @@ $_default: (
     'outline-label-padding': if($exclude-hardcoded-values, null, 4px),
     'outline-width': map.get($text-field, 'outline-width'),
     'supporting-text-color': map.get($text-field, 'supporting-text-color'),
-    'supporting-text-padding': if($exclude-hardcoded-values, null, 16px),
-    'supporting-text-padding-top': if($exclude-hardcoded-values, null, 4px),
+    'supporting-text-leading-space': if($exclude-hardcoded-values, null, 16px),
+    'supporting-text-top-space': if($exclude-hardcoded-values, null, 4px),
+    'supporting-text-trailing-space': if($exclude-hardcoded-values, null, 16px),
     'supporting-text-type': map.get($text-field, 'supporting-text-type'),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
     // go/keep-sorted end
