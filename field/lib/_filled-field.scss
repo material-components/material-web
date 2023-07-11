@@ -126,11 +126,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   .field:not(.with-start) .start {
-    padding-inline-start: var(--_container-padding-horizontal);
+    padding-inline-start: var(--_leading-space);
   }
 
   .field:not(.with-end) .end {
-    padding-inline-end: var(--_container-padding-horizontal);
+    padding-inline-end: var(--_trailing-space);
   }
 
   .field:not(.no-label) .container {

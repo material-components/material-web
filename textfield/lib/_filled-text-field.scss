@@ -21,7 +21,8 @@
       'container-shape-start-end',
       'container-shape-end-end',
       'container-shape-end-start',
-      'container-padding-horizontal',
+      'leading-space',
+      'trailing-space',
       'container-padding-vertical',
       'input-text-prefix-trailing-space',
       'input-text-suffix-leading-space',
@@ -49,7 +50,8 @@
   // Add missing tokens
   $tokens: map.merge(
     (
-      'container-padding-horizontal': 16px,
+      'leading-space': 16px,
+      'trailing-space': 16px,
       'container-padding-vertical': 16px,
       'input-text-prefix-trailing-space': 2px,
       'input-text-suffix-leading-space': 2px,
@@ -93,7 +95,6 @@
         'active-indicator-color': var(--_active-indicator-color),
         'active-indicator-height': var(--_active-indicator-height),
         'container-color': var(--_container-color),
-        'container-padding-horizontal': var(--_container-padding-horizontal),
         'container-padding-vertical': var(--_container-padding-vertical),
         'container-shape-end-end': var(--_container-shape-end-end),
         'container-shape-end-start': var(--_container-shape-end-start),
@@ -173,9 +174,11 @@
         'label-text-populated-size': var(--_label-text-populated-size),
         'label-text-type': var(--_label-text-type),
         'leading-content-color': var(--_leading-icon-color),
+        'leading-space': var(--_leading-space),
         'supporting-text-color': var(--_supporting-text-color),
         'supporting-text-type': var(--_supporting-text-type),
         'trailing-content-color': var(--_trailing-icon-color),
+        'trailing-space': var(--_trailing-space),
         'with-label-container-padding-vertical':
           var(--_with-label-container-padding-vertical) // go/keep-sorted end
       )

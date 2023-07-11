@@ -17,7 +17,6 @@
 
 $supported-tokens: (
   // go/keep-sorted start
-  'container-padding-horizontal',
   'container-padding-vertical',
   'container-shape',
   'content-color',
@@ -73,6 +72,7 @@ $supported-tokens: (
   'label-text-populated-size',
   'label-text-type',
   'leading-content-color',
+  'leading-space',
   'outline-color',
   'outline-label-padding',
   'outline-width',
@@ -82,6 +82,7 @@ $supported-tokens: (
   'supporting-text-trailing-space',
   'supporting-text-type',
   'trailing-content-color',
+  'trailing-space',
   // go/keep-sorted end
 );
 
@@ -100,7 +101,6 @@ $_default: (
 
   $tokens: (
     // go/keep-sorted start
-    'container-padding-horizontal': if($exclude-hardcoded-values, null, 16px),
     'container-padding-vertical': if($exclude-hardcoded-values, null, 16px),
     'container-shape': map.get($text-field, 'container-shape'),
     'content-color': map.get($text-field, 'input-text-color'),
@@ -188,6 +188,7 @@ $_default: (
       map.get($text-field, 'label-text-populated-size'),
     'label-text-type': map.get($text-field, 'label-text-type'),
     'leading-content-color': map.get($text-field, 'leading-icon-color'),
+    'leading-space': if($exclude-hardcoded-values, null, 16px),
     'outline-color': map.get($text-field, 'outline-color'),
     'outline-label-padding': if($exclude-hardcoded-values, null, 4px),
     'outline-width': map.get($text-field, 'outline-width'),
@@ -197,6 +198,7 @@ $_default: (
     'supporting-text-trailing-space': if($exclude-hardcoded-values, null, 16px),
     'supporting-text-type': map.get($text-field, 'supporting-text-type'),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
+    'trailing-space': if($exclude-hardcoded-values, null, 16px),
     // go/keep-sorted end
   );
 

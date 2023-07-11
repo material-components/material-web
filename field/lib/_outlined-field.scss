@@ -148,7 +148,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     display: flex;
     margin-inline-start: calc(-1 * var(--_outline-label-padding));
     margin-inline-end: var(--_outline-label-padding);
-    max-width: calc(100% - 2 * var(--_container-padding-horizontal));
+    max-width: calc(100% - var(--_leading-space) - var(--_trailing-space));
     padding: 0 var(--_outline-label-padding);
     position: relative;
   }
@@ -230,13 +230,13 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   .outline-start,
   .field:not(.with-start) .start {
     padding-inline-start: max(
-      var(--_container-padding-horizontal),
+      var(--_leading-space),
       $shape-start + var(--_outline-label-padding)
     );
   }
 
   .field:not(.with-end) .end {
-    padding-inline-end: max(var(--_container-padding-horizontal), $shape-end);
+    padding-inline-end: max(var(--_trailing-space), $shape-end);
   }
 
   .outline-start::before,

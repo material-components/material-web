@@ -237,7 +237,8 @@ interface TextInputOptions<T> {
 
 const sharedTextFieldStyles: StyleInfo = {
   'margin-inline-end': '16px',
-  '--md-filled-field-container-padding-horizontal': '8px',
+  '--md-filled-field-leading-space': '8px',
+  '--md-filled-field-trailing-space': '8px',
   '--md-filled-field-container-padding-vertical': '4px',
   'width': '150px',
   'min-width': '150px',
