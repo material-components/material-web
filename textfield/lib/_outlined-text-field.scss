@@ -22,8 +22,8 @@
       'container-shape-end-start',
       'container-padding-horizontal',
       'container-padding-vertical',
-      'input-text-prefix-padding',
-      'input-text-suffix-padding',
+      'input-text-prefix-trailing-space',
+      'input-text-suffix-leading-space',
       'focus-caret-color'
     )
   );
@@ -46,8 +46,8 @@
     (
       'container-padding-horizontal': 16px,
       'container-padding-vertical': 16px,
-      'input-text-prefix-padding': 2px,
-      'input-text-suffix-padding': 2px,
+      'input-text-prefix-trailing-space': 2px,
+      'input-text-suffix-leading-space': 2px,
       // TODO(b/270705687): remove when focus-caret-color token added
       'focus-caret-color':
         map.get(tokens.md-sys-color-values-light(), 'primary'),

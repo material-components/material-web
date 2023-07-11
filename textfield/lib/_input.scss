@@ -52,10 +52,10 @@
   }
 
   .prefix {
-    padding-inline-end: var(--_input-text-prefix-padding);
+    padding-inline-end: var(--_input-text-prefix-trailing-space);
   }
 
   .suffix {
-    padding-inline-start: var(--_input-text-suffix-padding);
+    padding-inline-start: var(--_input-text-suffix-leading-space);
   }
 }
