@@ -344,12 +344,20 @@ export class Ripple extends LitElement implements Attachable {
     this.state = State.INACTIVE;
     const animation = this.growAnimation;
     const pressAnimationPlayState = animation?.currentTime ?? Infinity;
+    // TODO: go/ts51upgrade - Auto-added to unblock TS5.1 migration.
+    //   TS2365: Operator '>=' cannot be applied to types 'CSSNumberish' and
+    //   'number'.
+    // @ts-ignore
     if (pressAnimationPlayState >= MINIMUM_PRESS_MS) {
       this.pressed = false;
       return;
     }
 
     await new Promise(resolve => {
+      // TODO: go/ts51upgrade - Auto-added to unblock TS5.1 migration.
+      //   TS2363: The right-hand side of an arithmetic operation must be of
+      //   type 'any', 'number', 'bigint' or an enum type.
+      // @ts-ignore
       setTimeout(resolve, MINIMUM_PRESS_MS - pressAnimationPlayState);
     });
 
