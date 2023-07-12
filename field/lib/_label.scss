@@ -28,8 +28,7 @@
 
   .label.resting {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: var(--_top-space);
   }
 
   .label.floating {
