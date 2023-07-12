@@ -195,6 +195,7 @@ export abstract class Select extends LitElement {
       <${this.fieldTag}
           aria-haspopup="listbox"
           role="combobox"
+          part="field"
           tabindex=${this.disabled ? '-1' : '0'}
           aria-expanded=${this.open ? 'true' : 'false'}
           class="field"
@@ -256,6 +257,7 @@ export abstract class Select extends LitElement {
           listTabIndex="-1"
           type="listbox"
           stay-open-on-focusout
+          part="menu"
           .anchor=${this.field}
           .open=${this.open}
           .quick=${this.quick}
