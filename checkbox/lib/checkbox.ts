@@ -15,7 +15,6 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
 
-
 /**
  * A checkbox component.
  */
