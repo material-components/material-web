@@ -28,10 +28,10 @@ breaking changes.
 
 Component                     | Alpha | Beta | Stable
 ----------------------------- | :---: | :--: | :----:
-Button                        | ✅     | ✅    | ❌
+Button                        | ✅     | ✅    | 🟡
 FAB                           | ✅     | ✅    | ❌
 Icon button                   | ✅     | ✅    | ❌
-Checkbox                      | ✅     | ✅    | ❌
+Checkbox                      | ✅     | ✅    | 🟡
 Chips                         | ✅     | ✅    | ❌
 Dialog                        | ✅     | ✅    | ❌
 Divider                       | ✅     | ✅    | ✅
@@ -43,11 +43,11 @@ List                          | ✅     | ✅    | ❌
 Menu                          | ✅     | ✅    | ❌
 Progress indicator (circular) | ✅     | ✅    | 🟡
 Progress indicator (linear)   | ✅     | ✅    | 🟡
-Radio button                  | ✅     | ✅    | ❌
+Radio button                  | ✅     | ✅    | 🟡
 Ripple                        | ✅     | ✅    | ✅
 Select                        | ✅     | ✅    | ❌
 Slider                        | ✅     | ✅    | ❌
-Switch                        | ✅     | ✅    | ❌
+Switch                        | ✅     | ✅    | 🟡
 Tabs                          | ✅     | ✅    | ❌
 Text field                    | ✅     | ✅    | 🟡
 
