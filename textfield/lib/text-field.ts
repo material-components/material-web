@@ -517,7 +517,7 @@ export abstract class TextField extends LitElement {
       max=${this.maxLength}
     >
       ${this.renderLeadingIcon()}
-      ${prefix}${input}${suffix}
+      <div class="content">${prefix}${input}${suffix}</div>
       ${this.renderTrailingIcon()}
     </${this.fieldTag}>`;
   }

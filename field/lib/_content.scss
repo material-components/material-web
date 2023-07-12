@@ -74,13 +74,9 @@ $_enter-delay: $_label-duration - $_visible-duration;
   }
 
   .content {
-    // Content elements provided to the field (such as <input>) may use
-    // `currentColor` to inherit this property.
     color: var(--_content-color);
     display: flex;
     flex: 1;
-    // Content elements provided to the field (such as <input>) may inherit font
-    font: var(--_content-type);
     opacity: 0;
     transition: opacity $_visible-duration
       map.get($_md-sys-motion, 'easing-emphasized');
@@ -91,6 +87,17 @@ $_enter-delay: $_label-duration - $_visible-duration;
   .populated .content {
     opacity: 1;
     transition-delay: $_enter-delay;
+  }
+
+  .content ::slotted(*) {
+    all: unset;
+    // Use `currentColor` to inherit the various state colors that are set
+    // below.
+    color: currentColor;
+    font: var(--_content-type);
+    padding-top: var(--_top-space);
+    padding-bottom: var(--_bottom-space);
+    width: 100%;
   }
 
   :hover .content {

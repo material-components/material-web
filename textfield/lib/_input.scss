@@ -4,17 +4,20 @@
 //
 
 @mixin styles() {
-  input {
-    appearance: none;
-    background: none;
-    border: none;
-    caret-color: var(--_caret-color);
-    color: currentColor;
-    font: inherit;
-    outline: none;
+  .content {
+    display: flex;
+  }
+
+  input,
+  .prefix,
+  .suffix {
+    all: inherit;
     padding: 0;
+  }
+
+  input {
+    caret-color: var(--_caret-color);
     text-align: inherit;
-    width: 100%;
 
     &::placeholder {
       color: currentColor;
@@ -49,6 +52,11 @@
 
   .text-field:not(.disabled) input::placeholder {
     color: var(--_input-text-placeholder-color);
+  }
+
+  .prefix,
+  .suffix {
+    width: min-content;
   }
 
   .prefix {

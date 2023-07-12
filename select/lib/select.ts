@@ -244,9 +244,7 @@ export abstract class Select extends LitElement {
   private renderLabel() {
     // need to render &nbsp; so that line-height can apply and give it a
     // non-zero height
-    return html`<div
-        id="label"
-        class="label">${this.displayText || html`&nbsp;`}</div>`;
+    return html`<div id="label">${this.displayText || html`&nbsp;`}</div>`;
   }
 
   private renderMenu() {

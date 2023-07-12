@@ -226,17 +226,27 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     var(--_container-shape-start-end),
     var(--_container-shape-end-end)
   );
+  $start-space: max(
+    var(--_leading-space),
+    $shape-start + var(--_outline-label-padding)
+  );
+  $end-space: max(var(--_trailing-space), $shape-end);
 
   .outline-start,
-  .field:not(.with-start) .start {
-    padding-inline-start: max(
-      var(--_leading-space),
-      $shape-start + var(--_outline-label-padding)
-    );
+  .field:not(.with-start) .content ::slotted(*) {
+    padding-inline-start: $start-space;
   }
 
-  .field:not(.with-end) .end {
-    padding-inline-end: max(var(--_trailing-space), $shape-end);
+  .field:not(.with-start) .label-space {
+    margin-inline-start: $start-space;
+  }
+
+  .field:not(.with-end) .content ::slotted(*) {
+    padding-inline-end: $end-space;
+  }
+
+  .field:not(.with-end) .label-space {
+    margin-inline-end: $end-space;
   }
 
   .outline-start::before,

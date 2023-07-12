@@ -5,6 +5,7 @@
 
 @mixin styles() {
   .label {
+    box-sizing: border-box;
     color: var(--_label-text-color);
     overflow: hidden;
     max-width: 100%;
@@ -22,6 +23,7 @@
     white-space: nowrap;
     z-index: 1;
     font: var(--_label-text-type);
+    width: min-content;
   }
 
   .label.resting {
@@ -42,6 +44,17 @@
 
   .no-label .label {
     display: none;
+  }
+
+  // Labels need start/end padding when there isn't start/end content so they
+  // don't sit on the edge of the field. We use a wrapper element around the
+  // labels so as not to affect the dimensions used in the label keyframes.
+  .label-space {
+    inset: 0;
+    position: absolute;
+    // Don't let setting text-align on the field change the label's alignment.
+    // It should only impact content text.
+    text-align: initial;
   }
 
   :hover .label {

@@ -92,7 +92,15 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
   .label.floating {
     position: absolute;
-    top: 0;
+    top: var(--_with-label-top-space);
+  }
+
+  .field:not(.with-start) .label-space {
+    margin-inline-start: var(--_leading-space);
+  }
+
+  .field:not(.with-end) .label-space {
+    margin-inline-end: var(--_trailing-space);
   }
 
   .active-indicator {
@@ -125,21 +133,19 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     opacity: 1;
   }
 
-  .field:not(.with-start) .start {
+  .field:not(.with-start) .content ::slotted(*) {
     padding-inline-start: var(--_leading-space);
   }
 
-  .field:not(.with-end) .end {
+  .field:not(.with-end) .content ::slotted(*) {
     padding-inline-end: var(--_trailing-space);
   }
 
-  .field:not(.no-label) .container {
+  .field:not(.no-label) .content ::slotted(*) {
     padding-bottom: var(--_with-label-bottom-space);
-    padding-top: var(--_with-label-top-space);
-  }
-
-  .field:not(.no-label) .middle {
-    padding-top: var(--_label-text-populated-line-height);
+    padding-top: calc(
+      var(--_with-label-top-space) + var(--_label-text-populated-line-height)
+    );
   }
 
   :hover .active-indicator::before {

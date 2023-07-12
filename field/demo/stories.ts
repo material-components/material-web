@@ -36,20 +36,6 @@ const styles = css`
   md-outlined-field {
     width: 256px;
   }
-
-  input,
-  textarea {
-    background: none;
-    border: none;
-    box-sizing: border-box;
-    color: currentColor;
-    font: inherit;
-    outline: 1px dashed currentColor;
-    padding: 0;
-    resize: none;
-    margin: 0;
-    width: 100%;
-  }
 `;
 
 const filled: MaterialStoryInit<StoryKnobs> = {

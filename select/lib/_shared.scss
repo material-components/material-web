@@ -46,10 +46,6 @@
     display: inline-flex;
   }
 
-  .label {
-    width: 100%;
-  }
-
   :host([disabled]) {
     pointer-events: none;
   }
