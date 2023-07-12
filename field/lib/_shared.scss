@@ -49,8 +49,10 @@
     position: relative;
   }
 
-  .resizable .container {
-    resize: both;
+  .field,
+  .container-overflow,
+  .container {
+    resize: inherit;
   }
 
   .disabled {

@@ -10,6 +10,7 @@ import '@material/web/field/outlined-field.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';
+import {styleMap} from 'lit/directives/style-map.js';
 
 /** Knob types for field stories. */
 export interface StoryKnobs {
@@ -62,8 +63,10 @@ const filled: MaterialStoryInit<StoryKnobs> = {
         html`<textarea rows="1" ?disabled=${disabled}></textarea>` :
         html`<input ?disabled=${disabled}>`;
 
+    const styles = {resize: resizable ? 'both' : null};
     return html`
       <md-filled-field
+        style=${styleMap(styles)}
         .label=${label}
         ?disabled=${disabled}
         .error=${error}
@@ -71,7 +74,6 @@ const filled: MaterialStoryInit<StoryKnobs> = {
         .hasStart=${hasStart}
         .hasEnd=${hasEnd}
         .populated=${populated}
-        .resizable=${resizable}
         .required=${required}
         supporting-text=${supportingText}
         error-text=${errorText}
@@ -110,8 +112,10 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
             disabled} aria-describedby="description"></textarea>` :
         html`<input ?disabled=${disabled} aria-describedby="description">`;
 
+    const styles = {resize: resizable ? 'both' : null};
     return html`
       <md-outlined-field
+        style=${styleMap(styles)}
         .label=${label}
         ?disabled=${disabled}
         .error=${error}
@@ -119,7 +123,6 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
         .hasStart=${hasStart}
         .hasEnd=${hasEnd}
         .populated=${populated}
-        .resizable=${resizable}
         .required=${required}
         supporting-text=${supportingText}
         error-text=${errorText}

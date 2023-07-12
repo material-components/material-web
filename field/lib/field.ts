@@ -20,7 +20,6 @@ export class Field extends LitElement implements SurfacePositionTarget {
   @property({type: Boolean}) focused = false;
   @property() label = '';
   @property({type: Boolean}) populated = false;
-  @property({type: Boolean}) resizable = false;
   @property({type: Boolean}) required = false;
   @property({attribute: 'supporting-text'}) supportingText = '';
   @property({attribute: 'error-text'}) errorText = '';
@@ -104,7 +103,6 @@ export class Field extends LitElement implements SurfacePositionTarget {
       'with-start': this.hasStart,
       'with-end': this.hasEnd,
       'populated': this.populated,
-      'resizable': this.resizable,
       'required': this.required,
       'no-label': !this.label,
     };
