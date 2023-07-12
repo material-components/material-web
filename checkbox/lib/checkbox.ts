@@ -14,6 +14,19 @@ import {classMap} from 'lit/directives/class-map.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
+import type {MdCheckbox} from '../checkbox.js';
+
+export class CheckboxCheckedEvent extends Event {
+  constructor (public checkbox: MdCheckbox) {
+    super('checked', { bubbles: true, composed: true })
+  }
+}
+
+declare global {
+  interface HTMLElementEventMap {
+    'checked': CheckboxCheckedEvent
+  }
+}
 
 /**
  * A checkbox component.
@@ -110,6 +123,8 @@ export class Checkbox extends LitElement {
       this.prevDisabled = changed.get('disabled') ?? this.disabled;
       this.prevIndeterminate =
           changed.get('indeterminate') ?? this.indeterminate;
+      
+      this.dispatchEvent(new CheckboxCheckedEvent(this))
     }
 
     const shouldAddFormValue = this.checked && !this.indeterminate;
