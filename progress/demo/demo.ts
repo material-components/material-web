@@ -21,28 +21,39 @@ function cssWire<T = string>(prop: string, unit = '') {
 }
 
 const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
-    'Progress indicators (linear)', [
+    'Progress indicators', [
       new Knob('progress', {ui: numberInput({step: 0.1}), defaultValue: 0.5}),
-      new Knob('buffer', {ui: numberInput({step: 0.1}), defaultValue: 0.8}),
       new Knob('indeterminate', {ui: boolInput(), defaultValue: false}),
       new Knob('fourColor', {ui: boolInput(), defaultValue: false}),
-      new Knob('track color', {
+      new Knob(
+          'buffer (linear)', {ui: numberInput({step: 0.1}), defaultValue: 0.8}),
+      new Knob('track color (linear)', {
         ui: colorPicker(),
         defaultValue: '',
         wiring: cssWire('--md-linear-progress-track-color')
       }),
-      new Knob('track height', {
+      new Knob('track height (linear)', {
         ui: numberInput(),
         defaultValue: 4,
         wiring: cssWire<number>('--md-linear-progress-track-height', 'px')
       }),
-      new Knob('indicator height', {
+      new Knob('indicator height (linear)', {
         ui: numberInput(),
         defaultValue: 4,
         wiring: cssWire<number>(
             '--md-linear-progress-active-indicator-height', 'px')
       }),
-      new Knob('custom theme', {ui: boolInput()}),
+      new Knob('custom theme (linear)', {ui: boolInput()}),
+      new Knob('size (circular)', {
+        ui: numberInput(),
+        defaultValue: 48,
+        wiring: cssWire<number>('--md-circular-progress-size', 'px')
+      }),
+      new Knob('trackWidth (circular)', {
+        ui: numberInput(),
+        defaultValue: 8.33,
+        wiring: cssWire<number>('--md-circular-progress-active-indicator-width')
+      }),
     ]);
 
 collection.addStories(...materialInitsToStoryInits(stories));

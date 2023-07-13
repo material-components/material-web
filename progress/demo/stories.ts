@@ -4,27 +4,66 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+
+import '@material/web/progress/linear-progress.js';
 import '@material/web/button/tonal-button.js';
 import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/standard-icon-button.js';
-import '@material/web/circularprogress/circular-progress.js';
+import '@material/web/progress/circular-progress.js';
 
 import {MdTonalButton} from '@material/web/button/tonal-button.js';
-import {MdCircularProgress} from '@material/web/circularprogress/circular-progress.js';
 import {MaterialStoryInit} from './material-collection.js';
+import {MdCircularProgress} from '@material/web/progress/circular-progress.js';
 import {css, html} from 'lit';
+import {classMap} from 'lit/directives/class-map.js';
 
-
-/** Knob types for circular-progress stories. */
+/** Knob types for linear progress stories. */
 export interface StoryKnobs {
   progress: number;
+  'buffer (linear)': number;
   indeterminate: boolean;
   fourColor: boolean;
-  size: number;
-  trackWidth: number;
+  'track color (linear)': string;
+  'track height (linear)': number;
+  'indicator height (linear)': number;
+  'custom theme (linear)': boolean;
+  'size (circular)': number;
+  'trackWidth (circular)': number;
 }
 
 const standard: MaterialStoryInit<StoryKnobs> = {
+  name: 'Linear progress',
+  styles: css`
+    md-linear-progress {
+      inline-size: 50vw;
+    }
+
+    .custom {
+      --md-linear-progress-active-indicator-color: linear-gradient(steelblue, lightblue);
+      --md-linear-progress-track-color: gainsboro;
+      --md-linear-progress-active-indicator-height: 20px;
+      --md-linear-progress-track-height: 20px;
+      --md-linear-progress-track-shape: 9999px;
+    }
+  `,
+  render(knobs) {
+    const {progress, indeterminate, fourColor} = knobs;
+    const buffer = knobs['buffer (linear)'];
+    const classes = {'custom': knobs['custom theme (linear)']};
+
+    return html`
+      <md-linear-progress
+          class=${classMap(classes)}
+          .progress=${progress}
+          .buffer=${buffer}
+          .indeterminate=${indeterminate}
+          .fourColor=${fourColor}
+      ></md-linear-progress>`;
+  }
+};
+
+
+const standardCircular: MaterialStoryInit<StoryKnobs> = {
   name: 'Circular progress',
   render({progress, indeterminate, fourColor}) {
     return html`
@@ -100,5 +139,5 @@ const insideButton: MaterialStoryInit<StoryKnobs> = {
   }
 };
 
-/** Circular Progress stories. */
-export const stories = [standard, iconButton, insideButton];
+/** Linear Progress stories. */
+export const stories = [standard, standardCircular, iconButton, insideButton];
