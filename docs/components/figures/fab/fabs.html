@@ -1,0 +1,65 @@
+<div class="figure-wrapper">
+  <figure
+      class="types-image"
+      style="justify-content:center;"
+      title="There are three sizes of floating action buttons: FAB, small FAB, and large FAB"
+      aria-label="The 3 sizes of FAB">
+    <style>
+      .types-image .wrapper,
+      .types-image .wrapper > * {
+        display: flex;
+        padding: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .types-image .wrapper > * {
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 16px;
+      }
+      .types-image span {
+        display: inline-flex;
+        background-color: var(--md-sys-color-inverse-surface);
+        color: var(--md-sys-color-inverse-on-surface);
+        padding: 8px;
+        margin-block-start: 8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+      }
+      .types-image .fab-wrapper {
+        height: 96px;
+        display: flex;
+        align-items: center;
+      }
+    </style>
+    <div class="wrapper">
+      <div>
+        <div class="fab-wrapper">
+          <md-fab variant="primary" aria-label="Accessibility">
+            <md-icon slot="icon">accessible_forward</md-icon>
+          </md-fab>
+        </div>
+        <span>1</span>
+      </div>
+      <div>
+        <div class="fab-wrapper">
+          <md-fab variant="tertiary" size="small" aria-label="Edit">
+            <md-icon slot="icon">edit</md-icon>
+          </md-fab>
+        </div>
+        <span>2</span>
+      </div>
+      <div>
+        <div class="fab-wrapper">
+          <md-fab size="large" aria-label="Color Palette">
+            <md-icon slot="icon">palette</md-icon>
+          </md-fab>
+        </div>
+        <span>3</span>
+      </div>
+    </div>
+  </figure>
+</div>
