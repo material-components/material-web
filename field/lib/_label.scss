@@ -48,7 +48,7 @@
   // Labels need start/end padding when there isn't start/end content so they
   // don't sit on the edge of the field. We use a wrapper element around the
   // labels so as not to affect the dimensions used in the label keyframes.
-  .label-space {
+  .label-wrapper {
     inset: 0;
     position: absolute;
     // Don't let setting text-align on the field change the label's alignment.

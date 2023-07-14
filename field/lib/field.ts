@@ -116,7 +116,7 @@ export class Field extends LitElement implements SurfacePositionTarget {
               <slot name="start"></slot>
             </div>
             <div class="middle">
-              <div class="label-space">
+              <div class="label-wrapper">
                 ${restingLabel}
                 ${outline ? nothing : floatingLabel}
               </div>

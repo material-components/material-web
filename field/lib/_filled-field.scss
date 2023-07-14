@@ -95,11 +95,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     top: var(--_with-label-top-space);
   }
 
-  .field:not(.with-start) .label-space {
+  .field:not(.with-start) .label-wrapper {
     margin-inline-start: var(--_leading-space);
   }
 
-  .field:not(.with-end) .label-space {
+  .field:not(.with-end) .label-wrapper {
     margin-inline-end: var(--_trailing-space);
   }
 

@@ -237,7 +237,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     padding-inline-start: $start-space;
   }
 
-  .field:not(.with-start) .label-space {
+  .field:not(.with-start) .label-wrapper {
     margin-inline-start: $start-space;
   }
 
@@ -245,7 +245,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     padding-inline-end: $end-space;
   }
 
-  .field:not(.with-end) .label-space {
+  .field:not(.with-end) .label-wrapper {
     margin-inline-end: $end-space;
   }
 
