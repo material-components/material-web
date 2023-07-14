@@ -141,9 +141,17 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     padding-inline-end: var(--_trailing-space);
   }
 
-  .field:not(.no-label) .content ::slotted(*) {
+  .field:not(.no-label) .content ::slotted(:not(textarea)) {
     padding-bottom: var(--_with-label-bottom-space);
     padding-top: calc(
+      var(--_with-label-top-space) + var(--_label-text-populated-line-height)
+    );
+  }
+
+  .field:not(.no-label) .content ::slotted(textarea) {
+    // Use margin for textareas since they will scroll over the label if not.
+    margin-bottom: var(--_with-label-bottom-space);
+    margin-top: calc(
       var(--_with-label-top-space) + var(--_label-text-populated-line-height)
     );
   }

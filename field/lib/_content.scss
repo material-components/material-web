@@ -95,9 +95,18 @@ $_enter-delay: $_label-duration - $_visible-duration;
     // below.
     color: currentColor;
     font: var(--_content-type);
+    width: 100%;
+  }
+
+  .content ::slotted(:not(textarea)) {
     padding-top: var(--_top-space);
     padding-bottom: var(--_bottom-space);
-    width: 100%;
+  }
+
+  .content ::slotted(textarea) {
+    // Use margin for textareas since they will scroll over the label if not.
+    margin-top: var(--_top-space);
+    margin-bottom: var(--_bottom-space);
   }
 
   :hover .content {
