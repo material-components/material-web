@@ -35,8 +35,10 @@
       --_#{$token}: var(--md-icon-button-#{$token}, #{$value});
     }
 
-    height: var(--_state-layer-size);
-    width: var(--_state-layer-size);
+    max-height: var(--_state-layer-size);
+    max-width: var(--_state-layer-size);
+    width: 100%;
+    height: 100%;
 
     @include focus-ring.theme(
       (
