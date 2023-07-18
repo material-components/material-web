@@ -15,6 +15,7 @@ import {stories, StoryKnobs} from './stories.js';
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Textfield', [
       new Knob('label', {ui: textInput(), defaultValue: 'Label'}),
+      new Knob('textarea', {ui: boolInput(), defaultValue: false}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('required', {ui: boolInput(), defaultValue: false}),
       new Knob('prefixText', {ui: textInput(), defaultValue: ''}),

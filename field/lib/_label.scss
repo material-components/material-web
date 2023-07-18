@@ -9,13 +9,6 @@
     color: var(--_label-text-color);
     overflow: hidden;
     max-width: 100%;
-    // The resting label at 100% height can block pointer events to the content
-    // if it's very long and spans the full width of the field. Additionally,
-    // selecting the label's text doesn't present a good UX, since the user
-    // selection should be re-focused to another element (such as the input)
-    // upon focusing. Finally, since the actual label elements are swapped, it
-    // is not easy to maintain the user's label text selection.
-    pointer-events: none;
     // TODO: Check with design, should there be any transition from resting to
     // floating when there is a mismatch between ellipsis, such as opacity
     // transition?
@@ -24,6 +17,18 @@
     z-index: 1;
     font: var(--_label-text-type);
     width: min-content;
+  }
+
+  .label-wrapper {
+    inset: 0;
+    // The resting label at 100% height can block pointer events to the content
+    // if it's very long and spans the full width of the field. Additionally,
+    // selecting the label's text doesn't present a good UX, since the user
+    // selection should be re-focused to another element (such as the input)
+    // upon focusing. Finally, since the actual label elements are swapped, it
+    // is not easy to maintain the user's label text selection.
+    pointer-events: none;
+    position: absolute;
   }
 
   .label.resting {

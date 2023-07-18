@@ -4,19 +4,22 @@
 //
 
 @mixin styles() {
-  .content {
+  .input-wrapper {
     display: flex;
   }
 
-  input,
-  .prefix,
-  .suffix {
+  .input-wrapper > * {
+    // Inherit field CSS set on the input wrapper, like font, but not margin or
+    // padding. This wrapper is needed since text fields may have prefix and
+    // suffix text next to an <input>
     all: inherit;
     padding: 0;
   }
 
-  input {
+  .input {
     caret-color: var(--_caret-color);
+    // remove extra height added by horizontal scrollbars
+    overflow-x: hidden;
     text-align: inherit;
 
     &::placeholder {
@@ -34,11 +37,11 @@
     }
   }
 
-  :focus-within input {
+  :focus-within .input {
     caret-color: var(--_focus-caret-color);
   }
 
-  .error:focus-within input {
+  .error:focus-within .input {
     caret-color: var(--_error-focus-caret-color);
   }
 
@@ -50,7 +53,7 @@
     color: var(--_input-text-suffix-color);
   }
 
-  .text-field:not(.disabled) input::placeholder {
+  .text-field:not(.disabled) .input::placeholder {
     color: var(--_input-text-placeholder-color);
   }
 

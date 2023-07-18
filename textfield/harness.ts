@@ -91,7 +91,7 @@ export class TextFieldHarness extends Harness<TextField> {
   }
 
   protected simulateInput(
-      element: HTMLInputElement, charactersToAppend: string,
+      element: HTMLInputElement|HTMLTextAreaElement, charactersToAppend: string,
       init?: InputEventInit) {
     element.value += charactersToAppend;
     if (!init) {
@@ -106,8 +106,8 @@ export class TextFieldHarness extends Harness<TextField> {
   }
 
   protected simulateDeletion(
-      element: HTMLInputElement, beginIndex?: number, endIndex?: number,
-      init?: InputEventInit) {
+      element: HTMLInputElement|HTMLTextAreaElement, beginIndex?: number,
+      endIndex?: number, init?: InputEventInit) {
     const deletedCharacters = element.value.slice(beginIndex, endIndex);
     element.value = element.value.substring(0, beginIndex ?? 0) +
         element.value.substring(endIndex ?? element.value.length);
@@ -122,7 +122,8 @@ export class TextFieldHarness extends Harness<TextField> {
     element.dispatchEvent(new InputEvent('input', init));
   }
 
-  protected simulateChangeIfNeeded(element: HTMLInputElement) {
+  protected simulateChangeIfNeeded(element: HTMLInputElement|
+                                   HTMLTextAreaElement) {
     if (this.valueBeforeChange === element.value) {
       return;
     }
@@ -133,6 +134,7 @@ export class TextFieldHarness extends Harness<TextField> {
 
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('input')!;
+    return this.element.renderRoot.querySelector('.input') as HTMLInputElement |
+        HTMLTextAreaElement;
   }
 }

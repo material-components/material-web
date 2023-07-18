@@ -36,6 +36,7 @@
     border-end-end-radius: var(--_container-shape-end-end);
     border-end-start-radius: var(--_container-shape-end-start);
     display: flex;
+    height: 100%;
     position: relative;
   }
 
@@ -44,6 +45,8 @@
     border-radius: inherit;
     display: flex;
     flex: 1;
+    max-height: 100%;
+    min-height: 100%;
     min-width: min-content;
     overflow: hidden;
     position: relative;
@@ -51,7 +54,9 @@
 
   .field,
   .container-overflow,
-  .container {
+  .field:not(.disabled) .container {
+    // Inherit `resize` set on host, but only inherit it for the actual
+    // container if the field is not disabled.
     resize: inherit;
   }
 

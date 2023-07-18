@@ -15,21 +15,31 @@
   :host {
     display: inline-flex;
     outline: none;
+    resize: both;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .text-field,
+  .field {
+    width: 100%;
   }
 
   .text-field {
     display: inline-flex;
-    flex: 1;
   }
 
   .field {
     cursor: text;
-    flex: 1;
   }
 
   .disabled .field {
     cursor: default;
+  }
+
+  .text-field,
+  .textarea .field {
+    // Note: only inherit default `resize: both` to the field when textarea.
+    resize: inherit;
   }
 
   @include icon.styles;
