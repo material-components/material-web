@@ -115,8 +115,8 @@ export abstract class SharedFab extends LitElement {
       </span>`;
   }
 
-  private onSlotchange(e: Event) {
-    const slotEl = e.target as HTMLSlotElement;
+  private onSlotchange(event: Event) {
+    const slotEl = event.target as HTMLSlotElement;
     const slottedEls = slotEl.assignedElements({flatten: true});
     this.hasIcon = slottedEls.length !== 0;
   }

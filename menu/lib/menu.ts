@@ -309,18 +309,18 @@ export abstract class Menu extends LitElement {
     };
   }
 
-  private async handleFocusout(e: FocusEvent) {
+  private async handleFocusout(event: FocusEvent) {
     if (this.stayOpenOnFocusout) {
       return;
     }
 
     // Stop propagation to prevent nested menus from interfering with each other
-    e.stopPropagation();
+    event.stopPropagation();
 
-    if (e.relatedTarget) {
+    if (event.relatedTarget) {
       // Don't close the menu if we are switching focus between menu,
       // md-menu-item, and md-list
-      if (isElementInSubtree(e.relatedTarget, this)) {
+      if (isElementInSubtree(event.relatedTarget, this)) {
         return;
       }
     }
@@ -339,14 +339,14 @@ export abstract class Menu extends LitElement {
   // istelf. Specifically useful for the case where typeahead encounters a space
   // and we don't want the menu item to close the menu.
   @eventOptions({capture: true})
-  private handleListKeydown(e: KeyboardEvent) {
-    if (e.target === this.listElement && !e.defaultPrevented &&
-        isClosableKey(e.code)) {
-      e.preventDefault();
+  private handleListKeydown(event: KeyboardEvent) {
+    if (event.target === this.listElement && !event.defaultPrevented &&
+        isClosableKey(event.code)) {
+      event.preventDefault();
       this.close();
     }
 
-    this.typeaheadController.onKeydown(e);
+    this.typeaheadController.onKeydown(event);
   }
 
   /**
@@ -638,8 +638,8 @@ export abstract class Menu extends LitElement {
     }
   }
 
-  private readonly onWindowClick = (e: MouseEvent) => {
-    if (!this.stayOpenOnOutsideClick && !e.composedPath().includes(this)) {
+  private readonly onWindowClick = (event: MouseEvent) => {
+    if (!this.stayOpenOnOutsideClick && !event.composedPath().includes(this)) {
       this.open = false;
     }
   };
@@ -648,8 +648,8 @@ export abstract class Menu extends LitElement {
     this.close();
   }
 
-  private onDeactivateItems(e: Event) {
-    e.stopPropagation();
+  private onDeactivateItems(event: Event) {
+    event.stopPropagation();
     const items = this.items;
     for (const item of items) {
       item.active = false;
@@ -657,27 +657,27 @@ export abstract class Menu extends LitElement {
     }
   }
 
-  private handleDeactivateTypeahead(e: DeactivateTypeaheadEvent) {
+  private handleDeactivateTypeahead(event: DeactivateTypeaheadEvent) {
     // stopPropagation so that this does not deactivate any typeaheads in menus
     // nested above it e.g. md-sub-menu-item
-    e.stopPropagation();
+    event.stopPropagation();
     this.typeaheadActive = false;
   }
 
-  private handleActivateTypeahead(e: ActivateTypeaheadEvent) {
+  private handleActivateTypeahead(event: ActivateTypeaheadEvent) {
     // stopPropagation so that this does not activate any typeaheads in menus
     // nested above it e.g. md-sub-menu-item
-    e.stopPropagation();
+    event.stopPropagation();
     this.typeaheadActive = true;
   }
 
-  private handleStayOpenOnFocusout(e: Event) {
-    e.stopPropagation();
+  private handleStayOpenOnFocusout(event: Event) {
+    event.stopPropagation();
     this.stayOpenOnFocusout = true;
   }
 
-  private handleCloseOnFocusout(e: Event) {
-    e.stopPropagation();
+  private handleCloseOnFocusout(event: Event) {
+    event.stopPropagation();
     this.stayOpenOnFocusout = false;
   }
 

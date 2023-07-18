@@ -33,14 +33,14 @@ export class MenuItemLink extends ListItemLink implements MenuItem {
         new DefaultCloseMenuEvent(this, {kind: CLOSE_REASON.CLICK_SELECTION}));
   }
 
-  protected override onKeydown(e: KeyboardEvent) {
+  protected override onKeydown(event: KeyboardEvent) {
     if (this.keepOpen) return;
 
-    const keyCode = e.code;
+    const keyCode = event.code;
     // Do not preventDefault on enter or else it will prevent from opening links
-    if (!e.defaultPrevented && isClosableKey(keyCode) &&
+    if (!event.defaultPrevented && isClosableKey(keyCode) &&
         keyCode !== SELECTION_KEY.ENTER) {
-      e.preventDefault();
+      event.preventDefault();
       this.dispatchEvent(new DefaultCloseMenuEvent(
           this, {kind: CLOSE_REASON.KEYDOWN, key: keyCode}));
     }

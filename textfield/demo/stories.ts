@@ -84,8 +84,8 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
 
 const LEADING_ICON = html`<md-icon slot="leadingicon">search</md-icon>`;
 const TRAILING_ICON = html`<md-icon slot="trailingicon">event</md-icon>`;
-function reportValidity(e: Event) {
-  (e.target as MdFilledTextField).reportValidity();
+function reportValidity(event: Event) {
+  (event.target as MdFilledTextField).reportValidity();
 }
 
 /** Textfield stories. */

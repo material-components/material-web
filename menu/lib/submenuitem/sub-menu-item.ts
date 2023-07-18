@@ -12,8 +12,8 @@ import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
 import {ActivateTypeaheadEvent, CLOSE_REASON, CloseMenuEvent, CloseOnFocusoutEvent, DeactivateItemsEvent, DeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY, StayOpenOnFocusoutEvent} from '../shared.js';
 
-function stopPropagation(e: Event) {
-  e.stopPropagation();
+function stopPropagation(event: Event) {
+  event.stopPropagation();
 }
 
 /**
@@ -108,16 +108,16 @@ export class SubMenuItem extends MenuItemEl {
   /**
    * On item keydown handles opening the submenu.
    */
-  protected override onKeydown(e: KeyboardEvent) {
-    const shouldOpenSubmenu = this.isSubmenuOpenKey(e.code);
+  protected override onKeydown(event: KeyboardEvent) {
+    const shouldOpenSubmenu = this.isSubmenuOpenKey(event.code);
 
-    if (e.code === SELECTION_KEY.SPACE) {
+    if (event.code === SELECTION_KEY.SPACE) {
       // prevent space from scrolling. Only open the submenu.
-      e.preventDefault();
+      event.preventDefault();
     }
 
     if (!shouldOpenSubmenu) {
-      super.onKeydown(e);
+      super.onKeydown(event);
       return;
     }
 
@@ -156,16 +156,16 @@ export class SubMenuItem extends MenuItemEl {
     ></slot></span>`;
   }
 
-  private onCloseSubmenu(e: CloseMenuEvent) {
-    e.itemPath.push(this);
+  private onCloseSubmenu(event: CloseMenuEvent) {
+    event.itemPath.push(this);
     // Restore focusout behavior
     this.dispatchEvent(new CloseOnFocusoutEvent());
     this.dispatchEvent(new ActivateTypeaheadEvent());
     // Escape should only close one menu not all of the menus unlike space or
     // click selection which should close all menus.
-    if (e.reason.kind === CLOSE_REASON.KEYDOWN &&
-        e.reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
-      e.stopPropagation();
+    if (event.reason.kind === CLOSE_REASON.KEYDOWN &&
+        event.reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
+      event.stopPropagation();
       this.active = true;
       this.selected = false;
       // It might already be active so manually focus
@@ -177,12 +177,12 @@ export class SubMenuItem extends MenuItemEl {
     this.selected = false;
   }
 
-  private async onSubMenuKeydown(e: KeyboardEvent) {
+  private async onSubMenuKeydown(event: KeyboardEvent) {
     // Stop propagation so that we don't accidentally close every parent menu.
     // Additionally, we want to isolate things like the typeahead keydowns
     // from bubbling up to the parent menu and confounding things.
-    e.stopPropagation();
-    const shouldClose = this.isSubmenuCloseKey(e.code);
+    event.stopPropagation();
+    const shouldClose = this.isSubmenuCloseKey(event.code);
 
     if (!shouldClose) return;
 

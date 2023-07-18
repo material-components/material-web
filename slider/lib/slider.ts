@@ -441,16 +441,16 @@ export class Slider extends LitElement {
     }
   }
 
-  private handleFocus(e: Event) {
-    this.updateOnTop(e.target as HTMLInputElement);
+  private handleFocus(event: Event) {
+    this.updateOnTop(event.target as HTMLInputElement);
   }
 
-  private startAction(e: Event) {
-    const target = e.target as HTMLInputElement;
+  private startAction(event: Event) {
+    const target = event.target as HTMLInputElement;
     const fixed =
         (target === this.inputStart) ? this.inputEnd! : this.inputStart!;
     this.action = {
-      canFlip: e.type === 'pointerdown',
+      canFlip: event.type === 'pointerdown',
       flipped: false,
       target,
       fixed,
@@ -459,22 +459,22 @@ export class Slider extends LitElement {
     };
   }
 
-  private finishAction(e: Event) {
+  private finishAction(event: Event) {
     this.action = undefined;
   }
 
-  private handleKeydown(e: KeyboardEvent) {
-    this.startAction(e);
+  private handleKeydown(event: KeyboardEvent) {
+    this.startAction(event);
   }
 
-  private handleKeyup(e: KeyboardEvent) {
-    this.finishAction(e);
+  private handleKeyup(event: KeyboardEvent) {
+    this.finishAction(event);
   }
 
-  private handleDown(e: PointerEvent) {
-    this.startAction(e);
-    this.ripplePointerId = e.pointerId;
-    const isStart = e.target as HTMLInputElement === this.inputStart;
+  private handleDown(event: PointerEvent) {
+    this.startAction(event);
+    this.ripplePointerId = event.pointerId;
+    const isStart = event.target as HTMLInputElement === this.inputStart;
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
     this.handleStartHover =
@@ -482,7 +482,7 @@ export class Slider extends LitElement {
     this.handleEndHover = !this.disabled && !isStart && Boolean(this.handleEnd);
   }
 
-  private async handleUp(e: PointerEvent) {
+  private async handleUp(event: PointerEvent) {
     const {target, values, flipped} = this.action ?? {};
     //  Async here for Firefox because input can be after pointerup
     //  when value is calmped.
@@ -497,7 +497,7 @@ export class Slider extends LitElement {
         target.dispatchEvent(new Event('change', {bubbles: true}));
       }
     }
-    this.finishAction(e);
+    this.finishAction(event);
   }
 
   /**
@@ -513,13 +513,13 @@ export class Slider extends LitElement {
    * of the directive. This is done based on the hover state when the
    * slider is updated.
    */
-  private handleMove(e: PointerEvent) {
-    this.handleStartHover = !this.disabled && inBounds(e, this.handleStart);
-    this.handleEndHover = !this.disabled && inBounds(e, this.handleEnd);
+  private handleMove(event: PointerEvent) {
+    this.handleStartHover = !this.disabled && inBounds(event, this.handleStart);
+    this.handleEndHover = !this.disabled && inBounds(event, this.handleEnd);
   }
 
-  private handleEnter(e: PointerEvent) {
-    this.handleMove(e);
+  private handleEnter(event: PointerEvent) {
+    this.handleMove(event);
   }
 
   private handleLeave() {
@@ -576,7 +576,7 @@ export class Slider extends LitElement {
     return true;
   }
 
-  private handleInput(e: InputEvent) {
+  private handleInput(event: InputEvent) {
     // avoid processing a re-dispatched event
     if (this.isRedisptchingEvent) {
       return;
@@ -603,28 +603,28 @@ export class Slider extends LitElement {
     }
     // control external visibility of input event
     if (stopPropagation) {
-      e.stopPropagation();
+      event.stopPropagation();
     }
     // ensure event path is correct when flipped.
     if (redispatch) {
       this.isRedisptchingEvent = true;
-      redispatchEvent(target, e);
+      redispatchEvent(target, event);
       this.isRedisptchingEvent = false;
     }
   }
 
-  private handleChange(e: Event) {
+  private handleChange(event: Event) {
     // prevent keyboard triggered changes from dispatching for
     // clamped values; note, this only occurs for keyboard
-    const changeTarget = e.target as HTMLInputElement;
+    const changeTarget = event.target as HTMLInputElement;
     const {target, values} = this.action ?? {};
     const squelch =
         (target && (target.valueAsNumber === values!.get(changeTarget)!));
     if (!squelch) {
-      redispatchEvent(this, e);
+      redispatchEvent(this, event);
     }
     // ensure keyboard triggered change clears action.
-    this.finishAction(e);
+    this.finishAction(event);
   }
 
   /** @private */

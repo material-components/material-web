@@ -179,7 +179,7 @@ export abstract class Button extends LitElement {
         this.handleSlotChange}"></slot>`;
   }
 
-  private handleClick(e: MouseEvent) {
+  private handleClick(event: MouseEvent) {
     if (this.isRedispatchingEvent) {
       return;
     }
@@ -192,9 +192,9 @@ export abstract class Button extends LitElement {
     if (!(isSubmit || isReset)) {
       return;
     }
-    e.stopPropagation();
+    event.stopPropagation();
     this.isRedispatchingEvent = true;
-    const prevented = !redispatchEvent(this, e);
+    const prevented = !redispatchEvent(this, event);
     this.isRedispatchingEvent = false;
     if (prevented) {
       return;

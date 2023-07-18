@@ -440,7 +440,7 @@ export class Dialog extends LitElement {
   /* Live media query for matching user specified fullscreen breakpoint. */
   private fullscreenQuery?: MediaQueryList;
   private fullscreenQueryListener:
-      ((e: MediaQueryListEvent) => void)|undefined = undefined;
+      ((event: MediaQueryListEvent) => void)|undefined = undefined;
   private updateFullscreen() {
     if (this.fullscreenQuery !== undefined) {
       this.fullscreenQuery.removeEventListener(
@@ -462,15 +462,15 @@ export class Dialog extends LitElement {
 
   // handles native close/cancel events and we just ensure
   // internal state is in sync.
-  private handleDialogDismiss(e: Event) {
-    if (e.type === 'cancel') {
+  private handleDialogDismiss(event: Event) {
+    if (event.type === 'cancel') {
       this.currentAction = this.escapeKeyAction;
       // Prevents the <dialog> element from closing when
       // `escapeKeyAction` is set to an empty string.
       // It also early returns and avoids <md-dialog> internal state
       // changes.
       if (this.escapeKeyAction === '') {
-        e.preventDefault();
+        event.preventDefault();
         return;
       }
     }
@@ -479,17 +479,17 @@ export class Dialog extends LitElement {
     this.open = false;
     this.opening = false;
     this.closing = false;
-    redispatchEvent(this, e);
+    redispatchEvent(this, event);
   }
 
-  private handleDialogClick(e: Event) {
+  private handleDialogClick(event: Event) {
     if (!this.open) {
       return;
     }
     this.currentAction =
-        (e.target as Element).getAttribute(this.actionAttribute) ??
+        (event.target as Element).getAttribute(this.actionAttribute) ??
         (!this.modeless && this.containerElement &&
-                 !e.composedPath().includes(this.containerElement) ?
+                 !event.composedPath().includes(this.containerElement) ?
              this.scrimClickAction :
              '');
     if (this.currentAction !== '') {
@@ -525,29 +525,30 @@ export class Dialog extends LitElement {
     this.getFocusElement()?.blur();
   }
 
-  private canStartDrag(e: PointerEvent) {
-    if (this.draggable === false || e.defaultPrevented || !(e.buttons & 1) ||
-        !this.headerElement || !e.composedPath().includes(this.headerElement)) {
+  private canStartDrag(event: PointerEvent) {
+    if (this.draggable === false || event.defaultPrevented ||
+        !(event.buttons & 1) || !this.headerElement ||
+        !event.composedPath().includes(this.headerElement)) {
       return false;
     }
     return true;
   }
 
-  private handlePointerMove(e: PointerEvent) {
-    if (!this.dragging && !this.canStartDrag(e) || !this.containerElement) {
+  private handlePointerMove(event: PointerEvent) {
+    if (!this.dragging && !this.canStartDrag(event) || !this.containerElement) {
       return;
     }
     const {top, left, height, width} =
         this.containerElement.getBoundingClientRect();
     if (!this.dragging) {
-      this.containerElement.setPointerCapture(e.pointerId);
+      this.containerElement.setPointerCapture(event.pointerId);
       this.dragging = true;
-      const {x, y} = e;
+      const {x, y} = event;
       this.dragInfo = [x, y, top, left];
     }
     const [sx, sy, st, sl] = this.dragInfo ?? [0, 0, 0, 0];
-    const dx = e.x - sx;
-    const dy = e.y - sy;
+    const dx = event.x - sx;
+    const dy = event.y - sy;
     const ml = window.innerWidth - width - this.dragMargin;
     const mt = window.innerHeight - height - this.dragMargin;
     const l = Math.max(this.dragMargin, Math.min(ml, dx + sl));
@@ -556,11 +557,11 @@ export class Dialog extends LitElement {
     this.style.setProperty('--_container-drag-block-start', `${t}px`);
   }
 
-  private handleDragEnd(e: PointerEvent) {
+  private handleDragEnd(event: PointerEvent) {
     if (!this.dragging) {
       return;
     }
-    this.containerElement?.releasePointerCapture(e.pointerId);
+    this.containerElement?.releasePointerCapture(event.pointerId);
     this.dragging = false;
     this.dragInfo = undefined;
   }

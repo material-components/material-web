@@ -337,13 +337,13 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
     const variant = `primary ${vertical}` as Variant;
     const classes = {vertical, scrolling: true};
 
-    function getTabs(e: Event) {
-      return ((e.target! as Element).getRootNode() as ShadowRoot)
+    function getTabs(event: Event) {
+      return ((event.target! as Element).getRootNode() as ShadowRoot)
           .querySelector('md-tabs')!;
     }
 
-    function addTab(e: Event) {
-      const tabs = getTabs(e);
+    function addTab(event: Event) {
+      const tabs = getTabs(event);
       const count = tabs.childElementCount;
       const tab = document.createElement('md-tab');
       tab.textContent = `Tab ${count + 1}`;
@@ -355,8 +355,8 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
         tabs.selected = count;
       }
     }
-    function removeTab(e: Event) {
-      const tabs = getTabs(e);
+    function removeTab(event: Event) {
+      const tabs = getTabs(event);
       if (tabs.selectedItem === undefined) {
         return;
       }
@@ -365,8 +365,8 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
       tabs.selected = Math.min(count - 1, tabs.selected);
     }
 
-    function moveTabTowardsEnd(e: Event) {
-      const tabs = getTabs(e);
+    function moveTabTowardsEnd(event: Event) {
+      const tabs = getTabs(event);
       const next = tabs.selectedItem?.nextElementSibling;
       if (next) {
         next.after(tabs.selectedItem);
@@ -374,8 +374,8 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
       }
     }
 
-    function moveTabTowardsStart(e: Event) {
-      const tabs = getTabs(e);
+    function moveTabTowardsStart(event: Event) {
+      const tabs = getTabs(event);
       const previous = tabs.selectedItem?.previousElementSibling;
       if (previous) {
         previous.before(tabs.selectedItem);

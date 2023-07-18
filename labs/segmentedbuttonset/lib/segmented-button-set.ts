@@ -64,8 +64,8 @@ export class SegmentedButtonSet extends LitElement {
     }
   }
 
-  private handleSegmentedButtonInteraction(e: CustomEvent) {
-    const index = this.buttons.indexOf(e.target as SegmentedButton);
+  private handleSegmentedButtonInteraction(event: CustomEvent) {
+    const index = this.buttons.indexOf(event.target as SegmentedButton);
     this.toggleSelection(index);
   }
 

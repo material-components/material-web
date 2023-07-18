@@ -100,7 +100,7 @@ export class Tabs extends LitElement {
    * The item currently focused.
    */
   protected get focusedItem() {
-    return this.items.find((e: HTMLElement) => e.matches(':focus-within'));
+    return this.items.find((el: HTMLElement) => el.matches(':focus-within'));
   }
 
   constructor() {
