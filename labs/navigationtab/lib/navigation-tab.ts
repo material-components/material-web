@@ -47,7 +47,7 @@ export class NavigationTab extends LitElement implements NavigationTabState {
         tabindex="${this.active ? 0 : -1}"
         @click="${this.handleClick}"
       >
-        <md-focus-ring inward></md-focus-ring>
+        <md-focus-ring part="focus-ring" inward></md-focus-ring>
         <md-ripple ?disabled="${
         this.disabled}" class="md3-navigation-tab__ripple"></md-ripple>
         <span aria-hidden="true" class="md3-navigation-tab__icon-content"

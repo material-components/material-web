@@ -54,7 +54,7 @@ export abstract class Chip extends LitElement {
       <div class="container ${classMap(this.getContainerClasses())}"
           role=${this.containerRole || nothing}>
         ${this.renderOutline()}
-        <md-focus-ring for=${this.primaryId}></md-focus-ring>
+        <md-focus-ring part="focus-ring" for=${this.primaryId}></md-focus-ring>
         <md-ripple for=${this.primaryId}
           ?disabled=${this.rippleDisabled}></md-ripple>
         ${this.renderActions()}

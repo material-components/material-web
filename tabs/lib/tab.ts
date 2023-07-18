@@ -111,7 +111,7 @@ export class Tab extends LitElement {
         ?disabled=${this.disabled}
         aria-label=${ariaLabel || nothing}
       >
-        <md-focus-ring inward></md-focus-ring>
+        <md-focus-ring part="focus-ring" inward></md-focus-ring>
         <md-elevation></md-elevation>
         <md-ripple ?disabled=${this.disabled}></md-ripple>
         <span class="touch"></span>

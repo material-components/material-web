@@ -298,7 +298,7 @@ export abstract class Menu extends LitElement {
    * Renders the focus ring component.
    */
   private renderFocusRing() {
-    return html`<md-focus-ring for="list"></md-focus-ring>`;
+    return html`<md-focus-ring part="focus-ring" for="list"></md-focus-ring>`;
   }
 
   private getSurfaceClasses() {

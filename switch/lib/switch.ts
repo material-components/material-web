@@ -128,7 +128,7 @@ export class Switch extends LitElement {
         ?disabled=${this.disabled}
         @click=${this.handleClick}
       >
-        <md-focus-ring></md-focus-ring>
+        <md-focus-ring part="focus-ring"></md-focus-ring>
         <span class="track">
           ${this.renderHandle()}
         </span>

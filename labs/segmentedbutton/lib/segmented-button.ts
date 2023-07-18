@@ -78,7 +78,7 @@ export class SegmentedButton extends LitElement {
         @click="${this.handleClick}"
         class="md3-segmented-button ${classMap(this.getRenderClasses())}"
       >
-        <md-focus-ring class="md3-segmented-button__focus-ring"></md-focus-ring>
+        <md-focus-ring class="md3-segmented-button__focus-ring" part="focus-ring"></md-focus-ring>
         <md-ripple ?disabled="${
         this.disabled}" class="md3-segmented-button__ripple"></md-ripple>
         ${this.renderOutline()}

@@ -74,7 +74,7 @@ export abstract class SharedFab extends LitElement {
         aria-label=${ariaLabel || nothing}
       >
         <md-elevation></md-elevation>
-        <md-focus-ring></md-focus-ring>
+        <md-focus-ring part="focus-ring"></md-focus-ring>
         <md-ripple class="ripple"></md-ripple>
         ${this.renderTouchTarget()}
         ${this.renderIcon()}

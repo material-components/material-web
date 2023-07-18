@@ -383,7 +383,7 @@ export class Slider extends LitElement {
     })}">
       <div class="handleNub"><md-elevation></md-elevation></div>
       ${when(this.labeled, () => this.renderLabel(label))}
-      <md-focus-ring for=${name}></md-focus-ring>
+      <md-focus-ring part="focus-ring" for=${name}></md-focus-ring>
       <md-ripple for=${name} class=${name} ?disabled=${
         this.disabled}></md-ripple>
     </div>`;

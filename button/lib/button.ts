@@ -159,7 +159,7 @@ export abstract class Button extends LitElement {
   }
 
   private renderFocusRing() {
-    return html`<md-focus-ring></md-focus-ring>`;
+    return html`<md-focus-ring part="focus-ring"></md-focus-ring>`;
   }
 
   private renderLabel() {

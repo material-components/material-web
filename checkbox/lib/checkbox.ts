@@ -143,7 +143,7 @@ export class Checkbox extends LitElement {
       <div class="container ${containerClasses}">
         <div class="outline"></div>
         <div class="background"></div>
-        <md-focus-ring for="input"></md-focus-ring>
+        <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
         <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
         <svg class="icon" viewBox="0 0 18 18">
           <rect class="mark short" />

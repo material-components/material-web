@@ -139,7 +139,7 @@ export class IconButton extends LitElement {
   }
 
   private renderFocusRing() {
-    return html`<md-focus-ring for=${
+    return html`<md-focus-ring part="focus-ring" for=${
         this.href ? 'link' : 'button'}></md-focus-ring>`;
   }
 

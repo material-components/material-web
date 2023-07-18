@@ -27,7 +27,7 @@ export function renderRemoveButton(
       tabindex=${!tabbable ? -1 : nothing}
       @click=${handleRemoveClick}
     >
-      <md-focus-ring></md-focus-ring>
+      <md-focus-ring part="trailing-focus-ring"></md-focus-ring>
       <md-ripple></md-ripple>
       <svg class="trailing icon" viewBox="0 96 960 960">
         <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />

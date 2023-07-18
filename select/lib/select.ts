@@ -256,6 +256,7 @@ export abstract class Select extends LitElement {
           type="listbox"
           stay-open-on-focusout
           part="menu"
+          exportparts="focus-ring: menu-focus-ring"
           .anchor=${this.field}
           .open=${this.open}
           .quick=${this.quick}
