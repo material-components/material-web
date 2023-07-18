@@ -12,7 +12,9 @@
     align-items: center;
     justify-content: center;
     padding: 0 8px;
+  }
 
+  .trailing.action md-focus-ring {
     // Note: the trailing action's shape only follows the trailing end of the
     // chip. For example, if the leading end is rounded, but the trailing is end
     // squared, then the focus ring will be squared (not rounded+squared).

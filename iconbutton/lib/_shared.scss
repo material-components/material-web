@@ -23,7 +23,9 @@
     height: var(--_container-size);
     width: var(--_container-size);
     justify-content: center;
+  }
 
+  md-focus-ring {
     @include focus-ring.theme(
       (
         'shape-start-start': var(--_container-shape-start-start),

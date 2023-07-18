@@ -45,17 +45,20 @@
   :host {
     color: unset;
 
-    @include focus-ring.theme(
-      (
-        'shape': 8px,
-      )
-    );
     @include ripple.theme(
       (
         hover-color: var(--_list-item-hover-state-layer-color),
         hover-opacity: var(--_list-item-hover-state-layer-opacity),
         pressed-color: var(--_list-item-pressed-state-layer-color),
         pressed-opacity: var(--_list-item-pressed-state-layer-opacity),
+      )
+    );
+  }
+
+  md-focus-ring {
+    @include focus-ring.theme(
+      (
+        'shape': 8px,
       )
     );
   }

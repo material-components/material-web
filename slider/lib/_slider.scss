@@ -93,7 +93,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
         shadow-color: var(--_handle-shadow-color),
       )
     );
-    // Focus ring
+  }
+
+  md-focus-ring {
     @include focus-ring.theme(
       (
         'outward-offset': -2px,

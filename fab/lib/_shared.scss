@@ -74,7 +74,9 @@ $_md-sys-motion: tokens.md-sys-motion-values();
         border-start-end-radius: var(--_large-container-shape-start-end);
         border-end-start-radius: var(--_large-container-shape-end-start);
         border-end-end-radius: var(--_large-container-shape-end-end);
+      }
 
+      md-focus-ring {
         @include focus-ring.theme(
           (
             'shape-start-start': var(--_large-container-shape-start-start),
@@ -162,6 +164,9 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);
     border-end-end-radius: var(--_container-shape-end-end);
+  }
+
+  md-focus-ring {
     @include focus-ring.theme(
       (
         'shape-start-start': var(--_container-shape-start-start),

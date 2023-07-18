@@ -37,10 +37,15 @@
 
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
+  }
 
+  md-focus-ring {
     @include focus-ring.theme(
       (
-        'shape': var(--_state-layer-shape),
+        'shape-start-start': var(--_state-layer-shape),
+        'shape-start-end': var(--_state-layer-shape),
+        'shape-end-end': var(--_state-layer-shape),
+        'shape-end-start': var(--_state-layer-shape),
       )
     );
   }

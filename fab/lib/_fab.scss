@@ -197,6 +197,9 @@
       border-start-end-radius: var(--_small-container-shape-start-end);
       border-end-start-radius: var(--_small-container-shape-end-start);
       border-end-end-radius: var(--_small-container-shape-end-end);
+    }
+
+    md-focus-ring {
       @include focus-ring.theme(
         (
           'shape-start-start': var(--_small-container-shape-start-start),

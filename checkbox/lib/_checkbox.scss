@@ -83,7 +83,9 @@ $_checkmark-bottom-left: 7px, -14px;
     vertical-align: top; // Fix extra space when placed inside display: block
     width: 48px;
     -webkit-tap-highlight-color: transparent;
+  }
 
+  md-focus-ring {
     @include focus-ring.theme(
       (
         'outward-offset': -2px,

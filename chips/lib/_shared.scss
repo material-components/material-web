@@ -29,7 +29,9 @@
         'pressed-opacity': var(--_pressed-state-layer-opacity),
       )
     );
+  }
 
+  md-focus-ring {
     @include focus-ring.theme(
       (
         'shape-start-start': var(--_container-shape-start-start),
