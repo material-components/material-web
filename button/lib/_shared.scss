@@ -19,11 +19,9 @@
     display: inline-flex;
     outline: none;
     -webkit-tap-highlight-color: transparent;
-    /**
-     * Override vertical-align with shortest value "top". Vertical-align's default
-     * "baseline" value causes buttons to be misaligned next to each other if one
-     * button has an icon and the other does not.
-     */
+    // Override vertical-align with shortest value "top". Vertical-align's
+    // default "baseline" value causes buttons to be misaligned next to each
+    // other if one button has an icon and the other does not.
     vertical-align: top;
 
     @include ripple.theme(

@@ -57,9 +57,7 @@ $_fullscreen-tokens: (
   fullscreen-container-block-padding: 8px,
 );
 
-/**
- * Extended token set for dialog.
- */
+// Extended token set for dialog.
 @function md-comp-dialog-values() {
   @return map.merge(
     map.merge(tokens.md-comp-dialog-values(), $_tokens),
