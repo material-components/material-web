@@ -76,9 +76,17 @@ const standardCircular: MaterialStoryInit<StoryKnobs> = {
 };
 const iconButton: MaterialStoryInit<StoryKnobs> = {
   name: 'Containing an icon-button',
-  styles: css`.aroundIcon {
-        --md-circular-progress-size: 48px;
-      }`,
+  styles: css`
+    .around-icon {
+      position: relative;
+    }
+
+    md-standard-icon-button {
+      inset: 0;
+      margin: auto;
+      position: absolute;
+    }
+  `,
   render({progress, indeterminate, fourColor}) {
     const toggle = ({target}: Event) => {
       const spinner =
@@ -87,16 +95,18 @@ const iconButton: MaterialStoryInit<StoryKnobs> = {
     };
 
     return html`
-      <md-circular-progress class="aroundIcon"
+      <div class="around-icon">
+        <md-circular-progress
           .progress=${progress}
           .indeterminate=${indeterminate}
           .fourColor=${fourColor}
-      >
+        ></md-circular-progress>
         <md-standard-icon-button toggle @change=${toggle}>
           <md-icon>play_arrow</md-icon>
           <md-icon slot="selectedIcon">pause</md-icon>
         </md-standard-icon-button>
-      </md-circular-progress>`;
+      </div>
+    `;
   }
 };
 const insideButton: MaterialStoryInit<StoryKnobs> = {

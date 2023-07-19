@@ -55,7 +55,7 @@ export class CircularProgress extends LitElement {
         this.indeterminate ? this.renderIndeterminateContainer() :
                              this.renderDeterminateContainer()}
       </div>
-      <slot></slot>`;
+    `;
   }
 
   // Determinate mode is rendered with an svg so the progress arc can be
