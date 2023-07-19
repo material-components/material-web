@@ -4,58 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing} from 'lit';
-import {property} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {html} from 'lit';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {Progress} from './progress.js';
 
 /**
  * A circular progress component.
  */
-export class CircularProgress extends LitElement {
-  static {
-    requestUpdateOnAriaChange(this);
-  }
+export class CircularProgress extends Progress {
+  protected override renderIndicator() {
+    if (this.indeterminate) {
+      return this.renderIndeterminateContainer();
+    }
 
-  /**
-   * Progress to display, a fraction between 0 and 1.
-   */
-  @property({type: Number}) progress = 0;
-
-  /**
-   * Whether or not to display an animated spinner representing indeterminate
-   * progress.
-   */
-  @property({type: Boolean}) indeterminate = false;
-
-  /**
-   * Whether or not to render indeterminate mode using 4 colors instead of one.
-   */
-  @property({type: Boolean, attribute: 'four-color'}) fourColor = false;
-
-  protected override render() {
-    const classes = {
-      'indeterminate': this.indeterminate,
-      'four-color': this.fourColor
-    };
-
-    // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
-    return html`
-      <div
-        class="circular-progress ${classMap(classes)}"
-        role="progressbar"
-        aria-label="${ariaLabel || nothing}"
-        aria-valuemin="0"
-        aria-valuemax="1"
-        aria-valuenow="${this.indeterminate ? nothing : this.progress}">
-        ${
-        this.indeterminate ? this.renderIndeterminateContainer() :
-                             this.renderDeterminateContainer()}
-      </div>
-    `;
+    return this.renderDeterminateContainer();
   }
 
   // Determinate mode is rendered with an svg so the progress arc can be
