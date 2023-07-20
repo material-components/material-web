@@ -7,7 +7,7 @@
 import '@material/web/checkbox/checkbox.js';
 
 import {labelStyles, MaterialStoryInit} from './material-collection.js';
-import {html} from 'lit';
+import {css, html} from 'lit';
 
 /** Knob types for checkbox stories. */
 export interface StoryKnobs {
@@ -17,37 +17,69 @@ export interface StoryKnobs {
   indeterminate: boolean;
 }
 
-const standard: MaterialStoryInit<StoryKnobs> = {
+const checkbox: MaterialStoryInit<StoryKnobs> = {
   name: 'Checkbox',
   render({checked, disabled, error, indeterminate}) {
     return html`
       <md-checkbox
-        .checked=${checked}
+        aria-label="An example checkbox"
+        ?checked=${checked}
         ?disabled=${disabled}
-        .error=${error}
-        .indeterminate=${indeterminate}
+        ?error=${error}
+        ?indeterminate=${indeterminate}
       ></md-checkbox>
     `;
   },
 };
 
-const labeled: MaterialStoryInit<StoryKnobs> = {
-  name: 'Labeled',
-  styles: labelStyles,
-  render({checked, disabled, error, indeterminate}) {
+const withLabels: MaterialStoryInit<StoryKnobs> = {
+  name: 'With labels',
+  styles: [
+    labelStyles,
+    css`
+      .column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        gap: 0;
+      }
+    `,
+  ],
+  render({disabled, error}) {
     return html`
-      <label>
-        Checkbox
-        <md-checkbox
-          .checked=${checked}
-          ?disabled=${disabled}
-          .error=${error}
-          .indeterminate=${indeterminate}
-        ></md-checkbox>
-      </label>
+      <div class="column" role="group" aria-label="Animals">
+        <label role="presentation">
+          <md-checkbox
+            ?disabled=${disabled}
+            ?error=${error}
+            aria-label="Cats"
+          ></md-checkbox>
+          <span aria-hidden="true">Cats</span>
+        </label>
+        <label role="presentation">
+          <md-checkbox
+            checked
+            ?disabled=${disabled}
+            ?error=${error}
+            aria-label="dogs"
+          ></md-checkbox>
+          <span aria-hidden="true">Dogs</span>
+        </label>
+        <label role="presentation">
+          <md-checkbox
+            indeterminate
+            ?disabled=${disabled}
+            ?error=${error}
+            aria-label="Birds"
+          ></md-checkbox>
+          <span aria-hidden="true">Birds</span>
+        </label>
+      </div>
     `;
   },
 };
 
 /** Checkbox stories. */
-export const stories = [standard, labeled];
+export const stories = [checkbox, withLabels];
