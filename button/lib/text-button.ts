@@ -9,11 +9,4 @@ import {Button} from './button.js';
 /**
  * A text button component.
  */
-export class TextButton extends Button {
-  protected override getRenderClasses() {
-    return {
-      ...super.getRenderClasses(),
-      'md3-button--text': true,
-    };
-  }
-}
+export class TextButton extends Button {}

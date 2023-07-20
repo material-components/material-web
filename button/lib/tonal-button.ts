@@ -14,13 +14,6 @@ import {Button} from './button.js';
  * A tonal button component.
  */
 export class TonalButton extends Button {
-  protected override getRenderClasses() {
-    return {
-      ...super.getRenderClasses(),
-      'md3-button--tonal': true,
-    };
-  }
-
   protected override renderElevation() {
     return html`<md-elevation></md-elevation>`;
   }

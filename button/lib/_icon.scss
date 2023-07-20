@@ -3,15 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @mixin styles() {
   // The icon CSS class overrides styles defined in the .material-icons CSS
   // class, which is loaded separately so the order of CSS definitions is not
   // guaranteed. Therefore, increase specifity to ensure overrides apply.
   ::slotted([slot='icon']) {
-    .md3-button & {
+    .button & {
       display: inline-flex;
       position: relative;
       writing-mode: horizontal-tb;
@@ -22,19 +19,19 @@
       block-size: var(--_icon-size);
     }
 
-    .md3-button:hover & {
+    .button:hover & {
       color: var(--_hover-icon-color);
     }
 
-    .md3-button:focus & {
+    .button:focus & {
       color: var(--_focus-icon-color);
     }
 
-    .md3-button:active & {
+    .button:active & {
       color: var(--_pressed-icon-color);
     }
 
-    .md3-button:disabled & {
+    .button:disabled & {
       color: var(--_disabled-icon-color);
       opacity: var(--_disabled-icon-opacity);
     }

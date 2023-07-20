@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -23,7 +20,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
   }
 
-  .md3-button {
+  .button {
     @include elevation.theme(
       (
         'level': var(--_container-elevation),

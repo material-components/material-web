@@ -12,14 +12,7 @@ import {Button} from './button.js';
  * An outlined button component.
  */
 export class OutlinedButton extends Button {
-  protected override getRenderClasses() {
-    return {
-      ...super.getRenderClasses(),
-      'md3-button--outlined': true,
-    };
-  }
-
   protected override renderOutline() {
-    return html`<span class="md3-button__outline"></span>`;
+    return html`<span class="button__outline"></span>`;
   }
 }

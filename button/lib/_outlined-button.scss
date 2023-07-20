@@ -11,9 +11,6 @@
 @use '../../tokens';
 // go/keep-sorted end
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 @mixin theme($tokens) {
   $supported-tokens: list.join(
     tokens.$md-comp-outlined-button-supported-tokens,
@@ -67,7 +64,7 @@
     );
   }
 
-  .md3-button__outline {
+  .button__outline {
     inset: 0;
     border-style: solid;
     position: absolute;
@@ -78,22 +75,22 @@
     border-end-start-radius: var(--_container-shape-end-start);
     border-end-end-radius: var(--_container-shape-end-end);
 
-    .md3-button:active & {
+    .button:active & {
       border-color: var(--_pressed-outline-color);
     }
 
-    .md3-button:disabled & {
+    .button:disabled & {
       border-color: var(--_disabled-outline-color);
       opacity: var(--_disabled-outline-opacity);
     }
   }
 
-  .md3-button__outline,
-  .md3-button__ripple {
+  .button__outline,
+  .button__ripple {
     border-width: var(--_outline-width);
   }
 
-  .md3-button__ripple {
+  .button__ripple {
     inline-size: calc(100% - 2 * var(--_outline-width));
     block-size: calc(100% - 2 * var(--_outline-width));
     border-style: solid;

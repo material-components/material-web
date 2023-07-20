@@ -69,7 +69,7 @@ export abstract class Button extends LitElement {
    */
   @property() type: ''|'submit'|'reset' = '';
 
-  @query('.md3-button') private readonly buttonElement!: HTMLElement|null;
+  @query('.button') private readonly buttonElement!: HTMLElement|null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
@@ -104,7 +104,7 @@ export abstract class Button extends LitElement {
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
     return staticHtml`
       <${button}
-        class="md3-button ${classMap(this.getRenderClasses())}"
+        class="button ${classMap(this.getRenderClasses())}"
         ?disabled=${isDisabled}
         aria-label="${ariaLabel || nothing}"
         aria-haspopup="${ariaHasPopup || nothing}"
@@ -126,8 +126,8 @@ export abstract class Button extends LitElement {
 
   protected getRenderClasses() {
     return {
-      'md3-button--icon-leading': !this.trailingIcon && this.hasIcon,
-      'md3-button--icon-trailing': this.trailingIcon && this.hasIcon,
+      'button--icon-leading': !this.trailingIcon && this.hasIcon,
+      'button--icon-trailing': this.trailingIcon && this.hasIcon,
     };
   }
 
@@ -141,7 +141,7 @@ export abstract class Button extends LitElement {
 
   private renderTouchTarget() {
     return html`
-      <span class="md3-button__touch"></span>
+      <span class="button__touch"></span>
     `;
   }
 
@@ -154,7 +154,7 @@ export abstract class Button extends LitElement {
   };
 
   private renderRipple() {
-    return html`<md-ripple class="md3-button__ripple" ?disabled="${
+    return html`<md-ripple class="button__ripple" ?disabled="${
         this.disabled}"></md-ripple>`;
   }
 
@@ -163,7 +163,7 @@ export abstract class Button extends LitElement {
   }
 
   private renderLabel() {
-    return html`<span class="md3-button__label"><slot></slot></span>`;
+    return html`<span class="button__label"><slot></slot></span>`;
   }
 
   private renderLeadingIcon() {

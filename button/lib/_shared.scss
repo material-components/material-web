@@ -3,9 +3,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// stylelint-disable selector-class-pattern --
-// Selector '.md3-*' should only be used in this project.
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
@@ -50,7 +47,7 @@
     pointer-events: none;
   }
 
-  .md3-button {
+  .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -102,7 +99,7 @@
       outline: none;
     }
 
-    &:disabled .md3-button__label {
+    &:disabled .button__label {
       color: var(--_disabled-label-text-color);
       opacity: var(--_disabled-label-text-opacity);
     }
@@ -125,33 +122,33 @@
     }
   }
 
-  .md3-button,
-  .md3-button__ripple {
+  .button,
+  .button__ripple {
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);
     border-end-end-radius: var(--_container-shape-end-end);
   }
 
-  .md3-button::after,
-  .md3-button::before,
+  .button::after,
+  .button::before,
   md-elevation,
-  .md3-button__ripple {
+  .button__ripple {
     z-index: -1; // Place behind content
   }
 
   // TODO(b/181413732): Verify token below are named correctly
-  .md3-button--icon-leading {
+  .button--icon-leading {
     padding-inline-start: var(--_with-icon-spacing-leading);
     padding-inline-end: var(--_with-icon-spacing-trailing);
   }
 
-  .md3-button--icon-trailing {
+  .button--icon-trailing {
     padding-inline-start: var(--_with-trailing-icon-spacing-leading);
     padding-inline-end: var(--_with-trailing-icon-spacing-trailing);
   }
 
-  .md3-link-button-wrapper {
+  .link-button-wrapper {
     inline-size: 100%;
   }
 }
