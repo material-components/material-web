@@ -7,7 +7,7 @@
 import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
-import {Tab, Variant} from './tab.js';
+import {Tab, TabVariant} from './tab.js';
 
 const NAVIGATION_KEYS = new Map([
   ['default', new Set(['Home', 'End'])],
@@ -51,7 +51,7 @@ export class Tabs extends LitElement {
    * include `vertical`.
    * Defaults to `primary`.
    */
-  @property({reflect: true}) variant: Variant = 'primary';
+  @property({reflect: true}) variant: TabVariant = 'primary';
 
   /**
    * Whether or not the item is `disabled`.

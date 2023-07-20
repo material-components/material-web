@@ -9,7 +9,7 @@ import '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/tabs/tabs.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {MdTabs, Variant} from '@material/web/tabs/tabs.js';
+import {MdTabs, TabVariant} from '@material/web/tabs/tabs.js';
 import {css, html, nothing} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -63,7 +63,7 @@ const primary: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
     const vertical = knobs.vertical ? 'vertical' : '';
-    const variant = `primary ${vertical}` as Variant;
+    const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical};
 
     return html`
@@ -100,7 +100,7 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
     const vertical = knobs.vertical ? 'vertical' : '';
-    const variant = `secondary ${vertical}` as Variant;
+    const variant = `secondary ${vertical}` as TabVariant;
     const classes = {vertical};
 
     return html`
@@ -134,7 +134,7 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
     const vertical = knobs.vertical ? 'vertical' : '';
-    const variant = `primary ${vertical}` as Variant;
+    const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical, scrolling: true};
 
     return html`
@@ -197,7 +197,7 @@ const custom: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
     const vertical = knobs.vertical ? 'vertical' : '';
-    const variant = `primary ${vertical}` as Variant;
+    const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical, custom: true};
 
     return html`
@@ -231,8 +231,8 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
     const vertical = knobs.vertical ? 'vertical' : '';
-    const variant = `primary ${vertical}` as Variant;
-    const secondaryVariant = `secondary ${vertical}` as Variant;
+    const variant = `primary ${vertical}` as TabVariant;
+    const secondaryVariant = `secondary ${vertical}` as TabVariant;
     const classes = {vertical};
 
     // show the selected secondary tabs
@@ -334,7 +334,7 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const inlineIcon = knobs.inlineIcon;
     const vertical = knobs.vertical ? 'vertical' : '';
-    const variant = `primary ${vertical}` as Variant;
+    const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical, scrolling: true};
 
     function getTabs(event: Event) {

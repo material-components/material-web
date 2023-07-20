@@ -11,7 +11,7 @@ import {styles} from './lib/fab-styles.css.js';
 import {styles as forcedColors} from './lib/forced-colors-styles.css.js';
 import {styles as sharedStyles} from './lib/shared-styles.css.js';
 
-export {Variant} from './lib/fab.js';
+export {FabVariant} from './lib/fab.js';
 export {FabSize} from './lib/shared.js';
 
 declare global {
@@ -49,6 +49,5 @@ declare global {
  */
 @customElement('md-fab')
 export class MdFab extends Fab {
-  static override styles =
-      [sharedStyles, styles, forcedColors];
+  static override styles = [sharedStyles, styles, forcedColors];
 }

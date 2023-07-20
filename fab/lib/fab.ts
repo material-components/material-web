@@ -11,14 +11,14 @@ import {SharedFab} from './shared.js';
 /**
  * The variants available to non-branded FABs.
  */
-export type Variant = 'surface'|'primary'|'secondary'|'tertiary';
+export type FabVariant = 'surface'|'primary'|'secondary'|'tertiary';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class Fab extends SharedFab {
   /**
    * The FAB color variant to render.
    */
-  @property() variant: Variant = 'surface';
+  @property() variant: FabVariant = 'surface';
 
   override getRenderClasses() {
     return {

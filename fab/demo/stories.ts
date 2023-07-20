@@ -8,7 +8,7 @@ import '@material/web/fab/fab.js';
 import '@material/web/icon/icon.js';
 import '@material/web/fab/branded-fab.js';
 
-import {FabSize, Variant} from '@material/web/fab/fab.js';
+import {FabSize, FabVariant} from '@material/web/fab/fab.js';
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';
 
@@ -18,7 +18,7 @@ export interface StoryKnobs {
   label: string;
   lowered: boolean;
   size: FabSize|undefined;
-  variant: Variant|undefined;
+  variant: FabVariant|undefined;
   reducedTouchTarget: boolean;
   hasIcon: boolean;
 }

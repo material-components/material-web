@@ -7,7 +7,7 @@
 import './index.js';
 import './material-collection.js';
 
-import {FabSize, Variant} from '@material/web/fab/fab.js';
+import {FabSize, FabVariant} from '@material/web/fab/fab.js';
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
 import {boolInput, Knob, selectDropdown, textInput} from './index.js';
 
@@ -28,8 +28,8 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Fab', [
     })
   }),
   new Knob('variant', {
-    defaultValue: 'surface' as Variant,
-    ui: selectDropdown<Variant>({
+    defaultValue: 'surface' as FabVariant,
+    ui: selectDropdown<FabVariant>({
       options: [
         {label: 'surface', value: 'surface'},
         {label: 'primary', value: 'primary'},

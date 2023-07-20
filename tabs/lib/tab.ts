@@ -32,7 +32,7 @@ type Orientation = ''|'vertical';
  * Tab variant can be `primary` or `secondary and can include a space
  * separated `vertical`.
  */
-export type Variant = Style|`${Style} ${Orientation}`|`${Orientation} ${Style}`;
+export type TabVariant = Style|`${Style} ${Orientation}`|`${Orientation} ${Style}`;
 
 /**
  * Tab component.
@@ -51,7 +51,7 @@ export class Tab extends LitElement {
    * include `vertical`.
    * Defaults to `primary`.
    */
-  @property({reflect: true}) variant: Variant = 'primary';
+  @property({reflect: true}) variant: TabVariant = 'primary';
 
   /**
    * Whether or not the tab is `disabled`.
