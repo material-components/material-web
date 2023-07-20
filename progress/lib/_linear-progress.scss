@@ -95,7 +95,6 @@ $rtl-selectors: (
     inline-size: 100%;
     block-size: var(--_active-indicator-height);
     transform-origin: left center;
-    will-change: transform;
     transition: transform $_determinate-duration $_determinate-easing;
   }
 
@@ -112,14 +111,12 @@ $rtl-selectors: (
   .buffer-bar {
     background: var(--_track-color);
     inset: 0;
-    will-change: transform;
     transition: transform $_determinate-duration $_determinate-easing;
     transform-origin: left center;
   }
 
   .track {
     inset: 0;
-    will-change: transform;
     animation: linear infinite $_determinate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
@@ -149,7 +146,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .primary-bar {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
@@ -157,7 +153,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .primary-bar > .bar-inner {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration
       primary-indeterminate-scale;
   }
@@ -169,7 +164,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .secondary-bar {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
@@ -177,7 +171,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .secondary-bar > .bar-inner {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration
       secondary-indeterminate-scale;
   }
