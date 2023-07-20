@@ -11,7 +11,6 @@ import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/progress/circular-progress.js';
 
-import {MdTonalButton} from '@material/web/button/tonal-button.js';
 import {MaterialStoryInit} from './material-collection.js';
 import {MdCircularProgress} from '@material/web/progress/circular-progress.js';
 import {css, html} from 'lit';
@@ -28,11 +27,9 @@ export interface StoryKnobs {
   'track height (linear)': number;
   'indicator height (linear)': number;
   'custom theme (linear)': boolean;
-  'size (circular)': number;
-  'trackWidth (circular)': number;
 }
 
-const standard: MaterialStoryInit<StoryKnobs> = {
+const linear: MaterialStoryInit<StoryKnobs> = {
   name: 'Linear progress',
   styles: css`
     md-linear-progress {
@@ -64,95 +61,103 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   }
 };
 
-
-const standardCircular: MaterialStoryInit<StoryKnobs> = {
+const circular: MaterialStoryInit<StoryKnobs> = {
   name: 'Circular progress',
   render({value, max, indeterminate, fourColor}) {
     return html`
       <md-circular-progress
-          .value=${value}
-          .max=${max}
-          .indeterminate=${indeterminate}
-          .fourColor=${fourColor}
-      ></md-circular-progress>`;
+        aria-label="An example circular progress"
+        value=${value}
+        max=${max}
+        ?indeterminate=${indeterminate}
+        ?four-color=${fourColor}
+      ></md-circular-progress>
+    `;
   },
 };
-const iconButton: MaterialStoryInit<StoryKnobs> = {
-  name: 'Containing an icon-button',
+
+const components: MaterialStoryInit<StoryKnobs> = {
+  name: 'Indicators in components',
   styles: css`
-    .around-icon {
-      position: relative;
+    .components {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
     }
 
-    md-standard-icon-button {
+    md-tonal-button {
+      width: 80px;
+    }
+
+    md-tonal-button md-circular-progress {
+      --md-circular-progress-size: 36px;
+      --md-circular-progress-active-indicator-width: ${(4 / 36) * 100};
+      --md-tonal-button-with-icon-spacing-trailing: 8px;
+    }
+
+    .around-icon {
+      height: 48px;
+      position: relative;
+      width: 48px;
+    }
+
+    .around-icon md-standard-icon-button {
       inset: 0;
       margin: auto;
       position: absolute;
     }
   `,
-  render({value, max, indeterminate, fourColor}) {
-    const toggle = ({target}: Event) => {
+  render({value, max}) {
+    const toggleIndeterminate = ({target}: Event) => {
       const spinner =
-          ((target as HTMLElement).parentElement as MdCircularProgress);
+          ((target as HTMLElement)
+               .parentElement?.querySelector('md-circular-progress'));
+      if (!spinner) {
+        return;
+      }
       spinner.indeterminate = !spinner.indeterminate;
     };
 
-    return html`
-      <div class="around-icon">
-        <md-circular-progress
-          .value=${value}
-          .max=${max}
-          .indeterminate=${indeterminate}
-          .fourColor=${fourColor}
-        ></md-circular-progress>
-        <md-standard-icon-button toggle @change=${toggle}>
-          <md-icon>play_arrow</md-icon>
-          <md-icon slot="selectedIcon">pause</md-icon>
-        </md-standard-icon-button>
-      </div>
-    `;
-  }
-};
-const insideButton: MaterialStoryInit<StoryKnobs> = {
-  name: 'Inside a button',
-  styles: css`.withSpinner {
-        --md-circular-progress-size: 36px;
-        --md-tonal-button-with-icon-spacing-trailing: 8px;
-        width: 80px;
-      }`,
-  render({value, max, indeterminate, fourColor}) {
     const loadTime = 2500;
     let loadTimeout = -1;
-    const toggleLoad = (target: MdTonalButton) => {
+    const toggleLoad = ({target}: {target: HTMLElement}) => {
       const spinner = target.firstElementChild as MdCircularProgress;
-      const label = target.lastElementChild!;
-      const shouldLoad = spinner.slot !== 'icon';
-      spinner.indeterminate = true;
-      label.slot = shouldLoad ? 'nothing' : '';
-      spinner.slot = shouldLoad ? 'icon' : 'nothing';
+      const label = target.lastElementChild as HTMLElement;
+      const shouldLoad = spinner.style.display === 'none';
+      label.style.display = shouldLoad ? 'none' : '';
+      spinner.style.display = shouldLoad ? '' : 'none';
       clearTimeout(loadTimeout);
       if (shouldLoad) {
         loadTimeout = setTimeout(() => {
-          toggleLoad(target);
+          toggleLoad({target});
         }, loadTime);
       }
     };
 
     return html`
-      <md-tonal-button class="withSpinner" @click=${
-        ({currentTarget}: Event) => {
-          toggleLoad(currentTarget as MdTonalButton);
-        }}>
-        <md-circular-progress slot="nothing"
-            .value=${value}
-            .max=${max}
-            .indeterminate=${indeterminate}
-            .fourColor=${fourColor}
-        ></md-circular-progress>
-        <span>Load</span>
-      </md-tonal-button>`;
+      <div class="components">
+        <md-tonal-button @click=${toggleLoad}>
+          <md-circular-progress style="display: none" indeterminate
+            aria-label="Loading, please wait"></md-circular-progress>
+          <span>Load</span>
+        </md-tonal-button>
+
+        <div class="around-icon">
+          <md-circular-progress value=${value} max=${max}
+            aria-label="Playback progress"></md-circular-progress>
+          <md-standard-icon-button toggle
+            aria-label="Play or pause music"
+            @change=${toggleIndeterminate}
+          >
+            <md-icon>play_arrow</md-icon>
+            <md-icon slot="selectedIcon">pause</md-icon>
+          </md-standard-icon-button>
+        </div>
+      </div>
+    `;
   }
 };
 
 /** Linear Progress stories. */
-export const stories = [standard, standardCircular, iconButton, insideButton];
+export const stories = [linear, circular, components];
