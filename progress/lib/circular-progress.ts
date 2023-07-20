@@ -23,7 +23,7 @@ export class CircularProgress extends Progress {
   // Determinate mode is rendered with an svg so the progress arc can be
   // easily animated via stroke-dashoffset.
   private renderDeterminateContainer() {
-    const dashOffset = (1 - this.progress) * 100;
+    const dashOffset = (1 - this.value) * 100;
     // note, dash-array/offset are relative to Setting `pathLength` but
     // Chrome seems to render this inaccurately and using a large viewbox helps.
     const pathLength = 100;

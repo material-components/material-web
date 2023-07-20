@@ -22,7 +22,7 @@ export abstract class Progress extends LitElement {
   /**
    * Progress to display, a fraction between 0 and 1.
    */
-  @property({type: Number}) progress = 0;
+  @property({type: Number}) value = 0;
 
   /**
    * Whether or not to display indeterminate progress, which gives no indication
@@ -44,7 +44,7 @@ export abstract class Progress extends LitElement {
         aria-label="${ariaLabel || nothing}"
         aria-valuemin="0"
         aria-valuemax="1"
-        aria-valuenow=${this.indeterminate ? nothing : this.progress}
+        aria-valuenow=${this.indeterminate ? nothing : this.value}
       >${this.renderIndicator()}</div>
     `;
   }

@@ -22,7 +22,7 @@ function cssWire<T = string>(prop: string, unit = '') {
 
 const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     'Progress indicators', [
-      new Knob('progress', {ui: numberInput({step: 0.1}), defaultValue: 0.5}),
+      new Knob('value', {ui: numberInput({step: 0.1}), defaultValue: 0.5}),
       new Knob('indeterminate', {ui: boolInput(), defaultValue: false}),
       new Knob('fourColor', {ui: boolInput(), defaultValue: false}),
       new Knob(

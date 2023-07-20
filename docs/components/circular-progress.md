@@ -75,7 +75,7 @@ indeterminate.](images/circularprogress/usage.gif "Determinate and indeterminate
       aria-label="Two circular progress indicators, one with three quarters of the track full
 and the other
 indeterminate.">
-    <md-circular-progress progress="0.75"></md-circular-progress>
+    <md-circular-progress value="0.75"></md-circular-progress>
 
     <md-circular-progress indeterminate></md-circular-progress>
   </figure>
@@ -86,7 +86,7 @@ indeterminate.">
 <!-- catalog-only-end -->
 
 ```html
-<md-circular-progress progress="0.75"></md-circular-progress>
+<md-circular-progress value="0.75"></md-circular-progress>
 
 <md-circular-progress indeterminate></md-circular-progress>
 ```
@@ -131,7 +131,7 @@ Add an
 attribute to progress indicators to give them a descriptive name.
 
 ```html
-<md-circular-progress progress="0.5" aria-label="Page refresh progress"></md-circular-progress>
+<md-circular-progress value="0.5" aria-label="Page refresh progress"></md-circular-progress>
 ```
 
 ## Theming
@@ -179,7 +179,7 @@ Token                                           | Default value
       }
     </style>
 
-    <md-circular-progress progress="0.5"></md-circular-progress>
+    <md-circular-progress value="0.5"></md-circular-progress>
   </figure>
 </div>
 
@@ -198,5 +198,5 @@ Token                                           | Default value
 }
 </style>
 
-<md-circular-progress progress="0.5"></md-circular-progress>
+<md-circular-progress value="0.5"></md-circular-progress>
 ```
