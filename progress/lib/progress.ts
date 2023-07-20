@@ -20,9 +20,14 @@ export abstract class Progress extends LitElement {
   }
 
   /**
-   * Progress to display, a fraction between 0 and 1.
+   * Progress to display, a fraction between 0 and `max`.
    */
   @property({type: Number}) value = 0;
+
+  /**
+   * Maximum progress to display, defaults to 1.
+   */
+  @property({type: Number}) max = 1;
 
   /**
    * Whether or not to display indeterminate progress, which gives no indication
@@ -43,7 +48,7 @@ export abstract class Progress extends LitElement {
         role="progressbar"
         aria-label="${ariaLabel || nothing}"
         aria-valuemin="0"
-        aria-valuemax="1"
+        aria-valuemax=${this.max}
         aria-valuenow=${this.indeterminate ? nothing : this.value}
       >${this.renderIndicator()}</div>
     `;

@@ -20,6 +20,7 @@ import {classMap} from 'lit/directives/class-map.js';
 /** Knob types for linear progress stories. */
 export interface StoryKnobs {
   value: number;
+  max: number;
   'buffer (linear)': number;
   indeterminate: boolean;
   fourColor: boolean;
@@ -47,7 +48,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     }
   `,
   render(knobs) {
-    const {value, indeterminate, fourColor} = knobs;
+    const {value, max, indeterminate, fourColor} = knobs;
     const buffer = knobs['buffer (linear)'];
     const classes = {'custom': knobs['custom theme (linear)']};
 
@@ -55,6 +56,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
       <md-linear-progress
           class=${classMap(classes)}
           .value=${value}
+          .max=${max}
           .buffer=${buffer}
           .indeterminate=${indeterminate}
           .fourColor=${fourColor}
@@ -65,10 +67,11 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 
 const standardCircular: MaterialStoryInit<StoryKnobs> = {
   name: 'Circular progress',
-  render({value, indeterminate, fourColor}) {
+  render({value, max, indeterminate, fourColor}) {
     return html`
       <md-circular-progress
           .value=${value}
+          .max=${max}
           .indeterminate=${indeterminate}
           .fourColor=${fourColor}
       ></md-circular-progress>`;
@@ -87,7 +90,7 @@ const iconButton: MaterialStoryInit<StoryKnobs> = {
       position: absolute;
     }
   `,
-  render({value, indeterminate, fourColor}) {
+  render({value, max, indeterminate, fourColor}) {
     const toggle = ({target}: Event) => {
       const spinner =
           ((target as HTMLElement).parentElement as MdCircularProgress);
@@ -98,6 +101,7 @@ const iconButton: MaterialStoryInit<StoryKnobs> = {
       <div class="around-icon">
         <md-circular-progress
           .value=${value}
+          .max=${max}
           .indeterminate=${indeterminate}
           .fourColor=${fourColor}
         ></md-circular-progress>
@@ -116,7 +120,7 @@ const insideButton: MaterialStoryInit<StoryKnobs> = {
         --md-tonal-button-with-icon-spacing-trailing: 8px;
         width: 80px;
       }`,
-  render({value, indeterminate, fourColor}) {
+  render({value, max, indeterminate, fourColor}) {
     const loadTime = 2500;
     let loadTimeout = -1;
     const toggleLoad = (target: MdTonalButton) => {
@@ -141,6 +145,7 @@ const insideButton: MaterialStoryInit<StoryKnobs> = {
         }}>
         <md-circular-progress slot="nothing"
             .value=${value}
+            .max=${max}
             .indeterminate=${indeterminate}
             .fourColor=${fourColor}
         ></md-circular-progress>

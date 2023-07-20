@@ -36,10 +36,12 @@ export class LinearProgress extends Progress {
   // due to a now fixed Chrome bug: crbug.com/389359.
   protected override renderIndicator() {
     const progressStyles = {
-      transform: `scaleX(${(this.indeterminate ? 1 : this.value) * 100}%)`
+      transform:
+          `scaleX(${(this.indeterminate ? 1 : this.value / this.max) * 100}%)`
     };
     const bufferStyles = {
-      transform: `scaleX(${(this.indeterminate ? 1 : this.buffer) * 100}%)`
+      transform:
+          `scaleX(${(this.indeterminate ? 1 : this.buffer / this.max) * 100}%)`
     };
 
     return html`
