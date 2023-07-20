@@ -88,7 +88,9 @@
   .content-wrapper {
     display: flex;
     width: 100%;
+    box-sizing: border-box;
     border-radius: inherit;
+    padding-inline-end: var(--_list-item-trailing-space);
   }
 
   md-ripple {
@@ -135,7 +137,6 @@
     box-sizing: border-box;
     flex: 1 0 0;
     padding-inline-start: var(--_list-item-leading-space);
-    padding-inline-end: var(--_list-item-trailing-space);
     z-index: 1;
   }
 
@@ -153,7 +154,7 @@
 
   slot[name='end']::slotted(*),
   .trailing-supporting-text {
-    margin-inline-end: var(
+    margin-inline-start: var(
       --_list-item-trailing-element-headline-trailing-element-space
     );
   }

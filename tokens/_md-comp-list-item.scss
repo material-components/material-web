@@ -155,7 +155,7 @@ $_default: (
     // 'list-item-leading-item-bottom-space': if($exclude-hardcoded-values, null, 8px),
     // 'list-item-leading-video-bottom-space': if($exclude-hardcoded-values, null, 0px),
     'list-item-trailing-element-headline-trailing-element-space': 16px,
-    'list-item-trailing-space': if($exclude-hardcoded-values, null, 16px),
+    'list-item-trailing-space': if($exclude-hardcoded-values, null, 24px),
     // go/keep-sorted end
   );
 }
