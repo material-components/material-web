@@ -70,6 +70,18 @@ describe('checkbox', () => {
       expect(changeHandler).toHaveBeenCalledTimes(1);
       expect(changeHandler).toHaveBeenCalledWith(jasmine.any(Event));
     });
+
+    it('should trigger input event when checkbox is selected', async () => {
+      const {harness} = await setupTest();
+      const inputHandler = jasmine.createSpy('inputHandler');
+      harness.element.addEventListener('input', inputHandler);
+
+      await harness.clickWithMouse();
+
+      expect(harness.element.checked).toBeTrue();
+      expect(inputHandler).toHaveBeenCalledTimes(1);
+      expect(inputHandler).toHaveBeenCalledWith(jasmine.any(Event));
+    });
   });
 
   describe('checked', () => {
