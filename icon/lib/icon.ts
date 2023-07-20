@@ -11,6 +11,6 @@ import {html, LitElement} from 'lit';
  */
 export class Icon extends LitElement {
   protected override render() {
-    return html`<span><slot></slot></span>`;
+    return html`<slot></slot>`;
   }
 }
