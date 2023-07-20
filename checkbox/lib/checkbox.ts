@@ -154,6 +154,7 @@ export class Checkbox extends LitElement {
         id="input"
         aria-checked=${isIndeterminate ? 'mixed' : nothing}
         aria-label=${ariaLabel || nothing}
+        aria-invalid=${this.error || nothing}
         ?disabled=${this.disabled}
         .indeterminate=${this.indeterminate}
         .checked=${this.checked}
