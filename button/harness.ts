@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Button} from './lib/button.js';
+import {Button} from './internal/button.js';
 
 /**
  * Test harness for buttons.

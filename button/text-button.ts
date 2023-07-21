@@ -6,9 +6,9 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
-import {TextButton} from './lib/text-button.js';
-import {styles as textStyles} from './lib/text-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {TextButton} from './internal/text-button.js';
+import {styles as textStyles} from './internal/text-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
