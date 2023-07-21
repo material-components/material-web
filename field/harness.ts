@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Field} from './lib/field.js';
+import {Field} from './internal/field.js';
 
 /**
  * Test harness for field elements.
