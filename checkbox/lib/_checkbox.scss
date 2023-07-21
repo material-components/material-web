@@ -154,8 +154,7 @@ $_checkmark-bottom-left: 7px, -14px;
     transform: scale(0.6); // Background and icon scale from 60% to 100%.
   }
 
-  .selected .background,
-  .selected .icon {
+  :where(.selected) :is(.background, .icon) {
     opacity: 1;
     // Enter duration for scale and opacity.
     transition-duration: 350ms, 50ms;
@@ -326,128 +325,147 @@ $_checkmark-bottom-left: 7px, -14px;
 
   // States
 
-  .error .outline {
+  :where(.error) .outline {
     border-color: var(--_unselected-error-outline-color);
     // TODO(b/262410085): add once token is added
     // border-width: var(--_unselected-error-outline-width);
   }
 
-  .error .background {
+  :where(.error) .background {
     background: var(--_selected-error-container-color);
   }
 
-  .error .icon {
+  :where(.error) .icon {
     fill: var(--_selected-error-icon-color);
   }
 
-  :host(:hover) .outline {
+  :where(:hover) .outline {
     border-color: var(--_unselected-hover-outline-color);
     border-width: var(--_unselected-hover-outline-width);
   }
 
-  :host(:hover) .background {
+  :where(:hover) .background {
     background: var(--_selected-hover-container-color);
   }
 
-  :host(:hover) .icon {
+  :where(:hover) .icon {
     fill: var(--_selected-hover-icon-color);
   }
 
-  :host(:hover) .error .outline {
+  :where(.error:hover) .outline {
     border-color: var(--_unselected-error-hover-outline-color);
   }
 
-  :host(:hover) .error .background {
+  :where(.error:hover) .background {
     background: var(--_selected-error-hover-container-color);
   }
 
-  :host(:hover) .error .icon {
+  :where(.error:hover) .icon {
     fill: var(--_selected-error-hover-icon-color);
   }
 
-  :host(:focus-within) .outline {
+  :where(:focus-within) .outline {
     border-color: var(--_unselected-focus-outline-color);
     border-width: var(--_unselected-focus-outline-width);
   }
 
-  :host(:focus-within) .background {
+  :where(:focus-within) .background {
     background: var(--_selected-focus-container-color);
   }
 
-  :host(:focus-within) .icon {
+  :where(:focus-within) .icon {
     fill: var(--_selected-focus-icon-color);
   }
 
-  :host(:focus-within) .error .outline {
+  :where(.error:focus-within) .outline {
     border-color: var(--_unselected-error-focus-outline-color);
   }
 
-  :host(:focus-within) .error .background {
+  :where(.error:focus-within) .background {
     background: var(--_selected-error-focus-container-color);
   }
 
-  :host(:focus-within) .error .icon {
+  :where(.error:focus-within) .icon {
     fill: var(--_selected-error-focus-icon-color);
   }
 
-  :host(:active) .outline {
+  :where(:active) .outline {
     border-color: var(--_unselected-pressed-outline-color);
     border-width: var(--_unselected-pressed-outline-width);
   }
 
-  :host(:active) .background {
+  :where(:active) .background {
     background: var(--_selected-pressed-container-color);
   }
 
-  :host(:active) .icon {
+  :where(:active) .icon {
     fill: var(--_selected-pressed-icon-color);
   }
 
-  :host(:active) .error .outline {
+  :where(.error:active) .outline {
     border-color: var(--_unselected-error-pressed-outline-color);
   }
 
-  :host(:active) .error .background {
+  :where(.error:active) .background {
     background: var(--_selected-error-pressed-container-color);
   }
 
-  :host(:active) .error .icon {
+  :where(.error:active) .icon {
     fill: var(--_selected-error-pressed-icon-color);
   }
 
   // Don't animate to/from disabled states because the outline is hidden when
   // selected. Without this, there'd be a FOUC if the checkbox state is
   // programmatically  changed while disabled.
-  :host([disabled]),
-  .prev-disabled {
-    .background,
-    .icon,
-    .mark {
-      animation-duration: 0s;
-      transition-duration: 0s;
-    }
+  :where(.disabled, .prev-disabled) :is(.background, .icon, .mark) {
+    animation-duration: 0s;
+    transition-duration: 0s;
   }
 
-  :host([disabled]) .outline {
+  :where(.disabled) .outline {
     border-color: var(--_unselected-disabled-outline-color);
     border-width: var(--_unselected-disabled-outline-width);
     opacity: var(--_unselected-disabled-container-opacity);
   }
 
-  :host([disabled]) .selected .outline {
+  :where(.selected.disabled) .outline {
     // Hide the outline behind the transparent selected container color.
     // This can be removed once disabled colors are flattened.
     visibility: hidden;
   }
 
-  :host([disabled]) .selected .background {
+  :where(.selected.disabled) .background {
     // Set disabled opacity only when selected since opacity is used to show
     // or hide the container background.
     background: var(--_selected-disabled-container-color);
     opacity: var(--_selected-disabled-container-opacity);
   }
 
-  :host([disabled]) .icon {
+  :where(.disabled) .icon {
     fill: var(--_selected-disabled-icon-color);
+  }
+
+  @media (forced-colors: active) {
+    .background {
+      background-color: CanvasText;
+    }
+
+    .selected.disabled .background {
+      background-color: GrayText;
+      opacity: 1;
+    }
+
+    .outline {
+      border-color: CanvasText;
+    }
+
+    .disabled .outline {
+      border-color: GrayText;
+      opacity: 1;
+    }
+
+    .icon {
+      fill: Canvas;
+    }
   }
 }

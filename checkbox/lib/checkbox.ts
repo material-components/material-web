@@ -126,6 +126,7 @@ export class Checkbox extends LitElement {
     const isIndeterminate = this.indeterminate;
 
     const containerClasses = classMap({
+      'disabled': this.disabled,
       'selected': isChecked || isIndeterminate,
       'unselected': !isChecked && !isIndeterminate,
       'checked': isChecked,
@@ -149,17 +150,18 @@ export class Checkbox extends LitElement {
           <rect class="mark short" />
           <rect class="mark long" />
         </svg>
+
+        <input type="checkbox"
+          id="input"
+          aria-checked=${isIndeterminate ? 'mixed' : nothing}
+          aria-label=${ariaLabel || nothing}
+          aria-invalid=${this.error || nothing}
+          ?disabled=${this.disabled}
+          .indeterminate=${this.indeterminate}
+          .checked=${this.checked}
+          @change=${this.handleChange}
+        >
       </div>
-      <input type="checkbox"
-        id="input"
-        aria-checked=${isIndeterminate ? 'mixed' : nothing}
-        aria-label=${ariaLabel || nothing}
-        aria-invalid=${this.error || nothing}
-        ?disabled=${this.disabled}
-        .indeterminate=${this.indeterminate}
-        .checked=${this.checked}
-        @change=${this.handleChange}
-      >
     `;
   }
 
