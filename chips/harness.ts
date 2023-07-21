@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Chip} from './lib/chip.js';
+import {Chip} from './internal/chip.js';
 
 /**
  * Test harness for chips.

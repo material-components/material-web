@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {ChipSet} from './lib/chip-set.js';
-import {styles} from './lib/chip-set-styles.css.js';
+import {ChipSet} from './internal/chip-set.js';
+import {styles} from './internal/chip-set-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
