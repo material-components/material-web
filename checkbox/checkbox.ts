@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {Checkbox} from './lib/checkbox.js';
-import {styles} from './lib/checkbox-styles.css.js';
+import {Checkbox} from './internal/checkbox.js';
+import {styles} from './internal/checkbox-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

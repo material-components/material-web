@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Checkbox} from './lib/checkbox.js';
+import {Checkbox} from './internal/checkbox.js';
 
 /**
  * Test harness for checkbox.
