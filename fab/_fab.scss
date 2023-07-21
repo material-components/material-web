@@ -3,5 +3,5 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-@forward './lib/fab-branded' as branded-* show branded-theme;
-@forward './lib/fab' show theme;
+@forward './internal/fab-branded' as branded-* show branded-theme;
+@forward './internal/fab' show theme;

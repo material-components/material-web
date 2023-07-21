@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Fab} from './lib/fab.js';
+import {Fab} from './internal/fab.js';
 
 /**
  * Test harness for floating action buttons.
