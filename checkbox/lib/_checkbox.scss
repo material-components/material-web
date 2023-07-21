@@ -129,9 +129,9 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   .outline {
-    border-color: var(--_unselected-outline-color);
+    border-color: var(--_outline-color);
     border-style: solid;
-    border-width: var(--_unselected-outline-width);
+    border-width: var(--_outline-width);
     box-sizing: border-box;
   }
 
@@ -176,10 +176,10 @@ $_checkmark-bottom-left: 7px, -14px;
 
     @include ripple.theme(
       (
-        hover-color: var(--_unselected-hover-state-layer-color),
-        hover-opacity: var(--_unselected-hover-state-layer-opacity),
-        pressed-color: var(--_unselected-pressed-state-layer-color),
-        pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
   }
@@ -326,9 +326,9 @@ $_checkmark-bottom-left: 7px, -14px;
   // States
 
   :where(.error) .outline {
-    border-color: var(--_unselected-error-outline-color);
+    border-color: var(--_error-outline-color);
     // TODO(b/262410085): add once token is added
-    // border-width: var(--_unselected-error-outline-width);
+    // border-width: var(--_error-outline-width);
   }
 
   :where(.error) .background {
@@ -340,8 +340,8 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(:hover) .outline {
-    border-color: var(--_unselected-hover-outline-color);
-    border-width: var(--_unselected-hover-outline-width);
+    border-color: var(--_hover-outline-color);
+    border-width: var(--_hover-outline-width);
   }
 
   :where(:hover) .background {
@@ -353,7 +353,7 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(.error:hover) .outline {
-    border-color: var(--_unselected-error-hover-outline-color);
+    border-color: var(--_error-hover-outline-color);
   }
 
   :where(.error:hover) .background {
@@ -365,8 +365,8 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(:focus-within) .outline {
-    border-color: var(--_unselected-focus-outline-color);
-    border-width: var(--_unselected-focus-outline-width);
+    border-color: var(--_focus-outline-color);
+    border-width: var(--_focus-outline-width);
   }
 
   :where(:focus-within) .background {
@@ -378,7 +378,7 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(.error:focus-within) .outline {
-    border-color: var(--_unselected-error-focus-outline-color);
+    border-color: var(--_error-focus-outline-color);
   }
 
   :where(.error:focus-within) .background {
@@ -390,8 +390,8 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(:active) .outline {
-    border-color: var(--_unselected-pressed-outline-color);
-    border-width: var(--_unselected-pressed-outline-width);
+    border-color: var(--_pressed-outline-color);
+    border-width: var(--_pressed-outline-width);
   }
 
   :where(:active) .background {
@@ -403,7 +403,7 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(.error:active) .outline {
-    border-color: var(--_unselected-error-pressed-outline-color);
+    border-color: var(--_error-pressed-outline-color);
   }
 
   :where(.error:active) .background {
@@ -423,9 +423,9 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(.disabled) .outline {
-    border-color: var(--_unselected-disabled-outline-color);
-    border-width: var(--_unselected-disabled-outline-width);
-    opacity: var(--_unselected-disabled-container-opacity);
+    border-color: var(--_disabled-outline-color);
+    border-width: var(--_disabled-outline-width);
+    opacity: var(--_disabled-container-opacity);
   }
 
   :where(.selected.disabled) .outline {
