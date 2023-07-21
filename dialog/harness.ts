@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Dialog} from './lib/dialog.js';
+import {Dialog} from './internal/dialog.js';
 
 
 /**
