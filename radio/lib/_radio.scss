@@ -47,12 +47,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       )
     );
 
-    @include focus-ring.theme(
-      (
-        'outward-offset': -2px,
-      )
-    );
-
     display: inline-flex;
     height: 48px;
     position: relative;
@@ -60,6 +54,14 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     width: 48px;
     // Remove highlight color for mobile Safari
     -webkit-tap-highlight-color: transparent;
+  }
+
+  md-focus-ring {
+    @include focus-ring.theme(
+      (
+        'outward-offset': -2px,
+      )
+    );
   }
 
   .checked {

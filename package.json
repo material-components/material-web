@@ -76,7 +76,8 @@
         "**/*.js",
         "**/*.js.map",
         "**/*.d.ts",
-        "!*.js",
+        "!css-to-ts.js",
+        "!web-test-runner.config.js",
         "!types/",
         "!catalog"
       ],

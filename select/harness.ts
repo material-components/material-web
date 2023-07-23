@@ -7,7 +7,7 @@
 import {LitElement} from 'lit';
 
 import {FieldHarness} from '../field/harness.js';
-import {Field} from '../field/lib/field.js';
+import {Field} from '../field/internal/field.js';
 import {Harness} from '../testing/harness.js';
 
 import {Select} from './lib/select.js';

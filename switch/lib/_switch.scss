@@ -87,7 +87,9 @@
     outline: none;
     vertical-align: top;
     -webkit-tap-highlight-color: transparent;
+  }
 
+  md-focus-ring {
     @include focus-ring.theme(
       (
         'shape-start-start': var(--_track-shape-start-start),

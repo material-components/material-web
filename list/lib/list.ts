@@ -92,8 +92,8 @@ export class List extends LitElement {
    * The content to be slotted into the list.
    */
   private renderContent() {
-    return html`<span><slot @click=${(e: Event) => {
-      e.stopPropagation();
+    return html`<span><slot @click=${(event: Event) => {
+      event.stopPropagation();
     }}></slot></span>`;
   }
 

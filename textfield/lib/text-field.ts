@@ -11,7 +11,7 @@ import {live} from 'lit/directives/live.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
-import {Field} from '../../field/lib/field.js';
+import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
@@ -21,7 +21,7 @@ import {stringConverter} from '../../internal/controller/string-converter.js';
  * Input types that are compatible with the text field.
  */
 export type TextFieldType =
-    'email'|'number'|'password'|'search'|'tel'|'text'|'url';
+    'email'|'number'|'password'|'search'|'tel'|'text'|'url'|'textarea';
 
 /**
  * Input types that are not fully supported for the text field.
@@ -102,6 +102,12 @@ export abstract class TextField extends LitElement {
   @property({attribute: 'text-direction'}) textDirection = '';
 
   /**
+   * The number of rows to display for a `type="textarea"` text field.
+   * Defaults to 2.
+   */
+  @property({type: Number}) rows = 2;
+
+  /**
    * The associated form element with which this element's value will submit.
    */
   get form() {
@@ -173,30 +179,30 @@ export abstract class TextField extends LitElement {
    * Gets or sets the direction in which selection occurred.
    */
   get selectionDirection() {
-    return this.getInput().selectionDirection;
+    return this.getInputOrTextarea().selectionDirection;
   }
   set selectionDirection(value: 'forward'|'backward'|'none'|null) {
-    this.getInput().selectionDirection = value;
+    this.getInputOrTextarea().selectionDirection = value;
   }
 
   /**
    * Gets or sets the end position or offset of a text selection.
    */
   get selectionEnd() {
-    return this.getInput().selectionEnd;
+    return this.getInputOrTextarea().selectionEnd;
   }
   set selectionEnd(value: number|null) {
-    this.getInput().selectionEnd = value;
+    this.getInputOrTextarea().selectionEnd = value;
   }
 
   /**
    * Gets or sets the starting position or offset of a text selection.
    */
   get selectionStart() {
-    return this.getInput().selectionStart;
+    return this.getInputOrTextarea().selectionStart;
   }
   set selectionStart(value: number|null) {
-    this.getInput().selectionStart = value;
+    this.getInputOrTextarea().selectionStart = value;
   }
 
   /**
@@ -217,7 +223,7 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
    */
   get validationMessage() {
-    return this.getInput().validationMessage;
+    return this.getInputOrTextarea().validationMessage;
   }
 
   /**
@@ -227,29 +233,49 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validity
    */
   get validity() {
-    return this.getInput().validity;
+    return this.getInputOrTextarea().validity;
   }
 
   /**
    * The text field's value as a number.
    */
   get valueAsNumber() {
-    return this.getInput().valueAsNumber;
+    const input = this.getInput();
+    if (!input) {
+      return NaN;
+    }
+
+    return input.valueAsNumber;
   }
   set valueAsNumber(value: number) {
-    this.getInput().valueAsNumber = value;
-    this.value = this.getInput().value;
+    const input = this.getInput();
+    if (!input) {
+      return;
+    }
+
+    input.valueAsNumber = value;
+    this.value = input.value;
   }
 
   /**
    * The text field's value as a Date.
    */
   get valueAsDate() {
-    return this.getInput().valueAsDate;
+    const input = this.getInput();
+    if (!input) {
+      return null;
+    }
+
+    return input.valueAsDate;
   }
   set valueAsDate(value: Date|null) {
-    this.getInput().valueAsDate = value;
-    this.value = this.getInput().value;
+    const input = this.getInput();
+    if (!input) {
+      return;
+    }
+
+    input.valueAsDate = value;
+    this.value = input.value;
   }
 
   /**
@@ -259,7 +285,7 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/willValidate
    */
   get willValidate() {
-    return this.getInput().willValidate;
+    return this.getInputOrTextarea().willValidate;
   }
 
   protected abstract readonly fieldTag: StaticValue;
@@ -284,7 +310,8 @@ export abstract class TextField extends LitElement {
     return this.error || this.nativeError;
   }
 
-  @query('input') private readonly input?: HTMLInputElement|null;
+  @query('.input')
+  private readonly inputOrTextarea?: HTMLInputElement|HTMLTextAreaElement|null;
   @query('.field') private readonly field?: Field|null;
   @queryAssignedElements({slot: 'leadingicon'})
   private readonly leadingIcons!: Element[];
@@ -369,7 +396,7 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
    */
   select() {
-    this.getInput().select();
+    this.getInputOrTextarea().select();
   }
 
   /**
@@ -384,7 +411,7 @@ export abstract class TextField extends LitElement {
    * @param error The error message to display.
    */
   setCustomValidity(error: string) {
-    this.getInput().setCustomValidity(error);
+    this.getInputOrTextarea().setCustomValidity(error);
   }
 
   /**
@@ -399,9 +426,9 @@ export abstract class TextField extends LitElement {
   setRangeText(...args: unknown[]) {
     // Calling setRangeText with 1 vs 3-4 arguments has different behavior.
     // Use spread syntax and type casting to ensure correct usage.
-    this.getInput().setRangeText(
+    this.getInputOrTextarea().setRangeText(
         ...args as Parameters<HTMLInputElement['setRangeText']>);
-    this.value = this.getInput().value;
+    this.value = this.getInputOrTextarea().value;
   }
 
   /**
@@ -416,7 +443,7 @@ export abstract class TextField extends LitElement {
   setSelectionRange(
       start: number|null, end: number|null,
       direction?: 'forward'|'backward'|'none') {
-    this.getInput().setSelectionRange(start, end, direction);
+    this.getInputOrTextarea().setSelectionRange(start, end, direction);
   }
 
   /**
@@ -429,6 +456,10 @@ export abstract class TextField extends LitElement {
    */
   stepDown(stepDecrement?: number) {
     const input = this.getInput();
+    if (!input) {
+      return;
+    }
+
     input.stepDown(stepDecrement);
     this.value = input.value;
   }
@@ -443,6 +474,10 @@ export abstract class TextField extends LitElement {
    */
   stepUp(stepIncrement?: number) {
     const input = this.getInput();
+    if (!input) {
+      return;
+    }
+
     input.stepUp(stepIncrement);
     this.value = input.value;
   }
@@ -472,6 +507,7 @@ export abstract class TextField extends LitElement {
     const classes = {
       'disabled': this.disabled,
       'error': !this.disabled && this.hasError,
+      'textarea': this.type === 'textarea',
     };
 
     return html`
@@ -486,7 +522,7 @@ export abstract class TextField extends LitElement {
 
     // If a property such as `type` changes and causes the internal <input>
     // value to change without dispatching an event, re-sync it.
-    const value = this.getInput().value;
+    const value = this.getInputOrTextarea().value;
     this.internals.setFormValue(value);
     if (this.value !== value) {
       // Note this is typically inefficient in updated() since it schedules
@@ -497,28 +533,25 @@ export abstract class TextField extends LitElement {
   }
 
   private renderField() {
-    const prefix = this.renderPrefix();
-    const suffix = this.renderSuffix();
-    const input = this.renderInput();
-
     return staticHtml`<${this.fieldTag}
       class="field"
+      count=${this.value.length}
       ?disabled=${this.disabled}
       ?error=${this.hasError}
+      error-text=${this.getErrorText()}
       ?focused=${this.focused}
       ?has-end=${this.hasTrailingIcon}
       ?has-start=${this.hasLeadingIcon}
       label=${this.label}
+      max=${this.maxLength}
       ?populated=${!!this.value}
       ?required=${this.required}
       supporting-text=${this.supportingText}
-      error-text=${this.getErrorText()}
-      count=${this.value.length}
-      max=${this.maxLength}
     >
       ${this.renderLeadingIcon()}
-      <div class="content">${prefix}${input}${suffix}</div>
+      ${this.renderInputOrTextarea()}
       ${this.renderTrailingIcon()}
+      <div id="description" slot="aria-describedby"></div>
     </${this.fieldTag}>`;
   }
 
@@ -538,35 +571,66 @@ export abstract class TextField extends LitElement {
      `;
   }
 
-  private renderInput() {
+  private renderInputOrTextarea() {
     const style = {direction: this.textDirection};
+    const ariaLabel =
+        (this as ARIAMixinStrict).ariaLabel || this.label || nothing;
+
+    if (this.type === 'textarea') {
+      return html`
+        <textarea
+          class="input"
+          style=${styleMap(style)}
+          aria-describedby="description"
+          aria-invalid=${this.hasError}
+          aria-label=${ariaLabel}
+          ?disabled=${this.disabled}
+          maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
+          minlength=${this.minLength > -1 ? this.minLength : nothing}
+          placeholder=${this.placeholder || nothing}
+          ?readonly=${this.readOnly}
+          ?required=${this.required}
+          rows=${this.rows}
+          .value=${live(this.value)}
+          @change=${this.redispatchEvent}
+          @input=${this.handleInput}
+          @select=${this.redispatchEvent}
+        ></textarea>
+      `;
+    }
+
+    const prefix = this.renderPrefix();
+    const suffix = this.renderSuffix();
 
     // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
     // fixed
     return html`
-      <input
-        style=${styleMap(style)}
-        aria-describedby="description"
-        aria-invalid=${this.hasError}
-        aria-label=${
-        (this as ARIAMixinStrict).ariaLabel || this.label || nothing}
-        ?disabled=${this.disabled}
-        max=${(this.max || nothing) as unknown as number}
-        maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
-        min=${(this.min || nothing) as unknown as number}
-        minlength=${this.minLength > -1 ? this.minLength : nothing}
-        pattern=${this.pattern || nothing}
-        placeholder=${this.placeholder || nothing}
-        ?readonly=${this.readOnly}
-        ?required=${this.required}
-        step=${(this.step || nothing) as unknown as number}
-        type=${this.type}
-        .value=${live(this.value)}
-        @change=${this.redispatchEvent}
-        @input=${this.handleInput}
-        @select=${this.redispatchEvent}
-      >
-      <div id="description" slot="aria-describedby"></div>
+      <div class="input-wrapper">
+        ${prefix}
+        <input
+          class="input"
+          style=${styleMap(style)}
+          aria-describedby="description"
+          aria-invalid=${this.hasError}
+          aria-label=${ariaLabel}
+          ?disabled=${this.disabled}
+          max=${(this.max || nothing) as unknown as number}
+          maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
+          min=${(this.min || nothing) as unknown as number}
+          minlength=${this.minLength > -1 ? this.minLength : nothing}
+          pattern=${this.pattern || nothing}
+          placeholder=${this.placeholder || nothing}
+          ?readonly=${this.readOnly}
+          ?required=${this.required}
+          step=${(this.step || nothing) as unknown as number}
+          type=${this.type}
+          .value=${live(this.value)}
+          @change=${this.redispatchEvent}
+          @input=${this.handleInput}
+          @select=${this.redispatchEvent}
+        >
+        ${suffix}
+      </div>
     `;
   }
 
@@ -618,8 +682,8 @@ export abstract class TextField extends LitElement {
     redispatchEvent(this, event);
   }
 
-  private getInput() {
-    if (!this.input) {
+  private getInputOrTextarea() {
+    if (!this.inputOrTextarea) {
       // If the input is not yet defined, synchronously render.
       // e.g.
       // const textField = document.createElement('md-outlined-text-field');
@@ -636,11 +700,19 @@ export abstract class TextField extends LitElement {
       this.scheduleUpdate();
     }
 
-    return this.input!;
+    return this.inputOrTextarea!;
+  }
+
+  private getInput() {
+    if (this.type === 'textarea') {
+      return null;
+    }
+
+    return this.getInputOrTextarea() as HTMLInputElement;
   }
 
   private checkValidityAndDispatch() {
-    const valid = this.getInput().checkValidity();
+    const valid = this.getInputOrTextarea().checkValidity();
     let canceled = false;
     if (!valid) {
       canceled = !this.dispatchEvent(new Event('invalid', {cancelable: true}));

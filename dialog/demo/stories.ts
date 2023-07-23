@@ -30,8 +30,8 @@ export interface StoryKnobs {
   supportingText: string;
 }
 
-function clickHandler(e: Event) {
-  ((e.target as Element).nextElementSibling as MdDialog)?.show();
+function clickHandler(event: Event) {
+  ((event.target as Element).nextElementSibling as MdDialog)?.show();
 }
 
 

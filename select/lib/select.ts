@@ -11,7 +11,7 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
-import {Field} from '../../field/lib/field.js';
+import {Field} from '../../field/internal/field.js';
 import {List} from '../../list/lib/list.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/lib/menu.js';
 import {DefaultCloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/lib/shared.js';
@@ -256,6 +256,7 @@ export abstract class Select extends LitElement {
           type="listbox"
           stay-open-on-focusout
           part="menu"
+          exportparts="focus-ring: menu-focus-ring"
           .anchor=${this.field}
           .open=${this.open}
           .quick=${this.quick}
@@ -278,30 +279,30 @@ export abstract class Select extends LitElement {
    * Handles opening the select on keydown and typahead selection when the menu
    * is closed.
    */
-  private handleKeydown(e: KeyboardEvent) {
+  private handleKeydown(event: KeyboardEvent) {
     if (this.open || this.disabled || !this.menu) {
       return;
     }
 
     const typeaheadController = this.menu.typeaheadController;
-    const isOpenKey =
-        e.code === 'Space' || e.code === 'ArrowDown' || e.code === 'Enter';
+    const isOpenKey = event.code === 'Space' || event.code === 'ArrowDown' ||
+        event.code === 'Enter';
 
     // Do not open if currently typing ahead because the user may be typing the
     // spacebar to match a word with a space
     if (!typeaheadController.isTypingAhead && isOpenKey) {
-      e.preventDefault();
+      event.preventDefault();
       this.open = true;
       return;
     }
 
-    const isPrintableKey = e.key.length === 1;
+    const isPrintableKey = event.key.length === 1;
 
     // Handles typing ahead when the menu is closed by delegating the event to
     // the underlying menu's typeaheadController
     if (isPrintableKey) {
-      typeaheadController.onKeydown(e);
-      e.preventDefault();
+      typeaheadController.onKeydown(event);
+      event.preventDefault();
 
       const {lastActiveRecord} = typeaheadController;
 
@@ -333,10 +334,10 @@ export abstract class Select extends LitElement {
   /**
    * Handles closing the menu when the focus leaves the select's subtree.
    */
-  private handleFocusout(e: FocusEvent) {
+  private handleFocusout(event: FocusEvent) {
     // Don't close the menu if we are switching focus between menu,
     // select-option, and field
-    if (e.relatedTarget && isElementInSubtree(e.relatedTarget, this)) {
+    if (event.relatedTarget && isElementInSubtree(event.relatedTarget, this)) {
       return;
     }
 
@@ -444,9 +445,9 @@ export abstract class Select extends LitElement {
   /**
    * Determines the reason for closing, and updates the UI accordingly.
    */
-  private handleCloseMenu(e: InstanceType<typeof DefaultCloseMenuEvent>) {
-    const reason = e.reason;
-    const item = e.itemPath[0] as SelectOption;
+  private handleCloseMenu(event: InstanceType<typeof DefaultCloseMenuEvent>) {
+    const reason = event.reason;
+    const item = event.itemPath[0] as SelectOption;
     this.open = false;
     let hasChanged = false;
 
@@ -487,8 +488,8 @@ export abstract class Select extends LitElement {
    * Handles updating selection when an option element requests selection via
    * property / attribute change.
    */
-  private handleRequestSelection(e: RequestSelectionEvent) {
-    const requestingOptionEl = e.target as SelectOption & HTMLElement;
+  private handleRequestSelection(event: RequestSelectionEvent) {
+    const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is already selected.
     if (this.lastSelectedOptionRecords.some(
@@ -503,8 +504,8 @@ export abstract class Select extends LitElement {
    * Handles updating selection when an option element requests deselection via
    * property / attribute change.
    */
-  private handleRequestDeselection(e: RequestDeselectionEvent) {
-    const requestingOptionEl = e.target as SelectOption & HTMLElement;
+  private handleRequestDeselection(event: RequestDeselectionEvent) {
+    const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is not even in the list of tracked selected items.
     if (!this.lastSelectedOptionRecords.some(

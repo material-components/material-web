@@ -1,0 +1,29 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use '../../focus/focus-ring';
+// go/keep-sorted end
+
+@media (forced-colors: active) {
+  .fab {
+    border: 1px solid ButtonText;
+
+    &.extended {
+      // Adjust the padding-inline to account for the 1px border in HCM.
+      padding-inline-start: 15px;
+      padding-inline-end: 19px;
+    }
+  }
+
+  md-focus-ring {
+    // Adjust the focus ring padding to account for the 1px border in HCM.
+    @include focus-ring.theme(
+      (
+        'outward-offset': 3px,
+      )
+    );
+  }
+}

@@ -6,12 +6,12 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {InputChip} from './lib/input-chip.js';
-import {styles as forcedColorsStyles} from './lib/input-forced-colors-styles.css.js';
-import {styles} from './lib/input-styles.css.js';
-import {styles as selectableStyles} from './lib/selectable-styles.css.js';
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
-import {styles as trailingIconStyles} from './lib/trailing-icon-styles.css.js';
+import {InputChip} from './internal/input-chip.js';
+import {styles as forcedColorsStyles} from './internal/input-forced-colors-styles.css.js';
+import {styles} from './internal/input-styles.css.js';
+import {styles as selectableStyles} from './internal/selectable-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as trailingIconStyles} from './internal/trailing-icon-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

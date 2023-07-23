@@ -35,7 +35,7 @@ export class Radio extends LitElement {
   /** @nocollapse */
   static formAssociated = true;
 
-  // Unique maskId is required because of a Safari bug that fail to persist 
+  // Unique maskId is required because of a Safari bug that fail to persist
   // reference to the mask. This should be removed once the bug is fixed.
   private readonly maskId = `cutout${++maskId}`;
 
@@ -125,7 +125,7 @@ export class Radio extends LitElement {
     return html`
       <div class=${classMap(classes)}>
         <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
-        <md-focus-ring for="input"></md-focus-ring>
+        <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
           <mask id="${this.maskId}">
             <rect width="100%" height="100%" fill="white" />

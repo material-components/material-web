@@ -6,9 +6,9 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {FilledField} from './lib/filled-field.js';
-import {styles as filledStyles} from './lib/filled-styles.css.js';
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
+import {FilledField} from './internal/filled-field.js';
+import {styles as filledStyles} from './internal/filled-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

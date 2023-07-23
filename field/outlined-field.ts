@@ -6,9 +6,9 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {OutlinedField} from './lib/outlined-field.js';
-import {styles as outlinedStyles} from './lib/outlined-styles.css.js';
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
+import {OutlinedField} from './internal/outlined-field.js';
+import {styles as outlinedStyles} from './internal/outlined-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

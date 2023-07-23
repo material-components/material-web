@@ -118,20 +118,20 @@ export class TypeaheadController {
    * Apply this listener to the element that will receive `keydown` events that
    * should trigger this controller.
    *
-   * @param e The native browser `KeyboardEvent` from the `keydown` event.
+   * @param event The native browser `KeyboardEvent` from the `keydown` event.
    */
-  readonly onKeydown = (e: KeyboardEvent) => {
+  readonly onKeydown = (event: KeyboardEvent) => {
     if (this.isTypingAhead) {
-      this.typeahead(e);
+      this.typeahead(event);
     } else {
-      this.beginTypeahead(e);
+      this.beginTypeahead(event);
     }
   };
 
   /**
    * Sets up typingahead
    */
-  private beginTypeahead(e: KeyboardEvent) {
+  private beginTypeahead(event: KeyboardEvent) {
     if (!this.active) {
       return;
     }
@@ -139,8 +139,8 @@ export class TypeaheadController {
     // We don't want to typeahead if the _beginning_ of the typeahead is a menu
     // navigation, or a selection. We will handle "Space" only if it's in the
     // middle of a typeahead
-    if (e.code === 'Space' || e.code === 'Enter' ||
-        e.code.startsWith('Arrow') || e.code === 'Escape') {
+    if (event.code === 'Space' || event.code === 'Enter' ||
+        event.code.startsWith('Arrow') || event.code === 'Escape') {
       return;
     }
 
@@ -156,7 +156,7 @@ export class TypeaheadController {
     if (this.lastActiveRecord) {
       this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
     }
-    this.typeahead(e);
+    this.typeahead(event);
   }
 
   /**
@@ -195,12 +195,12 @@ export class TypeaheadController {
    *
    * activates Olive
    */
-  private typeahead(e: KeyboardEvent) {
+  private typeahead(event: KeyboardEvent) {
     clearTimeout(this.cancelTypeaheadTimeout);
     // Stop typingahead if one of the navigation or selection keys (except for
     // Space) are pressed
-    if (e.code === 'Enter' || e.code.startsWith('Arrow') ||
-        e.code === 'Escape') {
+    if (event.code === 'Enter' || event.code.startsWith('Arrow') ||
+        event.code === 'Escape') {
       this.endTypeahead();
       if (this.lastActiveRecord) {
         this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
@@ -209,16 +209,16 @@ export class TypeaheadController {
     }
 
     // If Space is pressed, prevent it from selecting and closing the menu
-    if (e.code === 'Space') {
-      e.stopPropagation();
-      e.preventDefault();
+    if (event.code === 'Space') {
+      event.stopPropagation();
+      event.preventDefault();
     }
 
     // Start up a new keystroke buffer timeout
     this.cancelTypeaheadTimeout =
         setTimeout(this.endTypeahead, this.getProperties().typeaheadBufferTime);
 
-    this.typaheadBuffer += e.key.toLowerCase();
+    this.typaheadBuffer += event.key.toLowerCase();
 
     const lastActiveIndex = this.lastActiveRecord ?
         this.lastActiveRecord[TYPEAHEAD_RECORD.INDEX] :

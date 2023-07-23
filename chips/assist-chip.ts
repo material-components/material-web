@@ -6,11 +6,11 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {AssistChip} from './lib/assist-chip.js';
-import {styles as forcedColorsStyles} from './lib/assist-forced-colors-styles.css.js';
-import {styles} from './lib/assist-styles.css.js';
-import {styles as elevatedStyles} from './lib/elevated-styles.css.js';
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
+import {AssistChip} from './internal/assist-chip.js';
+import {styles as forcedColorsStyles} from './internal/assist-forced-colors-styles.css.js';
+import {styles} from './internal/assist-styles.css.js';
+import {styles as elevatedStyles} from './internal/elevated-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

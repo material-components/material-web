@@ -9,7 +9,7 @@ import {customElement} from 'lit/decorators.js';
 import {Tab} from './lib/tab.js';
 import {styles} from './lib/tab-styles.css.js';
 
-export {Variant} from './lib/tab.js';
+export {TabVariant} from './lib/tab.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -158,7 +158,7 @@ terms of color and shape.
 
 Token                                    | Default value
 ---------------------------------------- | -----------------------------------
-`--md-checkbox-unselected-outline-color` | `--md-sys-color-on-surface-variant`
+`--md-checkbox-outline-color`            | `--md-sys-color-on-surface-variant`
 `--md-checkbox-selected-container-color` | `--md-sys-color-primary`
 `--md-checkbox-selected-icon-color`      | `--md-sys-color-on-primary`
 `--md-checkbox-container-shape`          | `2px`

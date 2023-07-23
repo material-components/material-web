@@ -240,12 +240,13 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
 };
 
 function displayCloseEvent(outputRef: Ref<HTMLElement>) {
-  return (e: CloseMenuEvent) => {
+  return (event: CloseMenuEvent) => {
     if (!outputRef.value) return;
 
     outputRef.value.innerText = `Closed by item(s) with text: ${
-        JSON.stringify(e.itemPath.map(
-            item => item.headline))} For reason: ${JSON.stringify(e.reason)}`;
+        JSON.stringify(event.itemPath.map(
+            item =>
+                item.headline))} For reason: ${JSON.stringify(event.reason)}`;
   };
 }
 
@@ -311,7 +312,7 @@ function renderSubMenu(
 
 function renderMenu(
     knobs: StoryKnobs, anchorRef: Ref<HTMLElement>, menuRef: Ref<MdMenu>,
-    onClose: (e: CloseMenuEvent) => void, hasOverflow: boolean,
+    onClose: (event: CloseMenuEvent) => void, hasOverflow: boolean,
     ...content: unknown[]) {
   return html`
     <md-menu

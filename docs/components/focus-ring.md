@@ -33,28 +33,16 @@ one of three ways.
 1.  Attached to the parent element
 
     ```html
-    <style>
-      .container {
-        position: relative;
-        --md-focus-ring-shape: 8px;
-      }
-    </style>
-    <button class="container">
-      <md-focus-ring></md-focus-ring>
+    <button style="position: relative">
+      <md-focus-ring style="--md-focus-ring-shape: 8px"></md-focus-ring>
     </button>
     ```
 
 1.  Attached to a referenced element
 
     ```html
-    <style>
-      .container {
-        position: relative;
-        --md-focus-ring-shape: 8px;
-      }
-    </style>
-    <div class="container">
-      <md-focus-ring for="control"></md-focus-ring>
+    <div style="position: relative">
+      <md-focus-ring for="control" style="--md-focus-ring-shape: 8px"></md-focus-ring>
       <input id="control">
     </div>
     ```
@@ -62,14 +50,8 @@ one of three ways.
 1.  Attached imperatively
 
     ```html
-    <style>
-      .container {
-        position: relative;
-        --md-focus-ring-shape: 8px;
-      }
-    </style>
-    <div class="container">
-      <md-focus-ring id="ring"></md-focus-ring>
+    <div style="position: relative">
+      <md-focus-ring id="ring" style="--md-focus-ring-shape: 8px"></md-focus-ring>
       <button id="ring-control"></button>
     </div>
     <script>
@@ -89,14 +71,8 @@ This is useful for components like list items.
 ![An element with a focus ring that animates inward.](images/focus/usage-inward.gif "A focus ring animating inward.")
 
 ```html
-<style>
-  .container {
-    position: relative;
-    --md-focus-ring-shape: 8px;
-  }
-</style>
-<button class="container">
-  <md-focus-ring inward></md-focus-ring>
+<button style="position: relative">
+  <md-focus-ring inward style="--md-focus-ring-shape: 8px"></md-focus-ring>
 </button>
 ```
 
@@ -109,7 +85,7 @@ properties.
 
 ```html
 <style>
-  :root {
+  md-focus-ring {
     --md-focus-ring-duration: 0s; /* disabled animation */
   }
 </style>
@@ -127,11 +103,11 @@ terms of color and shape.
 
 ### Tokens
 
-Token                    | Default value
------------------------- | --------------------------
-`--md-focus-ring-color`  | `--md-sys-color-secondary`
-`--md-focus-ring-shape`  | `9999px`
-`--md-focus-ring-width`  | `3px`
+Token                   | Default value
+----------------------- | --------------------------
+`--md-focus-ring-color` | `--md-sys-color-secondary`
+`--md-focus-ring-shape` | `9999px`
+`--md-focus-ring-width` | `3px`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-focus-ring.scss)
     <!-- {.external} -->
@@ -142,7 +118,7 @@ Token                    | Default value
 
 ```html
 <style>
-:root {
+md-focus-ring {
   --md-focus-ring-shape: 0px;
   --md-focus-ring-width: 2px;
   --md-focus-ring-active-width: 4px;

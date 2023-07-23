@@ -12,10 +12,6 @@ import {css, html} from 'lit';
 /** Knob types for focus ring stories. */
 export interface StoryKnobs {
   inward: boolean;
-  '--md-focus-ring-width': string;
-  '--md-focus-ring-active-width': string;
-  '--md-focus-ring-outward-offset': string;
-  '--md-focus-ring-inward-offset': string;
 }
 
 const standard: MaterialStoryInit<StoryKnobs> = {

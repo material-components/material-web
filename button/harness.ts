@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Button} from './lib/button.js';
+import {Button} from './internal/button.js';
 
 /**
  * Test harness for buttons.
@@ -14,6 +14,6 @@ import {Button} from './lib/button.js';
 export class ButtonHarness extends Harness<Button> {
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.md3-button') as HTMLElement;
+    return this.element.renderRoot.querySelector('.button') as HTMLElement;
   }
 }

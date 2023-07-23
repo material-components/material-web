@@ -40,12 +40,12 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
         new DefaultCloseMenuEvent(this, {kind: CLOSE_REASON.CLICK_SELECTION}));
   }
 
-  protected override onKeydown(e: KeyboardEvent) {
+  protected override onKeydown(event: KeyboardEvent) {
     if (this.keepOpen) return;
-    const keyCode = e.code;
+    const keyCode = event.code;
 
-    if (!e.defaultPrevented && isClosableKey(keyCode)) {
-      e.preventDefault();
+    if (!event.defaultPrevented && isClosableKey(keyCode)) {
+      event.preventDefault();
       this.dispatchEvent(new DefaultCloseMenuEvent(
           this, {kind: CLOSE_REASON.KEYDOWN, key: keyCode}));
     }

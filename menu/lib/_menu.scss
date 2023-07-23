@@ -48,13 +48,15 @@
       )
     );
 
+    min-width: 300px;
+  }
+
+  md-focus-ring {
     @include focus-ring.theme(
       (
         'shape': var(--_container-shape),
       )
     );
-
-    min-width: 300px;
   }
 
   .menu {

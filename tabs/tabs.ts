@@ -11,7 +11,7 @@ import {customElement} from 'lit/decorators.js';
 import {Tabs} from './lib/tabs.js';
 import {styles} from './lib/tabs-styles.css.js';
 
-export {Variant, MdTab} from './tab.js';
+export {MdTab, TabVariant} from './tab.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -49,13 +49,12 @@ $_custom-property-prefix: 'icon';
     -moz-osx-font-smoothing: grayscale;
   }
 
-  span {
-    ::slotted(svg) {
-      fill: currentColor;
-    }
-    ::slotted(*) {
-      height: var(--_size);
-      width: var(--_size);
-    }
+  ::slotted(svg) {
+    fill: currentColor;
+  }
+
+  ::slotted(*) {
+    height: var(--_size);
+    width: var(--_size);
   }
 }

@@ -67,13 +67,13 @@
     content-visibility: auto;
   }
 
-  .circular-progress {
+  .progress {
     flex: 1;
     align-self: stretch;
     margin: $container-padding;
   }
 
-  .circular-progress,
+  .progress,
   .spinner,
   .left,
   .right,
@@ -110,14 +110,12 @@
     stroke: transparent;
   }
 
-  .circular-progress.indeterminate {
-    will-change: transform;
+  .progress.indeterminate {
     animation: linear infinite linear-rotate;
     animation-duration: $linear-rotate-duration;
   }
 
   .spinner {
-    will-change: transform;
     animation: infinite both rotate-arc;
     animation-duration: $cycle-duration;
     animation-timing-function: $indeterminate-easing;
@@ -143,7 +141,6 @@
     border: solid calc($_active-indicator-fraction * $_padding-box-width);
     border-color: var(--_active-indicator-color) var(--_active-indicator-color)
       transparent transparent;
-    will-change: transform;
     animation: expand-arc;
     animation-iteration-count: infinite;
     animation-fill-mode: both;

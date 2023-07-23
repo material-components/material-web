@@ -48,9 +48,9 @@ $_track-background: 0 / $_track-background-width 100%
 // Generates a list of rtl selectors. This is done so rules can be generated
 // separately so they don't get dropped where unsupported.
 $rtl-selectors: (
-  ':host-context([dir="rtl"]) .linear-progress',
-  ':host([dir="rtl"]) .linear-progress',
-  '.linear-progress:dir(rtl)'
+  ':host-context([dir="rtl"]) .progress',
+  ':host([dir="rtl"]) .progress',
+  '.progress:dir(rtl)'
 );
 
 @mixin styles() {
@@ -72,7 +72,7 @@ $rtl-selectors: (
     contain: strict;
   }
 
-  .linear-progress,
+  .progress,
   .track,
   .buffer-bar,
   .bar,
@@ -80,7 +80,7 @@ $rtl-selectors: (
     position: absolute;
   }
 
-  .linear-progress {
+  .progress {
     inset: 0;
     outline: transparent solid 1px;
     border-radius: var(--_track-shape);
@@ -95,7 +95,6 @@ $rtl-selectors: (
     inline-size: 100%;
     block-size: var(--_active-indicator-height);
     transform-origin: left center;
-    will-change: transform;
     transition: transform $_determinate-duration $_determinate-easing;
   }
 
@@ -112,14 +111,12 @@ $rtl-selectors: (
   .buffer-bar {
     background: var(--_track-color);
     inset: 0;
-    will-change: transform;
     transition: transform $_determinate-duration $_determinate-easing;
     transform-origin: left center;
   }
 
   .track {
     inset: 0;
-    will-change: transform;
     animation: linear infinite $_determinate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
@@ -149,7 +146,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .primary-bar {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
@@ -157,7 +153,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .primary-bar > .bar-inner {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration
       primary-indeterminate-scale;
   }
@@ -169,7 +164,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .secondary-bar {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
@@ -177,7 +171,6 @@ $rtl-selectors: (
   }
 
   .indeterminate.animation-ready .secondary-bar > .bar-inner {
-    will-change: transform;
     animation: linear infinite $_indeterminate-duration
       secondary-indeterminate-scale;
   }
@@ -310,13 +303,13 @@ $rtl-selectors: (
   }
 
   @media screen and (forced-colors: active) {
-    .linear-progress {
+    .progress {
       --_active-indicator-color: canvastext;
       --_track-color: graytext;
       border: 1px solid canvastext;
     }
 
-    .indeterminate.linear-progress {
+    .indeterminate.progress {
       --_track-color: canvas;
     }
   }

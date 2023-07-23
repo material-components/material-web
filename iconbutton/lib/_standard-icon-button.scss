@@ -34,15 +34,20 @@
     @each $token, $value in $tokens {
       --_#{$token}: var(--md-icon-button-#{$token}, #{$value});
     }
-
+    
     max-height: var(--_state-layer-size);
     max-width: var(--_state-layer-size);
     width: 100%;
     height: 100%;
+  }
 
+  md-focus-ring {
     @include focus-ring.theme(
       (
-        'shape': var(--_state-layer-shape),
+        'shape-start-start': var(--_state-layer-shape),
+        'shape-start-end': var(--_state-layer-shape),
+        'shape-end-end': var(--_state-layer-shape),
+        'shape-end-start': var(--_state-layer-shape),
       )
     );
   }

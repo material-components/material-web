@@ -6,13 +6,13 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {Fab} from './lib/fab.js';
-import {styles} from './lib/fab-styles.css.js';
-import {styles as forcedColors} from './lib/forced-colors-styles.css.js';
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
+import {Fab} from './internal/fab.js';
+import {styles} from './internal/fab-styles.css.js';
+import {styles as forcedColors} from './internal/forced-colors-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
-export {Variant} from './lib/fab.js';
-export {FabSize} from './lib/shared.js';
+export {FabVariant} from './internal/fab.js';
+export {FabSize} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -49,6 +49,5 @@ declare global {
  */
 @customElement('md-fab')
 export class MdFab extends Fab {
-  static override styles =
-      [sharedStyles, styles, forcedColors];
+  static override styles = [sharedStyles, styles, forcedColors];
 }

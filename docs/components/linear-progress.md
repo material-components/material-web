@@ -82,7 +82,7 @@ indeterminate.](images/linearprogress/usage.gif "Determinate and indeterminate l
       style="min-width:300px;flex-direction:column;justify-content:center;gap:16px;"
       title="Determinate and indeterminate linear progress indicators."
       aria-label="Two linear progress indicators, one with half the track and the other indeterminate.">
-    <md-linear-progress style="width:100%;" progress="0.5"></md-linear-progress>
+    <md-linear-progress style="width:100%;" value="0.5"></md-linear-progress>
     <md-linear-progress style="width:100%;" indeterminate></md-linear-progress>
   </figure>
 </div>
@@ -92,7 +92,7 @@ indeterminate.](images/linearprogress/usage.gif "Determinate and indeterminate l
 <!-- catalog-only-end -->
 
 ```html
-<md-linear-progress progress="0.5"></md-linear-progress>
+<md-linear-progress value="0.5"></md-linear-progress>
 
 <md-linear-progress indeterminate></md-linear-progress>
 ```
@@ -136,7 +136,7 @@ Add an
 attribute to progress indicators to give them a descriptive name.
 
 ```html
-<md-linear-progress progress="0.5" aria-label="Download progress"></md-linear-progress>
+<md-linear-progress value="0.5" aria-label="Download progress"></md-linear-progress>
 ```
 
 ## Theming
@@ -187,7 +187,7 @@ Token                                          | Default value
       flex-grow: 1;
     }
   </style>
-  <md-linear-progress progress="0.5"></md-linear-progress>
+  <md-linear-progress value="0.5"></md-linear-progress>
   </figure>
 </div>
 
@@ -206,5 +206,5 @@ Token                                          | Default value
 }
 </style>
 
-<md-linear-progress progress="0.5"></md-linear-progress>
+<md-linear-progress value="0.5"></md-linear-progress>
 ```

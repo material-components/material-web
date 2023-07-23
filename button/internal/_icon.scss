@@ -1,0 +1,39 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin styles() {
+  // The icon CSS class overrides styles defined in the .material-icons CSS
+  // class, which is loaded separately so the order of CSS definitions is not
+  // guaranteed. Therefore, increase specifity to ensure overrides apply.
+  ::slotted([slot='icon']) {
+    .button & {
+      display: inline-flex;
+      position: relative;
+      writing-mode: horizontal-tb;
+      fill: currentColor;
+      color: var(--_icon-color);
+      font-size: var(--_icon-size);
+      inline-size: var(--_icon-size);
+      block-size: var(--_icon-size);
+    }
+
+    .button:hover & {
+      color: var(--_hover-icon-color);
+    }
+
+    .button:focus & {
+      color: var(--_focus-icon-color);
+    }
+
+    .button:active & {
+      color: var(--_pressed-icon-color);
+    }
+
+    .button:disabled & {
+      color: var(--_disabled-icon-color);
+      opacity: var(--_disabled-icon-opacity);
+    }
+  }
+}

@@ -22,7 +22,8 @@ function cssWire<T = string>(prop: string, unit = '') {
 
 const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     'Progress indicators', [
-      new Knob('progress', {ui: numberInput({step: 0.1}), defaultValue: 0.5}),
+      new Knob('value', {ui: numberInput({step: 0.1}), defaultValue: 0.5}),
+      new Knob('max', {ui: numberInput(), defaultValue: 1}),
       new Knob('indeterminate', {ui: boolInput(), defaultValue: false}),
       new Knob('fourColor', {ui: boolInput(), defaultValue: false}),
       new Knob(
@@ -44,16 +45,6 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
             '--md-linear-progress-active-indicator-height', 'px')
       }),
       new Knob('custom theme (linear)', {ui: boolInput()}),
-      new Knob('size (circular)', {
-        ui: numberInput(),
-        defaultValue: 48,
-        wiring: cssWire<number>('--md-circular-progress-size', 'px')
-      }),
-      new Knob('trackWidth (circular)', {
-        ui: numberInput(),
-        defaultValue: 8.33,
-        wiring: cssWire<number>('--md-circular-progress-active-indicator-width')
-      }),
     ]);
 
 collection.addStories(...materialInitsToStoryInits(stories));

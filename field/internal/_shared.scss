@@ -1,0 +1,70 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './content';
+@use './label';
+@use './supporting-text';
+// go/keep-sorted end
+
+@mixin styles() {
+  :host {
+    display: inline-flex;
+  }
+
+  .field {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    // Allow the use of block/inline reflexive RTL properties without impacting
+    // structure when languages change.
+    writing-mode: horizontal-tb;
+    max-width: 100%; // Do not allow field to grow beyond explicitly set width
+  }
+
+  // A separate wrapper is needed around the container for the outline, whose
+  // floating label needs overflow: visible. The container itself needs
+  // overflow: hidden for resizability.
+  .container-overflow {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    display: flex;
+    height: 100%;
+    position: relative;
+  }
+
+  .container {
+    align-items: center;
+    border-radius: inherit;
+    display: flex;
+    flex: 1;
+    max-height: 100%;
+    min-height: 100%;
+    min-width: min-content;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .field,
+  .container-overflow,
+  .field:not(.disabled) .container {
+    // Inherit `resize` set on host, but only inherit it for the actual
+    // container if the field is not disabled.
+    resize: inherit;
+  }
+
+  .disabled {
+    pointer-events: none;
+  }
+
+  @include content.styles;
+  @include label.styles;
+  @include supporting-text.styles;
+}

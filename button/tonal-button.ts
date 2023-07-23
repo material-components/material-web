@@ -6,10 +6,10 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as sharedElevationStyles} from './lib/shared-elevation-styles.css.js';
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
-import {TonalButton} from './lib/tonal-button.js';
-import {styles as tonalStyles} from './lib/tonal-styles.css.js';
+import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {TonalButton} from './internal/tonal-button.js';
+import {styles as tonalStyles} from './internal/tonal-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

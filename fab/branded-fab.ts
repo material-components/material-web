@@ -6,12 +6,12 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {Fab, Variant} from './lib/fab.js';
-import {styles} from './lib/fab-branded-styles.css.js';
-import {styles as forcedColors} from './lib/forced-colors-styles.css.js';
-import {styles as sharedStyles} from './lib/shared-styles.css.js';
+import {Fab, FabVariant} from './internal/fab.js';
+import {styles} from './internal/fab-branded-styles.css.js';
+import {styles as forcedColors} from './internal/forced-colors-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
-export {FabSize} from './lib/shared.js';
+export {FabSize} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -52,7 +52,7 @@ export class MdBrandedFab extends Fab {
   /**
    * Branded FABs have no variants
    */
-  override variant!: Variant;
+  override variant!: FabVariant;
 
   override getRenderClasses() {
     return {
@@ -63,6 +63,5 @@ export class MdBrandedFab extends Fab {
       'small': false,
     };
   }
-  static override styles =
-      [sharedStyles, styles, forcedColors];
+  static override styles = [sharedStyles, styles, forcedColors];
 }

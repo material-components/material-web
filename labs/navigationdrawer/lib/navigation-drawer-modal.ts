@@ -72,8 +72,8 @@ export class NavigationDrawerModal extends LitElement {
     }
   }
 
-  private handleKeyDown(e: KeyboardEvent) {
-    if (e.code === 'Escape') {
+  private handleKeyDown(event: KeyboardEvent) {
+    if (event.code === 'Escape') {
       this.opened = false;
     }
   }
