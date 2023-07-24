@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {Icon} from './lib/icon.js';
-import {styles} from './lib/icon-styles.css.js';
+import {Icon} from './internal/icon.js';
+import {styles} from './internal/icon-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
