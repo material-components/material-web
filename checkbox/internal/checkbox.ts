@@ -24,6 +24,12 @@ export class Checkbox extends LitElement {
   }
 
   /** @nocollapse */
+  static override shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true
+  };
+
+  /** @nocollapse */
   static formAssociated = true;
 
   /**
@@ -97,10 +103,6 @@ export class Checkbox extends LitElement {
         dispatchActivationClick(this.input!);
       });
     }
-  }
-
-  override focus() {
-    this.input?.focus();
   }
 
   protected override update(changed: PropertyValues<Checkbox>) {
