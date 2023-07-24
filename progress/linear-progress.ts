@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {LinearProgress} from './lib/linear-progress.js';
-import {styles} from './lib/linear-progress-styles.css.js';
+import {LinearProgress} from './internal/linear-progress.js';
+import {styles} from './internal/linear-progress-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

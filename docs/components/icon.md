@@ -146,7 +146,7 @@ Token                               | Default value
 `--md-icon-size`                    | `24px`
 `--md-icon-weight`                  | `400`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/icon/lib/_md-comp-icon.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/icon/internal/_md-comp-icon.scss)
     <!-- {.external} -->
 
 ### Example

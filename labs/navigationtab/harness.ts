@@ -6,7 +6,7 @@
 
 import {Harness} from '../../testing/harness.js';
 
-import {NavigationTab} from './lib/navigation-tab.js';
+import {NavigationTab} from './internal/navigation-tab.js';
 
 /**
  * Test harness for navigation tab elements.

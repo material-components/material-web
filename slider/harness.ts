@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Slider} from './lib/slider.js';
+import {Slider} from './internal/slider.js';
 
 /**
  * Test harness for slider.

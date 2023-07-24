@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {TextField} from './lib/text-field.js';
+import {TextField} from './internal/text-field.js';
 
 /**
  * Test harness for text field elements.

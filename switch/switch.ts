@@ -6,9 +6,9 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as forcedColorsStyles} from './lib/forced-colors-styles.css.js';
-import {Switch} from './lib/switch.js';
-import {styles} from './lib/switch-styles.css.js';
+import {styles as forcedColorsStyles} from './internal/forced-colors-styles.css.js';
+import {Switch} from './internal/switch.js';
+import {styles} from './internal/switch-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
