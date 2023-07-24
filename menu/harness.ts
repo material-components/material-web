@@ -8,10 +8,10 @@ import {LitElement} from 'lit';
 
 import {Harness} from '../testing/harness.js';
 
-import {Menu} from './lib/menu.js';
-import {MenuItemHarness} from './lib/menuitem/harness.js';
+import {Menu} from './internal/menu.js';
+import {MenuItemHarness} from './internal/menuitem/harness.js';
 
-export {MenuItemHarness} from './lib/menuitem/harness.js';
+export {MenuItemHarness} from './internal/menuitem/harness.js';
 
 /**
  * Test harness for menu.

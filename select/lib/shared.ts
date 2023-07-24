@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MenuItem} from '../../menu/lib/shared.js';
+import {MenuItem} from '../../menu/internal/shared.js';
 
 /**
  * The interface specific to a Select Option

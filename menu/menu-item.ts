@@ -9,12 +9,12 @@ import {customElement} from 'lit/decorators.js';
 import {styles as listItemForcedColorsStyles} from '../list/internal/listitem/forced-colors-styles.css.js';
 import {styles as listItemStyles} from '../list/internal/listitem/list-item-styles.css.js';
 
-import {styles as forcedColorsStyles} from './lib/menuitem/forced-colors-styles.css.js';
-import {MenuItemEl} from './lib/menuitem/menu-item.js';
-import {styles} from './lib/menuitem/menu-item-styles.css.js';
+import {styles as forcedColorsStyles} from './internal/menuitem/forced-colors-styles.css.js';
+import {MenuItemEl} from './internal/menuitem/menu-item.js';
+import {styles} from './internal/menuitem/menu-item-styles.css.js';
 
 export {ListItem} from '../list/internal/listitem/list-item.js';
-export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
+export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

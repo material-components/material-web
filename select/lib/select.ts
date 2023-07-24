@@ -13,9 +13,9 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {List} from '../../list/internal/list.js';
-import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/lib/menu.js';
-import {DefaultCloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/lib/shared.js';
-import {TYPEAHEAD_RECORD} from '../../menu/lib/typeaheadController.js';
+import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
+import {DefaultCloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/shared.js';
+import {TYPEAHEAD_RECORD} from '../../menu/internal/typeaheadController.js';
 
 import {getSelectedItems, RequestDeselectionEvent, RequestSelectionEvent, SelectOption, SelectOptionRecord} from './shared.js';
 

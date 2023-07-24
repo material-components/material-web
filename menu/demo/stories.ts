@@ -14,7 +14,7 @@ import '@material/web/divider/divider.js';
 import '@material/web/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {CloseMenuEvent} from '@material/web/menu/lib/shared.js';
+import {CloseMenuEvent} from '@material/web/menu/internal/shared.js';
 import {Corner, DefaultFocusState, MdMenu} from '@material/web/menu/menu.js';
 import {css, html, nothing, TemplateResult} from 'lit';
 import {createRef, ref, Ref} from 'lit/directives/ref.js';

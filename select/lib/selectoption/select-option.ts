@@ -7,7 +7,7 @@
 import {PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
-import {ListItemRole, MenuItemEl} from '../../../menu/lib/menuitem/menu-item.js';
+import {ListItemRole, MenuItemEl} from '../../../menu/internal/menuitem/menu-item.js';
 import {RequestDeselectionEvent, RequestSelectionEvent, SelectOption} from '../shared.js';
 
 /**
