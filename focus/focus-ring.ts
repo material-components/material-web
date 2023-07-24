@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {FocusRing} from './lib/focus-ring.js';
-import {styles} from './lib/focus-ring-styles.css.js';
+import {FocusRing} from './internal/focus-ring.js';
+import {styles} from './internal/focus-ring-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
