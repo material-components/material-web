@@ -6,11 +6,11 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {List} from './lib/list.js';
-import {ListItemHarness} from './lib/listitem/harness.js';
-import {ListItemEl} from './lib/listitem/list-item.js';
+import {List} from './internal/list.js';
+import {ListItemHarness} from './internal/listitem/harness.js';
+import {ListItemEl} from './internal/listitem/list-item.js';
 
-export {ListItemHarness} from './lib/listitem/harness.js';
+export {ListItemHarness} from './internal/listitem/harness.js';
 
 const NAVIGABLE_KEYS = {
   'ArrowDown': 'ArrowDown',

@@ -6,9 +6,9 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as forcedColors} from './lib/listitem/forced-colors-styles.css.js';
-import {styles} from './lib/listitem/list-item-styles.css.js';
-import {ListItemLinkOnly as ListItemLink} from './lib/listitemlink/list-item-link-only.js';
+import {styles as forcedColors} from './internal/listitem/forced-colors-styles.css.js';
+import {styles} from './internal/listitem/list-item-styles.css.js';
+import {ListItemLinkOnly as ListItemLink} from './internal/listitemlink/list-item-link-only.js';
 
 declare global {
   interface HTMLElementTagNameMap {

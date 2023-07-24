@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as listItemForcedColorsStyles} from '../list/lib/listitem/forced-colors-styles.css.js';
-import {styles as listItemStyles} from '../list/lib/listitem/list-item-styles.css.js';
+import {styles as listItemForcedColorsStyles} from '../list/internal/listitem/forced-colors-styles.css.js';
+import {styles as listItemStyles} from '../list/internal/listitem/list-item-styles.css.js';
 import {styles as forcedColorsStyles} from '../menu/lib/menuitem/forced-colors-styles.css.js';
 import {styles} from '../menu/lib/menuitem/menu-item-styles.css.js';
 

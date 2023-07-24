@@ -6,10 +6,10 @@
 
 import {property} from 'lit/decorators.js';
 
-import {ListItemEl, ListItemRole} from '../../../list/lib/listitem/list-item.js';
+import {ListItemEl, ListItemRole} from '../../../list/internal/listitem/list-item.js';
 import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem} from '../shared.js';
 
-export {ListItemRole} from '../../../list/lib/listitem/list-item.js';
+export {ListItemRole} from '../../../list/internal/listitem/list-item.js';
 
 /**
  * @fires close-menu {CloseMenuEvent}

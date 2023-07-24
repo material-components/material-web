@@ -7,7 +7,7 @@
 import {html} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
-import {List} from '../../../list/lib/list.js';
+import {List} from '../../../list/internal/list.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
 import {ActivateTypeaheadEvent, CLOSE_REASON, CloseMenuEvent, CloseOnFocusoutEvent, DeactivateItemsEvent, DeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY, StayOpenOnFocusoutEvent} from '../shared.js';

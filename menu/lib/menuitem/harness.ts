@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ListItemHarness} from '../../../list/lib/listitem/harness.js';
+import {ListItemHarness} from '../../../list/internal/listitem/harness.js';
 
 /**
  * Test harness for menu item.

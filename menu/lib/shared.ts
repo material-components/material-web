@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ListItem} from '../../list/lib/listitem/list-item.js';
+import {ListItem} from '../../list/internal/listitem/list-item.js';
 
 /**
  * Interface specific to menu item and not list item.

@@ -6,7 +6,7 @@
 
 import {property} from 'lit/decorators.js';
 
-import {ListItemLink} from '../../../list/lib/listitemlink/list-item-link.js';
+import {ListItemLink} from '../../../list/internal/listitemlink/list-item-link.js';
 import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem, SELECTION_KEY} from '../shared.js';
 
 /**

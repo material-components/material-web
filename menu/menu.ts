@@ -10,7 +10,7 @@ import {styles as forcedColors} from './lib/forced-colors-styles.css.js';
 import {Menu} from './lib/menu.js';
 import {styles} from './lib/menu-styles.css.js';
 
-export {ListItem} from '../list/lib/listitem/list-item.js';
+export {ListItem} from '../list/internal/listitem/list-item.js';
 export {Corner, DefaultFocusState} from './lib/menu.js';
 export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
 

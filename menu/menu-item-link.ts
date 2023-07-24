@@ -6,14 +6,14 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as listItemForcedColorsStyles} from '../list/lib/listitem/forced-colors-styles.css.js';
-import {styles as listItemStyles} from '../list/lib/listitem/list-item-styles.css.js';
+import {styles as listItemForcedColorsStyles} from '../list/internal/listitem/forced-colors-styles.css.js';
+import {styles as listItemStyles} from '../list/internal/listitem/list-item-styles.css.js';
 
 import {styles as forcedColorsStyles} from './lib/menuitem/forced-colors-styles.css.js';
 import {styles} from './lib/menuitem/menu-item-styles.css.js';
 import {MenuItemLink} from './lib/menuitemlink/menu-item-link.js';
 
-export {ListItem} from '../list/lib/listitem/list-item.js';
+export {ListItem} from '../list/internal/listitem/list-item.js';
 export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './lib/shared.js';
 
 
