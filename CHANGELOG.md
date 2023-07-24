@@ -1,5 +1,95 @@
 # Changelog
 
+## [1.0.0-pre.14](https://github.com/material-components/material-web/compare/v1.0.0-pre.13...v1.0.0-pre.14) (2023-07-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename `@material/web/<component>/lib` to `@material/web/<component>/internal`. Prefer not using internal files.
+* **focus:** Change `@material/web/focus/focus-ring.js` to `@material/web/focus/md-focus-ring.js`.
+* **menu:** Rename `@material/web/menu/lib` to `@material/web/menu/internal`. Prefer not using internal files.
+* **list:** Rename `@material/web/list/lib` to `@material/web/list/internal`. Prefer not using internal files.
+* **focus:** Rename `@material/web/focus/lib` to `@material/web/focus/internal`. Prefer not using internal files.
+* **icon:** Rename `@material/web/icon/lib` to `@material/web/icon/internal`. Prefer not using internal files.
+* **iconbutton:** Rename `@material/web/iconbutton/lib` to `@material/web/iconbutton/internal`. Prefer not using internal files.
+* **field:** Rename `@material/web/field/lib` to `@material/web/field/internal`. Prefer not using internal files.
+* **divider:** Rename `@material/web/divider/lib` to `@material/web/divider/internal`. Prefer not using internal files.
+* **chips:** Rename `@material/web/chips/lib` to `@material/web/chips/internal`. Prefer not using internal files.
+* **elevation:** Rename `@material/web/elevation/lib` to `@material/web/elevation/internal`. Prefer not using internal files.
+* **fab:** Rename `@material/web/fab/lib` to `@material/web/fab/internal`. Prefer not using internal files.
+* **dialog:** Rename `@material/web/dialog/lib` to `@material/web/dialog/internal`. Prefer not using internal files.
+* **checkbox:** Rename `@material/web/checkbox/lib` to `@material/web/checkbox/internal`. Prefer not using internal files.
+* **button:** Rename `@material/web/button/lib` to `@material/web/button/internal`. Prefer not using internal files.
+* **checkbox:** Rename `--md-checkbox-unselected-<token>` to `--md-checkbox-<token>`
+* **progress:** rename `progress` property to `value`
+* **progress:** remove circular progress slots
+* **focus:** Set `--md-focus-ring-*` tokens directly on `<md-focus-ring>` elements. Focus rings are exposed with `::part(focus-ring)`.
+* **linearprogress:** remove linearprogress directory
+* **circularprogress:** remove circularprogress directory
+* **field:** remove resizable, use css `resize: both`
+* **textfield:** Rename `--md-*-field-container-padding-vertical` to `--md-*-field-top-space` and `--md-*-field-bottom-space`. Rename `--md-filled-*-field-with-label-container-padding-vertical` to `--md-filled-*-field-with-label-top-space` and `--md-filled-*-field-with-label-bottom-space`
+* **textfield:** Rename `--md-*-field-container-padding-horizontal` to `--md-*-field-leading-space` and `--md-*-field-trailing-space`
+* **textfield:** Rename `--md-*-field-supporting-text-padding` to `--md-*-field-supporting-text-leading-space` and `--md-*-field-supporting-text-trailing-space`. Rename `--md-*-field-supporting-text-padding-top` to `--md-*-field-supporting-text-top-space`
+* **textfield:** Rename `--md-*-text-field-input-text-prefix-padding` and `--md-*-text-field-input-text-suffix-padding` to `--md-*-text-field-input-text-prefix-trailing-space` and `--md-*-text-field-input-text-suffix-leading-space`
+
+### Features
+
+* add component convenience bundles ([ae407b0](https://github.com/material-components/material-web/commit/ae407b0874760cb6a3d5a8db55c72f6cd4dc3d3c))
+* **all:** expose `focus-ring` parts ([243e231](https://github.com/material-components/material-web/commit/243e231a1370c06d6ecd34b81be5f7c091cee6a7))
+* **checkbox:** dispatch input event ([154861c](https://github.com/material-components/material-web/commit/154861c99e51e22c0a96f29fe5be22e053bbe04f))
+* **progress:** add `max` property ([02a509b](https://github.com/material-components/material-web/commit/02a509b480145abf6bea44ec9d1f03379ea25538))
+* **select:** expose menu and field CSS shadow parts ([c512808](https://github.com/material-components/material-web/commit/c5128089cdaed532ea47c0f8c3b556183d1ad3ec)), closes [#4291](https://github.com/material-components/material-web/issues/4291)
+* **textfield:** add textarea type ([ff2e089](https://github.com/material-components/material-web/commit/ff2e0896800faeca0942dbd0fc4e0e159974d6a4))
+
+
+### Bug Fixes
+
+* **button:** remove md3-* class prefixes ([2dabbdc](https://github.com/material-components/material-web/commit/2dabbdc142c88e4c94bcbcbaa333811e7126ba97))
+* **button:** rename "lib" directory to "internal" ([601ebb6](https://github.com/material-components/material-web/commit/601ebb669cc02b9a50c25950210bf6142550d546))
+* **checkbox:** add a11y to demos ([89b99a7](https://github.com/material-components/material-web/commit/89b99a70947c10353f243c6adc6c12b6e895f6e5))
+* **checkbox:** do not announce icon for screen readers ([921f185](https://github.com/material-components/material-web/commit/921f185aa14b22d3dce72fe1fe272b1501404cc4))
+* **checkbox:** fix broken "lib" to "internal" sass import ([2147af7](https://github.com/material-components/material-web/commit/2147af7e28e1c96dc138c85c55eb1b1dd70da715))
+* **checkbox:** reduce forced-colors size ([b5712f3](https://github.com/material-components/material-web/commit/b5712f3d4b4845e98cfb74f145e400647b492823))
+* **checkbox:** remove "unselected" prefix from tokens ([66d7b8b](https://github.com/material-components/material-web/commit/66d7b8b275a51ae3a2f8a3957178583bb2904d5a))
+* **checkbox:** rename "lib" directory to "internal" ([c4ac9f7](https://github.com/material-components/material-web/commit/c4ac9f73d923237457f856589b10e0413943664c))
+* **checkbox:** screen readers announce errors as invalid ([ec02fe4](https://github.com/material-components/material-web/commit/ec02fe40fc6b576f8060b5862141f5061e85529c))
+* **chips:** rename "lib" directory to "internal" ([a8880f7](https://github.com/material-components/material-web/commit/a8880f791b0a4961065dd8cc19f3727eb4d60100))
+* **circularprogress:** remove circularprogress directory ([48edec0](https://github.com/material-components/material-web/commit/48edec020034a648961ea3b5670f8d60b5b27cda))
+* **dialog:** rename "lib" directory to "internal" ([aaa672b](https://github.com/material-components/material-web/commit/aaa672b8687f89b638050aef08691a01a73e23c2))
+* **divider:** rename "lib" directory to "internal" ([7fc17c9](https://github.com/material-components/material-web/commit/7fc17c99c9b6daaf2fa677889b242a71468d9f10))
+* **elevation:** rename "lib" directory to "internal" ([0432e6d](https://github.com/material-components/material-web/commit/0432e6d9ceb454b94265ddafb63db2059633acbd))
+* **fab:** rename "lib" directory to "internal" ([5618b5e](https://github.com/material-components/material-web/commit/5618b5e23f8dc6ad3e9b4625d7172d6f3f4a1bfd))
+* **field:** keep label in same spot when resizing ([e1f8819](https://github.com/material-components/material-web/commit/e1f881991aac43c87b050bc4b1ec255f8d394fa3))
+* **field:** move padding to slotted content ([0ab5fd5](https://github.com/material-components/material-web/commit/0ab5fd595d8c163065860a2e0deec8b77c8c9d77))
+* **field:** remove resizable, use css `resize: both` ([6734344](https://github.com/material-components/material-web/commit/6734344e7362c484fb3e1f47449c364c3a8ad176))
+* **field:** rename "lib" directory to "internal" ([dac3639](https://github.com/material-components/material-web/commit/dac363972149d78ca8f810bee970487f2a533946))
+* **field:** use margin for textarea content ([7fdd0c4](https://github.com/material-components/material-web/commit/7fdd0c4c31a1cbaeba8297179c18645947410dfa))
+* **focus:** move --md-focus-ring tokens to host ([f7eff48](https://github.com/material-components/material-web/commit/f7eff48c665ba5d59756c7d9013bcd058ba41575))
+* **focus:** rename "lib" directory to "internal" ([77110d7](https://github.com/material-components/material-web/commit/77110d7c8ef8a91974bc93a7a0060433ee3fee04))
+* **focus:** rename import to md-focus-ring.ts ([d49f9b8](https://github.com/material-components/material-web/commit/d49f9b89e4aed98382705f62cdacf0e777b5f5e0))
+* **iconbutton:** rename "lib" directory to "internal" ([38b1b69](https://github.com/material-components/material-web/commit/38b1b69a9c0f243836fecc38cae17a237c312313))
+* **icon:** rename "lib" directory to "internal" ([21b7bec](https://github.com/material-components/material-web/commit/21b7becd7bddc8e04f0428a1f8fb8d5fd37c912c))
+* **linearprogress:** remove linearprogress directory ([bac10a6](https://github.com/material-components/material-web/commit/bac10a619bcb0d4e413ac94a0c387dcff2184d02))
+* **list,menu,select:** update layout tokens to latest values and fix targets ([e9ef7ec](https://github.com/material-components/material-web/commit/e9ef7ec5b450b7126ff4a6f01f98720826c6b51f))
+* **list:** rename "lib" directory to "internal" ([c6e6f65](https://github.com/material-components/material-web/commit/c6e6f65445f8436ed1f27830624dfaaea144d132))
+* **menu:** rename "lib" directory to "internal" ([a8c2fa9](https://github.com/material-components/material-web/commit/a8c2fa9a8b2b591aed88babf1c65d8c89e181a4f))
+* **progress:** add shared class ([75058ca](https://github.com/material-components/material-web/commit/75058ca2be558ac19c35f3b56f6c211cefa4027a))
+* **progress:** remove circular progress slots ([aea4d5e](https://github.com/material-components/material-web/commit/aea4d5e4fd60b061183c2f8219b7ece5cc581372))
+* **progress:** remove circular progress will-change CSS ([0f7e881](https://github.com/material-components/material-web/commit/0f7e881ee7612951cccaf360d49c51e3c965f3d8))
+* **progress:** rename `progress` property to `value` ([a2b4f61](https://github.com/material-components/material-web/commit/a2b4f6152d7b284f291e494f120aad98c54dbb16))
+* **progress:** squash linearprogress and circular progress into progress ([15df1d5](https://github.com/material-components/material-web/commit/15df1d5f1a82dd508b44cf8988c46ad4013db491))
+* **progress:** update circular demos ([c1aac11](https://github.com/material-components/material-web/commit/c1aac1174c1da3022e8447c494b006f2d3d49f86))
+* rename "lib" directory to "internal" ([6ec3f06](https://github.com/material-components/material-web/commit/6ec3f06429b2cd54382780ee74bb4bcf0ed0b5b6))
+* **textfield:** rename container-padding-horizontal token ([447886d](https://github.com/material-components/material-web/commit/447886da2e5c648837704a3fc7a4552b5ba6e80a))
+* **textfield:** rename container-padding-vertical tokens ([86aba33](https://github.com/material-components/material-web/commit/86aba33dea126463fe51498196b844f2f41c807b))
+* **textfield:** rename prefix/suffix padding tokens ([53966af](https://github.com/material-components/material-web/commit/53966af32da0d269b3e8d7cd74102e168dcede53))
+* **textfield:** rename supporting-text-padding tokens ([4f37b44](https://github.com/material-components/material-web/commit/4f37b4474fbca2b8aa6b2ce1f06f832bf9e11fd9))
+
+
+### Miscellaneous Chores
+
+* update next version ([4596c4a](https://github.com/material-components/material-web/commit/4596c4a2bcb098093afed3cfcfd56dd23c73c35a))
+
 ## [1.0.0-pre.13](https://github.com/material-components/material-web/compare/v1.0.0-pre.12...v1.0.0-pre.13) (2023-07-10)
 
 
