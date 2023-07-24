@@ -8,7 +8,7 @@
 
 import {createTokenTests} from '../testing/tokens.js';
 
-import {MdFocusRing} from './focus-ring.js';
+import {MdFocusRing} from './md-focus-ring.js';
 
 describe('<md-focus-ring>', () => {
   describe('.styles', () => {

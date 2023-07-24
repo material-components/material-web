@@ -5,7 +5,7 @@
  */
 
 import '../../../ripple/ripple.js';
-import '../../../focus/focus-ring.js';
+import '../../../focus/md-focus-ring.js';
 
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';

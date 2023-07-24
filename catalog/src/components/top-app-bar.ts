@@ -4,10 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/focus/focus-ring.js';
+import '@material/web/focus/md-focus-ring.js';
 import '@material/web/iconbutton/standard-icon-button.js';
 import '@material/web/icon/icon.js';
-import '@material/web/focus/focus-ring.js';
 
 import type {MdStandardIconButton} from '@material/web/iconbutton/standard-icon-button.js';
 import {css, html, LitElement} from 'lit';

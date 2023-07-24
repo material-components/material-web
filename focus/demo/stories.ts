@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/focus/focus-ring.js';
+import '@material/web/focus/md-focus-ring.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';

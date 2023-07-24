@@ -5,7 +5,7 @@
  */
 
 import '../../list/list.js';
-import '../../focus/focus-ring.js';
+import '../../focus/md-focus-ring.js';
 import '../../elevation/elevation.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
