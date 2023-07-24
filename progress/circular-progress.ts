@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {CircularProgress} from './lib/circular-progress.js';
-import {styles} from './lib/circular-progress-styles.css.js';
+import {CircularProgress} from './internal/circular-progress.js';
+import {styles} from './internal/circular-progress-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

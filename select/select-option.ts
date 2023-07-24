@@ -12,7 +12,7 @@ import {styles as forcedColorsStyles} from '../menu/internal/menuitem/forced-col
 import {styles} from '../menu/internal/menuitem/menu-item-styles.css.js';
 
 // TODO(b/236285090): update with HCM best practices
-import {SelectOptionEl} from './lib/selectoption/select-option.js';
+import {SelectOptionEl} from './internal/selectoption/select-option.js';
 
 declare global {
   interface HTMLElementTagNameMap {

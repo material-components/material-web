@@ -6,10 +6,10 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {TestTable} from './lib/test-table.js';
-import {styles as testTableStyles} from './lib/test-table-styles.css.js';
+import {TestTable} from './internal/test-table.js';
+import {styles as testTableStyles} from './internal/test-table-styles.css.js';
 
-export {TestTableTemplate} from './lib/test-table.js';
+export {TestTableTemplate} from './internal/test-table.js';
 
 declare global {
   interface HTMLElementTagNameMap {

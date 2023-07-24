@@ -6,10 +6,10 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {Tab} from './lib/tab.js';
-import {styles} from './lib/tab-styles.css.js';
+import {Tab} from './internal/tab.js';
+import {styles} from './internal/tab-styles.css.js';
 
-export {TabVariant} from './lib/tab.js';
+export {TabVariant} from './internal/tab.js';
 
 declare global {
   interface HTMLElementTagNameMap {

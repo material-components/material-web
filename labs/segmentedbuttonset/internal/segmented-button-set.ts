@@ -9,7 +9,7 @@ import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
-import {SegmentedButton} from '../../segmentedbutton/lib/segmented-button.js';
+import {SegmentedButton} from '../../segmentedbutton/internal/segmented-button.js';
 
 /**
  * SegmentedButtonSet is the parent component for two or more

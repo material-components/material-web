@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Switch} from './lib/switch.js';
+import {Switch} from './internal/switch.js';
 
 /**
  * Test harness for switch elements.

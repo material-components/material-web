@@ -6,8 +6,8 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {NavigationTab} from './lib/navigation-tab.js';
-import {styles} from './lib/navigation-tab-styles.css.js';
+import {NavigationTab} from './internal/navigation-tab.js';
+import {styles} from './internal/navigation-tab-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -12,7 +12,7 @@ import {property, queryAssignedElements} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 import {isRtl} from '../../../internal/controller/is-rtl.js';
-import {NavigationTab} from '../../navigationtab/lib/navigation-tab.js';
+import {NavigationTab} from '../../navigationtab/internal/navigation-tab.js';
 
 import {NavigationTabInteractionEvent} from './constants.js';
 import {NavigationBarState} from './state.js';

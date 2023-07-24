@@ -6,9 +6,9 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as forcedColorsStyles} from './lib/forced-colors-styles.css.js';
-import {Radio} from './lib/radio.js';
-import {styles} from './lib/radio-styles.css.js';
+import {styles as forcedColorsStyles} from './internal/forced-colors-styles.css.js';
+import {Radio} from './internal/radio.js';
+import {styles} from './internal/radio-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {

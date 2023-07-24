@@ -6,7 +6,7 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {Radio} from './lib/radio.js';
+import {Radio} from './internal/radio.js';
 
 /**
  * Test harness for radio.

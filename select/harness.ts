@@ -10,8 +10,8 @@ import {FieldHarness} from '../field/harness.js';
 import {Field} from '../field/internal/field.js';
 import {Harness} from '../testing/harness.js';
 
-import {Select} from './lib/select.js';
-import {SelectOptionHarness} from './lib/selectoption/harness.js';
+import {Select} from './internal/select.js';
+import {SelectOptionHarness} from './internal/selectoption/harness.js';
 
 /**
  * Test harness for menu.

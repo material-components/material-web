@@ -6,8 +6,8 @@
 
 import {ElementWithHarness, Harness} from '../testing/harness.js';
 
-import {Tab} from './lib/tab.js';
-import {Tabs} from './lib/tabs.js';
+import {Tab} from './internal/tab.js';
+import {Tabs} from './internal/tabs.js';
 
 /**
  * Test harness for Tab.

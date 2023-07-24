@@ -6,8 +6,8 @@
 
 import {Harness} from '../testing/harness.js';
 
-import {CircularProgress} from './lib/circular-progress.js';
-import {LinearProgress} from './lib/linear-progress.js';
+import {CircularProgress} from './internal/circular-progress.js';
+import {LinearProgress} from './internal/linear-progress.js';
 
 /**
  * Test harness for linear-progress.

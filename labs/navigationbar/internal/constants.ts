@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {NavigationTabState} from '../../navigationtab/lib/state.js';
+import {NavigationTabState} from '../../navigationtab/internal/state.js';
 
 /**
  * MDCNavigationTabInteractionEventDetail provides details for the interaction
