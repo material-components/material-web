@@ -16,7 +16,15 @@ $supported-tokens: (
   'disabled-selected-icon-opacity',
   'disabled-unselected-icon-color',
   'disabled-unselected-icon-opacity',
+  'focus-icon-color',
+  'hover-icon-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'icon-color',
   'icon-size',
+  'pressed-icon-color',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
   'selected-focus-icon-color',
   'selected-hover-icon-color',
   'selected-hover-state-layer-color',
@@ -26,14 +34,6 @@ $supported-tokens: (
   'selected-pressed-state-layer-color',
   'selected-pressed-state-layer-opacity',
   'state-layer-size',
-  'unselected-focus-icon-color',
-  'unselected-hover-icon-color',
-  'unselected-hover-state-layer-color',
-  'unselected-hover-state-layer-opacity',
-  'unselected-icon-color',
-  'unselected-pressed-icon-color',
-  'unselected-pressed-state-layer-color',
-  'unselected-pressed-state-layer-opacity',
   // go/keep-sorted end
 );
 
@@ -55,7 +55,18 @@ $_default: (
   $tokens: values.validate(
     md-comp-radio-button.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: (
+      // Remove default "unselected" prefix (b/292244480)
+      'unselected-focus-icon-color': 'focus-icon-color',
+      'unselected-hover-icon-color': 'hover-icon-color',
+      'unselected-hover-state-layer-color': 'hover-state-layer-color',
+      'unselected-hover-state-layer-opacity': 'hover-state-layer-opacity',
+      'unselected-icon-color': 'icon-color',
+      'unselected-pressed-icon-color': 'pressed-icon-color',
+      'unselected-pressed-state-layer-color': 'pressed-state-layer-color',
+      'unselected-pressed-state-layer-opacity': 'pressed-state-layer-opacity'
+    )
   );
 
   @return $tokens;

@@ -40,10 +40,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
     @include ripple.theme(
       (
-        hover-color: var(--_unselected-hover-state-layer-color),
-        hover-opacity: var(--_unselected-hover-state-layer-opacity),
-        pressed-color: var(--_unselected-pressed-state-layer-color),
-        pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
 
@@ -94,7 +94,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   .icon {
-    fill: var(--_unselected-icon-color);
+    fill: var(--_icon-color);
     height: var(--_icon-size);
     width: var(--_icon-size);
   }
@@ -136,15 +136,15 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   :host(:hover) .icon {
-    fill: var(--_unselected-hover-icon-color);
+    fill: var(--_hover-icon-color);
   }
 
   :host(:focus-within) .icon {
-    fill: var(--_unselected-focus-icon-color);
+    fill: var(--_focus-icon-color);
   }
 
   :host(:active) .icon {
-    fill: var(--_unselected-pressed-icon-color);
+    fill: var(--_pressed-icon-color);
   }
 
   :host([disabled]) .icon {
