@@ -76,5 +76,19 @@ describe('Filter chip', () => {
          await harness.clickWithMouse();
          expect(handler).toHaveBeenCalledTimes(2);
        });
+
+    it('can prevent default', async () => {
+      const {chip, harness} = await setupTest();
+      const handler = jasmine.createSpy();
+      chip.addEventListener('selected', handler);
+
+       chip.addEventListener('click', (event) => {
+         event.preventDefault();
+       })
+
+       await harness.clickWithMouse();
+       await harness.clickWithMouse();
+       expect(handler).toHaveBeenCalledTimes(0);
+    })
   });
 });

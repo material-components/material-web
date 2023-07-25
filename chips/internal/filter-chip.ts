@@ -10,6 +10,7 @@ import {html, nothing, PropertyValues, svg, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {redispatchEvent} from '../../internal/controller/events.js';
 
 import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-icons.js';
@@ -21,6 +22,9 @@ export class FilterChip extends MultiActionChip {
   @property({type: Boolean}) elevated = false;
   @property({type: Boolean}) removable = false;
   @property({type: Boolean, reflect: true}) selected = false;
+
+  // flag to prvent processing of re-dispatched input event.
+  private isRedispatchingEvent = false;
 
   protected get primaryId() {
     return 'option';
@@ -35,8 +39,20 @@ export class FilterChip extends MultiActionChip {
     // Remove the `row` role from the container, since filter chips do not use a
     // `grid` navigation model.
     this.containerRole = undefined;
-    this.addEventListener('click', () => {
+    this.addEventListener('click', (event) => {
+      // avoid processing a re-dispatched event
+      if (this.isRedispatchingEvent) {
+        return;
+      }
+
       if (this.disabled) {
+        return;
+      }
+
+      this.isRedispatchingEvent = true;
+      const preventDefault = !redispatchEvent(this, event);
+      this.isRedispatchingEvent = false;
+      if (preventDefault) {
         return;
       }
 
