@@ -23,7 +23,7 @@ export class FilterChip extends MultiActionChip {
   @property({type: Boolean}) removable = false;
   @property({type: Boolean, reflect: true}) selected = false;
 
-  // flag to prvent processing of re-dispatched input event.
+  // flag to prevent processing of re-dispatched click event.
   private isRedispatchingEvent = false;
 
   protected get primaryId() {
