@@ -13,4 +13,15 @@ export class Icon extends LitElement {
   protected override render() {
     return html`<slot></slot>`;
   }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    const ariaHidden = this.getAttribute('aria-hidden');
+    if (ariaHidden === 'false') {
+      this.removeAttribute('aria-hidden');
+      return;
+    }
+
+    this.setAttribute('aria-hidden', 'true');
+  }
 }
