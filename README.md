@@ -31,7 +31,7 @@ Component                     | Alpha | Beta | Stable
 Button                        | ✅     | ✅    | 🟡
 FAB                           | ✅     | ✅    | ❌
 Icon button                   | ✅     | ✅    | ❌
-Checkbox                      | ✅     | ✅    | 🟡
+Checkbox                      | ✅     | ✅    | ✅
 Chips                         | ✅     | ✅    | ❌
 Dialog                        | ✅     | ✅    | ❌
 Divider                       | ✅     | ✅    | ✅
