@@ -23,9 +23,6 @@ export class FilterChip extends MultiActionChip {
   @property({type: Boolean}) removable = false;
   @property({type: Boolean, reflect: true}) selected = false;
 
-  // flag to prevent processing of re-dispatched click event.
-  private isRedispatchingEvent = false;
-
   protected get primaryId() {
     return 'option';
   }
@@ -39,25 +36,6 @@ export class FilterChip extends MultiActionChip {
     // Remove the `row` role from the container, since filter chips do not use a
     // `grid` navigation model.
     this.containerRole = undefined;
-    this.addEventListener('click', (event) => {
-      // avoid processing a re-dispatched event
-      if (this.isRedispatchingEvent) {
-        return;
-      }
-
-      if (this.disabled) {
-        return;
-      }
-
-      this.isRedispatchingEvent = true;
-      const preventDefault = !redispatchEvent(this, event);
-      this.isRedispatchingEvent = false;
-      if (preventDefault) {
-        return;
-      }
-
-      this.selected = !this.selected;
-    });
   }
 
   protected override updated(changed: PropertyValues<this>) {
@@ -91,6 +69,7 @@ export class FilterChip extends MultiActionChip {
         aria-selected=${this.selected}
         ?disabled=${this.disabled || nothing}
         role="option"
+        @click=${this.handleClick}
       >${this.renderContent()}</button>
     `;
   }
@@ -122,5 +101,18 @@ export class FilterChip extends MultiActionChip {
     }
 
     return super.renderOutline();
+  }
+
+  private handleClick(event: MouseEvent) {
+    if (this.disabled) {
+      return
+    }
+
+    const preventDefault = !redispatchEvent(this, event);
+    if (preventDefault) {
+      return;
+    }
+
+    this.selected = !this.selected;
   }
 }
