@@ -215,4 +215,57 @@ describe('checkbox', () => {
       expect(element.checked).toBeFalse();
     });
   });
+
+  describe('validation', () => {
+    it('should set valueMissing when required and not selected', async () => {
+      const {harness} = await setupTest();
+      harness.element.required = true;
+
+      expect(harness.element.validity.valueMissing)
+          .withContext('checkbox.validity.valueMissing')
+          .toBeTrue();
+    });
+
+    it('should not set valueMissing when required and checked', async () => {
+      const {harness} = await setupTest();
+      harness.element.required = true;
+      harness.element.checked = true;
+
+      expect(harness.element.validity.valueMissing)
+          .withContext('checkbox.validity.valueMissing')
+          .toBeFalse();
+    });
+
+    it('should set valueMissing when required and indeterminate', async () => {
+      const {harness} = await setupTest();
+      harness.element.required = true;
+      harness.element.indeterminate = true;
+
+      expect(harness.element.validity.valueMissing)
+          .withContext('checkbox.validity.valueMissing')
+          .toBeTrue();
+    });
+
+    it('should set error to true when showValidity() is called and checkbox is invalid',
+       async () => {
+         const {harness} = await setupTest();
+         harness.element.required = true;
+
+         harness.element.showValidity();
+         expect(harness.element.error).withContext('checkbox.error').toBeTrue();
+       });
+
+    it('should set error to false when showValidity() is called and checkbox is valid',
+       async () => {
+         const {harness} = await setupTest();
+         harness.element.required = true;
+         harness.element.error = true;
+         harness.element.checked = true;
+
+         harness.element.showValidity();
+         expect(harness.element.error)
+             .withContext('checkbox.error')
+             .toBeFalse();
+       });
+  });
 });
