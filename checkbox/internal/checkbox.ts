@@ -114,9 +114,11 @@ export class Checkbox extends LitElement {
           changed.get('indeterminate') ?? this.indeterminate;
     }
 
-    const shouldAddFormValue = this.checked && !this.indeterminate;
-    const state = String(this.checked);
-    this.internals.setFormValue(shouldAddFormValue ? this.value : null, state);
+    const hasValue = this.checked || this.indeterminate;
+    const state = this.checked ? 'checked' :
+        this.indeterminate     ? 'indeterminate' :
+                                 null;
+    this.internals.setFormValue(hasValue ? this.value : null, state);
     super.update(changed);
   }
 
@@ -177,13 +179,15 @@ export class Checkbox extends LitElement {
 
   /** @private */
   formResetCallback() {
-    // The checked property does not reflect, so the original attribute set by
-    // the user is used to determine the default value.
+    // The checked/indeterminate properties do not reflect, so the original
+    // attribute set by the user is used to determine the default value.
     this.checked = this.hasAttribute('checked');
+    this.indeterminate = this.hasAttribute('indeterminate');
   }
 
   /** @private */
-  formStateRestoreCallback(state: string) {
-    this.checked = state === 'true';
+  formStateRestoreCallback(state: 'checked'|'indeterminate'|null) {
+    this.checked = state === 'checked';
+    this.indeterminate = state === 'indeterminate';
   }
 }

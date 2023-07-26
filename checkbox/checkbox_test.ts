@@ -59,12 +59,9 @@ describe('<md-checkbox>', () => {
         {
           name: 'indeterminate',
           render: () =>
-              html`<md-checkbox name="checkbox" checked indeterminate></md-checkbox>`,
+              html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
           assertValue(formData) {
-            expect(formData)
-                .withContext(
-                    'should not add anything to form when indeterminate')
-                .toHaveSize(0);
+            expect(formData.get('checkbox')).toBe('on');
           }
         },
         {
@@ -113,8 +110,8 @@ describe('<md-checkbox>', () => {
           },
           assertReset(checkbox) {
             expect(checkbox.indeterminate)
-                .withContext('checkbox.indeterminate should not be reset')
-                .toBeFalse();
+                .withContext('checkbox.indeterminate after reset')
+                .toBeTrue();
           }
         }
       ],
@@ -144,8 +141,8 @@ describe('<md-checkbox>', () => {
               html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
           assertRestored(checkbox) {
             expect(checkbox.indeterminate)
-                .withContext('checkbox.indeterminate should not be restored')
-                .toBeFalse();
+                .withContext('checkbox.indeterminate after restore')
+                .toBeTrue();
           }
         }
       ]
