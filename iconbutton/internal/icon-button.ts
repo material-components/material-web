@@ -24,6 +24,10 @@ export class IconButton extends LitElement {
     requestUpdateOnAriaChange(this);
   }
 
+  /** @nocollapse */
+  static override shadowRootOptions:
+      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+
   /**
    * Disables the icon button and makes it non-interactive.
    */
