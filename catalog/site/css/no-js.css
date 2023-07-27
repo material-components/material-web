@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 :root,
 :host {
   --md-sys-color-background: #fbf8ff;
@@ -39,7 +45,6 @@
   --md-sys-color-on-error-container: #410002;
 }
 
-/* prefers dark mode media query */
 @media (prefers-color-scheme: dark) {
   :root,
   :host {
