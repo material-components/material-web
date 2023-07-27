@@ -19,6 +19,12 @@
     <!-- Inlines the material theming logic since we want to prevent FOUC -->
     {% inlinejs "inline/apply-saved-theme.js" %}
     <script type="module" src="/js/pages/global.js"></script>
+    <noscript>
+      <link
+      rel="stylesheet"
+      href="/css/no-js.css"
+    />
+    </noscript>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
