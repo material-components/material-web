@@ -13,9 +13,6 @@ import {classMap} from 'lit/directives/class-map.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 import {createThrottle, msFromTimeCSSValue} from '../../internal/motion/animation.js';
 
-// This is required for decorators.
-// tslint:disable:no-new-decorators
-
 /**
  * Default close action.
  */
@@ -26,7 +23,7 @@ const CLOSING_TRANSITION_PROP = '--_closing-transition-duration';
 
 /**
  * A dialog component.
- * 
+ *
  * @fires opening Dispatched when the dialog is opening before any animations.
  * @fires opened Dispatched when the dialog has opened after any animations.
  * @fires closing Dispatched when the dialog is closing before any animations.
