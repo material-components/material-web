@@ -22,7 +22,7 @@ tag: 'docType:reference'
 <!-- [TOC] -->
 
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-components.github.io/material-web/components/linearprogress/)<!-- {.external} -->.**
+[Material Web catalog](https://material-web.dev/components/linear-progress/)<!-- {.external} -->.**
 
 <!-- github-only-end -->
 

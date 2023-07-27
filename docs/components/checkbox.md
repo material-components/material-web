@@ -20,10 +20,8 @@ tag: 'docType:reference'
 
 <!-- [TOC] -->
 
-TODO: update link to live site
-
 **This documentation is fully rendered on the
-[Material Web catalog](https://github.com/material-components/material-web/tree/main)<!-- {.external} -->.**
+[Material Web catalog](https://material-web.dev/components/checkbox/)<!-- {.external} -->.**
 
 <!-- github-only-end -->
 

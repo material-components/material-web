@@ -18,6 +18,9 @@ tag: 'docType:reference'
 
 <!-- [TOC] -->
 
+**This documentation is fully rendered on the
+[Material Web catalog](https://material-web.dev/components/icon-button/)<!-- {.external} -->.**
+
 [Icon buttons](https://m3.material.io/components/icon-buttons)<!-- {.external} --> help
 people take supplementary actions with a single tap.
 

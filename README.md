@@ -8,7 +8,7 @@ Material Web is implemented as a collection of
 [Material 3](https://m3.material.io/) is the latest version of Google’s
 open-source design system.
 
-> Tip: Check out the [quick start guide](docs/quick-start.md) to jump in.
+> Tip: Check out the [quick start guide](docs/quick-start.md) to jump in as well as the [documentation site](https://material-web.dev).
 
 ## Roadmap
 

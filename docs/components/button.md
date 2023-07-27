@@ -8,6 +8,8 @@ dirname: button
 
 # Buttons
 
+<!-- github-only-start -->
+
 <!--*
 # Document freshness: For more information, see go/fresh-source.
 freshness: { owner: 'lizmitchell' reviewed: '2023-01-26' }
@@ -17,6 +19,10 @@ tag: 'docType:reference'
 <!-- go/md-button -->
 
 <!-- [TOC] -->
+
+[Material Web catalog](https://material-web.dev/components/button/)<!-- {.external} -->.**
+
+<!-- github-only-end -->
 
 [Buttons](https://m3.material.io/components/buttons)<!-- {.external} --> help people
 initiate actions, from sending an email, to sharing a document, to liking a

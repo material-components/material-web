@@ -9,6 +9,9 @@ ssrOnly: true
 
 # Circular progress
 
+<!-- github-only-start -->
+
+
 <!--*
 # Document freshness: For more information, see go/fresh-source.
 freshness: { owner: 'lizmitchell' reviewed: '2023-05-02' }
@@ -18,6 +21,11 @@ tag: 'docType:reference'
 <!-- go/md-circular-progress -->
 
 <!-- [TOC] -->
+
+**This documentation is fully rendered on the
+[Material Web catalog](https://material-web.dev/components/circular-progress/)<!-- {.external} -->.**
+
+<!-- github-only-end -->
 
 [Progress indicators](https://m3.material.io/components/progress-indicators)<!-- {.external} -->
 inform users about the status of ongoing processes, such as loading an app or

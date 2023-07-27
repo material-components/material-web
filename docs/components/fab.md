@@ -20,6 +20,9 @@ tag: 'docType:reference'
 
 <!-- [TOC] -->
 
+**This documentation is fully rendered on the
+[Material Web catalog](https://material-web.dev/components/fab/)<!-- {.external} -->.**
+
 <!-- github-only-end -->
 
 [FAB](https://m3.material.io/components/floating-action-button)<!-- {.external} -->
