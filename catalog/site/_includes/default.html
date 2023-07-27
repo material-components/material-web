@@ -13,12 +13,12 @@
     <!-- Inlines the global css in site/css/global.css -->
     {% inlinecss "global.css" %}
     <!-- MUST be loaded before any lit bundle. allows hydration of SSRd components -->
-    <script type="module" src="/material-web/js/ssr-utils/lit-hydrate-support.js"></script>
+    <script type="module" src="/js/ssr-utils/lit-hydrate-support.js"></script>
     <!-- Loads definition for <lit-island>. See docs for @11ty/is-land for usage -->
-    <script type="module" src="/material-web/js/ssr-utils/lit-island.js"></script>
+    <script type="module" src="/js/ssr-utils/lit-island.js"></script>
     <!-- Inlines the material theming logic since we want to prevent FOUC -->
     {% inlinejs "inline/apply-saved-theme.js" %}
-    <script type="module" src="/material-web/js/pages/global.js"></script>
+    <script type="module" src="/js/pages/global.js"></script>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
@@ -38,9 +38,9 @@
   <body dsd-pending>
     <!-- Inlines the declarative shadow dom polyfill for FF since it's performance sensitive -->
     {% inlinejs "ssr-utils/dsd-polyfill.js" %}
-    <lit-island on:idle import="/material-web/js/hydration-entrypoints/navigation.js">
+    <lit-island on:idle import="/js/hydration-entrypoints/navigation.js">
       <nav-drawer page-title="{{name}}" {% if hasToc %}has-toc{% endif %}>
-        <top-app-bar slot="top-app-bar" baseURI="/material-web">
+        <top-app-bar slot="top-app-bar" baseURI="/">
           {% block topappbar %}{{ topappbar | safe }}{% endblock %}
         </top-app-bar>
 
@@ -57,7 +57,7 @@
             {% for component in collections.component|filtersort('data.name') %}
               <li>
                 <md-list-item-link
-                  href="/material-web{{ component.url }}"
+                  href="{{ component.url }}"
                   headline="{{ component.data.name }}"
                   {% if component.url == page.url %}selected{% endif %}
                   data-role=""

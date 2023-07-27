@@ -1,9 +1,9 @@
 {% extends 'default.html' %}
 
 {% block head %}
-  <script type="module" src="/material-web/js/pages/components.js"></script>
-  <link rel="stylesheet" href="/material-web/css/components.css" />
-  <link rel="stylesheet" href="/material-web/css/syntax-highlight.css" />
+  <script type="module" src="/js/pages/components.js"></script>
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/syntax-highlight.css" />
 {% endblock %}
 
 {% block toc%}
@@ -15,7 +15,7 @@
 <!-- Loads page JS on idle callback at src/hydration-entrypoints/components/md-file-name.ts -->
 <lit-island
     on:idle
-    import="/material-web/js/hydration-entrypoints{{ page.filePathStem }}.js">
+    import="/js/hydration-entrypoints{{ page.filePathStem }}.js">
 </lit-island>
 {% endif %}
 {{ content | safe }}

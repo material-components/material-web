@@ -53,9 +53,9 @@ function playgroundExample(eleventyConfig) {
           </md-outlined-icon-button>
           Expand interactive demo.
         </summary>
-        <lit-island on:visible import="/material-web/js/hydration-entrypoints/playground-elements.js" class="example" aria-hidden="true">
+        <lit-island on:visible import="/js/hydration-entrypoints/playground-elements.js" class="example" aria-hidden="true">
           <playground-project
-              id="${id}" project-src="/material-web/assets/stories/${dirname}/project.json">
+              id="${id}" project-src="/assets/stories/${dirname}/project.json">
           <playground-preview
               style="${previewHeight}"
               project="${id}"
