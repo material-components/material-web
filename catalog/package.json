@@ -7,7 +7,7 @@
     "node": "20.x.x"
   },
   "scripts": {
-    "start": "node server/index.mjs",
+    "start": "npm run serve --watch",
     "dev": "npm run serve:dev --watch",
     "serve": "wireit",
     "serve:dev": "wireit",
