@@ -25,14 +25,10 @@ export interface Tabs extends HTMLElement {
   previousSelectedItem?: Tab;
 }
 
-type Style = ''|'primary'|'secondary';
-type Orientation = ''|'vertical';
-
 /**
- * Tab variant can be `primary` or `secondary and can include a space
- * separated `vertical`.
+ * Tab variant can be `primary` or `secondary`.
  */
-export type TabVariant = Style|`${Style} ${Orientation}`|`${Orientation} ${Style}`;
+export type TabVariant = 'primary'|'secondary';
 
 /**
  * Tab component.
@@ -47,9 +43,7 @@ export class Tab extends LitElement {
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   /**
-   * Styling variant to display, 'primary' or 'secondary' and can also
-   * include `vertical`.
-   * Defaults to `primary`.
+   * Styling variant to display, 'primary' (default) or 'secondary'.
    */
   @property({reflect: true}) variant: TabVariant = 'primary';
 
@@ -159,7 +153,8 @@ export class Tab extends LitElement {
       return reduceMotion ? [{'opacity': 1}, {'transform': 'none'}] : null;
     }
     const from: Keyframe = {};
-    const isVertical = this.variant.includes('vertical');
+    // TODO(b/293506179): remove vertical logic
+    const isVertical = false;
     const fromRect =
         (this.tabs?.previousSelectedItem?.indicator.getBoundingClientRect() ??
          ({} as DOMRect));

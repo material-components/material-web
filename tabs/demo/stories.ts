@@ -16,13 +16,13 @@ import {classMap} from 'lit/directives/class-map.js';
 /** Knob types for Tabs stories. */
 export interface StoryKnobs {
   selected: number;
-  vertical: boolean;
   disabled: boolean;
   selectOnFocus: boolean;
   inlineIcon: boolean;
   content: string;
 }
 
+// TODO(b/293506179): remove vertical logic and styles
 const styles = css`
   .content:not([hidden]) {
     display: flex;
@@ -62,7 +62,7 @@ const primary: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = knobs.vertical ? 'vertical' : '';
+    const vertical = '';
     const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical};
 
@@ -99,7 +99,7 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = knobs.vertical ? 'vertical' : '';
+    const vertical = '';
     const variant = `secondary ${vertical}` as TabVariant;
     const classes = {vertical};
 
@@ -133,7 +133,7 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = knobs.vertical ? 'vertical' : '';
+    const vertical = '';
     const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical, scrolling: true};
 
@@ -196,7 +196,7 @@ const custom: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = knobs.vertical ? 'vertical' : '';
+    const vertical = '';
     const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical, custom: true};
 
@@ -230,7 +230,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = knobs.vertical ? 'vertical' : '';
+    const vertical = '';
     const variant = `primary ${vertical}` as TabVariant;
     const secondaryVariant = `secondary ${vertical}` as TabVariant;
     const classes = {vertical};
@@ -333,7 +333,7 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     const inlineIcon = knobs.inlineIcon;
-    const vertical = knobs.vertical ? 'vertical' : '';
+    const vertical = '';
     const variant = `primary ${vertical}` as TabVariant;
     const classes = {vertical, scrolling: true};
 

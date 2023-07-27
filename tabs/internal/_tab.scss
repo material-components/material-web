@@ -255,7 +255,7 @@
     min-width: 100%;
   }
 
-  // vertical (no tokens for vertical as yet)
+  // TODO(b/293506179): remove vertical styles
   :host([variant~='vertical']) {
     flex: 0;
   }

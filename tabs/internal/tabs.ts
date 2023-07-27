@@ -9,6 +9,7 @@ import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
 import {Tab, TabVariant} from './tab.js';
 
+// TODO(b/293506179): remove vertical logic
 const NAVIGATION_KEYS = new Map([
   ['default', new Set(['Home', 'End'])],
   ['horizontal', new Set(['ArrowLeft', 'ArrowRight'])],
@@ -47,9 +48,7 @@ export class Tabs extends LitElement {
   };
 
   /**
-   * Styling variant to display, 'primary' or 'secondary' and can also
-   * include `vertical`.
-   * Defaults to `primary`.
+   * Styling variant to display, 'primary' (default) or 'secondary'.
    */
   @property({reflect: true}) variant: TabVariant = 'primary';
 
@@ -70,7 +69,6 @@ export class Tabs extends LitElement {
   selectOnFocus = false;
 
   private previousSelected = -1;
-  private orientation = 'horizontal';
   private readonly scrollMargin = 48;
 
   @queryAssignedElements({selector: 'md-tab', flatten: true})
@@ -121,7 +119,7 @@ export class Tabs extends LitElement {
   private readonly handleKeydown = async (event: KeyboardEvent) => {
     const {key} = event;
     const shouldHandleKey = NAVIGATION_KEYS.get('default')!.has(key) ||
-        NAVIGATION_KEYS.get(this.orientation)!.has(key);
+        NAVIGATION_KEYS.get('horizontal')!.has(key);
     // await to after user may cancel event.
     if (!shouldHandleKey || (await this.wasEventPrevented(event, true)) ||
         this.disabled) {
@@ -228,10 +226,6 @@ export class Tabs extends LitElement {
     if (changed.has('selected')) {
       this.previousSelected = changed.get('selected') ?? -1;
     }
-    if (changed.has('variant')) {
-      this.orientation =
-          this.variant.includes('vertical') ? 'vertical' : 'horizontal';
-    }
     if (this.itemsDirty) {
       this.itemsDirty = false;
       this.previousSelected = -1;
@@ -309,7 +303,8 @@ export class Tabs extends LitElement {
     }
     // wait for items to render.
     await this.itemsUpdateComplete();
-    const isVertical = this.orientation === 'vertical';
+    // TODO(b/293506179): remove vertical logic
+    const isVertical = false;
     const offset = isVertical ? item.offsetTop : item.offsetLeft;
     const extent = isVertical ? item.offsetHeight : item.offsetWidth;
     const scroll = isVertical ? this.scrollTop : this.scrollLeft;

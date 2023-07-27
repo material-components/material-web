@@ -29,7 +29,6 @@ const collection =
           }
         }
       }),
-      new Knob('vertical', {ui: boolInput(), defaultValue: false}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('selectOnFocus', {ui: boolInput(), defaultValue: false}),
       new Knob('inlineIcon', {ui: boolInput(), defaultValue: false}),
