@@ -27,7 +27,7 @@ function renderCode(originalRule) {
 
     return `
 <lit-island
-    import="/material-web/js/hydration-entrypoints/copy-code-button.js"
+    import="/js/hydration-entrypoints/copy-code-button.js"
     on:interaction="focusin,pointerenter,touchstart">
   <copy-code-button>
     ${originalHTMLContent}

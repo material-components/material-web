@@ -45,12 +45,12 @@ import {materialDesign} from '../svg/material-design-logo.js';
               <span><md-icon>menu</md-icon></span>
               <span slot="selectedIcon"><md-icon>menu_open</md-icon></span>
             </md-standard-icon-button>
-            <md-standard-icon-button href="/material-web/" class="home-button">
+            <md-standard-icon-button href="/" class="home-button">
               ${materialDesign}
             </md-standard-icon-button>
           </section>
 
-          <a href="/material-web/" id="home-link">
+          <a href="/" id="home-link">
             Material Web
             <md-focus-ring for="home-link"></md-focus-ring>
           </a>
@@ -58,7 +58,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
           <section class="end">
             <lit-island
               on:interaction="pointerenter,focusin,pointerdown"
-              import="/material-web/js/hydration-entrypoints/menu.js"
+              import="/js/hydration-entrypoints/menu.js"
               id="menu-island"
             >
               <md-menu

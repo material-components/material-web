@@ -1,5 +1,5 @@
 {
-  "extends": "/material-web/assets/stories/base.json",
+  "extends": "/assets/stories/base.json",
   "files": {
     "demo.ts": {
       "hidden": true

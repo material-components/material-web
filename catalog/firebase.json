@@ -1,0 +1,35 @@
+{
+  "hosting": {
+    "public": "_prod",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "_dev/**",
+      "site/**",
+      "src/**",
+      "stories/**",
+      "build/**"
+    ],
+    "headers": [
+      {
+        "source": "**/*.*",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "604800"
+          }
+        ]
+      },
+      {
+        "source": "**/@(*.woff2|playground-typescript-worker.js)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "31536000"
+          }
+        ]
+      }
+    ]
+  }
+}

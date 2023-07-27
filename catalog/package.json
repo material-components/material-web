@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "The Material Web Catalog.",
   "main": "_prod/index.html",
+  "engines": {
+    "node": "20.x.x"
+  },
   "scripts": {
     "start": "npm run serve",
     "dev": "npm run serve:dev --watch",
@@ -123,7 +126,7 @@
       ]
     },
     "serve:dev": {
-      "command": "wds -b /material-web/ --watch --root-dir _dev --open",
+      "command": "wds --watch --root-dir _dev --open",
       "service": true,
       "dependencies": [
         {
@@ -133,7 +136,7 @@
       ]
     },
     "serve": {
-      "command": "wds -b /material-web/ --watch --root-dir _prod",
+      "command": "wds --watch --root-dir _prod",
       "service": true,
       "dependencies": [
         {
@@ -146,8 +149,7 @@
       "command": "node scripts/copy-stories.mjs",
       "files": [
         "scripts/copy-stories.mjs",
-        "../*/demo",
-        "!../node_modules"
+        "../*/demo"
       ],
       "output": [
         "stories/*/**/*",
@@ -176,6 +178,7 @@
     "@web/dev-server": "^0.1.35",
     "@webcomponents/template-shadowroot": "^0.2.1",
     "clean-css": "^5.3.1",
+    "eleventy-plugin-compress": "^1.0.5",
     "eleventy-plugin-nesting-toc": "^1.3.0",
     "esbuild": "^0.17.14",
     "esbuild-plugin-minify-html-literals": "^1.0.1",

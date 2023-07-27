@@ -15,6 +15,7 @@ const permalinks = require('./eleventy-helpers/plugins/permalinks.cjs');
 const filterSort = require('./eleventy-helpers/filters/filter-sort.cjs');
 const copyCodeButtonPlugin = require('./eleventy-helpers/plugins/copy-code-button.cjs');
 const markdownIt = require('markdown-it');
+const { compress } = require('eleventy-plugin-compress');
 
 // dev mode build
 const DEV = process.env.NODE_ENV === 'DEV';
@@ -77,6 +78,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginTOC, {
     tags: ['h2', 'h3', 'h4'],
     wrapper: 'div',
+  });
+
+  eleventyConfig.addPlugin(compress, {
+    enabled: !DEV,
   });
 
   // set output folders and use nunjucks for html templating engine. see
