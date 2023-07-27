@@ -8,7 +8,7 @@ dirname: fab
 
 # Floating action buttons (FAB)
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
@@ -20,10 +20,12 @@ tag: 'docType:reference'
 
 <!-- [TOC] -->
 
+<!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/fab/)<!-- {.external} -->.**
+[Material Web catalog](https://material-web.dev/components/fab/).**
+<!-- external-only-end -->
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 
 [FAB](https://m3.material.io/components/floating-action-button)<!-- {.external} -->
 represents the most important action on a screen. It puts key actions within
@@ -66,11 +68,11 @@ payment'"
 
 ## Types
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![The 3 sizes of FAB](images/fab/fabs.webp "There are three sizes of floating action buttons: FAB, small FAB, and large FAB")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/fabs.html" -->
 
 1.  [FAB](#fab-1)
@@ -79,11 +81,11 @@ payment'"
 
 ### Extended FAB
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![2 examples of extended FABs](images/fab/extended-fabs.webp "There are two types of extended FABs with and without icon")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/extended-fabs.html" -->
 
 1.  [Extended FAB with both icon and label text](#extended-fab-1)
@@ -93,11 +95,11 @@ payment'"
 
 FABs should have an icon, such as a font `md-icon`, an `svg`, or an `img`.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A standard surface fab](images/fab/usage-fab.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-fab.html" -->
 
 ```html
@@ -110,11 +112,11 @@ FABs should have an icon, such as a font `md-icon`, an `svg`, or an `img`.
 
 FABs can be set to a lower elevation with the `lowered` attribute.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A standard fab with an edit icon and lowered in elevation](images/fab/usage-lowered.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-lowered.html" -->
 
 ```html
@@ -149,11 +151,11 @@ FAB will make sure that the icon is not announced.
 
 FABs should display a clear and understandable icon.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A standard surface fab](images/fab/usage-fab.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-fab.html" -->
 
 ```html
@@ -172,11 +174,11 @@ avoid a flash of unstyled content. Otherwise, the client will automatically
 detect if an icon is slotted into the element, but that event is not fired upon
 hydration of a SSRd declarative shadow DOM template.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An extended FAB with an edit icon and the visible text edit](images/fab/usage-extended.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-extended.html" -->
 
 ```html
@@ -189,11 +191,11 @@ hydration of a SSRd declarative shadow DOM template.
 
 Extended FABs are the only FABs that can be used without an icon.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An extended FAB with a visible label saying reroute](images/fab/usage-without-icon.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-without-icon.html" -->
 
 ```html
@@ -205,13 +207,13 @@ Extended FABs are the only FABs that can be used without an icon.
 FAB colors may be changed with the `variant` attribute. It can be set to
 "surface" (default), "primary", "secondary", or "tertiary".
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Three fabs with edit icons next to each other but the first is primary
 colored, second is secondary, and the last is tertiary
 colored.](images/fab/usage-color.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-color.html" -->
 
 ```html
@@ -231,12 +233,12 @@ colored.](images/fab/usage-color.webp)
 FABs may be small, medium (default), or large by setting the `size` attribute.
 Small FABs can optionally further reduce their touch target.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Four surface fabs side by side with edit icons of visual size size small,
 small, medium, and large](images/fab/usage-sizes.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-sizes.html" -->
 
 ```html
@@ -256,20 +258,20 @@ small, medium, and large](images/fab/usage-sizes.webp)
 
 ## Branded FAB
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 <!-- go/md-branded-fab -->
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 
 Branded FABs use a brightly colored logo for their icon. Unlike [FAB](#fab),
 branded FABs do not have color variants.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A branded FAB with a google-colored plus icon.](images/fab/usage-branded.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-branded.html" -->
 
 ```html
@@ -289,12 +291,12 @@ branded FABs do not have color variants.
 Branded FABs may be extended with a label for additional emphasis. Unlike
 [FAB](#fab), branded FABs should always display their logo icon.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An extended branded fab with a google-colored plus icon and the visible text
 Add](images/fab/usage-branded-extended.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-branded-extended.html" -->
 
 ```html
@@ -313,12 +315,12 @@ Add](images/fab/usage-branded-extended.webp)
 
 Branded FABs may be medium (default) or large by setting the `size` attribute.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Two branded FABs next to each other with a google-branded plus icon. A medium
 sized one and a large one.](images/fab/usage-branded-sizes.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-branded-sizes.html" -->
 
 ```html
@@ -362,11 +364,11 @@ Token                              | Default value
 
 ### FAB example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a fab with a different theme applied](images/fab/theming-fab.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/theming-fab.html" -->
 
 ```html
@@ -401,11 +403,11 @@ Token                      | Default value
 
 #### Extended FAB example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of an extended FAB with a different theme applied](images/fab/theming-extended.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/theming-extended.html" -->
 
 ```html
@@ -438,12 +440,12 @@ Token                              | Default value
 
 ### Branded FAB example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of two branded fabs, one regular, one extended with the visible label
 Add with a different theme applied](images/fab/theming-branded.webp)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/theming-branded.html" -->
 
 ```html

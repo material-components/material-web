@@ -15,16 +15,18 @@ freshness: { owner: 'lizmitchell' reviewed: '2023-05-02' }
 tag: 'docType:reference'
 *-->
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 <!-- go/md-linear-progress -->
 
 <!-- [TOC] -->
 
+<!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/linear-progress/)<!-- {.external} -->.**
+[Material Web catalog](https://material-web.dev/components/linear-progress/).**
+<!-- external-only-end -->
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 
 [Progress indicators](https://m3.material.io/components/progress-indicators)<!-- {.external} -->
 inform users about the status of ongoing processes, such as loading an app or
@@ -67,12 +69,12 @@ fixed, visible track.
 Linear progress indicators may be determinate to show progress, or indeterminate
 for an unspecified amount of progress.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Two linear progress indicators, one with half the track full and the other
 indeterminate.](images/linearprogress/usage.gif "Determinate and indeterminate linear progress indicators.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -102,11 +104,11 @@ indeterminate.](images/linearprogress/usage.gif "Determinate and indeterminate l
 Indeterminate linear progress indicators may cycle between four colors (primary,
 primary container, tertiary, and tertiary container by default).
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An indeterminate linear progress indicator that cycles between four colors.](images/linearprogress/usage-four-color.gif "A four-color indeterminate linear progress indicator")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -159,11 +161,11 @@ Token                                          | Default value
 
 ### Example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a linear progress indicator with a different theme applied](images/linearprogress/theming.png "Linear progress theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--

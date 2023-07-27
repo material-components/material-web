@@ -14,16 +14,18 @@ freshness: { owner: 'emarquez' reviewed: '2023-05-03' }
 tag: 'docType:reference'
 *-->
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 <!-- go/md-checkbox -->
 
 <!-- [TOC] -->
 
+<!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/checkbox/)<!-- {.external} -->.**
+[Material Web catalog](https://material-web.dev/components/checkbox/).**
+<!-- external-only-end -->
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 
 [Checkboxes](https://m3.material.io/components/checkbox)<!-- {.external} --> allow users
 to select one or more items from a set. Checkboxes can turn an option on or off.
@@ -62,11 +64,11 @@ user needs to select one or more options from a list.
 
 Checkboxes may be standalone, pre-checked, or indeterminate.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Three checkboxes in a row that are unselected, selected, and indeterminate](images/checkbox/usage.png "Unselected, selected, and indeterminate checkboxes.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -95,11 +97,11 @@ Checkboxes may be standalone, pre-checked, or indeterminate.
 
 Associate a label with a checkbox using the `<label>` element.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Two checkboxes with labels](images/checkbox/usage-label.png "Labeled checkboxes.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -166,11 +168,11 @@ Token                                    | Default value
 
 ### Example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a checkbox with a different theme applied](images/checkbox/theming.png "Checkbox theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--

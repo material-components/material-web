@@ -9,7 +9,7 @@ ssrOnly: true
 
 # Circular progress
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 
 <!--*
@@ -22,10 +22,12 @@ tag: 'docType:reference'
 
 <!-- [TOC] -->
 
+<!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/circular-progress/)<!-- {.external} -->.**
+[Material Web catalog](https://material-web.dev/components/circular-progress/).**
+<!-- external-only-end -->
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 
 [Progress indicators](https://m3.material.io/components/progress-indicators)<!-- {.external} -->
 inform users about the status of ongoing processes, such as loading an app or
@@ -65,13 +67,13 @@ circular track in a clockwise direction.
 Circular progress indicators may be determinate to show progress, or
 indeterminate for an unspecified amount of progress.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Two circular progress indicators, one with three quarters of the track full
 and the other
 indeterminate.](images/circularprogress/usage.gif "Determinate and indeterminate circular progress indicators.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -104,11 +106,11 @@ indeterminate.">
 Indeterminate circular progress indicators may cycle between four colors
 (primary, primary container, tertiary, and tertiary container by default).
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An indeterminate circular progress indicator that cycles between four colors.](images/circularprogress/usage-four-color.gif "A four-color indeterminate circular progress indicator")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -163,11 +165,11 @@ Token                                           | Default value
 
 ### Example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a circular progress indicator with a different theme applied](images/circularprogress/theming.png "Circular progress indicator theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--

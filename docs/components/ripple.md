@@ -15,16 +15,18 @@ freshness: { owner: 'lizmitchell' reviewed: '2023-06-05' }
 tag: 'docType:reference'
 *-->
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 <!-- go/md-ripple -->
 
 <!-- [TOC] -->
 
+<!-- external-only-start -->
 **This documentation is fully rendered on the
 [Material Web catalog](https://material-web.dev/components/ripple/)<!-- {.external} -->**
+<!-- external-only-end -->
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 
 Ripples are
 [state layers](https://m3.material.io/foundations/interaction/states/state-layers)<!-- {.external} -->
@@ -63,11 +65,11 @@ title="A bounded and unbounded ripple.">
 Ripples display on hover and press pointer interactions. They may be attached to
 a control in one of three ways.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A container that displays a bounded ripple on interaction.](images/ripple/usage.gif "A bounded ripple.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -151,11 +153,11 @@ md-ripple.unbounded {
 }
 ```
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A circular container with an inner circle that displays an unbounded ripple around it on interaction.](images/ripple/usage-unbounded.gif "An unbounded ripple.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -219,11 +221,11 @@ Token                    | Default value
 
 ### Example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a ripple with a different theme applied](images/ripple/theming.gif "Ripple theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--

@@ -18,8 +18,10 @@ tag: 'docType:reference'
 
 <!-- [TOC] -->
 
+<!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/icon-button/)<!-- {.external} -->.**
+[Material Web catalog](https://material-web.dev/components/icon-button/).**
+<!-- external-only-end -->
 
 [Icon buttons](https://m3.material.io/components/icon-buttons)<!-- {.external} --> help
 people take supplementary actions with a single tap.
@@ -51,11 +53,11 @@ people take supplementary actions with a single tap.
 
 ## Types
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Side by side view of standard and contained icon buttons](images/iconbutton/buttons.png "1 - Standard Icon Button. 2 - Contained Icon Button (including filled, filled tonal, and outlined styles)")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/buttons.html" -->
 
 1.  [Standard Icon Button](#standard-icon-button)
@@ -75,11 +77,11 @@ Icon buttons can be grouped together or they can stand alone.
 To use icons by name, see the [Icon](icon.md#usage) documentation for loading
 the icon font.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A row of icon buttons](images/iconbutton/usage.png "Icon buttons can be used within other components, such as a bottom app bar")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage.html" -->
 
 ```html
@@ -113,13 +115,13 @@ attribute to turn the icon button into a link.
 
 ### Toggle
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Two rows of toggling icon buttons, the top row is unselected and the bottom
 row is
 selected](images/iconbutton/usage-toggle.png "Unselected and Selected Icon Button")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-toggle.html" -->
 
 Toggle icon buttons allow a single choice to be selected or deselected, such as
@@ -202,11 +204,11 @@ that can be toggled on and off, such as favorite or bookmark.
 
 Icon buttons can be grouped together or they can stand alone.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A check icon](images/iconbutton/usage-standard.png "Standard Icon Button with Check icon")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-standard.html" -->
 
 ```html
@@ -219,11 +221,11 @@ Icon buttons can be grouped together or they can stand alone.
 
 <!-- go/md-filled-icon-button -->
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A circular button with a check icon](images/iconbutton/usage-filled.png "Filled Icon Button")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-filled.html" -->
 
 Filled icon buttons have higher visual impact and are best for high emphasis
@@ -239,11 +241,11 @@ actions.
 
 <!-- go/md-filled-tonal-icon-button -->
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A filled tonal icon button with a check icon](images/iconbutton/usage-filled-tonal.png "Filled Tonal Icon Button")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-filled-tonal.html" -->
 
 Filled tonal icon buttons are a middle ground between filled and outlined icon
@@ -261,11 +263,11 @@ high emphasis action.
 
 <!-- go/md-outlined-icon-button -->
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An outlined circular icon button with a check icon](images/iconbutton/usage-outlined.png "Outlined Icon button")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-outlined.html" -->
 
 Outlined icon buttons are medium-emphasis buttons. They're useful when an icon
@@ -296,11 +298,11 @@ Token                                    | Default value
 
 ### Standard Icon Button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a standard icon button with a different theme applied](images/iconbutton/theming-standard.png "Standard icon button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-standard.html" -->
 
 ```html
@@ -331,11 +333,11 @@ Token                                              | Default value
 
 ### Filled Icon Button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a filled icon button with a different theme applied](images/iconbutton/theming-filled.png "Filled icon button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-filled.html" -->
 
 ```html
@@ -364,11 +366,11 @@ Token                                                    | Default value
 
 ### Filled Tonal Icon Button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a filled tonal icon button with a different theme applied](images/iconbutton/theming-filled-tonal.png "Filled tonal icon button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-filled-tonal.html" -->
 
 ```html
@@ -397,11 +399,11 @@ Token                                                | Default value
 
 ### Outlined Icon Button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of an outlined icon button with a different theme applied](images/iconbutton/theming-outlined.png "Outlined icon button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-outlined.html" -->
 
 ```html

@@ -8,7 +8,7 @@ dirname: button
 
 # Buttons
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
@@ -20,9 +20,12 @@ tag: 'docType:reference'
 
 <!-- [TOC] -->
 
-[Material Web catalog](https://material-web.dev/components/button/)<!-- {.external} -->.**
+<!-- external-only-start -->
+**This documentation is fully rendered on the
+[Material Web catalog](https://material-web.dev/components/button/).**
+<!-- external-only-end -->
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 
 [Buttons](https://m3.material.io/components/buttons)<!-- {.external} --> help people
 initiate actions, from sending an email, to sharing a document, to liking a
@@ -61,11 +64,11 @@ payment'"
 
 ## Types
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![The 5 types of common buttons](images/button/types.png "Elevated, filled, filled tonal, outlined, and text buttons")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -145,12 +148,12 @@ payment'"
 Buttons have label text that describes the action that will occur if a user taps
 a button.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An outlined button with the text "Back" next to a filled button with the text
 "Complete"](images/button/usage.png "Outlined and filled buttons.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -179,13 +182,13 @@ a button.
 An icon may optionally be added to a button to help communicate the button's
 action and help draw attention.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A tonal button with a right arrow send icon with text 'send' and a text button
 with the text 'open' with a trailing icon arrow
 box](images/button/usage-icon.png "Slot in icons to the appropriate slots")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -242,11 +245,11 @@ are essentially filled tonal buttons with a shadow. To prevent shadow creep,
 only use them when absolutely necessary, such as when the button requires visual
 separation from a patterned background.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An elevated button](images/button/usage-elevated-button.png)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -275,7 +278,7 @@ separation from a patterned background.
 have the most visual impact after the FAB, and should be used for important,
 final actions that complete a flow, like Save, Join now, or Confirm.
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -306,11 +309,11 @@ is an alternative middle ground between filled and outlined buttons. They're
 useful in contexts where a lower-priority button requires slightly more emphasis
 than an outline would give, such as "Next" in an onboarding flow.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A filled tonal button](images/button/usage-filled-tonal-button.png)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -339,11 +342,11 @@ than an outline would give, such as "Next" in an onboarding flow.
 are medium-emphasis buttons. They contain actions that are important, but aren’t
 the primary action in an app.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![An outlined button](images/button/usage-outlined-button.png)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -372,11 +375,11 @@ the primary action in an app.
 are used for the lowest priority actions, especially when presenting multiple
 options.
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![A text button](images/button/usage-text-button.png)
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -416,11 +419,11 @@ Token                                   | Default value
 
 ### Elevated button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of an elevated button with a different theme applied](images/button/theming-elevated-button.png "Elevated button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -476,11 +479,11 @@ Token                                 | Default value
 
 ### Filled button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a filled button with a different theme applied](images/button/theming-filled-button.png "Filled button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -536,11 +539,11 @@ Token                                | Default value
 
 ### Filled tonal button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a filled tonal button with a different theme applied](images/button/theming-filled-tonal-button.png "Filled tonal button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -596,11 +599,11 @@ Token                                   | Default value
 
 ### Outlined button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of an outlined button with a different theme applied](images/button/theming-outlined-button.png "Outlined button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -654,11 +657,11 @@ Token                               | Default value
 
 ### Text button example
 
-<!-- github-only-start -->
+<!-- no-catalog-start -->
 
 ![Image of a text button with a different theme applied](images/button/theming-text-button.png "Text button theming example.")
 
-<!-- github-only-end -->
+<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--

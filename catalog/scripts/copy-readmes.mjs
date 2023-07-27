@@ -52,7 +52,7 @@ const transforms = [
   // comments
   {
     before:
-        /\s*<!-- github-only-start -->(.|\n)*?<!-- github-only-end -->\s*/gm,
+        /\s*<!-- no-catalog-start -->(.|\n)*?<!-- no-catalog-end -->\s*/gm,
     after: '\n\n',
   },
   // eleventy pages end with `/` so `components/checkbox.md` will turn into the
