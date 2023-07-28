@@ -53,7 +53,7 @@ export class List extends LitElement {
    */
   @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
 
-  @query('.md3-list') listRoot!: HTMLElement|null;
+  @query('.md3-list') private listRoot!: HTMLElement|null;
 
   /**
    * An array of activatable and disableable list items. Queries every assigned
@@ -102,7 +102,7 @@ export class List extends LitElement {
    *
    * @param event {KeyboardEvent} The keyboard event that triggers this handler.
    */
-  handleKeydown(event: KeyboardEvent) {
+  private handleKeydown(event: KeyboardEvent) {
     const key = event.key;
     if (!isNavigableKey(key)) {
       return;
