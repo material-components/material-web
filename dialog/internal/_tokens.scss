@@ -50,17 +50,7 @@ $_tokens: (
   with-divider-divider-color: map.get($_md-sys-color, 'outline')
 );
 
-$_fullscreen-tokens: (
-  fullscreen-header-block-size: 56px,
-  fullscreen-footer-block-size: 56px,
-  // Note, the 8px here is not per spec, but needed to make the explicit 56px not be cramped.
-  fullscreen-container-block-padding: 8px,
-);
-
 // Extended token set for dialog.
 @function md-comp-dialog-values() {
-  @return map.merge(
-    map.merge(tokens.md-comp-dialog-values(), $_tokens),
-    $_fullscreen-tokens
-  );
+  @return map.merge(tokens.md-comp-dialog-values(), $_tokens);
 }

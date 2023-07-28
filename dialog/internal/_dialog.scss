@@ -327,8 +327,9 @@
   :host([showing-fullscreen]) .header {
     justify-content: space-between;
     flex-direction: row;
-    max-block-size: var(--_fullscreen-header-block-size);
-    padding-block-start: var(--_fullscreen-container-block-padding);
+    max-block-size: 56px;
+    // Note, the 8px here is not per spec, but needed to make the explicit 56px not be cramped.
+    padding-block-start: 8px;
     // TODO: should there be explicit tokens for these?
     padding-inline: 4px;
     --_header-spacing: 4px;
@@ -340,8 +341,9 @@
   }
 
   :host([showing-fullscreen]) .footer {
-    max-block-size: var(--_fullscreen-footer-block-size);
-    padding-block-end: var(--_fullscreen-container-block-padding);
+    max-block-size: 56px;
+    // Note, the 8px here is not per spec, but needed to make the explicit 56px not be cramped.
+    padding-block-end: 8px;
   }
 
   // Hide bottom divider on fullscreen since it's common not to have footer actions.

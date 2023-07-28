@@ -70,16 +70,6 @@ export class Dialog extends LitElement {
    * When showing fullscreen, the header will take up less vertical space, and
    * the dialog will have a `showing-fullscreen`attribute, allowing content to
    * be styled in this state.
-   *
-   * Dialogs can be sized by setting:
-   *
-   * * --md-dialog-container-min-block-size
-   * * --md-dialog-container-max-block-size
-   * * --md-dialog-container-min-inline-size
-   * * --md-dialog-container-max-inline-size
-   *
-   * These are typically configured via media queries and are independent of the
-   * fullscreen setting.
    */
   @property({type: Boolean}) fullscreen = false;
 
