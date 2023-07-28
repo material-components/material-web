@@ -8,7 +8,7 @@
 import '@material/web/progress/linear-progress.js';
 import '@material/web/button/tonal-button.js';
 import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/progress/circular-progress.js';
 
 import {MaterialStoryInit} from './material-collection.js';
@@ -102,7 +102,7 @@ const components: MaterialStoryInit<StoryKnobs> = {
       width: 48px;
     }
 
-    .around-icon md-standard-icon-button {
+    .around-icon md-icon-button {
       inset: 0;
       margin: auto;
       position: absolute;
@@ -146,13 +146,13 @@ const components: MaterialStoryInit<StoryKnobs> = {
         <div class="around-icon">
           <md-circular-progress value=${value} max=${max}
             aria-label="Playback progress"></md-circular-progress>
-          <md-standard-icon-button toggle
+          <md-icon-button toggle
             aria-label="Play or pause music"
             @change=${toggleIndeterminate}
           >
             <md-icon>play_arrow</md-icon>
             <md-icon slot="selectedIcon">pause</md-icon>
-          </md-standard-icon-button>
+          </md-icon-button>
         </div>
       </div>
     `;

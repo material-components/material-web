@@ -5,10 +5,10 @@
  */
 
 import '@material/web/focus/md-focus-ring.js';
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/icon/icon.js';
 
-import type {MdStandardIconButton} from '@material/web/iconbutton/standard-icon-button.js';
+import type {MdIconButton} from '@material/web/iconbutton/icon-button.js';
 import {css, html, LitElement} from 'lit';
 import {customElement, query, state} from 'lit/decorators.js';
 import {live} from 'lit/directives/live.js';
@@ -28,15 +28,14 @@ import {materialDesign} from '../svg/material-design-logo.js';
    */
   @state() private menuOpen = false;
 
-  @query('.end md-standard-icon-button')
-  private paletteButton!: MdStandardIconButton;
+  @query('.end md-icon-button') private paletteButton!: MdIconButton;
 
   render() {
     return html`
       <header>
         <div class="default-content">
           <section class="start">
-            <md-standard-icon-button
+            <md-icon-button
               toggle
               class="menu-button"
               .selected=${live(drawerOpenSignal.value)}
@@ -44,10 +43,10 @@ import {materialDesign} from '../svg/material-design-logo.js';
             >
               <span><md-icon>menu</md-icon></span>
               <span slot="selectedIcon"><md-icon>menu_open</md-icon></span>
-            </md-standard-icon-button>
-            <md-standard-icon-button href="/" class="home-button">
+            </md-icon-button>
+            <md-icon-button href="/" class="home-button">
               ${materialDesign}
-            </md-standard-icon-button>
+            </md-icon-button>
           </section>
 
           <a href="/" id="home-link">
@@ -71,9 +70,9 @@ import {materialDesign} from '../svg/material-design-logo.js';
               >
                 <theme-changer></theme-changer>
               </md-menu>
-              <md-standard-icon-button @click="${this.onPaletteClick}">
+              <md-icon-button @click="${this.onPaletteClick}">
                 <md-icon>palette</md-icon>
-              </md-standard-icon-button>
+              </md-icon-button>
             </lit-island>
           </section>
         </div>
@@ -106,7 +105,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
    * Toggles the sidebar's open state.
    */
   private onMenuIconToggle(e: InputEvent) {
-    drawerOpenSignal.value = (e.target as MdStandardIconButton).selected;
+    drawerOpenSignal.value = (e.target as MdIconButton).selected;
   }
 
   static styles = css`
@@ -135,14 +134,14 @@ import {materialDesign} from '../svg/material-design-logo.js';
       align-items: center;
     }
 
-    md-standard-icon-button:not(:defined) {
+    md-icon-button:not(:defined) {
       width: 40px;
       height: 40px;
       display: flex;
       visibility: hidden;
     }
 
-    md-standard-icon-button * {
+    md-icon-button * {
       display: block;
     }
 

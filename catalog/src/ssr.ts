@@ -18,7 +18,7 @@ import '@material/web/list/list-item-link.js';
 import '@material/web/progress/circular-progress.js';
 import '@material/web/tabs/tabs.js';
 import '@material/web/tabs/tab.js';
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/iconbutton/filled-icon-button.js';
 import '@material/web/iconbutton/filled-tonal-icon-button.js';
 import '@material/web/iconbutton/outlined-icon-button.js';

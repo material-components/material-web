@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/icon/icon.js';
 
 import {css, html, LitElement} from 'lit';
@@ -24,7 +24,7 @@ export class CopyCodeButton extends LitElement {
       --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
     }
 
-    md-standard-icon-button {
+    md-icon-button {
       color: red;
       position: absolute;
       inset: var(--catalog-copy-code-button-inset, var(--_border-radius) var(--_border-radius) auto auto);
@@ -60,11 +60,11 @@ export class CopyCodeButton extends LitElement {
     const icon = this.showCheckmark ? 'check' : 'content_copy';
     return html`
       <slot></slot>
-      <md-standard-icon-button @click=${this.onClick} title=${this.buttonTitle}>
+      <md-icon-button @click=${this.onClick} title=${this.buttonTitle}>
         <md-icon aria-live="polite" aria-label=${label}>
           <span aria-hidden="true">${icon}</span>
         </md-icon>
-      </md-standard-icon-button>
+      </md-icon-button>
     `;
   }
 

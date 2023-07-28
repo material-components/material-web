@@ -60,7 +60,7 @@ people take supplementary actions with a single tap.
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/buttons.html" -->
 
-1.  [Standard Icon Button](#standard-icon-button)
+1.  [Icon Button](#icon-button)
 2.  [Filled Icon Button](#filled-icon-button)
 3.  [Filled Tonal Icon Button](#filled-tonal-icon-button)
 4.  [Outlined Icon Button](#outlined-icon-button)
@@ -85,9 +85,9 @@ the icon font.
 <!-- catalog-include "figures/iconbutton/usage.html" -->
 
 ```html
-<md-standard-icon-button>
+<md-icon-button>
   <md-icon>check</md-icon>
-</md-standard-icon-button>
+</md-icon-button>
 <md-filled-icon-button>
   <md-icon>check</md-icon>
 </md-filled-icon-button>
@@ -108,9 +108,9 @@ and optionally a
 attribute to turn the icon button into a link.
 
 ```html
-<md-standard-icon-button href="https://google.com">
+<md-icon-button href="https://google.com">
   <md-icon>check</md-icon>
-</md-standard-icon-button>
+</md-icon-button>
 ```
 
 ### Toggle
@@ -129,10 +129,10 @@ adding or removing something from favorites.
 
 ```html
 <div>
-  <md-standard-icon-button toggle>
+  <md-icon-button toggle>
     <md-icon>close</md-icon>
     <md-icon slot="selectedIcon">check</md-icon>
-  </md-standard-icon-button>
+  </md-icon-button>
   <md-filled-icon-button toggle>
     <md-icon>close</md-icon>
     <md-icon slot="selectedIcon">check</md-icon>
@@ -147,10 +147,10 @@ adding or removing something from favorites.
   </md-outlined-icon-button>
 </div>
 <div>
-  <md-standard-icon-button toggle selected>
+  <md-icon-button toggle selected>
     <md-icon>close</md-icon>
     <md-icon slot="selectedIcon">check</md-icon>
-  </md-standard-icon-button>
+  </md-icon-button>
   <md-filled-icon-button toggle selected>
     <md-icon>close</md-icon>
     <md-icon slot="selectedIcon">check</md-icon>
@@ -173,9 +173,9 @@ Add an
 attribute to buttons whose labels need a more descriptive label.
 
 ```html
-<md-standard-icon-button aria-label="Search for Contact">
+<md-icon-button aria-label="Search for Contact">
   <md-icon>search</md-icon>
-</md-standard-icon-button>
+</md-icon-button>
 ```
 
 ### Toggle
@@ -184,17 +184,15 @@ Add a `selected-aria-label` attribute to toggle buttons whose labels need a more
 descriptive label when selected.
 
 ```html
-<md-standard-icon-button toggle
+<md-icon-button toggle
   aria-label="Unselected"
   selected-aria-label="Selected">
   <md-icon>close</md-icon>
   <md-icon slot="selectedIcon">check</md-icon>
-</md-standard-icon-button>
+</md-icon-button>
 ```
 
-## Standard Icon Button
-
-<!-- go/md-standard-icon-button -->
+## Icon Button
 
 Use
 [icon buttons](https://m3.material.io/components/icon-buttons/guidelines)<!-- {.external} -->
@@ -212,9 +210,9 @@ Icon buttons can be grouped together or they can stand alone.
 <!-- catalog-include "figures/iconbutton/usage-standard.html" -->
 
 ```html
-<md-standard-icon-button>
+<md-icon-button>
   <md-icon>check</md-icon>
-</md-standard-icon-button>
+</md-icon-button>
 ```
 
 ## Filled Icon Button
@@ -285,7 +283,7 @@ filled tonal icon button.
 Icon Button supports [Material theming](../theming.md) and can be customized in
 terms of color, and shape.
 
-### Standard Icon Button tokens
+### Icon Button tokens
 
 Token                                    | Default value
 ---------------------------------------- | -----------------------------------
@@ -296,7 +294,7 @@ Token                                    | Default value
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-icon-button.scss)
     <!-- {.external} -->
 
-### Standard Icon Button example
+### Icon Button example
 
 <!-- no-catalog-start -->
 
@@ -314,9 +312,9 @@ Token                                    | Default value
 }
 </style>
 
-<md-standard-icon-button>
+<md-icon-button>
   <md-icon>check</md-icon>
-</md-standard-icon-button>
+</md-icon-button>
 ```
 
 ### Filled Icon Button tokens

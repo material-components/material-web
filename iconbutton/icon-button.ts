@@ -12,7 +12,7 @@ import {styles} from './internal/standard-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-standard-icon-button': MdStandardIconButton;
+    'md-icon-button': MdIconButton;
   }
 }
 
@@ -31,8 +31,8 @@ declare global {
  * - Add to Favorites
  * - Print
  */
-@customElement('md-standard-icon-button')
-export class MdStandardIconButton extends IconButton {
+@customElement('md-icon-button')
+export class MdIconButton extends IconButton {
   static override styles = [sharedStyles, styles];
 
   protected override getRenderClasses() {

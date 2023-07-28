@@ -6,7 +6,7 @@
 
 /* Fork of Lit stories story-knob-renderer with m3 components and theming */
 
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/icon/icon.js';
 import '@material/web/elevation/elevation.js';
 
@@ -72,9 +72,9 @@ export class StoryKnobPanel extends LitElement {
 
     if (this.showCloseIcon) {
       closeIcon = html`
-        <md-standard-icon-button aria-label="close" @click=${this.close}>
+        <md-icon-button aria-label="close" @click=${this.close}>
           <md-icon>close</md-icon>
-        </md-standard-icon-button>
+        </md-icon-button>
       `;
     }
 
@@ -96,13 +96,13 @@ export class StoryKnobPanel extends LitElement {
       const iconLabel = this.draggable ? 'dock' : 'pop out';
 
       dragIcon = html`
-        <md-standard-icon-button
+        <md-icon-button
           class="dragIconButton"
           aria-label=${iconLabel}
           @click=${this.onDragIconClick}
         >
           <md-icon>${iconSvg}</md-icon>
-        </md-standard-icon-button>
+        </md-icon-button>
       `;
     }
 
