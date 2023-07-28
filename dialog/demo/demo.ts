@@ -32,7 +32,6 @@ const collection =
       new Knob('modeless', {defaultValue: false, ui: boolInput()}),
       new Knob('footerHidden', {defaultValue: false, ui: boolInput()}),
       new Knob('stacked', {defaultValue: false, ui: boolInput()}),
-      new Knob('draggable', {defaultValue: false, ui: boolInput()}),
       new Knob('icon', {defaultValue: '', ui: textInput()}),
       new Knob('headline', {defaultValue: 'Dialog', ui: textInput()}),
       new Knob(
@@ -40,7 +39,6 @@ const collection =
           {defaultValue: 'Just a simple dialog.', ui: textInput()}),
     ]);
 
-collection.addStories(
-    ...materialInitsToStoryInits(stories));
+collection.addStories(...materialInitsToStoryInits(stories));
 
 setUpDemo(collection, {icons: 'material-symbols'});

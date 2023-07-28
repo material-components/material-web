@@ -160,11 +160,6 @@ export class Dialog extends LitElement {
    */
   @property({type: Boolean, reflect: true}) modeless = false;
 
-  /**
-   * Set to make the dialog position draggable.
-   */
-  @property({type: Boolean}) override draggable = false;
-
   private readonly throttle = createThrottle();
 
   @query('.dialog', true)
@@ -178,11 +173,8 @@ export class Dialog extends LitElement {
   // for scrolling related styling
   @query(`.content`, true)
   private readonly contentElement!: HTMLDivElement|null;
-  // used to determine container size for dragging
   @query(`.container`, true)
   private readonly containerElement!: HTMLDivElement|null;
-  // used to determine where users can drag from.
-  @query(`.header`, true) private readonly headerElement!: HTMLDivElement|null;
 
   /**
    * Private properties that reflect for styling manually in `updated`.
@@ -201,10 +193,6 @@ export class Dialog extends LitElement {
   @property({reflect: true}) transition = 'grow-down';
 
   private currentAction: string|undefined;
-
-  @state() private dragging = false;
-  private readonly dragMargin = 8;
-  private dragInfo?: [number, number, number, number]|undefined;
 
   /**
    * Opens and shows the dialog. This is equivalent to setting the `open`
@@ -266,12 +254,7 @@ export class Dialog extends LitElement {
       aria-labelledby="header"
       aria-describedby="content"
     >
-      <div class="container ${classMap({
-      'dragging': this.dragging
-    })}"
-        @pointermove=${this.handlePointerMove}
-        @pointerup=${this.handleDragEnd}
-      >
+      <div class="container">
         <md-elevation></md-elevation>
         <header class="header">
           <slot name="header">
@@ -311,10 +294,6 @@ export class Dialog extends LitElement {
   }
 
   protected override updated(changed: PropertyValues) {
-    if (changed.get('draggable') && !this.draggable) {
-      this.style.removeProperty('--_container-drag-inline-start');
-      this.style.removeProperty('--_container-drag-block-start');
-    }
     // Reflect internal state to facilitate styling.
     this.reflectStateProp(changed, 'opening', this.opening);
     this.reflectStateProp(changed, 'closing', this.closing);
@@ -510,46 +489,5 @@ export class Dialog extends LitElement {
 
   override blur() {
     this.getFocusElement()?.blur();
-  }
-
-  private canStartDrag(event: PointerEvent) {
-    if (this.draggable === false || event.defaultPrevented ||
-        !(event.buttons & 1) || !this.headerElement ||
-        !event.composedPath().includes(this.headerElement)) {
-      return false;
-    }
-    return true;
-  }
-
-  private handlePointerMove(event: PointerEvent) {
-    if (!this.dragging && !this.canStartDrag(event) || !this.containerElement) {
-      return;
-    }
-    const {top, left, height, width} =
-        this.containerElement.getBoundingClientRect();
-    if (!this.dragging) {
-      this.containerElement.setPointerCapture(event.pointerId);
-      this.dragging = true;
-      const {x, y} = event;
-      this.dragInfo = [x, y, top, left];
-    }
-    const [sx, sy, st, sl] = this.dragInfo ?? [0, 0, 0, 0];
-    const dx = event.x - sx;
-    const dy = event.y - sy;
-    const ml = window.innerWidth - width - this.dragMargin;
-    const mt = window.innerHeight - height - this.dragMargin;
-    const l = Math.max(this.dragMargin, Math.min(ml, dx + sl));
-    const t = Math.max(this.dragMargin, Math.min(mt, dy + st));
-    this.style.setProperty('--_container-drag-inline-start', `${l}px`);
-    this.style.setProperty('--_container-drag-block-start', `${t}px`);
-  }
-
-  private handleDragEnd(event: PointerEvent) {
-    if (!this.dragging) {
-      return;
-    }
-    this.containerElement?.releasePointerCapture(event.pointerId);
-    this.dragging = false;
-    this.dragInfo = undefined;
   }
 }

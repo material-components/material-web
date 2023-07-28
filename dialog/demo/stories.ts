@@ -24,7 +24,6 @@ export interface StoryKnobs {
   modeless: boolean;
   footerHidden: boolean;
   stacked: boolean;
-  draggable: boolean;
   icon: string;
   headline: string;
   supportingText: string;
@@ -43,7 +42,6 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     modeless,
     footerHidden,
     stacked,
-    draggable,
     icon,
     headline,
     supportingText
@@ -55,7 +53,6 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .draggable=${draggable}
           .transition=${transition!}
       >
         <md-icon slot="headline-prefix">${icon}</md-icon>
@@ -75,7 +72,6 @@ const alert: MaterialStoryInit<StoryKnobs> = {
     modeless,
     footerHidden,
     stacked,
-    draggable,
     icon,
     headline,
     supportingText
@@ -87,7 +83,6 @@ const alert: MaterialStoryInit<StoryKnobs> = {
             .modeless=${modeless}
             .footerHidden=${footerHidden}
             .stacked=${stacked}
-            .draggable=${draggable}
             .transition=${transition!}
         >
           <span slot="header">Alert dialog</span>
@@ -105,7 +100,6 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
     modeless,
     footerHidden,
     stacked,
-    draggable,
     icon,
     headline,
     supportingText
@@ -117,7 +111,6 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .draggable=${draggable}
           .transition=${transition!}
       >
         <md-icon slot="headline-prefix">delete_outline</md-icon>
@@ -146,7 +139,6 @@ const choose: MaterialStoryInit<StoryKnobs> = {
     modeless,
     footerHidden,
     stacked,
-    draggable,
     icon,
     headline,
     supportingText
@@ -158,7 +150,6 @@ const choose: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .draggable=${draggable}
           .transition=${transition!}
       >
         <span slot="header">Choose your favorite pet</span>
@@ -214,7 +205,6 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
     modeless,
     footerHidden,
     stacked,
-    draggable,
     icon,
     headline,
     supportingText
@@ -226,7 +216,6 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .draggable=${draggable}
           .transition=${transition!}
       >
         <span slot="header">
@@ -259,7 +248,6 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
     modeless,
     footerHidden,
     stacked,
-    draggable,
     icon,
     headline,
     supportingText
@@ -271,7 +259,6 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .draggable=${draggable}
           .transition=${transition!}
       >
       <span slot="header">

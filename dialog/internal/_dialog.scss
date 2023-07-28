@@ -22,10 +22,6 @@
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-
-    // Private properties for drag data.
-    --_container-drag-inline-start: initial;
-    --_container-drag-block-start: initial;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -87,15 +83,9 @@
   .container {
     position: absolute;
 
-    inset-inline-start: var(
-      --_container-drag-inline-start,
-      var(--_container-inset-inline-start)
-    );
+    inset-inline-start: var(--_container-inset-inline-start);
     inset-inline-end: var(--_container-inset-inline-end);
-    inset-block-start: var(
-      --_container-drag-block-start,
-      var(--_container-inset-block-start)
-    );
+    inset-block-start: var(--_container-inset-block-start);
     inset-block-end: var(--_container-inset-block-end);
 
     background-color: var(--_container-color);
@@ -181,12 +171,6 @@
 
   .scroll-divider-footer:not(.footerHidden) .content {
     border-block-end-color: var(--_with-divider-divider-color);
-  }
-
-  .dragging {
-    user-select: none;
-    cursor: move;
-    touch-action: none;
   }
 
   // Transitions for open/closed states
