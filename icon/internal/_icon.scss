@@ -27,6 +27,8 @@ $_custom-property-prefix: 'icon';
     }
 
     display: inline-flex;
+    height: var(--_size);
+    width: var(--_size);
     color: var(--_color);
     font-family: var(--_font);
     font-weight: var(--_weight);
@@ -54,7 +56,7 @@ $_custom-property-prefix: 'icon';
   }
 
   ::slotted(*) {
-    height: var(--_size);
-    width: var(--_size);
+    height: inherit;
+    width: inherit;
   }
 }
