@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/textfield/filled-text-field.js';
 import '@material/web/radio/radio.js';
 import '@material/web/icon/icon.js';
@@ -208,7 +208,7 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           .stacked=${stacked}
       >
         <span slot="header">
-          <md-standard-icon-button dialog-action="close"><md-icon>close</md-icon></md-standard-icon-button>
+          <md-icon-button dialog-action="close"><md-icon>close</md-icon></md-icon-button>
           <span class="headline">Create new contact</span>
         </span>
         <div class="contact-content">
@@ -250,7 +250,7 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
       >
       <span slot="header">
         <span style="flex: 1;">Floating Sheet</span>
-        <md-standard-icon-button dialog-action="close"><md-icon>close</md-icon></md-standard-icon-button>
+        <md-icon-button dialog-action="close"><md-icon>close</md-icon></md-icon-button>
       </span>
       <div>This is a floating sheet with title.
         Floating sheets offer no action buttons at the bottom,

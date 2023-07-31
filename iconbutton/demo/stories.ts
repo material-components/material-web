@@ -8,7 +8,7 @@ import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/filled-icon-button.js';
 import '@material/web/iconbutton/filled-tonal-icon-button.js';
 import '@material/web/iconbutton/outlined-icon-button.js';
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 
 import {isRtl} from '@material/web/internal/controller/is-rtl.js';
 import {MaterialStoryInit} from './material-collection.js';
@@ -29,25 +29,25 @@ export interface StoryKnobs {
 }
 
 const standard: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-standard-icon-button>',
+  name: '<md-icon-button>',
   render(knobs) {
     const {icon, ariaLabel, disabled, flipIconInRtl} = knobs;
     return html`
-      <md-standard-icon-button
+      <md-icon-button
           .ariaLabel=${ariaLabel}
           .disabled=${disabled}
           .flipIconInRtl=${flipIconInRtl}
           ${ref(rtlRefCallback(knobs))}>
         <md-icon>${icon}</md-icon>
-      </md-standard-icon-button>`;
+      </md-icon-button>`;
   }
 };
 const link: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-standard-icon-button> link',
+  name: '<md-icon-button> link',
   render(knobs) {
     const {icon, ariaLabel, href, target, disabled, flipIconInRtl} = knobs;
     return html`
-      <md-standard-icon-button
+      <md-icon-button
           .ariaLabel=${ariaLabel}
           .disabled=${disabled}
           .flipIconInRtl=${flipIconInRtl}
@@ -55,11 +55,11 @@ const link: MaterialStoryInit<StoryKnobs> = {
           .target="${target}"
           ${ref(rtlRefCallback(knobs))}>
         <md-icon>${icon}</md-icon>
-      </md-standard-icon-button>`;
+      </md-icon-button>`;
   }
 };
 const toggle: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-standard-icon-button> toggle',
+  name: '<md-icon-button> toggle',
   render(knobs) {
     const {
       icon,
@@ -70,7 +70,7 @@ const toggle: MaterialStoryInit<StoryKnobs> = {
       disabled,
     } = knobs;
     return html`
-      <md-standard-icon-button
+      <md-icon-button
           toggle
           .disabled=${disabled}
           .selectedAriaLabel=${selectedAriaLabel}
@@ -81,7 +81,7 @@ const toggle: MaterialStoryInit<StoryKnobs> = {
             html`<md-icon slot="selectedIcon">${selectedIcon}</md-icon>` :
             nothing}
         <md-icon>${icon}</md-icon>
-      </md-standard-icon-button>`;
+      </md-icon-button>`;
   }
 };
 const outlined: MaterialStoryInit<StoryKnobs> = {

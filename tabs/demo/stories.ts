@@ -5,7 +5,7 @@
  */
 
 import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/standard-icon-button.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/tabs/tabs.js';
 
 import {MaterialStoryInit} from './material-collection.js';
@@ -385,14 +385,13 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="controls">
-        <md-standard-icon-button @click=${
-        addTab}><md-icon>add</md-icon></md-standard-icon-button>
-        <md-standard-icon-button @click=${
-        removeTab}><md-icon>remove</md-icon></md-standard-icon-button>
-        <md-standard-icon-button @click=${
-        moveTabTowardsStart}><md-icon>chevron_left</md-icon></md-standard-icon-button>
-        <md-standard-icon-button @click=${
-        moveTabTowardsEnd}><md-icon>chevron_right</md-icon></md-standard-icon-button>
+        <md-icon-button @click=${addTab}><md-icon>add</md-icon></md-icon-button>
+        <md-icon-button @click=${
+        removeTab}><md-icon>remove</md-icon></md-icon-button>
+        <md-icon-button @click=${
+        moveTabTowardsStart}><md-icon>chevron_left</md-icon></md-icon-button>
+        <md-icon-button @click=${
+        moveTabTowardsEnd}><md-icon>chevron_right</md-icon></md-icon-button>
       </div>
       <md-tabs
           class=${classMap(classes)}
