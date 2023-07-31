@@ -33,23 +33,45 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 @mixin styles() {
   $tokens: tokens.md-comp-focus-ring-values();
 
+  $active-width: var(
+    --md-focus-ring-active-width,
+    #{map.get($tokens, 'active-width')}
+  );
+  $color: var(--md-focus-ring-color, #{map.get($tokens, 'color')});
+  $duration: var(--md-focus-ring-duration, #{map.get($tokens, 'duration')});
+  $width: var(--md-focus-ring-width, #{map.get($tokens, 'width')});
+  $inward-offset: var(
+    --md-focus-ring-inward-offset,
+    #{map.get($tokens, 'inward-offset')}
+  );
+  $outward-offset: var(
+    --md-focus-ring-outward-offset,
+    #{map.get($tokens, 'outward-offset')}
+  );
+  // Support logical shape properties
+  $start-start: var(
+    --md-focus-ring-shape-start-start,
+    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
+  );
+  $start-end: var(
+    --md-focus-ring-shape-start-end,
+    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
+  );
+  $end-end: var(
+    --md-focus-ring-shape-end-end,
+    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
+  );
+  $end-start: var(
+    --md-focus-ring-shape-end-start,
+    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
+  );
+
   :host {
-    @each $token, $value in $tokens {
-      --md-focus-ring-#{$token}: #{$value};
-    }
-
-    // Support logical shape properties
-    --md-focus-ring-shape-start-start: var(--md-focus-ring-shape);
-    --md-focus-ring-shape-start-end: var(--md-focus-ring-shape);
-    --md-focus-ring-shape-end-end: var(--md-focus-ring-shape);
-    --md-focus-ring-shape-end-start: var(--md-focus-ring-shape);
-
-    animation-delay: 0s, calc(var(--md-focus-ring-duration) * 0.25);
-    animation-duration: calc(var(--md-focus-ring-duration) * 0.25),
-      calc(var(--md-focus-ring-duration) * 0.75);
+    animation-delay: 0s, calc($duration * 0.25);
+    animation-duration: calc($duration * 0.25), calc($duration * 0.75);
     animation-timing-function: map.get($_md-sys-motion, 'easing-emphasized');
     box-sizing: border-box;
-    color: var(--md-focus-ring-color);
+    color: $color;
     display: none;
     pointer-events: none;
     position: absolute;
@@ -61,40 +83,22 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
   :host(:not([inward])) {
     animation-name: outward-grow, outward-shrink;
-    border-end-end-radius: calc(
-      var(--md-focus-ring-shape-end-end) + var(--md-focus-ring-outward-offset)
-    );
-    border-end-start-radius: calc(
-      var(--md-focus-ring-shape-end-start) + var(--md-focus-ring-outward-offset)
-    );
-    border-start-end-radius: calc(
-      var(--md-focus-ring-shape-start-end) + var(--md-focus-ring-outward-offset)
-    );
-    border-start-start-radius: calc(
-      var(--md-focus-ring-shape-start-start) +
-        var(--md-focus-ring-outward-offset)
-    );
-    inset: calc(-1 * (var(--md-focus-ring-outward-offset)));
-    outline: var(--md-focus-ring-width) solid currentColor;
+    border-end-end-radius: calc($end-end + $outward-offset);
+    border-end-start-radius: calc($end-start + $outward-offset);
+    border-start-end-radius: calc($start-end + $outward-offset);
+    border-start-start-radius: calc($start-start + $outward-offset);
+    inset: calc(-1 * $outward-offset);
+    outline: $width solid currentColor;
   }
 
   :host([inward]) {
     animation-name: inward-grow, inward-shrink;
-    border-end-end-radius: calc(
-      var(--md-focus-ring-shape-end-end) - var(--md-focus-ring-inward-offset)
-    );
-    border-end-start-radius: calc(
-      var(--md-focus-ring-shape-end-start) - var(--md-focus-ring-inward-offset)
-    );
-    border-start-end-radius: calc(
-      var(--md-focus-ring-shape-start-end) - var(--md-focus-ring-inward-offset)
-    );
-    border-start-start-radius: calc(
-      var(--md-focus-ring-shape-start-start) -
-        var(--md-focus-ring-inward-offset)
-    );
-    border: var(--md-focus-ring-width) solid currentColor;
-    inset: var(--md-focus-ring-inward-offset);
+    border-end-end-radius: calc($end-end - $inward-offset);
+    border-end-start-radius: calc($end-start - $inward-offset);
+    border-start-end-radius: calc($start-end - $inward-offset);
+    border-start-start-radius: calc($start-start - $inward-offset);
+    border: $width solid currentColor;
+    inset: $inward-offset;
   }
 
   @keyframes outward-grow {
@@ -102,13 +106,13 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       outline-width: 0;
     }
     to {
-      outline-width: var(--md-focus-ring-active-width);
+      outline-width: $active-width;
     }
   }
 
   @keyframes outward-shrink {
     from {
-      outline-width: var(--md-focus-ring-active-width);
+      outline-width: $active-width;
     }
   }
 
@@ -117,13 +121,13 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       border-width: 0;
     }
     to {
-      border-width: var(--md-focus-ring-active-width);
+      border-width: $active-width;
     }
   }
 
   @keyframes inward-shrink {
     from {
-      border-width: var(--md-focus-ring-active-width);
+      border-width: $active-width;
     }
   }
 
