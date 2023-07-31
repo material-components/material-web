@@ -33,16 +33,16 @@ $supported-tokens: (
   'icon-size',
   'label-text-color',
   'label-text-type',
+  'leading-space',
   'pressed-icon-color',
   'pressed-label-text-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
-  'spacing-leading',
-  'spacing-trailing',
-  'with-icon-spacing-leading',
-  'with-icon-spacing-trailing',
-  'with-trailing-icon-spacing-leading',
-  'with-trailing-icon-spacing-trailing',
+  'trailing-space',
+  'with-leading-icon-leading-space',
+  'with-leading-icon-trailing-space',
+  'with-trailing-icon-leading-space',
+  'with-trailing-icon-trailing-space',
   // go/keep-sorted end
 );
 
@@ -73,13 +73,15 @@ $_default: (
     $new-tokens: (
       // TODO(b/198759625): Remove once spacing tokens are formally added
       // go/keep-sorted start
-      'spacing-leading': if($exclude-hardcoded-values, null, 12px),
-      'spacing-trailing': if($exclude-hardcoded-values, null, 12px),
-      'with-icon-spacing-leading': if($exclude-hardcoded-values, null, 12px),
-      'with-icon-spacing-trailing': if($exclude-hardcoded-values, null, 16px),
-      'with-trailing-icon-spacing-leading':
+      'leading-space': if($exclude-hardcoded-values, null, 12px),
+      'trailing-space': if($exclude-hardcoded-values, null, 12px),
+      'with-leading-icon-leading-space':
+        if($exclude-hardcoded-values, null, 12px),
+      'with-leading-icon-trailing-space':
         if($exclude-hardcoded-values, null, 16px),
-      'with-trailing-icon-spacing-trailing':
+      'with-trailing-icon-leading-space':
+        if($exclude-hardcoded-values, null, 16px),
+      'with-trailing-icon-trailing-space':
         if($exclude-hardcoded-values, null, 12px),
       // go/keep-sorted end
     ),

@@ -56,8 +56,8 @@ export class KnobColorSelector extends LitElement {
       display: inline-block;
       position: relative;
       margin-inline-end: 16px;
-      --md-outlined-button-spacing-leading: 8px;
-      --md-outlined-button-spacing-trailing: 8px;
+      --md-outlined-button-leading-space: 8px;
+      --md-outlined-button-trailing-space: 8px;
       --md-outlined-button-container-height: 32px;
       /* md-checkbox sizes */
       --_component-size: 40px;

@@ -67,8 +67,8 @@
     font: var(--_label-text-type);
     color: var(--_label-text-color);
     // TODO(b/181413732): Verify token below are named correctly
-    padding-inline-start: var(--_spacing-leading);
-    padding-inline-end: var(--_spacing-trailing);
+    padding-inline-start: var(--_leading-space);
+    padding-inline-end: var(--_trailing-space);
     gap: 8px;
 
     &::before {
@@ -139,13 +139,13 @@
 
   // TODO(b/181413732): Verify token below are named correctly
   .button--icon-leading {
-    padding-inline-start: var(--_with-icon-spacing-leading);
-    padding-inline-end: var(--_with-icon-spacing-trailing);
+    padding-inline-start: var(--_with-leading-icon-leading-space);
+    padding-inline-end: var(--_with-leading-icon-trailing-space);
   }
 
   .button--icon-trailing {
-    padding-inline-start: var(--_with-trailing-icon-spacing-leading);
-    padding-inline-end: var(--_with-trailing-icon-spacing-trailing);
+    padding-inline-start: var(--_with-trailing-icon-leading-space);
+    padding-inline-end: var(--_with-trailing-icon-trailing-space);
   }
 
   .link-button-wrapper {

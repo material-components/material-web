@@ -93,7 +93,7 @@ const components: MaterialStoryInit<StoryKnobs> = {
     md-tonal-button md-circular-progress {
       --md-circular-progress-size: 36px;
       --md-circular-progress-active-indicator-width: ${(4 / 36) * 100};
-      --md-tonal-button-with-icon-spacing-trailing: 8px;
+      --md-tonal-button-with-leading-icon-trailing-space: 8px;
     }
 
     .around-icon {
