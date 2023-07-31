@@ -75,9 +75,9 @@ payment'"
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/fabs.html" -->
 
-1.  [FAB](#fab-1)
-2.  [Small FAB](#small)
-3.  [Large FAB](#large)
+1.  [FAB](#fab)
+2.  [Small FAB](#sizes)
+3.  [Large FAB](#sizes)
 
 ### Extended FAB
 
@@ -88,7 +88,7 @@ payment'"
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/extended-fabs.html" -->
 
-1.  [Extended FAB with both icon and label text](#extended-fab-1)
+1.  [Extended FAB with both icon and label text](#extended)
 2.  [Extended FAB without icon](#without-icon)
 
 ## Usage
