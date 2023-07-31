@@ -47,7 +47,7 @@
   }
 
   // Set the ripple opacity to 0 if there is a submenu that is hovered.
-  .list-item:has(.submenu:hover) {
+  .submenu-hover {
     // Have to use ripple theme directly because :has selector in this case does
     // not work in this case with the :has selector, thus we cannot override the
     // custom props set in :host

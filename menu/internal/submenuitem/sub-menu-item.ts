@@ -5,7 +5,7 @@
  */
 
 import {html} from 'lit';
-import {property, queryAssignedElements} from 'lit/decorators.js';
+import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
 import {List} from '../../../list/internal/list.js';
 import {Corner, Menu} from '../menu.js';
@@ -52,6 +52,8 @@ export class SubMenuItem extends MenuItemEl {
    * Sets the item in the selected visual state when a submenu is opened.
    */
   @property({type: Boolean, reflect: true}) selected = false;
+
+  @state() protected submenuHover = false;
 
   @queryAssignedElements({slot: 'submenu', flatten: true})
   private readonly menus!: Menu[];
@@ -105,6 +107,10 @@ export class SubMenuItem extends MenuItemEl {
     this.show();
   }
 
+  protected override getRenderClasses() {
+    return {...super.getRenderClasses(), 'submenu-hover': this.submenuHover};
+  }
+
   /**
    * On item keydown handles opening the submenu.
    */
@@ -149,6 +155,8 @@ export class SubMenuItem extends MenuItemEl {
   private renderSubMenu() {
     return html`<span class="submenu"><slot
         name="submenu"
+        @pointerenter=${this.onSubmenuPointerEnter}
+        @pointerleave=${this.onSubmenuPointerLeave}
         @pointerdown=${stopPropagation}
         @click=${stopPropagation}
         @keydown=${this.onSubMenuKeydown}
@@ -297,5 +305,13 @@ export class SubMenuItem extends MenuItemEl {
       default:
         return false;
     }
+  }
+
+  private onSubmenuPointerEnter() {
+    this.submenuHover = true;
+  }
+
+  private onSubmenuPointerLeave() {
+    this.submenuHover = false;
   }
 }

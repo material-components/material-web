@@ -10,7 +10,7 @@
 
   // Show double border only when selected, and the current list item does not
   // have a focus ring on it.
-  :host([selected]) .list-item:not(:has(.focus-ring[visible]))::before {
+  :host([selected]) .list-item:not(.has-focus-ring)::before {
     content: '';
     position: absolute;
     inset: 0;

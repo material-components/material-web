@@ -4,13 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LitElement} from 'lit';
+import {LitElement, PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {Attachable, AttachableController} from '../../internal/controller/attachable-controller.js';
 
 /**
  * Events that the focus ring listens to.
+ *
+ * @fires visibility-changed Fired whenever `visible` changes.
  */
 const EVENTS = ['focusin', 'focusout', 'pointerdown'];
 
@@ -79,6 +81,15 @@ export class FocusRing extends LitElement implements Attachable {
       prev?.removeEventListener(event, this);
       next?.addEventListener(event, this);
     }
+  }
+
+  override update(changed: PropertyValues<this>) {
+    if (changed.has('visible')) {
+      // This logic can be removed once the `:has` selector has been introduced
+      // to Firefox. This is necessary to allow correct submenu styles.
+      this.dispatchEvent(new Event('visibility-changed'));
+    }
+    super.update(changed);
   }
 }
 

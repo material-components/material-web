@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {property} from 'lit/decorators.js';
+import {property, state} from 'lit/decorators.js';
 
+import type {MdFocusRing} from '../../../focus/md-focus-ring.js';
 import {ListItemEl, ListItemRole} from '../../../list/internal/listitem/list-item.js';
 import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem} from '../shared.js';
 
@@ -26,6 +27,8 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
    */
   @property({type: Boolean, attribute: 'keep-open'}) keepOpen = false;
 
+  @state() protected hasFocusRing = false;
+
   /**
    * Used for overriding e.g. sub-menu-item.
    */
@@ -38,6 +41,18 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
 
     this.dispatchEvent(
         new DefaultCloseMenuEvent(this, {kind: CLOSE_REASON.CLICK_SELECTION}));
+  }
+
+  protected override getRenderClasses() {
+    return {
+      ...super.getRenderClasses(),
+      'has-focus-ring': this.hasFocusRing,
+    };
+  }
+
+  protected override onFocusRingVisibilityChanged(e: Event) {
+    const focusRing = e.target as MdFocusRing;
+    this.hasFocusRing = focusRing.visible;
   }
 
   protected override onKeydown(event: KeyboardEvent) {
