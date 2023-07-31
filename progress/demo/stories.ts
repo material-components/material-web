@@ -6,7 +6,7 @@
 
 
 import '@material/web/progress/linear-progress.js';
-import '@material/web/button/tonal-button.js';
+import '@material/web/button/filled-tonal-button.js';
 import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/icon-button.js';
 import '@material/web/progress/circular-progress.js';
@@ -86,14 +86,14 @@ const components: MaterialStoryInit<StoryKnobs> = {
       gap: 32px;
     }
 
-    md-tonal-button {
+    md-filled-tonal-button {
       width: 80px;
     }
 
-    md-tonal-button md-circular-progress {
+    md-filled-tonal-button md-circular-progress {
       --md-circular-progress-size: 36px;
       --md-circular-progress-active-indicator-width: ${(4 / 36) * 100};
-      --md-tonal-button-with-leading-icon-trailing-space: 8px;
+      --md-filled-tonal-button-with-leading-icon-trailing-space: 8px;
     }
 
     .around-icon {
@@ -137,11 +137,11 @@ const components: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="components">
-        <md-tonal-button @click=${toggleLoad}>
+        <md-filled-tonal-button @click=${toggleLoad}>
           <md-circular-progress style="display: none" indeterminate
             aria-label="Loading, please wait"></md-circular-progress>
           <span>Load</span>
-        </md-tonal-button>
+        </md-filled-tonal-button>
 
         <div class="around-icon">
           <md-circular-progress value=${value} max=${max}

@@ -9,7 +9,7 @@ import '@material/web/button/elevated-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/button/outlined-button.js';
 import '@material/web/button/text-button.js';
-import '@material/web/button/tonal-button.js';
+import '@material/web/button/filled-tonal-button.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {html} from 'lit';
@@ -78,14 +78,14 @@ const tonal: MaterialStoryInit<StoryKnobs> = {
     const standardLabel = label || 'Tonal';
     const linkLabel = label || 'Tonal link';
     return html`
-      <md-tonal-button
+      <md-filled-tonal-button
         aria-label=${ariaLabelMsg('tonal', label)}
         ?disabled=${disabled ?? false}
       >
         ${standardLabel}
-      </md-tonal-button>
+      </md-filled-tonal-button>
 
-      <md-tonal-button
+      <md-filled-tonal-button
         aria-label=${ariaLabelMsg('tonal', linkLabel)}
         href="https://google.com"
         target="_blank"
@@ -93,7 +93,7 @@ const tonal: MaterialStoryInit<StoryKnobs> = {
       >
         ${linkLabel}
         <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
-      </md-tonal-button>
+      </md-filled-tonal-button>
     `;
   }
 };

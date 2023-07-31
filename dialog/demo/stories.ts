@@ -8,7 +8,7 @@ import '@material/web/iconbutton/icon-button.js';
 import '@material/web/textfield/filled-text-field.js';
 import '@material/web/radio/radio.js';
 import '@material/web/icon/icon.js';
-import '@material/web/button/tonal-button.js';
+import '@material/web/button/filled-tonal-button.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/button/text-button.js';
 import '@material/web/dialog/dialog.js';
@@ -112,7 +112,7 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
           Deleting the selected photos will also remove them from all synced devices.
         </div>
         <md-text-button slot="footer" dialog-action="delete">Delete</md-text-button>
-        <md-tonal-button slot="footer" dialog-focus dialog-action="cancel">Cancel</md-tonal-button>
+        <md-filled-tonal-button slot="footer" dialog-focus dialog-action="cancel">Cancel</md-filled-tonal-button>
       </md-dialog>`;
   }
 };

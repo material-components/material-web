@@ -11,9 +11,9 @@ import {html} from 'lit';
 import {Button} from './button.js';
 
 /**
- * A tonal button component.
+ * A filled tonal button component.
  */
-export class TonalButton extends Button {
+export class FilledTonalButton extends Button {
   protected override renderElevation() {
     return html`<md-elevation></md-elevation>`;
   }

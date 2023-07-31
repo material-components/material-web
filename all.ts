@@ -15,9 +15,9 @@
 // go/keep-sorted start
 import './button/elevated-button.js';
 import './button/filled-button.js';
+import './button/filled-tonal-button.js';
 import './button/outlined-button.js';
 import './button/text-button.js';
-import './button/tonal-button.js';
 import './checkbox/checkbox.js';
 import './chips/assist-chip.js';
 import './chips/filter-chip.js';
@@ -63,9 +63,9 @@ import './textfield/outlined-text-field.js';
 // go/keep-sorted start
 export * from './button/elevated-button.js';
 export * from './button/filled-button.js';
+export * from './button/filled-tonal-button.js';
 export * from './button/outlined-button.js';
 export * from './button/text-button.js';
-export * from './button/tonal-button.js';
 export * from './checkbox/checkbox.js';
 export * from './chips/assist-chip.js';
 export * from './chips/filter-chip.js';

@@ -118,7 +118,7 @@ payment'"
         <span>2</span>
       </div>
       <div>
-        <md-tonal-button>Tonal</md-tonal-button>
+        <md-filled-tonal-button>Tonal</md-filled-tonal-button>
         <span>3</span>
       </div>
       <div>
@@ -198,10 +198,10 @@ box](images/button/usage-icon.png "Slot in icons to the appropriate slots")
       style="justify-content:center;gap: 8px;"
       title="Outlined and filled buttons."
       aria-label="An outlined button with the text 'Back' next to a filled button with the text 'Complete'">
-    <md-tonal-button>
+    <md-filled-tonal-button>
       Send
       <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
-    </md-tonal-button>
+    </md-filled-tonal-button>
 
     <md-text-button trailingicon>
       Open
@@ -215,10 +215,10 @@ box](images/button/usage-icon.png "Slot in icons to the appropriate slots")
 <!-- catalog-only-end -->
 
 ```html
-<md-tonal-button>
+<md-filled-tonal-button>
   Send
   <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
-</md-tonal-button>
+</md-filled-tonal-button>
 
 <md-text-button trailingicon>
   Open
@@ -301,7 +301,7 @@ final actions that complete a flow, like Save, Join now, or Confirm.
 
 ## Filled tonal button
 
-<!-- go/md-tonal-button -->
+<!-- go/md-filled-tonal-button -->
 
 A
 [filled tonal button](https://m3.material.io/components/buttons/guidelines#07a1577b-aaf5-4824-a698-03526421058b)<!-- {.external} -->
@@ -322,7 +322,7 @@ than an outline would give, such as "Next" in an onboarding flow.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="A tonal button.">
-    <md-tonal-button>Tonal</md-tonal-button>
+    <md-filled-tonal-button>Tonal</md-filled-tonal-button>
   </figure>
 </div>
 
@@ -331,7 +331,7 @@ than an outline would give, such as "Next" in an onboarding flow.
 <!-- catalog-only-end -->
 
 ```html
-<md-tonal-button>Tonal</md-tonal-button>
+<md-filled-tonal-button>Tonal</md-filled-tonal-button>
 ```
 
 ## Outlined button
@@ -527,12 +527,12 @@ Token                                 | Default value
 
 ### Filled tonal button tokens
 
-Token                                | Default value
------------------------------------- | ---------------------------------------
-`--md-tonal-button-container-color`  | `--md-sys-color-secondary-container`
-`--md-tonal-button-container-shape`  | `9999px`
-`--md-tonal-button-label-text-color` | `--md-sys-color-on-secondary-container`
-`--md-tonal-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
+Token                                       | Default value
+------------------------------------------- | -------------
+`--md-filled-tonal-button-container-color`  | `--md-sys-color-secondary-container`
+`--md-filled-tonal-button-container-shape`  | `9999px`
+`--md-filled-tonal-button-label-text-color` | `--md-sys-color-on-secondary-container`
+`--md-filled-tonal-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-tonal-button.scss)
     <!-- {.external} -->
@@ -557,14 +557,14 @@ Token                                | Default value
     <style>
       .styled-example {
         background-color: white;
-        --md-tonal-button-container-shape: 0px;
-        --md-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-filled-tonal-button-container-shape: 0px;
+        --md-filled-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
         --md-sys-color-secondary-container: #CCE8E7;
         --md-sys-color-on-secondary-container: #051F1F;
       }
     </style>
 
-    <md-tonal-button>Tonal</md-tonal-button>
+    <md-filled-tonal-button>Tonal</md-filled-tonal-button>
   </figure>
 </div>
 
@@ -575,14 +575,14 @@ Token                                | Default value
 ```html
 <style>
 :root {
-  --md-tonal-button-container-shape: 0px;
-  --md-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+  --md-filled-tonal-button-container-shape: 0px;
+  --md-filled-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
   --md-sys-color-secondary-container: #CCE8E7;
   --md-sys-color-on-secondary-container: #051F1F;
 }
 </style>
 
-<md-tonal-button>Tonal</md-tonal-button>
+<md-filled-tonal-button>Tonal</md-filled-tonal-button>
 ```
 
 ### Outlined button tokens

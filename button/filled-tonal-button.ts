@@ -6,14 +6,14 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {FilledTonalButton} from './internal/filled-tonal-button.js';
+import {styles as tonalStyles} from './internal/filled-tonal-styles.css.js';
 import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
-import {TonalButton} from './internal/tonal-button.js';
-import {styles as tonalStyles} from './internal/tonal-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-tonal-button': MdTonalButton;
+    'md-filled-tonal-button': MdFilledTonalButton;
   }
 }
 
@@ -38,7 +38,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-tonal-button')
-export class MdTonalButton extends TonalButton {
+@customElement('md-filled-tonal-button')
+export class MdFilledTonalButton extends FilledTonalButton {
   static override styles = [sharedStyles, sharedElevationStyles, tonalStyles];
 }

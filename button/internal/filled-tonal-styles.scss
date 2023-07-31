@@ -4,7 +4,7 @@
 //
 
 // go/keep-sorted start
-@use './tonal-button';
+@use './filled-tonal-button';
 // go/keep-sorted end
 
-@include tonal-button.styles;
+@include filled-tonal-button.styles;
