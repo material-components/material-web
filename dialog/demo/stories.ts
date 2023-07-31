@@ -19,7 +19,6 @@ import {css, html} from 'lit';
 
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
-  transition: string|undefined;
   fullscreen: boolean;
   modeless: boolean;
   footerHidden: boolean;
@@ -37,7 +36,6 @@ function clickHandler(event: Event) {
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: '<md-dialog>',
   render({
-    transition,
     fullscreen,
     modeless,
     footerHidden,
@@ -53,7 +51,6 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .transition=${transition!}
       >
         <md-icon slot="headline-prefix">${icon}</md-icon>
         <span slot="headline">${headline}</span>
@@ -67,7 +64,6 @@ const alert: MaterialStoryInit<StoryKnobs> = {
 
   name: 'Alert',
   render({
-    transition,
     fullscreen,
     modeless,
     footerHidden,
@@ -83,7 +79,6 @@ const alert: MaterialStoryInit<StoryKnobs> = {
             .modeless=${modeless}
             .footerHidden=${footerHidden}
             .stacked=${stacked}
-            .transition=${transition!}
         >
           <span slot="header">Alert dialog</span>
           <span>This is a standard alert dialog. Alert dialogs interrupt users with urgent information, details, or actions.</span>
@@ -95,7 +90,6 @@ const alert: MaterialStoryInit<StoryKnobs> = {
 const confirm: MaterialStoryInit<StoryKnobs> = {
   name: 'Confirm',
   render({
-    transition,
     fullscreen,
     modeless,
     footerHidden,
@@ -106,12 +100,11 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
   }) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog transition="condense" style="--md-dialog-container-max-inline-size: 320px;"
+      <md-dialog style="--md-dialog-container-max-inline-size: 320px;"
           .fullscreen=${fullscreen}
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .transition=${transition!}
       >
         <md-icon slot="headline-prefix">delete_outline</md-icon>
         <span slot="headline">Permanently delete?</span>
@@ -134,7 +127,6 @@ const choose: MaterialStoryInit<StoryKnobs> = {
     }
     `,
   render({
-    transition,
     fullscreen,
     modeless,
     footerHidden,
@@ -150,7 +142,6 @@ const choose: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .transition=${transition!}
       >
         <span slot="header">Choose your favorite pet</span>
         <p>
@@ -200,7 +191,6 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
       flex: 1;
     }`,
   render({
-    transition,
     fullscreen,
     modeless,
     footerHidden,
@@ -216,7 +206,6 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .transition=${transition!}
       >
         <span slot="header">
           <md-standard-icon-button dialog-action="close"><md-icon>close</md-icon></md-standard-icon-button>
@@ -243,7 +232,6 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
 const floatingSheet: MaterialStoryInit<StoryKnobs> = {
   name: 'Floating sheet',
   render({
-    transition,
     fullscreen,
     modeless,
     footerHidden,
@@ -259,7 +247,6 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
           .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
-          .transition=${transition!}
       >
       <span slot="header">
         <span style="flex: 1;">Floating Sheet</span>

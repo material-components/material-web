@@ -181,14 +181,6 @@ export class Dialog extends LitElement {
   @state() private opening = false;
   @state() private closing = false;
 
-  /**
-   * Transition kind. Supported options include: grow, shrink, grow-down,
-   * grow-up, grow-left, and grow-right.
-   *
-   * Defaults to grow-down.
-   */
-  @property({reflect: true}) transition = 'grow-down';
-
   private currentAction: string|undefined;
 
   /**

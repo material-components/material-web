@@ -185,12 +185,12 @@ $_closing-transition-easing: map.get(
     opacity: 0;
   }
 
-  :host([transition][showing-open]) .container > * {
+  :host([showing-open]) .container > * {
     opacity: 1;
     transform: none;
   }
 
-  :host([transition][showing-open]) .container {
+  :host([showing-open]) .container {
     opacity: 1;
     transform: none;
   }
@@ -227,7 +227,7 @@ $_closing-transition-easing: map.get(
     opacity: 0;
   }
 
-  :host([transition='grow-down']) {
+  :host {
     --_opening-transform: scale(1, 0.1) translateY(-20%);
     --_closing-transform: scale(1, 0.9) translateY(-10%);
     --_origin: top;
@@ -235,60 +235,22 @@ $_closing-transition-easing: map.get(
     --_origin-footer: bottom;
   }
 
-  :host([transition='grow-up']) {
-    --_opening-transform: scale(1, 0.1) translateY(20%);
-    --_closing-transform: scale(1, 0.9) translateY(10%);
-    --_origin: bottom;
-    --_opening-content-transform: scale(1, 2);
-    --_origin-footer: bottom;
-  }
-
-  :host([transition='grow-left']) {
-    --_opening-transform: scale(0.1, 1) translateX(20%);
-    --_closing-transform: scale(0.9, 1) translateX(10%);
-    --_origin: right;
-    --_opening-content-transform: none;
-    --_origin-footer: none;
-  }
-
-  :host([transition='grow-right']) {
-    --_opening-transform: scale(0.1, 1) translateX(-20%);
-    --_closing-transform: scale(0.9, 1) translateX(-10%);
-    --_origin: left;
-    --_opening-content-transform: none;
-    --_origin-footer: none;
-  }
-
-  :host([transition^='grow-']) .container {
+  .container {
     transform-origin: var(--_origin);
     transform: var(--_opening-transform);
   }
 
-  :host([transition^='grow-']) .container > * {
+  .container > * {
     transform-origin: var(--_origin);
     transform: var(--_opening-content-transform);
   }
 
-  :host([transition^='grow-']) .footer {
+  .footer {
     transform-origin: var(--_origin-footer);
   }
 
-  :host([transition^='grow-'][closing]) {
+  :host([closing]) {
     transform: var(--_closing-transform);
-  }
-
-  :host([transition='shrink']) .container {
-    transform: scale(1.2);
-  }
-
-  :host([transition='grow']) .container {
-    transform: scale(0.8);
-  }
-
-  :host([transition='shrink'][closing]) .container,
-  :host([transition='grow'][closing]) .container {
-    transition-duration: 0;
-    transform: none;
   }
 
   // fullscreen
