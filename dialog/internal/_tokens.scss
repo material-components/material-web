@@ -28,16 +28,6 @@ $_tokens: (
   container-inset-block-start: auto,
   container-inset-block-end: auto,
 
-  // Transition
-  // Basing on https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration#27a05b8b-02b1-4695-a7e4-70797f205222
-  opening-transition-duration: map.get($_md-sys-motion, 'duration-medium4'),
-  opening-transition-easing:
-    map.get($_md-sys-motion, 'easing-emphasized-decelerate'),
-  closing-transition-duration: map.get($_md-sys-motion, 'duration-short4'),
-  closing-transition-easing:
-    map.get($_md-sys-motion, 'easing-emphasized-accelerate'),
-  // Scrim
-  scrim-color: rgba(0, 0, 0, 0.32),
   // Content
   container-block-padding: 24px,
   container-inline-padding: 24px,

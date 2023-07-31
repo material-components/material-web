@@ -18,9 +18,6 @@ import {createThrottle, msFromTimeCSSValue} from '../../internal/motion/animatio
  */
 export const CLOSE_ACTION = 'close';
 
-const OPENING_TRANSITION_PROP = '--_opening-transition-duration';
-const CLOSING_TRANSITION_PROP = '--_closing-transition-duration';
-
 /**
  * A dialog component.
  *
@@ -361,8 +358,8 @@ export class Dialog extends LitElement {
       this.dispatchActionEvent(this.open ? 'opening' : 'closing');
     }
     // Compute desired transition duration.
-    const duration = msFromTimeCSSValue(getComputedStyle(this).getPropertyValue(
-        this.open ? OPENING_TRANSITION_PROP : CLOSING_TRANSITION_PROP));
+    const duration = msFromTimeCSSValue(
+        getComputedStyle(this.containerElement!).transitionDuration);
     let promise = this.updateComplete;
     if (duration > 0) {
       promise = new Promise((r) => {

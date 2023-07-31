@@ -22,12 +22,7 @@ interface DialogTestProps {
 
 function getDialogTemplate(props?: DialogTestProps) {
   return html`
-    <md-dialog
-      .modeless=${props?.modeless ?? false}
-      style="
-        --md-dialog-opening-transition-duration: 0ms;
-        --md-dialog-closing-transition-duration: 0ms;
-      ">
+    <md-dialog .modeless=${props?.modeless ?? false}>
       <div class="content">Content
         <input dialog-focus>
       </div>

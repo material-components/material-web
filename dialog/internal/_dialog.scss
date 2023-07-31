@@ -3,31 +3,36 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// PUBLIC PROPERTIES
-
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../internal/sass/theme';
-@use './tokens';
+@use '../../tokens';
+@use './tokens' as md-dialog-tokens;
 // go/keep-sorted end
 
+$_md-sys-motion: tokens.md-sys-motion-values();
+// Basing on https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration#27a05b8b-02b1-4695-a7e4-70797f205222
+$_opening-transition-duration: map.get($_md-sys-motion, 'duration-medium4');
+$_opening-transition-easing: map.get(
+  $_md-sys-motion,
+  'easing-emphasized-decelerate'
+);
+$_closing-transition-duration: map.get($_md-sys-motion, 'duration-short4');
+$_closing-transition-easing: map.get(
+  $_md-sys-motion,
+  'easing-emphasized-accelerate'
+);
+
 @mixin styles() {
-  $tokens: tokens.md-comp-dialog-values();
+  $tokens: md-dialog-tokens.md-comp-dialog-values();
   $tokens: theme.create-theme-vars($tokens, 'dialog');
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :host {
-      --_opening-transition-duration: 0;
-      --_closing-transition-duration: 0;
     }
   }
 
@@ -64,19 +69,8 @@
     background: none;
   }
 
-  // Note, using ::before as scrim because ::backdrop cannot inherit custom properties.
-  .dialog::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    block-size: 100dvh;
-    inline-size: 100dvw;
-    pointer-events: none;
-  }
-
   // Hide scrim when modeless.
-  :host([modeless]) .dialog:before {
+  :host([modeless]) .dialog::backdrop {
     display: none;
   }
 
@@ -198,31 +192,31 @@
     transform: none;
   }
 
-  .dialog::before {
+  .dialog::backdrop {
     transition: background-color linear;
     background-color: transparent;
   }
 
-  :host([showing-open]) .dialog::before {
-    background-color: var(--_scrim-color);
+  :host([showing-open]) .dialog::backdrop {
+    background-color: rgb(0 0 0 / 32%);
   }
 
-  :host([opening]) .dialog::before {
-    transition-duration: calc(var(--_opening-transition-duration) / 2);
+  :host([opening]) .dialog::backdrop {
+    transition-duration: $_opening-transition-duration / 2;
   }
 
-  :host([closing]) .dialog::before {
-    transition-duration: calc(var(--_closing-transition-duration) / 2);
+  :host([closing]) .dialog::backdrop {
+    transition-duration: $_closing-transition-duration / 2;
   }
 
   :host([opening]) .container {
-    transition-duration: var(--_opening-transition-duration);
-    transition-timing-function: var(--_opening-transition-easing);
+    transition-duration: $_opening-transition-duration;
+    transition-timing-function: $_opening-transition-easing;
   }
 
   :host([closing]) .container {
-    transition-duration: var(--_closing-transition-duration);
-    transition-timing-function: var(--_closing-transition-easing);
+    transition-duration: $_closing-transition-duration;
+    transition-timing-function: $_closing-transition-easing;
   }
 
   :host([trasition][closing]) .container > * {

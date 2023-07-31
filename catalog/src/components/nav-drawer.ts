@@ -252,7 +252,7 @@ import {SignalElement} from '../signals/signal-element.js';
     }
 
     .scrim {
-      background-color: var(--md-dialog-scrim-color, rgba(0, 0, 0, 0.32));
+      background-color: rgba(0, 0, 0, 0.32);
     }
 
     @media (max-width: 900px) {
@@ -368,7 +368,7 @@ import {SignalElement} from '../signals/signal-element.js';
         }
 
         .scrim {
-          background-color: var(--md-dialog-scrim-color, rgba(0, 0, 0, 0.75));
+          background-color: rgba(0, 0, 0, 0.75);
         }
       }
 

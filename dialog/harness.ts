@@ -60,7 +60,7 @@ export class DialogHarness extends Harness<Dialog> {
     await this.transitionComplete();
     const dialogElement = await this.getInteractiveElement();
     const {backgroundColor, display} =
-        getComputedStyle(dialogElement, '::before');
+        getComputedStyle(dialogElement, '::backdrop');
     const hiddenBg = `rgba(0, 0, 0, 0)`;
     return backgroundColor !== hiddenBg && display !== 'none';
   }
