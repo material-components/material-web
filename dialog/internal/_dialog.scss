@@ -222,7 +222,7 @@ $_closing-transition-easing: map.get(
     transition-timing-function: $_closing-transition-easing;
   }
 
-  :host([trasition][closing]) .container > * {
+  :host([transition][closing]) .container > * {
     transform: none;
     opacity: 0;
   }
