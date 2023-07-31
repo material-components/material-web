@@ -45,26 +45,26 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
   }
 
   .icon--off {
-    width: var(--_unselected-icon-size);
-    height: var(--_unselected-icon-size);
-    fill: var(--_unselected-icon-color);
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    fill: var(--_icon-color);
   }
 
   .switch--unselected:hover .icon--off {
-    fill: var(--_unselected-hover-icon-color);
+    fill: var(--_hover-icon-color);
   }
 
   .switch--unselected:focus-within .icon--off {
-    fill: var(--_unselected-focus-icon-color);
+    fill: var(--_focus-icon-color);
   }
 
   .switch--unselected:active .icon--off {
-    fill: var(--_unselected-pressed-icon-color);
+    fill: var(--_pressed-icon-color);
   }
 
   .switch--unselected:disabled .icon--off {
-    fill: var(--_disabled-unselected-icon-color);
-    opacity: var(--_disabled-unselected-icon-opacity);
+    fill: var(--_disabled-icon-color);
+    opacity: var(--_disabled-icon-opacity);
   }
 
   .icon--on {

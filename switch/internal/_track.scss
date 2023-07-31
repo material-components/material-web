@@ -63,29 +63,29 @@
   }
 
   .switch--unselected .track::before {
-    background-color: var(--_unselected-track-color);
-    border-color: var(--_unselected-track-outline-color);
+    background-color: var(--_track-color);
+    border-color: var(--_track-outline-color);
     border-style: solid;
     border-width: var(--_track-outline-width);
   }
 
   .switch--unselected:hover .track::before {
-    background-color: var(--_unselected-hover-track-color);
-    border-color: var(--_unselected-hover-track-outline-color);
+    background-color: var(--_hover-track-color);
+    border-color: var(--_hover-track-outline-color);
   }
 
   .switch--unselected:focus-visible .track::before {
-    background-color: var(--_unselected-focus-track-color);
-    border-color: var(--_unselected-focus-track-outline-color);
+    background-color: var(--_focus-track-color);
+    border-color: var(--_focus-track-outline-color);
   }
 
   .switch--unselected:active .track::before {
-    background-color: var(--_unselected-pressed-track-color);
-    border-color: var(--_unselected-pressed-track-outline-color);
+    background-color: var(--_pressed-track-color);
+    border-color: var(--_pressed-track-outline-color);
   }
 
   .switch--unselected:disabled .track::before {
-    background-color: var(--_disabled-unselected-track-color);
-    border-color: var(--_disabled-unselected-track-outline-color);
+    background-color: var(--_disabled-track-color);
+    border-color: var(--_disabled-track-outline-color);
   }
 }

@@ -43,8 +43,8 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     border-start-end-radius: var(--_handle-shape-start-end);
     border-end-end-radius: var(--_handle-shape-end-end);
     border-end-start-radius: var(--_handle-shape-end-start);
-    height: var(--_unselected-handle-height);
-    width: var(--_unselected-handle-width);
+    height: var(--_handle-height);
+    width: var(--_handle-width);
 
     transform-origin: center;
     transition-property: height, width;
@@ -108,24 +108,24 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
   }
 
   .switch--unselected .handle::before {
-    background-color: var(--_unselected-handle-color);
+    background-color: var(--_handle-color);
   }
 
   .switch--unselected:hover .handle::before {
-    background-color: var(--_unselected-hover-handle-color);
+    background-color: var(--_hover-handle-color);
   }
 
   .switch--unselected:focus-within .handle::before {
-    background-color: var(--_unselected-focus-handle-color);
+    background-color: var(--_focus-handle-color);
   }
 
   .switch--unselected:active .handle::before {
-    background-color: var(--_unselected-pressed-handle-color);
+    background-color: var(--_pressed-handle-color);
   }
 
   .switch--unselected:disabled .handle::before {
-    background-color: var(--_disabled-unselected-handle-color);
-    opacity: var(--_disabled-unselected-handle-opacity);
+    background-color: var(--_disabled-handle-color);
+    opacity: var(--_disabled-handle-opacity);
   }
 
   md-ripple {
@@ -149,10 +149,10 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
   .switch--unselected md-ripple {
     @include ripple.theme(
       (
-        'hover-color': var(--_unselected-hover-state-layer-color),
-        'pressed-color': var(--_unselected-pressed-state-layer-color),
-        'hover-opacity': var(--_unselected-hover-state-layer-opacity),
-        'pressed-opacity': var(--_unselected-pressed-state-layer-opacity),
+        'hover-color': var(--_hover-state-layer-color),
+        'pressed-color': var(--_pressed-state-layer-color),
+        'hover-opacity': var(--_hover-state-layer-opacity),
+        'pressed-opacity': var(--_pressed-state-layer-opacity),
       )
     );
   }
