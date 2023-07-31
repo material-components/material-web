@@ -26,18 +26,7 @@ $_tokens: (
   container-inset-inline-start: auto,
   container-inset-inline-end: auto,
   container-inset-block-start: auto,
-  container-inset-block-end: auto,
-
-  // Content
-  container-block-padding: 24px,
-  container-inline-padding: 24px,
-  header-spacing: 16px,
-  action-spacing: 8px,
-  content-block-start-spacing: 16px,
-  content-block-end-spacing: 24px,
-  // Divider
-  with-divider-divider-height: 1px,
-  with-divider-divider-color: map.get($_md-sys-color, 'outline')
+  container-inset-block-end: auto
 );
 
 // Extended token set for dialog.

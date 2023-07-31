@@ -5,6 +5,7 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:math';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/elevation';
@@ -13,7 +14,9 @@
 @use './tokens' as md-dialog-tokens;
 // go/keep-sorted end
 
+$_md-sys-color: tokens.md-sys-color-values-light();
 $_md-sys-motion: tokens.md-sys-motion-values();
+
 // Basing on https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration#27a05b8b-02b1-4695-a7e4-70797f205222
 $_opening-transition-duration: map.get($_md-sys-motion, 'duration-medium4');
 $_opening-transition-easing: map.get(
@@ -92,8 +95,8 @@ $_closing-transition-easing: map.get(
     max-block-size: var(--_container-max-block-size);
     min-inline-size: var(--_container-min-inline-size);
     max-inline-size: var(--_container-max-inline-size);
-    padding-block-start: var(--_container-block-padding);
-    padding-block-end: var(--_container-block-padding);
+    padding-block-start: 24px;
+    padding-block-end: 24px;
   }
 
   md-elevation {
@@ -107,15 +110,15 @@ $_closing-transition-easing: map.get(
   .container > * {
     box-sizing: border-box;
     // Apply pad left/right here so scrollbar is not indented.
-    padding-inline-start: var(--_container-inline-padding);
-    padding-inline-end: var(--_container-inline-padding);
+    padding-inline-start: 24px;
+    padding-inline-end: 24px;
   }
 
   .header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--_header-spacing);
+    gap: 16px;
     -webkit-font-smoothing: antialiased;
     color: var(--_headline-color);
     font: var(--_headline-type);
@@ -124,8 +127,8 @@ $_closing-transition-easing: map.get(
   .content {
     flex: 1;
     overflow: auto;
-    margin-block-start: var(--_content-block-start-spacing);
-    margin-block-end: var(--_content-block-end-spacing);
+    margin-block-start: 16px;
+    margin-block-end: 24px;
     -webkit-font-smoothing: antialiased;
     color: var(--_supporting-text-color);
     font: var(--_supporting-text-type);
@@ -138,11 +141,11 @@ $_closing-transition-easing: map.get(
     align-items: center;
     justify-content: flex-end;
     box-sizing: border-box;
-    gap: var(--_action-spacing);
+    gap: 8px;
   }
 
-  .footerHidden {
-    --_content-block-end-spacing: 0px;
+  .footerHidden .content {
+    margin-block-end: 0px;
   }
 
   .footerHidden .footer {
@@ -155,16 +158,16 @@ $_closing-transition-easing: map.get(
   }
 
   .scrollable .content {
-    border-block-start: var(--_with-divider-divider-height) solid transparent;
-    border-block-end: var(--_with-divider-divider-height) solid transparent;
+    border-block-start: 1px solid transparent;
+    border-block-end: 1px solid transparent;
   }
 
   .scroll-divider-header .content {
-    border-block-start-color: var(--_with-divider-divider-color);
+    border-block-start-color: map.get($_md-sys-color, 'outline');
   }
 
   .scroll-divider-footer:not(.footerHidden) .content {
-    border-block-end-color: var(--_with-divider-divider-color);
+    border-block-end-color: map.get($_md-sys-color, 'outline');
   }
 
   // Transitions for open/closed states
@@ -202,11 +205,11 @@ $_closing-transition-easing: map.get(
   }
 
   :host([opening]) .dialog::backdrop {
-    transition-duration: $_opening-transition-duration / 2;
+    transition-duration: math.div($_opening-transition-duration, 2);
   }
 
   :host([closing]) .dialog::backdrop {
-    transition-duration: $_closing-transition-duration / 2;
+    transition-duration: math.div($_closing-transition-duration, 2);
   }
 
   :host([opening]) .container {
@@ -310,7 +313,7 @@ $_closing-transition-easing: map.get(
     padding-block-start: 8px;
     // TODO: should there be explicit tokens for these?
     padding-inline: 4px;
-    --_header-spacing: 4px;
+    gap: 4px;
   }
 
   :host([showing-fullscreen]) .content {
