@@ -30,18 +30,20 @@ $supported-tokens: (
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
   'selected-container-color',
+  'toggle-focus-icon-color',
+  'toggle-hover-icon-color',
+  'toggle-hover-state-layer-color',
+  'toggle-icon-color',
+  'toggle-pressed-icon-color',
+  'toggle-pressed-state-layer-color',
   'toggle-selected-focus-icon-color',
   'toggle-selected-hover-icon-color',
   'toggle-selected-hover-state-layer-color',
   'toggle-selected-icon-color',
   'toggle-selected-pressed-icon-color',
   'toggle-selected-pressed-state-layer-color',
-  'toggle-unselected-focus-icon-color',
-  'toggle-unselected-hover-icon-color',
-  'toggle-unselected-hover-state-layer-color',
-  'toggle-unselected-icon-color',
-  'toggle-unselected-pressed-icon-color',
-  'toggle-unselected-pressed-state-layer-color',
+  // Note: filled icon buttons have three container colors,
+  // "container-color" for regular, then selected/unselected for toggle.
   'unselected-container-color',
   // go/keep-sorted end
 );
@@ -50,8 +52,8 @@ $unsupported-tokens: (
   // go/keep-sorted start
   'focus-state-layer-color',
   'focus-state-layer-opacity',
+  'toggle-focus-state-layer-color',
   'toggle-selected-focus-state-layer-color',
-  'toggle-unselected-focus-state-layer-color',
   // go/keep-sorted end
 );
 
@@ -65,7 +67,20 @@ $_default: (
   $tokens: values.validate(
     md-comp-filled-tonal-icon-button.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: (
+      // TODO(b/292244480): remove default unselected prefix
+      'toggle-unselected-focus-icon-color': 'toggle-focus-icon-color',
+      'toggle-unselected-hover-icon-color': 'toggle-hover-icon-color',
+      'toggle-unselected-hover-state-layer-color':
+        'toggle-hover-state-layer-color',
+      'toggle-unselected-icon-color': 'toggle-icon-color',
+      'toggle-unselected-pressed-icon-color': 'toggle-pressed-icon-color',
+      'toggle-unselected-pressed-state-layer-color':
+        'toggle-pressed-state-layer-color',
+      'toggle-unselected-focus-state-layer-color':
+        'toggle-focus-state-layer-color'
+    )
   );
 
   @return $tokens;

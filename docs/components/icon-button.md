@@ -285,11 +285,11 @@ terms of color, and shape.
 
 ### Icon Button tokens
 
-Token                                    | Default value
----------------------------------------- | -----------------------------------
-`--md-icon-button-unselected-icon-color` | `--md-sys-color-on-surface-variant`
-`--md-icon-button-state-layer-shape`     | `9999px`
-`--md-icon-button-icon-size`             | `24px`
+Token                                | Default value
+------------------------------------ | -----------------------------------
+`--md-icon-button-icon-color`        | `--md-sys-color-on-surface-variant`
+`--md-icon-button-state-layer-shape` | `9999px`
+`--md-icon-button-icon-size`         | `24px`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-icon-button.scss)
     <!-- {.external} -->
@@ -387,13 +387,13 @@ Token                                                    | Default value
 
 ### Outlined Icon Button tokens
 
-Token                                                | Default value
----------------------------------------------------- | ------------------------
-`--md-outlined-icon-button-unselected-outline-color` | `--md-sys-color-outline`
-`--md-outlined-icon-button-unselected-outline-width` | `1px`
-`--md-outlined-icon-button-container-shape`          | `9999px`
-`--md-outlined-icon-button-container-size`           | `40px`
-`--md-outlined-icon-button-icon-size`                | `24px`
+Token                                       | Default value
+------------------------------------------- | ------------------------
+`--md-outlined-icon-button-outline-color`   | `--md-sys-color-outline`
+`--md-outlined-icon-button-outline-width`   | `1px`
+`--md-outlined-icon-button-container-shape` | `9999px`
+`--md-outlined-icon-button-container-size`  | `40px`
+`--md-outlined-icon-button-icon-size`       | `24px`
 
 ### Outlined Icon Button example
 
@@ -410,7 +410,7 @@ Token                                                | Default value
   --md-outlined-icon-button-container-size: 80px;
   --md-outlined-icon-button-container-shape: 0px;
   --md-outlined-icon-button-icon-size: 40px;
-  --md-outlined-icon-button-unselected-outline-width: 4px;
+  --md-outlined-icon-button-outline-width: 4px;
   --md-sys-color-outline: #006A6A;
 }
 </style>

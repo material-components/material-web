@@ -113,30 +113,32 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
 
   .toggle-filled-tonal {
     &:not(:disabled) {
-      color: var(--_toggle-unselected-icon-color);
+      color: var(--_toggle-icon-color);
 
       &:hover {
-        color: var(--_toggle-unselected-hover-icon-color);
+        color: var(--_toggle-hover-icon-color);
       }
 
       &:focus {
-        color: var(--_toggle-unselected-focus-icon-color);
+        color: var(--_toggle-focus-icon-color);
       }
 
       &:active {
-        color: var(--_toggle-unselected-pressed-icon-color);
+        color: var(--_toggle-pressed-icon-color);
       }
     }
 
     @include ripple.theme(
       (
-        hover-color: var(--_toggle-unselected-hover-state-layer-color),
-        pressed-color: var(--_toggle-unselected-pressed-state-layer-color),
+        hover-color: var(--_toggle-hover-state-layer-color),
+        pressed-color: var(--_toggle-pressed-state-layer-color),
       )
     );
   }
 
   .toggle-filled-tonal:not(:disabled)::before {
+    // Note: filled tonal icon buttons have three container colors,
+    // "container-color" for regular, then selected/unselected for toggle.
     background-color: var(--_unselected-container-color);
   }
 

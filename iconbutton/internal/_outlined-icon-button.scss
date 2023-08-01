@@ -64,40 +64,40 @@
 
   .outlined {
     background-color: transparent;
-    color: var(--_unselected-icon-color);
+    color: var(--_icon-color);
 
     @include ripple.theme(
       (
-        hover-color: var(--_unselected-hover-state-layer-color),
+        hover-color: var(--_hover-state-layer-color),
         hover-opacity: var(--_hover-state-layer-opacity),
-        pressed-color: var(--_unselected-pressed-state-layer-color),
+        pressed-color: var(--_pressed-state-layer-color),
         pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
 
     &::before {
-      border-color: var(--_unselected-outline-color);
-      border-width: var(--_unselected-outline-width);
+      border-color: var(--_outline-color);
+      border-width: var(--_outline-width);
     }
 
     &:hover {
-      color: var(--_unselected-hover-icon-color);
+      color: var(--_hover-icon-color);
     }
 
     &:focus {
-      color: var(--_unselected-focus-icon-color);
+      color: var(--_focus-icon-color);
     }
 
     &:active {
-      color: var(--_unselected-pressed-icon-color);
+      color: var(--_pressed-icon-color);
     }
 
     &:disabled {
       color: var(--_disabled-icon-color);
 
       &::before {
-        border-color: var(--_disabled-unselected-outline-color);
-        opacity: var(--_disabled-unselected-outline-opacity);
+        border-color: var(--_disabled-outline-color);
+        opacity: var(--_disabled-outline-opacity);
       }
     }
   }
@@ -165,13 +165,13 @@
     // Selected button in HCM has an outline.
     .selected {
       &::before {
-        border-color: var(--_unselected-outline-color);
-        border-width: var(--_unselected-outline-width);
+        border-color: var(--_outline-color);
+        border-width: var(--_outline-width);
       }
 
       &:disabled::before {
-        border-color: var(--_disabled-unselected-outline-color);
-        opacity: var(--_disabled-unselected-outline-opacity);
+        border-color: var(--_disabled-outline-color);
+        opacity: var(--_disabled-outline-opacity);
       }
     }
   }

@@ -52,27 +52,27 @@
 
   .standard {
     background-color: transparent;
-    color: var(--_unselected-icon-color);
+    color: var(--_icon-color);
 
     @include ripple.theme(
       (
-        hover-color: var(--_unselected-hover-state-layer-color),
-        hover-opacity: var(--_unselected-hover-state-layer-opacity),
-        pressed-color: var(--_unselected-pressed-state-layer-color),
-        pressed-opacity: var(--_unselected-pressed-state-layer-opacity),
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
 
     &:hover {
-      color: var(--_unselected-hover-icon-color);
+      color: var(--_hover-icon-color);
     }
 
     &:focus {
-      color: var(--_unselected-focus-icon-color);
+      color: var(--_focus-icon-color);
     }
 
     &:active {
-      color: var(--_unselected-pressed-icon-color);
+      color: var(--_pressed-icon-color);
     }
 
     &:disabled {
