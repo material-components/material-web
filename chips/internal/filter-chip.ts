@@ -10,6 +10,7 @@ import {html, nothing, PropertyValues, svg, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {redispatchEvent} from '../../internal/controller/events.js';
 
 import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-icons.js';
@@ -35,13 +36,6 @@ export class FilterChip extends MultiActionChip {
     // Remove the `row` role from the container, since filter chips do not use a
     // `grid` navigation model.
     this.containerRole = undefined;
-    this.addEventListener('click', () => {
-      if (this.disabled) {
-        return;
-      }
-
-      this.selected = !this.selected;
-    });
   }
 
   protected override updated(changed: PropertyValues<this>) {
@@ -75,6 +69,7 @@ export class FilterChip extends MultiActionChip {
         aria-selected=${this.selected}
         ?disabled=${this.disabled || nothing}
         role="option"
+        @click=${this.handleClick}
       >${this.renderContent()}</button>
     `;
   }
@@ -106,5 +101,18 @@ export class FilterChip extends MultiActionChip {
     }
 
     return super.renderOutline();
+  }
+
+  private handleClick(event: MouseEvent) {
+    if (this.disabled) {
+      return;
+    }
+
+    const preventDefault = !redispatchEvent(this, event);
+    if (preventDefault) {
+      return;
+    }
+
+    this.selected = !this.selected;
   }
 }
