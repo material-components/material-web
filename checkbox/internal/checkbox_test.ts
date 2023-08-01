@@ -48,7 +48,6 @@ describe('checkbox', () => {
       expect(harness.element.checked).toEqual(false);
       expect(harness.element.indeterminate).toEqual(false);
       expect(harness.element.disabled).toEqual(false);
-      expect(harness.element.error).toEqual(false);
       expect(harness.element.value).toEqual('on');
     });
 
@@ -245,27 +244,5 @@ describe('checkbox', () => {
           .withContext('checkbox.validity.valueMissing')
           .toBeTrue();
     });
-
-    it('should set error to true when showValidity() is called and checkbox is invalid',
-       async () => {
-         const {harness} = await setupTest();
-         harness.element.required = true;
-
-         harness.element.showValidity();
-         expect(harness.element.error).withContext('checkbox.error').toBeTrue();
-       });
-
-    it('should set error to false when showValidity() is called and checkbox is valid',
-       async () => {
-         const {harness} = await setupTest();
-         harness.element.required = true;
-         harness.element.error = true;
-         harness.element.checked = true;
-
-         harness.element.showValidity();
-         expect(harness.element.error)
-             .withContext('checkbox.error')
-             .toBeFalse();
-       });
   });
 });

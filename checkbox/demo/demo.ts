@@ -16,7 +16,6 @@ const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Checkbox', [
       new Knob('checked', {defaultValue: false, ui: boolInput()}),
       new Knob('indeterminate', {defaultValue: false, ui: boolInput()}),
-      new Knob('error', {defaultValue: false, ui: boolInput()}),
       new Knob('disabled', {defaultValue: false, ui: boolInput()}),
     ]);
 

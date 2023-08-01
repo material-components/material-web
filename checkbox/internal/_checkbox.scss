@@ -195,17 +195,6 @@ $_checkmark-bottom-left: 7px, -14px;
     );
   }
 
-  .error md-ripple {
-    @include ripple.theme(
-      (
-        hover-color: var(--_error-hover-state-layer-color),
-        hover-opacity: var(--_error-hover-state-layer-opacity),
-        pressed-color: var(--_error-pressed-state-layer-color),
-        pressed-opacity: var(--_error-pressed-state-layer-opacity),
-      )
-    );
-  }
-
   // Icon and icon marks
 
   .icon {
@@ -325,20 +314,6 @@ $_checkmark-bottom-left: 7px, -14px;
 
   // States
 
-  :where(.error) .outline {
-    border-color: var(--_error-outline-color);
-    // TODO(b/262410085): add once token is added
-    // border-width: var(--_error-outline-width);
-  }
-
-  :where(.error) .background {
-    background: var(--_selected-error-container-color);
-  }
-
-  :where(.error) .icon {
-    fill: var(--_selected-error-icon-color);
-  }
-
   :where(:hover) .outline {
     border-color: var(--_hover-outline-color);
     border-width: var(--_hover-outline-width);
@@ -350,18 +325,6 @@ $_checkmark-bottom-left: 7px, -14px;
 
   :where(:hover) .icon {
     fill: var(--_selected-hover-icon-color);
-  }
-
-  :where(.error:hover) .outline {
-    border-color: var(--_error-hover-outline-color);
-  }
-
-  :where(.error:hover) .background {
-    background: var(--_selected-error-hover-container-color);
-  }
-
-  :where(.error:hover) .icon {
-    fill: var(--_selected-error-hover-icon-color);
   }
 
   :where(:focus-within) .outline {
@@ -377,18 +340,6 @@ $_checkmark-bottom-left: 7px, -14px;
     fill: var(--_selected-focus-icon-color);
   }
 
-  :where(.error:focus-within) .outline {
-    border-color: var(--_error-focus-outline-color);
-  }
-
-  :where(.error:focus-within) .background {
-    background: var(--_selected-error-focus-container-color);
-  }
-
-  :where(.error:focus-within) .icon {
-    fill: var(--_selected-error-focus-icon-color);
-  }
-
   :where(:active) .outline {
     border-color: var(--_pressed-outline-color);
     border-width: var(--_pressed-outline-width);
@@ -400,18 +351,6 @@ $_checkmark-bottom-left: 7px, -14px;
 
   :where(:active) .icon {
     fill: var(--_selected-pressed-icon-color);
-  }
-
-  :where(.error:active) .outline {
-    border-color: var(--_error-pressed-outline-color);
-  }
-
-  :where(.error:active) .background {
-    background: var(--_selected-error-pressed-container-color);
-  }
-
-  :where(.error:active) .icon {
-    fill: var(--_selected-error-pressed-icon-color);
   }
 
   // Don't animate to/from disabled states because the outline is hidden when

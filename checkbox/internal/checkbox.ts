@@ -43,11 +43,6 @@ export class Checkbox extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
-   * Whether or not the checkbox is invalid.
-   */
-  @property({type: Boolean}) error = false;
-
-  /**
    * Whether or not the checkbox is indeterminate.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes
@@ -183,23 +178,6 @@ export class Checkbox extends LitElement {
   }
 
   /**
-   * Checks the checkbox's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * The checkbox's `error` state will be set to true if invalid, or false if
-   * valid.
-   *
-   * @return true if the checkbox is valid, or false if not.
-   */
-  showValidity() {
-    const isValid = this.checkValidity();
-    this.error = !isValid;
-    return isValid;
-  }
-
-  /**
    * Sets the checkbox's native validation error message. This is used to
    * customize `validationMessage`.
    *
@@ -242,7 +220,6 @@ export class Checkbox extends LitElement {
       'unselected': !isChecked && !isIndeterminate,
       'checked': isChecked,
       'indeterminate': isIndeterminate,
-      'error': this.error && !this.disabled,
       'prev-unselected': prevNone,
       'prev-checked': prevChecked,
       'prev-indeterminate': prevIndeterminate,
@@ -250,7 +227,7 @@ export class Checkbox extends LitElement {
     });
 
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaInvalid} = this as ARIAMixinStrict;
     return html`
       <div class="container ${containerClasses}">
         <div class="outline"></div>
@@ -266,7 +243,7 @@ export class Checkbox extends LitElement {
           id="input"
           aria-checked=${isIndeterminate ? 'mixed' : nothing}
           aria-label=${ariaLabel || nothing}
-          aria-invalid=${this.error || nothing}
+          aria-invalid=${ariaInvalid || nothing}
           ?disabled=${this.disabled}
           ?required=${this.required}
           .indeterminate=${this.indeterminate}
