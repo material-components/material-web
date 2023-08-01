@@ -149,6 +149,9 @@ more descriptive.
 </label>
 ```
 
+> Note: checkboxes are not automatically labelled by `<label>` elements and
+> always need an `aria-label`. See b/294081528.
+
 ## Theming
 
 Checkbox supports [Material theming](../theming.md) and can be customized in
