@@ -31,6 +31,11 @@ describe('<md-filled-button>', () => {
       return {harness: new ButtonHarness(element), form};
     }
 
+    it('button is submit type by default', async () => {
+      const {harness} = await setupTest();
+      expect(harness.element.type).toBe('submit');
+    });
+
     it('button with type submit can submit a form', async () => {
       const {harness, form} = await setupTest();
       harness.element.type = 'submit';
@@ -68,6 +73,24 @@ describe('<md-filled-button>', () => {
       await harness.clickWithMouse();
 
       expect(form.requestSubmit).not.toHaveBeenCalled();
+    });
+
+    it('should set the button as the SubmitEvent submitter', async () => {
+      const {harness, form} = await setupTest();
+      const submitListener =
+          jasmine.createSpy('submitListener').and.callFake((event: Event) => {
+            event.preventDefault();
+          });
+
+      form.addEventListener('submit', submitListener);
+
+      await harness.clickWithMouse();
+
+      expect(submitListener).toHaveBeenCalled();
+      const event = submitListener.calls.argsFor(0)[0] as SubmitEvent;
+      expect(event.submitter)
+          .withContext('event.submitter')
+          .toBe(harness.element);
     });
   });
 });

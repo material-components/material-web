@@ -63,11 +63,15 @@ export abstract class Button extends LitElement {
   @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
 
   /**
-   * Specifies the type of button, used for controlling forms. When type
-   * is `submit`, the containing form is submitted; when it is `reset` the
-   * form is reset.
+   * A string indicating the behavior of the button.
+   *
+   * - submit: The button submits the form. This is the default value if the
+   * attribute is not specified, or if it is dynamically changed to an empty or
+   * invalid value.
+   * - reset: The button resets the form.
+   * - button: The button does nothing.
    */
-  @property() type: ''|'submit'|'reset' = '';
+  @property() type: 'button'|'submit'|'reset' = 'submit';
 
   @query('.button') private readonly buttonElement!: HTMLElement|null;
 
@@ -185,25 +189,35 @@ export abstract class Button extends LitElement {
     }
     // based on type, trigger form action.
     const {type, internals: {form}} = this;
-    if (!form) {
+    if (!form || type === 'button') {
       return;
     }
-    const isSubmit = type === 'submit', isReset = type === 'reset';
-    if (!(isSubmit || isReset)) {
-      return;
-    }
-    event.stopPropagation();
+
     this.isRedispatchingEvent = true;
     const prevented = !redispatchEvent(this, event);
     this.isRedispatchingEvent = false;
     if (prevented) {
       return;
     }
-    if (isSubmit) {
-      form.requestSubmit();
-    } else if (isReset) {
+
+    if (type === 'reset') {
       form.reset();
+      return;
     }
+
+    // form.requestSubmit(submitter) does not work with form associated custom
+    // elements. This patches the dispatched submit event to add the correct
+    // `submitter`.
+    // See https://github.com/WICG/webcomponents/issues/814
+    form.addEventListener('submit', submitEvent => {
+      Object.defineProperty(submitEvent, 'submitter', {
+        configurable: true,
+        enumerable: true,
+        get: () => this,
+      });
+    }, {capture: true, once: true});
+
+    form.requestSubmit();
   }
 
   private handleSlotChange() {
