@@ -35,6 +35,7 @@ $supported-tokens: (
   'selected-pressed-icon-color',
   'selected-pressed-label-text-color',
   'selected-pressed-state-layer-color',
+  'shape',
   'unselected-focus-icon-color',
   'unselected-focus-label-text-color',
   'unselected-hover-icon-color',
@@ -62,7 +63,6 @@ $unsupported-tokens: (
   'label-text-weight',
   'outline-width',
   'selected-focus-state-layer-color',
-  'shape',
   'unselected-focus-state-layer-color',
   // go/keep-sorted end
 );
