@@ -78,54 +78,60 @@ $_checkmark-bottom-left: 7px, -14px;
     border-end-end-radius: var(--_container-shape-end-end);
     border-end-start-radius: var(--_container-shape-end-start);
     display: inline-flex;
-    height: 48px;
+    height: var(--_container-size);
+    margin: calc((48px - var(--_container-size)) / 2);
     position: relative;
     vertical-align: top; // Fix extra space when placed inside display: block
-    width: 48px;
+    width: var(--_container-size);
     -webkit-tap-highlight-color: transparent;
   }
 
-  md-focus-ring {
-    @include focus-ring.theme(
-      (
-        'outward-offset': -2px,
-      )
-    );
+  :host([touch-target='none']) {
+    margin: unset;
   }
 
+  md-focus-ring {
+    height: 44px;
+    inset: unset;
+    width: 44px;
+  }
+
+  // <input> is also the touch target
   input {
     appearance: none;
-    inset: 0;
+    height: 48px;
     margin: 0;
+    opacity: 0;
     outline: none;
     position: absolute;
-    opacity: 0;
-    block-size: 100%;
-    inline-size: 100%;
+    width: 48px;
+  }
+
+  :host([touch-target='none']) input {
+    width: 100%;
+    height: 100%;
   }
 
   .container {
     border-radius: inherit;
+    display: grid;
     height: 100%;
+    place-content: center;
+    place-items: center;
     position: relative;
     width: 100%;
   }
 
-  // Center elements within the container.
   .outline,
   .background,
-  md-ripple,
   .icon {
     inset: 0;
-    margin: auto;
     position: absolute;
   }
 
   .outline,
   .background {
     border-radius: inherit;
-    height: var(--_container-size);
-    width: var(--_container-size);
   }
 
   .outline {
@@ -172,6 +178,7 @@ $_checkmark-bottom-left: 7px, -14px;
   md-ripple {
     border-radius: var(--_state-layer-shape);
     height: var(--_state-layer-size);
+    inset: unset;
     width: var(--_state-layer-size);
 
     @include ripple.theme(
