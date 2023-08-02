@@ -8,11 +8,6 @@ import {Harness} from '../testing/harness.js';
 
 import {TextField} from './internal/text-field.js';
 
-export const inputEventInitBase: InputEventInit = {
-  composed: true,
-  bubbles: true
-};
-
 /**
  * Test harness for text field elements.
  */
@@ -101,8 +96,9 @@ export class TextFieldHarness extends Harness<TextField> {
     element.value += charactersToAppend;
     if (!init) {
       init = {
-        ...inputEventInitBase,
         inputType: 'insertText',
+        composed: true,
+        bubbles: true,
         isComposing: false,
         data: charactersToAppend,
       };
@@ -119,8 +115,9 @@ export class TextFieldHarness extends Harness<TextField> {
         element.value.substring(endIndex ?? element.value.length);
     if (!init) {
       init = {
-        ...inputEventInitBase,
         inputType: 'deleteContentBackward',
+        composed: true,
+        bubbles: true,
         isComposing: false,
         data: deletedCharacters,
       };

@@ -14,7 +14,7 @@ import {literal} from 'lit/static-html.js';
 import {Environment} from '../../testing/environment.js';
 import {createFormTests} from '../../testing/forms.js';
 import {Harness} from '../../testing/harness.js';
-import {TextFieldHarness, inputEventInitBase} from '../harness.js';
+import {TextFieldHarness} from '../harness.js';
 
 import {TextField} from './text-field.js';
 
@@ -132,7 +132,10 @@ describe('TextField', () => {
       const inputHandler = jasmine.createSpy('inputHandler');
       harness.element.addEventListener('input', inputHandler);
 
-      const event = new InputEvent('input', inputEventInitBase);
+      const event = new InputEvent('input', {
+        composed: true,
+        bubbles: true,
+      });
       input.dispatchEvent(event);
 
       expect(inputHandler).toHaveBeenCalledWith(event);
