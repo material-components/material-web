@@ -15,7 +15,6 @@ import {stories, StoryKnobs} from './stories.js';
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Dialog', [
       new Knob('fullscreen', {defaultValue: false, ui: boolInput()}),
-      new Knob('modeless', {defaultValue: false, ui: boolInput()}),
       new Knob('footerHidden', {defaultValue: false, ui: boolInput()}),
       new Knob('stacked', {defaultValue: false, ui: boolInput()}),
       new Knob('icon', {defaultValue: '', ui: textInput()}),

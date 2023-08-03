@@ -20,7 +20,6 @@ import {css, html} from 'lit';
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
   fullscreen: boolean;
-  modeless: boolean;
   footerHidden: boolean;
   stacked: boolean;
   icon: string;
@@ -35,20 +34,11 @@ function clickHandler(event: Event) {
 
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: '<md-dialog>',
-  render({
-    fullscreen,
-    modeless,
-    footerHidden,
-    stacked,
-    icon,
-    headline,
-    supportingText
-  }) {
+  render({fullscreen, footerHidden, stacked, icon, headline, supportingText}) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
       <md-dialog
           .fullscreen=${fullscreen}
-          .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
       >
@@ -63,20 +53,11 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 const alert: MaterialStoryInit<StoryKnobs> = {
 
   name: 'Alert',
-  render({
-    fullscreen,
-    modeless,
-    footerHidden,
-    stacked,
-    icon,
-    headline,
-    supportingText
-  }) {
+  render({fullscreen, footerHidden, stacked, icon, headline, supportingText}) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
         <md-dialog
             .fullscreen=${fullscreen}
-            .modeless=${modeless}
             .footerHidden=${footerHidden}
             .stacked=${stacked}
         >
@@ -89,20 +70,11 @@ const alert: MaterialStoryInit<StoryKnobs> = {
 
 const confirm: MaterialStoryInit<StoryKnobs> = {
   name: 'Confirm',
-  render({
-    fullscreen,
-    modeless,
-    footerHidden,
-    stacked,
-    icon,
-    headline,
-    supportingText
-  }) {
+  render({fullscreen, footerHidden, stacked, icon, headline, supportingText}) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
       <md-dialog style="--md-dialog-container-max-inline-size: 320px;"
           .fullscreen=${fullscreen}
-          .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
       >
@@ -126,20 +98,11 @@ const choose: MaterialStoryInit<StoryKnobs> = {
       align-items: center;
     }
     `,
-  render({
-    fullscreen,
-    modeless,
-    footerHidden,
-    stacked,
-    icon,
-    headline,
-    supportingText
-  }) {
+  render({fullscreen, footerHidden, stacked, icon, headline, supportingText}) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
       <md-dialog
           .fullscreen=${fullscreen}
-          .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
       >
@@ -190,20 +153,11 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
     .contact-row > * {
       flex: 1;
     }`,
-  render({
-    fullscreen,
-    modeless,
-    footerHidden,
-    stacked,
-    icon,
-    headline,
-    supportingText
-  }) {
+  render({fullscreen, footerHidden, stacked, icon, headline, supportingText}) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
       <md-dialog class="contacts"
           .fullscreen=${fullscreen}
-          .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
       >
@@ -231,20 +185,11 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
 
 const floatingSheet: MaterialStoryInit<StoryKnobs> = {
   name: 'Floating sheet',
-  render({
-    fullscreen,
-    modeless,
-    footerHidden,
-    stacked,
-    icon,
-    headline,
-    supportingText
-  }) {
+  render({fullscreen, footerHidden, stacked, icon, headline, supportingText}) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
       <md-dialog
           .fullscreen=${fullscreen}
-          .modeless=${modeless}
           .footerHidden=${footerHidden}
           .stacked=${stacked}
       >

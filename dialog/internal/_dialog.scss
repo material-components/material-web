@@ -56,13 +56,6 @@ $_closing-transition-easing: map.get(
     overflow: clip;
   }
 
-  // stylelint-disable-next-line selector-pseudo-class-no-unknown --
-  // New platform pseudo-class
-  .dialog:not(:modal) {
-    z-index: 10000;
-    pointer-events: none;
-  }
-
   .dialog[open] {
     display: flex;
   }
@@ -70,11 +63,6 @@ $_closing-transition-easing: map.get(
   .dialog::backdrop {
     // Per spec, custom properties don't inherit to backdrop so we avoid using it.
     background: none;
-  }
-
-  // Hide scrim when modeless.
-  :host([modeless]) .dialog::backdrop {
-    display: none;
   }
 
   .container {

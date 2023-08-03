@@ -12,25 +12,6 @@ import {createTokenTests} from '../testing/tokens.js';
 import {MdDialog} from './dialog.js';
 import {DialogHarness} from './harness.js';
 
-function isDocumentScrollingDisabled() {
-  return getComputedStyle(document.body).overflow === 'hidden';
-}
-
-interface DialogTestProps {
-  modeless?: boolean;
-}
-
-function getDialogTemplate(props?: DialogTestProps) {
-  return html`
-    <md-dialog .modeless=${props?.modeless ?? false}>
-      <div class="content">Content
-        <input dialog-focus>
-      </div>
-      <button slot="footer" dialog-action="button">Close</button>
-    </md-dialog>`;
-}
-
-
 describe('<md-dialog>', () => {
   const realTimeout = globalThis.setTimeout;
   const env = new Environment();
@@ -46,10 +27,16 @@ describe('<md-dialog>', () => {
     }
   }
 
+  async function setupTest() {
+    const root = env.render(html`
+      <md-dialog>
+        <div class="content">Content
+          <input dialog-focus>
+        </div>
+        <button slot="footer" dialog-action="button">Close</button>
+      </md-dialog>
+    `);
 
-  async function setupTest(
-      props?: DialogTestProps, template = getDialogTemplate) {
-    const root = env.render(template(props));
     await env.waitForStability();
     setClockEnabled(false);
     const dialog = root.querySelector<MdDialog>('md-dialog')!;
@@ -110,17 +97,6 @@ describe('<md-dialog>', () => {
       expect(await harness.isScrimVisible()).toBeTrue();
       harness.element.open = false;
       expect(await harness.isScrimVisible()).toBeFalse();
-    });
-
-    it('prevents document scrolling when open', async () => {
-      const {harness} = await setupTest();
-      expect(isDocumentScrollingDisabled()).toBeFalse();
-      harness.element.open = true;
-      await harness.transitionComplete();
-      expect(isDocumentScrollingDisabled()).toBeTrue();
-      harness.element.open = false;
-      await harness.transitionComplete();
-      expect(isDocumentScrollingDisabled()).toBeFalse();
     });
 
     it('fires open/close events', async () => {
@@ -193,37 +169,5 @@ describe('<md-dialog>', () => {
          expect(document.activeElement).toBe(button);
          button.remove();
        });
-
-    describe('modeless', () => {
-      it('does not render srcrim', async () => {
-        const {harness} = await setupTest({modeless: true});
-        expect(await harness.isScrimVisible()).toBeFalse();
-        harness.element.open = true;
-        expect(await harness.isScrimVisible()).toBeFalse();
-        harness.element.open = false;
-        expect(await harness.isScrimVisible()).toBeFalse();
-      });
-
-      it('does not close on external click', async () => {
-        const {harness} = await setupTest({modeless: true});
-        harness.element.show();
-        const dialogElement = await harness.getInteractiveElement();
-        dialogElement.click();
-        await harness.transitionComplete();
-        expect(harness.element.open).toBeTrue();
-        harness.element.close();
-        await harness.transitionComplete();
-      });
-      it('does not prevent document scrolling', async () => {
-        const {harness} = await setupTest({modeless: true});
-        expect(isDocumentScrollingDisabled()).toBeFalse();
-        harness.element.open = true;
-        await harness.transitionComplete();
-        expect(isDocumentScrollingDisabled()).toBeFalse();
-        harness.element.open = false;
-        await harness.transitionComplete();
-        expect(isDocumentScrollingDisabled()).toBeFalse();
-      });
-    });
   });
 });

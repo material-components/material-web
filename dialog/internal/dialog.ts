@@ -28,34 +28,6 @@ export const CLOSE_ACTION = 'close';
  * @fires cancel The native HTMLDialogElement cancel event.
  */
 export class Dialog extends LitElement {
-  private static preventedScrollingCount = 0;
-  private static scrollbarTester: HTMLDivElement;
-
-  private static setDocumentScrollingDisabled(disabled = false) {
-    let {preventedScrollingCount, scrollbarTester} = Dialog;
-    Dialog.preventedScrollingCount = preventedScrollingCount =
-        Math.max(preventedScrollingCount + (Number(disabled) || -1), 0);
-    const shouldPrevent = Boolean(preventedScrollingCount);
-    const {style} = document.body;
-    if (shouldPrevent && style.overflow === 'hidden') {
-      return;
-    }
-    if (scrollbarTester === undefined) {
-      Dialog.scrollbarTester = scrollbarTester = document.createElement('div');
-      scrollbarTester.style.cssText =
-          `position: absolute; height: 0; width: 100%; visibility: hidden; pointer-events: none;`;
-    }
-    // Appends an element to see if its offsetWidth changes when overflow is
-    // altered. If it does, then add end inline padding to restore the width to
-    // avoid a visible layout shift.
-    document.body.append(scrollbarTester);
-    const {offsetWidth} = scrollbarTester;
-    style.overflow = shouldPrevent ? 'hidden' : '';
-    const scrollbarWidth = scrollbarTester.offsetWidth - offsetWidth;
-    scrollbarTester.remove();
-    style.paddingInlineEnd = shouldPrevent ? `${scrollbarWidth}px` : '';
-  }
-
   /**
    * Opens the dialog when set to `true` and closes it when set to `false`.
    */
@@ -149,13 +121,6 @@ export class Dialog extends LitElement {
    * which is the value of this property and defaults to `close`.
    */
   @property({attribute: 'escape-key-action'}) escapeKeyAction = CLOSE_ACTION;
-
-  /**
-   * When opened, the dialog is displayed modeless or non-modal. This
-   * allows users to interact with content outside the dialog without
-   * closing the dialog and does not display the scrim around the dialog.
-   */
-  @property({type: Boolean, reflect: true}) modeless = false;
 
   private readonly throttle = createThrottle();
 
@@ -294,20 +259,11 @@ export class Dialog extends LitElement {
     if (!changed.has('open')) {
       return;
     }
-    // prevent body scrolling early only when opening to avoid layout
-    // shift when closing.
-    if (!this.modeless && this.open) {
-      Dialog.setDocumentScrollingDisabled(this.open);
-    }
     if (this.open) {
       this.contentElement!.scrollTop = 0;
-      if (this.modeless) {
-        this.dialogElement!.show();
-      } else {
-        // Note, native focus handling fails when focused element is in an
-        // overflow: auto container.
-        this.dialogElement!.showModal();
-      }
+      // Note, native focus handling fails when focused element is in an
+      // overflow: auto container.
+      this.dialogElement!.showModal();
     }
     // Avoids dispatching initial state.
     const shouldDispatchAction = changed.get('open') !== undefined;
@@ -376,10 +332,6 @@ export class Dialog extends LitElement {
       });
       this.dialogElement?.close(this.currentAction || this.defaultAction);
       await closedPromise;
-      // enable scrolling late to avoid layout shift when closing
-      if (!this.modeless) {
-        Dialog.setDocumentScrollingDisabled(this.open);
-      }
     }
     if (shouldDispatchAction) {
       this.dispatchActionEvent(this.open ? 'opened' : 'closed');
@@ -443,7 +395,7 @@ export class Dialog extends LitElement {
     }
     this.currentAction =
         (event.target as Element).getAttribute(this.actionAttribute) ??
-        (!this.modeless && this.containerElement &&
+        (this.containerElement &&
                  !event.composedPath().includes(this.containerElement) ?
              this.scrimClickAction :
              '');
