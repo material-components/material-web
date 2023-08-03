@@ -88,21 +88,6 @@ export class Dialog extends LitElement {
   @property({attribute: 'action-attribute'}) actionAttribute = 'dialog-action';
 
   /**
-   * When the dialog is opened, it will focus the first element which has
-   * an attribute name matching this property. The default value is
-   * `dialogFocus`. For example:
-   *
-   *  <md-dialog>
-   *    <md-filled-text-field
-   *      label="Enter some text"
-   *      dialog-focus
-   *    >
-   *    </md-filled-text-field>
-   *  </md-dialog>
-   */
-  @property({attribute: 'focus-attribute'}) focusAttribute = 'dialog-focus';
-
-  /**
    * Clicking on the scrim surrounding the dialog closes the dialog.
    * The `closing` and `closed` events this produces have an `action` property
    * which is the value of this property and defaults to `close`.
@@ -394,7 +379,7 @@ export class Dialog extends LitElement {
   }
 
   private getFocusElement(): HTMLElement|null {
-    const selector = `[${this.focusAttribute}]`;
+    const selector = `[autofocus]`;
     const slotted = [this.footerSlot, this.contentSlot].flatMap(
         slot => slot.assignedElements({flatten: true}));
     for (const el of slotted) {

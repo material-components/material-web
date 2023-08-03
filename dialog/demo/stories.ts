@@ -80,7 +80,7 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
           Deleting the selected photos will also remove them from all synced devices.
         </div>
         <md-text-button slot="footer" dialog-action="delete">Delete</md-text-button>
-        <md-filled-tonal-button slot="footer" dialog-focus dialog-action="cancel">Cancel</md-filled-tonal-button>
+        <md-filled-tonal-button slot="footer" autofocus dialog-action="cancel">Cancel</md-filled-tonal-button>
       </md-dialog>`;
   }
 };
@@ -110,7 +110,7 @@ const choose: MaterialStoryInit<StoryKnobs> = {
         <label><md-radio name="pet" value="dogs"></md-radio> Dogs</label>
         <label><md-radio name="pet" value="birds"></md-radio> Birds</label>
         <md-text-button slot="footer" dialog-action="cancel">Cancel</md-text-button>
-        <md-text-button slot="footer" dialog-focus dialog-action="ok">OK</md-text-button>
+        <md-text-button slot="footer" autofocus dialog-action="ok">OK</md-text-button>
       </md-dialog>`;
   }
 };
@@ -161,7 +161,7 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
         </span>
         <div class="contact-content">
           <div class="contact-row">
-            <md-filled-text-field dialog-focus label="First Name"></md-filled-text-field>
+            <md-filled-text-field autofocus label="First Name"></md-filled-text-field>
             <md-filled-text-field label="Last Name"></md-filled-text-field>
           </div>
           <div class="contact-row">
