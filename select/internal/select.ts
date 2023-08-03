@@ -17,7 +17,7 @@ import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
 import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/shared.js';
 import {TYPEAHEAD_RECORD} from '../../menu/internal/typeaheadController.js';
 
-import {getSelectedItems, RequestDeselectionEvent, RequestSelectionEvent, SelectOption, SelectOptionRecord} from './shared.js';
+import {createRequestDeselectionEvent, createRequestSelectionEvent, getSelectedItems, SelectOption, SelectOptionRecord} from './shared.js';
 
 const VALUE = Symbol('value');
 
@@ -488,7 +488,8 @@ export abstract class Select extends LitElement {
    * Handles updating selection when an option element requests selection via
    * property / attribute change.
    */
-  private handleRequestSelection(event: RequestSelectionEvent) {
+  private handleRequestSelection(
+      event: ReturnType<typeof createRequestSelectionEvent>) {
     const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is already selected.
@@ -504,7 +505,8 @@ export abstract class Select extends LitElement {
    * Handles updating selection when an option element requests deselection via
    * property / attribute change.
    */
-  private handleRequestDeselection(event: RequestDeselectionEvent) {
+  private handleRequestDeselection(
+      event: ReturnType<typeof createRequestDeselectionEvent>) {
     const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is not even in the list of tracked selected items.

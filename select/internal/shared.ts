@@ -35,7 +35,7 @@ export type SelectOptionRecord = [SelectOption, number];
 /**
  * Given a list of select options, this function will return an array of
  * SelectOptionRecords that are selected.
- * 
+ *
  * @return An array of SelectOptionRecords describing the options that are
  * selected.
  */
@@ -53,21 +53,23 @@ export function getSelectedItems(items: SelectOption[]) {
 }
 
 /**
- * An event fired by a SelectOption to request selection from md-select.
+ * Creates an event fired by a SelectOption to request selection from md-select.
  * Typically fired after `selected` changes from `false` to `true`.
  */
-export class RequestSelectionEvent extends Event {
-  constructor() {
-    super('request-selection', {bubbles: true, composed: true});
-  }
+export function createRequestSelectionEvent() {
+  return new Event('request-selection', {
+    bubbles: true,
+    composed: true,
+  });
 }
 
 /**
- * An event fired by a SelectOption to request deselection from md-select.
- * Typically fired after `selected` changes from `true` to `false`.
+ * Creates an event fired by a SelectOption to request deselection from
+ * md-select. Typically fired after `selected` changes from `true` to `false`.
  */
-export class RequestDeselectionEvent extends Event {
-  constructor() {
-    super('request-deselection', {bubbles: true, composed: true});
-  }
+export function createRequestDeselectionEvent() {
+  return new Event('request-deselection', {
+    bubbles: true,
+    composed: true,
+  });
 }

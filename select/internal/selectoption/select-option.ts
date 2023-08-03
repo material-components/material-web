@@ -8,15 +8,14 @@ import {PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {ListItemRole, MenuItemEl} from '../../../menu/internal/menuitem/menu-item.js';
-import {RequestDeselectionEvent, RequestSelectionEvent, SelectOption} from '../shared.js';
+import {createRequestDeselectionEvent, createRequestSelectionEvent, SelectOption} from '../shared.js';
 
 /**
- * @fires close-menu {CloseMenuEvent} Closes the encapsulating menu on
- * @fires request-selection {RequestSelectionEvent} Requests the parent
- * md-select to select this element (and deselect others if single-selection)
- * when `selected` changed to `true`.
- * @fires request-deselection {RequestDeselectionEvent} Requests the parent
- * md-select to deselect this element when `selected` changed to `false`.
+ * @fires close-menu Closes the encapsulating menu on
+ * @fires request-selection Requests the parent md-select to select this element
+ * (and deselect others if single-selection) when `selected` changed to `true`.
+ * @fires request-deselection Requests the parent md-select to deselect this
+ * element when `selected` changed to `false`.
  */
 export class SelectOptionEl extends MenuItemEl implements SelectOption {
   /**
@@ -60,9 +59,9 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
       // handled by md-select because it needs to coordinate the
       // single-selection behavior.
       if (this.selected) {
-        this.dispatchEvent(new RequestSelectionEvent());
+        this.dispatchEvent(createRequestSelectionEvent());
       } else {
-        this.dispatchEvent(new RequestDeselectionEvent());
+        this.dispatchEvent(createRequestDeselectionEvent());
       }
     }
   }
