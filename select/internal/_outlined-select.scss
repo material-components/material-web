@@ -166,13 +166,13 @@
     );
   }
 
-  [hasstart] .icon.leading {
+  [has-start] .icon.leading {
     font-size: var(--_text-field-leading-icon-size);
     height: var(--_text-field-leading-icon-size);
     width: var(--_text-field-leading-icon-size);
   }
 
-  [hasend] .icon.trailing {
+  .icon.trailing {
     font-size: var(--_text-field-trailing-icon-size);
     height: var(--_text-field-trailing-icon-size);
     width: var(--_text-field-trailing-icon-size);

@@ -137,9 +137,27 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
+@function _get-override-tokens($exclude-hardcoded-values) {
+  // Values pulled from b/198759625 spreadsheet
+  @return (
+    // go/keep-sorted start
+    // TODO(b/292242500): remove once we upgrade tokens
+    'text-field-leading-icon-size': if($exclude-hardcoded-values, null, 24px),
+    // go/keep-sorted end
+  );
+}
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
+  $original-tokens: md-comp-filled-select.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+  $original-tokens: map.merge(
+    $original-tokens,
+    _get-override-tokens($exclude-hardcoded-values)
+  );
   $tokens: values.validate(
-    md-comp-filled-select.values($deps, $exclude-hardcoded-values),
+    $original-tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens
   );

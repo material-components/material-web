@@ -81,11 +81,6 @@ export abstract class Select extends LitElement {
   @property({type: Boolean, attribute: 'has-leading-icon'})
   hasLeadingIcon = false;
   /**
-   * Whether or not the text field has a trailing icon. Used for SSR.
-   */
-  @property({type: Boolean, attribute: 'has-trailing-icon'})
-  hasTrailingIcon = false;
-  /**
    * Text to display in the field. Only set for SSR.
    */
   @property({attribute: 'display-text'}) displayText = '';
@@ -96,8 +91,6 @@ export abstract class Select extends LitElement {
   @query('md-menu') private readonly menu!: Menu|null;
   @queryAssignedElements({slot: 'leadingicon', flatten: true})
   private readonly leadingIcons!: Element[];
-  @queryAssignedElements({slot: 'trailingicon', flatten: true})
-  private readonly trailingIcons!: Element[];
 
   /**
    * The value of the currently selected option.
@@ -186,6 +179,7 @@ export abstract class Select extends LitElement {
     return {
       'disabled': this.disabled,
       'error': this.error,
+      'open': this.open,
     };
   }
 
@@ -205,8 +199,8 @@ export abstract class Select extends LitElement {
           .disabled=${this.disabled}
           .required=${this.required}
           .error=${this.error}
-          .hasStart=${this.hasLeadingIcon}
-          .hasEnd=${this.hasTrailingIcon}
+          ?has-start=${this.hasLeadingIcon}
+          has-end
           supporting-text=${this.supportingText}
           error-text=${this.errorText}
           @keydown =${this.handleKeydown}
@@ -236,7 +230,12 @@ export abstract class Select extends LitElement {
   private renderTrailingIcon() {
     return html`
       <span class="icon trailing" slot="end">
-         <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
+        <slot name="trailingicon" @slotchange=${this.handleIconChange}>
+          <svg height="5" viewBox="7 10 10 5" focusable="false">
+            <polygon class="down" stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
+            <polygon class="up" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15"></polygon>
+          </svg>
+        </slot>
       </span>
      `;
   }
@@ -564,7 +563,6 @@ export abstract class Select extends LitElement {
 
   private handleIconChange() {
     this.hasLeadingIcon = this.leadingIcons.length > 0;
-    this.hasTrailingIcon = this.trailingIcons.length > 0;
   }
 
   /**

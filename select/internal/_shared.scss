@@ -29,6 +29,36 @@
     position: relative;
   }
 
+  .icon.trailing svg,
+  .icon ::slotted(*) {
+    fill: currentColor;
+  }
+
+  .icon ::slotted(*) {
+    width: inherit;
+    height: inherit;
+    font-size: inherit;
+  }
+
+  .icon slot {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon.trailing :is(.up, .down) {
+    opacity: 0;
+    /* 75 ms is half of min(animate open duration, animate closed duration)*/
+    transition: opacity 75ms linear 75ms;
+  }
+
+  .select:not(.open) .down,
+  .select.open .up {
+    opacity: 1;
+  }
+
   .field,
   .select,
   md-menu {
