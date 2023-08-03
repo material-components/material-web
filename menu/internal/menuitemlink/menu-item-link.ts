@@ -7,7 +7,7 @@
 import {property} from 'lit/decorators.js';
 
 import {ListItemLink} from '../../../list/internal/listitemlink/list-item-link.js';
-import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem, SELECTION_KEY} from '../shared.js';
+import {CLOSE_REASON, createDefaultCloseMenuEvent, isClosableKey, MenuItem, SELECTION_KEY} from '../shared.js';
 
 /**
  * @fires close-menu {CloseMenuEvent}
@@ -29,8 +29,8 @@ export class MenuItemLink extends ListItemLink implements MenuItem {
   protected override onClick() {
     if (this.keepOpen || this.keepOpenOnClick) return;
 
-    this.dispatchEvent(
-        new DefaultCloseMenuEvent(this, {kind: CLOSE_REASON.CLICK_SELECTION}));
+    this.dispatchEvent(createDefaultCloseMenuEvent(
+        this, {kind: CLOSE_REASON.CLICK_SELECTION}));
   }
 
   protected override onKeydown(event: KeyboardEvent) {
@@ -41,7 +41,7 @@ export class MenuItemLink extends ListItemLink implements MenuItem {
     if (!event.defaultPrevented && isClosableKey(keyCode) &&
         keyCode !== SELECTION_KEY.ENTER) {
       event.preventDefault();
-      this.dispatchEvent(new DefaultCloseMenuEvent(
+      this.dispatchEvent(createDefaultCloseMenuEvent(
           this, {kind: CLOSE_REASON.KEYDOWN, key: keyCode}));
     }
   }

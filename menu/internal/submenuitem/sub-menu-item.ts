@@ -10,25 +10,24 @@ import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {List} from '../../../list/internal/list.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
-import {ActivateTypeaheadEvent, CLOSE_REASON, CloseMenuEvent, CloseOnFocusoutEvent, DeactivateItemsEvent, DeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY, StayOpenOnFocusoutEvent} from '../shared.js';
+import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createCloseOnFocusoutEvent, createDeactivateItemsEvent, createDeactivateTypeaheadEvent, createStayOpenOnFocusoutEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
 function stopPropagation(event: Event) {
   event.stopPropagation();
 }
 
 /**
- * @fires deactivate-items {DeactivateItemsEvent} Requests the parent menu to
- *     deselect other items when a submenu opens
- * @fires deactivate-typeahead {DeactivateItemsEvent} Requests the parent menu
- *     to deactivate the typeahead functionality when a submenu opens
- * @fires activate-typeahead {DeactivateItemsEvent} Requests the parent menu to
- *     activate the typeahead functionality when a submenu closes
- * @fires stay-open-on-focusout {StayOpenOnFocusoutEvent} Requests the parent
- *     menu to stay open when focusout event is fired or has a `null`
- *     `relatedTarget` when submenu is opened.
- * @fires close-on-focusout {CloseOnFocusoutEvent} Requests the parent
- *     menu to close when focusout event is fired or has a `null`
- *     `relatedTarget` When submenu is closed.
+ * @fires deactivate-items Requests the parent menu to deselect other items when
+ * a submenu opens
+ * @fires deactivate-typeahead Requests the parent menu to deactivate the
+ * typeahead functionality when a submenu opens
+ * @fires activate-typeahead Requests the parent menu to activate the typeahead
+ * functionality when a submenu closes
+ * @fires stay-open-on-focusout Requests the parent menu to stay open when
+ * focusout event is fired or has a `null` `relatedTarget` when submenu is
+ * opened.
+ * @fires close-on-focusout Requests the parent menu to close when focusout
+ * event is fired or has a `null` `relatedTarget` When submenu is closed.
  */
 export class SubMenuItem extends MenuItemEl {
   /**
@@ -165,14 +164,15 @@ export class SubMenuItem extends MenuItemEl {
   }
 
   private onCloseSubmenu(event: CloseMenuEvent) {
-    event.itemPath.push(this);
+    const {itemPath, reason} = event.detail;
+    itemPath.push(this);
     // Restore focusout behavior
-    this.dispatchEvent(new CloseOnFocusoutEvent());
-    this.dispatchEvent(new ActivateTypeaheadEvent());
+    this.dispatchEvent(createCloseOnFocusoutEvent());
+    this.dispatchEvent(createActivateTypeaheadEvent());
     // Escape should only close one menu not all of the menus unlike space or
     // click selection which should close all menus.
-    if (event.reason.kind === CLOSE_REASON.KEYDOWN &&
-        event.reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
+    if (reason.kind === CLOSE_REASON.KEYDOWN &&
+        reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
       event.stopPropagation();
       this.active = true;
       this.selected = false;
@@ -231,13 +231,13 @@ export class SubMenuItem extends MenuItemEl {
     // has a submenuitem hovered which opens a third submenut. Then if you hover
     // on yet another middle menu-item (not submenuitem) then focusout Event's
     // relatedTarget will be `null` thus, causing all the menus to close
-    this.dispatchEvent(new StayOpenOnFocusoutEvent());
+    this.dispatchEvent(createStayOpenOnFocusoutEvent());
     menu.show();
 
     // Deactivate other items. This can be the case if the user has tabbed
     // around the menu and then mouses over an md-sub-menu.
-    this.dispatchEvent(new DeactivateItemsEvent());
-    this.dispatchEvent(new DeactivateTypeaheadEvent());
+    this.dispatchEvent(createDeactivateItemsEvent());
+    this.dispatchEvent(createDeactivateTypeaheadEvent());
     this.selected = true;
 
     // This is the case of mouse hovering when already opened via keyboard or
@@ -258,11 +258,11 @@ export class SubMenuItem extends MenuItemEl {
     const menu = this.submenuEl;
     if (!menu || !menu.open) return;
 
-    this.dispatchEvent(new ActivateTypeaheadEvent());
+    this.dispatchEvent(createActivateTypeaheadEvent());
     menu.quick = true;
     menu.close();
     // Restore focusout behavior.
-    this.dispatchEvent(new CloseOnFocusoutEvent());
+    this.dispatchEvent(createCloseOnFocusoutEvent());
     this.active = false;
     this.selected = false;
     menu.addEventListener('closed', onClosed, {once: true});

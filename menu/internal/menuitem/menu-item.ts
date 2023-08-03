@@ -8,7 +8,7 @@ import {property, state} from 'lit/decorators.js';
 
 import type {MdFocusRing} from '../../../focus/md-focus-ring.js';
 import {ListItemEl, ListItemRole} from '../../../list/internal/listitem/list-item.js';
-import {CLOSE_REASON, DefaultCloseMenuEvent, isClosableKey, MenuItem} from '../shared.js';
+import {CLOSE_REASON, createDefaultCloseMenuEvent, isClosableKey, MenuItem} from '../shared.js';
 
 export {ListItemRole} from '../../../list/internal/listitem/list-item.js';
 
@@ -39,8 +39,8 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
   protected override onClick() {
     if (this.keepOpen || this.keepOpenOnClick) return;
 
-    this.dispatchEvent(
-        new DefaultCloseMenuEvent(this, {kind: CLOSE_REASON.CLICK_SELECTION}));
+    this.dispatchEvent(createDefaultCloseMenuEvent(
+        this, {kind: CLOSE_REASON.CLICK_SELECTION}));
   }
 
   protected override getRenderClasses() {
@@ -61,7 +61,7 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
 
     if (!event.defaultPrevented && isClosableKey(keyCode)) {
       event.preventDefault();
-      this.dispatchEvent(new DefaultCloseMenuEvent(
+      this.dispatchEvent(createDefaultCloseMenuEvent(
           this, {kind: CLOSE_REASON.KEYDOWN, key: keyCode}));
     }
   }

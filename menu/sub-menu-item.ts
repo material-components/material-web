@@ -14,7 +14,7 @@ import {styles} from './internal/menuitem/menu-item-styles.css.js';
 import {SubMenuItem} from './internal/submenuitem/sub-menu-item.js';
 
 export {ListItem} from '../list/internal/listitem/list-item.js';
-export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './internal/shared.js';
+export {CloseMenuEvent, MenuItem} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

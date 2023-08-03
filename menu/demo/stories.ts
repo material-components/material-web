@@ -244,9 +244,9 @@ function displayCloseEvent(outputRef: Ref<HTMLElement>) {
     if (!outputRef.value) return;
 
     outputRef.value.innerText = `Closed by item(s) with text: ${
-        JSON.stringify(event.itemPath.map(
-            item =>
-                item.headline))} For reason: ${JSON.stringify(event.reason)}`;
+        JSON.stringify(
+            event.detail.itemPath.map(item => item.headline))} For reason: ${
+        JSON.stringify(event.detail.reason)}`;
   };
 }
 

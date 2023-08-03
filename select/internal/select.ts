@@ -14,7 +14,7 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 import {Field} from '../../field/internal/field.js';
 import {List} from '../../list/internal/list.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
-import {DefaultCloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/shared.js';
+import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/shared.js';
 import {TYPEAHEAD_RECORD} from '../../menu/internal/typeaheadController.js';
 
 import {getSelectedItems, RequestDeselectionEvent, RequestSelectionEvent, SelectOption, SelectOptionRecord} from './shared.js';
@@ -445,9 +445,9 @@ export abstract class Select extends LitElement {
   /**
    * Determines the reason for closing, and updates the UI accordingly.
    */
-  private handleCloseMenu(event: InstanceType<typeof DefaultCloseMenuEvent>) {
-    const reason = event.reason;
-    const item = event.itemPath[0] as SelectOption;
+  private handleCloseMenu(event: CloseMenuEvent) {
+    const reason = event.detail.reason;
+    const item = event.detail.itemPath[0] as SelectOption;
     this.open = false;
     let hasChanged = false;
 

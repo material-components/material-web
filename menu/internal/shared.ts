@@ -71,70 +71,91 @@ export interface KeydownReason extends Reason {
 export type DefaultReasons = ClickReason|KeydownReason;
 
 /**
- * The event that closes any parent menus. It is recommended to subclass and
- * dispatch this event rather than creating your own `close-menu` event.
+ * Creates an event that closes any parent menus.
  */
-export class CloseMenuEvent<T extends Reason = DefaultReasons> extends Event {
-  readonly itemPath: MenuItem[];
-  constructor(public initiator: MenuItem, readonly reason: T) {
-    super('close-menu', {bubbles: true, composed: true});
-    this.itemPath = [initiator];
-  }
+export function createCloseMenuEvent<T extends Reason = DefaultReasons>(
+    initiator: MenuItem, reason: T) {
+  return new CustomEvent<
+      {initiator: MenuItem, itemPath: MenuItem[], reason: T}>('close-menu', {
+    bubbles: true,
+    composed: true,
+    detail: {initiator, reason, itemPath: [initiator]}
+  });
 }
 
 /**
- * The event that signals to the menu that it should stay open on the focusout
- * event.
+ * Creates an event that signals to the menu that it should stay open on the
+ * focusout event.
  */
-export class StayOpenOnFocusoutEvent extends Event {
-  constructor() {
-    super('stay-open-on-focusout', {bubbles: true, composed: true});
-  }
+export function createStayOpenOnFocusoutEvent() {
+  return new Event('stay-open-on-focusout', {bubbles: true, composed: true});
 }
 
 /**
- * The event that signals to the menu that it should close open on the focusout
- * event.
+ * Creates an event that signals to the menu that it should close open on the
+ * focusout event.
  */
-export class CloseOnFocusoutEvent extends Event {
-  constructor() {
-    super('close-on-focusout', {bubbles: true, composed: true});
-  }
+export function createCloseOnFocusoutEvent() {
+  return new Event('close-on-focusout', {bubbles: true, composed: true});
 }
 
 /**
- * The default close menu event used by md-menu. To create your own `close-menu`
- * event, you should subclass the `CloseMenuEvent` instead.
+ * Creates a default close menu event used by md-menu.
+ */
+export const createDefaultCloseMenuEvent = createCloseMenuEvent<DefaultReasons>;
+
+/**
+ * The type of the default close menu event used by md-menu.
  */
 // tslint:disable-next-line
-export const DefaultCloseMenuEvent = CloseMenuEvent<DefaultReasons>;
+export type CloseMenuEvent<T extends Reason = DefaultReasons> =
+    ReturnType<typeof createCloseMenuEvent<T>>;
 
 /**
- * The event that requests the parent md-menu to deactivate all other items.
+ * Creates an event that requests the parent md-menu to deactivate all other
+ * items.
  */
-export class DeactivateItemsEvent extends Event {
-  constructor() {
-    super('deactivate-items', {bubbles: true, composed: true});
-  }
+export function createDeactivateItemsEvent() {
+  return new Event('deactivate-items', {bubbles: true, composed: true});
 }
 
 /**
- * Requests the typeahead functionality of containing menu be deactivated.
+ * The type of the event that requests the parent md-menu to deactivate all
+ * other items.
  */
-export class DeactivateTypeaheadEvent extends Event {
-  constructor() {
-    super('deactivate-typeahead', {bubbles: true, composed: true});
-  }
+export type DeactivateItemsEvent =
+    ReturnType<typeof createDeactivateItemsEvent>;
+
+
+/**
+ * Creates an event that requests the typeahead functionality of containing menu
+ * be deactivated.
+ */
+export function createDeactivateTypeaheadEvent() {
+  return new Event('deactivate-typeahead', {bubbles: true, composed: true});
 }
 
 /**
- * Requests the typeahead functionality of containing menu be activated.
+ * The type of the event that requests the typeahead functionality of containing
+ * menu be deactivated.
  */
-export class ActivateTypeaheadEvent extends Event {
-  constructor() {
-    super('activate-typeahead', {bubbles: true, composed: true});
-  }
+export type DeactivateTypeaheadEvent =
+    ReturnType<typeof createDeactivateTypeaheadEvent>;
+
+/**
+ * Creates an event that requests the typeahead functionality of containing menu
+ * be activated.
+ */
+export function createActivateTypeaheadEvent() {
+  return new Event('activate-typeahead', {bubbles: true, composed: true});
 }
+
+/**
+ * The type of the event that requests the typeahead functionality of containing
+ * menu be activated.
+ */
+export type ActivateTypeaheadEvent =
+    ReturnType<typeof createActivateTypeaheadEvent>;
 
 /**
  * Keys that are used to navigate menus.

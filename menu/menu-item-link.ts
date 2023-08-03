@@ -14,7 +14,7 @@ import {styles} from './internal/menuitem/menu-item-styles.css.js';
 import {MenuItemLink} from './internal/menuitemlink/menu-item-link.js';
 
 export {ListItem} from '../list/internal/listitem/list-item.js';
-export {CloseMenuEvent, DeactivateItemsEvent, MenuItem} from './internal/shared.js';
+export {CloseMenuEvent, MenuItem} from './internal/shared.js';
 
 
 declare global {
