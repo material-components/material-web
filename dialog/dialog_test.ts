@@ -77,18 +77,13 @@ describe('<md-dialog>', () => {
       expect(await harness.isDialogVisible()).toBeFalse();
     });
 
-    it('renders open state by calling show()/close()/toggleShow()',
-       async () => {
-         const {harness} = await setupTest();
-         harness.element.show();
-         expect(await harness.isDialogVisible()).toBeTrue();
-         harness.element.close();
-         expect(await harness.isDialogVisible()).toBeFalse();
-         harness.element.toggleShow();
-         expect(await harness.isDialogVisible()).toBeTrue();
-         harness.element.toggleShow();
-         expect(await harness.isDialogVisible()).toBeFalse();
-       });
+    it('renders open state by calling show()/close()', async () => {
+      const {harness} = await setupTest();
+      harness.element.show();
+      expect(await harness.isDialogVisible()).toBeTrue();
+      harness.element.close();
+      expect(await harness.isDialogVisible()).toBeFalse();
+    });
 
     it('renders scrim', async () => {
       const {harness} = await setupTest();

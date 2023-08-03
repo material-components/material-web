@@ -159,17 +159,6 @@ export class Dialog extends LitElement {
     this.open = false;
   }
 
-  /**
-   * Opens and shows the dialog if it is closed; otherwise closes it.
-   */
-  toggleShow() {
-    if (this.open) {
-      this.close(this.currentAction);
-    } else {
-      this.show();
-    }
-  }
-
   private getContentScrollInfo() {
     if (!this.hasUpdated || !this.contentElement) {
       return {isScrollable: false, isAtScrollTop: true, isAtScrollBottom: true};
