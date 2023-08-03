@@ -140,11 +140,6 @@ $_closing-transition-easing: map.get(
     display: none;
   }
 
-  .stacked .footer {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
   .scrollable .content {
     border-block-start: 1px solid transparent;
     border-block-end: 1px solid transparent;

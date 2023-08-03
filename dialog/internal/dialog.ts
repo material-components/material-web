@@ -60,12 +60,6 @@ export class Dialog extends LitElement {
   @property({type: Boolean, attribute: 'footer-hidden'}) footerHidden = false;
 
   /**
-   * Renders footer content in a vertically stacked alignment rather than the
-   * normal horizontal alignment.
-   */
-  @property({type: Boolean}) stacked = false;
-
-  /**
    * When the dialog is closed it disptaches `closing` and `closed` events.
    * These events have an action property which has a default value of
    * the value of this property. Specific actions have explicit values but when
@@ -199,7 +193,6 @@ export class Dialog extends LitElement {
       @cancel=${this.handleDialogDismiss}
       @click=${this.handleDialogClick}
       class="dialog ${classMap({
-      'stacked': this.stacked,
       'scrollable': isScrollable,
       'scroll-divider-header': !isAtScrollTop,
       'scroll-divider-footer': !isAtScrollBottom,

@@ -16,7 +16,6 @@ const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Dialog', [
       new Knob('fullscreen', {defaultValue: false, ui: boolInput()}),
       new Knob('footerHidden', {defaultValue: false, ui: boolInput()}),
-      new Knob('stacked', {defaultValue: false, ui: boolInput()}),
       new Knob('icon', {defaultValue: '', ui: textInput()}),
       new Knob('headline', {defaultValue: 'Dialog', ui: textInput()}),
       new Knob(
