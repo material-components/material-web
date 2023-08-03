@@ -262,13 +262,15 @@
 }
 
 @mixin _icon() {
+  ::slotted(*) {
+    fill: currentColor;
+  }
+
   slot[name='start']::slotted([data-variant='icon']) {
-    @include icon.theme(
-      (
-        color: var(--_list-item-leading-icon-color),
-        size: var(--_list-item-leading-icon-size),
-      )
-    );
+    font-size: var(--_list-item-leading-icon-size);
+    width: var(--_list-item-leading-icon-size);
+    height: var(--_list-item-leading-icon-size);
+    color: var(--_list-item-leading-icon-color);
 
     .with-three-line & {
       // In three line, icon must align with the mid-line of headline text
@@ -282,12 +284,10 @@
   }
 
   slot[name='end']::slotted([data-variant='icon']) {
-    @include icon.theme(
-      (
-        color: var(--_list-item-trailing-icon-color),
-        size: var(--_list-item-trailing-icon-size),
-      )
-    );
+    font-size: var(--_list-item-trailing-icon-size);
+    width: var(--_list-item-trailing-icon-size);
+    height: var(--_list-item-trailing-icon-size);
+    color: var(--_list-item-trailing-icon-color);
 
     .with-three-line & {
       // In three line, icon must align with the mid-line of headline text
@@ -302,77 +302,43 @@
 
   :hover {
     slot[name='start']::slotted([data-variant='icon']) {
-      @include icon.theme(
-        (
-          color: var(--_list-item-hover-leading-icon-icon-color),
-        )
-      );
+      color: var(--_list-item-hover-leading-icon-icon-color);
     }
 
     slot[name='end']::slotted([data-variant='icon']) {
-      @include icon.theme(
-        (
-          color: var(--_list-item-hover-trailing-icon-icon-color),
-        )
-      );
+      color: var(--_list-item-hover-trailing-icon-icon-color);
     }
   }
 
   :focus {
     slot[name='start']::slotted([data-variant='icon']) {
-      @include icon.theme(
-        (
-          color: var(--_list-item-focus-leading-icon-icon-color),
-        )
-      );
+      color: var(--_list-item-focus-leading-icon-icon-color);
     }
 
     slot[name='end']::slotted([data-variant='icon']) {
-      @include icon.theme(
-        (
-          color: var(--_list-item-focus-trailing-icon-icon-color),
-        )
-      );
+      color: var(--_list-item-focus-trailing-icon-icon-color);
     }
   }
 
   :active {
     slot[name='start']::slotted([data-variant='icon']) {
-      @include icon.theme(
-        (
-          color: var(--_list-item-pressed-leading-icon-icon-color),
-        )
-      );
+      color: var(--_list-item-pressed-leading-icon-icon-color);
     }
 
     slot[name='end']::slotted([data-variant='icon']) {
-      @include icon.theme(
-        (
-          color: var(--_list-item-pressed-trailing-icon-icon-color),
-        )
-      );
+      color: var(--_list-item-pressed-trailing-icon-icon-color);
     }
   }
 
   .disabled {
     slot[name='start']::slotted([data-variant='icon']) {
       opacity: var(--_list-item-disabled-leading-icon-opacity);
-
-      @include icon.theme(
-        (
-          color: var(--_list-item-disabled-leading-icon-color),
-        )
-      );
+      color: var(--_list-item-disabled-leading-icon-color);
     }
 
     slot[name='end']::slotted([data-variant='icon']) {
       opacity: var(--_list-item-disabled-trailing-icon-opacity);
-
-      @include icon.theme(
-        (
-          color: var(--_list-item-disabled-trailing-icon-color),
-        )
-      );
+      color: var(--_list-item-disabled-trailing-icon-color);
     }
   }
 }

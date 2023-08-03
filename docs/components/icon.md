@@ -94,7 +94,7 @@ Load the font with
 <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Sharp" rel="stylesheet">
 ```
 
-To use Sharp icons, set `--md-icon-font` to `'Material Symbols Sharp'`.
+To use Sharp icons, set `font-family` to `'Material Symbols Sharp'`.
 
 ### Fill
 
@@ -109,7 +109,7 @@ filled. Along with weight, fill is a primary attribute that impacts the overall
 look of a symbol.
 
 All styles of Material Symbols can be filled by setting
-`--md-icon-font-variation-settings` to `'FILL' 1`.
+`font-variation-settings` to `'FILL' 1`.
 
 ## Accessibility
 
@@ -138,13 +138,9 @@ If using SVG icons, add an `aria-label` attribute to the SVG element.
 
 ### Tokens
 
-Token                               | Default value
------------------------------------ | -----------------------------
-`--md-icon-color`                   | `inherit`
-`--md-icon-font`                    | `'Material Symbols Outlined'`
-`--md-icon-font-variation-settings` | `inherit`
-`--md-icon-size`                    | `24px`
-`--md-icon-weight`                  | `400`
+Token            | Default value
+---------------- | -----------------------------
+`--md-icon-font` | `'Material Symbols Outlined'`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/icon/internal/_md-comp-icon.scss)
     <!-- {.external} -->
@@ -159,9 +155,15 @@ Token                               | Default value
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL@20..48,100..700,0..1" rel="stylesheet">
 
 <style>
-:root {
-  --md-icon-color: #006A6A;
-  --md-icon-size: 48px;
+md-icon {
+  color: #006A6A;
+  font-size: 48px;
+}
+md-icon,
+md-icon > * {
+  /* Resizes any slotted images or SVGs */
+  width: 48px;
+  height: 48px;
 }
 .rounded {
   --md-icon-font: 'Material Symbols Rounded';
@@ -170,7 +172,7 @@ Token                               | Default value
   --md-icon-font: 'Material Symbols Sharp';
 }
 md-icon[filled] {
-  --md-icon-font-variation-settings: 'FILL' 1;
+  font-variation-settings: 'FILL' 1;
 }
 </style>
 

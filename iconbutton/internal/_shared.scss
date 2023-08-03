@@ -61,15 +61,12 @@
   }
 
   .icon {
-    height: var(--_icon-size);
-    width: var(--_icon-size);
-
-    @include icon.theme(
-      (
-        size: var(--_icon-size),
-        weight: inherit,
-      )
-    );
+    ::slotted(*) {
+      font-size: var(--_icon-size);
+      height: var(--_icon-size);
+      width: var(--_icon-size);
+      font-weight: inherit;
+    }
   }
 
   md-ripple {

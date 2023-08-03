@@ -1,0 +1,32 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './values';
+// go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'font',
+  // go/keep-sorted end
+);
+
+@function _get-new-tokens($exclude-hardcoded-values) {
+  @return (
+    // go/keep-sorted start
+    font: if($exclude-hardcoded-values, null, 'Material Symbols Outlined'),
+    // go/keep-sorted end
+  );
+}
+
+@function values($exclude-hardcoded-values: false) {
+  $tokens: values.validate(
+    (),
+    $supported-tokens: $supported-tokens,
+    $new-tokens: _get-new-tokens($exclude-hardcoded-values)
+  );
+
+  @return $tokens;
+}

@@ -5,34 +5,35 @@
 
 // go/keep-sorted start
 @use '../../internal/sass/theme';
-@use './md-comp-icon';
+@use '../../tokens';
+@use 'sass:map';
 // go/keep-sorted end
 
 $_custom-property-prefix: 'icon';
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(md-comp-icon.values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: theme.validate-theme(tokens.md-comp-icon-values(), $tokens);
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if $value {
+      --md-icon-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
-  $tokens: md-comp-icon.values();
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  $tokens: tokens.md-comp-icon-values();
 
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
-    }
-
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: inherit;
+    font-variation-settings: inherit;
+    font-weight: 400;
+    font-family: var(--md-icon-font, #{map.get($tokens, font)});
     display: inline-flex;
-    color: var(--_color);
-    font-family: var(--_font);
-    font-weight: var(--_weight);
     font-style: normal;
-    font-size: var(--_size);
-    font-variation-settings: var(--_font-variation-settings);
     line-height: 1;
     // Avoid displaying overflowing text if font ligatures have not loaded.
     overflow: hidden;
@@ -54,7 +55,7 @@ $_custom-property-prefix: 'icon';
   }
 
   ::slotted(*) {
-    height: var(--_size);
-    width: var(--_size);
+    height: 100%;
+    width: 100%;
   }
 }
