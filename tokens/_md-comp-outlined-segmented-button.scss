@@ -16,6 +16,7 @@
 
 $supported-tokens: (
   // go/keep-sorted start
+  'container-height',
   'disabled-icon-color',
   'disabled-label-text-color',
   'disabled-outline-color',
@@ -51,7 +52,6 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
-  'container-height',
   'disabled-icon-opacity',
   'disabled-label-text-opacity',
   'disabled-outline-opacity',
