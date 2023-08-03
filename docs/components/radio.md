@@ -64,7 +64,24 @@ Radios can be pre-selected by adding a `selected` attribute.
 
 Add a `value` to identify which radio is selected in a form.
 
-<!-- TODO: add image example -->
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;"
+      aria-label="">
+    TODO: update figure
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <form>
@@ -78,7 +95,24 @@ Add a `value` to identify which radio is selected in a form.
 
 Associate a label with a radio using the `<label>` element.
 
-<!-- TODO: add image example -->
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;"
+      aria-label="">
+    TODO: update figure
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <label>
@@ -96,8 +130,6 @@ Add an
 [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)<!-- {.external} -->
 attribute to radios without labels or radios whose labels need to be more
 descriptive.
-
-<!-- TODO: add image example -->
 
 ```html
 <label>
@@ -131,7 +163,24 @@ Token                            | Default value
 
 ### Example
 
-<!-- TODO: add image example -->
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      style="justify-content:center;"
+      aria-label="">
+    TODO: update figure
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
 
 ```html
 <style>
