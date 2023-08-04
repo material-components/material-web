@@ -245,6 +245,7 @@ import {SignalElement} from '../signals/signal-element.js';
       inset: var(--catalog-top-app-bar-height) 0 0 0;
       z-index: 12;
       background-color: var(--md-sys-color-surface-container);
+      overflow-y: auto;
     }
 
     aside slot {
