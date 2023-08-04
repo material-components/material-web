@@ -173,7 +173,11 @@ export class ListItemEl extends LitElement implements ListItem {
    * Handles rendering of the ripple element.
    */
   protected renderRipple(): TemplateResult|typeof nothing {
-    return html`<md-ripple for="item" ?disabled=${this.disabled}></md-ripple>`;
+    return html`
+      <md-ripple
+          part="ripple"
+          for="item"
+          ?disabled=${this.disabled}></md-ripple>`;
   }
 
   /**

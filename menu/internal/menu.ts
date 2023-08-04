@@ -265,6 +265,7 @@ export abstract class Menu extends LitElement {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <md-list
+          part="list"
           id="list"
           aria-label=${ariaLabel || nothing}
           type=${this.type}
@@ -291,7 +292,7 @@ export abstract class Menu extends LitElement {
    * Renders the elevation component.
    */
   private renderElevation() {
-    return html`<md-elevation></md-elevation>`;
+    return html`<md-elevation part="elevation"></md-elevation>`;
   }
 
   /**
