@@ -14,7 +14,7 @@ import './components/theme-changer.js';
 import '@material/web/menu/menu.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/list/list.js';
-import '@material/web/list/list-item-link.js';
+import '@material/web/list/list-item.js';
 import '@material/web/progress/circular-progress.js';
 import '@material/web/tabs/tabs.js';
 import '@material/web/tabs/tab.js';

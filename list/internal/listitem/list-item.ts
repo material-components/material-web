@@ -10,6 +10,7 @@ import '../../../focus/md-focus-ring.js';
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
+import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
@@ -82,16 +83,28 @@ export class ListItemEl extends LitElement implements ListItem {
   @property({type: Boolean, reflect: true}) active = false;
 
   /**
-   * Sets the role of the list item. Set to '' to clear the role.
+   * Sets the role of the list item. Set to 'nothing' to clear the role. This
+   * property will be ignored if `href` is set since the underlying element will
+   * be a native anchor tag.
    */
-  @property()
-  type: ListItemRole = 'listitem';
+  @property() type: ListItemRole = 'listitem';
 
   /**
    * READONLY. Sets the `md-list-item` attribute on the element.
    */
   @property({type: Boolean, attribute: 'md-list-item', reflect: true})
   isListItem = true;
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
+   */
+  @property() href = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is
+   * set.
+   */
+  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
   @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
 
@@ -134,19 +147,25 @@ export class ListItemEl extends LitElement implements ListItem {
    * @param content the child content of the list item.
    */
   protected renderListItem(content: unknown) {
-    return html`
-      <li
+    const isAnchor = !!this.href;
+    const tag = isAnchor ? literal`a` : literal`li`;
+    const role = isAnchor || this.type === 'none' ? nothing : this.type;
+    const target = isAnchor && !!this.target ? this.target : nothing;
+    return staticHtml`
+      <${tag}
         id="item"
         tabindex=${this.disabled ? -1 : this.itemTabIndex}
-        role=${this.type === 'none' ? nothing : this.type}
+        role=${role}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"
+        href=${this.href || nothing}
+        target=${target}
         @click=${this.onClick}
         @pointerenter=${this.onPointerenter}
         @pointerleave=${this.onPointerleave}
         @keydown=${this.onKeydown}
-      >${content}</li>
+      >${content}</${tag}>
     `;
   }
 

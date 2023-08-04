@@ -7,7 +7,6 @@
 // import 'jasmine'; (google3-only)
 import './list.js';
 import './list-item.js';
-import './list-item-link.js';
 
 import {html} from 'lit';
 
@@ -1101,65 +1100,52 @@ describe('<md-list-item>', () => {
   });
 });
 
-describe('<md-list-item-link>', () => {
+describe('<md-list-item> link', () => {
   const env = new Environment();
 
   describe('.styles', () => {
     createTokenTests(MdListItem.styles);
   });
 
-  describe('rendering', () => {
-    // We repeat these tests because technically list-item-link has its own
-    // implementation of these methods. Everything else is shared.
-    it('disabled overrides tabIndex', async () => {
-      const root = env.render(html`<md-list-item-link></md-list-item-link>`);
+  it('setting href renders an anchor tag', async () => {
+    const root = env.render(
+        html`<md-list-item href="https://google.com"></md-list-item>`);
 
-      const listItem = root.querySelector('md-list-item-link')!;
+    const listItem = root.querySelector('md-list-item')!;
 
-      await env.waitForStability();
+    await env.waitForStability();
 
-      const internalRoot =
-          listItem.renderRoot.querySelector('#item') as HTMLElement;
+    const internalRoot =
+        listItem.renderRoot.querySelector('#item') as HTMLElement;
 
-      expect(internalRoot.tabIndex).toBe(-1);
+    expect(internalRoot.tagName).toBe('A');
+  });
+  
+  it('setting type and href does not render a role', async () => {
+    const root = env.render(
+        html`<md-list-item type="menuitem" href="https://google.com"></md-list-item>`);
 
-      listItem.itemTabIndex = 2;
+    const listItem = root.querySelector('md-list-item')!;
 
-      await env.waitForStability();
+    await env.waitForStability();
 
-      expect(listItem.disabled).toBeFalse();
-      expect(internalRoot.tabIndex).toBe(2);
+    const internalRoot =
+        listItem.renderRoot.querySelector('#item') as HTMLElement;
 
-      listItem.disabled = true;
+    expect(internalRoot.hasAttribute('role')).toBe(false);
+  });
+  
+  it('setting target without href renders nothing', async () => {
+    const root = env.render(
+        html`<md-list-item target="_blank"></md-list-item>`);
 
-      await env.waitForStability();
+    const listItem = root.querySelector('md-list-item')!;
 
-      expect(listItem.disabled).toBeTrue();
-      expect(internalRoot.tabIndex).toBe(-1);
-    });
+    await env.waitForStability();
 
-    it('ripple and focus ring not rendered on noninteractive', async () => {
-      const root = env.render(html`<md-list-item-link></md-list-item-link>`);
+    const internalRoot =
+        listItem.renderRoot.querySelector('#item') as HTMLElement;
 
-      const listItem = root.querySelector('md-list-item-link')!;
-
-      await env.waitForStability();
-
-      let rippleEl = listItem.renderRoot.querySelector('md-ripple');
-      let focusRingEl = listItem.renderRoot.querySelector('md-focus-ring');
-
-      expect(rippleEl).toBeTruthy();
-      expect(focusRingEl).toBeTruthy();
-
-      listItem.noninteractive = true;
-
-      await env.waitForStability();
-
-      rippleEl = listItem.renderRoot.querySelector('md-ripple');
-      focusRingEl = listItem.renderRoot.querySelector('md-focus-ring');
-
-      expect(rippleEl).toBeNull();
-      expect(focusRingEl).toBeNull();
-    });
+    expect(internalRoot.hasAttribute('target')).toBe(false);
   });
 });

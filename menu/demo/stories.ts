@@ -6,7 +6,6 @@
 
 
 import '@material/web/menu/menu-item.js';
-import '@material/web/menu/menu-item-link.js';
 import '@material/web/menu/sub-menu-item.js';
 import '@material/web/menu/menu.js';
 import '@material/web/button/filled-button.js';
@@ -41,8 +40,6 @@ export interface StoryKnobs {
   'menu-item': void;
   keepOpen: boolean;
   disabled: boolean;
-
-  'menu-item-link': void;
   href: string;
   target: string;
   'link icon': string;
@@ -124,7 +121,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 };
 
 const linkable: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-menu-item-link>',
+  name: '<md-menu-item>',
   styles: sharedStyle,
   render(knobs) {
     const showMenu = () => {
@@ -262,15 +259,15 @@ function renderItems(names: string[], knobs: StoryKnobs) {
 
 function renderLinkableItems(names: string[], knobs: StoryKnobs) {
   return names.map(name => html`
-    <md-menu-item-link
+    <md-menu-item
         headline=${name}
         .disabled=${knobs.disabled}
-        .target=${knobs.target}
+        .target=${knobs.target as '' | '_blank' | '_parent' | '_self' | '_top'}
         .href=${knobs.href}>
       <md-icon data-variant="icon" slot="end">
         ${knobs['link icon']}
       </md-icon>
-    </md-menu-item-link>
+    </md-menu-item>
   `);
 }
 

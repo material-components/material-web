@@ -85,18 +85,18 @@ a:focus-visible {
   text-decoration: underline;
 }
 
-nav-drawer md-list-item-link[selected] {
+nav-drawer md-list-item[href][selected] {
   --md-list-item-list-item-container-color: var(
     --md-sys-color-surface-container-highest
   );
 }
 
 @media (forced-colors: active) {
-  nav-drawer md-list-item-link[selected] {
+  nav-drawer md-list-item[href][selected] {
     border: 4px double CanvasText;
   }
 
-  nav-drawer md-list-item-link {
+  nav-drawer md-list-item[href] {
     border-radius: var(--catalog-shape-xl);
     border: 1px solid CanvasText;
   }
@@ -110,12 +110,12 @@ md-list {
   min-width: unset;
 }
 
-md-list-item-link {
+md-list-item[href] {
   margin-block: var(--catalog-spacing-m);
   display: block;
 }
 
-md-list-item-link:first-of-type {
+md-list-item[href]:first-of-type {
   margin-block: 4px;
 }
 

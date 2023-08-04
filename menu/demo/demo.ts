@@ -108,9 +108,6 @@ const collection =
         defaultValue: false,
         ui: boolInput(),
       }),
-
-      // menu-item-link knobs
-      new Knob('menu-item-link', {ui: title()}),
       new Knob('href', {
         defaultValue: 'https://google.com',
         ui: textInput(),

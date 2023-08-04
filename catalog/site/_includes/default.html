@@ -59,13 +59,13 @@
           <md-list listtabindex="-1">
             {% for component in collections.component|filtersort('data.name') %}
               <li>
-                <md-list-item-link
+                <md-list-item
                   href="{{ component.url }}"
                   headline="{{ component.data.name }}"
                   {% if component.url == page.url %}selected{% endif %}
                   data-role=""
                   itemtabindex="0"
-                ></md-list-item-link>
+                ></md-list-item>
               </li>
             {% endfor %}
           </md-list>

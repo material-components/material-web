@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/list/list-item-link.js';
 import '@material/web/list/list-item.js';
 import '@material/web/divider/divider.js';
 import '@material/web/list/list.js';
@@ -110,7 +109,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             </md-icon>
           </md-list-item>
 
-          <md-list-item-link
+          <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}
               .multiLineSupportingText=${multiLineSupportingText}
@@ -119,11 +118,11 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .noninteractive=${noninteractive}
               .itemTabIndex=${itemTabIndex}
               .href=${href}
-              .target=${target}
+              .target=${target as '' | '_blank' | '_parent' | '_self' | '_top'}
               .active=${active}>
             <md-icon data-variant="icon" slot="end">${
         knobs['link end icon']}</md-icon>
-          </md-list-item-link>
+          </md-list-item>
 
           <md-divider></md-divider>
 

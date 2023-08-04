@@ -48,16 +48,13 @@ const collection =
       new Knob('supportingText', {ui: textInput(), defaultValue: ''}),
       new Knob('trailingSupportingText', {ui: textInput(), defaultValue: ''}),
       new Knob('itemTabIndex', {ui: numberInput(), defaultValue: 0}),
+      new Knob('href', {ui: textInput(), defaultValue: 'https://google.com'}),
+      new Knob('target', {ui: textInput(), defaultValue: '_blank'}),
+      new Knob('link end icon', {ui: textInput(), defaultValue: 'open_in_new'}),
 
       new Knob('data-variant=icon', {ui: title()}),
       new Knob('start icon', {ui: textInput(), defaultValue: 'account_circle'}),
       new Knob('end icon', {ui: textInput(), defaultValue: 'check_circle'}),
-
-
-      new Knob('data-variant=link', {ui: title()}),
-      new Knob('href', {ui: textInput(), defaultValue: 'https://google.com'}),
-      new Knob('target', {ui: textInput(), defaultValue: '_blank'}),
-      new Knob('link end icon', {ui: textInput(), defaultValue: 'open_in_new'}),
 
       new Knob('data-variant=avatar', {ui: title()}),
       new Knob('avatar img', {ui: textInput(), defaultValue: AVATAR_URL}),
