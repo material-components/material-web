@@ -34,26 +34,6 @@ export class Dialog extends LitElement {
   @property({type: Boolean}) open = false;
 
   /**
-   * Setting fullscreen displays the dialog fullscreen on small screens.
-   * This can be customized via the `fullscreenBreakpoint` property.
-   * When showing fullscreen, the header will take up less vertical space, and
-   * the dialog will have a `showing-fullscreen`attribute, allowing content to
-   * be styled in this state.
-   */
-  @property({type: Boolean}) fullscreen = false;
-
-  /**
-   * A media query string specifying the breakpoint at which the dialog
-   * should be shown fullscreen. Note, this only applies when the `fullscreen`
-   * property is set.
-   *
-   * By default, the dialog is shown fullscreen on screens less than 600px wide
-   * or 400px tall.
-   */
-  @property({attribute: 'fullscreen-breakpoint'})
-  fullscreenBreakpoint = '(max-width: 600px), (max-height: 400px)';
-
-  /**
    * Hides the dialog footer, making any content slotted into the footer
    * inaccessible.
    */
@@ -120,7 +100,6 @@ export class Dialog extends LitElement {
   /**
    * Private properties that reflect for styling manually in `updated`.
    */
-  @state() private showingFullscreen = false;
   @state() private showingOpen = false;
   @state() private opening = false;
   @state() private closing = false;
@@ -200,9 +179,6 @@ export class Dialog extends LitElement {
       // only closing if was opened previously...
       this.closing = !this.open && changed.get('open');
     }
-    if (changed.has('fullscreen') || changed.has('fullscreenBreakpoint')) {
-      this.updateFullscreen();
-    }
   }
 
   protected override firstUpdated() {
@@ -218,9 +194,6 @@ export class Dialog extends LitElement {
     // Reflect internal state to facilitate styling.
     this.reflectStateProp(changed, 'opening', this.opening);
     this.reflectStateProp(changed, 'closing', this.closing);
-    this.reflectStateProp(
-        changed, 'showingFullscreen', this.showingFullscreen,
-        'showing-fullscreen');
     this.reflectStateProp(
         changed, 'showingOpen', this.showingOpen, 'showing-open');
     if (!changed.has('open')) {
@@ -309,29 +282,6 @@ export class Dialog extends LitElement {
   private dispatchActionEvent(type: string) {
     const detail = {action: this.open ? 'none' : this.currentAction};
     this.dispatchEvent(new CustomEvent(type, {detail, bubbles: true}));
-  }
-
-  /* Live media query for matching user specified fullscreen breakpoint. */
-  private fullscreenQuery?: MediaQueryList;
-  private fullscreenQueryListener:
-      ((event: MediaQueryListEvent) => void)|undefined = undefined;
-  private updateFullscreen() {
-    if (this.fullscreenQuery !== undefined) {
-      this.fullscreenQuery.removeEventListener(
-          'change', this.fullscreenQueryListener!);
-      this.fullscreenQuery = this.fullscreenQueryListener = undefined;
-    }
-    if (!this.fullscreen) {
-      this.showingFullscreen = false;
-      return;
-    }
-    this.fullscreenQuery = window.matchMedia(this.fullscreenBreakpoint);
-    this.fullscreenQuery.addEventListener(
-        'change',
-        (this.fullscreenQueryListener = (event: MediaQueryListEvent) => {
-          this.showingFullscreen = event.matches;
-        }));
-    this.showingFullscreen = this.fullscreenQuery.matches;
   }
 
   // handles native close/cancel events and we just ensure

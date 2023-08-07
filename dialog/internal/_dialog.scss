@@ -236,47 +236,6 @@ $_closing-transition-easing: map.get(
     transform: var(--_closing-transform);
   }
 
-  // fullscreen
-  :host([showing-fullscreen]) {
-    --_container-max-block-size: none;
-    --_container-max-inline-size: none;
-  }
-
-  :host([showing-fullscreen]) .container {
-    block-size: 100dvh;
-    inline-size: 100dvw;
-    border-radius: 0px;
-    padding-block-start: 0;
-    padding-block-end: 0;
-  }
-
-  :host([showing-fullscreen]) .header {
-    justify-content: space-between;
-    flex-direction: row;
-    max-block-size: 56px;
-    // Note, the 8px here is not per spec, but needed to make the explicit 56px not be cramped.
-    padding-block-start: 8px;
-    // TODO: should there be explicit tokens for these?
-    padding-inline: 4px;
-    gap: 4px;
-  }
-
-  :host([showing-fullscreen]) .content {
-    margin-block-start: 0;
-    margin-block-end: 0;
-  }
-
-  :host([showing-fullscreen]) .footer {
-    max-block-size: 56px;
-    // Note, the 8px here is not per spec, but needed to make the explicit 56px not be cramped.
-    padding-block-end: 8px;
-  }
-
-  // Hide bottom divider on fullscreen since it's common not to have footer actions.
-  :host([showing-fullscreen]) .scroll-divider-footer .content {
-    border-block-end-color: transparent;
-  }
-
   // High contrast mode
   @media screen and (forced-colors: active), (-ms-high-contrast: active) {
     .container {
@@ -296,9 +255,5 @@ $_closing-transition-easing: map.get(
     align-self: stretch;
     display: flex;
     align-items: center;
-  }
-
-  :host([showing-fullscreen]) [name='headline']::slotted(*) {
-    flex: 1;
   }
 }
