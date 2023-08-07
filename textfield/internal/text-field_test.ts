@@ -132,7 +132,10 @@ describe('TextField', () => {
       const inputHandler = jasmine.createSpy('inputHandler');
       harness.element.addEventListener('input', inputHandler);
 
-      const event = new InputEvent('input');
+      const event = new InputEvent('input', {
+        composed: true,
+        bubbles: true,
+      });
       input.dispatchEvent(event);
 
       expect(inputHandler).toHaveBeenCalledWith(event);

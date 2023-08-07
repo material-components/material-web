@@ -675,7 +675,6 @@ export abstract class TextField extends LitElement {
   private handleInput(event: InputEvent) {
     this.dirty = true;
     this.value = (event.target as HTMLInputElement).value;
-    this.redispatchEvent(event);
   }
 
   private redispatchEvent(event: Event) {

@@ -97,6 +97,8 @@ export class TextFieldHarness extends Harness<TextField> {
     if (!init) {
       init = {
         inputType: 'insertText',
+        composed: true,
+        bubbles: true,
         isComposing: false,
         data: charactersToAppend,
       };
@@ -114,6 +116,8 @@ export class TextFieldHarness extends Harness<TextField> {
     if (!init) {
       init = {
         inputType: 'deleteContentBackward',
+        composed: true,
+        bubbles: true,
         isComposing: false,
         data: deletedCharacters,
       };
