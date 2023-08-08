@@ -20,7 +20,7 @@ import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../..
  */
 export class Checkbox extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Checkbox);
   }
 
   /** @nocollapse */

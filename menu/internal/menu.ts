@@ -64,7 +64,7 @@ function getFocusedElement(activeDoc: Document|ShadowRoot = document):
  */
 export abstract class Menu extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Menu);
   }
 
   @query('md-list') private readonly listElement!: List|null;

@@ -22,7 +22,7 @@ import {dispatchActivationClick, isActivationClick} from '../../internal/control
  */
 export class Switch extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Switch);
   }
 
   /** @nocollapse */

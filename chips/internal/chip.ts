@@ -18,7 +18,7 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
  */
 export abstract class Chip extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Chip);
   }
 
   /** @nocollapse */

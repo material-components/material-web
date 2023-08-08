@@ -34,7 +34,7 @@ export type ListItem = ListItemSelf&HTMLElement;
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class ListItemEl extends LitElement implements ListItem {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(ListItemEl);
   }
 
   /**

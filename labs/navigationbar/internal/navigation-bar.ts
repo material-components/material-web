@@ -22,7 +22,7 @@ import {NavigationBarState} from './state.js';
  */
 export class NavigationBar extends LitElement implements NavigationBarState {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(NavigationBar);
   }
 
   @property({type: Number, attribute: 'active-index'}) activeIndex = 0;

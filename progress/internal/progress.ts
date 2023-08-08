@@ -16,7 +16,7 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
  */
 export abstract class Progress extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Progress);
   }
 
   /**

@@ -22,7 +22,7 @@ export type ChipSetType = 'assist'|'suggestion'|'filter'|'input'|'';
  */
 export class ChipSet extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(ChipSet);
   }
 
   get chips() {

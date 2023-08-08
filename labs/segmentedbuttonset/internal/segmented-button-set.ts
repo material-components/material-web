@@ -18,7 +18,7 @@ import {SegmentedButton} from '../../segmentedbutton/internal/segmented-button.j
  */
 export class SegmentedButtonSet extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(SegmentedButtonSet);
   }
 
   @property({type: Boolean}) multiselect = false;

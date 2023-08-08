@@ -22,7 +22,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
  */
 export class SegmentedButton extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(SegmentedButton);
   }
 
   @property({type: Boolean}) disabled = false;

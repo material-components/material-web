@@ -24,7 +24,7 @@ import {ARIA_PROPERTIES, ariaPropertyToAttribute} from './aria.js';
  * @example
  * class XButton extends LitElement {
  *   static {
- *     requestUpdateOnAriaChange(this);
+ *     requestUpdateOnAriaChange(XButton);
  *   }
  *
  *   protected override render() {

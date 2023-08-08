@@ -35,7 +35,7 @@ export type TabVariant = 'primary'|'secondary';
  */
 export class Tab extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Tab);
   }
 
   /** @nocollapse */

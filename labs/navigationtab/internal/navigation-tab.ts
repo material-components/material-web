@@ -22,7 +22,7 @@ import {NavigationTabState} from './state.js';
  */
 export class NavigationTab extends LitElement implements NavigationTabState {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(NavigationTab);
   }
 
   @property({type: Boolean}) disabled = false;

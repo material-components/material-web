@@ -25,7 +25,7 @@ let maskId = 0;
  */
 export class Radio extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Radio);
   }
 
   /** @nocollapse */

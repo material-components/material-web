@@ -18,7 +18,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
  */
 export class NavigationDrawer extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(NavigationDrawer);
   }
 
   @property({type: Boolean}) opened = false;

@@ -21,7 +21,7 @@ import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../..
  */
 export abstract class Button extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(Button);
   }
 
   /** @nocollapse */

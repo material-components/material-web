@@ -39,7 +39,7 @@ function isNavigableKey(key: string): key is NavigatableValues {
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
   static {
-    requestUpdateOnAriaChange(this);
+    requestUpdateOnAriaChange(List);
   }
 
   /** @nocollapse */
