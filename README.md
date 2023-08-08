@@ -30,15 +30,15 @@ Component                     | Alpha | Beta | Stable
 ----------------------------- | :---: | :--: | :----:
 Button                        | ✅     | ✅    | 🟡
 FAB                           | ✅     | ✅    | ❌
-Icon button                   | ✅     | ✅    | ❌
+Icon button                   | ✅     | ✅    | 🟡
 Checkbox                      | ✅     | ✅    | ✅
 Chips                         | ✅     | ✅    | ❌
-Dialog                        | ✅     | ✅    | ❌
+Dialog                        | ✅     | ✅    | 🟡
 Divider                       | ✅     | ✅    | ✅
 Elevation                     | ✅     | ✅    | ✅
 Focus ring                    | ✅     | ✅    | ✅
 Field                         | ✅     | ✅    | 🟡
-Icon                          | ✅     | ✅    | ❌
+Icon                          | ✅     | ✅    | 🟡
 List                          | ✅     | ✅    | ❌
 Menu                          | ✅     | ✅    | ❌
 Progress indicator (circular) | ✅     | ✅    | ✅
