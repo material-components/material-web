@@ -14,14 +14,17 @@ import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
+import {internals} from '../../internal/controller/element-internals.js';
+import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
+import {FormSubmitter, FormSubmitterType, setupFormSubmitter} from '../../internal/controller/form-submitter.js';
 
 /**
  * A button component.
  */
-export abstract class Button extends LitElement {
+export abstract class Button extends LitElement implements FormSubmitter {
   static {
     requestUpdateOnAriaChange(Button);
+    setupFormSubmitter(Button);
   }
 
   /** @nocollapse */
@@ -62,27 +65,16 @@ export abstract class Button extends LitElement {
    */
   @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
 
-  /**
-   * A string indicating the behavior of the button.
-   *
-   * - submit: The button submits the form. This is the default value if the
-   * attribute is not specified, or if it is dynamically changed to an empty or
-   * invalid value.
-   * - reset: The button resets the form.
-   * - button: The button does nothing.
-   */
-  @property() type: 'button'|'submit'|'reset' = 'submit';
+  @property() type: FormSubmitterType = 'submit';
 
   @query('.button') private readonly buttonElement!: HTMLElement|null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
 
-  private readonly internals =
+  /** @private */
+  [internals] =
       (this as HTMLElement /* needed for closure */).attachInternals();
-
-  // flag to avoid processing redispatched event.
-  private isRedispatchingEvent = false;
 
   constructor() {
     super();
@@ -115,7 +107,6 @@ export abstract class Button extends LitElement {
         aria-expanded="${ariaExpanded || nothing}"
         href=${this.href || nothing}
         target=${this.target || nothing}
-        @click="${this.handleClick}"
       >
         ${this.renderFocusRing()}
         ${this.renderElevation()}
@@ -181,43 +172,6 @@ export abstract class Button extends LitElement {
   private renderIcon() {
     return html`<slot name="icon" @slotchange="${
         this.handleSlotChange}"></slot>`;
-  }
-
-  private handleClick(event: MouseEvent) {
-    if (this.isRedispatchingEvent) {
-      return;
-    }
-    // based on type, trigger form action.
-    const {type, internals: {form}} = this;
-    if (!form || type === 'button') {
-      return;
-    }
-
-    this.isRedispatchingEvent = true;
-    const prevented = !redispatchEvent(this, event);
-    this.isRedispatchingEvent = false;
-    if (prevented) {
-      return;
-    }
-
-    if (type === 'reset') {
-      form.reset();
-      return;
-    }
-
-    // form.requestSubmit(submitter) does not work with form associated custom
-    // elements. This patches the dispatched submit event to add the correct
-    // `submitter`.
-    // See https://github.com/WICG/webcomponents/issues/814
-    form.addEventListener('submit', submitEvent => {
-      Object.defineProperty(submitEvent, 'submitter', {
-        configurable: true,
-        enumerable: true,
-        get: () => this,
-      });
-    }, {capture: true, once: true});
-
-    form.requestSubmit();
   }
 
   private handleSlotChange() {

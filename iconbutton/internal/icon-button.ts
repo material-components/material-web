@@ -14,14 +14,22 @@ import {html as staticHtml, literal} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {internals} from '../../internal/controller/element-internals.js';
+import {FormSubmitter, FormSubmitterType, setupFormSubmitter} from '../../internal/controller/form-submitter.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';
 
 type LinkTarget = '_blank'|'_parent'|'_self'|'_top';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
-export class IconButton extends LitElement {
+export class IconButton extends LitElement implements FormSubmitter {
   static {
     requestUpdateOnAriaChange(IconButton);
+    setupFormSubmitter(IconButton);
+  }
+
+  /** @nocollapse */
+  static get formAssociated() {
+    return true;
   }
 
   /** @nocollapse */
@@ -68,7 +76,13 @@ export class IconButton extends LitElement {
    */
   @property({type: Boolean, reflect: true}) selected = false;
 
+  @property() type: FormSubmitterType = 'submit';
+
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
+
+  /** @private */
+  [internals] =
+      (this as HTMLElement /* needed for closure */).attachInternals();
 
   /**
    * Link buttons cannot be disabled.
