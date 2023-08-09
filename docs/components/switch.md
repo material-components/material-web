@@ -81,7 +81,7 @@ Switches are similar to checkboxes, and can be unselected or selected.
 <!-- catalog-only-end -->
 
 ```html
-<md-switch></md-checkbox>
+<md-switch></md-switch>
 <md-switch selected></md-switch>
 ```
 
@@ -110,10 +110,10 @@ can choose to display both icons or only selected icons.
 <!-- catalog-only-end -->
 
 ```html
-<md-switch icons></md-checkbox>
+<md-switch icons></md-switch>
 <md-switch icons selected></md-switch>
 
-<md-switch icons show-only-selected-icon></md-checkbox>
+<md-switch icons show-only-selected-icon></md-switch>
 <md-switch icons show-only-selected-icon selected></md-switch>
 ```
 

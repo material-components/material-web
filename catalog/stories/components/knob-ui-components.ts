@@ -33,7 +33,7 @@ export function boolInput(): KnobUi<boolean> {
         <div>
           <label>
             <md-checkbox
-              reducedTouchTarget
+              touch-target="none"
               .checked=${!!knob.latestValue}
               @change="${valueChanged}"
             >
