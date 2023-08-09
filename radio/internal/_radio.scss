@@ -48,20 +48,31 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     );
 
     display: inline-flex;
-    height: 48px;
+    height: var(--_icon-size);
+    margin: calc((48px - var(--_icon-size)) / 2);
     position: relative;
     vertical-align: top; // Fix extra space when placed inside display: block
-    width: 48px;
+    width: var(--_icon-size);
     // Remove highlight color for mobile Safari
     -webkit-tap-highlight-color: transparent;
   }
 
+  :host([touch-target='none']) {
+    margin: unset;
+  }
+
+  .container {
+    display: grid;
+    height: 100%;
+    place-content: center;
+    place-items: center;
+    width: 100%;
+  }
+
   md-focus-ring {
-    @include focus-ring.theme(
-      (
-        'outward-offset': -2px,
-      )
-    );
+    height: 44px;
+    inset: unset;
+    width: 44px;
   }
 
   .checked {
@@ -75,28 +86,32 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     );
   }
 
-  input,
-  .icon {
-    inset: 0;
-    margin: auto;
-    position: absolute;
-  }
-
+  // <input> is also the touch target
   input {
     appearance: none;
+    height: 48px;
     outline: none;
+    margin: 0;
+    position: absolute;
+    width: 48px;
+  }
+
+  :host([touch-target='none']) input {
+    width: 100%;
+    height: 100%;
   }
 
   md-ripple {
     border-radius: 50%;
     height: var(--_state-layer-size);
+    inset: unset;
     width: var(--_state-layer-size);
   }
 
   .icon {
     fill: var(--_icon-color);
-    height: var(--_icon-size);
-    width: var(--_icon-size);
+    height: 100%;
+    width: 100%;
   }
 
   .outer.circle {

@@ -123,7 +123,7 @@ export class Radio extends LitElement {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      <div class=${classMap(classes)}>
+      <div class="container ${classMap(classes)}">
         <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
         <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
@@ -131,7 +131,8 @@ export class Radio extends LitElement {
             <rect width="100%" height="100%" fill="white" />
             <circle cx="10" cy="10" r="8" fill="black" />
           </mask>
-          <circle class="outer circle" cx="10" cy="10" r="10" mask="url(#${this.maskId})" />
+          <circle class="outer circle" cx="10" cy="10" r="10"
+              mask="url(#${this.maskId})" />
           <circle class="inner circle" cx="10" cy="10" r="5" />
         </svg>
         <input
