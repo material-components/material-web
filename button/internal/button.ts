@@ -135,9 +135,7 @@ export abstract class Button extends LitElement implements FormSubmitter {
   }
 
   private renderTouchTarget() {
-    return html`
-      <span class="button__touch"></span>
-    `;
+    return html`<span class="touch"></span>`;
   }
 
   private readonly handleActivationClick = (event: MouseEvent) => {

@@ -4,12 +4,16 @@
 //
 
 @mixin styles() {
-  .button__touch {
+  .touch {
     position: absolute;
     top: 50%;
     height: 48px;
     left: 0;
     right: 0;
     transform: translateY(-50%);
+  }
+
+  :host([touch-target='none']) .touch {
+    display: none;
   }
 }

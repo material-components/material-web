@@ -14,6 +14,7 @@
 @mixin styles() {
   :host {
     display: inline-flex;
+    height: var(--_container-height);
     outline: none;
     -webkit-tap-highlight-color: transparent;
     // Override vertical-align with shortest value "top". Vertical-align's
@@ -29,6 +30,10 @@
         pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
+  }
+
+  :host([touch-target='wrapper']) {
+    margin: max(0px, (48px - var(--_container-height)) / 2) 0;
   }
 
   md-focus-ring {
@@ -63,7 +68,7 @@
     inline-size: 100%;
     position: relative;
     z-index: 0; // Place content on top of elevation and ripple
-    block-size: var(--_container-height);
+    height: 100%;
     font: var(--_label-text-type);
     color: var(--_label-text-color);
     // TODO(b/181413732): Verify token below are named correctly
