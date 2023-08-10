@@ -19,7 +19,6 @@
 $supported-tokens: (
   // go/keep-sorted start
   'container-color',
-  'container-elevation',
   'container-shape',
   'headline-color',
   'headline-type',
@@ -58,6 +57,8 @@ $unsupported-tokens: (
   'action-pressed-label-text-color',
   'action-pressed-state-layer-color',
   'action-pressed-state-layer-opacity',
+  'container-elevation',
+  // Unused without a shadow color
   'headline-font',
   'headline-line-height',
   'headline-size',

@@ -15,11 +15,10 @@ import '@material/web/dialog/dialog.js';
 
 import {MdDialog} from '@material/web/dialog/dialog.js';
 import {MaterialStoryInit} from './material-collection.js';
-import {css, html} from 'lit';
+import {css, html, nothing} from 'lit';
 
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
-  footerHidden: boolean;
   icon: string;
   headline: string;
   supportingText: string;
@@ -31,53 +30,61 @@ function clickHandler(event: Event) {
 
 
 const standard: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-dialog>',
-  render({footerHidden, icon, headline, supportingText}) {
+  name: 'Standard',
+  render({icon, headline, supportingText}) {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog
-          .footerHidden=${footerHidden}
-      >
-        <md-icon slot="headline-prefix">${icon}</md-icon>
-        <span slot="headline">${headline}</span>
-        <span>${supportingText}</span>
-        <md-text-button slot="footer" dialog-action="close">Close</md-text-button>
-      </md-dialog>`;
+      <md-dialog>
+        ${icon ? html`<md-icon slot="icon">${icon}</md-icon>` : nothing}
+        <div slot="headline">${headline}</div>
+        <form id="form" slot="content" method="dialog">
+          <span>${supportingText}</span>
+        </form>
+        <div slot="actions">
+          <md-text-button form="form" value="close">Close</md-text-button>
+          <md-text-button form="form" value="ok" autofocus>OK</md-text-button>
+        </div>
+      </md-dialog>
+    `;
   }
 };
 
 const alert: MaterialStoryInit<StoryKnobs> = {
-
   name: 'Alert',
-  render({footerHidden, icon, headline, supportingText}) {
+  render() {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-        <md-dialog
-            .footerHidden=${footerHidden}
-        >
-          <span slot="header">Alert dialog</span>
-          <span>This is a standard alert dialog. Alert dialogs interrupt users with urgent information, details, or actions.</span>
-          <md-text-button slot="footer" dialog-action="ok">OK</md-text-button>
-        </md-dialog>`;
+      <md-dialog type="alert">
+        <div slot="headline">Alert dialog</div>
+        <form id="form" slot="content" method="dialog">
+          This is a standard alert dialog. Alert dialogs interrupt users with
+          urgent information, details, or actions.
+        </form>
+        <div slot="actions">
+          <md-text-button form="form" value="ok">OK</md-text-button>
+        </div>
+      </md-dialog>
+    `;
   }
 };
 
 const confirm: MaterialStoryInit<StoryKnobs> = {
   name: 'Confirm',
-  render({footerHidden, icon, headline, supportingText}) {
+  render() {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog style="--md-dialog-container-max-inline-size: 320px;"
-          .footerHidden=${footerHidden}
-      >
-        <md-icon slot="headline-prefix">delete_outline</md-icon>
-        <span slot="headline">Permanently delete?</span>
-        <div>
+      <md-dialog style="max-width: 320px;">
+        <div slot="headline">Permanently delete?</div>
+        <md-icon slot="icon">delete_outline</md-icon>
+        <form id="form" slot="content" method="dialog">
           Deleting the selected photos will also remove them from all synced devices.
+        </form>
+        <div slot="actions">
+          <md-text-button form="form" value="delete">Delete</md-text-button>
+          <md-filled-tonal-button autofocus form="form" value="cancel">Cancel</md-filled-tonal-button>
         </div>
-        <md-text-button slot="footer" dialog-action="delete">Delete</md-text-button>
-        <md-filled-tonal-button slot="footer" autofocus dialog-action="cancel">Cancel</md-filled-tonal-button>
-      </md-dialog>`;
+      </md-dialog>
+    `;
   }
 };
 
@@ -90,32 +97,26 @@ const choose: MaterialStoryInit<StoryKnobs> = {
       align-items: center;
     }
     `,
-  render({footerHidden, icon, headline, supportingText}) {
+  render() {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog
-          .footerHidden=${footerHidden}
-      >
-        <span slot="header">Choose your favorite pet</span>
-        <p>
-          This is a standard choice dialog. These dialogs give users the ability to make
-          a decision and confirm it. This gives them a chance to change their minds if necessary.
-        </p>
-        <label>
-          <md-radio name="pet" value="cats" touch-target="wrapper"
-              checked></md-radio> Cats
-        </label>
-        <label>
-          <md-radio name="pet" value="dogs"
-              touch-target="wrapper"></md-radio> Dogs
-        </label>
-        <label>
-          <md-radio name="pet" value="birds"
-              touch-target="wrapper"></md-radio> Birds
-        </label>
-        <md-text-button slot="footer" dialog-action="cancel">Cancel</md-text-button>
-        <md-text-button slot="footer" autofocus dialog-action="ok">OK</md-text-button>
-      </md-dialog>`;
+      <md-dialog>
+        <div slot="headline">Choose your favorite pet</div>
+        <form id="form" slot="content" method="dialog">
+          <div>
+            This is a standard choice dialog. These dialogs give users the ability to make
+            a decision and confirm it. This gives them a chance to change their minds if necessary.
+          </div>
+          <label><md-radio name="pet" value="cats" touch-target="wrapper" checked></md-radio> Cats</label>
+          <label><md-radio name="pet" value="dogs" touch-target="wrapper"></md-radio> Dogs</label>
+          <label><md-radio name="pet" value="birds" touch-target="wrapper"></md-radio> Birds</label>
+        </form>
+        <div slot="actions">
+          <md-text-button form="form" value="cancel">Cancel</md-text-button>
+          <md-text-button form="form" autofocus value="ok">OK</md-text-button>
+        </div>
+      </md-dialog>
+    `;
   }
 };
 
@@ -123,7 +124,7 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
   name: 'Contacts',
   styles: css`
     .contacts {
-      --md-dialog-container-min-inline-size: calc(100vw - 212px);
+      min-width: calc(100vw - 212px);
     }
 
     .contacts [slot="header"] {
@@ -148,17 +149,17 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
     .contact-row > * {
       flex: 1;
     }`,
-  render({footerHidden, icon, headline, supportingText}) {
+  render() {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog class="contacts"
-          .footerHidden=${footerHidden}
-      >
-        <span slot="header">
-          <md-icon-button dialog-action="close"><md-icon>close</md-icon></md-icon-button>
+      <md-dialog class="contacts">
+        <span slot="headline">
+          <md-icon-button form="form" value="close">
+            <md-icon>close</md-icon>
+          </md-icon-button>
           <span class="headline">Create new contact</span>
         </span>
-        <div class="contact-content">
+        <form id="form" slot="content" method="dialog" class="contact-content">
           <div class="contact-row">
             <md-filled-text-field autofocus label="First Name"></md-filled-text-field>
             <md-filled-text-field label="Last Name"></md-filled-text-field>
@@ -169,31 +170,36 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           </div>
           <md-filled-text-field label="Email"></md-filled-text-field>
           <md-filled-text-field label="Phone"></md-filled-text-field>
+        </form>
+        <div slot="actions">
+          <md-text-button form="form" value="cancel">Cancel</md-text-button>
+          <md-text-button form="form" value="save">Save</md-text-button>
         </div>
-        <md-text-button slot="footer" dialog-action="cancel">Cancel</md-text-button>
-        <md-text-button slot="footer" dialog-action="save">Save</md-text-button>
-      </md-dialog>`;
+      </md-dialog>
+    `;
   }
 };
 
 const floatingSheet: MaterialStoryInit<StoryKnobs> = {
   name: 'Floating sheet',
-  render({footerHidden, icon, headline, supportingText}) {
+  render() {
     return html`
       <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog
-          .footerHidden=${footerHidden}
-      >
-      <span slot="header">
-        <span style="flex: 1;">Floating Sheet</span>
-        <md-icon-button dialog-action="close"><md-icon>close</md-icon></md-icon-button>
-      </span>
-      <div>This is a floating sheet with title.
-        Floating sheets offer no action buttons at the bottom,
-        but there's a close icon button at the top right.
-        They accept any HTML content.
-      </div>
-    </md-dialog>`;
+      <md-dialog>
+        <span slot="headline">
+          <span style="flex: 1;">Floating Sheet</span>
+          <md-icon-button form="form" value="close">
+            <md-icon>close</md-icon>
+          </md-icon-button>
+        </span>
+        <form id="form" slot="content" method="dialog">
+          This is a floating sheet with title.
+          Floating sheets offer no action buttons at the bottom,
+          but there's a close icon button at the top right.
+          They accept any HTML content.
+        </form>
+      </md-dialog>
+    `;
   }
 };
 

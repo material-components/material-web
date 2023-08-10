@@ -4,348 +4,354 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
+import '../../divider/divider.js';
 
-import {html, LitElement, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
-import {createThrottle, msFromTimeCSSValue} from '../../internal/motion/animation.js';
 
-/**
- * Default close action.
- */
-export const CLOSE_ACTION = 'close';
+import {DIALOG_DEFAULT_CLOSE_ANIMATION, DIALOG_DEFAULT_OPEN_ANIMATION, DialogAnimation, DialogAnimationArgs} from './animations.js';
 
 /**
  * A dialog component.
  *
- * @fires opening Dispatched when the dialog is opening before any animations.
+ * @fires open Dispatched when the dialog is opening before any animations.
  * @fires opened Dispatched when the dialog has opened after any animations.
- * @fires closing Dispatched when the dialog is closing before any animations.
+ * @fires close Dispatched when the dialog is closing before any animations.
  * @fires closed Dispatched when the dialog has closed after any animations.
- * @fires cancel The native HTMLDialogElement cancel event.
+ * @fires cancel Dispatched when the dialog has been canceled by clicking on the
+ *     scrim or pressing Escape.
  */
 export class Dialog extends LitElement {
+  static {
+    requestUpdateOnAriaChange(Dialog);
+  }
+
+  static override shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true
+  };
+
   /**
    * Opens the dialog when set to `true` and closes it when set to `false`.
    */
-  @property({type: Boolean}) open = false;
-
-  /**
-   * Hides the dialog footer, making any content slotted into the footer
-   * inaccessible.
-   */
-  @property({type: Boolean, attribute: 'footer-hidden'}) footerHidden = false;
-
-  /**
-   * When the dialog is closed it disptaches `closing` and `closed` events.
-   * These events have an action property which has a default value of
-   * the value of this property. Specific actions have explicit values but when
-   * a value is not specified, the default is used. For example, clicking the
-   * scrim, pressing escape, or clicking a button with an action attribute set
-   * produce an explicit action.
-   *
-   * Defaults to `close`.
-   */
-  @property({attribute: 'default-action'}) defaultAction = CLOSE_ACTION;
-
-  /**
-   * The name of an attribute which can be placed on any element slotted into
-   * the dialog. If an element has an action attribute set, clicking it will
-   * close the dialog and the `closing` and `closed` events dispatched will
-   * have their action property set the value of this attribute on the
-   * clicked element.The default value is `dialog-action`. For example,
-   *
-   *   <md-dialog>
-   *    Content
-   *     <md-filled-button slot="footer" dialog-action="buy">
-   *       Buy
-   *     </md-filled-button>
-   *   </md-dialog>
-   */
-  @property({attribute: 'action-attribute'}) actionAttribute = 'dialog-action';
-
-  /**
-   * Clicking on the scrim surrounding the dialog closes the dialog.
-   * The `closing` and `closed` events this produces have an `action` property
-   * which is the value of this property and defaults to `close`.
-   */
-  @property({attribute: 'scrim-click-action'}) scrimClickAction = CLOSE_ACTION;
-
-  /**
-   * Pressing the `escape` key while the dialog is open closes the dialog.
-   * The `closing` and `closed` events this produces have an `action` property
-   * which is the value of this property and defaults to `close`.
-   */
-  @property({attribute: 'escape-key-action'}) escapeKeyAction = CLOSE_ACTION;
-
-  private readonly throttle = createThrottle();
-
-  @query('.dialog', true)
-  private readonly dialogElement!: HTMLDialogElement|null;
-
-  // slots tracked to find focusable elements.
-  @query('slot[name=footer]', true)
-  private readonly footerSlot!: HTMLSlotElement;
-  @query('slot:not([name])', true)
-  private readonly contentSlot!: HTMLSlotElement;
-  // for scrolling related styling
-  @query(`.content`, true)
-  private readonly contentElement!: HTMLDivElement|null;
-  @query(`.container`, true)
-  private readonly containerElement!: HTMLDivElement|null;
-
-  /**
-   * Private properties that reflect for styling manually in `updated`.
-   */
-  @state() private showingOpen = false;
-  @state() private opening = false;
-  @state() private closing = false;
-
-  private currentAction: string|undefined;
-
-  /**
-   * Opens and shows the dialog. This is equivalent to setting the `open`
-   * property to true.
-   */
-  show() {
-    this.open = true;
+  @property({type: Boolean})
+  get open() {
+    return this.isOpen;
   }
 
-  /**
-   * Closes the dialog. This is equivalent to setting the `open`
-   * property to false.
-   */
-  close(action = '') {
-    this.currentAction = action;
-    this.open = false;
-  }
-
-  private getContentScrollInfo() {
-    if (!this.hasUpdated || !this.contentElement) {
-      return {isScrollable: false, isAtScrollTop: true, isAtScrollBottom: true};
+  set open(open: boolean) {
+    if (open === this.isOpen) {
+      return;
     }
-    const {scrollTop, scrollHeight, offsetHeight, clientHeight} =
-        this.contentElement;
-    return {
-      isScrollable: scrollHeight > offsetHeight,
-      isAtScrollTop: scrollTop === 0,
-      isAtScrollBottom:
-          Math.abs(Math.round(scrollHeight - scrollTop) - clientHeight) <= 2
-    };
+
+    this.isOpen = open;
+    if (open) {
+      this.setAttribute('open', '');
+      this.show();
+    } else {
+      this.removeAttribute('open');
+      this.close();
+    }
+  }
+
+  /**
+   * Gets or sets the dialog's return value, usually to indicate which button
+   * a user pressed to close it.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue
+   */
+  @property({attribute: false}) returnValue = '';
+
+  /**
+   * The type of dialog for accessibility. Set this to `alert` to announce a
+   * dialog as an alert dialog.
+   */
+  @property() type?: 'alert';
+
+  /**
+   * Gets the opening animation for a dialog. Set to a new function to customize
+   * the animation.
+   */
+  getOpenAnimation = () => DIALOG_DEFAULT_OPEN_ANIMATION;
+
+  /**
+   * Gets the closing animation for a dialog. Set to a new function to customize
+   * the animation.
+   */
+  getCloseAnimation = () => DIALOG_DEFAULT_CLOSE_ANIMATION;
+
+  private isOpen = false;
+  @query('dialog') private readonly dialog!: HTMLDialogElement|null;
+  @query('.scrim') private readonly scrim!: HTMLDialogElement|null;
+  @query('.container') private readonly container!: HTMLDialogElement|null;
+  @query('.headline') private readonly headline!: HTMLDialogElement|null;
+  @query('.content') private readonly content!: HTMLDialogElement|null;
+  @query('.actions') private readonly actions!: HTMLDialogElement|null;
+  @state() private isAtScrollTop = false;
+  @state() private isAtScrollBottom = false;
+  @query('.scroller') private readonly scroller!: HTMLElement|null;
+  @query('.top.anchor') private readonly topAnchor!: HTMLElement|null;
+  @query('.bottom.anchor') private readonly bottomAnchor!: HTMLElement|null;
+  private nextClickIsFromContent = false;
+  private intersectionObserver?: IntersectionObserver;
+  // Dialogs should not be SSR'd while open, so we can just use runtime checks.
+  @state() private hasHeadline = false;
+  @state() private hasActions = false;
+  @state() private hasIcon = false;
+
+  constructor() {
+    super();
+    if (!isServer) {
+      this.addEventListener('submit', this.handleSubmit);
+    }
+  }
+
+  /**
+   * Opens the dialog and fires a cancelable `open` event. After a dialog's
+   * animation, an `opened` event is fired.
+   *
+   * Add an `autocomplete` attribute to a child of the dialog that should
+   * receive focus after opening.
+   *
+   * @return A Promise that resolves after the animation is finished and the
+   *     `opened` event was fired.
+   */
+  async show() {
+    const {dialog, container} = this;
+    if (!dialog || !container || dialog.open) {
+      return;
+    }
+
+    const preventOpen =
+        !this.dispatchEvent(new Event('open', {cancelable: true}));
+    if (preventOpen) {
+      this.open = false;
+      return;
+    }
+
+    // All Material dialogs are modal.
+    dialog.showModal();
+    this.open = true;
+    // Reset scroll position if re-opening a dialog with the same content.
+    if (this.scroller) {
+      this.scroller.scrollTop = 0;
+    }
+    // Native modal dialogs ignore autofocus and instead force focus to the
+    // first focusable child. Override this behavior if there is a child with
+    // an autofocus attribute.
+    this.querySelector<HTMLElement>('[autofocus]')?.focus();
+
+    await this.animateDialog(this.getOpenAnimation());
+    this.dispatchEvent(new Event('opened'));
+  }
+
+  /**
+   * Closes the dialog and fires a cancelable `close` event. After a dialog's
+   * animation, a `closed` event is fired.
+   *
+   * @param returnValue A return value usually indicating which button was used
+   *     to close a dialog. If a dialog is canceled by clicking the scrim or
+   *     pressing Escape, it will not change the return value after closing.
+   * @return A Promise that resolves after the animation is finished and the
+   *     `closed` event was fired.
+   */
+  async close(returnValue = this.returnValue) {
+    const {dialog, container} = this;
+    if (!dialog || !container || !dialog.open) {
+      return;
+    }
+
+    const prevReturnValue = this.returnValue;
+    this.returnValue = returnValue;
+    const preventClose =
+        !this.dispatchEvent(new Event('close', {cancelable: true}));
+    if (preventClose) {
+      this.returnValue = prevReturnValue;
+      return;
+    }
+
+    await this.animateDialog(this.getCloseAnimation());
+    dialog.close(returnValue);
+    this.open = false;
+    this.dispatchEvent(new Event('closed'));
   }
 
   protected override render() {
-    const {isScrollable, isAtScrollTop, isAtScrollBottom} =
-        this.getContentScrollInfo();
-    return html`
-    <dialog
-      @close=${this.handleDialogDismiss}
-      @cancel=${this.handleDialogDismiss}
-      @click=${this.handleDialogClick}
-      class="dialog ${classMap({
-      'scrollable': isScrollable,
-      'scroll-divider-header': !isAtScrollTop,
-      'scroll-divider-footer': !isAtScrollBottom,
-      'footerHidden': this.footerHidden
-    })}"
-      aria-labelledby="header"
-      aria-describedby="content"
-    >
-      <div class="container">
-        <md-elevation></md-elevation>
-        <header class="header">
-          <slot name="header">
-            <slot name="headline-prefix"></slot>
-            <slot name="headline"></slot>
-            <slot name="headline-suffix"></slot>
-          </slot>
-        </header>
-        <section class="content" @scroll=${this.handleContentScroll}>
-          <slot></slot>
-        </section>
-        <footer class="footer">
-          <slot name="footer"></slot>
-        </footer>
-      </div>
-    </dialog>`;
-  }
+    const scrollable =
+        this.open && !(this.isAtScrollTop && this.isAtScrollBottom);
+    const classes = {
+      'has-headline': this.hasHeadline,
+      'has-actions': this.hasActions,
+      'has-icon': this.hasIcon,
+      'scrollable': scrollable,
+      'show-top-divider': scrollable && !this.isAtScrollTop,
+      'show-bottom-divider': scrollable && !this.isAtScrollBottom,
+    };
 
-  protected override willUpdate(changed: PropertyValues) {
-    if (changed.has('open')) {
-      this.opening = this.open;
-      // only closing if was opened previously...
-      this.closing = !this.open && changed.get('open');
-    }
+    const {ariaLabel} = this as ARIAMixinStrict;
+    return html`
+      <div class="scrim"></div>
+      <dialog
+        class=${classMap(classes)}
+        aria-label=${ariaLabel || nothing}
+        aria-labelledby=${this.hasHeadline ? 'headline' : nothing}
+        role=${this.type === 'alert' ? 'alertdialog' : nothing}
+        @cancel=${this.handleCancel}
+        @click=${this.handleDialogClick}
+        .returnValue=${this.returnValue || nothing}
+      >
+        <div class="container"
+          @click=${this.handleContentClick}
+        >
+          <div class="headline">
+            <div class="icon">
+              <slot name="icon" @slotchange=${this.handleIconChange}></slot>
+            </div>
+            <h2 id="headline" aria-hidden=${!this.hasHeadline || nothing}>
+              <slot name="headline"
+                  @slotchange=${this.handleHeadlineChange}></slot>
+            </h2>
+            <md-divider></md-divider>
+          </div>
+          <div class="scroller">
+            <div class="content">
+              <div class="top anchor"></div>
+              <slot name="content"></slot>
+              <div class="bottom anchor"></div>
+            </div>
+          </div>
+          <div class="actions">
+            <md-divider></md-divider>
+            <slot name="actions"
+              @slotchange=${this.handleActionsChange}></slot>
+          </div>
+        </div>
+      </dialog>
+    `;
   }
 
   protected override firstUpdated() {
-    // Update when content size changes to show/hide scroll dividers.
-    new ResizeObserver(() => {
-      if (this.showingOpen) {
-        this.requestUpdate();
+    this.intersectionObserver = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        this.handleAnchorIntersection(entry);
       }
-    }).observe(this.contentElement!);
+    }, {root: this.scroller!});
+
+    this.intersectionObserver.observe(this.topAnchor!);
+    this.intersectionObserver.observe(this.bottomAnchor!);
   }
 
-  protected override updated(changed: PropertyValues) {
-    // Reflect internal state to facilitate styling.
-    this.reflectStateProp(changed, 'opening', this.opening);
-    this.reflectStateProp(changed, 'closing', this.closing);
-    this.reflectStateProp(
-        changed, 'showingOpen', this.showingOpen, 'showing-open');
-    if (!changed.has('open')) {
+  private handleDialogClick() {
+    if (this.nextClickIsFromContent) {
+      // Avoid doing a layout calculation below if we know the click came from
+      // content.
+      this.nextClickIsFromContent = false;
       return;
     }
-    if (this.open) {
-      this.contentElement!.scrollTop = 0;
-      // Note, native focus handling fails when focused element is in an
-      // overflow: auto container.
-      this.dialogElement!.showModal();
-    }
-    // Avoids dispatching initial state.
-    const shouldDispatchAction = changed.get('open') !== undefined;
-    this.performTransition(shouldDispatchAction);
-  }
 
-  /**
-   * Internal state is reflected here as attributes to effect styling. This
-   * could be done via internal classes, but it's published on the host
-   * to facilitate the (currently undocumented) possibility of customizing
-   * styling of user content based on these states.
-   * Note, in the future this could be done with `:state(...)` when browser
-   * support improves.
-   */
-  private reflectStateProp(
-      changed: PropertyValues, key: string, value: unknown,
-      attribute?: string) {
-    attribute ??= key;
-    if (!changed.has(key)) {
+    // Click originated on the backdrop. Native `<dialog>`s will not cancel,
+    // but Material dialogs do.
+    const preventDefault =
+        !this.dispatchEvent(new Event('cancel', {cancelable: true}));
+    if (preventDefault) {
       return;
     }
-    if (value) {
-      this.setAttribute(attribute, '');
-    } else {
-      this.removeAttribute(attribute);
-    }
+
+    this.close();
   }
 
-  private dialogClosedResolver?: () => void;
-
-  private async performTransition(shouldDispatchAction: boolean) {
-    // TODO: pause here only to avoid a double update warning.
-    await this.updateComplete;
-    // Focus initial element.
-    if (this.open) {
-      this.focus();
-    }
-    this.showingOpen = this.open;
-    if (shouldDispatchAction) {
-      this.dispatchActionEvent(this.open ? 'opening' : 'closing');
-    }
-    // Compute desired transition duration.
-    const duration = msFromTimeCSSValue(
-        getComputedStyle(this.containerElement!).transitionDuration);
-    let promise = this.updateComplete;
-    if (duration > 0) {
-      promise = new Promise((r) => {
-        setTimeout(r, duration);
-      });
-    }
-    await promise;
-    this.opening = false;
-    this.closing = false;
-    if (!this.open && this.dialogElement?.open) {
-      // Closing the dialog triggers an asynchronous `close` event.
-      // It's important to wait for this event to fire since it changes the
-      // state of `open` to false.
-      // Without waiting, this element's `closed` event can be called before
-      // the dialog's `close` event, which is problematic since the user
-      // can set `open` in the `closed` event.
-      // The timing of the event appears to vary via browser and does *not*
-      // seem to resolve by "task" timing; therefore an explicit promise is
-      // used.
-      const closedPromise = new Promise<void>(resolve => {
-        this.dialogClosedResolver = resolve;
-      });
-      this.dialogElement?.close(this.currentAction || this.defaultAction);
-      await closedPromise;
-    }
-    if (shouldDispatchAction) {
-      this.dispatchActionEvent(this.open ? 'opened' : 'closed');
-    }
-    this.currentAction = undefined;
+  private handleContentClick() {
+    this.nextClickIsFromContent = true;
   }
 
-  private dispatchActionEvent(type: string) {
-    const detail = {action: this.open ? 'none' : this.currentAction};
-    this.dispatchEvent(new CustomEvent(type, {detail, bubbles: true}));
-  }
-
-  // handles native close/cancel events and we just ensure
-  // internal state is in sync.
-  private handleDialogDismiss(event: Event) {
-    if (event.type === 'cancel') {
-      this.currentAction = this.escapeKeyAction;
-      // Prevents the <dialog> element from closing when
-      // `escapeKeyAction` is set to an empty string.
-      // It also early returns and avoids <md-dialog> internal state
-      // changes.
-      if (this.escapeKeyAction === '') {
-        event.preventDefault();
-        return;
-      }
-    }
-    this.dialogClosedResolver?.();
-    this.dialogClosedResolver = undefined;
-    this.open = false;
-    this.opening = false;
-    this.closing = false;
-    redispatchEvent(this, event);
-  }
-
-  private handleDialogClick(event: Event) {
-    if (!this.open) {
+  private handleSubmit(event: SubmitEvent) {
+    const form = event.target as HTMLFormElement;
+    const {submitter} = event;
+    if (form.method !== 'dialog' || !submitter) {
       return;
     }
-    this.currentAction =
-        (event.target as Element).getAttribute(this.actionAttribute) ??
-        (this.containerElement &&
-                 !event.composedPath().includes(this.containerElement) ?
-             this.scrimClickAction :
-             '');
-    if (this.currentAction !== '') {
-      this.close(this.currentAction);
+
+    // Close reason is the submitter's value attribute, or the dialog's
+    // `returnValue` if there is no attribute.
+    this.close(submitter.getAttribute('value') ?? this.returnValue);
+  }
+
+  private handleCancel(event: Event) {
+    if (event.target !== this.dialog) {
+      // Ignore any cancel events dispatched by content.
+      return;
     }
+
+    const preventDefault = !redispatchEvent(this, event);
+    // We always prevent default on the original dialog event since we'll
+    // animate closing it before it actually closes.
+    event.preventDefault();
+    if (preventDefault) {
+      return;
+    }
+
+    this.close();
   }
 
-  /* This allows the dividers to dynamically show based on scrolling. */
-  private handleContentScroll() {
-    this.throttle('scroll', () => {
-      this.requestUpdate();
-    });
-  }
+  private async animateDialog(animation: DialogAnimation) {
+    const {dialog, scrim, container, headline, content, actions} = this;
+    if (!dialog || !scrim || !container || !headline || !content || !actions) {
+      return;
+    }
 
-  private getFocusElement(): HTMLElement|null {
-    const selector = `[autofocus]`;
-    const slotted = [this.footerSlot, this.contentSlot].flatMap(
-        slot => slot.assignedElements({flatten: true}));
-    for (const el of slotted) {
-      const focusEl = el.matches(selector) ? el : el.querySelector(selector);
-      if (focusEl) {
-        return focusEl as HTMLElement;
+    const {
+      container: containerAnimate,
+      dialog: dialogAnimate,
+      scrim: scrimAnimate,
+      headline: headlineAnimate,
+      content: contentAnimate,
+      actions: actionsAnimate
+    } = animation;
+
+    const elementAndAnimation: Array<[Element, DialogAnimationArgs[]]> = [
+      [dialog, dialogAnimate ?? []], [scrim, scrimAnimate ?? []],
+      [container, containerAnimate ?? []], [headline, headlineAnimate ?? []],
+      [content, contentAnimate ?? []], [actions, actionsAnimate ?? []]
+    ];
+
+    const animations: Animation[] = [];
+    for (const [element, animation] of elementAndAnimation) {
+      for (const animateArgs of animation) {
+        animations.push(element.animate(...animateArgs));
       }
     }
-    return null;
+
+    await Promise.all(animations.map(animation => animation.finished));
   }
 
-  override focus() {
-    this.getFocusElement()?.focus();
+  private handleHeadlineChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    this.hasHeadline = slot.assignedElements().length > 0;
   }
 
-  override blur() {
-    this.getFocusElement()?.blur();
+  private handleActionsChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    this.hasActions = slot.assignedElements().length > 0;
+  }
+
+  private handleIconChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    this.hasIcon = slot.assignedElements().length > 0;
+  }
+
+  private handleAnchorIntersection(entry: IntersectionObserverEntry) {
+    const {target, isIntersecting} = entry;
+    if (target === this.topAnchor) {
+      this.isAtScrollTop = isIntersecting;
+    }
+
+    if (target === this.bottomAnchor) {
+      this.isAtScrollBottom = isIntersecting;
+    }
   }
 }

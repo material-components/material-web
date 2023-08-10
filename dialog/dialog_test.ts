@@ -13,156 +13,166 @@ import {MdDialog} from './dialog.js';
 import {DialogHarness} from './harness.js';
 
 describe('<md-dialog>', () => {
-  const realTimeout = globalThis.setTimeout;
   const env = new Environment();
-
-  function setClockEnabled(enable = false) {
-    const isEnabled = globalThis.setTimeout !== realTimeout;
-    if (isEnabled !== enable) {
-      if (enable) {
-        jasmine.clock().install();
-      } else {
-        jasmine.clock().uninstall();
-      }
-    }
-  }
 
   async function setupTest() {
     const root = env.render(html`
       <md-dialog>
-        <div class="content">Content
+        <form id="form" method="dialog" slot="content">
+          Content
           <input autofocus>
+        </form>
+        <div slot="actions">
+          <button form="form" value="button">Close</button>
         </div>
-        <button slot="footer" dialog-action="button">Close</button>
       </md-dialog>
     `);
 
     await env.waitForStability();
-    setClockEnabled(false);
-    const dialog = root.querySelector<MdDialog>('md-dialog')!;
+    const dialog = root.querySelector('md-dialog');
+    if (!dialog) {
+      throw new Error('Failed to query rendered <md-dialog>');
+    }
+
     const harness = new DialogHarness(dialog);
-    const contentElement = root.querySelector<HTMLElement>('.content')!;
-    const focusElement = root.querySelector<HTMLElement>('[autofocus]')!;
-    return {harness, root, contentElement, focusElement};
+    const dialogElement = dialog.shadowRoot?.querySelector('dialog');
+    if (!dialogElement) {
+      throw new Error('Failed to query rendered <dialog>');
+    }
+
+    const contentElement = root.querySelector<HTMLElement>('[slot=content]');
+    if (!contentElement) {
+      throw new Error('Failed to query rendered content.');
+    }
+
+    const focusElement = root.querySelector<HTMLElement>('[autofocus]');
+    if (!focusElement) {
+      throw new Error('Failed to query rendered autofocus element.');
+    }
+
+    return {harness, root, dialogElement, contentElement, focusElement};
   }
-
-
-  afterEach(() => {
-    setClockEnabled(true);
-  });
 
   describe('.styles', () => {
     createTokenTests(MdDialog.styles);
   });
 
   describe('basic', () => {
-    it('initializes as an md-dialog', async () => {
+    it('open property calls show() and close()', async () => {
       const {harness} = await setupTest();
-      expect(harness.element).toBeInstanceOf(MdDialog);
-      expect(await harness.getInteractiveElement())
-          .toBeInstanceOf(HTMLDialogElement);
-    });
+      spyOn(harness.element, 'show');
+      spyOn(harness.element, 'close');
 
-    it('renders open state by setting open property', async () => {
-      const {harness} = await setupTest();
-      expect(await harness.isDialogVisible()).toBeFalse();
       harness.element.open = true;
-      expect(await harness.isDialogVisible()).toBeTrue();
+      await env.waitForStability();
+      expect(harness.element.show).toHaveBeenCalled();
 
       harness.element.open = false;
-      expect(await harness.isDialogVisible()).toBeFalse();
-      harness.element.open = true;
-      expect(await harness.isDialogVisible()).toBeTrue();
-      harness.element.open = false;
-      expect(await harness.isDialogVisible()).toBeFalse();
+      await env.waitForStability();
+      expect(harness.element.close).toHaveBeenCalled();
     });
 
     it('renders open state by calling show()/close()', async () => {
-      const {harness} = await setupTest();
-      harness.element.show();
-      expect(await harness.isDialogVisible()).toBeTrue();
-      harness.element.close();
-      expect(await harness.isDialogVisible()).toBeFalse();
-    });
-
-    it('renders scrim', async () => {
-      const {harness} = await setupTest();
-      expect(await harness.isScrimVisible()).toBeFalse();
-      harness.element.open = true;
-      expect(await harness.isScrimVisible()).toBeTrue();
-      harness.element.open = false;
-      expect(await harness.isScrimVisible()).toBeFalse();
+      const {harness, dialogElement} = await setupTest();
+      await harness.element.show();
+      expect(dialogElement.open).toBeTrue();
+      await harness.element.close();
+      expect(dialogElement.open).toBeFalse();
     });
 
     it('fires open/close events', async () => {
       const {harness} = await setupTest();
-      const openingHandler = jasmine.createSpy('openingHandler');
+      const openHandler = jasmine.createSpy('openHandler');
       const openedHandler = jasmine.createSpy('openedHandler');
-      const closingHandler = jasmine.createSpy('closingHandler');
+      const closeHandler = jasmine.createSpy('closeHandler');
       const closedHandler = jasmine.createSpy('closedHandler');
-      harness.element.addEventListener('opening', openingHandler);
+      harness.element.addEventListener('open', openHandler);
       harness.element.addEventListener('opened', openedHandler);
-      harness.element.addEventListener('closing', closingHandler);
+      harness.element.addEventListener('close', closeHandler);
       harness.element.addEventListener('closed', closedHandler);
-      harness.element.show();
-      await harness.transitionComplete();
-      expect(openingHandler).toHaveBeenCalledTimes(1);
+      await harness.element.show();
+      expect(openHandler).toHaveBeenCalledTimes(1);
       expect(openedHandler).toHaveBeenCalledTimes(1);
-      expect(closingHandler).toHaveBeenCalledTimes(0);
+      expect(closeHandler).toHaveBeenCalledTimes(0);
       expect(closedHandler).toHaveBeenCalledTimes(0);
-      harness.element.close('testing');
-      await harness.transitionComplete();
-      expect(openingHandler).toHaveBeenCalledTimes(1);
+      await harness.element.close('testing');
+      expect(openHandler).toHaveBeenCalledTimes(1);
       expect(openedHandler).toHaveBeenCalledTimes(1);
-      expect(closingHandler).toHaveBeenCalledTimes(1);
-      expect(closingHandler.calls.mostRecent().args[0].detail.action)
-          .toBe('testing');
+      expect(closeHandler).toHaveBeenCalledTimes(1);
       expect(closedHandler).toHaveBeenCalledTimes(1);
-      expect(closedHandler.calls.mostRecent().args[0].detail.action)
-          .toBe('testing');
+      expect(harness.element.returnValue).toBe('testing');
     });
 
     it('closes when element with action is clicked', async () => {
       const {harness} = await setupTest();
-      harness.element.show();
-      await harness.transitionComplete();
-      const closedHandler = jasmine.createSpy('closedHandler');
-      harness.element.addEventListener('closed', closedHandler);
-      harness.element
-          .querySelector<HTMLButtonElement>(
-              '[dialog-action="button"]')!.click();
-      await harness.transitionComplete();
+      await harness.element.show();
+      const closedPromise = new Promise<void>(resolve => {
+        harness.element.addEventListener('closed', () => {
+          resolve();
+        }, {once: true});
+      });
+
+      harness.element.querySelector<HTMLButtonElement>(
+                         '[value="button"]')!.click();
+      await closedPromise;
       expect(harness.element.open).toBeFalse();
-      expect(closedHandler.calls.mostRecent().args[0].detail.action)
-          .toBe('button');
+      expect(harness.element.returnValue).toBe('button');
     });
 
     it('closes with click outside dialog', async () => {
-      const {harness, contentElement} = await setupTest();
-      harness.element.show();
+      const {harness, dialogElement, contentElement} = await setupTest();
+      const isClosing = jasmine.createSpy('isClosing');
+      harness.element.addEventListener('close', isClosing);
+      await harness.element.show();
       contentElement.click();
-      await harness.transitionComplete();
-      expect(harness.element.open).toBeTrue();
-      const dialogElement = await harness.getInteractiveElement();
+      expect(isClosing).not.toHaveBeenCalled();
       dialogElement.click();
-      await harness.transitionComplete();
-      expect(harness.element.open).toBeFalse();
+      expect(isClosing).toHaveBeenCalled();
     });
 
-    it('focses element with focus attribute when shown and previously focused element when closed',
+    it('focuses element with autofocus when shown and previously focused element when closed',
        async () => {
          const {harness, focusElement} = await setupTest();
          const button = document.createElement('button');
          document.body.append(button);
          button.focus();
          expect(document.activeElement).toBe(button);
-         harness.element.show();
-         await harness.transitionComplete();
+         await harness.element.show();
          expect(document.activeElement).toBe(focusElement);
-         harness.element.close();
-         await harness.transitionComplete();
+         await harness.element.close();
          expect(document.activeElement).toBe(button);
          button.remove();
        });
+  });
+
+  it('should set returnValue during the close event', async () => {
+    const {harness} = await setupTest();
+
+    let returnValueDuringClose = '';
+    harness.element.addEventListener('close', () => {
+      returnValueDuringClose = harness.element.returnValue;
+    });
+
+    await harness.element.show();
+    const returnValue = 'foo';
+    await harness.element.close(returnValue);
+    expect(returnValueDuringClose)
+        .withContext('dialog.returnValue during close event')
+        .toBe(returnValue);
+  });
+
+  it('should not change returnValue if close event is canceled', async () => {
+    const {harness} = await setupTest();
+
+    harness.element.addEventListener('close', event => {
+      event.preventDefault();
+    });
+
+    await harness.element.show();
+    const prevReturnValue = harness.element.returnValue;
+    await harness.element.close('new return value');
+    expect(harness.element.returnValue)
+        .withContext('dialog.returnValue after close event canceled')
+        .toBe(prevReturnValue);
   });
 });
