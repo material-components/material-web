@@ -1,5 +1,92 @@
 # Changelog
 
+## [1.0.0-pre.15](https://github.com/material-components/material-web/compare/v1.0.0-pre.14...v1.0.0-pre.15) (2023-08-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **dialog:** See https://github.com/material-components/material-web/discussions/4675 for more details.
+* **fab:** Replace `reduced-touch-target` with `touch-target="none"`
+* **checkbox:** Checkbox's size is now smaller by default. Add margin or `touch-target="wrapper"` to increase it to the previous size.
+* **radio:** Radio's size is now smaller by default. Add margin or `touch-target="wrapper"` to increase it to the previous size.
+* **dialog:** Fullscreen dialogs weren't matching spec, so we're removing them for now to avoid future breaking changes. They will be re-added later.
+* **list,menu:** list-item-link and menu-item-link have been removed and their functionality has been added to menu-item and list-item respectively.
+* **dialog:** use `autofocus` attribute instead of `dialog-focus`
+* **dialog:** Use dialog.open, dialog.show(), and dialog.close() instead.
+* **dialog:** dialog actions can set their own layout with a container element.
+* **dialog:** Material dialogs are always modal.
+* **select:** select will now show an arrow indicator and will apply default styles to slotted icons
+* **icon:** Remove css custom properties from icon and prefer applying normal css properties on host except for font-family.
+* **menu:** subclassing events is not supported in ES5 so all menu-related events now use CustomEvent rather than subclassing Event
+* **button:** Buttons submit forms by default, like `<button>`. Add `type="button"` to not submit forms.
+* **checkbox:** Design is still exploring error-state checkboxes. If needed, theme with an error color and set aria-invalid.
+* **iconbutton:** Remove "unselected" from `--md-*-icon-button-*` custom properties.
+* **button:** Rename "md-tonal-button" elements, imports, and tokens to "md-filled-tonal-button"
+* **iconbutton:** rename <md-standard-icon-button> to <md-icon-button>
+* **dialog:** remove transitions
+* **dialog:** remove content and divider tokens
+* **dialog:** remove transition and scrim tokens
+* **switch:** Rename `--md-switch-unselected-<token>` to `--md-switch-<token>`
+* **button:** Rename `--md-<button>-spacing-<token>` to `--md-<button>-<token>-space`. Rename `--md-<button>-with-icon-*` to `--md-<button>-with-leading-icon-*`.
+* **dialog:** remove draggable
+* **dialog:** remove fullscreen tokens
+* **radio:** Rename `--md-radio-unselected-<token>` to `--md-radio-<token>`
+
+### Features
+
+* **button:** add touch target configs ([1f46179](https://github.com/material-components/material-web/commit/1f46179e831537b4470548e09e1574c1c4c5a90c))
+* **checkbox:** add required and form validity ([5606eef](https://github.com/material-components/material-web/commit/5606eefc38b08ebeb5f63d54b4b82631ea67936a))
+* **checkbox:** add touch target configurations ([f574b00](https://github.com/material-components/material-web/commit/f574b00a6384ec8f95bffd5e2c730c58639f98dd))
+* **chips:** add touch target configs ([2300eb6](https://github.com/material-components/material-web/commit/2300eb6e4f666f8776d9860157ce6f09f322e4b6))
+* **fab:** add touch target configurations ([8588a3f](https://github.com/material-components/material-web/commit/8588a3f52e7496e281bf59d6b1ad6a9ab116d236))
+* **icon:** add aria-hidden true by default ([08d50e2](https://github.com/material-components/material-web/commit/08d50e231dd7091f5fd4b843e636e9f04941f998))
+* **iconbutton:** add form submission ([c0da72b](https://github.com/material-components/material-web/commit/c0da72b6dc743772f34fb1e20ef678850bcc0dd1))
+* **list,menu:** add css shadow parts to sub components ([65d04a3](https://github.com/material-components/material-web/commit/65d04a3cf3cba46deb12cd0affa2649bf3e45407))
+* **radio:** add touch target configurations ([7c461ca](https://github.com/material-components/material-web/commit/7c461cad75c58eb28c3b02321197ebcf9d3b93cd))
+
+
+### Bug Fixes
+
+* **button:** rename `&lt;md-tonal-button&gt;` to `<md-filled-tonal-button>` ([cc26ef6](https://github.com/material-components/material-web/commit/cc26ef6c02dabf9e853b4aee08f5cb3af5e29f8f))
+* **button:** rename spacing tokens ([2329d2b](https://github.com/material-components/material-web/commit/2329d2b419d2963d8050dc4cda1607f165f3d2fd))
+* **button:** type is submit by default ([97f5b61](https://github.com/material-components/material-web/commit/97f5b616d6b76e23e378f7abed4c6a72b60c9367))
+* **checkbox:** remove error property ([ce248dc](https://github.com/material-components/material-web/commit/ce248dc3831a494bf70625d3f4b0b6ca895a2d97))
+* **dialog:** misspelled `transition` ([fa103cb](https://github.com/material-components/material-web/commit/fa103cbc78677b4829a94743b1561a023d44058f)), closes [#4638](https://github.com/material-components/material-web/issues/4638)
+* **dialog:** remove content and divider tokens ([5adbf73](https://github.com/material-components/material-web/commit/5adbf730d3c9bf9ccfa066a0b7e10ac1831b8269))
+* **dialog:** remove draggable ([2568d4f](https://github.com/material-components/material-web/commit/2568d4fbac69c8b5e9a5d5198c6525224ebf778d))
+* **dialog:** remove fullscreen temporarily ([39ae5a6](https://github.com/material-components/material-web/commit/39ae5a694723d83674eab06dcee9f8a3c5d7d764))
+* **dialog:** remove fullscreen tokens ([8b896e0](https://github.com/material-components/material-web/commit/8b896e0e638f61a7963a9104db70d27f6d2afbca))
+* **dialog:** remove modeless ([d8ac9ce](https://github.com/material-components/material-web/commit/d8ac9ce29e146516d84c3f6ba38cd9b8d39db8ec))
+* **dialog:** remove stacked ([500472b](https://github.com/material-components/material-web/commit/500472bbdf094187de1c937a2e2fac293880ba1c))
+* **dialog:** remove toggleShow() ([b992b15](https://github.com/material-components/material-web/commit/b992b154dee676a746cd3ada066809514c8a1dbb))
+* **dialog:** remove transition and scrim tokens ([e581142](https://github.com/material-components/material-web/commit/e581142d67ebe5429999e3517cf420138cfac671))
+* **dialog:** remove transitions ([2d1c580](https://github.com/material-components/material-web/commit/2d1c58022e70c3141f79e94cb2ccc12af1d3f816))
+* **dialog:** use `autofocus` attribute instead of `dialog-focus` ([50fd2f3](https://github.com/material-components/material-web/commit/50fd2f3fe08d9c9dc8c2e188fc0b9c39750e8af8))
+* **filter-chip:** make click event preventDefault proof ([041cb21](https://github.com/material-components/material-web/commit/041cb21233b49680ec47980bea2e5cf44cbcbd05))
+* **filter-chip:** move click event to inner button ([22b5b21](https://github.com/material-components/material-web/commit/22b5b2173aedfec88362b256a02d7841097e9598))
+* **focus:** allow `--md-focus-ring-*` cascading again ([1fa5cf3](https://github.com/material-components/material-web/commit/1fa5cf34852fde4353352056b76520ff5c1321d1))
+* **icon-button:** delegates focus ([db2010d](https://github.com/material-components/material-web/commit/db2010d2c12673a5905e751c68583d3df86f281d))
+* **iconbutton:** remove unselected token prefix ([0a63c26](https://github.com/material-components/material-web/commit/0a63c267e9ccb272916d80b30c79908c2736e37f))
+* **iconbutton:** rename &lt;md-standard-icon-button&gt; to <md-icon-button> ([a117b06](https://github.com/material-components/material-web/commit/a117b06b7b1d177cc9cd8abd4c9b9ff489e20d5d))
+* **radio:** remove "unselected" prefix from tokens ([fb1c603](https://github.com/material-components/material-web/commit/fb1c6039e763dc7b78687f660772aeec5fe494b9))
+* **segmentedbutton:** add back container height token ([db8be0a](https://github.com/material-components/material-web/commit/db8be0a15c81dd4854ea984d842c5bfe21e890d6))
+* **segmentedbutton:** add back shape token ([c148bf6](https://github.com/material-components/material-web/commit/c148bf61fe11564eb60bd34ca8d1a92bb33cb0a8))
+* **select:** add trailing icon indicator and fix icon token application ([4ab2e39](https://github.com/material-components/material-web/commit/4ab2e393d440225b6eb37c83aead7fd62920b11a))
+* **switch:** remove unselected token prefix ([3681b58](https://github.com/material-components/material-web/commit/3681b588e02a43a4c72d4be703206348eea943a7))
+
+
+### Miscellaneous Chores
+
+* update next version ([432e660](https://github.com/material-components/material-web/commit/432e660d0cf65d94e390d9d1f0043d03c1381061))
+
+
+### Code Refactoring
+
+* **dialog:** match native `&lt;dialog&gt;` and fix spacing ([2996a8b](https://github.com/material-components/material-web/commit/2996a8b8266ac721e66d88fce9b1097e23f8ff49))
+* **icon:** remove css custom props from icon and apply values directly on host ([ff60a88](https://github.com/material-components/material-web/commit/ff60a88843f901eb553e271fb5a786d6439935c8))
+* **list,menu:** add href to (list|menu)-item and remove (menu|list)-item-link ([09cb6da](https://github.com/material-components/material-web/commit/09cb6da8fb0335494df04f8310242d3248507b40))
+* **menu:** events no longer subclass Event but rather use CustomEvent ([043d548](https://github.com/material-components/material-web/commit/043d5482702620fe36f87255c74b17bb76d10554))
+
 ## [1.0.0-pre.14](https://github.com/material-components/material-web/compare/v1.0.0-pre.13...v1.0.0-pre.14) (2023-07-24)
 
 
