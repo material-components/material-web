@@ -57,7 +57,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   :host([touch-target='wrapper']) {
-    margin: calc((48px - var(--_icon-size)) / 2);
+    margin: max(0px, ((48px - var(--_icon-size)) / 2));
   }
 
   .container {
