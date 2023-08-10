@@ -25,6 +25,7 @@ const checkbox: MaterialStoryInit<StoryKnobs> = {
         ?checked=${checked}
         ?disabled=${disabled}
         ?indeterminate=${indeterminate}
+        touch-target="wrapper"
       ></md-checkbox>
     `;
   },
@@ -52,6 +53,7 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
           <md-checkbox
             ?disabled=${disabled}
             aria-label="Cats"
+            touch-target="wrapper"
           ></md-checkbox>
           <span aria-hidden="true">Cats</span>
         </label>
@@ -60,6 +62,7 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
             checked
             ?disabled=${disabled}
             aria-label="dogs"
+            touch-target="wrapper"
           ></md-checkbox>
           <span aria-hidden="true">Dogs</span>
         </label>
@@ -68,6 +71,7 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
             indeterminate
             ?disabled=${disabled}
             aria-label="Birds"
+            touch-target="wrapper"
           ></md-checkbox>
           <span aria-hidden="true">Birds</span>
         </label>
