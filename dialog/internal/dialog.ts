@@ -209,7 +209,7 @@ export class Dialog extends LitElement {
           @click=${this.handleContentClick}
         >
           <div class="headline">
-            <div class="icon">
+            <div class="icon" aria-hidden="true">
               <slot name="icon" @slotchange=${this.handleIconChange}></slot>
             </div>
             <h2 id="headline" aria-hidden=${!this.hasHeadline || nothing}>

@@ -24,17 +24,18 @@ export interface StoryKnobs {
   supportingText: string;
 }
 
-function clickHandler(event: Event) {
+function showDialog(event: Event) {
   ((event.target as Element).nextElementSibling as MdDialog)?.show();
 }
 
-
 const standard: MaterialStoryInit<StoryKnobs> = {
-  name: 'Standard',
+  name: 'Dialog',
   render({icon, headline, supportingText}) {
     return html`
-      <md-filled-button @click=${clickHandler}>Open</md-filled-button>
-      <md-dialog>
+      <md-filled-button @click=${showDialog}
+          aria-label="Open a dialog">Open</md-filled-button>
+
+      <md-dialog aria-label=${headline ? nothing : 'A simple dialog'}>
         ${icon ? html`<md-icon slot="icon">${icon}</md-icon>` : nothing}
         <div slot="headline">${headline}</div>
         <form id="form" slot="content" method="dialog">
@@ -53,7 +54,9 @@ const alert: MaterialStoryInit<StoryKnobs> = {
   name: 'Alert',
   render() {
     return html`
-      <md-filled-button @click=${clickHandler}>Open</md-filled-button>
+      <md-filled-button @click=${showDialog}
+          aria-label="Open an alert dialog">Alert</md-filled-button>
+
       <md-dialog type="alert">
         <div slot="headline">Alert dialog</div>
         <form id="form" slot="content" method="dialog">
@@ -72,16 +75,20 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
   name: 'Confirm',
   render() {
     return html`
-      <md-filled-button @click=${clickHandler}>Open</md-filled-button>
+      <md-filled-button @click=${showDialog}
+          aria-label="Open a confirmation dialog">Confirm</md-filled-button>
+
       <md-dialog style="max-width: 320px;">
         <div slot="headline">Permanently delete?</div>
         <md-icon slot="icon">delete_outline</md-icon>
         <form id="form" slot="content" method="dialog">
-          Deleting the selected photos will also remove them from all synced devices.
+          Deleting the selected photos will also remove them from all synced
+          devices.
         </form>
         <div slot="actions">
           <md-text-button form="form" value="delete">Delete</md-text-button>
-          <md-filled-tonal-button autofocus form="form" value="cancel">Cancel</md-filled-tonal-button>
+          <md-filled-tonal-button form="form" value="cancel"
+              autofocus>Cancel</md-filled-tonal-button>
         </div>
       </md-dialog>
     `;
@@ -93,23 +100,29 @@ const choose: MaterialStoryInit<StoryKnobs> = {
   styles: css`
     label {
       display: flex;
-      gap: 8px;
       align-items: center;
     }
-    `,
+  `,
   render() {
     return html`
-      <md-filled-button @click=${clickHandler}>Open</md-filled-button>
+      <md-filled-button @click=${showDialog}
+          aria-label="Open a choice dialog">Choice</md-filled-button>
+
       <md-dialog>
         <div slot="headline">Choose your favorite pet</div>
         <form id="form" slot="content" method="dialog">
-          <div>
-            This is a standard choice dialog. These dialogs give users the ability to make
-            a decision and confirm it. This gives them a chance to change their minds if necessary.
-          </div>
-          <label><md-radio name="pet" value="cats" touch-target="wrapper" checked></md-radio> Cats</label>
-          <label><md-radio name="pet" value="dogs" touch-target="wrapper"></md-radio> Dogs</label>
-          <label><md-radio name="pet" value="birds" touch-target="wrapper"></md-radio> Birds</label>
+          <label>
+            <md-radio name="pet" value="cats" aria-label="Cats" touch-target="wrapper" checked></md-radio>
+            <span aria-hidden="true">Cats</span>
+          </label>
+          <label>
+            <md-radio name="pet" value="dogs" aria-label="Dogs" touch-target="wrapper"></md-radio>
+            <span aria-hidden="true">Dogs</span>
+          </label>
+          <label>
+            <md-radio name="pet" value="birds" aria-label="Birds" touch-target="wrapper"></md-radio>
+            <span aria-hidden="true">Birds</span>
+          </label>
         </form>
         <div slot="actions">
           <md-text-button form="form" value="cancel">Cancel</md-text-button>
@@ -121,7 +134,7 @@ const choose: MaterialStoryInit<StoryKnobs> = {
 };
 
 const contacts: MaterialStoryInit<StoryKnobs> = {
-  name: 'Contacts',
+  name: 'Form',
   styles: css`
     .contacts {
       min-width: calc(100vw - 212px);
@@ -148,13 +161,16 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
 
     .contact-row > * {
       flex: 1;
-    }`,
+    }
+  `,
   render() {
     return html`
-      <md-filled-button @click=${clickHandler}>Open</md-filled-button>
+      <md-filled-button @click=${showDialog}
+          aria-label="Open a form dialog">Form</md-filled-button>
+
       <md-dialog class="contacts">
         <span slot="headline">
-          <md-icon-button form="form" value="close">
+          <md-icon-button form="form" value="close" aria-label="Close dialog">
             <md-icon>close</md-icon>
           </md-icon-button>
           <span class="headline">Create new contact</span>
@@ -172,6 +188,8 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           <md-filled-text-field label="Phone"></md-filled-text-field>
         </form>
         <div slot="actions">
+          <md-text-button form="form" value="reset" type="reset">Reset</md-text-button>
+          <div style="flex: 1"></div>
           <md-text-button form="form" value="cancel">Cancel</md-text-button>
           <md-text-button form="form" value="save">Save</md-text-button>
         </div>
@@ -184,11 +202,17 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
   name: 'Floating sheet',
   render() {
     return html`
-      <md-filled-button @click=${clickHandler}>Open</md-filled-button>
+      <md-filled-button
+        @click=${showDialog}
+        aria-label="Open a floating sheet"
+      >
+        Floating sheet
+      </md-filled-button>
+
       <md-dialog>
         <span slot="headline">
           <span style="flex: 1;">Floating Sheet</span>
-          <md-icon-button form="form" value="close">
+          <md-icon-button form="form" value="close" aria-label="Close dialog">
             <md-icon>close</md-icon>
           </md-icon-button>
         </span>
