@@ -19,7 +19,6 @@ export interface StoryKnobs {
   lowered: boolean;
   size: FabSize|undefined;
   variant: FabVariant|undefined;
-  reducedTouchTarget: boolean;
   hasIcon: boolean;
 }
 
@@ -32,12 +31,11 @@ const styles = css`
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: '<md-fab>',
   styles,
-  render({icon, label, lowered, size, variant, reducedTouchTarget, hasIcon}) {
+  render({icon, label, lowered, size, variant, hasIcon}) {
     return html`
       <md-fab
           class="fab"
           .variant=${variant!}
-          .reducedTouchTarget=${reducedTouchTarget}
           .lowered=${lowered}
           .label=${label}
           .size=${size!}
@@ -51,11 +49,10 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 const branded: MaterialStoryInit<StoryKnobs> = {
   name: '<md-branded-fab>',
   styles,
-  render({label, lowered, size, reducedTouchTarget, hasIcon}) {
+  render({label, lowered, size, hasIcon}) {
     return html`
       <md-branded-fab
           class="fab"
-          .reducedTouchTarget=${reducedTouchTarget}
           .lowered=${lowered}
           .label=${label}
           .size=${size!}

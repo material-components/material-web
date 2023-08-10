@@ -102,6 +102,10 @@
     );
   }
 
+  :host([size='small'][touch-target='wrapper']) {
+    margin: max(0px, 48px - var(--_small-container-height));
+  }
+
   .fab {
     @include color(
       (

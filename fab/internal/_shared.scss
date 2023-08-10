@@ -28,6 +28,14 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     display: inline-flex;
   }
 
+  :host([size='medium'][touch-target='wrapper']) {
+    margin: max(0px, 48px - var(--_container-height));
+  }
+
+  :host([size='large'][touch-target='wrapper']) {
+    margin: max(0px, 48px - var(--_large-container-height));
+  }
+
   .fab,
   .icon,
   .icon ::slotted(*) {
@@ -149,6 +157,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     left: 50%;
     width: 48px;
     transform: translate(-50%, -50%);
+  }
+
+  :host([touch-target='none']) .touch-target {
+    display: none;
   }
 
   md-elevation,

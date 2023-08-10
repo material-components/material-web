@@ -38,7 +38,6 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Fab', [
       ]
     })
   }),
-  new Knob('reducedTouchTarget', {defaultValue: false, ui: boolInput()}),
   new Knob('hasIcon', {defaultValue: true, ui: boolInput()}),
 ]);
 

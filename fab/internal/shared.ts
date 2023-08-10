@@ -38,7 +38,7 @@ export abstract class SharedFab extends LitElement {
    * NOTE: Branded FABs cannot be sized to `small`, and Extended FABs do not
    * have different sizes.
    */
-  @property() size: FabSize = 'medium';
+  @property({reflect: true}) size: FabSize = 'medium';
 
   /**
    * The text to display on the FAB.
@@ -58,12 +58,6 @@ export abstract class SharedFab extends LitElement {
    * and non-extended FABs.
    */
   @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
-
-  /**
-   * Lowers the FAB's elevation and places it into the `lowered` state.
-   */
-  @property({type: Boolean, attribute: 'reduced-touch-target'})
-  reducedTouchTarget = false;
 
   protected override render() {
     // Needed for closure conformance
@@ -95,8 +89,7 @@ export abstract class SharedFab extends LitElement {
   }
 
   private renderTouchTarget() {
-    return this.reducedTouchTarget ? html`` :
-                                     html`<div class="touch-target"></div>`;
+    return html`<div class="touch-target"></div>`;
   }
 
   private renderLabel() {

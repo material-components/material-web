@@ -242,7 +242,7 @@ small, medium, and large](images/fab/usage-sizes.webp)
 <!-- catalog-include "figures/fab/usage-sizes.html" -->
 
 ```html
-<md-fab size="small" reduced-touch-target aria-label="Edit">
+<md-fab size="small" touch-target="none" aria-label="Edit">
   <md-icon slot="icon">edit</md-icon>
 </md-fab>
 <md-fab size="small" aria-label="Edit">

@@ -45,7 +45,6 @@ describe('<md-fab>', () => {
       const {harness} = await setupTest();
       expect(harness.element).toBeInstanceOf(MdFab);
       expect(harness.element.lowered).toEqual(false);
-      expect(harness.element.reducedTouchTarget).toEqual(false);
       expect(harness.element.label).toEqual('');
       expect(harness.element.variant).toEqual('surface');
       expect(harness.element.size).toEqual('medium');
