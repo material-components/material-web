@@ -101,9 +101,18 @@ const choose: MaterialStoryInit<StoryKnobs> = {
           This is a standard choice dialog. These dialogs give users the ability to make
           a decision and confirm it. This gives them a chance to change their minds if necessary.
         </p>
-        <label><md-radio name="pet" value="cats" checked></md-radio> Cats</label>
-        <label><md-radio name="pet" value="dogs"></md-radio> Dogs</label>
-        <label><md-radio name="pet" value="birds"></md-radio> Birds</label>
+        <label>
+          <md-radio name="pet" value="cats" touch-target="wrapper"
+              checked></md-radio> Cats
+        </label>
+        <label>
+          <md-radio name="pet" value="dogs"
+              touch-target="wrapper"></md-radio> Dogs
+        </label>
+        <label>
+          <md-radio name="pet" value="birds"
+              touch-target="wrapper"></md-radio> Birds
+        </label>
         <md-text-button slot="footer" dialog-action="cancel">Cancel</md-text-button>
         <md-text-button slot="footer" autofocus dialog-action="ok">OK</md-text-button>
       </md-dialog>`;

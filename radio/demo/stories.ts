@@ -22,18 +22,21 @@ const standard: MaterialStoryInit<StoryKnobs> = {
       <md-radio
         name="story1"
         value="radioA"
+        touch-target="wrapper"
         .checked=${checked === '0'}
         .disabled="${disabled || false}">
       </md-radio>
       <md-radio
         name="story1"
         value="radioB"
+        touch-target="wrapper"
         .checked=${checked === '1'}
         .disabled="${disabled || false}">
       </md-radio>
       <md-radio
         name="story1"
         value="radioC"
+        touch-target="wrapper"
         .checked=${checked === '2'}
         .disabled="${disabled || false}">
       </md-radio>
@@ -51,6 +54,7 @@ const labeled: MaterialStoryInit<StoryKnobs> = {
         <md-radio
           name="story2"
           value="radioA"
+          touch-target="wrapper"
           .checked=${checked === '0'}
           .disabled="${disabled || false}">
         </md-radio>
@@ -60,6 +64,7 @@ const labeled: MaterialStoryInit<StoryKnobs> = {
         <md-radio
           name="story2"
           value="radioB"
+          touch-target="wrapper"
           .checked=${checked === '1'}
           .disabled="${disabled || false}">
         </md-radio>
@@ -69,6 +74,7 @@ const labeled: MaterialStoryInit<StoryKnobs> = {
         <md-radio
           name="story2"
           value="radioC"
+          touch-target="wrapper"
           .checked=${checked === '2'}
           .disabled="${disabled || false}">
         </md-radio>
