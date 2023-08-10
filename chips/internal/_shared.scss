@@ -31,6 +31,10 @@
     );
   }
 
+  :host([touch-target='wrapper']) {
+    margin: max(0px, (48px - var(--_container-height)) / 2) 0;
+  }
+
   md-focus-ring {
     @include focus-ring.theme(
       (
@@ -97,6 +101,10 @@
     position: absolute;
     transform: translateY(-50%);
     width: 100%;
+  }
+
+  :host([touch-target='none']) .touch {
+    display: none;
   }
 
   // Outline, separate node for disabled opacity changes
