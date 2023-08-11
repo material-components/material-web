@@ -25,6 +25,10 @@
     justify-content: center;
   }
 
+  :host([touch-target='wrapper']) {
+    margin: max(0px, (48px - var(--_container-size)) / 2);
+  }
+
   md-focus-ring {
     @include focus-ring.theme(
       (
@@ -49,6 +53,7 @@
     display: flex;
     justify-content: center;
     outline: none;
+    padding: 0;
     position: relative;
     text-decoration: none;
     user-select: none;
@@ -99,5 +104,9 @@
     left: 50%;
     width: 48px;
     transform: translate(-50%, -50%);
+  }
+
+  :host([touch-target='none']) .touch {
+    display: none;
   }
 }

@@ -39,6 +39,10 @@
     width: var(--_state-layer-size);
   }
 
+  :host([touch-target='wrapper']) {
+    margin: max(0px, (48px - var(--_state-layer-size)) / 2);
+  }
+
   md-focus-ring {
     @include focus-ring.theme(
       (
