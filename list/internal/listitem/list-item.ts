@@ -131,7 +131,7 @@ export class ListItemEl extends LitElement implements ListItem {
 
   protected override render() {
     return this.renderListItem(html`
-      <div class="content-wrapper">
+      <div class="container">
         ${this.renderStart()}
         ${this.renderBody()}
         ${this.renderEnd()}
