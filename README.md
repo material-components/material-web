@@ -8,7 +8,7 @@ is a UI toolkit to build customizable and accessible web applications.
 Google's open-source design system.
 
 > Tip: Using Angular? We recommend using
-> [Angular Material](https://material.angular.io/) <!-- {.external} --> components
+> [Angular Material](https://material.angular.io/)<!-- {.external} --> components
 > instead.
 
 **Resources**
