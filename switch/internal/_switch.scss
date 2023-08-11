@@ -89,6 +89,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  :host([touch-target='wrapper']) {
+    margin: max(0px, (48px - var(--_track-height)) / 2) 0px;
+  }
+
   md-focus-ring {
     @include focus-ring.theme(
       (
@@ -125,7 +129,11 @@
   .touch {
     position: absolute;
     height: 48px;
-    width: 48px;
+    width: 100%;
+  }
+
+  :host([touch-target='none']) .touch {
+    display: none;
   }
 
   // Disabled

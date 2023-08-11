@@ -148,12 +148,12 @@ export class Switch extends LitElement {
       'with-icon': this.icons || (this.showOnlySelectedIcon && this.selected),
     };
     return html`
+      ${this.renderTouchTarget()}
       <span class="handle-container">
         <md-ripple for="switch" ?disabled="${this.disabled}"></md-ripple>
         <span class="handle ${classMap(classes)}">
           ${this.shouldShowIcons() ? this.renderIcons() : html``}
         </span>
-        ${this.renderTouchTarget()}
       </span>
     `;
   }
