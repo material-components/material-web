@@ -1,14 +1,19 @@
 # Material Web
 
-Material Web is Google’s UI toolkit for building beautiful, accessible web
-applications.
+Material
+[web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)<!-- {.external} -->
+is a UI toolkit to build customizable and accessible web applications.
 
-Material Web is implemented as a collection of
-[web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
-[Material 3](https://m3.material.io/) is the latest version of Google’s
-open-source design system.
+[Material 3](https://m3.material.io/)<!-- {.external} --> is the latest version of
+Google's open-source design system.
 
-> Tip: Check out the [quick start guide](docs/quick-start.md) to jump in<!-- external-only-start --> as well as the [documentation site](https://material-web.dev)<!-- external-only-end -->.
+> Tip: Using Angular? We recommend using
+> [Angular Material](https://material.angular.io/) <!-- {.external} --> components
+> instead.
+
+**Resources**
+
+-   [Introduction](docs/intro.md)
 
 ## Roadmap
 
