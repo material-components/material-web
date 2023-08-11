@@ -49,31 +49,31 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
   render({disabled}) {
     return html`
       <div class="column" role="group" aria-label="Animals">
-        <label role="presentation">
+        <label>
           <md-checkbox
             ?disabled=${disabled}
             aria-label="Cats"
             touch-target="wrapper"
           ></md-checkbox>
-          <span aria-hidden="true">Cats</span>
+          Cats
         </label>
-        <label role="presentation">
+        <label>
           <md-checkbox
             checked
             ?disabled=${disabled}
             aria-label="dogs"
             touch-target="wrapper"
           ></md-checkbox>
-          <span aria-hidden="true">Dogs</span>
+          Dogs
         </label>
-        <label role="presentation">
+        <label>
           <md-checkbox
             indeterminate
             ?disabled=${disabled}
             aria-label="Birds"
             touch-target="wrapper"
           ></md-checkbox>
-          <span aria-hidden="true">Birds</span>
+          Birds
         </label>
       </div>
     `;

@@ -8,7 +8,7 @@ import './index.js';
 import './material-collection.js';
 
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
-import {boolInput, Knob, textInput} from './index.js';
+import {boolInput, Knob} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 
@@ -18,10 +18,6 @@ const collection =
       new Knob('selected', {defaultValue: false, ui: boolInput()}),
       new Knob('icons', {defaultValue: false, ui: boolInput()}),
       new Knob('showOnlySelectedIcon', {defaultValue: false, ui: boolInput()}),
-      new Knob('value', {defaultValue: 'on', ui: textInput()}),
-      new Knob('name', {defaultValue: '', ui: textInput()}),
-      new Knob('aria-label', {defaultValue: '', ui: textInput()}),
-      new Knob('aria-labelledby', {defaultValue: '', ui: textInput()}),
     ]);
 
 collection.addStories(...materialInitsToStoryInits(stories));
