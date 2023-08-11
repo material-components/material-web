@@ -108,7 +108,6 @@ export class Tab extends LitElement {
         <md-focus-ring part="focus-ring" inward></md-focus-ring>
         <md-elevation></md-elevation>
         <md-ripple ?disabled=${this.disabled}></md-ripple>
-        <span class="touch"></span>
         <div class="content ${classMap(contentClasses)}">
           <slot name="icon"></slot>
           <span class="label">

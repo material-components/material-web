@@ -96,15 +96,6 @@
     border-radius: var(--_container-shape);
   }
 
-  .touch {
-    position: absolute;
-    top: 50%;
-    height: 48px;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-  }
-
   .content {
     position: relative;
     box-sizing: border-box;
