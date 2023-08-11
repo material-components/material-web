@@ -77,9 +77,9 @@ Checkboxes may be standalone, pre-checked, or indeterminate.
   <figure
       style="justify-content:center;"
       aria-label="Three checkboxes in a row that are unselected, selected, and indeterminate">
-    <md-checkbox></md-checkbox>
-    <md-checkbox checked></md-checkbox>
-    <md-checkbox indeterminate></md-checkbox>
+    <md-checkbox touch-target="wrapper"></md-checkbox>
+    <md-checkbox touch-target="wrapper" checked></md-checkbox>
+    <md-checkbox touch-target="wrapper" indeterminate></md-checkbox>
   </figure>
 </div>
 
@@ -111,10 +111,10 @@ Associate a label with a checkbox using the `<label>` element.
       style="justify-content:center;align-items:center;"
       aria-label="Two checkboxes with labels">
     <label style="display:flex;align-items:center;">
-      <md-checkbox></md-checkbox>
+      <md-checkbox  touch-target="wrapper"></md-checkbox>
       Checkbox one
     </label>
-    <md-checkbox id="checkbox-two"></md-checkbox>
+    <md-checkbox id="checkbox-two"  touch-target="wrapper"></md-checkbox>
     <label for="checkbox-two">Checkbox two</label>
   </figure>
 </div>
@@ -198,8 +198,8 @@ Token                                    | Default value
     }
   </style>
 
-<md-checkbox></md-checkbox>
-<md-checkbox checked></md-checkbox>
+<md-checkbox touch-target="wrapper"></md-checkbox>
+<md-checkbox touch-target="wrapper" checked></md-checkbox>
 
   </figure>
 </div>
