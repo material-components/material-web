@@ -29,9 +29,12 @@ large screen layouts and design tokens.
 ## What are web components?
 
 [Web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)<!-- {.external} -->
-are custom HTML elements with encapsulated styles and behavior. Many components
-in this library are drop-in replacements for browser elements like `<button>`
-and `<input>`.
+are custom HTML elements with encapsulated styles and behavior. They work across
+many different frameworks (such as Lit, React, Vue, and Svelte) as well as web
+environments (such as Eleventy, Wordpress, and Ruby on Rails).
+
+Many components in
+this library are drop-in replacements for browser elements like `<button>` and `<input>`.
 
 ```html
 <!-- Browser elements -->
