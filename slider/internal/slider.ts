@@ -22,7 +22,6 @@ import {MdRipple} from '../../ripple/ripple.js';
 // Disable warning for classMap with destructuring
 // tslint:disable:quoted-properties-on-dictionary
 
-
 /**
  * Slider component.
  */
@@ -72,31 +71,43 @@ export class Slider extends LitElement {
    * An optional label for the slider's value displayed when range is
    * false; if not set, the label is the value itself.
    */
-  @property({attribute: 'value-label'}) valueLabel?: string;
+  @property({attribute: 'value-label'}) valueLabel = '';
 
   /**
    * An optional label for the slider's start value displayed when
    * range is true; if not set, the label is the valueStart itself.
    */
-  @property({attribute: 'value-label-start'}) valueLabelStart?: string;
+  @property({attribute: 'value-label-start'}) valueLabelStart = '';
 
   /**
    * An optional label for the slider's end value displayed when
    * range is true; if not set, the label is the valueEnd itself.
    */
-  @property({attribute: 'value-label-end'}) valueLabelEnd?: string;
+  @property({attribute: 'value-label-end'}) valueLabelEnd = '';
 
   /**
-   * Aria label for the slider's start value displayed when
+   * Aria label for the slider's start handle displayed when
    * range is true.
    */
-  @property({attribute: 'aria-label-start'}) ariaLabelStart?: string;
+  @property({attribute: 'aria-label-start'}) ariaLabelStart = '';
 
   /**
-   * Aria label for the slider's end value displayed when
+   * Aria value text for the slider's start value displayed when
    * range is true.
    */
-  @property({attribute: 'aria-label-end'}) ariaLabelEnd?: string;
+  @property({attribute: 'aria-valuetext-start'}) ariaValueTextStart = '';
+
+  /**
+   * Aria label for the slider's end handle displayed when
+   * range is true.
+   */
+  @property({attribute: 'aria-label-end'}) ariaLabelEnd = '';
+
+  /**
+   * Aria value text for the slider's end value displayed when
+   * range is true.
+   */
+  @property({attribute: 'aria-valuetext-end'}) ariaValueTextEnd = '';
 
   /**
    * The step between values.
@@ -190,6 +201,45 @@ export class Slider extends LitElement {
 
   @state() private renderValueStart?: number;
   @state() private renderValueEnd?: number;
+
+  // Note: start aria-* properties are only applied when range=true, which is
+  // why they do not need to handle both cases.
+  private get renderAriaLabelStart() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
+    return this.ariaLabelStart || ariaLabel && `${ariaLabel} start` ||
+        this.valueLabelStart || String(this.valueStart);
+  }
+
+  private get renderAriaValueTextStart() {
+    return this.ariaValueTextStart || this.valueLabelStart ||
+        String(this.valueStart);
+  }
+
+  // Note: end aria-* properties are applied for single and range sliders, which
+  // is why it needs to handle `this.range` (while start aria-* properties do
+  // not).
+  private get renderAriaLabelEnd() {
+    // Needed for closure conformance
+    const {ariaLabel} = this as ARIAMixinStrict;
+    if (this.range) {
+      return this.ariaLabelEnd || ariaLabel && `${ariaLabel} end` ||
+          this.valueLabelEnd || String(this.valueEnd);
+    }
+
+    return ariaLabel || this.valueLabel || String(this.value);
+  }
+
+  private get renderAriaValueTextEnd() {
+    if (this.range) {
+      return this.ariaValueTextEnd || this.valueLabelEnd ||
+          String(this.valueEnd);
+    }
+
+    // Needed for conformance
+    const {ariaValueText} = this as ARIAMixinStrict;
+    return ariaValueText || this.valueLabel || String(this.value);
+  }
 
   // used in synthetic events generated to control ripple hover state.
   private ripplePointerId = 1;
@@ -308,20 +358,26 @@ export class Slider extends LitElement {
     const containerClasses = {ranged: this.range};
 
     // optional label values to show in place of the value.
-    const labelStart = this.valueLabelStart ?? String(this.renderValueStart);
-    const labelEnd = (this.range ? this.valueLabelEnd : this.valueLabel) ??
+    const labelStart = this.valueLabelStart || String(this.renderValueStart);
+    const labelEnd = (this.range ? this.valueLabelEnd : this.valueLabel) ||
         String(this.renderValueEnd);
 
     const inputStartProps = {
       start: true,
       value: this.renderValueStart,
-      label: labelStart
+      ariaLabel: this.renderAriaLabelStart,
+      ariaValueText: this.renderAriaValueTextStart,
+      ariaMin: this.min,
+      ariaMax: this.valueEnd ?? this.max,
     };
 
     const inputEndProps = {
       start: false,
       value: this.renderValueEnd,
-      label: labelEnd
+      ariaLabel: this.renderAriaLabelEnd,
+      ariaValueText: this.renderAriaValueTextEnd,
+      ariaMin: this.range ? this.valueStart ?? this.min : this.min,
+      ariaMax: this.max,
     };
 
     const handleStartProps = {
@@ -365,7 +421,7 @@ export class Slider extends LitElement {
   }
 
   private renderLabel(value: string) {
-    return html`<div class="label">
+    return html`<div class="label" aria-hidden="true">
         <span class="labelContent" part="label">${value}</span>
       </div>`;
   }
@@ -389,16 +445,17 @@ export class Slider extends LitElement {
     </div>`;
   }
 
-  private renderInput({start, value, label}:
-                          {start: boolean; value?: number; label: string;}) {
+  private renderInput(
+      {start, value, ariaLabel, ariaValueText, ariaMin, ariaMax}: {
+        start: boolean;
+        value?: number; ariaLabel: string; ariaValueText: string;
+        ariaMin: number;
+        ariaMax: number;
+      }) {
+    // Slider requires min/max set to the overall min/max for both inputs.
+    // This is reported to screen readers, which is why we need aria-valuemin
+    // and aria-valuemax.
     const name = start ? `start` : `end`;
-    // when ranged, ensure announcement includes value info.
-    // Needed for closure conformance
-    let {ariaLabel} = this as ARIAMixinStrict;
-    const {range, ariaLabelStart, ariaLabelEnd} = this;
-    if (range) {
-      ariaLabel = (start ? ariaLabelStart : ariaLabelEnd) ?? null;
-    }
     return html`<input type="range"
       class="${classMap({
       start,
@@ -417,12 +474,14 @@ export class Slider extends LitElement {
       id=${name}
       .disabled=${this.disabled}
       .min=${String(this.min)}
+      aria-valuemin=${ariaMin}
       .max=${String(this.max)}
+      aria-valuemax=${ariaMax}
       .step=${String(this.step)}
       .value=${String(value)}
       .tabIndex=${start ? 1 : 0}
       aria-label=${ariaLabel || nothing}
-      aria-valuetext=${label}>`;
+      aria-valuetext=${ariaValueText}>`;
   }
 
   private async toggleRippleHover(
@@ -483,7 +542,11 @@ export class Slider extends LitElement {
   }
 
   private async handleUp(event: PointerEvent) {
-    const {target, values, flipped} = this.action ?? {};
+    if (!this.action) {
+      return;
+    }
+
+    const {target, values, flipped} = this.action;
     //  Async here for Firefox because input can be after pointerup
     //  when value is calmped.
     await new Promise(requestAnimationFrame);
@@ -493,7 +556,7 @@ export class Slider extends LitElement {
       target.focus();
       // When action is flipped, change must be fired manually since the
       // real event target did not change.
-      if (flipped && target.valueAsNumber !== values!.get(target)!) {
+      if (flipped && target.valueAsNumber !== values.get(target)!) {
         target.dispatchEvent(new Event('change', {bubbles: true}));
       }
     }
@@ -532,7 +595,11 @@ export class Slider extends LitElement {
   }
 
   private needsClamping() {
-    const {target, fixed} = this.action!;
+    if (!this.action) {
+      return false;
+    }
+
+    const {target, fixed} = this.action;
     const isStart = target === this.inputStart;
     return isStart ? target.valueAsNumber > fixed.valueAsNumber :
                      target.valueAsNumber < fixed.valueAsNumber;
@@ -542,7 +609,11 @@ export class Slider extends LitElement {
   // start > end, avoid clamping and "flip" to use the other input
   // as the action target.
   private isActionFlipped() {
-    const action = this.action!;
+    const {action} = this;
+    if (!action) {
+      return false;
+    }
+
     const {target, fixed, values} = action;
     if (action.canFlip) {
       const coincident = values.get(target) === values.get(fixed);
@@ -559,7 +630,11 @@ export class Slider extends LitElement {
   // when flipped, apply the drag input to the flipped target and reset
   // the actual target.
   private flipAction() {
-    const {target, fixed, values} = this.action!;
+    if (!this.action) {
+      return false;
+    }
+
+    const {target, fixed, values} = this.action;
     const changed = target.valueAsNumber !== fixed.valueAsNumber;
     target.valueAsNumber = fixed.valueAsNumber;
     fixed.valueAsNumber = values.get(fixed)!;
@@ -568,10 +643,10 @@ export class Slider extends LitElement {
 
   // clamp such that start does not move beyond end and visa versa.
   private clampAction() {
-    if (!this.needsClamping()) {
+    if (!this.needsClamping() || !this.action) {
       return false;
     }
-    const {target, fixed} = this.action!;
+    const {target, fixed} = this.action;
     target.valueAsNumber = fixed.valueAsNumber;
     return true;
   }
@@ -581,7 +656,8 @@ export class Slider extends LitElement {
     if (this.isRedisptchingEvent) {
       return;
     }
-    let stopPropagation = false, redispatch = false;
+    let stopPropagation = false;
+    let redispatch = false;
     if (this.range) {
       if (this.isActionFlipped()) {
         stopPropagation = true;
@@ -592,7 +668,7 @@ export class Slider extends LitElement {
         redispatch = false;
       }
     }
-    const {target} = this.action!;
+    const target = event.target as HTMLInputElement;
     this.updateOnTop(target);
     // update value only on interaction
     if (this.range) {

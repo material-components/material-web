@@ -6,114 +6,125 @@
 
 import '@material/web/slider/slider.js';
 
-import {MaterialStoryInit} from './material-collection.js';
+import {labelStyles, MaterialStoryInit} from './material-collection.js';
 import {MdSlider} from '@material/web/slider/slider.js';
 import {css, html} from 'lit';
 
 /** Knob types for slider stories. */
 export interface StoryKnobs {
-  value: number;
-  valueStart: number;
-  valueEnd: number;
-  min: number;
-  max: number;
-  step: number;
-  range: boolean;
-  ticks: boolean;
-  labeled: boolean;
   disabled: boolean;
 }
 
-const styles = css`
+const sharedStyles = css`
   label {
-    font-family: Roboto, 'Google Sans', system-ui;
-    color: var(--mdc-typography-headline-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    place-items: flex-start;
   }
 `;
 
-const standard: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-slider>',
-  styles,
-  render(knobs) {
+const single: MaterialStoryInit<StoryKnobs> = {
+  name: 'Single point sliders',
+  styles: [labelStyles, sharedStyles],
+  render({disabled}) {
     return html`
-      <label>label
-        <md-slider
-            .value=${knobs.value}
-            .valueStart=${knobs.valueStart}
-            .valueEnd=${knobs.valueEnd}
-            .min=${knobs.min}
-            .max=${knobs.max}
-            .step=${knobs.step ?? 1}
-            .range=${knobs.range}
-            .ticks=${knobs.ticks}
-            .labeled=${knobs.labeled ?? false}
-            .disabled=${knobs.disabled ?? false}
+      <label>
+        Continuous
+        <md-slider ?disabled=${disabled ?? false}
+          aria-label="An example continuous slider"
         ></md-slider>
-      </label>`;
+      </label>
+
+      <label>
+        Labeled
+        <md-slider labeled ?disabled=${disabled ?? false}
+          aria-label="An example slider with a label"
+        ></md-slider>
+      </label>
+
+      <label>
+        Tick marks
+        <md-slider labeled step="10" ticks ?disabled=${disabled ?? false}
+          aria-label="An example slider with tick marks"
+        ></md-slider>
+      </label>
+    `;
   }
 };
 
-const multiValue: MaterialStoryInit<StoryKnobs> = {
-  name: 'multi-value',
-  styles,
-  render(knobs) {
+const range: MaterialStoryInit<StoryKnobs> = {
+  name: 'Range sliders',
+  styles: [labelStyles, sharedStyles],
+  render({disabled}) {
     return html`
-      <label>label
-        <md-slider
-          range
-          .valueStart=${(knobs.valueStart)}
-          .valueEnd=${(knobs.valueEnd)}
-          .min=${knobs.min}
-          .max=${knobs.max}
-          .step=${knobs.step ?? 1}
-          .ticks=${knobs.ticks}
-          .labeled=${knobs.labeled ?? true}
-          .disabled=${knobs.disabled ?? false}
+      <label>
+        Range
+        <md-slider range ?disabled=${disabled ?? false}
+          aria-label="An example range slider"
         ></md-slider>
-      </label>`;
+      </label>
+
+      <label>
+        Labeled
+        <md-slider labeled range ?disabled=${disabled ?? false}
+          aria-label="An example range slider with labels"
+        ></md-slider>
+      </label>
+
+      <label>
+        Tick marks
+        <md-slider labeled range step="10" ticks ?disabled=${disabled ?? false}
+          value-start="30" value-end="70"
+          aria-label="An example range slider with tick marks"
+        ></md-slider>
+      </label>
+    `;
   }
 };
 
 const customStyling: MaterialStoryInit<StoryKnobs> = {
-  name: 'custom styling',
+  name: 'Custom styling',
   styles: [
-    styles,
+    labelStyles,
+    sharedStyles,
     css`
-    md-slider {
-      --myColor: hsl(180, 15%, 25%);
-      --myInactiveColor: hsl(180, 15%, 75%);
+      md-slider {
+        --myColor: hsl(180, 15%, 25%);
+        --myInactiveColor: hsl(180, 15%, 75%);
 
-      /* handle */
-      --md-slider-handle-shape: 4px;
-      --md-slider-handle-height: 12px;
-      --md-slider-handle-width: 20px;
-      --md-slider-handle-color: var(--myColor);
-      --md-slider-focus-handle-color: yellow;
-      --md-slider-hover-handle-color: green;
-      --md-slider-pressed-handle-color: pink;
+        /* handle */
+        --md-slider-handle-shape: 4px;
+        --md-slider-handle-height: 12px;
+        --md-slider-handle-width: 20px;
+        --md-slider-handle-color: var(--myColor);
+        --md-slider-focus-handle-color: yellow;
+        --md-slider-hover-handle-color: green;
+        --md-slider-pressed-handle-color: pink;
 
-      /* label */
-      --md-slider-label-container-height: 24px;
-      --md-slider-label-container-color: var(--myColor);
-      --md-slider-label-label-text-size: 20px;
+        /* label */
+        --md-slider-label-container-height: 24px;
+        --md-slider-label-container-color: var(--myColor);
+        --md-slider-label-label-text-size: 20px;
 
-      /* track */
-      --md-slider-active-track-shape: 4px;
-      --md-slider-inactive-track-shape: 4px;
+        /* track */
+        --md-slider-active-track-shape: 4px;
+        --md-slider-inactive-track-shape: 4px;
 
-      --md-slider-active-track-height: 16px;
-      --md-slider-inactive-track-height: 16px;
+        --md-slider-active-track-height: 16px;
+        --md-slider-inactive-track-height: 16px;
 
-      --md-slider-active-track-color: var(--myInactiveColor);
-      --md-slider-inactive-track-color: var(--myInactiveColor);
+        --md-slider-active-track-color: var(--myInactiveColor);
+        --md-slider-inactive-track-color: var(--myInactiveColor);
 
-      /* state layer */
-      --md-slider-state-layer-color: var(--myColor);
-      --md-slider-hover-state-layer-color: var(--myColor);
-      --md-slider-pressed-state-layer-color: var(--myColor);
-    }`,
+        /* state layer */
+        --md-slider-state-layer-color: var(--myColor);
+        --md-slider-hover-state-layer-color: var(--myColor);
+        --md-slider-pressed-state-layer-color: var(--myColor);
+      }
+    `,
   ],
-  render(knobs) {
+  render({disabled}) {
     const labels = ['🤬', '😡', '😔', '😐', '😌', '😁', '🤪'];
     function labelFor(value: number) {
       return labels[Math.round(value * (labels.length - 1))];
@@ -128,25 +139,28 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
       target.valueLabelEnd = labelFor(fractionEnd);
     }
     return html`
-      <label>label
+      <label>
+        Custom styles
         <md-slider
+          aria-label="An example slider with custom styles"
           range
-          .valueStart=${(knobs.valueStart)}
-          .valueEnd=${(knobs.valueEnd)}
-          .valueLabelStart=${'😔'}
-          .valueLabelEnd=${'😌'}
+          value-start="2"
+          value-end="5"
+          value-label-start="😔"
+          value-label-end="😌"
           ticks
           labeled
-          .min=${knobs.min}
-          .max=${knobs.max ?? 30}
-          .step=${knobs.step ?? 1}
-          .disabled=${knobs.disabled ?? false}
+          min="0"
+          max="7"
+          step="1"
+          .disabled=${disabled ?? false}
           @pointerdown=${updateLabel}
           @input=${updateLabel}
         ></md-slider>
-      </label>`;
+      </label>
+    `;
   }
 };
 
 /** slider stories. */
-export const stories = [standard, multiValue, customStyling];
+export const stories = [single, range, customStyling];
