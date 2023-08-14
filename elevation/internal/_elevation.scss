@@ -4,27 +4,33 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../internal/sass/theme';
-@use '../../internal/sass/var';
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-elevation-values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'elevation');
-  @include theme.emit-theme-vars($tokens);
+  $supported-tokens: tokens.$md-comp-elevation-supported-tokens;
+
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-elevation-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-elevation-values();
-  $tokens: theme.create-theme-vars($tokens, 'elevation');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-elevation-#{$token}, #{$value});
     }
 
     display: flex;

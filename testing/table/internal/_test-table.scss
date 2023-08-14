@@ -10,7 +10,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../../internal/sass/theme';
 @use '../../../tokens';
 // go/keep-sorted end
 
@@ -22,19 +21,25 @@ $dark-theme: tokens.md-comp-test-table-values(
 );
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-test-table-values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'test-table');
+  // $supported-tokens: tokens.$md-comp-test-table-supported-tokens;
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    // @if list.index($supported-tokens, $token) == null {
+    //   @error 'Token `#{$token}` is not a supported token.';
+    // }
+
+    @if $value {
+      --md-test-table-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-test-table-values();
-  $tokens: theme.create-theme-vars($tokens, 'test-table');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-test-table-#{$token}, #{$value});
     }
 
     display: flex;

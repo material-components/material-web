@@ -7,26 +7,29 @@
 // Selector '.md3-*' should only be used in this project.
 
 // go/keep-sorted start
-@use '../../../internal/sass/theme';
 @use '../../../tokens';
 // go/keep-sorted end
 
-$_custom-property-prefix: 'badge';
-
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-badge-values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  // $supported-tokens: tokens.$md-comp-badge-supported-tokens;
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    // @if list.index($supported-tokens, $token) == null {
+    //   @error 'Token `#{$token}` is not a supported token.';
+    // }
+
+    @if $value {
+      --md-badge-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-badge-values();
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-badge-#{$token}, #{$value});
     }
   }
 

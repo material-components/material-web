@@ -10,7 +10,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../../internal/sass/theme';
 @use '../../../tokens';
 // go/keep-sorted end
 
@@ -24,11 +23,10 @@
       'spacing-trailing': 12px,
     )
   );
-  $tokens: theme.create-theme-vars($tokens, 'segmented-button');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-outlined-segmented-button-#{$token}, #{$value});
     }
   }
 

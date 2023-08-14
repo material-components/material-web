@@ -11,29 +11,31 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../../elevation/elevation';
-@use '../../../internal/sass/theme';
 @use '../../../tokens';
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(
-    tokens.md-comp-navigation-bar-values(),
-    $tokens
-  );
-  $tokens: theme.create-theme-vars($tokens, 'navigation-bar');
+  // $supported-tokens: tokens.$md-comp-navigation-bar-supported-tokens;
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    // @if list.index($supported-tokens, $token) == null {
+    //   @error 'Token `#{$token}` is not a supported token.';
+    // }
+
+    @if $value {
+      --md-navigation-bar-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: tokens.md-comp-navigation-bar-values();
-  $tokens: theme.create-theme-vars($tokens, 'navigation-bar');
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-navigation-bar-#{$token}, #{$value});
     }
 
     @include elevation.theme(

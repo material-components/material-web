@@ -9,16 +9,19 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../../internal/sass/theme';
 @use '../../../list/list-item';
 @use '../../../ripple/ripple';
 @use '../../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-menu-item-values(), $tokens);
+  $supported-tokens: tokens.$md-comp-menu-item-supported-tokens;
 
   @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
     @if $value {
       --md-menu-item-#{$token}: #{$value};
     }

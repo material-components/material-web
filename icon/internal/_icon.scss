@@ -4,17 +4,21 @@
 //
 
 // go/keep-sorted start
-@use '../../internal/sass/theme';
-@use '../../tokens';
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
-
-$_custom-property-prefix: 'icon';
+// go/keep-sorted start
+@use '../../tokens';
+// go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-icon-values(), $tokens);
+  $supported-tokens: tokens.$md-comp-icon-supported-tokens;
 
   @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
     @if $value {
       --md-icon-#{$token}: #{$value};
     }

@@ -4,21 +4,25 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../../focus/focus-ring';
 @use '../../../icon/icon';
-@use '../../../internal/sass/theme';
 @use '../../../ripple/ripple';
 @use '../../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-list-item-values(), $tokens);
+  $supported-tokens: tokens.$md-comp-list-item-supported-tokens;
 
   @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
     @if $value {
       --md-list-item-#{$token}: #{$value};
     }

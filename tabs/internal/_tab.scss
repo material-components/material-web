@@ -4,27 +4,34 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
 @use '../../internal/sass/string-ext';
-@use '../../internal/sass/theme';
 @use '../../ripple/ripple';
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $reference: tokens.md-comp-tab-values();
-  $tokens: theme.validate-theme($reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, '');
-  @include theme.emit-theme-vars($tokens);
+  $supported-tokens: tokens.$md-comp-tab-supported-tokens;
+
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   // contains tokens for all variants and applied where needed
-  $tokens: theme.create-theme-vars(tokens.md-comp-tab-values(), '');
+  $tokens: tokens.md-comp-tab-values();
 
   :host {
     // apply primary-tokens by default
@@ -32,7 +39,7 @@
     @each $token, $value in $tokens {
       @if string-ext.has-prefix($token, $primary-prefix) {
         $token: string-ext.trim-prefix(#{$token}, $primary-prefix);
-        --_#{$token}: #{$value};
+        --_#{$token}: var(--md-#{$primary-prefix}#{$token}, #{$value});
       }
     }
 
@@ -233,7 +240,7 @@
     @each $token, $value in $tokens {
       @if string-ext.has-prefix($token, $secondary-prefix) {
         $token: string-ext.trim-prefix(#{$token}, $secondary-prefix);
-        --_#{$token}: #{$value};
+        --_#{$token}: var(--md-#{$secondary-prefix}#{$token}, #{$value});
       }
     }
   }

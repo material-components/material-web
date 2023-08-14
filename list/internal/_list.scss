@@ -12,15 +12,18 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../internal/sass/theme';
 @use '../../tokens';
 @use './listitem/list-item';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-list-values(), $tokens);
+  $supported-tokens: tokens.$md-comp-list-supported-tokens;
 
   @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
     @if $value {
       --md-list-#{$token}: #{$value};
     }

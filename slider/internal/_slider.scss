@@ -4,12 +4,12 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
-@use '../../internal/sass/theme';
 @use '../../ripple/ripple';
 @use '../../tokens';
 // go/keep-sorted end
@@ -43,14 +43,21 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 }
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-slider-values(), $tokens);
-  $tokens: theme.create-theme-vars($tokens, 'slider');
+  $supported-tokens: tokens.$md-comp-slider-supported-tokens;
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-slider-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
-  $tokens: theme.create-theme-vars(tokens.md-comp-slider-values(), 'slider');
+  $tokens: tokens.md-comp-slider-values();
 
   // The max clip is reduced by 1 full tick display which is 2x the container
   // size to account for always showing the active track on the outside
@@ -79,12 +86,12 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   );
 
   :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: var(--md-slider-#{$token}, #{$value});
+    }
+
     display: inline-flex;
     vertical-align: middle;
-
-    @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
-    }
     min-inline-size: 200px;
 
     @include elevation.theme(

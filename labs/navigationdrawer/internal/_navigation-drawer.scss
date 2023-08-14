@@ -9,7 +9,6 @@
 // go/keep-sorted start
 @use '../../../elevation/elevation';
 @use '../../../internal/motion/animation';
-@use '../../../internal/sass/theme';
 // go/keep-sorted end
 
 $curve: animation.$standard-easing;
@@ -28,22 +27,26 @@ $_reference: (
   'standard-container-elevation': 0,
 );
 
-$_custom-property-prefix: 'navigation-drawer';
-
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme($_reference, $tokens);
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
+  // $supported-tokens: tokens.$md-comp-navigation-drawer-supported-tokens;
 
-  @include theme.emit-theme-vars($tokens);
+  @each $token, $value in $tokens {
+    // @if list.index($supported-tokens, $token) == null {
+    //   @error 'Token `#{$token}` is not a supported token.';
+    // }
+
+    @if $value {
+      --md-navigation-drawer-#{$token}: #{$value};
+    }
+  }
 }
 
 @mixin styles() {
   $tokens: $_reference;
-  $tokens: theme.create-theme-vars($tokens, $_custom-property-prefix);
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+      --_#{$token}: var(--md-navigation-drawer-#{$token}, #{$value});
     }
 
     @include elevation.theme(

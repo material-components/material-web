@@ -11,16 +11,19 @@
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
-@use '../../internal/sass/theme';
 @use '../../list/list' as md-list;
 @use '../../list/list-item';
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $tokens: theme.validate-theme(tokens.md-comp-menu-values(), $tokens);
+  $supported-tokens: tokens.$md-comp-menu-supported-tokens;
 
   @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
     @if $value {
       --md-menu-#{$token}: #{$value};
     }
