@@ -126,13 +126,15 @@ $_default: (
     $unsupported-tokens: $unsupported-tokens
   );
 
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
   $tokens: map.merge(
     $tokens,
     (
+      // TODO(b/271876162): remove when tokens compiler emits typescale tokens
       'input-text-type': map.get($deps, 'md-sys-typescale', 'body-large'),
       'label-text-type': map.get($deps, 'md-sys-typescale', 'body-large'),
       'supporting-text-type': map.get($deps, 'md-sys-typescale', 'body-small'),
+      // TODO(b/259455114): remove when focus tokens update to 3px
+      'focus-active-indicator-height': if($exclude-hardcoded-values, null, 3px)
     )
   );
 

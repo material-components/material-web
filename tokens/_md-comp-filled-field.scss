@@ -184,8 +184,8 @@ $_default: (
       map.get($text-field, 'error-trailing-icon-color'),
     'focus-active-indicator-color':
       map.get($text-field, 'focus-active-indicator-color'),
-    'focus-active-indicator-height':
-      map.get($text-field, 'focus-active-indicator-height'),
+    // TODO(b/259455114): remove when focus tokens update to 3px
+    'focus-active-indicator-height': if($exclude-hardcoded-values, null, 3px),
     'focus-content-color': map.get($text-field, 'focus-input-text-color'),
     'focus-label-text-color': map.get($text-field, 'focus-label-text-color'),
     'focus-leading-content-color':

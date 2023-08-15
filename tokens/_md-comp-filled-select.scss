@@ -141,6 +141,9 @@ $_default: (
   // Values pulled from b/198759625 spreadsheet
   @return (
     // go/keep-sorted start
+    // TODO(b/259455114): remove when focus tokens update to 3px
+    'text-field-focus-active-indicator-height':
+      if($exclude-hardcoded-values, null, 3px),
     // TODO(b/292242500): remove once we upgrade tokens
     'text-field-leading-icon-size': if($exclude-hardcoded-values, null, 24px),
     // go/keep-sorted end

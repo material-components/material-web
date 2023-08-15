@@ -166,7 +166,8 @@ $_default: (
     'focus-leading-content-color':
       map.get($text-field, 'focus-leading-icon-color'),
     'focus-outline-color': map.get($text-field, 'focus-outline-color'),
-    'focus-outline-width': map.get($text-field, 'focus-outline-width'),
+    // TODO(b/259455114): remove when focus tokens update to 3px
+    'focus-outline-width': if($exclude-hardcoded-values, null, 3px),
     'focus-supporting-text-color':
       map.get($text-field, 'focus-supporting-text-color'),
     'focus-trailing-content-color':
