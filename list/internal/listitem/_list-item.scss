@@ -216,7 +216,6 @@
   }
 
   .trailing-supporting-text {
-    padding-inline-start: 16px;
     font: var(--_trailing-supporting-text-type);
 
     .list-item:not(.disabled) & {
@@ -231,7 +230,7 @@
     .with-three-line & {
       // In three line, trailing-supporting-text must align with the mid-line of
       // the headline text.
-      padding-block-start: calc(
+      margin-block-start: calc(
         (
             var(--_label-text-line-height) -
               var(--_trailing-supporting-text-line-height)
@@ -252,12 +251,12 @@
     width: var(--_leading-image-width);
     border-radius: var(--_leading-image-shape);
     // Min height is two-line height
-    padding-block: calc(
+    margin-block: calc(
       (var(--_two-line-container-height) - var(--_leading-image-height)) / 2
     );
 
     .with-three-line & {
-      padding-block: 0;
+      margin-block: 0;
     }
   }
 }
@@ -275,7 +274,7 @@
 
     .with-three-line & {
       // In three line, icon must align with the mid-line of headline text
-      padding-block-start: calc(
+      margin-block-start: calc(
         (var(--_label-text-line-height) - var(--_leading-icon-size)) / 2
       );
     }
@@ -289,7 +288,7 @@
 
     .with-three-line & {
       // In three line, icon must align with the mid-line of headline text
-      padding-block-start: calc(
+      margin-block-start: calc(
         (var(--_label-text-line-height) - var(--_trailing-icon-size)) / 2
       );
     }
@@ -362,7 +361,7 @@
     border-radius: var(--_leading-video-shape);
     margin-inline-start: var(--_leading-video-leading-space);
     // Min height is three-line height
-    padding-block: calc(
+    margin-block: calc(
       (var(--_three-line-container-height) - var(--_small-leading-video-height)) /
         2
     );
@@ -370,13 +369,13 @@
     // Let it auto-layout so that we don't mess with the icons and supporting
     // text that is supposed to be top-aligned in three-line.
     .with-three-line & {
-      padding-block: 0;
+      margin-block: 0;
     }
   }
 
   ::slotted([data-variant='video-large']) {
     // Min height is three-line height
-    padding-block: calc(
+    margin-block: calc(
       (var(--_three-line-container-height) - var(--_large-leading-video-height)) /
         2
     );
