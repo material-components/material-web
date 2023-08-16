@@ -162,7 +162,7 @@
     animation-delay: calc(-0.5 * $arc-duration), 0ms;
   }
 
-  @media screen and (forced-colors: active) {
+  @media (forced-colors: active) {
     .progress {
       stroke: CanvasText;
     }

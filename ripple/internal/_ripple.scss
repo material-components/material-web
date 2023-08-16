@@ -41,7 +41,7 @@
     display: none;
   }
 
-  @media screen and (forced-colors: active) {
+  @media (forced-colors: active) {
     :host {
       display: none;
     }

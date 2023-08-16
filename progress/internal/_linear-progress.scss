@@ -302,7 +302,7 @@ $rtl-selectors: (
     }
   }
 
-  @media screen and (forced-colors: active) {
+  @media (forced-colors: active) {
     .progress {
       --_active-indicator-color: canvastext;
       --_track-color: graytext;
