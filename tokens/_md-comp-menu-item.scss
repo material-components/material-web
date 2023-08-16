@@ -18,8 +18,8 @@
 
 $supported-tokens: (
   // go/keep-sorted start
-  'list-item-container-color',
-  'list-item-selected-container-color',
+  'container-color',
+  'selected-container-color',
   // go/keep-sorted end
 );
 
@@ -43,7 +43,7 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $renamed-tokens: (
-      'container-color': 'list-item-container-color',
+      'list-item-selected-container-color': 'selected-container-color',
     )
   );
 

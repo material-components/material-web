@@ -151,7 +151,7 @@ import {SignalElement} from '../signals/signal-element.js';
     }
 
     ::slotted(*) {
-      --md-list-item-list-item-container-shape: var(--catalog-shape-xl);
+      --md-list-item-container-shape: var(--catalog-shape-xl);
       --md-focus-ring-shape: var(--catalog-shape-xl);
     }
 

@@ -86,7 +86,7 @@ a:focus-visible {
 }
 
 nav-drawer md-list-item[href][selected] {
-  --md-list-item-list-item-container-color: var(
+  --md-list-item-container-color: var(
     --md-sys-color-surface-container-highest
   );
 }
@@ -104,7 +104,7 @@ nav-drawer md-list-item[href][selected] {
 
 md-list {
   --md-list-container-color: transparent;
-  --md-list-item-list-item-container-color: transparent;
+  --md-list-item-container-color: transparent;
   display: block;
   margin-inline: var(--catalog-spacing-m);
   min-width: unset;

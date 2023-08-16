@@ -11,12 +11,12 @@
   :host {
     @include list-item.theme(
       (
-        list-item-disabled-label-text-color: GrayText,
-        list-item-disabled-label-text-opacity: 1,
-        list-item-disabled-leading-icon-color: GrayText,
-        list-item-disabled-leading-icon-opacity: 1,
-        list-item-disabled-trailing-icon-color: GrayText,
-        list-item-disabled-trailing-icon-opacity: 1,
+        disabled-label-text-color: GrayText,
+        disabled-label-text-opacity: 1,
+        disabled-leading-icon-color: GrayText,
+        disabled-leading-icon-opacity: 1,
+        disabled-trailing-icon-color: GrayText,
+        disabled-trailing-icon-opacity: 1,
       )
     );
   }

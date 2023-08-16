@@ -38,14 +38,14 @@
 
     @include list-item.theme(
       (
-        'list-item-container-color': var(--_list-item-container-color),
+        'container-color': var(--_container-color),
       )
     );
   }
 
   .list-item {
     :host([selected]) & {
-      background-color: var(--_list-item-selected-container-color);
+      background-color: var(--_selected-container-color);
     }
   }
 
