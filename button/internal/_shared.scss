@@ -118,11 +118,17 @@
       &::before {
         content: '';
         box-sizing: border-box;
-        border: 1px solid transparent;
+        border: 1px solid CanvasText;
         border-radius: inherit;
         inset: 0;
         pointer-events: none;
         position: absolute;
+      }
+
+      &:disabled {
+        --_disabled-icon-opacity: 1;
+        --_disabled-container-opacity: 1;
+        --_disabled-label-text-opacity: 1;
       }
     }
   }

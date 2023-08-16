@@ -83,6 +83,12 @@
       border-color: var(--_disabled-outline-color);
       opacity: var(--_disabled-outline-opacity);
     }
+
+    @media (forced-colors: active) {
+      .button:disabled & {
+        opacity: 1;
+      }
+    }
   }
 
   .button__outline,
