@@ -27,14 +27,14 @@ export class LinearProgress extends Progress {
       transform:
           `scaleX(${(this.indeterminate ? 1 : this.value / this.max) * 100}%)`
     };
-    const bufferStyles = {
+    const dotStyles = {
       transform:
           `scaleX(${(this.indeterminate ? 1 : this.buffer / this.max) * 100}%)`
     };
 
     return html`
-      <div class="track"></div>
-      <div class="buffer-bar" style=${styleMap(bufferStyles)}></div>
+      <div class="dots"></div>
+      <div class="inactive-track" style=${styleMap(dotStyles)}></div>
       <div class="bar primary-bar" style=${styleMap(progressStyles)}>
         <div class="bar-inner"></div>
       </div>

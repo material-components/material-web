@@ -34,15 +34,15 @@ $_indeterminate-duration: 2s;
 // the track height. Since the dots are circular, width scales with height.
 // Background width is separated because it's also used to help animate the
 // /dots.
-$_track-dot-size: calc(var(--_track-height) / 2);
-$_track-background-width: calc($_track-dot-size * 5);
+$_dot-size: calc(var(--_track-height) / 2);
+$_dot-background-width: calc($_dot-size * 5);
 // this is a series of sized/colored dots.
-$_track-background: 0 / $_track-background-width 100%
+$_dot-background: 0 / $_dot-background-width 100%
   radial-gradient(
-    circle at calc($_track-dot-size * 2),
+    circle at calc($_dot-size * 2),
     var(--_track-color) 0,
-    var(--_track-color) $_track-dot-size,
-    transparent $_track-dot-size
+    var(--_track-color) $_dot-size,
+    transparent $_dot-size
   );
 
 // Generates a list of rtl selectors. This is done so rules can be generated
@@ -61,20 +61,19 @@ $rtl-selectors: (
       --_#{$token}: var(--md-linear-progress-#{$token}, #{$value});
     }
 
-    display: block;
+    display: flex;
     position: relative;
     // note, this matches the `meter` element and is just done so
-    // there's a minimum width when in a container with a display like
-    // inline-flex.
-    min-inline-size: 80px;
-    block-size: var(--_track-height);
+    // there's a default width.
+    width: 80px;
+    height: var(--_track-height);
     content-visibility: auto;
     contain: strict;
   }
 
   .progress,
-  .track,
-  .buffer-bar,
+  .dots,
+  .inactive-track,
   .bar,
   .bar-inner {
     position: absolute;
@@ -82,7 +81,6 @@ $rtl-selectors: (
 
   .progress {
     inset: 0;
-    outline: transparent solid 1px;
     border-radius: var(--_track-shape);
     overflow: hidden;
     display: flex;
@@ -92,8 +90,8 @@ $rtl-selectors: (
   .bar {
     animation: none;
     // position is offset for indeterminate animation, so we lock the inline size here.
-    inline-size: 100%;
-    block-size: var(--_active-indicator-height);
+    width: 100%;
+    height: var(--_active-indicator-height);
     transform-origin: left center;
     transition: transform $_determinate-duration $_determinate-easing;
   }
@@ -108,20 +106,20 @@ $rtl-selectors: (
     background: var(--_active-indicator-color);
   }
 
-  .buffer-bar {
+  .inactive-track {
     background: var(--_track-color);
     inset: 0;
     transition: transform $_determinate-duration $_determinate-easing;
     transform-origin: left center;
   }
 
-  .track {
+  .dots {
     inset: 0;
     animation: linear infinite $_determinate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
     animation-name: buffering;
-    background: $_track-background;
+    background: $_dot-background;
   }
 
   // indeterminate
@@ -141,7 +139,7 @@ $rtl-selectors: (
     display: block;
   }
 
-  .indeterminate .track {
+  .indeterminate .dots {
     display: none;
   }
 
@@ -187,11 +185,11 @@ $rtl-selectors: (
         transform-origin: right center;
       }
 
-      .buffer-bar {
+      .inactive-track {
         transform-origin: right center;
       }
 
-      .track {
+      .dots {
         // stylelint-disable-next-line no-unknown-animations --
         // animation generated via mixin
         animation-name: buffering-rtl;
@@ -303,15 +301,16 @@ $rtl-selectors: (
   }
 
   @media (forced-colors: active) {
-    .progress {
-      --_active-indicator-color: canvastext;
-      --_track-color: graytext;
-      border: 1px solid canvastext;
+    :host {
+      outline: 1px solid CanvasText;
     }
 
-    .indeterminate.progress {
-      --_track-color: canvas;
+    .bar-inner {
+      background: CanvasText;
     }
+
+    // TODO(b/296262544): fix dots not being CanvasText. This need a refactor,
+    // since background gradiants are not displayed in HCM.
   }
 }
 
@@ -324,7 +323,7 @@ $rtl-selectors: (
   @keyframes buffering#{$suffix} {
     0% {
       // the amount to animate is aligned with the default track background
-      transform: translateX(calc(#{$sign} * #{$_track-background-width}));
+      transform: translateX(calc(#{$sign} * #{$_dot-background-width}));
     }
   }
 
