@@ -69,28 +69,12 @@ Checkboxes may be standalone, pre-checked, or indeterminate.
 ![Three checkboxes in a row that are unselected, selected, and indeterminate](images/checkbox/usage.png "Unselected, selected, and indeterminate checkboxes.")
 
 <!-- no-catalog-end -->
-<!-- catalog-only-start -->
-
-<!--
-
-<div class="figure-wrapper">
-  <figure
-      style="justify-content:center;"
-      aria-label="Three checkboxes in a row that are unselected, selected, and indeterminate">
-    <md-checkbox touch-target="wrapper"></md-checkbox>
-    <md-checkbox touch-target="wrapper" checked></md-checkbox>
-    <md-checkbox touch-target="wrapper" indeterminate></md-checkbox>
-  </figure>
-</div>
-
--->
-
-<!-- catalog-only-end -->
+<!-- catalog-include "figures/checkbox/usage.html" -->
 
 ```html
-<md-checkbox></md-checkbox>
-<md-checkbox checked></md-checkbox>
-<md-checkbox indeterminate></md-checkbox>
+<md-checkbox touch-target="wrapper"></md-checkbox>
+<md-checkbox touch-target="wrapper" checked></md-checkbox>
+<md-checkbox touch-target="wrapper" indeterminate></md-checkbox>
 ```
 
 ### Label
@@ -102,34 +86,15 @@ Associate a label with a checkbox using the `<label>` element.
 ![Two checkboxes with labels](images/checkbox/usage-label.png "Labeled checkboxes.")
 
 <!-- no-catalog-end -->
-<!-- catalog-only-start -->
-
-<!--
-
-<div class="figure-wrapper">
-  <figure
-      style="justify-content:center;align-items:center;"
-      aria-label="Two checkboxes with labels">
-    <label style="display:flex;align-items:center;">
-      <md-checkbox  touch-target="wrapper"></md-checkbox>
-      Checkbox one
-    </label>
-    <md-checkbox id="checkbox-two"  touch-target="wrapper"></md-checkbox>
-    <label for="checkbox-two">Checkbox two</label>
-  </figure>
-</div>
-
--->
-
-<!-- catalog-only-end -->
+<!-- catalog-include "figures/checkbox/usage-label.html" -->
 
 ```html
 <label>
-  <md-checkbox></md-checkbox>
+  <md-checkbox touch-target="wrapper"></md-checkbox>
   Checkbox one
 </label>
 
-<md-checkbox id="checkbox-two"></md-checkbox>
+<md-checkbox id="checkbox-two" touch-target="wrapper"></md-checkbox>
 <label for="checkbox-two">Checkbox two</label>
 ```
 
@@ -176,37 +141,7 @@ Token                                    | Default value
 ![Image of a checkbox with a different theme applied](images/checkbox/theming.png "Checkbox theming example.")
 
 <!-- no-catalog-end -->
-<!-- catalog-only-start -->
-
-<!--
-
-<div class="figure-wrapper">
-  <figure
-      style="justify-content:center;align-items:center;"
-      class="styled-example"
-      aria-label="Image of a checkbox with a different theme applied">
-  <style>
-    .styled-example {
-      background-color: white;
-      border-radius: 28px;
-      /* System tokens */
-      --md-sys-color-primary: #006a6a;
-      --md-sys-color-on-primary: #ffffff;
-      --md-sys-color-on-surface-variant: #3f4948;
-      /* Component tokens */
-      --md-checkbox-container-shape: 0px;
-    }
-  </style>
-
-<md-checkbox touch-target="wrapper"></md-checkbox>
-<md-checkbox touch-target="wrapper" checked></md-checkbox>
-
-  </figure>
-</div>
-
--->
-
-<!-- catalog-only-end -->
+<!-- catalog-include "figures/checkbox/theming.html" -->
 
 ```html
 <style>
@@ -221,6 +156,6 @@ Token                                    | Default value
   }
 </style>
 
-<md-checkbox></md-checkbox>
-<md-checkbox checked></md-checkbox>
+<md-checkbox touch-target="wrapper"></md-checkbox>
+<md-checkbox touch-target="wrapper" checked></md-checkbox>
 ```
