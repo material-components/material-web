@@ -59,6 +59,28 @@
     );
   }
 
+  :host([avatar]) {
+    // Use a rounded border by default for avatar chips. Recreating the
+    // fallbacks allows `--md-input-chip-container-shape` to cascade and
+    // override this without needing to add more specificity for avatar chips.
+    --_container-shape-start-start: var(
+      --md-input-chip-container-shape-start-start,
+      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
+    );
+    --_container-shape-start-end: var(
+      --md-input-chip-container-shape-start-end,
+      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
+    );
+    --_container-shape-end-end: var(
+      --md-input-chip-container-shape-end-end,
+      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
+    );
+    --_container-shape-end-start: var(
+      --md-input-chip-container-shape-end-start,
+      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
+    );
+  }
+
   .avatar .primary.action {
     padding-inline-start: 4px;
   }
