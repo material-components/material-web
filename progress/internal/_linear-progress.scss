@@ -145,37 +145,37 @@ $rtl-selectors: (
     display: none;
   }
 
-  .indeterminate.animation-ready .primary-bar {
+  .indeterminate .primary-bar {
     animation: linear infinite $_indeterminate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
     animation-name: primary-indeterminate-translate;
   }
 
-  .indeterminate.animation-ready .primary-bar > .bar-inner {
+  .indeterminate .primary-bar > .bar-inner {
     animation: linear infinite $_indeterminate-duration
       primary-indeterminate-scale;
   }
 
-  .indeterminate.animation-ready.four-color .primary-bar > .bar-inner {
+  .indeterminate.four-color .primary-bar > .bar-inner {
     animation-name: primary-indeterminate-scale, four-color;
     animation-duration: $_indeterminate-duration,
       calc($_indeterminate-duration * 2);
   }
 
-  .indeterminate.animation-ready .secondary-bar {
+  .indeterminate .secondary-bar {
     animation: linear infinite $_indeterminate-duration;
     // stylelint-disable-next-line no-unknown-animations --
     // animation generated via mixin
     animation-name: secondary-indeterminate-translate;
   }
 
-  .indeterminate.animation-ready .secondary-bar > .bar-inner {
+  .indeterminate .secondary-bar > .bar-inner {
     animation: linear infinite $_indeterminate-duration
       secondary-indeterminate-scale;
   }
 
-  .indeterminate.animation-ready.four-color .secondary-bar > .bar-inner {
+  .indeterminate.four-color .secondary-bar > .bar-inner {
     animation-name: secondary-indeterminate-scale, four-color;
     animation-duration: $_indeterminate-duration,
       calc($_indeterminate-duration * 2);
@@ -197,13 +197,13 @@ $rtl-selectors: (
         animation-name: buffering-rtl;
       }
 
-      &.indeterminate.animation-ready .primary-bar {
+      &.indeterminate .primary-bar {
         // stylelint-disable-next-line no-unknown-animations --
         // animation generated via mixin
         animation-name: primary-indeterminate-translate-rtl;
       }
 
-      &.indeterminate.animation-ready .secondary-bar {
+      &.indeterminate .secondary-bar {
         // stylelint-disable-next-line no-unknown-animations --
         // animation generated via mixin
         animation-name: secondary-indeterminate-translate-rtl;

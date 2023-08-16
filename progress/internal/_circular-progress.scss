@@ -80,7 +80,7 @@
   .circle,
   svg,
   .track,
-  .progress {
+  .active-track {
     position: absolute;
     inset: 0;
   }
@@ -100,7 +100,7 @@
     fill: transparent;
   }
 
-  .progress {
+  .active-track {
     // note, these value come from the m2 version but match current gm3 values.
     transition: stroke-dashoffset 500ms cubic-bezier(0, 0, 0.2, 1);
     stroke: var(--_active-indicator-color);
@@ -163,7 +163,7 @@
   }
 
   @media (forced-colors: active) {
-    .progress {
+    .active-track {
       stroke: CanvasText;
     }
 

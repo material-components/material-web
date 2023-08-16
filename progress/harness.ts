@@ -15,9 +15,7 @@ import {LinearProgress} from './internal/linear-progress.js';
 export class LinearProgressHarness extends Harness<LinearProgress> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    // Test access to protected property
-    // tslint:disable-next-line:no-dict-access-on-struct-type
-    return this.element['rootEl'];
+    return this.element.querySelector<HTMLElement>('.progress')!;
   }
 }
 
@@ -27,6 +25,6 @@ export class LinearProgressHarness extends Harness<LinearProgress> {
 export class CircularProgressHarness extends Harness<CircularProgress> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.querySelector<HTMLElement>('.circularProgresss')!;
+    return this.element.querySelector<HTMLElement>('.progress')!;
   }
 }

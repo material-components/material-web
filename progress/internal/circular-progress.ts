@@ -29,7 +29,7 @@ export class CircularProgress extends Progress {
     return html`
       <svg viewBox="0 0 4800 4800">
         <circle class="track" pathLength="100"></circle>
-        <circle class="progress" pathLength="100"
+        <circle class="active-track" pathLength="100"
           stroke-dashoffset=${dashOffset}></circle>
       </svg>
     `;
