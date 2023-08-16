@@ -67,6 +67,7 @@
     --catalog-body-m-font-size: 12px;
     /* Mostly to accommodate content padding on small screens */
     --catalog-spacing-xl: 16px;
+    --catalog-spacing-l: 12px;
   }
 }
 

@@ -142,8 +142,8 @@ import {SignalElement} from '../signals/signal-element.js';
       --_drawer-width: var(--catalog-drawer-width, 300px);
       /* When in wide mode inline start margin is handled by the sidebar */
       --_pane-margin-inline-start: 0px;
-      --_pane-margin-inline-end: var(--catalog-spacing-xl);
-      --_pane-margin-block-end: var(--catalog-spacing-xl);
+      --_pane-margin-inline-end: var(--catalog-spacing-l);
+      --_pane-margin-block-end: var(--catalog-spacing-l);
       --_toc-pane-width: 250px;
       min-height: 100dvh;
       display: flex;
