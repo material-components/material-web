@@ -44,13 +44,13 @@ export abstract class Button extends LitElement implements FormSubmitter {
   /**
    * The URL that the link button points to.
    */
-  @property() href?: string;
+  @property() href = '';
 
   /**
    * Where to display the linked `href` URL for a link button. Common options
    * include `_blank` to open in a new tab.
    */
-  @property() target?: string;
+  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
   /**
    * Whether to render the icon at the inline end of the label rather than the
