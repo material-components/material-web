@@ -55,7 +55,7 @@ export class IconButton extends LitElement implements FormSubmitter {
   /**
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute.
    */
-  @property() target = '';
+  @property() target: LinkTarget|'' = '';
 
   /**
    * The `aria-label` of the button when the button is toggleable and selected.
@@ -130,7 +130,7 @@ export class IconButton extends LitElement implements FormSubmitter {
       <a class="link"
         id="link"
         href="${this.href}"
-        target="${this.target as LinkTarget || nothing}"
+        target="${this.target || nothing}"
         aria-label="${ariaLabel || nothing}"
       ></a>
     `;

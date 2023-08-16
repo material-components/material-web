@@ -20,7 +20,7 @@ export interface StoryKnobs {
   icon: string;
   ariaLabel: string;
   href: string;
-  target: string;
+  target: '_blank'|'_parent'|'_self'|'_top'|'';
   selectedIcon: string;
   selectedAriaLabel: string;
   selected: boolean;

@@ -18,7 +18,7 @@ const collection =
       new Knob('ariaLabel', {ui: textInput(), defaultValue: ''}),
       new Knob(
           'href', {ui: textInput(), defaultValue: 'https://www.google.com'}),
-      new Knob('target', {
+      new Knob<'_blank'|'_self', 'target'>('target', {
         ui: radioSelector({
           options: [
             {value: '_blank', label: '_blank'}, {value: '_self', label: '_self'}
