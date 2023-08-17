@@ -16,7 +16,19 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: tokens.$md-comp-tab-supported-tokens;
+  $supported-tokens: list.join(
+    tokens.$md-comp-tab-supported-tokens,
+    (
+      'primary-tab-container-shape-start-start',
+      'primary-tab-container-shape-start-end',
+      'primary-tab-container-shape-end-end',
+      'primary-tab-container-shape-end-start',
+      'secondary-tab-container-shape-start-start',
+      'secondary-tab-container-shape-start-end',
+      'secondary-tab-container-shape-end-end',
+      'secondary-tab-container-shape-end-start'
+    )
+  );
 
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
@@ -42,6 +54,24 @@
         --_#{$token}: var(--md-#{$primary-prefix}#{$token}, #{$value});
       }
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-primary-tab-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-primary-tab-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-primary-tab-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-primary-tab-container-shape-end-start,
+      var(--_container-shape)
+    );
 
     display: inline-flex;
     outline: none;
@@ -80,7 +110,7 @@
     user-select: none;
     -webkit-appearance: none;
     vertical-align: middle;
-    background: transparent;
+    background: none;
     text-decoration: none;
     width: 100%;
     position: relative;
@@ -88,7 +118,6 @@
     margin: 0;
     z-index: 0; // Ensure this is a stacking context so the indicator displays
     font: var(--_label-text-type);
-    background-color: var(--_container-color);
     border-bottom: var(--_divider-thickness) solid var(--_divider-color);
     color: var(--_label-text-color);
 
@@ -98,9 +127,20 @@
     }
   }
 
-  .button,
+  .button::before {
+    background: var(--_container-color);
+    content: '';
+    inset: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .button::before,
   md-ripple {
-    border-radius: var(--_container-shape);
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
   }
 
   .content {
@@ -243,6 +283,24 @@
         --_#{$token}: var(--md-#{$secondary-prefix}#{$token}, #{$value});
       }
     }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-secondary-tab-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-secondary-tab-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-secondary-tab-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-secondary-tab-container-shape-end-start,
+      var(--_container-shape)
+    );
   }
 
   :host([variant~='secondary']) .content {
