@@ -34,26 +34,26 @@ breaking changes.
 Component                     | Alpha | Beta | Stable
 ----------------------------- | :---: | :--: | :----:
 Button                        | ✅     | ✅    | 🟡
-FAB                           | ✅     | ✅    | ❌
+FAB                           | ✅     | ✅    | 🟡
 Icon button                   | ✅     | ✅    | 🟡
 Checkbox                      | ✅     | ✅    | ✅
-Chips                         | ✅     | ✅    | ❌
+Chips                         | ✅     | ✅    | 🟡
 Dialog                        | ✅     | ✅    | ✅
 Divider                       | ✅     | ✅    | ✅
 Elevation                     | ✅     | ✅    | ✅
 Focus ring                    | ✅     | ✅    | ✅
 Field                         | ✅     | ✅    | 🟡
 Icon                          | ✅     | ✅    | ✅
-List                          | ✅     | ✅    | ❌
-Menu                          | ✅     | ✅    | ❌
+List                          | ✅     | ✅    | 🟡
+Menu                          | ✅     | ✅    | 🟡
 Progress indicator (circular) | ✅     | ✅    | ✅
 Progress indicator (linear)   | ✅     | ✅    | 🟡
 Radio button                  | ✅     | ✅    | 🟡
 Ripple                        | ✅     | ✅    | ✅
-Select                        | ✅     | ✅    | ❌
-Slider                        | ✅     | ✅    | ❌
+Select                        | ✅     | ✅    | 🟡
+Slider                        | ✅     | ✅    | 🟡
 Switch                        | ✅     | ✅    | 🟡
-Tabs                          | ✅     | ✅    | ❌
+Tabs                          | ✅     | ✅    | 🟡
 Text field                    | ✅     | ✅    | 🟡
 
 ### Future
