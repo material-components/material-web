@@ -7,7 +7,7 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, literal} from 'lit/static-html.js';
@@ -107,16 +107,7 @@ export abstract class Button extends LitElement implements FormSubmitter {
         aria-expanded="${ariaExpanded || nothing}"
         href=${this.href || nothing}
         target=${this.target || nothing}
-      >
-        ${this.renderFocusRing()}
-        ${this.renderElevation()}
-        ${this.renderRipple()}
-        ${this.renderOutline()}
-        ${this.renderTouchTarget()}
-        ${this.renderLeadingIcon()}
-        ${this.renderLabel()}
-        ${this.renderTrailingIcon()}
-      </${button}>`;
+      >${this.renderContent()}</${button}>`;
   }
 
   protected getRenderClasses() {
@@ -126,16 +117,26 @@ export abstract class Button extends LitElement implements FormSubmitter {
     };
   }
 
-  protected renderElevation(): TemplateResult|typeof nothing {
-    return nothing;
-  }
+  protected renderElevation?(): unknown;
 
-  protected renderOutline(): TemplateResult|typeof nothing {
-    return nothing;
-  }
+  protected renderOutline?(): unknown;
 
-  private renderTouchTarget() {
-    return html`<span class="touch"></span>`;
+  private renderContent() {
+    // Link buttons may not be disabled
+    const isDisabled = this.disabled && !this.href;
+    const icon =
+        html`<slot name="icon" @slotchange="${this.handleSlotChange}"></slot>`;
+
+    return html`
+      ${this.renderElevation?.()}
+      ${this.renderOutline?.()}
+      <md-focus-ring part="focus-ring"></md-focus-ring>
+      <md-ripple class="button__ripple" ?disabled="${isDisabled}"></md-ripple>
+      <span class="touch"></span>
+      ${this.trailingIcon ? nothing : icon}
+      <span class="button__label"><slot></slot></span>
+      ${this.trailingIcon ? icon : nothing}
+    `;
   }
 
   private readonly handleActivationClick = (event: MouseEvent) => {
@@ -145,32 +146,6 @@ export abstract class Button extends LitElement implements FormSubmitter {
     this.focus();
     dispatchActivationClick(this.buttonElement);
   };
-
-  private renderRipple() {
-    return html`<md-ripple class="button__ripple" ?disabled="${
-        this.disabled}"></md-ripple>`;
-  }
-
-  private renderFocusRing() {
-    return html`<md-focus-ring part="focus-ring"></md-focus-ring>`;
-  }
-
-  private renderLabel() {
-    return html`<span class="button__label"><slot></slot></span>`;
-  }
-
-  private renderLeadingIcon() {
-    return this.trailingIcon ? nothing : this.renderIcon();
-  }
-
-  private renderTrailingIcon() {
-    return this.trailingIcon ? this.renderIcon() : nothing;
-  }
-
-  private renderIcon() {
-    return html`<slot name="icon" @slotchange="${
-        this.handleSlotChange}"></slot>`;
-  }
 
   private handleSlotChange() {
     this.hasIcon = this.assignedIcons.length > 0;
