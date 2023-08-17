@@ -132,6 +132,7 @@ export abstract class TextField extends LitElement {
   }
 
   // <input> properties
+  @property({reflect: true}) override inputMode = '';
   /**
    * Defines the greatest value in the range of permitted values.
    *
@@ -616,8 +617,10 @@ export abstract class TextField extends LitElement {
     const prefix = this.renderPrefix();
     const suffix = this.renderSuffix();
 
-    // TODO(b/243805848): remove `as unknown as number` once lit analyzer is
-    // fixed
+    // TODO(b/243805848): remove `as unknown as number` and `as any` once lit
+    // analyzer is fixed
+    // tslint:disable-next-line:no-any
+    const inputMode = this.inputMode as any;
     return html`
       <div class="input-wrapper">
         ${prefix}
@@ -628,6 +631,7 @@ export abstract class TextField extends LitElement {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           ?disabled=${this.disabled}
+          inputmode=${inputMode || nothing}
           max=${(this.max || nothing) as unknown as number}
           maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
           min=${(this.min || nothing) as unknown as number}
