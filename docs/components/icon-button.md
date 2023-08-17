@@ -180,13 +180,13 @@ attribute to buttons whose labels need a more descriptive label.
 
 ### Toggle
 
-Add a `selected-aria-label` attribute to toggle buttons whose labels need a more
+Add a `aria-label-selected` attribute to toggle buttons whose labels need a more
 descriptive label when selected.
 
 ```html
 <md-icon-button toggle
   aria-label="Unselected"
-  selected-aria-label="Selected">
+  aria-label-selected="Selected">
   <md-icon>close</md-icon>
   <md-icon slot="selectedIcon">check</md-icon>
 </md-icon-button>

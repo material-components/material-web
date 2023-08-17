@@ -145,7 +145,7 @@ describe('icon button tests', () => {
 
     it('button with toggled aria label toggles aria label', async () => {
       const {element} = await setUpTest('toggle');
-      element.selectedAriaLabel = 'aria label on';
+      element.ariaLabelSelected = 'aria label on';
       element.ariaLabel = 'aria label off';
       await element.updateComplete;
 

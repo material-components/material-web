@@ -60,8 +60,8 @@ export class IconButton extends LitElement implements FormSubmitter {
   /**
    * The `aria-label` of the button when the button is toggleable and selected.
    */
-  @property({attribute: 'selected-aria-label', reflect: true})
-  selectedAriaLabel!: string;
+  @property({attribute: 'aria-label-selected', reflect: true})
+  ariaLabelSelected = '';
 
   /**
    * When true, the button will toggle between selected and unselected
@@ -97,12 +97,12 @@ export class IconButton extends LitElement implements FormSubmitter {
     const tag = this.href ? literal`div` : literal`button`;
     // Needed for closure conformance
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
-    const hasToggledAriaLabel = ariaLabel && this.selectedAriaLabel;
+    const hasToggledAriaLabel = ariaLabel && this.ariaLabelSelected;
     const ariaPressedValue = hasToggledAriaLabel ? nothing : this.selected;
     let ariaLabelValue: string|null|typeof nothing = nothing;
     if (!this.href) {
       ariaLabelValue = (hasToggledAriaLabel && this.selected) ?
-          this.selectedAriaLabel :
+          this.ariaLabelSelected :
           ariaLabel;
     }
     return staticHtml`<${tag}

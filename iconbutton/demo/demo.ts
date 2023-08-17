@@ -28,7 +28,7 @@ const collection =
         defaultValue: '_blank'
       }),
       new Knob('selectedIcon', {ui: textInput(), defaultValue: 'star'}),
-      new Knob('selectedAriaLabel', {ui: textInput(), defaultValue: ''}),
+      new Knob('ariaLabelSelected', {ui: textInput(), defaultValue: ''}),
       new Knob('selected', {ui: boolInput(), defaultValue: false}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('flipIconInRtl', {ui: boolInput(), defaultValue: false}),

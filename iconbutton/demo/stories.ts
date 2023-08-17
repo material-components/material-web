@@ -22,7 +22,7 @@ export interface StoryKnobs {
   href: string;
   target: '_blank'|'_parent'|'_self'|'_top'|'';
   selectedIcon: string;
-  selectedAriaLabel: string;
+  ariaLabelSelected: string;
   selected: boolean;
   disabled: boolean;
   flipIconInRtl: boolean;
@@ -65,7 +65,7 @@ const toggle: MaterialStoryInit<StoryKnobs> = {
       icon,
       ariaLabel,
       selectedIcon,
-      selectedAriaLabel,
+      ariaLabelSelected,
       selected,
       disabled,
     } = knobs;
@@ -73,7 +73,7 @@ const toggle: MaterialStoryInit<StoryKnobs> = {
       <md-icon-button
           toggle
           .disabled=${disabled}
-          .selectedAriaLabel=${selectedAriaLabel}
+          .ariaLabelSelected=${ariaLabelSelected}
           .ariaLabel=${ariaLabel}
           .selected=${selected}>
           ${
@@ -121,7 +121,7 @@ const outlinedToggle: MaterialStoryInit<StoryKnobs> = {
       icon,
       ariaLabel,
       selectedIcon,
-      selectedAriaLabel,
+      ariaLabelSelected,
       selected,
       disabled,
     } = knobs;
@@ -129,7 +129,7 @@ const outlinedToggle: MaterialStoryInit<StoryKnobs> = {
       <md-outlined-icon-button
           toggle
           .disabled=${disabled}
-          .selectedAriaLabel=${selectedAriaLabel}
+          .ariaLabelSelected=${ariaLabelSelected}
           .ariaLabel=${ariaLabel}
           .selected=${selected}>
           ${
@@ -177,7 +177,7 @@ const filledToggle: MaterialStoryInit<StoryKnobs> = {
       icon,
       ariaLabel,
       selectedIcon,
-      selectedAriaLabel,
+      ariaLabelSelected,
       selected,
       disabled,
     } = knobs;
@@ -185,7 +185,7 @@ const filledToggle: MaterialStoryInit<StoryKnobs> = {
       <md-filled-icon-button
           toggle
           .disabled=${disabled}
-          .selectedAriaLabel=${selectedAriaLabel}
+          .ariaLabelSelected=${ariaLabelSelected}
           .ariaLabel=${ariaLabel}
           .selected=${selected}>
           ${
@@ -233,7 +233,7 @@ const tonalToggle: MaterialStoryInit<StoryKnobs> = {
       icon,
       ariaLabel,
       selectedIcon,
-      selectedAriaLabel,
+      ariaLabelSelected,
       selected,
       disabled,
     } = knobs;
@@ -241,7 +241,7 @@ const tonalToggle: MaterialStoryInit<StoryKnobs> = {
       <md-filled-tonal-icon-button
           toggle
           .disabled=${disabled}
-          .selectedAriaLabel=${selectedAriaLabel}
+          .ariaLabelSelected=${ariaLabelSelected}
           .ariaLabel=${ariaLabel}
           .selected=${selected}>
         ${
