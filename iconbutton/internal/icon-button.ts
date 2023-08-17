@@ -60,8 +60,7 @@ export class IconButton extends LitElement implements FormSubmitter {
   /**
    * The `aria-label` of the button when the button is toggleable and selected.
    */
-  @property({attribute: 'aria-label-selected', reflect: true})
-  ariaLabelSelected = '';
+  @property({attribute: 'aria-label-selected'}) ariaLabelSelected = '';
 
   /**
    * When true, the button will toggle between selected and unselected
