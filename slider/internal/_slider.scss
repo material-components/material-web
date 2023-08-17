@@ -9,7 +9,6 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../elevation/elevation';
-@use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../tokens';
 // go/keep-sorted end
@@ -108,12 +107,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   md-focus-ring {
-    @include focus-ring.theme(
-      (
-        'outward-offset': -2px,
-        shape: 9999px,
-      )
-    );
+    height: 48px;
+    inset: unset;
+    width: 48px;
   }
 
   md-elevation {
