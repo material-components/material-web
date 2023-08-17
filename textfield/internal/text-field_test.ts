@@ -28,12 +28,14 @@ declare global {
 class TestTextField extends TextField {
   protected override readonly fieldTag = literal`md-filled-field`;
 
-  getHasError() {
+  async getHasError() {
+    await this.updateComplete;
     return this.renderRoot.querySelector('input')?.getAttribute(
                'aria-invalid') === 'true';
   }
 
-  getErrorTextValue() {
+  async getErrorTextValue() {
+    await this.updateComplete;
     return this.renderRoot.querySelector('md-filled-field')?.errorText || '';
   }
 }
@@ -290,31 +292,6 @@ describe('TextField', () => {
   });
 
   describe('native validation', () => {
-    it('should expose input validity', async () => {
-      const {testElement, input} = await setupTest();
-      const spy = spyOnProperty(input, 'validity', 'get').and.callThrough();
-
-      expect(testElement.validity).toEqual(jasmine.any(Object));
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it('should expose input validationMessage', async () => {
-      const {testElement, input} = await setupTest();
-      const spy =
-          spyOnProperty(input, 'validationMessage', 'get').and.callThrough();
-
-      expect(testElement.validationMessage).toEqual(jasmine.any(String));
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it('should expose input willValidate', async () => {
-      const {testElement, input} = await setupTest();
-      const spy = spyOnProperty(input, 'willValidate', 'get').and.callThrough();
-
-      expect(testElement.willValidate).toEqual(jasmine.any(Boolean));
-      expect(spy).toHaveBeenCalled();
-    });
-
     describe('checkValidity()', () => {
       it('should return true if the text field is valid', async () => {
         const {testElement} = await setupTest();
@@ -349,6 +326,44 @@ describe('TextField', () => {
 
         expect(invalidHandler).toHaveBeenCalled();
       });
+
+      it('should return validity during input event', async () => {
+        const {testElement, harness} = await setupTest();
+
+        testElement.required = true;
+        await harness.inputValue('Value');
+
+        let isValidDuringInput = true;
+        testElement.addEventListener('input', () => {
+          isValidDuringInput = testElement.validity.valid;
+        });
+
+        await harness.deleteValue();
+
+        expect(isValidDuringInput)
+            .withContext('validity.valid result during input event')
+            .toBeFalse();
+      });
+
+      it('should return validity during change event', async () => {
+        const {testElement, harness} = await setupTest();
+        testElement.required = true;
+
+        await harness.inputValue('Value');
+        await harness.blur();
+
+        let isValidDuringChange = true;
+        testElement.addEventListener('change', () => {
+          isValidDuringChange = testElement.validity.valid;
+        }, {once: true});
+
+        await harness.deleteValue();
+        await harness.blur();
+
+        expect(isValidDuringChange)
+            .withContext('validity.valid result during change event')
+            .toBeFalse();
+      });
     });
 
     describe('reportValidity()', () => {
@@ -358,7 +373,7 @@ describe('TextField', () => {
         const valid = testElement.reportValidity();
 
         expect(valid).withContext('valid').toBeTrue();
-        expect(testElement.getHasError())
+        expect(await testElement.getHasError())
             .withContext('testElement.getHasError()')
             .toBeFalse();
       });
@@ -370,7 +385,7 @@ describe('TextField', () => {
         const valid = testElement.reportValidity();
 
         expect(valid).withContext('valid').toBeFalse();
-        expect(testElement.getHasError())
+        expect(await testElement.getHasError())
             .withContext('testElement.getHasError()')
             .toBeTrue();
       });
@@ -383,7 +398,7 @@ describe('TextField', () => {
         testElement.reportValidity();
 
         expect(testElement.validationMessage).toEqual(errorMessage);
-        expect(testElement.getErrorTextValue()).toEqual(errorMessage);
+        expect(await testElement.getErrorTextValue()).toEqual(errorMessage);
       });
 
       it('should not update error or error text if invalid event is canceled',
@@ -398,10 +413,10 @@ describe('TextField', () => {
            const valid = testElement.reportValidity();
 
            expect(valid).withContext('valid').toBeFalse();
-           expect(testElement.getHasError())
+           expect(await testElement.getHasError())
                .withContext('testElement.getHasError()')
                .toBeFalse();
-           expect(testElement.getErrorTextValue()).toEqual('');
+           expect(await testElement.getErrorTextValue()).toEqual('');
          });
 
       it('should be overridden by error and errorText', async () => {
@@ -412,22 +427,22 @@ describe('TextField', () => {
 
         const valid = testElement.reportValidity();
         expect(valid).withContext('native validity should be valid').toBeTrue();
-        expect(testElement.getHasError())
+        expect(await testElement.getHasError())
             .withContext('testElement.getHasError()')
             .toBeTrue();
-        expect(testElement.getErrorTextValue()).toEqual(errorMessage);
+        expect(await testElement.getErrorTextValue()).toEqual(errorMessage);
       });
     });
 
     describe('setCustomValidity()', () => {
-      it('should call input.setCustomValidity()', async () => {
-        const {testElement, input} = await setupTest();
-        spyOn(input, 'setCustomValidity').and.callThrough();
+      it('should set a custom validationMessage', async () => {
+        const {testElement} = await setupTest();
 
         const errorMessage = 'Error message';
         testElement.setCustomValidity(errorMessage);
-
-        expect(input.setCustomValidity).toHaveBeenCalledWith(errorMessage);
+        expect(testElement.validationMessage)
+            .withContext('validationMessage')
+            .toEqual(errorMessage);
       });
     });
 

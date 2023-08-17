@@ -127,7 +127,6 @@ export class Checkbox extends LitElement {
   @state() private prevDisabled = false;
   @state() private prevIndeterminate = false;
   @query('input') private readonly input!: HTMLInputElement|null;
-  @query('.outline') private readonly outline!: HTMLElement|null;
   private readonly internals =
       (this as HTMLElement /* needed for closure */).attachInternals();
 
@@ -189,7 +188,7 @@ export class Checkbox extends LitElement {
    * @param error The error message to display.
    */
   setCustomValidity(error: string) {
-    this.internals.setValidity({customError: !!error}, error);
+    this.internals.setValidity({customError: !!error}, error, this.getInput());
   }
 
   protected override update(changed: PropertyValues<this>) {
@@ -228,17 +227,10 @@ export class Checkbox extends LitElement {
 
     // Needed for closure conformance
     const {ariaLabel, ariaInvalid} = this as ARIAMixinStrict;
+    // Note: <input> needs to be rendered before the <svg> for
+    // form.reportValidity() to work in Chrome.
     return html`
       <div class="container ${containerClasses}">
-        <div class="outline"></div>
-        <div class="background"></div>
-        <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
-        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
-        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true">
-          <rect class="mark short" />
-          <rect class="mark long" />
-        </svg>
-
         <input type="checkbox"
           id="input"
           aria-checked=${isIndeterminate ? 'mixed' : nothing}
@@ -250,8 +242,23 @@ export class Checkbox extends LitElement {
           .checked=${this.checked}
           @change=${this.handleChange}
         >
+
+        <div class="outline"></div>
+        <div class="background"></div>
+        <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
+        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
+        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true">
+          <rect class="mark short" />
+          <rect class="mark long" />
+        </svg>
       </div>
     `;
+  }
+
+  protected override updated() {
+    // Sync validity when properties change, since validation properties may
+    // have changed.
+    this.syncValidity();
   }
 
   private handleChange(event: Event) {
@@ -273,7 +280,7 @@ export class Checkbox extends LitElement {
     }
 
     this.internals.setValidity(
-        input.validity, input.validationMessage, this.outline!);
+        input.validity, input.validationMessage, this.getInput());
   }
 
   private getInput() {

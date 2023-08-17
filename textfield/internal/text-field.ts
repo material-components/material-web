@@ -217,23 +217,24 @@ export abstract class TextField extends LitElement {
   type: TextFieldType|UnsupportedTextFieldType = 'text';
 
   /**
-   * Returns the native validation error message that would be displayed upon
-   * calling `reportValidity()`.
+   * Returns the text field's validation error message.
    *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
    */
   get validationMessage() {
-    return this.getInputOrTextarea().validationMessage;
+    this.syncValidity();
+    return this.internals.validationMessage;
   }
 
   /**
-   * Returns a ValidityState object that represents the validity states of the
+   * Returns a `ValidityState` object that represents the validity states of the
    * text field.
    *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validity
+   * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
    */
   get validity() {
-    return this.getInputOrTextarea().validity;
+    this.syncValidity();
+    return this.internals.validity;
   }
 
   /**
@@ -282,10 +283,11 @@ export abstract class TextField extends LitElement {
    * Returns whether an element will successfully validate based on forms
    * validation rules and constraints.
    *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/willValidate
+   * https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/willValidate
    */
   get willValidate() {
-    return this.getInputOrTextarea().willValidate;
+    this.syncValidity();
+    return this.internals.willValidate;
   }
 
   protected abstract readonly fieldTag: StaticValue;
@@ -340,8 +342,8 @@ export abstract class TextField extends LitElement {
    * @return true if the text field is valid, or false if not.
    */
   checkValidity() {
-    const {valid} = this.checkValidityAndDispatch();
-    return valid;
+    this.syncValidity();
+    return this.internals.checkValidity();
   }
 
   /**
@@ -376,15 +378,22 @@ export abstract class TextField extends LitElement {
    * @return true if the text field is valid, or false if not.
    */
   reportValidity() {
-    const {valid, canceled} = this.checkValidityAndDispatch();
-    if (!canceled) {
-      const prevMessage = this.getErrorText();
-      this.nativeError = !valid;
-      this.nativeErrorText = this.validationMessage;
+    let invalidEvent: Event|undefined;
+    this.addEventListener('invalid', event => {
+      invalidEvent = event;
+    }, {once: true});
 
-      if (prevMessage === this.getErrorText()) {
-        this.field?.reannounceError();
-      }
+    const valid = this.checkValidity();
+    if (invalidEvent?.defaultPrevented) {
+      return valid;
+    }
+
+    const prevMessage = this.getErrorText();
+    this.nativeError = !valid;
+    this.nativeErrorText = this.validationMessage;
+
+    if (prevMessage === this.getErrorText()) {
+      this.field?.reannounceError();
     }
 
     return valid;
@@ -400,8 +409,8 @@ export abstract class TextField extends LitElement {
   }
 
   /**
-   * Sets the text field's native validation error message. This is used to
-   * customize `validationMessage`.
+   * Sets a custom validation error message for the text field. Use this for
+   * custom error message.
    *
    * When the error is not an empty string, the text field is considered invalid
    * and `validity.customError` will be true.
@@ -411,7 +420,8 @@ export abstract class TextField extends LitElement {
    * @param error The error message to display.
    */
   setCustomValidity(error: string) {
-    this.getInputOrTextarea().setCustomValidity(error);
+    this.internals.setValidity(
+        {customError: !!error}, error, this.getInputOrTextarea());
   }
 
   /**
@@ -523,13 +533,17 @@ export abstract class TextField extends LitElement {
     // If a property such as `type` changes and causes the internal <input>
     // value to change without dispatching an event, re-sync it.
     const value = this.getInputOrTextarea().value;
-    this.internals.setFormValue(value);
     if (this.value !== value) {
       // Note this is typically inefficient in updated() since it schedules
       // another update. However, it is needed for the <input> to fully render
       // before checking its value.
       this.value = value;
     }
+
+    this.internals.setFormValue(value);
+    // Sync validity when properties change, since validation properties may
+    // have changed.
+    this.syncValidity();
   }
 
   private renderField() {
@@ -592,7 +606,7 @@ export abstract class TextField extends LitElement {
           ?required=${this.required}
           rows=${this.rows}
           .value=${live(this.value)}
-          @change=${this.redispatchEvent}
+          @change=${this.handleChange}
           @input=${this.handleInput}
           @select=${this.redispatchEvent}
         ></textarea>
@@ -675,6 +689,14 @@ export abstract class TextField extends LitElement {
   private handleInput(event: InputEvent) {
     this.dirty = true;
     this.value = (event.target as HTMLInputElement).value;
+    // Sync validity so that clients can check validity on input.
+    this.syncValidity();
+  }
+
+  private handleChange(event: Event) {
+    // Sync validity so that clients can check validity on change.
+    this.syncValidity();
+    this.redispatchEvent(event);
   }
 
   private redispatchEvent(event: Event) {
@@ -710,14 +732,18 @@ export abstract class TextField extends LitElement {
     return this.getInputOrTextarea() as HTMLInputElement;
   }
 
-  private checkValidityAndDispatch() {
-    const valid = this.getInputOrTextarea().checkValidity();
-    let canceled = false;
-    if (!valid) {
-      canceled = !this.dispatchEvent(new Event('invalid', {cancelable: true}));
+  private syncValidity() {
+    // Sync the internal <input>'s validity and the host's ElementInternals
+    // validity. We do this to re-use native `<input>` validation messages.
+    const input = this.getInputOrTextarea();
+    if (this.internals.validity.customError) {
+      input.setCustomValidity(this.internals.validationMessage);
+    } else {
+      input.setCustomValidity('');
     }
 
-    return {valid, canceled};
+    this.internals.setValidity(
+        input.validity, input.validationMessage, this.getInputOrTextarea());
   }
 
   private handleIconChange() {
