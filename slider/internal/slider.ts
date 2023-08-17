@@ -350,10 +350,10 @@ export class Slider extends LitElement {
     const endFraction = ((this.renderValueEnd ?? this.min) - this.min) / range;
     const containerStyles = {
       // for clipping inputs and active track.
-      '--slider-start-fraction': String(startFraction),
-      '--slider-end-fraction': String(endFraction),
+      '--_start-fraction': String(startFraction),
+      '--_end-fraction': String(endFraction),
       // for generating tick marks
-      '--slider-tick-count': String(range / step),
+      '--_tick-count': String(range / step),
     };
     const containerClasses = {ranged: this.range};
 

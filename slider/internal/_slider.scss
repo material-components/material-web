@@ -66,29 +66,34 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     100% - var(--_with-tick-marks-container-size) * 2
   );
   // When the start fraction is !0, add clipping by the tick container size
-  $_start-fraction-not-zero: min(var(--slider-start-fraction) * 1e9, 1);
+  $_start-fraction-not-zero: min(var(--_start-fraction) * 1e9, 1);
   $_active-track-start-offset: calc(
     var(--_with-tick-marks-container-size) * $_start-fraction-not-zero
   );
   $_active-track-start-clip: calc(
     $_active-track-start-offset + $_active-track-max-clip *
-      var(--slider-start-fraction)
+      var(--_start-fraction)
   );
 
   // When the end fraction is !1, add clipping by the tick container size
-  $_end-fraction-not-one: min((1 - var(--slider-end-fraction)) * 1e9, 1);
+  $_end-fraction-not-one: min((1 - var(--_end-fraction)) * 1e9, 1);
   $_active-track-end-offset: calc(
     var(--_with-tick-marks-container-size) * $_end-fraction-not-one
   );
   $_active-track-end-clip: calc(
     $_active-track-end-offset + $_active-track-max-clip *
-      (1 - var(--slider-end-fraction))
+      (1 - var(--_end-fraction))
   );
 
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: var(--md-slider-#{$token}, #{$value});
     }
+
+    // Set these to avoid token test failures
+    --_start-fraction: 0;
+    --_end-fraction: 0;
+    --_tick-count: 0;
 
     display: inline-flex;
     vertical-align: middle;
@@ -169,8 +174,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
     // ticks size: set here since it does not change.
     background-size: calc(
-        (100% - var(--_with-tick-marks-container-size) * 2) /
-          var(--slider-tick-count)
+        (100% - var(--_with-tick-marks-container-size) * 2) / var(--_tick-count)
       )
       100%;
   }
@@ -253,10 +257,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     position: absolute;
     inset-block-start: 0;
     inset-block-end: 0;
-    inset-inline-start: calc(100% * var(--slider-start-fraction));
-    inline-size: calc(
-      100% * (var(--slider-end-fraction) - var(--slider-start-fraction))
-    );
+    inset-inline-start: calc(100% * var(--_start-fraction));
+    inline-size: calc(100% * (var(--_end-fraction) - var(--_start-fraction)));
   }
 
   // handle
@@ -430,8 +432,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   $_clip-to-start: calc(
     var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
       (
-        var(--slider-start-fraction) +
-          ((var(--slider-end-fraction) - var(--slider-start-fraction)) / 2)
+        var(--_start-fraction) +
+          ((var(--_end-fraction) - var(--_start-fraction)) / 2)
       )
   );
 
