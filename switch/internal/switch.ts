@@ -145,7 +145,7 @@ export class Switch extends LitElement {
 
   private renderHandle() {
     const classes = {
-      'with-icon': this.icons || (this.showOnlySelectedIcon && this.selected),
+      'with-icon': this.showOnlySelectedIcon ? this.selected : this.icons,
     };
     return html`
       ${this.renderTouchTarget()}
