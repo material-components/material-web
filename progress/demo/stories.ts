@@ -51,12 +51,13 @@ const linear: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <md-linear-progress
-          class=${classMap(classes)}
-          .value=${value}
-          .max=${max}
-          .buffer=${buffer}
-          .indeterminate=${indeterminate}
-          .fourColor=${fourColor}
+        aria-label="An example linear progress bar"
+        class=${classMap(classes)}
+        .value=${value}
+        .max=${max}
+        .buffer=${buffer}
+        .indeterminate=${indeterminate}
+        .fourColor=${fourColor}
       ></md-linear-progress>`;
   }
 };
