@@ -53,6 +53,7 @@ $_dot-background: 0 / $_dot-background-width 100%
       --_#{$token}: var(--md-linear-progress-#{$token}, #{$value});
     }
 
+    border-radius: var(--_track-shape);
     display: flex;
     position: relative;
     // note, this matches the `meter` element and is just done so
@@ -76,7 +77,7 @@ $_dot-background: 0 / $_dot-background-width 100%
     // with scale(-1).
     direction: ltr;
     inset: 0;
-    border-radius: var(--_track-shape);
+    border-radius: inherit;
     overflow: hidden;
     display: flex;
     align-items: center;
