@@ -45,14 +45,6 @@ $_dot-background: 0 / $_dot-background-width 100%
     transparent $_dot-size
   );
 
-// Generates a list of rtl selectors. This is done so rules can be generated
-// separately so they don't get dropped where unsupported.
-$rtl-selectors: (
-  ':host-context([dir="rtl"]) .progress',
-  ':host([dir="rtl"]) .progress',
-  '.progress:dir(rtl)'
-);
-
 @mixin styles() {
   $tokens: tokens.md-comp-linear-progress-indicator-values();
 
@@ -80,6 +72,9 @@ $rtl-selectors: (
   }
 
   .progress {
+    // Animations need to be in LTR. We support RTL by flipping the indicator
+    // with scale(-1).
+    direction: ltr;
     inset: 0;
     border-radius: var(--_track-shape);
     overflow: hidden;
@@ -116,10 +111,9 @@ $rtl-selectors: (
   .dots {
     inset: 0;
     animation: linear infinite $_determinate-duration;
-    // stylelint-disable-next-line no-unknown-animations --
-    // animation generated via mixin
     animation-name: buffering;
     background: $_dot-background;
+    z-index: -1; // Place behind tracks for Safari
   }
 
   // indeterminate
@@ -145,8 +139,6 @@ $rtl-selectors: (
 
   .indeterminate .primary-bar {
     animation: linear infinite $_indeterminate-duration;
-    // stylelint-disable-next-line no-unknown-animations --
-    // animation generated via mixin
     animation-name: primary-indeterminate-translate;
   }
 
@@ -163,8 +155,6 @@ $rtl-selectors: (
 
   .indeterminate .secondary-bar {
     animation: linear infinite $_indeterminate-duration;
-    // stylelint-disable-next-line no-unknown-animations --
-    // animation generated via mixin
     animation-name: secondary-indeterminate-translate;
   }
 
@@ -179,34 +169,15 @@ $rtl-selectors: (
       calc($_indeterminate-duration * 2);
   }
 
-  @each $selector in $rtl-selectors {
-    #{$selector} {
-      .bar {
-        transform-origin: right center;
-      }
+  // TODO(https://bugs.chromium.org/p/chromium/issues/detail?id=1420655):
+  // remove :host and :host-context once Chrome supports :dir
+  :host-context([dir='rtl']),
+  :host([dir='rtl']) {
+    transform: scale(-1);
+  }
 
-      .inactive-track {
-        transform-origin: right center;
-      }
-
-      .dots {
-        // stylelint-disable-next-line no-unknown-animations --
-        // animation generated via mixin
-        animation-name: buffering-rtl;
-      }
-
-      &.indeterminate .primary-bar {
-        // stylelint-disable-next-line no-unknown-animations --
-        // animation generated via mixin
-        animation-name: primary-indeterminate-translate-rtl;
-      }
-
-      &.indeterminate .secondary-bar {
-        // stylelint-disable-next-line no-unknown-animations --
-        // animation generated via mixin
-        animation-name: secondary-indeterminate-translate-rtl;
-      }
-    }
+  :host(:dir(rtl)) {
+    transform: scale(-1);
   }
 
   @keyframes primary-indeterminate-scale {
@@ -265,8 +236,61 @@ $rtl-selectors: (
     }
   }
 
-  @include _directional-keyframes('ltr');
-  @include _directional-keyframes('rtl');
+  @keyframes buffering {
+    0% {
+      // the amount to animate is aligned with the default track background
+      transform: translateX(#{$_dot-background-width});
+    }
+  }
+
+  // note, the numbers here come directly from the mdc implementation.
+  // see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L208.
+  // keyframes
+  @keyframes primary-indeterminate-translate {
+    0% {
+      transform: translateX(0px);
+    }
+
+    20% {
+      animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+      transform: translateX(0px);
+    }
+
+    59.15% {
+      animation-timing-function: cubic-bezier(
+        0.302435,
+        0.381352,
+        0.55,
+        0.956352
+      );
+      transform: translateX(83.6714%);
+    }
+
+    100% {
+      transform: translateX(200.611%);
+    }
+  }
+
+  @keyframes secondary-indeterminate-translate {
+    0% {
+      animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+      transform: translateX(0px);
+    }
+
+    25% {
+      animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+      transform: translateX(37.6519%);
+    }
+
+    48.35% {
+      animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+      transform: translateX(84.3862%);
+    }
+
+    100% {
+      transform: translateX(160.278%);
+    }
+  }
 
   @keyframes four-color {
     0% {
@@ -311,68 +335,5 @@ $rtl-selectors: (
 
     // TODO(b/296262544): fix dots not being CanvasText. This need a refactor,
     // since background gradiants are not displayed in HCM.
-  }
-}
-
-// Generates keyframes for ltr and rtl.
-@mixin _directional-keyframes($dir) {
-  $is-rtl: $dir == 'rtl';
-  $sign: if($is-rtl, -1, 1);
-  $suffix: if($is-rtl, '-rtl', '');
-
-  @keyframes buffering#{$suffix} {
-    0% {
-      // the amount to animate is aligned with the default track background
-      transform: translateX(calc(#{$sign} * #{$_dot-background-width}));
-    }
-  }
-
-  // note, the numbers here come directly from the mdc implementation.
-  // see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L208.
-  // keyframes
-  @keyframes primary-indeterminate-translate#{$suffix} {
-    0% {
-      transform: translateX(0px);
-    }
-
-    20% {
-      animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
-      transform: translateX(0px);
-    }
-
-    59.15% {
-      animation-timing-function: cubic-bezier(
-        0.302435,
-        0.381352,
-        0.55,
-        0.956352
-      );
-      transform: translateX(calc(#{$sign} * 83.6714%));
-    }
-
-    100% {
-      transform: translateX(calc(#{$sign} * 200.611%));
-    }
-  }
-
-  @keyframes secondary-indeterminate-translate#{$suffix} {
-    0% {
-      animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
-      transform: translateX(0px);
-    }
-
-    25% {
-      animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
-      transform: translateX(calc(#{$sign} * 37.6519%));
-    }
-
-    48.35% {
-      animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
-      transform: translateX(calc(#{$sign} * 84.3862%));
-    }
-
-    100% {
-      transform: translateX(calc(#{$sign} * 160.278%));
-    }
   }
 }
