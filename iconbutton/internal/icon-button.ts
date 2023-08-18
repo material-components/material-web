@@ -28,9 +28,7 @@ export class IconButton extends LitElement implements FormSubmitter {
   }
 
   /** @nocollapse */
-  static get formAssociated() {
-    return true;
-  }
+  static readonly formAssociated = true;
 
   /** @nocollapse */
   static override shadowRootOptions:

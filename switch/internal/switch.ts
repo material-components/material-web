@@ -30,7 +30,7 @@ export class Switch extends LitElement {
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   /** @nocollapse */
-  static formAssociated = true;
+  static readonly formAssociated = true;
 
   /**
    * Disables the switch and makes it non-interactive.

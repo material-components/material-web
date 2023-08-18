@@ -33,7 +33,7 @@ export class Radio extends LitElement {
       ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
   /** @nocollapse */
-  static formAssociated = true;
+  static readonly formAssociated = true;
 
   // Unique maskId is required because of a Safari bug that fail to persist
   // reference to the mask. This should be removed once the bug is fixed.

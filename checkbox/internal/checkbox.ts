@@ -30,7 +30,7 @@ export class Checkbox extends LitElement {
   };
 
   /** @nocollapse */
-  static formAssociated = true;
+  static readonly formAssociated = true;
 
   /**
    * Whether or not the checkbox is selected.
