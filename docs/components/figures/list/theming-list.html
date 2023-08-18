@@ -1,0 +1,42 @@
+<div class="figure-wrapper">
+  <figure
+      class="styled-example list"
+      aria-label="Image of a list and list items of foods with their inventory stock number with a different theme applied"
+      style="padding-block: 16px;">
+    <style>
+      figure md-list-item {
+        --md-list-item-container-shape: 0;
+      }
+      .styled-example {
+        background-color: #f4fbfa;
+      }
+      .styled-example.list md-list {
+        --md-list-container-color: #f4fbfa;
+        --md-list-item-container-color: transparent;
+        --md-list-item-label-text-color: #161d1d;
+        --md-list-item-supporting-text-color: #3f4948;
+        --md-list-item-trailing-supporting-text-color: #3f4948;
+        --md-list-item-label-text-type: system-ui;
+        --md-list-item-supporting-text-type: system-ui;
+        --md-list-item-trailing-supporting-text-type: system-ui;
+      }
+    </style>
+    <md-list>
+      <md-list-item
+          headline="Apple"
+          supporting-text="In stock"
+          trailing-supporting-text="+100">
+      </md-list-item>
+      <md-list-item
+          headline="Banana"
+          supporting-text="In stock"
+          trailing-supporting-text="56">
+      </md-list-item>
+      <md-list-item
+          headline="Cucumber"
+          supporting-text="Low stock"
+          trailing-supporting-text="5">
+      </md-list-item>
+    </md-list>
+  </figure>
+</div>

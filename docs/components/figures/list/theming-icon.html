@@ -1,0 +1,34 @@
+<div class="figure-wrapper">
+  <figure
+      class="styled-example icon"
+      aria-label="Image of a list and icon list items of food names with a different theme applied"
+      style="padding-block: 16px;">
+    <style>
+      .styled-example.icon md-list {
+        --md-list-container-color: #f4fbfa;
+        --md-list-item-container-color: transparent;
+        --md-list-item-leading-icon-color: #006a6a;
+        --md-list-item-trailing-icon-color: #006a6a;
+        --md-list-item-leading-icon-size: 20px;
+        --md-list-item-trailing-icon-size: 20px;
+      }
+      .styled-example.icon md-list .unhealthy {
+        --md-list-item-trailing-icon-color: #ba1a1a;
+      }
+    </style>
+    <md-list>
+      <md-list-item headline="Eggs">
+        <md-icon slot="start" data-variant="icon">egg</md-icon>
+        <md-icon slot="end" data-variant="icon">recommend</md-icon>
+      </md-list-item>
+      <md-list-item headline="Ice cream" class="unhealthy">
+        <md-icon slot="start" data-variant="icon">icecream</md-icon>
+        <md-icon slot="end" data-variant="icon">dangerous</md-icon>
+      </md-list-item>
+      <md-list-item headline="Orange">
+        <md-icon slot="start" data-variant="icon">nutrition</md-icon>
+        <md-icon slot="end" data-variant="icon">recommend</md-icon>
+      </md-list-item>
+    </md-list>
+  </figure>
+</div>

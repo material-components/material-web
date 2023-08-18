@@ -1,0 +1,30 @@
+<div class="figure-wrapper">
+  <figure
+    class="styled-example avatar"
+    aria-label="Image of a list and avatar list items with a different theme applied"
+    style="padding-block: 16px"
+  >
+    <style>
+      .styled-example.avatar md-list {
+        --md-list-container-color: #f4fbfa;
+        --md-list-item-container-color: transparent;
+        --md-list-item-leading-avatar-color: #9cf1f0;
+        --md-list-item-leading-avatar-label-color: #002020;
+        --md-list-item-leading-avatar-label-type: system-ui;
+        --md-list-item-leading-avatar-shape: 0;
+        --md-list-item-leading-avatar-size: 36px;
+      }
+    </style>
+    <md-list>
+      <md-list-item headline="Elliott Marquez">
+        <span data-variant="avatar" slot="start">EM</span>
+      </md-list-item>
+      <md-list-item headline="Elizabeth Mitchell">
+        <span data-variant="avatar" slot="start">LM</span>
+      </md-list-item>
+      <md-list-item headline="Andrew Jakubowicz">
+        <span data-variant="avatar" slot="start">AJ</span>
+      </md-list-item>
+    </md-list>
+  </figure>
+</div>

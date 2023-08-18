@@ -34,7 +34,7 @@ main > * {
   max-width: 1760px;
 }
 
-img,
+img:not(figure *),
 figure {
   border-radius: var(--catalog-image-border-radius);
   min-height: 56px;
