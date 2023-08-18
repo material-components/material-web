@@ -58,4 +58,10 @@
       var(--_container-shape)
     );
   }
+
+  @media (forced-colors: active) {
+    .link .outline {
+      border-color: ActiveText;
+    }
+  }
 }

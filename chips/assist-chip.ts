@@ -7,7 +7,6 @@
 import {customElement} from 'lit/decorators.js';
 
 import {AssistChip} from './internal/assist-chip.js';
-import {styles as forcedColorsStyles} from './internal/assist-forced-colors-styles.css.js';
 import {styles} from './internal/assist-styles.css.js';
 import {styles as elevatedStyles} from './internal/elevated-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
@@ -26,6 +25,5 @@ declare global {
  */
 @customElement('md-assist-chip')
 export class MdAssistChip extends AssistChip {
-  static override styles =
-      [sharedStyles, elevatedStyles, styles, forcedColorsStyles];
+  static override styles = [sharedStyles, elevatedStyles, styles];
 }

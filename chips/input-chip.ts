@@ -7,7 +7,6 @@
 import {customElement} from 'lit/decorators.js';
 
 import {InputChip} from './internal/input-chip.js';
-import {styles as forcedColorsStyles} from './internal/input-forced-colors-styles.css.js';
 import {styles} from './internal/input-styles.css.js';
 import {styles as selectableStyles} from './internal/selectable-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
@@ -27,8 +26,6 @@ declare global {
  */
 @customElement('md-input-chip')
 export class MdInputChip extends InputChip {
-  static override styles = [
-    sharedStyles, trailingIconStyles, selectableStyles, styles,
-    forcedColorsStyles
-  ];
+  static override styles =
+      [sharedStyles, trailingIconStyles, selectableStyles, styles];
 }

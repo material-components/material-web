@@ -116,11 +116,11 @@
     position: absolute;
   }
 
-  :focus .outline {
+  :where(:focus) .outline {
     border-color: var(--_focus-outline-color);
   }
 
-  .disabled .outline {
+  :where(.disabled) .outline {
     border-color: var(--_disabled-outline-color);
     opacity: var(--_disabled-outline-opacity);
   }
@@ -147,19 +147,19 @@
     white-space: nowrap;
   }
 
-  :hover .label {
+  :where(:hover) .label {
     color: var(--_hover-label-text-color);
   }
 
-  :focus .label {
+  :where(:focus) .label {
     color: var(--_focus-label-text-color);
   }
 
-  :active .label {
+  :where(:active) .label {
     color: var(--_pressed-label-text-color);
   }
 
-  .disabled .label {
+  :where(.disabled) .label {
     color: var(--_disabled-label-text-color);
     opacity: var(--_disabled-label-text-opacity);
   }
@@ -181,20 +181,27 @@
     color: var(--_leading-icon-color);
   }
 
-  :hover .leading.icon {
+  :where(:hover) .leading.icon {
     color: var(--_hover-leading-icon-color);
   }
 
-  :focus .leading.icon {
+  :where(:focus) .leading.icon {
     color: var(--_focus-leading-icon-color);
   }
 
-  :active .leading.icon {
+  :where(:active) .leading.icon {
     color: var(--_pressed-leading-icon-color);
   }
 
-  .disabled .leading.icon {
+  :where(.disabled) .leading.icon {
     color: var(--_disabled-leading-icon-color);
     opacity: var(--_disabled-leading-icon-opacity);
+  }
+
+  @media (forced-colors: active) {
+    :where(.disabled) :is(.label, .outline, .leading.icon) {
+      color: GrayText;
+      opacity: 1;
+    }
   }
 }

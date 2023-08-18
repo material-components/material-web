@@ -94,4 +94,14 @@
   .disabled.avatar .leading.icon {
     opacity: var(--_disabled-avatar-opacity);
   }
+
+  @media (forced-colors: active) {
+    .link .outline {
+      border-color: ActiveText;
+    }
+
+    .disabled.avatar .leading.icon {
+      opacity: 1;
+    }
+  }
 }

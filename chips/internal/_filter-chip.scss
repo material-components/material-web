@@ -71,4 +71,10 @@
   .disabled .checkmark {
     opacity: var(--_disabled-leading-icon-opacity);
   }
+
+  @media (forced-colors: active) {
+    .disabled .checkmark {
+      opacity: 1;
+    }
+  }
 }

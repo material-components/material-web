@@ -8,7 +8,6 @@ import {customElement} from 'lit/decorators.js';
 
 import {styles as elevatedStyles} from './internal/elevated-styles.css.js';
 import {FilterChip} from './internal/filter-chip.js';
-import {styles as forcedColorsStyles} from './internal/filter-forced-colors-styles.css.js';
 import {styles} from './internal/filter-styles.css.js';
 import {styles as selectableStyles} from './internal/selectable-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
@@ -29,7 +28,6 @@ declare global {
 @customElement('md-filter-chip')
 export class MdFilterChip extends FilterChip {
   static override styles = [
-    sharedStyles, elevatedStyles, trailingIconStyles, selectableStyles, styles,
-    forcedColorsStyles
+    sharedStyles, elevatedStyles, trailingIconStyles, selectableStyles, styles
   ];
 }
