@@ -103,6 +103,7 @@ $_checkmark-bottom-left: 7px, -14px;
     outline: none;
     position: absolute;
     width: 48px;
+    z-index: 1;
   }
 
   :host([touch-target='none']) input {
