@@ -19,7 +19,6 @@ export interface StoryKnobs {
   lowered: boolean;
   size: FabSize|undefined;
   variant: FabVariant|undefined;
-  hasIcon: boolean;
 }
 
 const styles = css`
@@ -31,15 +30,14 @@ const styles = css`
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: '<md-fab>',
   styles,
-  render({icon, label, lowered, size, variant, hasIcon}) {
+  render({icon, label, lowered, size, variant}) {
     return html`
       <md-fab
           class="fab"
           .variant=${variant!}
           .lowered=${lowered}
           .label=${label}
-          .size=${size!}
-          .hasIcon=${hasIcon}>
+          .size=${size!}>
         <md-icon slot="icon">${icon}</md-icon>
       </md-fab>
     `;
@@ -49,14 +47,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 const branded: MaterialStoryInit<StoryKnobs> = {
   name: '<md-branded-fab>',
   styles,
-  render({label, lowered, size, hasIcon}) {
+  render({label, lowered, size}) {
     return html`
       <md-branded-fab
           class="fab"
           .lowered=${lowered}
           .label=${label}
-          .size=${size!}
-          .hasIcon=${hasIcon}>
+          .size=${size!}>
         <svg slot="icon" width="36" height="36" viewBox="0 0 36 36">
           <path fill="#34A853" d="M16 16v14h4V20z"></path>
           <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>

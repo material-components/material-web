@@ -51,14 +51,6 @@ export abstract class SharedFab extends LitElement {
    */
   @property({type: Boolean}) lowered = false;
 
-  /**
-   * NOTE: For SSR use only as it will be overriden by icon slotchange event.
-   *
-   * Whether to display the icon or not in extended FAB. Does nothing on branded
-   * and non-extended FABs.
-   */
-  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
-
   protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
@@ -84,7 +76,6 @@ export abstract class SharedFab extends LitElement {
       'small': this.size === 'small' && !isExtended,
       'large': this.size === 'large' && !isExtended,
       'extended': isExtended,
-      'hasIcon': !isExtended || this.hasIcon,
     };
   }
 
@@ -102,15 +93,9 @@ export abstract class SharedFab extends LitElement {
         <slot
             name="icon"
             aria-hidden=${
-        ariaLabel || this.label ? 'true' : nothing as unknown as 'false'}
-            @slotchange=${this.onSlotchange}>
+        ariaLabel || this.label ? 'true' : nothing as unknown as 'false'}>
+          <span></span>
         </slot>
       </span>`;
-  }
-
-  private onSlotchange(event: Event) {
-    const slotEl = event.target as HTMLSlotElement;
-    const slottedEls = slotEl.assignedElements({flatten: true});
-    this.hasIcon = slottedEls.length !== 0;
   }
 }

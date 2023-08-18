@@ -173,16 +173,19 @@
     }
   }
 
-  .fab:not(.hasIcon) {
-    padding-inline-start: 20px;
-  }
-
-  .fab:not(.hasIcon) .icon {
-    display: none;
-  }
-
-  .fab:not(.hasIcon) .label {
-    padding-inline-start: 0;
+  /*
+   * The default content is needed because we do a bit of trickery. If there is
+   * no slotted icon we need to have `padding-inline: 20px` but if there is, we
+   * need   padding-inline: 16px 20px.
+   * 
+   * So what this approach does is make the margin / padding-inline of the outer
+   * button `padding-inline: 16px 20px`, so if there is something slotted, it
+   * renders correctly. This default content span then fills the extra `4px`
+   * inline spacing if nothing is slotted which effectively makes the button's
+   * inlne spacing `20px/20px`.
+   */
+  .fab.extended slot span {
+    padding-inline-start: 4px;
   }
 
   .fab.small {

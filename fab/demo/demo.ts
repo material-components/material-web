@@ -38,7 +38,6 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Fab', [
       ]
     })
   }),
-  new Knob('hasIcon', {defaultValue: true, ui: boolInput()}),
 ]);
 
 collection.addStories(...materialInitsToStoryInits(stories));

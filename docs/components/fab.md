@@ -142,7 +142,7 @@ additional context if needed. By supplying the `label` attribute, the extended
 FAB will make sure that the icon is not announced.
 
 ```html
-<md-fab label="Edit" aria-label="Edit Comment" has-icon>
+<md-fab label="Edit" aria-label="Edit Comment">
   <md-icon slot="icon">edit</md-icon>
 </md-fab>
 ```
@@ -169,11 +169,6 @@ FABs should display a clear and understandable icon.
 FABs may be extended with a label for additional emphasis. Extended FABs can
 omit their icon.
 
-*SSR note:* extended FABs with icons should add the `has-icon` attribute to
-avoid a flash of unstyled content. Otherwise, the client will automatically
-detect if an icon is slotted into the element, but that event is not fired upon
-hydration of a SSRd declarative shadow DOM template.
-
 <!-- no-catalog-start -->
 
 ![An extended FAB with an edit icon and the visible text edit](images/fab/usage-extended.webp)
@@ -182,7 +177,7 @@ hydration of a SSRd declarative shadow DOM template.
 <!-- catalog-include "figures/fab/usage-extended.html" -->
 
 ```html
-<md-fab label="Edit" has-icon>
+<md-fab label="Edit">
   <md-icon slot="icon">edit</md-icon>
 </md-fab>
 ```
@@ -421,7 +416,7 @@ Token                      | Default value
     background-color: #f4fbfa;
   }
 </style>
-<md-fab label="Edit" has-icon>
+<md-fab label="Edit">
   <md-icon slot="icon">edit</md-icon>
 </md-fab>
 ```

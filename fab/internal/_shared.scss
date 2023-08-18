@@ -133,11 +133,14 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   .label {
-    padding-inline-start: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font: var(--_label-text-type);
+  }
+
+  .fab.extended .icon ::slotted(*) {
+    margin-inline-end: 12px;
   }
 
   .ripple {
