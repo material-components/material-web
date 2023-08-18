@@ -34,6 +34,20 @@ export interface FormSubmitter extends ReactiveElement, WithInternals {
    * - button: The element does nothing.
    */
   type: FormSubmitterType;
+
+  /**
+   * The HTML name to use in form submission. When combined with a `value`, the
+   * submitting button's name/value will be added to the form.
+   *
+   * Names must reflect to a `name` attribute for form integration.
+   */
+  name: string;
+
+  /**
+   * The value of the button. When combined with a `name`, the submitting
+   * button's name/value will be added to the form.
+   */
+  value: string;
 }
 
 type FormSubmitterConstructor =
@@ -71,7 +85,8 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
   (ctor as unknown as typeof ReactiveElement).addInitializer(instance => {
     const submitter = instance as FormSubmitter;
     submitter.addEventListener('click', async event => {
-      const {type, [internals]: {form}} = submitter;
+      const {type, [internals]: elementInternals} = submitter;
+      const {form} = elementInternals;
       if (!form || type === 'button') {
         return;
       }
@@ -102,6 +117,7 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
         });
       }, {capture: true, once: true});
 
+      elementInternals.setFormValue(submitter.value);
       form.requestSubmit();
     });
   });

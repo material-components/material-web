@@ -65,6 +65,22 @@ export abstract class Button extends LitElement implements FormSubmitter {
 
   @property() type: FormSubmitterType = 'submit';
 
+  @property() value = '';
+
+  get name() {
+    return this.getAttribute('name') ?? '';
+  }
+  set name(name: string) {
+    this.setAttribute('name', name);
+  }
+
+  /**
+   * The associated form element with which this element's value will submit.
+   */
+  get form() {
+    return this[internals].form;
+  }
+
   @query('.button') private readonly buttonElement!: HTMLElement|null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})

@@ -7,7 +7,7 @@
 // import 'jasmine'; (google3-only)
 
 import {html, LitElement} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 
 import {Environment} from '../../testing/environment.js';
 import {Harness} from '../../testing/harness.js';
@@ -30,6 +30,8 @@ class FormSubmitterButton extends LitElement {
   static formAssociated = true;
 
   type: FormSubmitterType = 'submit';
+  @property({reflect: true}) name = '';
+  value = '';
 
   [internals] = this.attachInternals();
 }
@@ -115,5 +117,24 @@ describe('setupFormSubmitter()', () => {
     expect(event.submitter)
         .withContext('event.submitter')
         .toBe(harness.element);
+  });
+
+  it('should add name/value to form data when present', async () => {
+    const {harness, form} = await setupTest();
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+    });
+
+    harness.element.name = 'foo';
+    harness.element.value = 'bar';
+
+    await harness.clickWithMouse();
+
+    const formData = Array.from(new FormData(form));
+    expect(formData.length).withContext('formData.length').toBe(1);
+
+    const [formName, formValue] = formData[0];
+    expect(formName).toBe('foo');
+    expect(formValue).toBe('bar');
   });
 });
