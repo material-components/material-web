@@ -122,6 +122,7 @@ export class Dialog extends LitElement {
    *     `opened` event was fired.
    */
   async show() {
+    await this.updateComplete
     const {dialog, container} = this;
     if (!dialog || !container || dialog.open) {
       return;
