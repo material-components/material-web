@@ -134,7 +134,7 @@
     display: inline-flex;
     justify-content: center;
     flex-direction: column;
-    max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
     flex: 1 0 0;
     padding-inline-start: var(--_list-item-leading-space);
