@@ -481,9 +481,9 @@ export abstract class Menu extends LitElement {
 
       // Make them all initially hidden and then clean up at the end of each
       // animation.
-      child.classList.toggle('hidden', true);
+      child.classList.toggle('md-menu-hidden', true);
       animation.addEventListener('finish', () => {
-        child.classList.toggle('hidden', false);
+        child.classList.toggle('md-menu-hidden', false);
       });
 
       childrenAnimations.push([child, animation]);
@@ -494,7 +494,7 @@ export abstract class Menu extends LitElement {
       upPositionCorrectionAnimation.cancel();
       surfaceOpacityAnimation.cancel();
       childrenAnimations.forEach(([child, animation]) => {
-        child.classList.toggle('hidden', false);
+        child.classList.toggle('md-menu-hidden', false);
         animation.cancel();
       });
     });
@@ -596,7 +596,7 @@ export abstract class Menu extends LitElement {
       // Make sure the items stay hidden at the end of each child animation.
       // We clean this up at the end of the overall animation.
       animation.addEventListener('finish', () => {
-        child.classList.toggle('hidden', true);
+        child.classList.toggle('md-menu-hidden', true);
       });
       childrenAnimations.push([child, animation]);
     }
@@ -607,7 +607,7 @@ export abstract class Menu extends LitElement {
       surfaceOpacityAnimation.cancel();
       childrenAnimations.forEach(([child, animation]) => {
         animation.cancel();
-        child.classList.toggle('hidden', false);
+        child.classList.toggle('md-menu-hidden', false);
       });
       reject();
     });
@@ -615,7 +615,7 @@ export abstract class Menu extends LitElement {
     surfaceHeightAnimation.addEventListener('finish', () => {
       surfaceEl.classList.toggle('animating', false);
       childrenAnimations.forEach(([child]) => {
-        child.classList.toggle('hidden', false);
+        child.classList.toggle('md-menu-hidden', false);
       });
       this.openCloseAnimationSignal.finish();
       this.dispatchEvent(new Event('closed'));

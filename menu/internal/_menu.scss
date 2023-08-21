@@ -95,7 +95,7 @@
       overflow: hidden;
     }
 
-    &.animating ::slotted(.hidden) {
+    &.animating ::slotted(.md-menu-hidden) {
       opacity: 0;
     }
 
