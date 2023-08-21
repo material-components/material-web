@@ -14,25 +14,14 @@
     padding: 0 8px;
   }
 
-  .trailing.action md-focus-ring {
-    // Note: the trailing action's shape only follows the trailing end of the
-    // chip. For example, if the leading end is rounded, but the trailing is end
-    // squared, then the focus ring will be squared (not rounded+squared).
-    @include focus-ring.theme(
-      (
-        'shape-start-start': var(--_container-shape-start-end),
-        'shape-end-start': var(--_container-shape-end-end),
-        'shape-end-end': var(--_container-shape-end-end),
-        'shape-start-end': var(--_container-shape-start-end),
-        'outward-offset': -2px,
-      )
-    );
-  }
-
-  .trailing.action md-ripple {
+  .trailing.action :is(md-ripple, md-focus-ring) {
     border-radius: 50%;
     height: calc(4 / 3 * var(--_icon-size)); // 24px default
     width: calc(4 / 3 * var(--_icon-size)); // 24px default
+  }
+
+  .trailing.action md-focus-ring {
+    inset: unset;
   }
 
   .has-trailing .primary.action {
