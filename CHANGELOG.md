@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.0.0-pre.16](https://github.com/material-components/material-web/compare/v1.0.0-pre.15...v1.0.0-pre.16) (2023-08-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **list-item:** remove duplicate list-item menu-item from custom prop names
+
+### Features
+
+* **fab:** do not require has-icon ([156ca3c](https://github.com/material-components/material-web/commit/156ca3cbe7fc03290892a1b20c8b5036b996d2ed))
+* **iconbutton:** add touch target configs ([0862c58](https://github.com/material-components/material-web/commit/0862c58d24054a496b452d22fd56726e38057669))
+* **list:** change default host display to flex so max-width can be set without user setting display ([aa3fe3d](https://github.com/material-components/material-web/commit/aa3fe3d1ecff7c32850045b5c7eaedb2adbedc43))
+* **switch:** add touch target configs ([8bad07b](https://github.com/material-components/material-web/commit/8bad07bcf7aade5bb79b04a177acc227da8527bc))
+* **tab:** add logical container shape tokens ([dbed51c](https://github.com/material-components/material-web/commit/dbed51cc275dd37251e4e7e151e8f9b7d698ff22))
+* **textfield:** support inputmode attribute ([5d0cbf5](https://github.com/material-components/material-web/commit/5d0cbf5e9758e07d2d580fd2a47bc6bc74289856))
+
+
+### Bug Fixes
+
+* **button:** `href` and `target` default value is now an empty string ([d665864](https://github.com/material-components/material-web/commit/d665864cba14e06aa050a1c77d8b5db914355113))
+* **button:** add value to form when submitting ([f23fac1](https://github.com/material-components/material-web/commit/f23fac1465d7e0f6a6fa029f7395c91bd5b765c6)), closes [#4526](https://github.com/material-components/material-web/issues/4526)
+* **button:** incorrect HCM colors ([b144227](https://github.com/material-components/material-web/commit/b1442274383a8ba83e6ec94e24d04becb5988b88))
+* **checkbox:** not working after formAssociated changes ([33803ab](https://github.com/material-components/material-web/commit/33803aba39ab531f233c6b4831eaa9d7715919a7)), closes [#4747](https://github.com/material-components/material-web/issues/4747)
+* **chips:** avatar input chips are rounded by default ([b7671fb](https://github.com/material-components/material-web/commit/b7671fb7882836e192de194d801e6d3edc856eb0))
+* **chips:** make forced-color border color explicit ([cd8f2fc](https://github.com/material-components/material-web/commit/cd8f2fc9fc9315024a9b22c89d07ac870836ddd5))
+* **chips:** per spec, trailing focus rings are always circles ([fc9b945](https://github.com/material-components/material-web/commit/fc9b945d9969091611d54b7b80e6b41a44c2df16))
+* **elevation:** don't transition border-radius ([7d616fa](https://github.com/material-components/material-web/commit/7d616faecdc20ff2bb407e6af99f46716b1a813f))
+* **iconbutton:** make target type stricter ([c874cd5](https://github.com/material-components/material-web/commit/c874cd55c70d0b3b5fe99464b2301a325dfea2df))
+* **iconbutton:** rename selectedAriaLabel to ariaLabelSelected along with attribute ([2bbab09](https://github.com/material-components/material-web/commit/2bbab09a509595e50b3d4684374b3210f4b44c42))
+* **icon:** don't allow user text selection by default ([53aab28](https://github.com/material-components/material-web/commit/53aab285e94495bbac577712d35db264a9d6c908))
+* **list:** use margin over padding on slotted content and fix extraneous spacing ([1530aca](https://github.com/material-components/material-web/commit/1530aca17de16919380e3a52d5eb348da05e60d8))
+* **menu:** make overriding default styles less likely ([626b4ef](https://github.com/material-components/material-web/commit/626b4efd69166b9c5602fdbb62389ce490bdef56))
+* **progress:** incorrect HCM colors ([f39da54](https://github.com/material-components/material-web/commit/f39da54bc579d0ec1f230fc4ab3b40a7466867d0))
+* **slider:** fix accessibility issues ([e836dc3](https://github.com/material-components/material-web/commit/e836dc333bdb840f41ed9afafd6f04f87ca67896))
+* **slider:** focus ring too small ([8942568](https://github.com/material-components/material-web/commit/8942568ffec755b588055cfd84a8d5b1e7829197))
+* **switch:** unselected handle too big with selected icon only ([ecf83a0](https://github.com/material-components/material-web/commit/ecf83a0e7a0f8ed377350ee4af40cb51b4404496))
+* **textfield:** add form validity support ([a167cab](https://github.com/material-components/material-web/commit/a167cabeff27275b88bcaa4c98d14307fc0f1fe9)), closes [#4435](https://github.com/material-components/material-web/issues/4435)
+* **textfield:** focus indicator and outline are 3px ([bbb7840](https://github.com/material-components/material-web/commit/bbb784012a3d29aa594e2051e1763f745e29d666))
+
+
+### Miscellaneous Chores
+
+* update next version ([1675fd0](https://github.com/material-components/material-web/commit/1675fd0062e8378897dbc8de4b2869dda3079987))
+
+
+### Code Refactoring
+
+* **list-item:** remove duplicate list-item menu-item from custom prop names ([2d9352e](https://github.com/material-components/material-web/commit/2d9352e3f4ec0fef3d5ffca5d34f07bf38345a92))
+
 ## [1.0.0-pre.15](https://github.com/material-components/material-web/compare/v1.0.0-pre.14...v1.0.0-pre.15) (2023-08-10)
 
 
