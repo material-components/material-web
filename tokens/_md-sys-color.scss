@@ -9,7 +9,62 @@
 // go/keep-sorted start
 @use './md-ref-palette';
 @use './v0_172/md-sys-color';
+@use './values';
 // go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'background',
+  'error',
+  'error-container',
+  'inverse-on-surface',
+  'inverse-primary',
+  'inverse-surface',
+  'on-background',
+  'on-error',
+  'on-error-container',
+  'on-primary',
+  'on-primary-container',
+  'on-primary-fixed',
+  'on-primary-fixed-variant',
+  'on-secondary',
+  'on-secondary-container',
+  'on-secondary-fixed',
+  'on-secondary-fixed-variant',
+  'on-surface',
+  'on-surface-variant',
+  'on-tertiary',
+  'on-tertiary-container',
+  'on-tertiary-fixed',
+  'on-tertiary-fixed-variant',
+  'outline',
+  'outline-variant',
+  'primary',
+  'primary-container',
+  'primary-fixed',
+  'primary-fixed-dim',
+  'scrim',
+  'secondary',
+  'secondary-container',
+  'secondary-fixed',
+  'secondary-fixed-dim',
+  'shadow',
+  'surface',
+  'surface-bright',
+  'surface-container',
+  'surface-container-high',
+  'surface-container-highest',
+  'surface-container-low',
+  'surface-container-lowest',
+  'surface-dim',
+  'surface-tint',
+  'surface-variant',
+  'tertiary',
+  'tertiary-container',
+  'tertiary-fixed',
+  'tertiary-fixed-dim',
+  // go/keep-sorted end
+);
 
 $_default-dark: (
   'md-ref-palette': md-ref-palette.values(),
@@ -29,7 +84,7 @@ $_default-dark: (
     }
   }
 
-  @return $tokens;
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
 }
 
 $_default-light: (
@@ -50,5 +105,5 @@ $_default-light: (
     }
   }
 
-  @return $tokens;
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
 }

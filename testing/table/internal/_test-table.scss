@@ -10,6 +10,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../../color/color';
 @use '../../../tokens';
 // go/keep-sorted end
 
@@ -96,12 +97,6 @@ $dark-theme: tokens.md-comp-test-table-values(
   }
 
   :host([dark]) {
-    $dark: tokens.md-sys-color-values-dark(
-      $exclude-custom-properties: true,
-    );
-
-    @each $token, $value in $dark {
-      --md-sys-color-#{$token}: #{$value};
-    }
+    @include color.dark-theme;
   }
 }
