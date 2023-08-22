@@ -59,7 +59,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     }
 
     .list {
-      max-width: 36px;
+      max-width: 200px;
     }`,
   render(knobs) {
     const {
