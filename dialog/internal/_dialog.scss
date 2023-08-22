@@ -167,8 +167,10 @@
   .container {
     border-radius: inherit;
     display: flex;
-    flex: 1;
     flex-direction: column;
+    // Safari won't show content with "flex: 1", but container needs to grow if
+    // height is set on the dialog, so use flex-grow instead.
+    flex-grow: 1;
     overflow: hidden;
     position: relative;
     transform-origin: top;
@@ -176,13 +178,16 @@
 
   .container::before {
     background: var(--_container-color);
+    border-radius: inherit;
     content: '';
     inset: 0;
     position: absolute;
   }
 
   .scroller {
+    display: flex;
     flex: 1;
+    flex-direction: column;
     overflow: hidden;
     z-index: 0; // needed to display scrollbars on Chrome linux
   }
@@ -198,6 +203,7 @@
   .content {
     color: var(--_supporting-text-color);
     font: var(--_supporting-text-type);
+    height: min-content; // Needed for Safari
     position: relative;
   }
 
