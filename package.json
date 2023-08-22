@@ -5,6 +5,14 @@
     "access": "public"
   },
   "description": "Material web components",
+  "keywords": [
+    "material",
+    "material design",
+    "design system",
+    "components",
+    "web components",
+    "lit"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/material-components/material-web.git"
