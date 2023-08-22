@@ -34,6 +34,7 @@ describe('<md-dialog>', () => {
       throw new Error('Failed to query rendered <md-dialog>');
     }
 
+    disableDialogAnimations(dialog);
     const harness = new DialogHarness(dialog);
     const dialogElement = dialog.shadowRoot?.querySelector('dialog');
     if (!dialogElement) {
@@ -127,6 +128,7 @@ describe('<md-dialog>', () => {
       contentElement.click();
       expect(isClosing).not.toHaveBeenCalled();
       dialogElement.click();
+      await env.waitForStability();
       expect(isClosing).toHaveBeenCalled();
     });
 
@@ -175,4 +177,90 @@ describe('<md-dialog>', () => {
         .withContext('dialog.returnValue after close event canceled')
         .toBe(prevReturnValue);
   });
+
+  it('should open on connected if opened before connected to DOM', async () => {
+    const openListener = jasmine.createSpy('openListener');
+    const dialog = document.createElement('md-dialog');
+    disableDialogAnimations(dialog);
+    dialog.addEventListener('open', openListener);
+    dialog.open = true;
+    expect(openListener)
+        .withContext('should not trigger open before connected')
+        .not.toHaveBeenCalled();
+
+    const root = env.render(html``);
+    root.appendChild(dialog);
+    await env.waitForStability();
+    expect(openListener)
+        .withContext('opens after connecting')
+        .toHaveBeenCalled();
+  });
+
+  it('should not open on connected if opened, but closed before connected to DOM',
+     async () => {
+       const openListener = jasmine.createSpy('openListener');
+       const dialog = document.createElement('md-dialog');
+       disableDialogAnimations(dialog);
+       dialog.addEventListener('open', openListener);
+       dialog.open = true;
+       await env.waitForStability();
+       dialog.open = false;
+       const root = env.render(html``);
+       root.appendChild(dialog);
+       await env.waitForStability();
+       expect(openListener)
+           .withContext('should not open on connected since close was called')
+           .not.toHaveBeenCalled();
+     });
+
+  it('should not open on connected if opened before connection but closed after',
+     async () => {
+       const openListener = jasmine.createSpy('openListener');
+       const dialog = document.createElement('md-dialog');
+       disableDialogAnimations(dialog);
+       dialog.addEventListener('open', openListener);
+       dialog.open = true;
+       const root = env.render(html``);
+       root.appendChild(dialog);
+       dialog.open = false;
+       await env.waitForStability();
+       expect(openListener)
+           .withContext(
+               'should not open on connected since close was called before open could complete')
+           .not.toHaveBeenCalled();
+     });
+
+  it('should not dispatch close if closed while disconnected', async () => {
+    const {harness, root} = await setupTest();
+    await harness.element.show();
+
+    const closeListener = jasmine.createSpy('closeListener');
+    harness.element.addEventListener('close', closeListener);
+    harness.element.remove();
+    await env.waitForStability();
+
+    expect(closeListener)
+        .withContext('should not trigger close when disconnected')
+        .not.toHaveBeenCalled();
+
+    await harness.element.close();
+    expect(closeListener)
+        .withContext('should not trigger close when disconnected')
+        .not.toHaveBeenCalled();
+
+    root.appendChild(harness.element);
+    await env.waitForStability();
+    expect(closeListener)
+        .withContext('should not trigger close when disconnected')
+        .not.toHaveBeenCalled();
+  });
 });
+
+function disableDialogAnimations(dialog: MdDialog) {
+  dialog.getOpenAnimation = () => {
+    return {};
+  };
+  dialog.getCloseAnimation = () => {
+    return {};
+  };
+}

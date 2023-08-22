@@ -86,6 +86,10 @@ export class Dialog extends LitElement {
   getCloseAnimation = () => DIALOG_DEFAULT_CLOSE_ANIMATION;
 
   private isOpen = false;
+  private isOpening = false;
+  // getIsConnectedPromise() immediately sets the resolve property.
+  private isConnectedPromiseResolve!: () => void;
+  private isConnectedPromise = this.getIsConnectedPromise();
   @query('dialog') private readonly dialog!: HTMLDialogElement|null;
   @query('.scrim') private readonly scrim!: HTMLDialogElement|null;
   @query('.container') private readonly container!: HTMLDialogElement|null;
@@ -122,8 +126,15 @@ export class Dialog extends LitElement {
    *     `opened` event was fired.
    */
   async show() {
-    const {dialog, container} = this;
-    if (!dialog || !container || dialog.open) {
+    this.isOpening = true;
+    // Dialogs can be opened before being attached to the DOM, so we need to
+    // wait until we're connected before calling `showModal()`.
+    await this.isConnectedPromise;
+    await this.updateComplete;
+    const dialog = this.dialog!;
+    // Check if already opened or if `dialog.close()` was called while awaiting.
+    if (dialog.open || !this.isOpening) {
+      this.isOpening = false;
       return;
     }
 
@@ -148,6 +159,7 @@ export class Dialog extends LitElement {
 
     await this.animateDialog(this.getOpenAnimation());
     this.dispatchEvent(new Event('opened'));
+    this.isOpening = false;
   }
 
   /**
@@ -161,8 +173,18 @@ export class Dialog extends LitElement {
    *     `closed` event was fired.
    */
   async close(returnValue = this.returnValue) {
-    const {dialog, container} = this;
-    if (!dialog || !container || !dialog.open) {
+    this.isOpening = false;
+    if (!this.isConnected) {
+      // Disconnected dialogs do not fire close events or animate.
+      this.open = false;
+      return;
+    }
+
+    await this.updateComplete;
+    const dialog = this.dialog!;
+    // Check if already closed or if `dialog.show()` was called while awaiting.
+    if (!dialog.open || this.isOpening) {
+      this.open = false;
       return;
     }
 
@@ -179,6 +201,16 @@ export class Dialog extends LitElement {
     dialog.close(returnValue);
     this.open = false;
     this.dispatchEvent(new Event('closed'));
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.isConnectedPromiseResolve();
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.isConnectedPromise = this.getIsConnectedPromise();
   }
 
   protected override render() {
@@ -353,5 +385,11 @@ export class Dialog extends LitElement {
     if (target === this.bottomAnchor) {
       this.isAtScrollBottom = isIntersecting;
     }
+  }
+
+  private getIsConnectedPromise() {
+    return new Promise<void>(resolve => {
+      this.isConnectedPromiseResolve = resolve;
+    });
   }
 }
