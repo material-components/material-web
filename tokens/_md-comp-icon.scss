@@ -10,6 +10,7 @@
 $supported-tokens: (
   // go/keep-sorted start
   'font',
+  'font-variation-settings'
   // go/keep-sorted end
 );
 
@@ -17,6 +18,7 @@ $supported-tokens: (
   @return (
     // go/keep-sorted start
     font: if($exclude-hardcoded-values, null, 'Material Symbols Outlined'),
+    font-variation-settings: if($exclude-hardcoded-values, null, inherit),
     // go/keep-sorted end
   );
 }

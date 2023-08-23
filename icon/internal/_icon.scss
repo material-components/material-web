@@ -33,7 +33,7 @@
     width: 24px;
     height: 24px;
     color: inherit;
-    font-variation-settings: inherit;
+    font-variation-settings: var(--md-icon-font-variation-settings, #{map.get($tokens, font-variation-settings)});
     font-weight: 400;
     font-family: var(--md-icon-font, #{map.get($tokens, font)});
     display: inline-flex;
