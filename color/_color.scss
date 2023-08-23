@@ -1,0 +1,193 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../tokens';
+// go/keep-sorted end
+
+/// `color.light-theme()` emits `--md-sys-color-*` custom properties for a light
+/// theme from the given color palette.
+///
+/// @example scss
+///   @use 'sass:map';
+///   @use '@material/web/color/color';
+///   @use '@material/web/tokens';
+///
+///   // Tip: if only changing part of the palette, merge the default palette
+///   // values to inherit other tones (such as neutral and error tones).
+///   $my-palette: map.merge(
+///     tokens.md-ref-palette-values(),
+///     (
+///       'primary10': /* ... */,
+///       'primary20': /* ... */,
+///       'primary30': /* ... */,
+///       'primary40': /* ... */,
+///       'primary50': /* ... */,
+///       'primary60': /* ... */,
+///       'primary70': /* ... */,
+///       'primary80': /* ... */,
+///       'primary90': /* ... */,
+///       'primary95': /* ... */,
+///       'primary99': /* ... */,
+///       // Opt: palette values for:
+///       // - secondary
+///       // - tertiary
+///       // - error
+///       // - neutral
+///       // - neutral-variant
+///     ),
+///   );
+///
+///   :root {
+///     @include color.light-theme($my-palette);
+///   }
+///
+///   /* Generated CSS */
+///   :root {
+///     --md-sys-color-primary: /* ... */;
+///     --md-sys-color-primary-container: /* ... */;
+///     --md-sys-color-primary-fixed: /* ... */;
+///     --md-sys-color-primary-fixed-dim: /* ... */;
+///     /* ... */
+///   }
+///
+/// To generate a palette, use the Material Theme Builder Figma plugin.
+///
+/// @link https://www.figma.com/community/plugin/1034969338659738588/Material-Theme-Builder
+///
+/// @param {Map} $md-ref-palette - A map of Material palette keys and their
+///     values.
+/// @output Emits `--md-sys-color-*` custom properties for a light theme with
+///     the given palette.
+@mixin light-theme($md-ref-palette: tokens.md-ref-palette-values()) {
+  @each $token, $value in $md-ref-palette {
+    @if list.index(tokens.$md-ref-palette-supported-tokens, $token) == null {
+      @error 'md-ref-palette `#{$token}` is not a supported token.';
+    }
+  }
+
+  @include theme(
+    tokens.md-sys-color-values-light(
+      (
+        'md-ref-palette': $md-ref-palette,
+      ),
+      $exclude-custom-properties: true
+    )
+  );
+}
+
+/// `color.dark-theme()` emits `--md-sys-color-*` custom properties for a dark
+/// theme from the given color palette.
+///
+/// @example scss
+///   @use 'sass:map';
+///   @use '@material/web/color/color';
+///   @use '@material/web/tokens';
+///
+///   // Tip: if only changing part of the palette, merge the default palette
+///   // values to inherit other tones (such as neutral and error tones).
+///   $my-palette: map.merge(
+///     tokens.md-ref-palette-values(),
+///     (
+///       'primary10': /* ... */,
+///       'primary20': /* ... */,
+///       'primary30': /* ... */,
+///       'primary40': /* ... */,
+///       'primary50': /* ... */,
+///       'primary60': /* ... */,
+///       'primary70': /* ... */,
+///       'primary80': /* ... */,
+///       'primary90': /* ... */,
+///       'primary95': /* ... */,
+///       'primary99': /* ... */,
+///       // Opt: palette values for:
+///       // - secondary
+///       // - tertiary
+///       // - error
+///       // - neutral
+///       // - neutral-variant
+///     ),
+///   );
+///
+///   @media (prefers-color-scheme: dark) {
+///     @include color.dark-theme($my-palette);
+///   }
+///
+///   /* Generated CSS */
+///   @media (prefers-color-scheme: dark) {
+///     --md-sys-color-primary: /* ... */;
+///     --md-sys-color-primary-container: /* ... */;
+///     --md-sys-color-primary-fixed: /* ... */;
+///     --md-sys-color-primary-fixed-dim: /* ... */;
+///     /* ... */
+///   }
+///
+/// To generate a palette, use the Material Theme Builder Figma plugin.
+///
+/// @link https://www.figma.com/community/plugin/1034969338659738588/Material-Theme-Builder
+///
+/// @param {Map} $md-ref-palette - A map of Material palette keys and their
+///     values.
+/// @output Emits `--md-sys-color-*` custom properties for a dark theme with
+///     the given palette.
+@mixin dark-theme($md-ref-palette: tokens.md-ref-palette-values()) {
+  @each $token, $value in $md-ref-palette {
+    @if list.index(tokens.$md-ref-palette-supported-tokens, $token) == null {
+      @error 'md-ref-palette `#{$token}` is not a supported token.';
+    }
+  }
+
+  @include theme(
+    tokens.md-sys-color-values-dark(
+      (
+        'md-ref-palette': $md-ref-palette,
+      ),
+      $exclude-custom-properties: true
+    )
+  );
+}
+
+/// `color.theme()` emits `--md-sys-color-*` custom properties for a given color
+/// scheme.
+///
+/// @example scss
+///   @use '@material/web/color/color';
+///
+///   :root {
+///     @include color.theme(
+///       'primary': /* ... */,
+///       'primary-container': /* ... */,
+///       'primary-fixed': /* ... */,
+///       'primary-fixed-dim': /* ... */,
+///       /* ... */
+///     );
+///   }
+///
+///   /* Generated CSS */
+///   :root {
+///     --md-sys-color-primary: /* ... */;
+///     --md-sys-color-primary-container: /* ... */;
+///     --md-sys-color-primary-fixed: /* ... */;
+///     --md-sys-color-primary-fixed-dim: /* ... */;
+///     /* ... */
+///   }
+///
+/// @param {Map} $tokens - A Map with `md-sys-color` token name keys and their
+///     corresponding values.
+/// @output Emits `--md-sys-color-*` custom properties for a given color scheme.
+@mixin theme($tokens) {
+  @each $token, $value in $tokens {
+    @if list.index(tokens.$md-sys-color-supported-tokens, $token) == null {
+      @error 'md-sys-color `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-sys-color-#{$token}: #{$value};
+    }
+  }
+}
