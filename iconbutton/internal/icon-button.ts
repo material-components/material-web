@@ -107,7 +107,7 @@ export class IconButton extends LitElement implements FormSubmitter {
   /**
    * Link buttons cannot be disabled.
    */
-  override willUpdate() {
+  protected override willUpdate() {
     if (this.href) {
       this.disabled = false;
     }
