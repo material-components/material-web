@@ -238,7 +238,7 @@ export class Dialog extends LitElement {
         .returnValue=${this.returnValue || nothing}
       >
         <div class="container"
-          @click=${this.handleContentClick}
+          @mousedown=${this.handleContentMouseDown}
         >
           <div class="headline">
             <div class="icon" aria-hidden="true">
@@ -278,8 +278,15 @@ export class Dialog extends LitElement {
     this.intersectionObserver.observe(this.bottomAnchor!);
   }
 
-  private handleDialogClick() {
+  private handleDialogClick(event: MouseEvent) {
+
     if (this.nextClickIsFromContent) {
+      if (event.target === this.dialog) {
+        // Click was pressed inside the content
+        // but released outside content.
+        // Prevent closing.
+        event.preventDefault();
+      }
       // Avoid doing a layout calculation below if we know the click came from
       // content.
       this.nextClickIsFromContent = false;
@@ -297,7 +304,7 @@ export class Dialog extends LitElement {
     this.close();
   }
 
-  private handleContentClick() {
+  private handleContentMouseDown() {
     this.nextClickIsFromContent = true;
   }
 
