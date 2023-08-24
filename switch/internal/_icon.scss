@@ -30,17 +30,17 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     opacity: 0;
   }
 
-  .switch:disabled .icon {
+  .disabled .icon {
     transition: none;
   }
 
-  .switch--selected .icon--on,
-  .switch--unselected .icon--off {
+  .selected .icon--on,
+  .unselected .icon--off {
     opacity: 1;
   }
 
   // rotate selected icon into view when there is no unselected icon
-  .switch--unselected .handle:not(.with-icon) .icon--on {
+  .unselected .handle:not(.with-icon) .icon--on {
     transform: rotate(-45deg);
   }
 
@@ -50,19 +50,19 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     fill: var(--_icon-color);
   }
 
-  .switch--unselected:hover .icon--off {
+  .unselected:hover .icon--off {
     fill: var(--_hover-icon-color);
   }
 
-  .switch--unselected:focus-within .icon--off {
+  .unselected:focus-within .icon--off {
     fill: var(--_focus-icon-color);
   }
 
-  .switch--unselected:active .icon--off {
+  .unselected:active .icon--off {
     fill: var(--_pressed-icon-color);
   }
 
-  .switch--unselected:disabled .icon--off {
+  .unselected.disabled .icon--off {
     fill: var(--_disabled-icon-color);
     opacity: var(--_disabled-icon-opacity);
   }
@@ -73,19 +73,19 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     fill: var(--_selected-icon-color);
   }
 
-  .switch--selected:hover .icon--on {
+  .selected:hover .icon--on {
     fill: var(--_selected-hover-icon-color);
   }
 
-  .switch--selected:focus-within .icon--on {
+  .selected:focus-within .icon--on {
     fill: var(--_selected-focus-icon-color);
   }
 
-  .switch--selected:active .icon--on {
+  .selected:active .icon--on {
     fill: var(--_selected-pressed-icon-color);
   }
 
-  .switch--selected:disabled .icon--on {
+  .selected.disabled .icon--on {
     fill: var(--_disabled-selected-icon-color);
     opacity: var(--_disabled-selected-icon-opacity);
   }

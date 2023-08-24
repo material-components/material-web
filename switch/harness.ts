@@ -14,6 +14,6 @@ import {Switch} from './internal/switch.js';
 export class SwitchHarness extends Harness<Switch> {
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector<HTMLElement>('.switch')!;
+    return this.element.renderRoot.querySelector('input')!;
   }
 }

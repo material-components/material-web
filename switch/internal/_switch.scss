@@ -106,14 +106,8 @@
 
   .switch {
     align-items: center;
-    background: none;
-    border: none;
-    cursor: pointer;
     display: inline-flex;
     flex-shrink: 0; // Stop from collapsing in flex containers
-    margin: 0;
-    outline: none;
-    padding: 0;
     position: relative;
     width: var(--_track-width);
     height: var(--_track-height);
@@ -125,34 +119,32 @@
     border-end-start-radius: var(--_track-shape-end-start);
   }
 
-  // Touch target
-  .touch {
-    position: absolute;
+  // Input is also touch target
+  input {
+    appearance: none;
     height: 48px;
+    outline: none;
+    margin: 0;
+    position: absolute;
     width: 100%;
+    z-index: 1;
   }
 
-  :host([touch-target='none']) .touch {
+  :host([touch-target='none']) input {
     display: none;
   }
 
-  // Disabled
-  .switch:disabled {
-    cursor: default;
-    pointer-events: none;
-  }
-
   // Disabled - Track
-  .switch:disabled .track {
+  .disabled .track {
     background-color: transparent;
     border-color: transparent;
   }
 
-  .switch:disabled .track::before {
+  .disabled .track::before {
     background-clip: content-box;
   }
 
-  .switch--selected:disabled .track {
+  .selected.disabled .track {
     background-clip: border-box;
   }
 

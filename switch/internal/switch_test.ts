@@ -76,30 +76,20 @@ describe('md-switch', () => {
       expect(toggle.selected).toBeFalse();
     });
 
-    it('sets `aria-checked` of button', () => {
-      const toggleButton = toggle.shadowRoot!.querySelector('button')!;
-      expect(toggleButton.getAttribute('aria-checked')).toEqual('false');
-
-      const selectedButton = selected.shadowRoot!.querySelector('button')!;
-      expect(selectedButton.getAttribute('aria-checked')).toEqual('true');
-    });
-
-    it('adds switch--selected class when true', () => {
+    it('adds selected class when true', () => {
       const toggleRoot = toggle.shadowRoot!.querySelector('.switch')!;
-      expect(Array.from(toggleRoot.classList))
-          .not.toContain('switch--selected');
+      expect(Array.from(toggleRoot.classList)).not.toContain('selected');
 
       const selectedRoot = selected.shadowRoot!.querySelector('.switch')!;
-      expect(Array.from(selectedRoot.classList)).toContain('switch--selected');
+      expect(Array.from(selectedRoot.classList)).toContain('selected');
     });
 
-    it('adds switch--unselected class when false', () => {
+    it('adds unselected class when false', () => {
       const toggleRoot = toggle.shadowRoot!.querySelector('.switch')!;
-      expect(Array.from(toggleRoot.classList)).toContain('switch--unselected');
+      expect(Array.from(toggleRoot.classList)).toContain('unselected');
 
       const selectedRoot = selected.shadowRoot!.querySelector('.switch')!;
-      expect(Array.from(selectedRoot.classList))
-          .not.toContain('switch--unselected');
+      expect(Array.from(selectedRoot.classList)).not.toContain('unselected');
     });
   });
 
@@ -114,32 +104,32 @@ describe('md-switch', () => {
       expect(toggle.disabled).toBeFalse();
     });
 
-    it('sets disabled of button', () => {
-      const toggleButton = toggle.shadowRoot!.querySelector('button')!;
-      expect(toggleButton.disabled).toBeFalse();
+    it('sets disabled of input', () => {
+      const toggleInput = toggle.shadowRoot!.querySelector('input')!;
+      expect(toggleInput.disabled).toBeFalse();
 
-      const selectedButton = disabled.shadowRoot!.querySelector('button')!;
-      expect(selectedButton.disabled).toBeTrue();
+      const selectedInput = disabled.shadowRoot!.querySelector('input')!;
+      expect(selectedInput.disabled).toBeTrue();
     });
   });
 
   describe('aria', () => {
     it('delegates aria-label to the proper element', async () => {
-      const button = toggle.shadowRoot!.querySelector('button')!;
+      const input = toggle.shadowRoot!.querySelector('input')!;
       toggle.setAttribute('aria-label', 'foo');
       await toggle.updateComplete;
       expect(toggle.ariaLabel).toEqual('foo');
       expect(toggle.getAttribute('aria-label')).toEqual('foo');
-      expect(button.getAttribute('aria-label')).toEqual('foo');
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
 
     it('delegates .ariaLabel to the proper element', async () => {
-      const button = toggle.shadowRoot!.querySelector('button')!;
+      const input = toggle.shadowRoot!.querySelector('input')!;
       toggle.ariaLabel = 'foo';
       await toggle.updateComplete;
       expect(toggle.ariaLabel).toEqual('foo');
       expect(toggle.getAttribute('aria-label')).toEqual('foo');
-      expect(button.getAttribute('aria-label')).toEqual('foo');
+      expect(input.getAttribute('aria-label')).toEqual('foo');
     });
   });
 
@@ -223,6 +213,25 @@ describe('md-switch', () => {
         await env.waitForStability();
         expect(toggle.selected).toBeFalse();
       });
+    });
+  });
+
+  describe('validation', () => {
+    it('should set valueMissing when required and not selected', async () => {
+      toggle.required = true;
+
+      expect(toggle.validity.valueMissing)
+          .withContext('toggle.validity.valueMissing')
+          .toBeTrue();
+    });
+
+    it('should not set valueMissing when required and selected', async () => {
+      toggle.required = true;
+      toggle.selected = true;
+
+      expect(toggle.validity.valueMissing)
+          .withContext('toggle.validity.valueMissing')
+          .toBeFalse();
     });
   });
 });
