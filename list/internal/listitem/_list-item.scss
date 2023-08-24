@@ -138,6 +138,7 @@
     display: inline-flex;
     justify-content: center;
     flex-direction: column;
+    min-width: 0;
     box-sizing: border-box;
     flex: 1 0 0;
     padding-inline-start: var(--_leading-space);
@@ -164,7 +165,6 @@
   }
 
   .label-text {
-    display: flex;
     text-overflow: ellipsis;
     overflow-x: hidden;
     white-space: nowrap;
