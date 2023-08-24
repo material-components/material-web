@@ -53,7 +53,7 @@ export class List extends LitElement {
    */
   @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
 
-  @query('.md3-list') private listRoot!: HTMLElement|null;
+  @query('.list') private listRoot!: HTMLElement|null;
 
   /**
    * An array of activatable and disableable list items. Queries every assigned
@@ -77,7 +77,7 @@ export class List extends LitElement {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-    <ul class="md3-list"
+    <ul class="list"
         aria-label=${ariaLabel || nothing}
         tabindex=${this.listTabIndex}
         role=${this.type || nothing}
