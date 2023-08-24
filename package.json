@@ -48,7 +48,7 @@
     "catalog"
   ],
   "dependencies": {
-    "lit": "^2.7.4",
+    "lit": "^2.7.4 || ^3.0.0",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
