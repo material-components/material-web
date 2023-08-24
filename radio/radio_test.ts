@@ -77,6 +77,23 @@ describe('<md-radio>', () => {
           .toBeTrue();
     });
 
+    it('clicking a radio can be default prevented', async () => {
+      const {harnesses} = await setupTest(radioGroup);
+      const unselected = harnesses[1];
+      expect(unselected.element.checked)
+          .withContext('unselected checked')
+          .toBeFalse();
+
+      unselected.element.addEventListener('click', event => {
+        event.preventDefault();
+      });
+
+      await unselected.clickWithMouse();
+      expect(unselected.element.checked)
+          .withContext('after clicking checked')
+          .toBeFalse();
+    });
+
     it('clicking a radio should unselect other radio which is already selected',
        async () => {
          const {harnesses} = await setupTest(radioGroupPreSelected);

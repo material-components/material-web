@@ -7,81 +7,93 @@
 import '@material/web/radio/radio.js';
 
 import {labelStyles, MaterialStoryInit} from './material-collection.js';
-import {html} from 'lit';
+import {css, html} from 'lit';
 
 /** Knob types for radio stories. */
 export interface StoryKnobs {
-  checked: '0'|'1'|'2'|undefined;
   disabled: boolean;
 }
 
-const standard: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-radio>',
-  render({checked, disabled}) {
+const radio: MaterialStoryInit<StoryKnobs> = {
+  name: 'Radios',
+  render({disabled}) {
     return html`
-      <md-radio
-        name="story1"
-        value="radioA"
-        touch-target="wrapper"
-        .checked=${checked === '0'}
-        .disabled="${disabled || false}">
-      </md-radio>
-      <md-radio
-        name="story1"
-        value="radioB"
-        touch-target="wrapper"
-        .checked=${checked === '1'}
-        .disabled="${disabled || false}">
-      </md-radio>
-      <md-radio
-        name="story1"
-        value="radioC"
-        touch-target="wrapper"
-        .checked=${checked === '2'}
-        .disabled="${disabled || false}">
-      </md-radio>
-      `;
+      <div role="radiogroup" aria-label="An example group of radio buttons">
+        <md-radio
+          aria-label="First radio"
+          name="group"
+          touch-target="wrapper"
+          ?disabled=${disabled}>
+        </md-radio>
+        <md-radio
+          aria-label="Second radio"
+          name="group"
+          touch-target="wrapper"
+          ?disabled=${disabled}>
+        </md-radio>
+        <md-radio
+          aria-label="Third radio"
+          name="group"
+          touch-target="wrapper"
+          ?disabled=${disabled}>
+        </md-radio>
+      </div>
+    `;
   },
 };
 
-const labeled: MaterialStoryInit<StoryKnobs> = {
-  name: 'Labeled',
-  styles: labelStyles,
-  render({checked, disabled}) {
+const withLabels: MaterialStoryInit<StoryKnobs> = {
+  name: 'With labels',
+  styles: [
+    labelStyles, css`
+      .column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .radio-label {
+        display: flex;
+        align-items: center;
+      }
+    `
+  ],
+  render({disabled}) {
     return html`
-      <label>
-        First Radio
-        <md-radio
-          name="story2"
-          value="radioA"
-          touch-target="wrapper"
-          .checked=${checked === '0'}
-          .disabled="${disabled || false}">
-        </md-radio>
-      </label>
-      <label>
-        Second Radio
-        <md-radio
-          name="story2"
-          value="radioB"
-          touch-target="wrapper"
-          .checked=${checked === '1'}
-          .disabled="${disabled || false}">
-        </md-radio>
-      </label>
-      <label>
-        Third Radio
-        <md-radio
-          name="story2"
-          value="radioC"
-          touch-target="wrapper"
-          .checked=${checked === '2'}
-          .disabled="${disabled || false}">
-        </md-radio>
-      </label>
-      `;
+      <div class="column" role="radiogroup" aria-label="Animals">
+        <div class="radio-label">
+          <md-radio
+            aria-label="Birds"
+            id="birds-radio"
+            name="with-labels"
+            touch-target="wrapper"
+            ?disabled=${disabled}>
+          </md-radio>
+          <label for="birds-radio">Birds</label>
+        </div>
+        <div class="radio-label">
+          <md-radio
+            aria-label="Cats"
+            id="cats-radio"
+            name="with-labels"
+            touch-target="wrapper"
+            ?disabled=${disabled}>
+          </md-radio>
+          <label for="cats-radio">Cats</label>
+        </div>
+        <div class="radio-label">
+          <md-radio
+            aria-label="Dogs"
+            id="dogs-radio"
+            name="with-labels"
+            touch-target="wrapper"
+            ?disabled=${disabled}>
+          </md-radio>
+          <label for="dogs-radio">Dogs</label>
+        </div>
+      </div>
+    `;
   },
 };
 
 /** Radio stories. */
-export const stories = [standard, labeled];
+export const stories = [radio, withLabels];

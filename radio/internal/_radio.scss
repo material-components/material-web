@@ -49,6 +49,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
     display: inline-flex;
     height: var(--_icon-size);
+    outline: none;
     position: relative;
     vertical-align: top; // Fix extra space when placed inside display: block
     width: var(--_icon-size);
@@ -89,7 +90,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   input {
     appearance: none;
     height: 48px;
-    outline: none;
     margin: 0;
     position: absolute;
     width: 48px;

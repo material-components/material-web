@@ -7,13 +7,11 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {html, isServer, LitElement} from 'lit';
+import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
+import {isActivationClick} from '../../internal/controller/events.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 
@@ -24,14 +22,6 @@ let maskId = 0;
  * A radio component.
  */
 export class Radio extends LitElement {
-  static {
-    requestUpdateOnAriaChange(Radio);
-  }
-
-  /** @nocollapse */
-  static override shadowRootOptions:
-      ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
-
   /** @nocollapse */
   static readonly formAssociated = true;
 
@@ -95,7 +85,6 @@ export class Radio extends LitElement {
     return this.internals.labels;
   }
 
-  @query('input') private readonly input!: HTMLInputElement|null;
   private readonly selectionController = new SingleSelectionController(this);
   private readonly internals =
       (this as HTMLElement /* needed for closure */).attachInternals();
@@ -104,28 +93,30 @@ export class Radio extends LitElement {
     super();
     this.addController(this.selectionController);
     if (!isServer) {
-      this.addEventListener('click', (event: Event) => {
-        if (!isActivationClick(event)) {
-          return;
-        }
-        this.focus();
-        dispatchActivationClick(this.input!);
-      });
+      this.addEventListener('click', this.handleClick.bind(this));
+      this.addEventListener('keydown', this.handleKeydown.bind(this));
     }
   }
 
-  override focus() {
-    this.input?.focus();
+  override connectedCallback() {
+    super.connectedCallback();
+    // Firefox does not support ElementInternals aria yet, so we need to hydrate
+    // an attribute.
+    if (!('role' in this.internals)) {
+      this.setAttribute('role', 'radio');
+      return;
+    }
+
+    this.internals.role = 'radio';
   }
 
   protected override render() {
     const classes = {checked: this.checked};
-    // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      <div class="container ${classMap(classes)}">
-        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
-        <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
+      <div class="container ${classMap(classes)}" aria-hidden="true">
+        <md-ripple part="ripple" .control=${this}
+            ?disabled=${this.disabled}></md-ripple>
+        <md-focus-ring part="focus-ring" .control=${this}></md-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
           <mask id="${this.maskId}">
             <rect width="100%" height="100%" fill="white" />
@@ -135,28 +126,58 @@ export class Radio extends LitElement {
               mask="url(#${this.maskId})" />
           <circle class="inner circle" cx="10" cy="10" r="5" />
         </svg>
+
         <input
           id="input"
           type="radio"
-          name=${this.name}
-          aria-label=${ariaLabel || nothing}
+          tabindex="-1"
           .checked=${this.checked}
           .value=${this.value}
           ?disabled=${this.disabled}
-          @change=${this.handleChange}
         >
       </div>
     `;
   }
 
-  private handleChange(event: Event) {
+  protected override updated() {
+    // Firefox does not support ElementInternals aria yet, so we need to hydrate
+    // an attribute.
+    if (!('ariaChecked' in this.internals)) {
+      this.setAttribute('aria-checked', String(this.checked));
+      return;
+    }
+
+    this.internals.ariaChecked = String(this.checked);
+  }
+
+  private async handleClick(event: Event) {
     if (this.disabled) {
       return;
     }
 
-    // Per spec, the change event on a radio input always represents checked.
+    // allow event to propagate to user code after a microtask.
+    await 0;
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    if (isActivationClick(event)) {
+      this.focus();
+    }
+
+    // Per spec, clicking on a radio input always selects it.
     this.checked = true;
-    redispatchEvent(this, event);
+    this.dispatchEvent(new Event('change', {bubbles: true}));
+  }
+
+  private async handleKeydown(event: KeyboardEvent) {
+    // allow event to propagate to user code after a microtask.
+    await 0;
+    if (event.key !== ' ' || event.defaultPrevented) {
+      return;
+    }
+
+    this.click();
   }
 
   /** @private */

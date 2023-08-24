@@ -60,7 +60,7 @@ Radios behave like
 elements and form a group with the same `name` attribute. Only one radio can be
 selected in a group.
 
-Radios can be pre-selected by adding a `selected` attribute.
+Radios can be pre-selected by adding a `checked` attribute.
 
 Add a `value` to identify which radio is selected in a form.
 
@@ -87,7 +87,7 @@ Add a `value` to identify which radio is selected in a form.
 <form>
   <md-radio name="animals" value="cats"></md-radio>
   <md-radio name="animals" value="dogs"></md-radio>
-  <md-radio name="animals" value="birds" selected></md-radio>
+  <md-radio name="animals" value="birds" checked></md-radio>
 </form>
 ```
 
@@ -115,14 +115,15 @@ Associate a label with a radio using the `<label>` element.
 <!-- catalog-only-end -->
 
 ```html
-<label>
-  <md-radio name="animals" value="cats"></md-radio>
-  Cats
-</label>
+<md-radio id="cats-radio" name="animals" value="cats"></md-radio>
+<label for="cats-radio">Cats</label>
 
 <md-radio id="dogs-radio" name="animals" value="dogs"></md-radio>
 <label for="dogs-radio">Dogs</label>
 ```
+
+> Note: do not wrap radios inside of a `<label>`, which stops screen readers
+> from correctly announcing the number of radios in a group.
 
 ## Accessibility
 
@@ -131,15 +132,25 @@ Add an
 attribute to radios without labels or radios whose labels need to be more
 descriptive.
 
+Place radios inside a
+[`role="radiogroup"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/radiogroup_role)<!-- {.external} -->.
+Radio groups must display a label, either with `aria-label` or
+`aria-labelledby`.
+
 ```html
-<label>
-  <md-radio name="group" value="1" aria-label="First"></md-radio>
-  1st
-</label>
-<label>
-  <md-radio name="group" value="2" aria-label="Second"></md-radio>
-  2nd
-</label>
+<div role="radiogroup" aria-labelledby="group-title">
+  <h3 id="group-title">Starting position</h3>
+  <div>
+    <md-radio id="first-radio" name="group" value="1"
+        aria-label="First"></md-radio>
+    <label for="first-radio">1st</label>
+  </div>
+  <div>
+    <md-radio id="second-radio" name="group" value="2"
+        aria-label="Second"></md-radio>
+    <label for="second-radio">2nd</label>
+  </div>
+</div>
 ```
 
 > Note: radios are not automatically labelled by `<label>` elements and always
@@ -191,6 +202,6 @@ Token                            | Default value
 </style>
 
 <md-radio name="group"></md-radio>
-<md-radio name="group" selected></md-radio>
+<md-radio name="group" checked></md-radio>
 <md-radio name="group"></md-radio>
 ```

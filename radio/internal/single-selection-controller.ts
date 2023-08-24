@@ -122,7 +122,7 @@ export class SingleSelectionController implements ReactiveController {
     // 2. If an element is focused, the others are no longer focusable.
     if (checkedSibling || this.focused) {
       const focusable = checkedSibling || this.host;
-      focusable.removeAttribute('tabindex');
+      focusable.tabIndex = 0;
 
       for (const sibling of siblings) {
         if (sibling !== focusable) {
@@ -134,7 +134,7 @@ export class SingleSelectionController implements ReactiveController {
 
     // 3. If none are checked or focused, all are focusable.
     for (const sibling of siblings) {
-      sibling.removeAttribute('tabindex');
+      sibling.tabIndex = 0;
     }
   }
 
@@ -212,12 +212,13 @@ export class SingleSelectionController implements ReactiveController {
         if (sibling !== nextSibling) {
           sibling.checked = false;
           sibling.tabIndex = -1;
+          sibling.blur();
         }
       }
 
       // The next sibling should be checked, focused and dispatch a change event
       nextSibling.checked = true;
-      nextSibling.removeAttribute('tabindex');
+      nextSibling.tabIndex = 0;
       nextSibling.focus();
       // Fire a change event since the change is triggered by a user action.
       // This matches native <input type="radio"> behavior.

@@ -14,6 +14,6 @@ import {Radio} from './internal/radio.js';
 export class RadioHarness extends Harness<Radio> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('input') as HTMLInputElement;
+    return this.element as HTMLElement;
   }
 }
