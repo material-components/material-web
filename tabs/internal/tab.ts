@@ -15,6 +15,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
+import {EASING} from '../../internal/motion/animation.js';
 
 /**
  * An element that can select items.
@@ -142,7 +143,8 @@ export class Tab extends LitElement {
     });
     const frames = this.getKeyframes();
     if (frames !== null) {
-      this.indicator.animate(frames, {duration: 400, easing: 'ease-out'});
+      this.indicator.animate(
+          frames, {duration: 250, easing: EASING.EMPHASIZED});
     }
   }
 
