@@ -9,6 +9,7 @@ import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
+import {renderGridAction, renderGridContainer} from './chip.js';
 import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-icons.js';
 
@@ -52,6 +53,10 @@ export class InputChip extends MultiActionChip {
   @query('.trailing.action')
   protected readonly trailingAction!: HTMLElement|null;
 
+  protected override renderContainer(content: unknown) {
+    return renderGridContainer(content, this.getContainerClasses());
+  }
+
   protected override getContainerClasses() {
     return {
       ...super.getContainerClasses(),
@@ -64,42 +69,42 @@ export class InputChip extends MultiActionChip {
     };
   }
 
-  protected override renderAction() {
+  protected override renderPrimaryAction(content: unknown) {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
-      return html`
+      return renderGridAction(html`
         <a class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
-        >${this.renderContent()}</a>
-      `;
+        >${content}</a>
+      `);
     }
 
     if (this.removeOnly) {
-      return html`
+      return renderGridAction(html`
         <span class="primary action" aria-label=${ariaLabel || nothing}>
-          ${this.renderContent()}
+          ${content}
         </span>
-      `;
+      `);
     }
 
-    return html`
+    return renderGridAction(html`
       <button class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled}
         type="button"
-      >${this.renderContent()}</button>
-    `;
+      >${content}</button>
+    `);
   }
 
   protected override renderTrailingAction() {
-    return renderRemoveButton({
+    return renderGridAction(renderRemoveButton({
       ariaLabel: this.ariaLabelRemove,
       disabled: !this.href && this.disabled,
       tabbable: this.removeOnly,
-    });
+    }));
   }
 }

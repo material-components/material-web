@@ -25,7 +25,11 @@ class TestMultiActionChip extends MultiActionChip {
 
   protected primaryId = 'primary';
 
-  protected override renderAction() {
+  protected override renderContainer(content: unknown) {
+    return html`<div>${content}</div>`;
+  }
+
+  protected override renderPrimaryAction() {
     return html`<button id="primary"></button>`;
   }
 

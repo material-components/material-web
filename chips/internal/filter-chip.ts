@@ -6,8 +6,9 @@
 
 import '../../elevation/elevation.js';
 
-import {html, nothing, PropertyValues, svg, TemplateResult} from 'lit';
+import {html, nothing, PropertyValues, svg} from 'lit';
 import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
@@ -31,18 +32,19 @@ export class FilterChip extends MultiActionChip {
   @query('.trailing.action')
   protected readonly trailingAction!: HTMLElement|null;
 
-  constructor() {
-    super();
-    // Remove the `row` role from the container, since filter chips do not use a
-    // `grid` navigation model.
-    this.containerRole = undefined;
-  }
-
   protected override updated(changed: PropertyValues<this>) {
     if (changed.has('selected') && changed.get('selected') !== undefined) {
       // Dispatch when `selected` changes, except for the first update.
       this.dispatchEvent(new Event('selected', {bubbles: true}));
     }
+  }
+
+  protected override renderContainer(content: unknown) {
+    const classes = this.getContainerClasses();
+    // Note: an explicit `role="presentation"` is needed for VoiceOver. Without
+    // it, linear navigation gets stuck on the first filter chip.
+    return html`<div class="container ${
+        classMap(classes)}" role="presentation">${content}</div>`;
   }
 
   protected override getContainerClasses() {
@@ -54,13 +56,7 @@ export class FilterChip extends MultiActionChip {
     };
   }
 
-  protected override renderActionCell(content: TemplateResult|typeof nothing) {
-    // Filter chips use a `listbox`/`option` model, and do not need `gridcell`
-    // wrappers around their actions.
-    return content;
-  }
-
-  protected override renderAction() {
+  protected override renderPrimaryAction(content: unknown) {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button class="primary action"
@@ -70,7 +66,7 @@ export class FilterChip extends MultiActionChip {
         ?disabled=${this.disabled || nothing}
         role="option"
         @click=${this.handleClick}
-      >${this.renderContent()}</button>
+      >${content}</button>
     `;
   }
 

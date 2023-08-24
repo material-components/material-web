@@ -62,7 +62,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           ?disabled=${disabled}
           ?elevated=${elevated}
         >
-          <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
+          <md-icon slot="icon">local_laundry_service</md-icon>
         </md-assist-chip>
       </md-chip-set>
     `;
@@ -108,7 +108,7 @@ const filters: MaterialStoryInit<StoryKnobs> = {
           ?disabled=${disabled}
           ?elevated=${elevated}
         >
-          <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
+          <md-icon slot="icon">local_laundry_service</md-icon>
         </md-filter-chip>
         <md-filter-chip
           label=${label || 'Removable filter chip'}
@@ -193,7 +193,7 @@ const suggestions: MaterialStoryInit<StoryKnobs> = {
           ?disabled=${disabled}
           ?elevated=${elevated}
         >
-          <md-icon slot="icon" aria-hidden="true">local_laundry_service</md-icon>
+          <md-icon slot="icon">local_laundry_service</md-icon>
         </md-suggestion-chip>
       </md-chip-set>
     `;

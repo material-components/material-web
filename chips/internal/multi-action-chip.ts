@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, isServer, nothing, TemplateResult} from 'lit';
+import {html, isServer} from 'lit';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
@@ -58,14 +58,14 @@ export abstract class MultiActionChip extends Chip {
     super.focus(options);
   }
 
-  protected override renderActions() {
+  protected override renderContainerContent() {
     return html`
-      ${super.renderActions()}
-      ${this.renderActionCell(this.renderTrailingAction())}
+      ${super.renderContainerContent()}
+      ${this.renderTrailingAction()}
     `;
   }
 
-  protected abstract renderTrailingAction(): TemplateResult|typeof nothing;
+  protected abstract renderTrailingAction(): unknown;
 
   private handleKeyDown(event: KeyboardEvent) {
     const isLeft = event.key === 'ArrowLeft';
