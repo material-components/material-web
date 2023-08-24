@@ -113,7 +113,7 @@ $_checkmark-bottom-left: 7px, -14px;
 
   .container {
     border-radius: inherit;
-    display: grid;
+    display: flex;
     height: 100%;
     place-content: center;
     place-items: center;

@@ -263,7 +263,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     block-size: var(--_state-layer-size);
     inline-size: var(--_state-layer-size);
     border-radius: var(--_handle-shape);
-    display: grid;
+    display: flex;
+    place-content: center;
     place-items: center;
   }
 
@@ -316,8 +317,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   .label {
     position: absolute;
     box-sizing: border-box;
-    display: grid;
+    display: flex;
     padding: 4px;
+    place-content: center;
     place-items: center;
     border-radius: map.get($_md-sys-shape, 'corner-full');
 

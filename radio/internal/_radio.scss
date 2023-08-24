@@ -61,7 +61,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   }
 
   .container {
-    display: grid;
+    display: flex;
     height: 100%;
     place-content: center;
     place-items: center;

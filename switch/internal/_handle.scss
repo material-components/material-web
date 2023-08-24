@@ -16,7 +16,8 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
 @mixin styles() {
   .handle-container {
-    display: grid;
+    display: flex;
+    place-content: center;
     place-items: center;
     position: relative;
     // this easing is custom to perform the "overshoot" animation
