@@ -52,7 +52,7 @@ Radio button                  | ✅     | ✅    | 🟡
 Ripple                        | ✅     | ✅    | ✅
 Select                        | ✅     | ✅    | 🟡
 Slider                        | ✅     | ✅    | 🟡
-Switch                        | ✅     | ✅    | 🟡
+Switch                        | ✅     | ✅    | ✅
 Tabs                          | ✅     | ✅    | 🟡
 Text field                    | ✅     | ✅    | 🟡
 
