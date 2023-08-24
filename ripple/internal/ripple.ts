@@ -99,6 +99,10 @@ export class Ripple extends LitElement implements Attachable {
   get control() {
     return this.attachableController.control;
   }
+  set control(control: HTMLElement|null) {
+    this.attachableController.control = control;
+  }
+
 
   @state() private hovered = false;
   @state() private pressed = false;

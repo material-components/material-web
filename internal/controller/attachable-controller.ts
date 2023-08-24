@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ReactiveController, ReactiveControllerHost, isServer} from 'lit';
+import {isServer, ReactiveController, ReactiveControllerHost} from 'lit';
 
 /**
  * An element that can be attached to an associated controlling element.
@@ -36,15 +36,15 @@ export interface Attachable {
   htmlFor: string|null;
 
   /**
-   * The element that controls the visibility of the attachable element. It is
-   * one of:
+   * Gets or sets the element that controls the visibility of the attachable
+   * element. It is one of:
    *
    * - The control referenced by the `for` attribute.
    * - The control provided to `element.attach(control)`
    * - The element's parent.
    * - `null` if the element is not controlled.
    */
-  readonly control: HTMLElement|null;
+  control: HTMLElement|null;
 
   /**
    * Attaches the element to an interactive control.
@@ -136,6 +136,13 @@ export class AttachableController implements ReactiveController, Attachable {
     }
 
     return this.currentControl || this.host.parentElement;
+  }
+  set control(control: HTMLElement|null) {
+    if (control) {
+      this.attach(control);
+    } else {
+      this.detach();
+    }
   }
 
   private currentControl: HTMLElement|null = null;

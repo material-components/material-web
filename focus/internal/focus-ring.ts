@@ -41,6 +41,9 @@ export class FocusRing extends LitElement implements Attachable {
   get control() {
     return this.attachableController.control;
   }
+  set control(control: HTMLElement|null) {
+    this.attachableController.control = control;
+  }
 
   private readonly attachableController =
       new AttachableController(this, this.onControlChange.bind(this));
