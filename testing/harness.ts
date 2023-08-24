@@ -552,6 +552,9 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   protected simulateMousePress(
       element: HTMLElement, init: PointerEventInit = {}) {
     this.addPseudoClass(element, ':active');
+    this.forEachNodeFrom(element, el => {
+      this.addPseudoClass(el, ':active');
+    });
     const mouseInit = this.createMouseEventInit(element);
     const pointerInit: PointerEventInit = {
       ...mouseInit,
@@ -574,6 +577,9 @@ export class Harness<E extends HTMLElement = HTMLElement> {
   protected simulateMouseRelease(
       element: HTMLElement, init: PointerEventInit = {}) {
     this.removePseudoClass(element, ':active');
+    this.forEachNodeFrom(element, el => {
+      this.removePseudoClass(el, ':active');
+    });
     const mouseInit = this.createMouseEventInit(element);
     const pointerInit: PointerEventInit = {
       ...mouseInit,
@@ -596,6 +602,9 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       element: HTMLElement, init: PointerEventInit = {},
       touchInit: TouchEventInit = {}) {
     this.addPseudoClass(element, ':active');
+    this.forEachNodeFrom(element, el => {
+      this.addPseudoClass(el, ':active');
+    });
     const mouseInit = this.createMouseEventInit(element);
     const pointerInit: PointerEventInit = {
       ...mouseInit,
@@ -628,6 +637,9 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       element: HTMLElement, init: PointerEventInit = {},
       touchInit: TouchEventInit = {}) {
     this.removePseudoClass(element, ':active');
+    this.forEachNodeFrom(element, el => {
+      this.removePseudoClass(el, ':active');
+    });
     const mouseInit = this.createMouseEventInit(element);
     const pointerInit: PointerEventInit = {
       ...mouseInit,
@@ -655,6 +667,9 @@ export class Harness<E extends HTMLElement = HTMLElement> {
       element: HTMLElement, init: PointerEventInit = {},
       touchInit: TouchEventInit = {}) {
     this.removePseudoClass(element, ':active');
+    this.forEachNodeFrom(element, el => {
+      this.removePseudoClass(el, ':active');
+    });
     const mouseInit = this.createMouseEventInit(element);
     const pointerInit: PointerEventInit = {
       ...mouseInit,
