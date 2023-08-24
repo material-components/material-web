@@ -9,11 +9,9 @@ import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
 import {Tab, TabVariant} from './tab.js';
 
-// TODO(b/293506179): remove vertical logic
 const NAVIGATION_KEYS = new Map([
   ['default', new Set(['Home', 'End'])],
   ['horizontal', new Set(['ArrowLeft', 'ArrowRight'])],
-  ['vertical', new Set(['ArrowUp', 'ArrowDown'])]
 ]);
 
 /**
@@ -303,22 +301,16 @@ export class Tabs extends LitElement {
     }
     // wait for items to render.
     await this.itemsUpdateComplete();
-    // TODO(b/293506179): remove vertical logic
-    const isVertical = false;
-    const offset = isVertical ? item.offsetTop : item.offsetLeft;
-    const extent = isVertical ? item.offsetHeight : item.offsetWidth;
-    const scroll = isVertical ? this.scrollTop : this.scrollLeft;
-    const hostExtent = isVertical ? this.offsetHeight : this.offsetWidth;
+    const offset = item.offsetLeft;
+    const extent = item.offsetWidth;
+    const scroll = this.scrollLeft;
+    const hostExtent = this.offsetWidth;
     const min = offset - this.scrollMargin;
     const max = offset + extent - hostExtent + this.scrollMargin;
     const to = Math.min(min, Math.max(max, scroll));
     const behavior =
         // type annotation because `instant` is valid but not included in type.
         this.focusedItem !== undefined ? 'smooth' : 'instant' as ScrollBehavior;
-    this.scrollTo({
-      behavior,
-      [isVertical ? 'left' : 'top']: 0,
-      [isVertical ? 'top' : 'left']: to
-    });
+    this.scrollTo({behavior, top: 0, left: to});
   }
 }

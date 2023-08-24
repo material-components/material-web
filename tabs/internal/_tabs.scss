@@ -21,14 +21,6 @@
     display: none;
   }
 
-  // TODO(b/293506179): remove vertical styles
-  :host([variant~='vertical']:not([hidden])) {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0px;
-  }
-
   :host::-webkit-scrollbar {
     display: none;
   }

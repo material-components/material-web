@@ -9,9 +9,8 @@ import '@material/web/iconbutton/icon-button.js';
 import '@material/web/tabs/tabs.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {MdTabs, TabVariant} from '@material/web/tabs/tabs.js';
+import {MdTabs} from '@material/web/tabs/tabs.js';
 import {css, html, nothing} from 'lit';
-import {classMap} from 'lit/directives/class-map.js';
 
 /** Knob types for Tabs stories. */
 export interface StoryKnobs {
@@ -22,7 +21,6 @@ export interface StoryKnobs {
   content: string;
 }
 
-// TODO(b/293506179): remove vertical logic and styles
 const styles = css`
   .content:not([hidden]) {
     display: flex;
@@ -33,22 +31,13 @@ const styles = css`
     font-family: Roboto, Material Sans, system-ui;
   }
 
-  .vertical:not([hidden]) {
-    display: inline-flex;
-    align-items: stretch;
-  }
-
-  md-tabs:not([variant~="vertical"]) {
+  md-tabs {
     --inline-size: 50vw;
     min-inline-size: var(--inline-size);
   }
 
-  md-tabs:not([variant~="vertical"]).scrolling {
+  md-tabs.scrolling {
     inline-size: var(--inline-size);
-  }
-
-  md-tabs[variant~="vertical"].scrolling {
-    block-size: 50vh;
   }
 
   .controls {
@@ -62,14 +51,10 @@ const primary: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = '';
-    const variant = `primary ${vertical}` as TabVariant;
-    const classes = {vertical};
 
     return html`
       <md-tabs
-          class=${classMap(classes)}
-          .variant=${variant}
+          variant="primary"
           .selected=${knobs.selected}
           .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
@@ -99,14 +84,10 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = '';
-    const variant = `secondary ${vertical}` as TabVariant;
-    const classes = {vertical};
 
     return html`
       <md-tabs
-          class=${classMap(classes)}
-          .variant=${variant}
+          variant="secondary"
           .selected=${knobs.selected}
           .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
@@ -133,14 +114,11 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = '';
-    const variant = `primary ${vertical}` as TabVariant;
-    const classes = {vertical, scrolling: true};
 
     return html`
       <md-tabs
-          class=${classMap(classes)}
-          .variant=${variant}
+          class="scrolling"
+          variant="primary"
           .selected=${knobs.selected}
           .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
@@ -196,14 +174,11 @@ const custom: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = '';
-    const variant = `primary ${vertical}` as TabVariant;
-    const classes = {vertical, custom: true};
 
     return html`
       <md-tabs
-          class=${classMap(classes)}
-          .variant=${variant}
+          class="custom"
+          variant="primary"
           .selected=${knobs.selected}
           .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
@@ -230,10 +205,6 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
-    const vertical = '';
-    const variant = `primary ${vertical}` as TabVariant;
-    const secondaryVariant = `secondary ${vertical}` as TabVariant;
-    const classes = {vertical};
 
     // show the selected secondary tabs
     const handlePrimaryTabsChange = ({target}: Event) => {
@@ -258,10 +229,9 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     }
 
     return html`
-      <div class="${classMap(classes)}">
+      <div>
         <md-tabs
-          class=${classMap(classes)}
-          .variant=${variant}
+          variant="primary"
           .selected=${knobs.selected}
           .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
@@ -277,10 +247,9 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
             ${tabContent('audiotrack', 'Music')}
           </md-tab>
         </md-tabs>
-        <div class=${classMap(classes)}>
+        <div>
           <md-tabs
-            class=${classMap(classes)}
-            .variant=${secondaryVariant}
+            variant="secondary"
             .selected=${knobs.selected}
             .disabled=${knobs.disabled}
             .selectOnFocus=${knobs.selectOnFocus}
@@ -291,11 +260,10 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
             <md-tab>Jaws</md-tab>
             <md-tab>Frozen</md-tab>
           </md-tabs>
-          <div class="content ${classMap(classes)}"></div>
+          <div class="content"></div>
           <md-tabs
             hidden
-            class=${classMap(classes)}
-            .variant=${secondaryVariant}
+            variant="secondary"
             .selected=${knobs.selected}
             .disabled=${knobs.disabled}
             .selectOnFocus=${knobs.selectOnFocus}
@@ -306,11 +274,10 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
             <md-tab>Swiss Alps</md-tab>
             <md-tab>Niagra Falls</md-tab>
           </md-tabs>
-          <div hidden class="content ${classMap(classes)}"></div>
+          <div hidden class="content"></div>
           <md-tabs
             hidden
-            class=${classMap(classes)}
-            .variant=${secondaryVariant}
+            variant="secondary"
             .selected=${knobs.selected}
             .disabled=${knobs.disabled}
             .selectOnFocus=${knobs.selectOnFocus}
@@ -321,7 +288,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
             <md-tab>Soundscapes</md-tab>
             <md-tab>White Noise</md-tab>
           </md-tabs>
-          <div hidden class="content ${classMap(classes)}"></div>
+          <div hidden class="content"></div>
         </div>
       </div>
       `;
@@ -333,9 +300,6 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     const inlineIcon = knobs.inlineIcon;
-    const vertical = '';
-    const variant = `primary ${vertical}` as TabVariant;
-    const classes = {vertical, scrolling: true};
 
     function getTabs(event: Event) {
       return ((event.target! as Element).getRootNode() as ShadowRoot)
@@ -394,8 +358,8 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
         moveTabTowardsEnd}><md-icon>chevron_right</md-icon></md-icon-button>
       </div>
       <md-tabs
-          class=${classMap(classes)}
-          .variant=${variant}
+          class="scrolling"
+          variant="primary"
           .selected=${knobs.selected}
           .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}

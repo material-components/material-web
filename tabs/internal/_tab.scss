@@ -311,32 +311,6 @@
     min-width: 100%;
   }
 
-  // TODO(b/293506179): remove vertical styles
-  :host([variant~='vertical']) {
-    flex: 0;
-  }
-
-  :host([variant~='vertical']) .button {
-    width: 100%;
-    flex-direction: row;
-    border-bottom: none;
-    border-right: var(--_divider-thickness) solid var(--_divider-color);
-  }
-
-  :host([variant~='vertical']) .content {
-    width: 100%;
-  }
-
-  :host([variant~='vertical']) .indicator {
-    height: 100%;
-    min-width: var(--_active-indicator-height);
-    inset: 0 0 0 auto;
-  }
-
-  :host([variant~='vertical'][variant~='primary']) {
-    --_active-indicator-shape: 9999px 0 0 9999px;
-  }
-
   :host,
   ::slotted(*) {
     white-space: nowrap;

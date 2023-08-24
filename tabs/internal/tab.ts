@@ -152,22 +152,19 @@ export class Tab extends LitElement {
       return reduceMotion ? [{'opacity': 1}, {'transform': 'none'}] : null;
     }
     const from: Keyframe = {};
-    // TODO(b/293506179): remove vertical logic
-    const isVertical = false;
     const fromRect =
         (this.tabs?.previousSelectedItem?.indicator.getBoundingClientRect() ??
          ({} as DOMRect));
-    const fromPos = isVertical ? fromRect.top : fromRect.left;
-    const fromExtent = isVertical ? fromRect.height : fromRect.width;
+    const fromPos = fromRect.left;
+    const fromExtent = fromRect.width;
     const toRect = this.indicator.getBoundingClientRect();
-    const toPos = isVertical ? toRect.top : toRect.left;
-    const toExtent = isVertical ? toRect.height : toRect.width;
-    const axis = isVertical ? 'Y' : 'X';
+    const toPos = toRect.left;
+    const toExtent = toRect.width;
     const scale = fromExtent / toExtent;
     if (!reduceMotion && fromPos !== undefined && toPos !== undefined &&
         !isNaN(scale)) {
-      from['transform'] = `translate${axis}(${
-          (fromPos - toPos).toFixed(4)}px) scale${axis}(${scale.toFixed(4)})`;
+      from['transform'] = `translateX(${
+          (fromPos - toPos).toFixed(4)}px) scaleX(${scale.toFixed(4)})`;
     } else {
       from['opacity'] = 0;
     }
