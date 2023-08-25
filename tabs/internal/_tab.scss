@@ -101,14 +101,13 @@
   }
 
   .button {
+    appearance: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
     border: none;
     outline: none;
     user-select: none;
-    -webkit-appearance: none;
     vertical-align: middle;
     background: none;
     text-decoration: none;
@@ -118,7 +117,6 @@
     margin: 0;
     z-index: 0; // Ensure this is a stacking context so the indicator displays
     font: var(--_label-text-type);
-    border-bottom: var(--_divider-thickness) solid var(--_divider-color);
     color: var(--_label-text-color);
 
     &::-moz-focus-inner {

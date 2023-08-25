@@ -137,7 +137,6 @@ Token                                     | Default value
 ----------------------------------------- | -----------------------------------
 `--md-primary-tab-container-color`        | `--md-sys-color-surface`
 `--md-secondary-tab-container-color`      | `--md-sys-color-surface`
-`--md-primary-tab-divider-color`          | `--md-sys-color-outline-variant`
 `--md-primary-tab-label-text-type`        | `500 0.875rem/1.25rem Roboto`
 `--md-primary-tab-active-indicator-color` | `--md-sys-color-primary`
 `--md-primary-tab-icon-color`             | `--md-sys-color-on-surface-variant`

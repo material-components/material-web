@@ -7,7 +7,6 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './md-comp-divider';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -47,8 +46,6 @@ $supported-tokens: (
   'primary-tab-container-elevation',
   'primary-tab-container-height',
   'primary-tab-container-shape',
-  'primary-tab-divider-color',
-  'primary-tab-divider-thickness',
   'primary-tab-focus-icon-color',
   'primary-tab-focus-label-text-color',
   'primary-tab-hover-icon-color',
@@ -82,8 +79,6 @@ $supported-tokens: (
   'secondary-tab-container-elevation',
   'secondary-tab-container-height',
   'secondary-tab-container-shape',
-  'secondary-tab-divider-color',
-  'secondary-tab-divider-thickness',
   'secondary-tab-focus-icon-color',
   'secondary-tab-focus-label-text-color',
   'secondary-tab-hover-icon-color',
@@ -132,12 +127,10 @@ $unsupported-tokens: (
   // prepare token values by normalizing and combinding primary/secondary
   // generated tokens *before* fixing up names and limiting to supported tokens.
   // 1. for primary
-  //   a. add divider/text tokens
-  //   b. prefix with `primary-tab`
+  //   a. prefix with `primary-tab`
   // 2. for secondary
-  //   a. add divider/text tokens
-  //   b. add missing secondary tokens to match primary
-  //   c. prefix with `secondary-tab`
+  //   a. add missing secondary tokens to match primary
+  //   b. prefix with `secondary-tab`
 
   $primary-tokens: md-comp-primary-navigation-tab.values(
     $deps,
@@ -237,14 +230,8 @@ $unsupported-tokens: (
   @return $tokens;
 }
 
-// add tokens for divider / label-text
+// add tokens for label-text
 @function _add-missing-tokens($tokens, $deps) {
-  $divider-tokens: md-comp-divider.values();
-  @each $key, $value in $divider-tokens {
-    $key: 'divider-#{$key}';
-    $tokens: map.set($tokens, $key, $value);
-  }
-
   // TODO(b/271876162): remove when tokens compiler emits typescale tokens
   $tokens: map.merge(
     $tokens,

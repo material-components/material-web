@@ -162,10 +162,13 @@ const custom: MaterialStoryInit<StoryKnobs> = {
         --md-primary-tab-active-hover-label-text-color: var(--active-color);
         --md-primary-tab-active-pressed-icon-color: var(--active-color);
         --md-primary-tab-active-pressed-label-text-color: var(--active-color);
-        /* divider */
-        --md-primary-tab-divider-color: var(--active-color);
-        --md-primary-tab-divider-thickness: 4px;
-      }`,
+      }
+
+      .custom::part(divider) {
+        --md-divider-color: var(--active-color);
+        --md-divider-thickness: 4px;
+      }
+    `,
   ],
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../divider/divider.js';
+
 import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
@@ -238,8 +240,11 @@ export class Tabs extends LitElement {
 
   protected override render() {
     return html`
-      <slot @slotchange=${this.handleSlotChange} @click=${
-        this.handleItemClick}></slot>
+      <div class="tabs">
+        <slot @slotchange=${this.handleSlotChange} @click=${
+          this.handleItemClick}></slot>
+      </div>
+      <md-divider part="divider"></md-divider>
     `;
   }
 
