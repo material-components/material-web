@@ -13,7 +13,7 @@ import {eventOptions, property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-import {ARIAMixinStrict, ARIARole} from '../../internal/aria/aria.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
 import {List} from '../../list/internal/list.js';
@@ -126,7 +126,7 @@ export abstract class Menu extends LitElement {
   /**
    * The role of the underlying list element.
    */
-  @property() type: ARIARole = 'menu';
+  @property() type: 'menu'|'menubar'|'listbox'|'list' = 'menu';
   /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.

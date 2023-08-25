@@ -7,7 +7,7 @@
 import {html, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
-import {ARIAMixinStrict, ARIARole} from '../../internal/aria/aria.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 
 import {ListItem} from './listitem/list-item.js';
@@ -46,7 +46,7 @@ export class List extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  @property() type: ARIARole|'' = 'list';
+  @property() type: 'menu'|'menubar'|'listbox'|'list'|'' = 'list';
 
   /**
    * The tabindex of the underlying list.
