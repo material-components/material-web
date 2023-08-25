@@ -7,8 +7,8 @@
 import './index.js';
 import './material-collection.js';
 
-import {MdTabs} from '@material/web/tabs/tabs.js';
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo} from './material-collection.js';
+import {MdTabs} from '@material/web/tabs/tabs.js';
 import {boolInput, Knob, numberInput, radioSelector} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
@@ -29,7 +29,6 @@ const collection =
           }
         }
       }),
-      new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('selectOnFocus', {ui: boolInput(), defaultValue: false}),
       new Knob('inlineIcon', {ui: boolInput(), defaultValue: false}),
       new Knob('content', {

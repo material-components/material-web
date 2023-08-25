@@ -49,11 +49,6 @@ export class Tab extends LitElement {
   @property({reflect: true}) variant: TabVariant = 'primary';
 
   /**
-   * Whether or not the tab is `disabled`.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
-
-  /**
    * Whether or not the tab is `selected`.
    **/
   @property({type: Boolean, reflect: true}) selected = false;
@@ -101,14 +96,13 @@ export class Tab extends LitElement {
       <button
         class="button"
         role="tab"
-        .tabIndex=${this.focusable && !this.disabled ? 0 : -1}
+        .tabIndex=${this.focusable ? 0 : -1}
         aria-selected=${this.selected ? 'true' : 'false'}
-        ?disabled=${this.disabled}
         aria-label=${ariaLabel || nothing}
       >
         <md-focus-ring part="focus-ring" inward></md-focus-ring>
         <md-elevation></md-elevation>
-        <md-ripple ?disabled=${this.disabled}></md-ripple>
+        <md-ripple></md-ripple>
         <div class="content ${classMap(contentClasses)}">
           <slot name="icon"></slot>
           <span class="label">
@@ -120,7 +114,7 @@ export class Tab extends LitElement {
   }
 
   protected override updated(changed: PropertyValues) {
-    if (changed.has('selected') && !this.disabled) {
+    if (changed.has('selected')) {
       this.animateSelected();
     }
   }

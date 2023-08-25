@@ -15,7 +15,6 @@ import {css, html, nothing} from 'lit';
 /** Knob types for Tabs stories. */
 export interface StoryKnobs {
   selected: number;
-  disabled: boolean;
   selectOnFocus: boolean;
   inlineIcon: boolean;
   content: string;
@@ -56,7 +55,6 @@ const primary: MaterialStoryInit<StoryKnobs> = {
       <md-tabs
           variant="primary"
           .selected=${knobs.selected}
-          .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
       >
         <md-tab .inlineIcon=${inlineIcon}>
@@ -89,7 +87,6 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
       <md-tabs
           variant="secondary"
           .selected=${knobs.selected}
-          .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
       >
         <md-tab .inlineIcon=${inlineIcon}>
@@ -120,7 +117,6 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
           class="scrolling"
           variant="primary"
           .selected=${knobs.selected}
-          .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
       >
         ${new Array(10).fill(html`
@@ -180,7 +176,6 @@ const custom: MaterialStoryInit<StoryKnobs> = {
           class="custom"
           variant="primary"
           .selected=${knobs.selected}
-          .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
       >
         <md-tab .inlineIcon=${inlineIcon}>
@@ -233,7 +228,6 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         <md-tabs
           variant="primary"
           .selected=${knobs.selected}
-          .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
           @change=${handlePrimaryTabsChange}
         >
@@ -251,7 +245,6 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
           <md-tabs
             variant="secondary"
             .selected=${knobs.selected}
-            .disabled=${knobs.disabled}
             .selectOnFocus=${knobs.selectOnFocus}
             @change=${handleSecondaryTabsChange}
           >
@@ -265,7 +258,6 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
             hidden
             variant="secondary"
             .selected=${knobs.selected}
-            .disabled=${knobs.disabled}
             .selectOnFocus=${knobs.selectOnFocus}
             @change=${handleSecondaryTabsChange}
           >
@@ -279,7 +271,6 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
             hidden
             variant="secondary"
             .selected=${knobs.selected}
-            .disabled=${knobs.disabled}
             .selectOnFocus=${knobs.selectOnFocus}
             @change=${handleSecondaryTabsChange}
           >
@@ -361,7 +352,6 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
           class="scrolling"
           variant="primary"
           .selected=${knobs.selected}
-          .disabled=${knobs.disabled}
           .selectOnFocus=${knobs.selectOnFocus}
       >
         <md-tab .inlineIcon=${inlineIcon}>

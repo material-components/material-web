@@ -266,13 +266,6 @@
     color: var(--_active-pressed-icon-color);
   }
 
-  // disabled state
-  :host([disabled]) {
-    cursor: default;
-    pointer-events: none;
-    opacity: 0.38;
-  }
-
   // secondary
   :host([variant~='secondary']) {
     // apply secondary-tab tokens

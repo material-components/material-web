@@ -51,11 +51,6 @@ export class Tabs extends LitElement {
   @property({reflect: true}) variant: TabVariant = 'primary';
 
   /**
-   * Whether or not the item is `disabled`.
-   */
-  @property({type: Boolean}) disabled = false;
-
-  /**
    * Index of the selected item.
    */
   @property({type: Number}) selected = 0;
@@ -119,8 +114,7 @@ export class Tabs extends LitElement {
     const shouldHandleKey = NAVIGATION_KEYS.get('default')!.has(key) ||
         NAVIGATION_KEYS.get('horizontal')!.has(key);
     // await to after user may cancel event.
-    if (!shouldHandleKey || (await this.wasEventPrevented(event, true)) ||
-        this.disabled) {
+    if (!shouldHandleKey || (await this.wasEventPrevented(event, true))) {
       return;
     }
     let indexToFocus = -1;
@@ -137,9 +131,7 @@ export class Tabs extends LitElement {
       indexToFocus =
           indexToFocus < 0 ? itemCount - 1 : indexToFocus % itemCount;
     }
-    const itemToFocus =
-        this.findFocusableItem(indexToFocus, key === 'End' || isPrevKey);
-    indexToFocus = this.items.indexOf(itemToFocus!);
+    const itemToFocus = this.items[indexToFocus];
     if (itemToFocus !== null && itemToFocus !== focused) {
       this.updateFocusableItem(itemToFocus);
       itemToFocus.focus();
@@ -165,20 +157,6 @@ export class Tabs extends LitElement {
       this.updateFocusableItem(this.selectedItem);
     }
   };
-
-  private findFocusableItem(i = -1, prev = false, tries = 0): Tab|null {
-    const itemCount = this.items.length - 1;
-    while (this.items[i]?.disabled && tries <= itemCount) {
-      tries++;
-      i = (i + (prev ? -1 : 1));
-      if (i > itemCount) {
-        return this.findFocusableItem(0, false, tries);
-      } else if (i < 0) {
-        return this.findFocusableItem(itemCount, true, tries);
-      }
-    }
-    return this.items[i] ?? null;
-  }
 
   // Note, this is async to allow the event to bubble to user code, which
   // may call `preventDefault`. If it does, avoid performing the tabs action
@@ -234,11 +212,10 @@ export class Tabs extends LitElement {
     const itemsOrVariantChanged =
         changed.has('itemsDirty') || changed.has('variant');
     // sync state with items.
-    if (itemsOrVariantChanged || changed.has('disabled')) {
+    if (itemsOrVariantChanged) {
       this.items.forEach((item, i) => {
         item.selected = this.selected === i;
         item.variant = this.variant;
-        item.disabled = this.disabled;
       });
     }
     if (itemsOrVariantChanged || changed.has('selected')) {
