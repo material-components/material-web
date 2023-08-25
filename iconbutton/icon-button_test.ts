@@ -10,8 +10,10 @@ import './icon-button.js';
 import {html} from 'lit';
 
 import {Environment} from '../testing/environment.js';
+import {createTokenTests} from '../testing/tokens.js';
 
 import {IconButtonHarness} from './harness.js';
+import {MdIconButton} from './icon-button.js';
 
 const ICON_BUTTON_TEMPLATE = html`
   <md-icon-button aria-label="Star">
@@ -36,6 +38,10 @@ interface IconButtonInternals {
 
 describe('icon button tests', () => {
   const env = new Environment();
+
+  describe('.styles', () => {
+    createTokenTests(MdIconButton.styles);
+  });
 
   describe('md-icon-button', () => {
     it('setting `disabled` updates the disabled attribute on the native ' +

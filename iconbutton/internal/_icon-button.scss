@@ -35,6 +35,14 @@
       --_#{$token}: var(--md-icon-button-#{$token}, #{$value});
     }
 
+    // These custom properties are not used, so set defaults so token tests pass
+    // for <md-icon-button>.
+    --_container-shape-start-start: 0;
+    --_container-shape-start-end: 0;
+    --_container-shape-end-end: 0;
+    --_container-shape-end-start: 0;
+    --_container-size: 0;
+
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
   }
