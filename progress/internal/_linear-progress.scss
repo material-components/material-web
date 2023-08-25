@@ -11,7 +11,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: tokens.$md-comp-linear-progress-indicator-supported-tokens;
+  $supported-tokens: tokens.$md-comp-linear-progress-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -46,7 +46,7 @@ $_dot-background: 0 / $_dot-background-width 100%
   );
 
 @mixin styles() {
-  $tokens: tokens.md-comp-linear-progress-indicator-values();
+  $tokens: tokens.md-comp-linear-progress-values();
 
   :host {
     @each $token, $value in $tokens {

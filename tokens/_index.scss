@@ -7,8 +7,7 @@
 @forward './md-comp-assist-chip' as md-comp-assist-chip-*;
 @forward './md-comp-badge' as md-comp-badge-*;
 @forward './md-comp-checkbox' as md-comp-checkbox-*;
-@forward './md-comp-circular-progress-indicator' as
-  md-comp-circular-progress-indicator-*;
+@forward './md-comp-circular-progress' as md-comp-circular-progress-*;
 @forward './md-comp-dialog' as md-comp-dialog-*;
 @forward './md-comp-divider' as md-comp-divider-*;
 @forward './md-comp-elevated-button' as md-comp-elevated-button-*;
@@ -29,8 +28,7 @@
 @forward './md-comp-icon' as md-comp-icon-*;
 @forward './md-comp-icon-button' as md-comp-icon-button-*;
 @forward './md-comp-input-chip' as md-comp-input-chip-*;
-@forward './md-comp-linear-progress-indicator' as
-  md-comp-linear-progress-indicator-*;
+@forward './md-comp-linear-progress' as md-comp-linear-progress-*;
 @forward './md-comp-list' as md-comp-list-*;
 @forward './md-comp-list-item' as md-comp-list-item-*;
 @forward './md-comp-menu' as md-comp-menu-*;
@@ -44,7 +42,7 @@
   md-comp-outlined-segmented-button-*;
 @forward './md-comp-outlined-select' as md-comp-outlined-select-*;
 @forward './md-comp-outlined-text-field' as md-comp-outlined-text-field-*;
-@forward './md-comp-radio-button' as md-comp-radio-button-*;
+@forward './md-comp-radio' as md-comp-radio-*;
 @forward './md-comp-ripple' as md-comp-ripple-*;
 @forward './md-comp-slider' as md-comp-slider-*;
 @forward './md-comp-suggestion-chip' as md-comp-suggestion-chip-*;

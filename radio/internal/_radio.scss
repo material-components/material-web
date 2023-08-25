@@ -17,7 +17,7 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $supported-tokens: tokens.$md-comp-radio-button-supported-tokens;
+  $supported-tokens: tokens.$md-comp-radio-supported-tokens;
 
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
@@ -31,7 +31,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-radio-button-values();
+  $tokens: tokens.md-comp-radio-values();
 
   :host {
     @each $token, $value in $tokens {
