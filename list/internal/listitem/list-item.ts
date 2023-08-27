@@ -21,6 +21,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 export type ListItemRole = 'listitem'|'menuitem'|'option'|'link'|'none';
 
 interface ListItemSelf {
+  key: string;
   active: boolean;
   disabled: boolean;
 }
@@ -36,6 +37,11 @@ export class ListItemEl extends LitElement implements ListItem {
   static {
     requestUpdateOnAriaChange(ListItemEl);
   }
+
+  /**
+   * Unique identifer for the list item.
+   */
+  @property() key = '';
 
   /**
    * The primary, headline text of the list item.
