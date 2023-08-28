@@ -26,6 +26,12 @@ const VALUE = Symbol('value');
  * interaction.
  * @fires change Fired when a selection is made by the user via mouse or
  * keyboard interaction.
+ * @fires select-opening Fired when the select's menu is about to open.
+ * @fires select-opened Fired when the select's menu has finished animations and
+ * opened.
+ * @fires select-closing Fired when the select's menu is about to close.
+ * @fires select-closed Fired when the select's menu has finished animations and
+ * closed.
  */
 export abstract class Select extends LitElement {
   /**
@@ -262,7 +268,9 @@ export abstract class Select extends LitElement {
           .fixed=${this.menuFixed}
           .typeaheadDelay=${this.typeaheadDelay}
           @opening=${this.handleOpening}
+          @opened=${this.handleOpened}
           @closing=${this.handleClosing}
+          @closed=${this.handleClosed}
           @close-menu=${this.handleCloseMenu}
           @request-selection=${this.handleRequestSelection}
           @request-deselection=${this.handleRequestDeselection}>
@@ -420,6 +428,8 @@ export abstract class Select extends LitElement {
    * active items.
    */
   private async handleOpening() {
+    this.dispatchEvent(new Event('select-opening'));
+
     const items = this.menu!.items;
     const activeItem = List.getActiveItem(items)?.item;
     const [selectedItem] = this.lastSelectedOptionRecords[0] ?? [null];
@@ -437,8 +447,17 @@ export abstract class Select extends LitElement {
     }
   }
 
+  private handleOpened() {
+    this.dispatchEvent(new Event('select-opened'));
+  }
+
   private handleClosing() {
     this.open = false;
+    this.dispatchEvent(new Event('select-closing'));
+  }
+
+  private handleClosed() {
+    this.dispatchEvent(new Event('select-closed'));
   }
 
   /**
