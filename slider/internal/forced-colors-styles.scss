@@ -33,9 +33,6 @@
         pressed-state-layer-color: $color,
         pressed-state-layer-opacity: 1,
         with-overlap-handle-outline-color: $container-color,
-        with-tick-marks-active-container-color: $color,
-        with-tick-marks-disabled-container-color: $disabled-color,
-        with-tick-marks-inactive-container-color: $container-color,
       )
     );
   }
@@ -49,5 +46,35 @@
   // inactive track
   :host(:not([disabled])) .track::before {
     border: 1px solid var(--_active-track-color);
+  }
+
+  // inactive-track
+  .track.tickmarks::before {
+    // A url must be used when forced-colors is active as it's the only value
+    // that is respected. The radial-gradient is not displayed. This is a
+    // stop-gap solution so ticks are displayed at all when forced-colors is
+    // active.
+    // Note:
+    // * The SVG has no viewBox which lets the svg take its dimensions from
+    //   background-size.
+    // * The fill is set directly. Using currentColor does not seem to work,
+    //   hence the duplication of background-image.
+    // * This approach does not respect tick sizes. Instead they will always be
+    //   1px wide. This is a limitation of using the url, as I'm not sure how
+    //   to pass in a custom property to change the `r` attribute.
+    // TODO(b/298051946): Tick marks cannot be resized in HCM
+    // stylelint-disable function-url-quotes -- SVG data URI
+    // SVG is optimized for data URI (https://codepen.io/tigt/post/optimizing-svgs-in-data-uris)
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='CanvasText'%3E%3Ccircle cx='2' cy='2'  r='1'/%3E%3C/svg%3E");
+    // stylelint-enable function-url-quotes
+  }
+
+  // active-track
+  .track.tickmarks::after {
+    // See inactive-track documentation for background-image.
+    // stylelint-disable function-url-quotes -- SVG data URI
+    // TODO(b/298051946): Tick marks cannot be resized in HCM
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='Canvas'%3E%3Ccircle cx='2' cy='2' r='1'/%3E%3C/svg%3E");
+    // stylelint-enable function-url-quotes
   }
 }
