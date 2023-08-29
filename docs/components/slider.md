@@ -53,7 +53,7 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 
 ## Interactive Demo
 
-{% playgroundexample dirname=dirname %}
+{% playgroundexample dirname=dirname, previewHeight=650 %}
 
 -->
 
