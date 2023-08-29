@@ -10,278 +10,158 @@ import '@material/web/iconbutton/filled-tonal-icon-button.js';
 import '@material/web/iconbutton/outlined-icon-button.js';
 import '@material/web/iconbutton/icon-button.js';
 
-import {isRtl} from '@material/web/internal/controller/is-rtl.js';
 import {MaterialStoryInit} from './material-collection.js';
-import {html, nothing} from 'lit';
-import {ref} from 'lit/directives/ref.js';
+import {css, html} from 'lit';
 
 /** Knob types for icon button stories. */
 export interface StoryKnobs {
   icon: string;
-  ariaLabel: string;
-  href: string;
-  target: '_blank'|'_parent'|'_self'|'_top'|'';
   selectedIcon: string;
-  ariaLabelSelected: string;
-  selected: boolean;
   disabled: boolean;
-  flipIconInRtl: boolean;
 }
 
-const standard: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-icon-button>',
-  render(knobs) {
-    const {icon, ariaLabel, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-icon-button>`;
+const styles = css`
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
-};
-const link: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-icon-button> link',
-  render(knobs) {
-    const {icon, ariaLabel, href, target, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          .href="${href}"
-          .target="${target}"
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-icon-button>`;
+
+  .row {
+    display: flex;
+    gap: 16px;
   }
-};
-const toggle: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-icon-button> toggle',
-  render(knobs) {
-    const {
-      icon,
-      ariaLabel,
-      selectedIcon,
-      ariaLabelSelected,
-      selected,
-      disabled,
-    } = knobs;
+`;
+
+const buttons: MaterialStoryInit<StoryKnobs> = {
+  name: 'Icon button variants',
+  styles,
+  render({icon, disabled}) {
     return html`
-      <md-icon-button
-          toggle
-          .disabled=${disabled}
-          .ariaLabelSelected=${ariaLabelSelected}
-          .ariaLabel=${ariaLabel}
-          .selected=${selected}>
-          ${
-        selectedIcon ?
-            html`<md-icon slot="selectedIcon">${selectedIcon}</md-icon>` :
-            nothing}
-        <md-icon>${icon}</md-icon>
-      </md-icon-button>`;
-  }
-};
-const outlined: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-outlined-icon-button>',
-  render(knobs) {
-    const {icon, ariaLabel, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-outlined-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-outlined-icon-button>`;
-  }
-};
-const outlinedLink: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-outlined-icon-button> link',
-  render(knobs) {
-    const {icon, ariaLabel, href, target, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-outlined-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          .href="${href}"
-          .target="${target}"
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-outlined-icon-button>`;
-  }
-};
-const outlinedToggle: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-outlined-icon-button> toggle',
-  render(knobs) {
-    const {
-      icon,
-      ariaLabel,
-      selectedIcon,
-      ariaLabelSelected,
-      selected,
-      disabled,
-    } = knobs;
-    return html`
-      <md-outlined-icon-button
-          toggle
-          .disabled=${disabled}
-          .ariaLabelSelected=${ariaLabelSelected}
-          .ariaLabel=${ariaLabel}
-          .selected=${selected}>
-          ${
-        selectedIcon ?
-            html`<md-icon slot="selectedIcon">${selectedIcon}</md-icon>` :
-            nothing}
-        <md-icon>${icon}</md-icon>
-      </md-outlined-icon-button>`;
-  }
-};
-const filled: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-filled-icon-button>',
-  render(knobs) {
-    const {icon, ariaLabel, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-filled-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-filled-icon-button>`;
-  }
-};
-const filledLink: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-filled-icon-button> link',
-  render(knobs) {
-    const {icon, ariaLabel, href, target, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-filled-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          .href="${href}"
-          .target="${target}"
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-filled-icon-button>`;
-  }
-};
-const filledToggle: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-filled-icon-button> toggle',
-  render(knobs) {
-    const {
-      icon,
-      ariaLabel,
-      selectedIcon,
-      ariaLabelSelected,
-      selected,
-      disabled,
-    } = knobs;
-    return html`
-      <md-filled-icon-button
-          toggle
-          .disabled=${disabled}
-          .ariaLabelSelected=${ariaLabelSelected}
-          .ariaLabel=${ariaLabel}
-          .selected=${selected}>
-          ${
-        selectedIcon ?
-            html`<md-icon slot="selectedIcon">${selectedIcon}</md-icon>` :
-            nothing}
-          <md-icon>${icon}</md-icon>
-      </md-filled-icon-button>`;
-  }
-};
-const tonal: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-filled-tonal-icon-button>',
-  render(knobs) {
-    const {icon, ariaLabel, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-filled-tonal-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-filled-tonal-icon-button>`;
-  }
-};
-const tonalLink: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-filled-tonal-icon-button> link',
-  render(knobs) {
-    const {icon, ariaLabel, href, target, disabled, flipIconInRtl} = knobs;
-    return html`
-      <md-filled-tonal-icon-button
-          .ariaLabel=${ariaLabel}
-          .disabled=${disabled}
-          .flipIconInRtl=${flipIconInRtl}
-          .href="${href}"
-          .target="${target}"
-          ${ref(rtlRefCallback(knobs))}>
-        <md-icon>${icon}</md-icon>
-      </md-filled-tonal-icon-button>`;
-  }
-};
-const tonalToggle: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-filled-tonal-icon-button> toggle',
-  render(knobs) {
-    const {
-      icon,
-      ariaLabel,
-      selectedIcon,
-      ariaLabelSelected,
-      selected,
-      disabled,
-    } = knobs;
-    return html`
-      <md-filled-tonal-icon-button
-          toggle
-          .disabled=${disabled}
-          .ariaLabelSelected=${ariaLabelSelected}
-          .ariaLabel=${ariaLabel}
-          .selected=${selected}>
-        ${
-        selectedIcon ?
-            html`<md-icon slot="selectedIcon">${selectedIcon}</md-icon>` :
-            nothing}
-        <md-icon>${icon}</md-icon>
-      </md-filled-tonal-icon-button>`;
+      <div class="column">
+        <div class="row">
+          <md-icon-button
+            aria-label="Standard icon"
+            ?disabled=${disabled}
+          >
+            <md-icon>${icon}</md-icon>
+          </md-icon-button>
+
+          <md-outlined-icon-button
+            aria-label="Outlined icon"
+            ?disabled=${disabled}>
+            <md-icon>${icon}</md-icon>
+          </md-outlined-icon-button>
+
+          <md-filled-icon-button
+            aria-label="Filled icon"
+            ?disabled=${disabled}
+          >
+            <md-icon>${icon}</md-icon>
+          </md-filled-icon-button>
+
+          <md-filled-tonal-icon-button
+            aria-label="Filled tonal icon"
+            ?disabled=${disabled}>
+            <md-icon>${icon}</md-icon>
+          </md-filled-tonal-icon-button>
+        </div>
+      </div>
+    `;
   }
 };
 
-// weakmap of elements to previous rtl knob value
-const previousRtl =
-    new WeakMap<Element, {lastRtl: boolean, lastFlipIconInRtl: boolean}>();
+const toggles: MaterialStoryInit<StoryKnobs> = {
+  name: 'Toggle icon buttons',
+  styles,
+  render({icon, selectedIcon, disabled}) {
+    return html`
+      <div class="column">
+        <div class="row">
+          <md-icon-button
+            aria-label="Standard icon"
+            toggle
+            ?disabled=${disabled}
+          >
+            <md-icon>${icon}</md-icon>
+            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+          </md-icon-button>
 
-// This calls some underlying functions to force the element to recalculate its
-// current RTL state whenever `flipIconInRtl` or `[dir]` changes.
-function rtlRefCallback(knobs: StoryKnobs) {
-  return (el: Element|undefined) => {
-    if (!el) {
-      return;
-    }
-    const {lastRtl, lastFlipIconInRtl} =
-        previousRtl.get(el) ?? {lastRtl: null, lastFlipIconInRtl: null};
-    const newRtl = (knobs as unknown as {'[dir=rtl]': boolean})['[dir=rtl]'];
-    const newFlipIconInRtl = knobs.flipIconInRtl;
+          <md-outlined-icon-button
+            aria-label="Outlined icon"
+            toggle
+            ?disabled=${disabled}
+          >
+            <md-icon>${icon}</md-icon>
+            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+          </md-outlined-icon-button>
 
-    if (lastRtl === newRtl && lastFlipIconInRtl === newFlipIconInRtl) {
-      return;
-    }
+          <md-filled-icon-button
+            aria-label="Filled icon"
+            toggle
+            ?disabled=${disabled}
+          >
+            <md-icon>${icon}</md-icon>
+            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+          </md-filled-icon-button>
 
-    previousRtl.set(el, {lastRtl: newRtl, lastFlipIconInRtl: newFlipIconInRtl});
-    const castedEl =
-        el as HTMLElement & {flipIcon: boolean, flipIconInRtl: boolean};
-    castedEl.flipIcon = isRtl(castedEl, castedEl.flipIconInRtl);
-  };
-}
+          <md-filled-tonal-icon-button
+            aria-label="Filled tonal icon"
+            toggle
+            ?disabled=${disabled}
+          >
+            <md-icon>${icon}</md-icon>
+            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+          </md-filled-tonal-icon-button>
+        </div>
+      </div>
+    `;
+  }
+};
 
-/** Icon Button stories. */
-export const stories = [
-  standard, link, toggle, outlined, outlinedLink, outlinedToggle, filled,
-  filledLink, filledToggle, tonal, tonalLink, tonalToggle
-];
+const links: MaterialStoryInit<StoryKnobs> = {
+  name: 'Links',
+  styles,
+  render({icon}) {
+    return html`
+      <div class="column">
+        <div class="row">
+          <md-icon-button
+            aria-label="Standard icon"
+            href="https://google.com"
+            target="_blank"
+          >
+            <md-icon>${icon}</md-icon>
+          </md-icon-button>
+
+          <md-outlined-icon-button
+            aria-label="Outlined icon"
+            href="https://google.com"
+            target="_blank"
+          >
+            <md-icon>${icon}</md-icon>
+          </md-outlined-icon-button>
+
+          <md-filled-icon-button
+            aria-label="Filled icon"
+            href="https://google.com"
+            target="_blank"
+          >
+            <md-icon>${icon}</md-icon>
+          </md-filled-icon-button>
+
+          <md-filled-tonal-icon-button
+            aria-label="Filled tonal icon"
+            href="https://google.com"
+            target="_blank"
+          >
+            <md-icon>${icon}</md-icon>
+          </md-filled-tonal-icon-button>
+        </div>
+      </div>
+    `;
+  }
+};
+
+/** Icon button stories. */
+export const stories = [buttons, toggles, links];

@@ -118,7 +118,7 @@ export class IconButton extends LitElement implements FormSubmitter {
     // Needed for closure conformance
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
     const hasToggledAriaLabel = ariaLabel && this.ariaLabelSelected;
-    const ariaPressedValue = hasToggledAriaLabel ? nothing : this.selected;
+    const ariaPressedValue = !this.toggle ? nothing : this.selected;
     let ariaLabelValue: string|null|typeof nothing = nothing;
     if (!this.href) {
       ariaLabelValue = (hasToggledAriaLabel && this.selected) ?

@@ -158,14 +158,12 @@ describe('icon button tests', () => {
       const button = element.shadowRoot!.querySelector('button')!;
       expect(element.selected).toBeFalse();
       expect(button.getAttribute('aria-label')).toEqual('aria label off');
-      expect(button.getAttribute('aria-pressed')).toBeNull();
 
       // Toggle
       button.click();
       await element.updateComplete;
       expect(element.selected).toBeTrue();
       expect(button.getAttribute('aria-label')).toEqual('aria label on');
-      expect(button.getAttribute('aria-pressed')).toBeNull();
     });
 
     it('if `flipsIconInRtl=true`, flips icon in an RTL context', async () => {
