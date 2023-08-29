@@ -34,7 +34,7 @@ import './progress/linear-progress.js';
 import './radio/radio.js';
 import './select/outlined-select.js';
 import './select/select-option.js';
-import './tabs/tab.js';
+import './tabs/primary-tab.js';
 import './tabs/tabs.js';
 import './textfield/outlined-text-field.js';
 // go/keep-sorted end
@@ -61,7 +61,7 @@ export * from './progress/linear-progress.js';
 export * from './radio/radio.js';
 export * from './select/outlined-select.js';
 export * from './select/select-option.js';
-export * from './tabs/tab.js';
+export * from './tabs/primary-tab.js';
 export * from './tabs/tabs.js';
 export * from './textfield/outlined-text-field.js';
 // go/keep-sorted end

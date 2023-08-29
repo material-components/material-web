@@ -7,6 +7,8 @@
 import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/icon-button.js';
 import '@material/web/tabs/tabs.js';
+import '@material/web/tabs/primary-tab.js';
+import '@material/web/tabs/secondary-tab.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {MdTabs} from '@material/web/tabs/tabs.js';
@@ -53,25 +55,24 @@ const primary: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <md-tabs
-          variant="primary"
           .selected=${knobs.selected}
           .selectOnFocus=${knobs.selectOnFocus}
       >
-        <md-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('piano', 'Keyboard')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('tune', 'Guitar')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('graphic_eq', 'Drums')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('speaker', 'Bass')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('nightlife', 'Saxophone')}
-        </md-tab>
+        </md-primary-tab>
       </md-tabs>`;
   }
 };
@@ -85,22 +86,21 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <md-tabs
-          variant="secondary"
           .selected=${knobs.selected}
           .selectOnFocus=${knobs.selectOnFocus}
       >
-        <md-tab .inlineIcon=${inlineIcon}>
+        <md-secondary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('flight', 'Travel')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-secondary-tab>
+        <md-secondary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('hotel', 'Hotel')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-secondary-tab>
+        <md-secondary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('hiking', 'Activities')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-secondary-tab>
+        <md-secondary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('restaurant', 'Food')}
-        </md-tab>
+        </md-secondary-tab>
       </md-tabs>`;
   }
 };
@@ -115,26 +115,25 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-tabs
           class="scrolling"
-          variant="primary"
           .selected=${knobs.selected}
           .selectOnFocus=${knobs.selectOnFocus}
       >
         ${new Array(10).fill(html`
-        <md-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('piano', 'Keyboard')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('tune', 'Guitar')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('graphic_eq', 'Drums')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('speaker', 'Bass')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('nightlife', 'Saxophone')}
-        </md-tab>
+        </md-primary-tab>
         `)}
       </md-tabs>`;
   }
@@ -177,22 +176,21 @@ const custom: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-tabs
           class="custom"
-          variant="primary"
           .selected=${knobs.selected}
           .selectOnFocus=${knobs.selectOnFocus}
       >
-        <md-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('flight', 'Travel')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('hotel', 'Hotel')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('hiking', 'Activities')}
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('restaurant', 'Food')}
-        </md-tab>
+        </md-primary-tab>
       </md-tabs>`;
   }
 };
@@ -229,58 +227,54 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div>
         <md-tabs
-          variant="primary"
           .selected=${knobs.selected}
           .selectOnFocus=${knobs.selectOnFocus}
           @change=${handlePrimaryTabsChange}
         >
-          <md-tab .inlineIcon=${inlineIcon}>
+          <md-primary-tab .inlineIcon=${inlineIcon}>
             ${tabContent('videocam', 'Movies')}
-          </md-tab>
-          <md-tab .inlineIcon=${inlineIcon}>
+          </md-primary-tab>
+          <md-primary-tab .inlineIcon=${inlineIcon}>
             ${tabContent('photo', 'Photos')}
-          </md-tab>
-          <md-tab .inlineIcon=${inlineIcon}>
+          </md-primary-tab>
+          <md-primary-tab .inlineIcon=${inlineIcon}>
             ${tabContent('audiotrack', 'Music')}
-          </md-tab>
+          </md-primary-tab>
         </md-tabs>
         <div>
           <md-tabs
-            variant="secondary"
             .selected=${knobs.selected}
             .selectOnFocus=${knobs.selectOnFocus}
             @change=${handleSecondaryTabsChange}
           >
-            <md-tab >Star Wars</md-tab>
-            <md-tab>Avengers</md-tab>
-            <md-tab>Jaws</md-tab>
-            <md-tab>Frozen</md-tab>
+            <md-secondary-tab>Star Wars</md-secondary-tab>
+            <md-secondary-tab>Avengers</md-secondary-tab>
+            <md-secondary-tab>Jaws</md-secondary-tab>
+            <md-secondary-tab>Frozen</md-secondary-tab>
           </md-tabs>
           <div class="content"></div>
           <md-tabs
             hidden
-            variant="secondary"
             .selected=${knobs.selected}
             .selectOnFocus=${knobs.selectOnFocus}
             @change=${handleSecondaryTabsChange}
           >
-            <md-tab>Yosemite</md-tab>
-            <md-tab>Mona Lisa</md-tab>
-            <md-tab>Swiss Alps</md-tab>
-            <md-tab>Niagra Falls</md-tab>
+            <md-secondary-tab>Yosemite</md-secondary-tab>
+            <md-secondary-tab>Mona Lisa</md-secondary-tab>
+            <md-secondary-tab>Swiss Alps</md-secondary-tab>
+            <md-secondary-tab>Niagra Falls</md-secondary-tab>
           </md-tabs>
           <div hidden class="content"></div>
           <md-tabs
             hidden
-            variant="secondary"
             .selected=${knobs.selected}
             .selectOnFocus=${knobs.selectOnFocus}
             @change=${handleSecondaryTabsChange}
           >
-            <md-tab>Rock</md-tab>
-            <md-tab>Ambient</md-tab>
-            <md-tab>Soundscapes</md-tab>
-            <md-tab>White Noise</md-tab>
+            <md-secondary-tab>Rock</md-secondary-tab>
+            <md-secondary-tab>Ambient</md-secondary-tab>
+            <md-secondary-tab>Soundscapes</md-secondary-tab>
+            <md-secondary-tab>White Noise</md-secondary-tab>
           </md-tabs>
           <div hidden class="content"></div>
         </div>
@@ -303,7 +297,7 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
     function addTab(event: Event) {
       const tabs = getTabs(event);
       const count = tabs.childElementCount;
-      const tab = document.createElement('md-tab');
+      const tab = document.createElement('md-primary-tab');
       tab.textContent = `Tab ${count + 1}`;
       if (tabs.selectedItem !== undefined) {
         tabs.selectedItem.after(tab);
@@ -353,19 +347,18 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
       </div>
       <md-tabs
           class="scrolling"
-          variant="primary"
           .selected=${knobs.selected}
           .selectOnFocus=${knobs.selectOnFocus}
       >
-        <md-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           Tab 1
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           Tab 2
-        </md-tab>
-        <md-tab .inlineIcon=${inlineIcon}>
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon}>
           Tab 3
-        </md-tab>
+        </md-primary-tab>
       </md-tabs>`;
   }
 };

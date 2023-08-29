@@ -10,7 +10,8 @@ import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {TabsHarness} from './harness.js';
-import {MdTab} from './tab.js';
+import {MdPrimaryTab} from './primary-tab.js';
+import {MdSecondaryTab} from './secondary-tab.js';
 import {MdTabs} from './tabs.js';
 
 interface TabsTestProps {
@@ -22,17 +23,16 @@ function getTabsTemplate(props?: TabsTestProps) {
     <md-tabs
       .selected=${props?.selected ?? 0}
     >
-      <md-tab>A</md-tab>
-      <md-tab>B</md-tab>
-      <md-tab>C</md-tab>
+      <md-primary-tab>A</md-primary-tab>
+      <md-primary-tab>B</md-primary-tab>
+      <md-primary-tab>C</md-primary-tab>
     </md-tabs>`;
 }
 
 describe('<md-tabs>', () => {
   const env = new Environment();
 
-  async function setupTest(
-      props?: TabsTestProps, template = getTabsTemplate) {
+  async function setupTest(props?: TabsTestProps, template = getTabsTemplate) {
     const root = env.render(template(props));
     await env.waitForStability();
     const tab = root.querySelector<MdTabs>('md-tabs')!;
@@ -42,7 +42,8 @@ describe('<md-tabs>', () => {
 
   describe('.styles', () => {
     createTokenTests(MdTabs.styles);
-    createTokenTests(MdTab.styles);
+    createTokenTests(MdPrimaryTab.styles);
+    createTokenTests(MdSecondaryTab.styles);
   });
 
   describe('properties', () => {
@@ -85,7 +86,7 @@ describe('<md-tabs>', () => {
     it('maintains selection when tabs are mutated', async () => {
       const {harness} = await setupTest({selected: 1});
       expect(harness.element.selectedItem.textContent).toBe('B');
-      const tab = document.createElement('md-tab');
+      const tab = document.createElement('md-primary-tab');
       tab.textContent = 'tab';
       // add before selected
       harness.element.prepend(tab);

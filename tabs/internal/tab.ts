@@ -27,11 +27,6 @@ export interface Tabs extends HTMLElement {
 }
 
 /**
- * Tab variant can be `primary` or `secondary`.
- */
-export type TabVariant = 'primary'|'secondary';
-
-/**
  * Tab component.
  */
 export class Tab extends LitElement {
@@ -43,10 +38,8 @@ export class Tab extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  /**
-   * Styling variant to display, 'primary' (default) or 'secondary'.
-   */
-  @property({reflect: true}) variant: TabVariant = 'primary';
+  /** @private indicates that the element is a tab for `<md-tabs>` */
+  static readonly isTab = true;
 
   /**
    * Whether or not the tab is `selected`.

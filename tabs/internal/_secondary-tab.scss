@@ -1,0 +1,69 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../tokens';
+// go/keep-sorted end
+
+@mixin theme($tokens) {
+  $supported-tokens: list.join(
+    tokens.$md-comp-secondary-tab-supported-tokens,
+    (
+      'container-shape-start-start',
+      'container-shape-start-end',
+      'container-shape-end-end',
+      'container-shape-end-start'
+    )
+  );
+
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Token `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-secondary-tab-#{$token}: #{$value};
+    }
+  }
+}
+
+@mixin styles() {
+  $tokens: tokens.md-comp-secondary-tab-values();
+
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: var(--md-secondary-tab-#{$token}, #{$value});
+    }
+
+    // Support logical shape properties
+    --_container-shape-start-start: var(
+      --md-secondary-tab-container-shape-start-start,
+      var(--_container-shape)
+    );
+    --_container-shape-start-end: var(
+      --md-secondary-tab-container-shape-start-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-end: var(
+      --md-secondary-tab-container-shape-end-end,
+      var(--_container-shape)
+    );
+    --_container-shape-end-start: var(
+      --md-secondary-tab-container-shape-end-start,
+      var(--_container-shape)
+    );
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .indicator {
+    min-width: 100%;
+  }
+}

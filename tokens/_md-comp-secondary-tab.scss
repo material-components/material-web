@@ -1,0 +1,139 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-elevation';
+@use './md-sys-shape';
+@use './md-sys-state';
+@use './md-sys-typescale';
+@use './v0_172/md-comp-secondary-navigation-tab';
+@use './values';
+// go/keep-sorted end
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
+);
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'active-focus-icon-color',
+  'active-focus-label-text-color',
+  'active-hover-icon-color',
+  'active-hover-label-text-color',
+  'active-hover-state-layer-color',
+  'active-hover-state-layer-opacity',
+  'active-icon-color',
+  'active-indicator-color',
+  'active-indicator-height',
+  'active-indicator-shape',
+  'active-label-text-color',
+  'active-pressed-icon-color',
+  'active-pressed-label-text-color',
+  'active-pressed-state-layer-color',
+  'active-pressed-state-layer-opacity',
+  'container-color',
+  'container-elevation',
+  'container-height',
+  'container-shape',
+  'focus-icon-color',
+  'focus-label-text-color',
+  'hover-icon-color',
+  'hover-label-text-color',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'icon-color',
+  'icon-size',
+  'label-text-color',
+  'label-text-type',
+  'pressed-icon-color',
+  'pressed-label-text-color',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // include an icon and the size will adjust;
+  // height is 48 and it's 64 with icon
+  'container-shadow-color',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-tracking',
+  'label-text-weight',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity'
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  $tokens: md-comp-secondary-navigation-tab.values(
+    $deps,
+    $exclude-hardcoded-values: $exclude-hardcoded-values
+  );
+
+  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
+  $tokens: map.merge(
+    $tokens,
+    (
+      'label-text-type': map.get($deps, 'md-sys-typescale', 'title-small'),
+    )
+  );
+
+  $tokens: _add-missing-secondary-tokens($tokens);
+
+  $tokens: values.validate(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $renamed-tokens: (
+      'inactive-label-text-color': 'label-text-color',
+      'with-icon-active-icon-color': 'active-icon-color',
+      'with-icon-focus-icon-color': 'focus-icon-color',
+      'with-icon-hover-icon-color': 'hover-icon-color',
+      'with-icon-icon-size': 'icon-size',
+      'with-icon-inactive-icon-color': 'icon-color',
+      'with-icon-pressed-icon-color': 'pressed-icon-color',
+    )
+  );
+
+  @return $tokens;
+}
+
+// add missing secondary tokens to match primary variant.
+@function _add-missing-secondary-tokens($tokens) {
+  $tokens: map.merge(
+    $tokens,
+    (
+      'active-focus-icon-color': map.get($tokens, 'icon-color'),
+      'active-focus-label-text-color':
+        map.get($tokens, 'active-label-text-color'),
+      'active-hover-icon-color': map.get($tokens, 'icon-color'),
+      'active-hover-label-text-color':
+        map.get($tokens, 'active-label-text-color'),
+      'active-hover-state-layer-color':
+        map.get($tokens, 'hover-state-layer-color'),
+      'active-hover-state-layer-opacity':
+        map.get($tokens, 'hover-state-layer-opacity'),
+      'active-icon-color': map.get($tokens, 'icon-color'),
+      'active-indicator-shape': 0,
+      'active-pressed-icon-color': map.get($tokens, 'icon-color'),
+      'active-pressed-label-text-color':
+        map.get($tokens, 'active-label-text-color'),
+      'active-pressed-state-layer-color':
+        map.get($tokens, 'pressed-state-layer-color'),
+      'active-pressed-state-layer-opacity':
+        map.get($tokens, 'pressed-state-layer-opacity'),
+    )
+  );
+  @return $tokens;
+}

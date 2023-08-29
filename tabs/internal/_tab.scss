@@ -15,64 +15,8 @@
 @use '../../tokens';
 // go/keep-sorted end
 
-@mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-tab-supported-tokens,
-    (
-      'primary-tab-container-shape-start-start',
-      'primary-tab-container-shape-start-end',
-      'primary-tab-container-shape-end-end',
-      'primary-tab-container-shape-end-start',
-      'secondary-tab-container-shape-start-start',
-      'secondary-tab-container-shape-start-end',
-      'secondary-tab-container-shape-end-end',
-      'secondary-tab-container-shape-end-start'
-    )
-  );
-
-  @each $token, $value in $tokens {
-    @if list.index($supported-tokens, $token) == null {
-      @error 'Token `#{$token}` is not a supported token.';
-    }
-
-    @if $value {
-      --md-#{$token}: #{$value};
-    }
-  }
-}
-
 @mixin styles() {
-  // contains tokens for all variants and applied where needed
-  $tokens: tokens.md-comp-tab-values();
-
   :host {
-    // apply primary-tokens by default
-    $primary-prefix: 'primary-tab-';
-    @each $token, $value in $tokens {
-      @if string-ext.has-prefix($token, $primary-prefix) {
-        $token: string-ext.trim-prefix(#{$token}, $primary-prefix);
-        --_#{$token}: var(--md-#{$primary-prefix}#{$token}, #{$value});
-      }
-    }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-primary-tab-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-primary-tab-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-primary-tab-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-primary-tab-container-shape-end-start,
-      var(--_container-shape)
-    );
-
     display: inline-flex;
     outline: none;
     -webkit-tap-highlight-color: transparent;
@@ -264,53 +208,14 @@
     color: var(--_active-pressed-icon-color);
   }
 
-  // secondary
-  :host([variant~='secondary']) {
-    // apply secondary-tab tokens
-    $secondary-prefix: 'secondary-tab-';
-    @each $token, $value in $tokens {
-      @if string-ext.has-prefix($token, $secondary-prefix) {
-        $token: string-ext.trim-prefix(#{$token}, $secondary-prefix);
-        --_#{$token}: var(--md-#{$secondary-prefix}#{$token}, #{$value});
-      }
-    }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-secondary-tab-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-secondary-tab-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-secondary-tab-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-secondary-tab-container-shape-end-start,
-      var(--_container-shape)
-    );
-  }
-
-  :host([variant~='secondary']) .content {
-    width: 100%;
-  }
-
-  :host([variant~='secondary']) .indicator {
-    min-width: 100%;
-  }
-
   :host,
   ::slotted(*) {
     white-space: nowrap;
   }
 
   @media (forced-colors: active) {
-    :host,
-    :host([variant]) {
-      --_active-indicator-color: CanvasText;
+    .indicator {
+      background: CanvasText;
     }
   }
 }

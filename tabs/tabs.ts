@@ -4,14 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './tab.js';
-
 import {customElement} from 'lit/decorators.js';
 
 import {Tabs} from './internal/tabs.js';
 import {styles} from './internal/tabs-styles.css.js';
-
-export {MdTab, TabVariant} from './tab.js';
 
 declare global {
   interface HTMLElementTagNameMap {

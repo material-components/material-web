@@ -9,7 +9,7 @@ import '../../divider/divider.js';
 import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
-import {Tab, TabVariant} from './tab.js';
+import {Tab} from './tab.js';
 
 const NAVIGATION_KEYS = new Map([
   ['default', new Set(['Home', 'End'])],
@@ -48,11 +48,6 @@ export class Tabs extends LitElement {
   };
 
   /**
-   * Styling variant to display, 'primary' (default) or 'secondary'.
-   */
-  @property({reflect: true}) variant: TabVariant = 'primary';
-
-  /**
    * Index of the selected item.
    */
   @property({type: Number}) selected = 0;
@@ -66,8 +61,11 @@ export class Tabs extends LitElement {
   private previousSelected = -1;
   private readonly scrollMargin = 48;
 
-  @queryAssignedElements({selector: 'md-tab', flatten: true})
-  private readonly items!: Tab[];
+  @queryAssignedElements({flatten: true})
+  private readonly maybeTabItems!: HTMLElement[];
+  private get items(): Tab[] {
+    return this.maybeTabItems.filter(isTab);
+  }
 
   // this tracks if items have changed, which triggers rendering so they can
   // be kept in sync
@@ -211,16 +209,14 @@ export class Tabs extends LitElement {
   }
 
   protected override async updated(changed: PropertyValues) {
-    const itemsOrVariantChanged =
-        changed.has('itemsDirty') || changed.has('variant');
+    const itemsChanged = changed.has('itemsDirty');
     // sync state with items.
-    if (itemsOrVariantChanged) {
+    if (itemsChanged) {
       this.items.forEach((item, i) => {
         item.selected = this.selected === i;
-        item.variant = this.variant;
       });
     }
-    if (itemsOrVariantChanged || changed.has('selected')) {
+    if (itemsChanged || changed.has('selected')) {
       if (this.previousSelectedItem !== this.selectedItem) {
         this.previousSelectedItem?.removeAttribute(this.selectedAttribute);
         this.selectedItem?.setAttribute(this.selectedAttribute, '');
@@ -242,7 +238,7 @@ export class Tabs extends LitElement {
     return html`
       <div class="tabs">
         <slot @slotchange=${this.handleSlotChange} @click=${
-          this.handleItemClick}></slot>
+        this.handleItemClick}></slot>
       </div>
       <md-divider part="divider"></md-divider>
     `;
@@ -295,4 +291,8 @@ export class Tabs extends LitElement {
         this.focusedItem !== undefined ? 'smooth' : 'instant' as ScrollBehavior;
     this.scrollTo({behavior, top: 0, left: to});
   }
+}
+
+function isTab(element: HTMLElement): element is Tab {
+  return 'isTab' in element.constructor && element.constructor.isTab === true;
 }

@@ -1,0 +1,10 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './primary-tab';
+// go/keep-sorted end
+
+@include primary-tab.styles;

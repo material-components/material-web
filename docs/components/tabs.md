@@ -12,7 +12,11 @@ dirname: tabs
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'ajakubowicz' reviewed: '2023-08-01' }
+freshness: {
+  owner: 'lizmitchell'
+  owner: 'ajakubowicz'
+  reviewed: '2023-08-25'
+}
 tag: 'docType:reference'
 *-->
 
@@ -44,6 +48,11 @@ related content that are at the same level of hierarchy.
 *   [Source code](https://github.com/material-components/material-web/tree/main/tabs)
     <!-- {.external} -->
 
+## Types
+
+1.  [Primary tabs](#primary-tabs)
+1.  [Secondary tabs](#secondary-tabs)
+
 <!-- catalog-only-start -->
 
 <!--
@@ -58,43 +67,29 @@ related content that are at the same level of hierarchy.
 
 ## Usage
 
-There are two tabs variants: `primary` (default), and `secondary`.
+Tabs contain multiple primary or secondary tab children. Use the same type of
+tab in a tab bar.
 
-Tabs consist of a parent `<md-tabs>` tag, containing multiple `<md-tab>`
-children.
-
-![A primary and secondary variant tab bar stacked on each other. Primar tabs
-show: "Keyboard" and "Guitar". Secondary tabs are: "Travel", "Hotel", and
-"Activities".](images/tabs/usage.png "Primary and Secondary tabs")
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- TODO: catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
-  <md-tab>
-    <md-icon aria-hidden="true" slot="icon">piano</md-icon>
-    Keyboard
-  </md-tab>
-  <md-tab>
-    <md-icon aria-hidden="true" slot="icon">tune</md-icon>
-    Guitar
-  </md-tab>
+  <md-primary-tab>Video</md-primary-tab>
+  <md-primary-tab>Photos</md-primary-tab>
+  <md-primary-tab>Audio</md-primary-tab>
 </md-tabs>
 
-
-<md-tabs variant="secondary">
- <md-tab inline-icon>
-  <md-icon aria-hidden="true" slot="icon">flight</md-icon>
-   Travel
- </md-tab>
- <md-tab inline-icon>
-  <md-icon aria-hidden="true" slot="icon">hotel</md-icon>
-   Hotel
- </md-tab>
- <md-tab inline-icon>
-  <md-icon aria-hidden="true" slot="icon">hiking</md-icon>
-   Activities
- </md-tab>
+<md-tabs>
+  <md-secondary-tab>Birds</md-secondary-tab>
+  <md-secondary-tab>Cats</md-secondary-tab>
+  <md-secondary-tab>Dogs</md-secondary-tab>
 </md-tabs>
 ```
+
+### Selection
 
 To observe changes to tab selections, add an event listener to `<md-tabs>`,
 listening for the `change` event.
@@ -107,20 +102,82 @@ tabs.addEventListener('change', (event: Event) => {
 });
 ```
 
-### Scrollable
+### Icons
 
-When a set of tabs cannot fit on screen or container, use scrollable tabs.
-Scrollable tabs can use longer text labels and a larger number of tabs. They are
-best used for browsing on touch interfaces.
+Tabs may optionally show an icon.
 
-![Tabs truncated horizontally showing "Tab 1", "Tab 2", "Tab 3", and "Ta".](images/tabs/scrollable.png)
+Icons communicate the type of content within a tab. Icons should be simple and
+recognizable.
+
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- TODO: catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
-  <md-tab>Tab 1</md-tab>
-  <md-tab>Tab 2</md-tab>
-  <md-tab>Tab 3</md-tab>
-  <md-tab>Tab 4</md-tab>
+  <md-primary-tab>
+    <md-icon slot="icon">piano</md-icon>
+    Keyboard
+  </md-primary-tab>
+  <md-primary-tab>
+    <md-icon slot="icon">tune</md-icon>
+    Guitar
+  </md-primary-tab>
+</md-tabs>
+```
+
+## Primary tabs
+
+<!-- go/md-primary-tab -->
+
+Primary tabs are placed at the top of the content pane under a top app bar. They
+display the main content destinations.
+
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+
+```html
+<md-tabs>
+  <md-primary-tab>
+    <md-icon slot="icon">piano</md-icon>
+    Keyboard
+  </md-primary-tab>
+  <md-primary-tab>
+    <md-icon slot="icon">tune</md-icon>
+    Guitar
+  </md-primary-tab>
+</md-tabs>
+```
+
+## Secondary tabs
+
+<!-- go/md-secondary-tab -->
+
+Secondary tabs are used within a content area to further separate related
+content and establish hierarchy.
+
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+
+```html
+<md-tabs>
+  <md-secondary-tab inline-icon>
+    <md-icon slot="icon">flight</md-icon>
+    Travel
+  </md-secondary-tab>
+  <md-secondary-tab inline-icon>
+    <md-icon slot="icon">hotel</md-icon>
+    Hotel
+  </md-secondary-tab>
+  <md-secondary-tab inline-icon>
+    <md-icon slot="icon">hiking</md-icon>
+    Activities
+  </md-secondary-tab>
 </md-tabs>
 ```
 
@@ -131,21 +188,20 @@ best used for browsing on touch interfaces.
 Tabs supports [Material theming](../theming.md) and can be customized in terms
 of color, typography, and shape.
 
-### Tokens
+### Primary tab tokens
 
 Token                                     | Default value
 ----------------------------------------- | -----------------------------------
 `--md-primary-tab-container-color`        | `--md-sys-color-surface`
-`--md-secondary-tab-container-color`      | `--md-sys-color-surface`
 `--md-primary-tab-label-text-type`        | `500 0.875rem/1.25rem Roboto`
 `--md-primary-tab-active-indicator-color` | `--md-sys-color-primary`
 `--md-primary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
 `--md-primary-tab-container-shape`        | `0px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-tab.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-primary-tab.scss)
     <!-- {.external} -->
 
-### Example
+### Primary tab example
 
 <!-- no-catalog-start -->
 
@@ -166,8 +222,46 @@ Token                                     | Default value
 </style>
 
 <md-tabs>
-  <md-tab>Tab 1</md-tab>
-  <md-tab>Tab 2</md-tab>
-  <md-tab>Tab 3</md-tab>
+  <md-primary-tab>Tab 1</md-primary-tab>
+  <md-primary-tab>Tab 2</md-primary-tab>
+  <md-primary-tab>Tab 3</md-primary-tab>
+</md-tabs>
+```
+
+### Secondary tab tokens
+
+Token                                       | Default value
+------------------------------------------- | -------------
+`--md-secondary-tab-container-color`        | `--md-sys-color-surface`
+`--md-secondary-tab-label-text-type`        | `500 0.875rem/1.25rem Roboto`
+`--md-secondary-tab-active-indicator-color` | `--md-sys-color-primary`
+`--md-secondary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
+`--md-secondary-tab-container-shape`        | `0px`
+
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-secondary-tab.scss)
+    <!-- {.external} -->
+
+### Secondary tab example
+
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+
+```html
+<style>
+:root {
+  /* System tokens */
+  --md-sys-color-surface: #f7faf9;
+  --md-sys-color-primary: #005353;
+
+  /* Component tokens */
+  --md-secondary-tab-label-text-type: 0.8em cursive, system-ui;
+}
+</style>
+
+<md-tabs>
+  <md-secondary-tab>Tab 1</md-secondary-tab>
+  <md-secondary-tab>Tab 2</md-secondary-tab>
+  <md-secondary-tab>Tab 3</md-secondary-tab>
 </md-tabs>
 ```
