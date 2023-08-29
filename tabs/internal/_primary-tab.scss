@@ -58,4 +58,13 @@
       var(--_container-shape)
     );
   }
+
+  .content.stacked {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .content.stacked.has-icon.has-label {
+    height: var(--_with-icon-and-label-text-container-height);
+  }
 }

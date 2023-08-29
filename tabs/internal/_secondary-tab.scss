@@ -57,8 +57,5 @@
       --md-secondary-tab-container-shape-end-start,
       var(--_container-shape)
     );
-
-    // TODO(b/293503309): remove once secondary tabs only use inline icons
-    --_with-icon-and-label-text-container-height: 64px;
   }
 }

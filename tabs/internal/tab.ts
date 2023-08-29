@@ -52,11 +52,6 @@ export class Tab extends LitElement {
   @property({type: Boolean}) focusable = false;
 
   /**
-   * Whether or not the icon renders inline with label or stacked vertically.
-   */
-  @property({type: Boolean, attribute: 'inline-icon'}) inlineIcon = false;
-
-  /**
    * In SSR, set this to true when an icon is present.
    */
   @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
@@ -93,12 +88,6 @@ export class Tab extends LitElement {
   }
 
   protected override render() {
-    const contentClasses = {
-      'inline-icon': this.inlineIcon,
-      'has-icon': this.hasIcon,
-      'has-label': !this.iconOnly,
-    };
-
     const indicator = html`<div class="indicator"></div>`;
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
@@ -113,13 +102,20 @@ export class Tab extends LitElement {
         <md-focus-ring part="focus-ring" inward></md-focus-ring>
         <md-elevation></md-elevation>
         <md-ripple></md-ripple>
-        <div class="content ${classMap(contentClasses)}">
+        <div class="content ${classMap(this.getContentClasses())}">
           <slot name="icon" @slotchange=${this.handleIconSlotChange}></slot>
           <slot @slotchange=${this.handleSlotChange}></slot>
           ${this.fullWidthIndicator ? nothing : indicator}
         </div>
         ${this.fullWidthIndicator ? indicator : nothing}
       </button>`;
+  }
+
+  protected getContentClasses() {
+    return {
+      'has-icon': this.hasIcon,
+      'has-label': !this.iconOnly,
+    };
   }
 
   protected override updated(changed: PropertyValues) {

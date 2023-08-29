@@ -89,19 +89,10 @@
     position: relative;
     box-sizing: border-box;
     display: inline-flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     height: var(--_container-height);
-    gap: 2px;
-  }
-
-  .content.has-icon.has-label:not(.inline-icon) {
-    height: var(--_with-icon-and-label-text-container-height);
-  }
-
-  .content.inline-icon {
-    flex-direction: row;
     gap: 8px;
   }
 

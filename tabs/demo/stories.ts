@@ -82,23 +82,22 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
-    const inlineIcon = knobs.inlineIcon;
 
     return html`
       <md-tabs
           .selected=${knobs.selected}
           .selectOnFocus=${knobs.selectOnFocus}
       >
-        <md-secondary-tab .inlineIcon=${inlineIcon}>
+        <md-secondary-tab>
           ${tabContent('flight', 'Travel')}
         </md-secondary-tab>
-        <md-secondary-tab .inlineIcon=${inlineIcon}>
+        <md-secondary-tab>
           ${tabContent('hotel', 'Hotel')}
         </md-secondary-tab>
-        <md-secondary-tab .inlineIcon=${inlineIcon}>
+        <md-secondary-tab>
           ${tabContent('hiking', 'Activities')}
         </md-secondary-tab>
-        <md-secondary-tab .inlineIcon=${inlineIcon}>
+        <md-secondary-tab>
           ${tabContent('restaurant', 'Food')}
         </md-secondary-tab>
       </md-tabs>`;
