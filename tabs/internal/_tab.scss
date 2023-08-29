@@ -57,7 +57,7 @@
     text-decoration: none;
     width: 100%;
     position: relative;
-    padding: 0;
+    padding: 0 16px;
     margin: 0;
     z-index: 0; // Ensure this is a stacking context so the indicator displays
     font: var(--_label-text-type);
@@ -92,18 +92,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: var(--_container-height);
+    gap: 2px;
+  }
 
-    $_content-padding: 8px;
-    // tabs are naturally sized up to their max height.
-    max-height: calc(var(--_container-height) + 2 * $_content-padding);
-    // min-height of touch target
-    min-height: 48px;
-    padding: $_content-padding calc(2 * $_content-padding);
-    gap: 4px;
+  .content.has-icon.has-label:not(.inline-icon) {
+    height: var(--_with-icon-and-label-text-container-height);
   }
 
   .content.inline-icon {
     flex-direction: row;
+    gap: 8px;
   }
 
   .indicator {

@@ -59,13 +59,11 @@ $supported-tokens: (
   'pressed-label-text-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
+  'with-icon-and-label-text-container-height',
   // go/keep-sorted end
 );
 
 $unsupported-tokens: (
-  // include an icon and the size will adjust;
-  // height is 48 and it's 64 with icon
-  'with-icon-and-label-text-container-height',
   'with-label-text-label-text-font',
   'with-label-text-label-text-line-height',
   'with-label-text-label-text-size',

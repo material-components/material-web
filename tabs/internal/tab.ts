@@ -9,7 +9,7 @@ import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
-import {property, query} from 'lit/decorators.js';
+import {property, query, queryAssignedElements, queryAssignedNodes, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
@@ -56,13 +56,26 @@ export class Tab extends LitElement {
    */
   @property({type: Boolean, attribute: 'inline-icon'}) inlineIcon = false;
 
+  /**
+   * In SSR, set this to true when an icon is present.
+   */
+  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
+
+  /**
+   * In SSR, set this to true when there is no label and only an icon.
+   */
+  @property({type: Boolean, attribute: 'icon-only'}) iconOnly = false;
+
   @query('.button') private readonly button!: HTMLElement|null;
 
   // note, this is public so it can participate in selection animation.
-  /**
-   * Selection indicator element.
-   */
+  /** @private */
   @query('.indicator') readonly indicator!: HTMLElement;
+  @state() protected fullWidthIndicator = false;
+  @queryAssignedNodes({flatten: true})
+  private readonly assignedDefaultNodes!: Node[];
+  @queryAssignedElements({slot: 'icon', flatten: true})
+  private readonly assignedIcons!: HTMLElement[];
 
   constructor() {
     super();
@@ -82,7 +95,11 @@ export class Tab extends LitElement {
   protected override render() {
     const contentClasses = {
       'inline-icon': this.inlineIcon,
+      'has-icon': this.hasIcon,
+      'has-label': !this.iconOnly,
     };
+
+    const indicator = html`<div class="indicator"></div>`;
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
@@ -97,12 +114,11 @@ export class Tab extends LitElement {
         <md-elevation></md-elevation>
         <md-ripple></md-ripple>
         <div class="content ${classMap(contentClasses)}">
-          <slot name="icon"></slot>
-          <span class="label">
-            <slot></slot>
-          </span>
-          <div class="indicator"></div>
+          <slot name="icon" @slotchange=${this.handleIconSlotChange}></slot>
+          <slot @slotchange=${this.handleSlotChange}></slot>
+          ${this.fullWidthIndicator ? nothing : indicator}
         </div>
+        ${this.fullWidthIndicator ? indicator : nothing}
       </button>`;
   }
 
@@ -160,6 +176,25 @@ export class Tab extends LitElement {
     // note, including `transform: none` avoids quirky Safari behavior
     // that can hide the animation.
     return [from, {'transform': 'none'}];
+  }
+
+  private handleSlotChange() {
+    this.iconOnly = false;
+    // Check if there's any label text or elements. If not, then there is only
+    // an icon.
+    for (const node of this.assignedDefaultNodes) {
+      const hasTextContent = node.nodeType === Node.TEXT_NODE &&
+          !!(node as Text).wholeText.match(/\S/);
+      if (node.nodeType === Node.ELEMENT_NODE || hasTextContent) {
+        return;
+      }
+    }
+
+    this.iconOnly = true;
+  }
+
+  private handleIconSlotChange() {
+    this.hasIcon = this.assignedIcons.length > 0;
   }
 }
 
