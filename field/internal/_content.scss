@@ -96,6 +96,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
     color: currentColor;
     font: var(--_content-type);
     width: 100%;
+    white-space: pre-wrap; // Needed for Firefox textarea with "all: unset"
   }
 
   .content ::slotted(:not(textarea)) {
