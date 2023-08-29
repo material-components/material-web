@@ -38,8 +38,7 @@ declare global {
  * ```html
  * <div style="position:relative;">
  *   <button
- *       class="anchor"
- *       ${ref(anchorRef)}
+ *       id="anchor"
  *       @click=${() => this.menuRef.value.show()}>
  *     Click to open menu
  *   </button>
@@ -47,8 +46,8 @@ declare global {
  *     `has-overflow` is required when using a submenu which overflows the
  *     menu's contents
  *   -->
- *   <md-menu has-overflow ${ref(menuRef)} ${(el) => el.anchor =
- * anchorRef.value}> <md-menu-item header="This is a header"></md-menu-item>
+ *   <md-menu anchor="anchor" has-overflow ${ref(menuRef)}>
+ *     <md-menu-item header="This is a header"></md-menu-item>
  *     <md-sub-menu-item header="this is a submenu item">
  *       <md-menu slot="submenu">
  *         <md-menu-item

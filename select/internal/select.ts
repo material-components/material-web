@@ -11,7 +11,6 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
-import {Field} from '../../field/internal/field.js';
 import {List} from '../../list/internal/list.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
 import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/shared.js';
@@ -93,7 +92,6 @@ export abstract class Select extends LitElement {
 
   @state() private focused = false;
   @state() private open = false;
-  @query('.field') private readonly field!: Field|null;
   @query('md-menu') private readonly menu!: Menu|null;
   @queryAssignedElements({slot: 'leadingicon', flatten: true})
   private readonly leadingIcons!: Element[];
@@ -196,6 +194,7 @@ export abstract class Select extends LitElement {
           aria-haspopup="listbox"
           role="combobox"
           part="field"
+          id="field"
           tabindex=${this.disabled ? '-1' : '0'}
           aria-expanded=${this.open ? 'true' : 'false'}
           class="field"
@@ -262,7 +261,7 @@ export abstract class Select extends LitElement {
           stay-open-on-focusout
           part="menu"
           exportparts="focus-ring: menu-focus-ring"
-          .anchor=${this.field}
+          anchor="field"
           .open=${this.open}
           .quick=${this.quick}
           .fixed=${this.menuFixed}

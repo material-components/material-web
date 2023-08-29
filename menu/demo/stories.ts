@@ -99,20 +99,16 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     };
 
     const menu = renderMenu(
-        knobs, firstAnchorRef, firstMenuRef, displayCloseEvent(firstOutputRef),
-        false, renderItems(fruitNames, knobs));
+        knobs, firstMenuRef, displayCloseEvent(firstOutputRef), false,
+        renderItems(fruitNames, knobs));
 
     return html`
       <div class="root">
         <div style="position:relative;">
-
-          <md-filled-button
-              @click=${showMenu}
-              ${ref(firstAnchorRef)}>
+          <md-filled-button @click=${showMenu} id="button">
             Open Menu
           </md-filled-button>
           ${menu}
-
         </div>
         <div class="output" ${ref(firstOutputRef)}></div>
       </div>
@@ -129,8 +125,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
     };
 
     const menu = renderMenu(
-        knobs, secondAnchorRef, secondMenuRef,
-        displayCloseEvent(secondOutputRef), false,
+        knobs, secondMenuRef, displayCloseEvent(secondOutputRef), false,
         renderLinkableItems(fruitNames, knobs));
 
     return html`
@@ -138,8 +133,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
         <div style="position:relative;">
 
           <md-filled-button
-              @click=${showMenu}
-              ${ref(secondAnchorRef)}>
+              @click=${showMenu} id="button">
             Open Menu
           </md-filled-button>
           ${menu}
@@ -167,16 +161,13 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
     };
 
     const rootMenu = renderMenu(
-        knobs, thirdAnchorRef, thirdMenuRef, displayCloseEvent(thirdOutputRef),
-        true, layer0);
+        knobs, thirdMenuRef, displayCloseEvent(thirdOutputRef), true, layer0);
 
     return html`
       <div class="root">
         <div style="position:relative;">
 
-          <md-filled-button
-              @click=${showMenu}
-              ${ref(thirdAnchorRef)}>
+          <md-filled-button @click=${showMenu} id="button">
             Open Menu
           </md-filled-button>
           ${rootMenu}
@@ -208,15 +199,15 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="root" style="position:relative;">
-        <div id="anchor" ${ref(fourthAnchorRef)}>
+        <div id="anchor">
           This is the anchor (use the "open" knob)
         </div>
         <md-menu slot="menu"
+            anchor="anchor"
             .open=${knobs.open}
             .quick=${knobs.quick}
             .hasOverflow=${knobs.hasOverflow}
             .ariaLabel=${knobs.ariaLabel}
-            .anchor=${fourthAnchorRef.value || null}
             .anchorCorner="${knobs.anchorCorner!}"
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
@@ -308,15 +299,13 @@ function renderSubMenu(
 }
 
 function renderMenu(
-    knobs: StoryKnobs, anchorRef: Ref<HTMLElement>, menuRef: Ref<MdMenu>,
+    knobs: StoryKnobs, menuRef: Ref<MdMenu>,
     onClose: (event: CloseMenuEvent) => void, hasOverflow: boolean,
     ...content: unknown[]) {
   return html`
     <md-menu
         ${ref(menuRef)}
-        ${ref(() => {
-    menuRef.value!.anchor = anchorRef.value || null;
-  })}
+        anchor="button"
         .quick=${knobs.quick}
         .hasOverflow=${hasOverflow ?? knobs.hasOverflow}
         .ariaLabel=${knobs.ariaLabel}
@@ -335,13 +324,9 @@ function renderMenu(
     </md-menu>`;
 }
 
-const firstAnchorRef = createRef<HTMLElement>();
 const firstMenuRef = createRef<MdMenu>();
-const secondAnchorRef = createRef<HTMLElement>();
 const secondMenuRef = createRef<MdMenu>();
-const thirdAnchorRef = createRef<HTMLElement>();
 const thirdMenuRef = createRef<MdMenu>();
-const fourthAnchorRef = createRef<HTMLElement>();
 const firstOutputRef = createRef<HTMLElement>();
 const secondOutputRef = createRef<HTMLElement>();
 const thirdOutputRef = createRef<HTMLElement>();

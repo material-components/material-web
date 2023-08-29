@@ -40,7 +40,7 @@ describe('<md-menu>', () => {
 
     const button = root.querySelector('button')!;
     const menu = root.querySelector('md-menu')!;
-    menu.anchor = button;
+    menu.anchorElement = button;
     menu.show();
     await menu.updateComplete;
     const listEl = menu.renderRoot.querySelector('md-list')!;

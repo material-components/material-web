@@ -72,10 +72,13 @@ export abstract class Menu extends LitElement {
   @query('slot') private readonly slotEl!: HTMLSlotElement|null;
 
   /**
-   * The element in which the menu should align to.
+   * The ID of the element in the same root node in which the menu should align
+   * to. Overrides setting `anchorElement = elementReference`.
+   *
+   * __NOTE__: anchor or anchorElement must either be an HTMLElement or resolve
+   * to an HTMLElement in order for menu to open.
    */
-  @property({attribute: false})
-  anchor: HTMLElement&Partial<SurfacePositionTarget>|null = null;
+  @property() anchor = '';
   /**
    * Makes the element use `position:fixed` instead of `position:absolute`. In
    * most cases, the menu should position itself above most other
@@ -200,6 +203,27 @@ export abstract class Menu extends LitElement {
     };
   });
 
+  private currentAnchorElement: HTMLElement|null = null;
+
+  /**
+   * The element which the menu should align to. If `anchor` is set to a
+   * non-empty idref string, then `anchorEl` will resolve to the element with
+   * the given id in the same root node. Otherwise, `null`.
+   */
+  get anchorElement(): HTMLElement&Partial<SurfacePositionTarget>|null {
+    if (this.anchor) {
+      return (this.getRootNode() as Document | ShadowRoot)
+          .querySelector(`#${this.anchor}`);
+    }
+
+    return this.currentAnchorElement;
+  }
+
+  set anchorElement(element: HTMLElement&Partial<SurfacePositionTarget>|null) {
+    this.currentAnchorElement = element;
+    this.requestUpdate('anchorElement');
+  }
+
   /**
    * Handles positioning the surface and aligning it to the anchor.
    */
@@ -209,7 +233,7 @@ export abstract class Menu extends LitElement {
           anchorCorner: this.anchorCorner,
           surfaceCorner: this.menuCorner,
           surfaceEl: this.surfaceEl,
-          anchorEl: this.anchor,
+          anchorEl: this.anchorElement,
           isTopLayer: this.fixed,
           isOpen: this.open,
           xOffset: this.xOffset,

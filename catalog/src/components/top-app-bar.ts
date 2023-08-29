@@ -10,7 +10,7 @@ import '@material/web/icon/icon.js';
 
 import type {MdIconButton} from '@material/web/iconbutton/icon-button.js';
 import {css, html, LitElement} from 'lit';
-import {customElement, query, state} from 'lit/decorators.js';
+import {customElement, state} from 'lit/decorators.js';
 import {live} from 'lit/directives/live.js';
 
 import {drawerOpenSignal} from '../signals/drawer-open-state.js';
@@ -27,8 +27,6 @@ import {materialDesign} from '../svg/material-design-logo.js';
    * Whether or not the color picker menu is open.
    */
   @state() private menuOpen = false;
-
-  @query('.end md-icon-button') private paletteButton!: MdIconButton;
 
   render() {
     return html`
@@ -61,7 +59,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
               id="menu-island"
             >
               <md-menu
-                .anchor=${this.paletteButton}
+                anchor="theme-button"
                 menu-corner="START_END"
                 anchor-corner="END_END"
                 stay-open-on-focusout
@@ -70,7 +68,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
               >
                 <theme-changer></theme-changer>
               </md-menu>
-              <md-icon-button @click="${this.onPaletteClick}">
+              <md-icon-button id="theme-button" @click="${this.onPaletteClick}">
                 <md-icon>palette</md-icon>
               </md-icon-button>
             </lit-island>

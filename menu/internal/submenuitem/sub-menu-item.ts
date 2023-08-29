@@ -216,7 +216,7 @@ export class SubMenuItem extends MenuItemEl {
     menu.hasOverflow = true;
     menu.anchorCorner = this.anchorCorner;
     menu.menuCorner = this.menuCorner;
-    menu.anchor = this;
+    menu.anchorElement = this;
     // We manually set focus with `active` on keyboard navigation. And we
     // want to focus the root on hover, so the user can pick up navigation with
     // keyboard after hover.
