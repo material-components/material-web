@@ -11,6 +11,7 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
+import {redispatchEvent} from '../../internal/controller/events.js';
 import {List} from '../../list/internal/list.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
 import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/shared.js';
@@ -25,11 +26,11 @@ const VALUE = Symbol('value');
  * interaction.
  * @fires change Fired when a selection is made by the user via mouse or
  * keyboard interaction.
- * @fires select-opening Fired when the select's menu is about to open.
- * @fires select-opened Fired when the select's menu has finished animations and
+ * @fires opening Fired when the select's menu is about to open.
+ * @fires opened Fired when the select's menu has finished animations and
  * opened.
- * @fires select-closing Fired when the select's menu is about to close.
- * @fires select-closed Fired when the select's menu has finished animations and
+ * @fires closing Fired when the select's menu is about to close.
+ * @fires closed Fired when the select's menu has finished animations and
  * closed.
  */
 export abstract class Select extends LitElement {
@@ -267,9 +268,9 @@ export abstract class Select extends LitElement {
           .fixed=${this.menuFixed}
           .typeaheadDelay=${this.typeaheadDelay}
           @opening=${this.handleOpening}
-          @opened=${this.handleOpened}
-          @closing=${this.handleClosing}
-          @closed=${this.handleClosed}
+          @opened=${this.redispatchEvent}
+          @closing=${this.redispatchEvent}
+          @closed=${this.redispatchEvent}
           @close-menu=${this.handleCloseMenu}
           @request-selection=${this.handleRequestSelection}
           @request-deselection=${this.handleRequestDeselection}>
@@ -426,8 +427,8 @@ export abstract class Select extends LitElement {
    * Focuses and activates the last selected item upon opening, and resets other
    * active items.
    */
-  private async handleOpening() {
-    this.dispatchEvent(new Event('select-opening'));
+  private async handleOpening(e: Event) {
+    this.redispatchEvent(e);
 
     const items = this.menu!.items;
     const activeItem = List.getActiveItem(items)?.item;
@@ -446,17 +447,8 @@ export abstract class Select extends LitElement {
     }
   }
 
-  private handleOpened() {
-    this.dispatchEvent(new Event('select-opened'));
-  }
-
-  private handleClosing() {
-    this.open = false;
-    this.dispatchEvent(new Event('select-closing'));
-  }
-
-  private handleClosed() {
-    this.dispatchEvent(new Event('select-closed'));
+  private redispatchEvent(e: Event) {
+    redispatchEvent(this, e);
   }
 
   /**
