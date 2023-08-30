@@ -12,7 +12,7 @@ import '@material/web/button/text-button.js';
 import '@material/web/button/filled-tonal-button.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {html} from 'lit';
+import {css, html} from 'lit';
 
 /** Knob types for button stories. */
 export interface StoryKnobs {
@@ -20,139 +20,174 @@ export interface StoryKnobs {
   disabled: boolean;
 }
 
-const elevated: MaterialStoryInit<StoryKnobs> = {
-  name: 'Elevated buttons',
-  render({label, disabled}) {
-    const standardLabel = label || 'Elevated';
-    const linkLabel = label || 'Elevated link';
-    return html`
-      <md-elevated-button
-        aria-label=${ariaLabelMsg('elevated', label)}
-        ?disabled=${disabled ?? false}
-      >
-        ${standardLabel}
-      </md-elevated-button>
+const styles = css`
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 
-      <md-elevated-button
-        aria-label=${ariaLabelMsg('elevated', linkLabel)}
-        href="https://google.com"
-        target="_blank"
-        trailing-icon
-      >
-        ${linkLabel}
-        <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
-      </md-elevated-button>
+  .row {
+    display: flex;
+    gap: 16px;
+  }
+`;
+
+const buttons: MaterialStoryInit<StoryKnobs> = {
+  name: 'Button variants',
+  styles,
+  render({label, disabled}) {
+    return html`
+      <div class="column">
+        <div class="row">
+          <md-filled-button ?disabled=${disabled}>
+            ${label || 'Filled'}
+          </md-filled-button>
+
+          <md-outlined-button ?disabled=${disabled}>
+            ${label || 'Outlined'}
+          </md-outlined-button>
+
+          <md-elevated-button ?disabled=${disabled}>
+            ${label || 'Elevated'}
+          </md-elevated-button>
+
+          <md-filled-tonal-button ?disabled=${disabled}>
+            ${label || 'Tonal'}
+          </md-filled-tonal-button>
+
+          <md-text-button ?disabled=${disabled}>
+            ${label || 'Text'}
+          </md-text-button>
+        </div>
+        <div class="row">
+          <md-filled-button ?disabled=${disabled}>
+            <md-icon slot="icon">upload</md-icon>
+            ${label || 'Filled'}
+          </md-filled-button>
+
+          <md-outlined-button ?disabled=${disabled}>
+            <md-icon slot="icon">upload</md-icon>
+            ${label || 'Outlined'}
+          </md-outlined-button>
+
+          <md-elevated-button ?disabled=${disabled}>
+            <md-icon slot="icon">upload</md-icon>
+            ${label || 'Elevated'}
+          </md-elevated-button>
+
+          <md-filled-tonal-button ?disabled=${disabled}>
+            <md-icon slot="icon">upload</md-icon>
+            ${label || 'Tonal'}
+          </md-filled-tonal-button>
+
+          <md-text-button ?disabled=${disabled}>
+            <md-icon slot="icon">upload</md-icon>
+            ${label || 'Text'}
+          </md-text-button>
+        </div>
+      </div>
     `;
   }
 };
 
-const filled: MaterialStoryInit<StoryKnobs> = {
-  name: 'Filled button',
-  render({label, disabled}) {
-    const standardLabel = label || 'Filled';
-    const linkLabel = label || 'Filled link';
+const links: MaterialStoryInit<StoryKnobs> = {
+  name: 'Links',
+  styles,
+  render({label}) {
     return html`
-      <md-filled-button
-        aria-label=${ariaLabelMsg('filled', label)}
-        ?disabled=${disabled ?? false}
-      >
-        ${standardLabel}
-      </md-filled-button>
+      <div class="column">
+        <div class="row">
+          <md-filled-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            ${label || 'Filled'}
+          </md-filled-button>
 
-      <md-filled-button
-        aria-label=${ariaLabelMsg('filled', linkLabel)}
-        href="https://google.com"
-        target="_blank"
-        trailing-icon
-      >
-        ${linkLabel}
-        <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
-      </md-filled-button>
+          <md-outlined-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            ${label || 'Outlined'}
+          </md-outlined-button>
+
+          <md-elevated-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            ${label || 'Elevated'}
+          </md-elevated-button>
+
+          <md-filled-tonal-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            ${label || 'Tonal'}
+          </md-filled-tonal-button>
+
+          <md-text-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            ${label || 'Text'}
+          </md-text-button>
+        </div>
+        <div class="row">
+          <md-filled-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            <md-icon slot="icon">open_in_new</md-icon>
+            ${label || 'Filled'}
+          </md-filled-button>
+
+          <md-outlined-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            <md-icon slot="icon">open_in_new</md-icon>
+            ${label || 'Outlined'}
+          </md-outlined-button>
+
+          <md-elevated-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            <md-icon slot="icon">open_in_new</md-icon>
+            ${label || 'Elevated'}
+          </md-elevated-button>
+
+          <md-filled-tonal-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            <md-icon slot="icon">open_in_new</md-icon>
+            ${label || 'Tonal'}
+          </md-filled-tonal-button>
+
+          <md-text-button
+            href="https://google.com"
+            target="_blank"
+            trailing-icon
+          >
+            <md-icon slot="icon">open_in_new</md-icon>
+            ${label || 'Text'}
+          </md-text-button>
+        </div>
+      </div>
     `;
   }
 };
-
-const tonal: MaterialStoryInit<StoryKnobs> = {
-  name: 'Tonal buttons',
-  render({label, disabled}) {
-    const standardLabel = label || 'Tonal';
-    const linkLabel = label || 'Tonal link';
-    return html`
-      <md-filled-tonal-button
-        aria-label=${ariaLabelMsg('tonal', label)}
-        ?disabled=${disabled ?? false}
-      >
-        ${standardLabel}
-      </md-filled-tonal-button>
-
-      <md-filled-tonal-button
-        aria-label=${ariaLabelMsg('tonal', linkLabel)}
-        href="https://google.com"
-        target="_blank"
-        trailing-icon
-      >
-        ${linkLabel}
-        <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
-      </md-filled-tonal-button>
-    `;
-  }
-};
-
-const outlined: MaterialStoryInit<StoryKnobs> = {
-  name: 'Outlined buttons',
-  render({label, disabled}) {
-    const standardLabel = label || 'Outlined';
-    const linkLabel = label || 'Outlined link';
-    return html`
-      <md-outlined-button
-        aria-label=${ariaLabelMsg('outlined', label)}
-        ?disabled=${disabled ?? false}
-      >
-        ${standardLabel}
-      </md-outlined-button>
-
-      <md-outlined-button
-        aria-label=${ariaLabelMsg('outlined', linkLabel)}
-        href="https://google.com"
-        target="_blank"
-        trailing-icon
-      >
-        ${linkLabel}
-        <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
-      </md-outlined-button>
-    `;
-  }
-};
-
-const text: MaterialStoryInit<StoryKnobs> = {
-  name: 'Text buttons',
-  render({label, disabled}) {
-    const standardLabel = label || 'Text';
-    const linkLabel = label || 'Text link';
-    return html`
-      <md-text-button
-        aria-label=${ariaLabelMsg('text', label)}
-        ?disabled=${disabled ?? false}
-      >
-        ${standardLabel}
-      </md-text-button>
-
-      <md-text-button
-        aria-label=${ariaLabelMsg('text', linkLabel)}
-        href="https://google.com"
-        target="_blank"
-        trailing-icon
-      >
-        ${linkLabel}
-        <md-icon slot="icon" aria-hidden="true">open_in_new</md-icon>
-      </md-text-button>
-    `;
-  }
-};
-
-function ariaLabelMsg(type: string, label: string) {
-  return `An example ${type} button, labelled "${label}"`;
-}
 
 /** Button stories. */
-export const stories = [elevated, filled, tonal, outlined, text];
+export const stories = [buttons, links];

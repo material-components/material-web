@@ -20,6 +20,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
   }
 
+  .button:disabled md-elevation {
+    transition: none;
+  }
+
   .button {
     @include elevation.theme(
       (
