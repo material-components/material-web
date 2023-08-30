@@ -72,37 +72,43 @@
     max-height: inherit;
     height: inherit;
     min-width: inherit;
+  }
 
-    &.fixed {
-      position: fixed;
-    }
+  .fixed {
+    position: fixed;
+  }
 
-    md-list {
-      height: inherit;
-      max-height: inherit;
-      display: block;
-      overflow: auto;
-      min-width: inherit;
-      border-radius: inherit;
-    }
+  md-list {
+    height: inherit;
+    max-height: inherit;
+    display: block;
+    overflow: auto;
+    min-width: inherit;
+    border-radius: inherit;
+  }
 
-    &.has-overflow md-list {
-      overflow: visible;
-    }
+  .has-overflow md-list {
+    overflow: visible;
+  }
 
-    &.animating md-list {
-      pointer-events: none;
-      overflow: hidden;
-    }
+  .animating md-list {
+    overflow: hidden;
+  }
 
-    &.animating ::slotted(.md-menu-hidden) {
-      opacity: 0;
-    }
+  .has-overflow.animating md-list {
+    // Often has-overlow is set because there are submenus. Since we need
+    // overflow to be hidden to make the animation work, we need to disable
+    // submenus opening mid-animation or else it looks completely wrong.
+    pointer-events: none;
+  }
 
-    slot {
-      display: block;
-      height: inherit;
-      max-height: inherit;
-    }
+  .animating ::slotted(.md-menu-hidden) {
+    opacity: 0;
+  }
+
+  slot {
+    display: block;
+    height: inherit;
+    max-height: inherit;
   }
 }
