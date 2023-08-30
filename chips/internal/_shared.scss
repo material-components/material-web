@@ -20,6 +20,7 @@
     border-end-end-radius: var(--_container-shape-end-end);
     display: inline-flex;
     height: var(--_container-height);
+    cursor: pointer;
 
     @include ripple.theme(
       (
@@ -203,5 +204,10 @@
       color: GrayText;
       opacity: 1;
     }
+  }
+
+  a,
+  button:not(:disabled) {
+    cursor: inherit;
   }
 }
