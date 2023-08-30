@@ -17,10 +17,7 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
 import {EASING} from '../../internal/motion/animation.js';
 
-/**
- * An element that can select items.
- */
-export interface Tabs extends HTMLElement {
+interface Tabs extends HTMLElement {
   selected?: number;
   selectedItem?: Tab;
   previousSelectedItem?: Tab;
@@ -132,10 +129,6 @@ export class Tab extends LitElement {
     dispatchActivationClick(this.button);
   };
 
-  private get tabs() {
-    return this.parentElement as Tabs;
-  }
-
   private animateSelected() {
     this.indicator.getAnimations().forEach(a => {
       a.cancel();
@@ -152,9 +145,12 @@ export class Tab extends LitElement {
     if (!this.selected) {
       return reduceMotion ? [{'opacity': 1}, {'transform': 'none'}] : null;
     }
+
+    // TODO(b/298105040): avoid hardcoding selector
+    const tabs = this.closest<Tabs>('md-tabs');
     const from: Keyframe = {};
     const fromRect =
-        (this.tabs?.previousSelectedItem?.indicator.getBoundingClientRect() ??
+        (tabs?.previousSelectedItem?.indicator.getBoundingClientRect() ??
          ({} as DOMRect));
     const fromPos = fromRect.left;
     const fromExtent = fromRect.width;

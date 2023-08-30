@@ -41,12 +41,6 @@ const NAVIGATION_KEYS = new Map([
  *
  */
 export class Tabs extends LitElement {
-  /** @nocollapse */
-  static override readonly shadowRootOptions = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true
-  };
-
   /**
    * Index of the selected item.
    */
@@ -71,8 +65,6 @@ export class Tabs extends LitElement {
   // be kept in sync
   @state() private itemsDirty = false;
 
-  private readonly selectedAttribute = `selected`;
-
   /**
    * The item currently selected.
    */
@@ -90,9 +82,12 @@ export class Tabs extends LitElement {
   /**
    * The item currently focused.
    */
-  protected get focusedItem() {
+  private get focusedItem() {
     return this.items.find((el: HTMLElement) => el.matches(':focus-within'));
   }
+
+  private readonly internals =
+      (this as HTMLElement /* needed for closure */).attachInternals();
 
   constructor() {
     super();
@@ -105,7 +100,14 @@ export class Tabs extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'tablist');
+    // Firefox does not support ElementInternals aria yet, so we need to hydrate
+    // an attribute.
+    if (!('role' in this.internals)) {
+      this.setAttribute('role', 'tablist');
+      return;
+    }
+
+    this.internals.role = 'tablist';
   }
 
   // focus item on keydown and optionally select it
@@ -218,8 +220,8 @@ export class Tabs extends LitElement {
     }
     if (itemsChanged || changed.has('selected')) {
       if (this.previousSelectedItem !== this.selectedItem) {
-        this.previousSelectedItem?.removeAttribute(this.selectedAttribute);
-        this.selectedItem?.setAttribute(this.selectedAttribute, '');
+        this.previousSelectedItem?.removeAttribute('selected');
+        this.selectedItem?.setAttribute('selected', '');
       }
       if (this.selectedItem !== this.focusedItem) {
         this.updateFocusableItem(this.selectedItem);
