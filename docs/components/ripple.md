@@ -140,7 +140,8 @@ To create an unbounded circular ripple centered on an element, use the following
 
 ```css
 .container {
-  display: grid;
+  display: flex;
+  place-content: center;
   place-items: center;
   position: relative;
 }
@@ -182,7 +183,8 @@ md-ripple.unbounded {
     width: 32px;
 
     /* Needed for unbounded ripple */
-    display: grid;
+    display: flex;
+    place-content: center;
     place-items: center;
     position: relative;
   }

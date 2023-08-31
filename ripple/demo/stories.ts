@@ -51,7 +51,8 @@ const ripples: MaterialStoryInit<StoryKnobs> = {
       width: 24px;
 
       /* Recommended styles for an unbounded ripple's anchor. */
-      display: grid;
+      display: flex;
+      place-content: center;
       place-items: center;
       position: relative;
     }
