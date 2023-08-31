@@ -176,7 +176,7 @@ icon), or to express errors.
 <md-outlined-text-field label="Password" type="password">
   <md-icon-button toggle slot="trailingicon">
     <md-icon>visibility</md-icon>
-    <md-icon slot="selectedIcon">visibility_off</md-icon>
+    <md-icon slot="selected">visibility_off</md-icon>
   </md-icon-button>
 </md-outlined-text-field>
 

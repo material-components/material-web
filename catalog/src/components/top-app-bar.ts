@@ -40,7 +40,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
               @input=${this.onMenuIconToggle}
             >
               <span><md-icon>menu</md-icon></span>
-              <span slot="selectedIcon"><md-icon>menu_open</md-icon></span>
+              <span slot="selected"><md-icon>menu_open</md-icon></span>
             </md-icon-button>
             <md-icon-button href="/" class="home-button">
               ${materialDesign}

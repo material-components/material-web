@@ -84,7 +84,7 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             ?disabled=${disabled}
           >
             <md-icon>${icon}</md-icon>
-            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+            <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-icon-button>
 
           <md-outlined-icon-button
@@ -93,7 +93,7 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             ?disabled=${disabled}
           >
             <md-icon>${icon}</md-icon>
-            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+            <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-outlined-icon-button>
 
           <md-filled-icon-button
@@ -102,7 +102,7 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             ?disabled=${disabled}
           >
             <md-icon>${icon}</md-icon>
-            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+            <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-filled-icon-button>
 
           <md-filled-tonal-icon-button
@@ -111,7 +111,7 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             ?disabled=${disabled}
           >
             <md-icon>${icon}</md-icon>
-            <md-icon slot="selectedIcon">${selectedIcon}</md-icon>
+            <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-filled-tonal-icon-button>
         </div>
       </div>

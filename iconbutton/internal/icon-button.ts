@@ -68,8 +68,8 @@ export class IconButton extends LitElement implements FormSubmitter {
 
   /**
    * Sets the selected state. When false, displays the default icon. When true,
-   * displays the `selectedIcon`, or the default icon If no `selectedIcon` is
-   * provided.
+   * displays the selected icon, or the default icon If no `slot="selected"`
+   * icon is provided.
    */
   @property({type: Boolean, reflect: true}) selected = false;
 
@@ -169,7 +169,7 @@ export class IconButton extends LitElement implements FormSubmitter {
 
   private renderSelectedIcon() {
     // Use default slot as fallback to not require specifying multiple icons
-    return html`<span class="icon icon--selected"><slot name="selectedIcon"><slot></slot></slot></span>`;
+    return html`<span class="icon icon--selected"><slot name="selected"><slot></slot></slot></span>`;
   }
 
   private renderTouchTarget() {

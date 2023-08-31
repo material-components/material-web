@@ -49,7 +49,7 @@ function playgroundExample(eleventyConfig) {
         <summary>
           <md-outlined-icon-button toggle tabindex="-1" aria-hidden="true">
             <md-icon aria-hidden="true">expand_more</md-icon>
-            <md-icon aria-hidden="true" slot="selectedIcon">expand_less</md-icon>
+            <md-icon aria-hidden="true" slot="selected">expand_less</md-icon>
           </md-outlined-icon-button>
           Expand interactive demo.
         </summary>

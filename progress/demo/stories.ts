@@ -152,7 +152,7 @@ const components: MaterialStoryInit<StoryKnobs> = {
             @change=${toggleIndeterminate}
           >
             <md-icon>play_arrow</md-icon>
-            <md-icon slot="selectedIcon">pause</md-icon>
+            <md-icon slot="selected">pause</md-icon>
           </md-icon-button>
         </div>
       </div>

@@ -131,37 +131,37 @@ adding or removing something from favorites.
 <div>
   <md-icon-button toggle>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-icon-button>
   <md-filled-icon-button toggle>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-filled-icon-button>
   <md-filled-tonal-icon-button toggle>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-filled-tonal-icon-button>
   <md-outlined-icon-button toggle>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-outlined-icon-button>
 </div>
 <div>
   <md-icon-button toggle selected>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-icon-button>
   <md-filled-icon-button toggle selected>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-filled-icon-button>
   <md-filled-tonal-icon-button toggle selected>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-filled-tonal-icon-button>
   <md-outlined-icon-button toggle selected>
     <md-icon>close</md-icon>
-    <md-icon slot="selectedIcon">check</md-icon>
+    <md-icon slot="selected">check</md-icon>
   </md-outlined-icon-button>
 </div>
 ```
@@ -188,7 +188,7 @@ descriptive label when selected.
   aria-label="Unselected"
   aria-label-selected="Selected">
   <md-icon>close</md-icon>
-  <md-icon slot="selectedIcon">check</md-icon>
+  <md-icon slot="selected">check</md-icon>
 </md-icon-button>
 ```
 
