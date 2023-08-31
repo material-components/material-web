@@ -147,7 +147,7 @@ Associate a label with a switch using the `<label>` element.
 </label>
 
 <label for="switch">Bluetooth</label>
-<md-switch id="switch"></md-radio>
+<md-switch id="switch"></md-switch>
 ```
 
 ## Accessibility
