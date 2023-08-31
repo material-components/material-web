@@ -37,6 +37,10 @@ declare global {
  * @example
  * ```html
  * <div style="position:relative;">
+ *   <!--
+ *     The menu ref in this example can be achieved by any method such as the
+ *     preferred `@query` decorator in Lit or a ref in React.
+ *   -->
  *   <button
  *       id="anchor"
  *       @click=${() => this.menuRef.value.show()}>
@@ -44,7 +48,11 @@ declare global {
  *   </button>
  *   <!--
  *     `has-overflow` is required when using a submenu which overflows the
- *     menu's contents
+ *     menu's contents.
+ *
+ *     Additionally, `anchor` ingests an idref which do not pass through shadow
+ *     roots. You can also set `.anchorElement` to an element reference if
+ *     necessary.
  *   -->
  *   <md-menu anchor="anchor" has-overflow ${ref(menuRef)}>
  *     <md-menu-item header="This is a header"></md-menu-item>

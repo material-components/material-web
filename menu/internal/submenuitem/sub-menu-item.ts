@@ -4,17 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html} from 'lit';
-import {property, queryAssignedElements, state} from 'lit/decorators.js';
+import {html, PropertyValues} from 'lit';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 
 import {List} from '../../../list/internal/list.js';
+import {MdRipple} from '../../../ripple/ripple.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
 import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createCloseOnFocusoutEvent, createDeactivateItemsEvent, createDeactivateTypeaheadEvent, createStayOpenOnFocusoutEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
-
-function stopPropagation(event: Event) {
-  event.stopPropagation();
-}
 
 /**
  * @fires deactivate-items Requests the parent menu to deselect other items when
@@ -53,6 +50,8 @@ export class SubMenuItem extends MenuItemEl {
   @property({type: Boolean, reflect: true}) selected = false;
 
   @state() protected submenuHover = false;
+
+  @query('md-ripple') private readonly rippleEl!: MdRipple;
 
   @queryAssignedElements({slot: 'submenu', flatten: true})
   private readonly menus!: Menu[];
@@ -116,6 +115,8 @@ export class SubMenuItem extends MenuItemEl {
   protected override onKeydown(event: KeyboardEvent) {
     const shouldOpenSubmenu = this.isSubmenuOpenKey(event.code);
 
+    if (event.defaultPrevented) return;
+
     if (event.code === SELECTION_KEY.SPACE) {
       // prevent space from scrolling. Only open the submenu.
       event.preventDefault();
@@ -156,11 +157,19 @@ export class SubMenuItem extends MenuItemEl {
         name="submenu"
         @pointerenter=${this.onSubmenuPointerEnter}
         @pointerleave=${this.onSubmenuPointerLeave}
-        @pointerdown=${stopPropagation}
-        @click=${stopPropagation}
         @keydown=${this.onSubMenuKeydown}
         @close-menu=${this.onCloseSubmenu}
     ></slot></span>`;
+  }
+
+  override firstUpdated(changed: PropertyValues<this>) {
+    super.firstUpdated(changed);
+
+    const {handleEvent} = this.rippleEl;
+
+    // TODO(b/298476971): remove once ripple has a better solution
+    this.rippleEl.handleEvent =
+        callIfEventNotBubbledThroughMenu(this, handleEvent.bind(this.rippleEl));
   }
 
   private onCloseSubmenu(event: CloseMenuEvent) {
@@ -186,13 +195,15 @@ export class SubMenuItem extends MenuItemEl {
   }
 
   private async onSubMenuKeydown(event: KeyboardEvent) {
-    // Stop propagation so that we don't accidentally close every parent menu.
-    // Additionally, we want to isolate things like the typeahead keydowns
-    // from bubbling up to the parent menu and confounding things.
-    event.stopPropagation();
+    if (event.defaultPrevented) return;
     const shouldClose = this.isSubmenuCloseKey(event.code);
 
     if (!shouldClose) return;
+
+    // Communicate that it's handled so that we don't accidentally close every
+    // parent menu. Additionally, we want to isolate things like the typeahead
+    // keydowns from bubbling up to the parent menu and confounding things.
+    event.preventDefault();
 
     this.close(() => {
       List.deactivateActiveItem(this.submenuEl!.items);
@@ -208,7 +219,7 @@ export class SubMenuItem extends MenuItemEl {
    */
   show(onOpened = () => {}) {
     const menu = this.submenuEl;
-    if (!menu) return;
+    if (!menu || menu.open) return;
 
     menu.quick = true;
     // Submenus are in overflow when not fixed. Can remove once we have native
@@ -314,4 +325,31 @@ export class SubMenuItem extends MenuItemEl {
   private onSubmenuPointerLeave() {
     this.submenuHover = false;
   }
+}
+
+/**
+ * Calls the given callback if the event has not bubbled through an md-menu.
+ */
+function callIfEventNotBubbledThroughMenu(
+    menuItem: HTMLElement, callback: (event: Event) => Promise<void>) {
+  return async (event: Event) => {
+    const path = event.composedPath();
+
+    for (const element of path) {
+      const isMenu =
+          !!(element as Element | HTMLElement)?.hasAttribute?.('md-menu');
+
+      // The path has a submenu, do not invoke callback;
+      if (isMenu) return;
+
+      // We have reached the target submenu. Any other menus in path are
+      // ancestors.
+      if (element === menuItem) {
+        break;
+      }
+    }
+
+    // invoke the callback because we have not run into a submenu.
+    await callback(event);
+  };
 }

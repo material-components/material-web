@@ -654,6 +654,9 @@ export abstract class Menu extends LitElement {
     if (!isServer) {
       window.addEventListener('click', this.onWindowClick, {capture: true});
     }
+
+    // need to self-identify as an md-menu for submenu ripple identification.
+    this.toggleAttribute('md-menu', true);
   }
 
   override disconnectedCallback() {

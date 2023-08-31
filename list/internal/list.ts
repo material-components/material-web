@@ -92,9 +92,7 @@ export class List extends LitElement {
    * The content to be slotted into the list.
    */
   private renderContent() {
-    return html`<span><slot @click=${(event: Event) => {
-      event.stopPropagation();
-    }}></slot></span>`;
+    return html`<span><slot></slot></span>`;
   }
 
   /**
@@ -104,7 +102,7 @@ export class List extends LitElement {
    */
   private handleKeydown(event: KeyboardEvent) {
     const key = event.key;
-    if (!isNavigableKey(key)) {
+    if (event.defaultPrevented || !isNavigableKey(key)) {
       return;
     }
     // do not use this.items directly so we don't re-query the DOM unnecessarily

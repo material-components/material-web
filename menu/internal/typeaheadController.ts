@@ -196,6 +196,7 @@ export class TypeaheadController {
    * activates Olive
    */
   private typeahead(event: KeyboardEvent) {
+    if (event.defaultPrevented) return;
     clearTimeout(this.cancelTypeaheadTimeout);
     // Stop typingahead if one of the navigation or selection keys (except for
     // Space) are pressed
@@ -210,7 +211,6 @@ export class TypeaheadController {
 
     // If Space is pressed, prevent it from selecting and closing the menu
     if (event.code === 'Space') {
-      event.stopPropagation();
       event.preventDefault();
     }
 
