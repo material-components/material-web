@@ -22,8 +22,8 @@ export class MenuHarness extends Harness<Menu> {
    */
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    await this.show();
-    return (await this.getItems())[0].getInteractiveElement();
+    return this.element.renderRoot.querySelector('md-list')!.renderRoot
+               .querySelector('.list') as HTMLElement;
   }
 
   /** @return ListItem harnesses for the menu's items. */
@@ -32,9 +32,8 @@ export class MenuHarness extends Harness<Menu> {
         (item) => new MenuItemHarness(item as typeof item&LitElement));
   }
 
-  async show(quick = true) {
+  async show() {
     const menu = this.element;
-    menu.quick = quick;
     if (menu.open) {
       return;
     }

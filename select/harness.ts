@@ -41,9 +41,7 @@ export class SelectHarness extends Harness<Select> {
         (item) => new SelectOptionHarness(item as typeof item&LitElement));
   }
 
-  async click(quick = true) {
-    this.element.quick = quick;
-    await this.element.updateComplete;
+  async click() {
     const field = await this.getField();
     field.click();
   }

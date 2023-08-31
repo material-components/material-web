@@ -35,7 +35,7 @@ export class ListHarness extends Harness<List> {
    */
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return (await this.getItems())[0].getInteractiveElement();
+    return this.element.renderRoot.querySelector('.list') as HTMLElement;
   }
 
   /** @return List item harnesses. */
