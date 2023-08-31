@@ -35,7 +35,10 @@ export class Tab extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  /** @private indicates that the element is a tab for `<md-tabs>` */
+  /**
+   * @private indicates that the element is a tab for `<md-tabs>`
+   * @nocollapse
+   */
   static readonly isTab = true;
 
   /**
