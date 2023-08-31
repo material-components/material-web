@@ -94,6 +94,7 @@ export abstract class Select extends LitElement {
   @state() private focused = false;
   @state() private open = false;
   @query('md-menu') private readonly menu!: Menu|null;
+  @query('#label') private readonly labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leadingicon', flatten: true})
   private readonly leadingIcons!: Element[];
 
@@ -317,6 +318,7 @@ export abstract class Select extends LitElement {
         return;
       }
 
+      this.labelEl?.setAttribute?.('aria-live', 'polite');
       const hasChanged = this.selectItem(
           lastActiveRecord[TYPEAHEAD_RECORD.ITEM] as SelectOption);
 
@@ -428,6 +430,7 @@ export abstract class Select extends LitElement {
    * active items.
    */
   private async handleOpening(e: Event) {
+    this.labelEl?.removeAttribute?.('aria-live');
     this.redispatchEvent(e);
 
     const items = this.menu!.items;
