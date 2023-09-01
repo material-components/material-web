@@ -89,6 +89,10 @@ $_enter-delay: $_label-duration - $_visible-duration;
     transition-delay: $_enter-delay;
   }
 
+  :is(.disabled, .disable-transitions) .content {
+    transition: none;
+  }
+
   .content ::slotted(*) {
     all: unset;
     // Use `currentColor` to inherit the various state colors that are set

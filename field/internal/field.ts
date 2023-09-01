@@ -59,6 +59,7 @@ export class Field extends LitElement implements SurfacePositionTarget {
    * to screen readers.
    */
   @state() private refreshErrorAlert = false;
+  @state() private disableTransitions = false;
   @query('.label.floating') private readonly floatingLabelEl!: HTMLElement|null;
   @query('.label.resting') private readonly restingLabelEl!: HTMLElement|null;
   @query('.container') private readonly containerEl!: HTMLElement|null;
@@ -76,6 +77,10 @@ export class Field extends LitElement implements SurfacePositionTarget {
 
   protected override update(props: PropertyValues<Field>) {
     // Client-side property updates
+    const isDisabledChanging = props.has('disabled') && props.get('disabled') !== undefined;
+    if (isDisabledChanging) {
+      this.disableTransitions = true;
+    }
 
     // When disabling, remove focus styles if focused.
     if (this.disabled && this.focused) {
@@ -98,6 +103,7 @@ export class Field extends LitElement implements SurfacePositionTarget {
     const outline = this.renderOutline?.(floatingLabel);
     const classes = {
       'disabled': this.disabled,
+      'disable-transitions': this.disableTransitions,
       'error': this.error && !this.disabled,
       'focused': this.focused,
       'with-start': this.hasStart,
@@ -147,6 +153,12 @@ export class Field extends LitElement implements SurfacePositionTarget {
       // Re-add it after an animation frame to re-announce the error.
       requestAnimationFrame(() => {
         this.refreshErrorAlert = false;
+      });
+    }
+
+    if (this.disableTransitions) {
+      requestAnimationFrame(() => {
+        this.disableTransitions = false;
       });
     }
   }
