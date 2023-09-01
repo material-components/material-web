@@ -5,7 +5,6 @@
     "declaration": true,
     "declarationMap": false,
     "downlevelIteration": true,
-    "experimentalDecorators": true,
     "importHelpers": true,
     "module": "es2015",
     "moduleResolution": "node",
@@ -15,6 +14,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noPropertyAccessFromIndexSignature": true,
+    "useDefineForClassFields": true,
     "noUnusedLocals": true,
     "paths": {
       "@material/web/*": ["./*"]

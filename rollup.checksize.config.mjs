@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-import { compileLitTemplates } from "@lit-labs/compiler";
+// import { compileLitTemplates } from "@lit-labs/compiler";
 import typescript from '@rollup/plugin-typescript';
 import summary from "rollup-plugin-summary";
 import { terser } from "rollup-plugin-terser";
@@ -31,7 +31,7 @@ export default {
         tsconfig: './tsconfig.json',
         declarationDir: '.',
         transformers: {
-          before: [compileLitTemplates()],
+          // before: [compileLitTemplates()],
         },
       }),
     terser(),
