@@ -367,8 +367,7 @@ function getTabContentGenerator(knobs: StoryKnobs) {
   const useIcon = contentKnob !== 'label';
   const useLabel = contentKnob !== 'icon';
   return (icon: string, label: string) => {
-    const iconTemplate =
-        html`<md-icon aria-hidden="true" slot="icon">${icon}</md-icon>`;
+    const iconTemplate = html`<md-icon slot="icon">${icon}</md-icon>`;
     return html`
       ${useIcon ? iconTemplate : nothing}
       ${useLabel ? html`${label}` : nothing}

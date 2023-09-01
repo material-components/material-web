@@ -126,6 +126,13 @@ export class Ripple extends LitElement implements Attachable {
     this.attachableController.detach();
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    // Needed for VoiceOver, which will create a "group" if the element is a
+    // sibling to other content.
+    this.setAttribute('aria-hidden', 'true');
+  }
+
   protected override render() {
     const classes = {
       'hovered': this.hovered,

@@ -56,15 +56,12 @@ export abstract class Chip extends LitElement {
   }
 
   protected renderContainerContent() {
-    // Note: add aria-hidden="true" to focus ring and ripple. For some reason
-    // they cause VoiceOver to get stuck inside filter chip sets without it.
-    // TODO(b/297428579): investigate and file VoiceOver bug
     return html`
       ${this.renderOutline()}
-      <md-focus-ring part="focus-ring" for=${this.primaryId}
-        aria-hidden="true"></md-focus-ring>
-      <md-ripple for=${this.primaryId} ?disabled=${this.rippleDisabled}
-        aria-hidden="true"></md-ripple>
+      <md-focus-ring part="focus-ring"
+          for=${this.primaryId}></md-focus-ring>
+      <md-ripple for=${this.primaryId}
+          ?disabled=${this.rippleDisabled}></md-ripple>
       ${this.renderPrimaryAction(this.renderPrimaryContent())}
     `;
   }

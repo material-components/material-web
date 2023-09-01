@@ -56,6 +56,13 @@ export class FocusRing extends LitElement implements Attachable {
     this.attachableController.detach();
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    // Needed for VoiceOver, which will create a "group" if the element is a
+    // sibling to other content.
+    this.setAttribute('aria-hidden', 'true');
+  }
+
   /** @private */
   handleEvent(event: FocusRingEvent) {
     if (event[HANDLED_BY_FOCUS_RING]) {
