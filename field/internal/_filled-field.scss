@@ -200,4 +200,16 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   .error .active-indicator::after {
     border-bottom-color: var(--_error-focus-active-indicator-color);
   }
+
+  // Move the container up so that the resize handle doesn't overlap the focus
+  // indicator. Content is moved back the opposite direction.
+  .resizable .container {
+    bottom: var(--_focus-active-indicator-height);
+    // Ensures the container doesn't create an overhang that can be clicked on.
+    clip-path: inset(var(--_focus-active-indicator-height) 0 0 0);
+  }
+
+  .resizable .container > * {
+    top: var(--_focus-active-indicator-height);
+  }
 }
