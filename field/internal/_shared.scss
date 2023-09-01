@@ -15,6 +15,7 @@
 @mixin styles() {
   :host {
     display: inline-flex;
+    resize: both;
   }
 
   .field {
@@ -29,7 +30,7 @@
 
   // A separate wrapper is needed around the container for the outline, whose
   // floating label needs overflow: visible. The container itself needs
-  // overflow: hidden for resizability.
+  // overflow: hidden when resizable.
   .container-overflow {
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
@@ -48,16 +49,23 @@
     max-height: 100%;
     min-height: 100%;
     min-width: min-content;
-    overflow: hidden;
     position: relative;
   }
 
   .field,
-  .container-overflow,
-  .field:not(.disabled) .container {
-    // Inherit `resize` set on host, but only inherit it for the actual
-    // container if the field is not disabled.
+  .container-overflow {
     resize: inherit;
+  }
+
+  .resizable:not(.disabled) .container {
+    // `resize` is inherited from the host, but only applies to the container
+    // when resizable.
+    resize: inherit;
+    // Overflow is visible when not resizable to allow overflowing content such
+    // as popups or icon focus rings.
+    // Resizable fields cannot display overflowing content due to `resize` not
+    // allowing it.
+    overflow: hidden;
   }
 
   .disabled {

@@ -214,6 +214,25 @@ export abstract class TextField extends LitElement {
    */
   @property() step = '';
 
+  /**
+   * The `<input>` type to use, defaults to "text". The type greatly changes how
+   * the text field behaves.
+   *
+   * Text fields support a limited number of `<input>` types:
+   *
+   * - text
+   * - textarea
+   * - email
+   * - number
+   * - password
+   * - search
+   * - tel
+   * - url
+   *
+   * See
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+   * for more details on each input type.
+   */
   @property({reflect: true})
   type: TextFieldType|UnsupportedTextFieldType = 'text';
 
@@ -561,6 +580,7 @@ export abstract class TextField extends LitElement {
       max=${this.maxLength}
       ?populated=${!!this.value}
       ?required=${this.required}
+      ?resizable=${this.type === 'textarea'}
       supporting-text=${this.supportingText}
     >
       ${this.renderLeadingIcon()}

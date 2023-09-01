@@ -5,6 +5,7 @@
  */
 
 import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
 import '@material/web/textfield/filled-text-field.js';
 import '@material/web/textfield/outlined-text-field.js';
 
@@ -99,7 +100,8 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
 };
 
 const LEADING_ICON = html`<md-icon slot="leadingicon">search</md-icon>`;
-const TRAILING_ICON = html`<md-icon slot="trailingicon">event</md-icon>`;
+const TRAILING_ICON =
+    html`<md-icon-button slot="trailingicon"><md-icon>event</md-icon></md-icon-button>`;
 function reportValidity(event: Event) {
   (event.target as MdFilledTextField).reportValidity();
 }
