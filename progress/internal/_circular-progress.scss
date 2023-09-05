@@ -26,6 +26,8 @@
 @mixin styles() {
   $tokens: tokens.md-comp-circular-progress-values();
 
+  // If changing this value, make sure to change $size-without-padding in the
+  // circular-progress tokens.
   $container-padding: 4px;
 
   // note, these value come from the m2 version but match current gm3 values.

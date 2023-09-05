@@ -52,10 +52,12 @@ $_default: (
     // must be set as a raw % for compatibility between rendering border or svg.
     $width: map.get($tokens, 'active-indicator-width');
     $size: map.get($tokens, 'size');
+    $container-padding: 4px;
+    $size-without-padding: $size - $container-padding - $container-padding;
     $tokens: map.set(
       $tokens,
       'active-indicator-width',
-      math.div($width, $size) * 100
+      math.div($width, $size-without-padding) * 100
     );
   }
 
