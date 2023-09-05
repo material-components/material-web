@@ -36,12 +36,6 @@ export class Tab extends LitElement {
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   /**
-   * @private indicates that the element is a tab for `<md-tabs>`
-   * @nocollapse
-   */
-  static readonly isTab = true;
-
-  /**
    * Whether or not the tab is `selected`.
    **/
   @property({type: Boolean, reflect: true}) selected = false;
