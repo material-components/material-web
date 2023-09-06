@@ -339,9 +339,6 @@ export abstract class Menu extends LitElement {
       return;
     }
 
-    // Stop propagation to prevent nested menus from interfering with each other
-    event.stopPropagation();
-
     if (event.relatedTarget) {
       // Don't close the menu if we are switching focus between menu,
       // md-menu-item, and md-list

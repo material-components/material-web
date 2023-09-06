@@ -11,7 +11,7 @@ import {List} from '../../../list/internal/list.js';
 import {MdRipple} from '../../../ripple/ripple.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
-import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createCloseOnFocusoutEvent, createDeactivateItemsEvent, createDeactivateTypeaheadEvent, createStayOpenOnFocusoutEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
+import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createDeactivateItemsEvent, createDeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
 /**
  * @fires deactivate-items Requests the parent menu to deselect other items when
@@ -20,11 +20,6 @@ import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createCloseO
  * typeahead functionality when a submenu opens
  * @fires activate-typeahead Requests the parent menu to activate the typeahead
  * functionality when a submenu closes
- * @fires stay-open-on-focusout Requests the parent menu to stay open when
- * focusout event is fired or has a `null` `relatedTarget` when submenu is
- * opened.
- * @fires close-on-focusout Requests the parent menu to close when focusout
- * event is fired or has a `null` `relatedTarget` When submenu is closed.
  */
 export class SubMenuItem extends MenuItemEl {
   /**
@@ -175,8 +170,7 @@ export class SubMenuItem extends MenuItemEl {
   private onCloseSubmenu(event: CloseMenuEvent) {
     const {itemPath, reason} = event.detail;
     itemPath.push(this);
-    // Restore focusout behavior
-    this.dispatchEvent(createCloseOnFocusoutEvent());
+
     this.dispatchEvent(createActivateTypeaheadEvent());
     // Escape should only close one menu not all of the menus unlike space or
     // click selection which should close all menus.
@@ -232,17 +226,17 @@ export class SubMenuItem extends MenuItemEl {
     // want to focus the root on hover, so the user can pick up navigation with
     // keyboard after hover.
     menu.defaultFocus = 'LIST_ROOT';
-    menu.skipRestoreFocus = true;
-    menu.stayOpenOnOutsideClick = true;
-    menu.stayOpenOnFocusout = true;
+    // This is required in the case where we have a leaf menu open and and the
+    // user hovers a parent menu's item which is not an md-sub-menu item.
+    // If this were set to true, then the menu would close and focus would be
+    // lost. That means the focusout event would have a `relatedTarget` of
+    // `null` since nothing in the menu would be focused anymore due to the
+    // leaf menu closing. restoring focus ensures that we keep focus in the
+    // submenu tree.
+    menu.skipRestoreFocus = false;
 
     // Menu could already be opened because of mouse interaction
     const menuAlreadyOpen = menu.open;
-    // We want the parent to stay open in the case such that a middle submenu
-    // has a submenuitem hovered which opens a third submenut. Then if you hover
-    // on yet another middle menu-item (not submenuitem) then focusout Event's
-    // relatedTarget will be `null` thus, causing all the menus to close
-    this.dispatchEvent(createStayOpenOnFocusoutEvent());
     menu.show();
 
     // Deactivate other items. This can be the case if the user has tabbed
@@ -272,8 +266,6 @@ export class SubMenuItem extends MenuItemEl {
     this.dispatchEvent(createActivateTypeaheadEvent());
     menu.quick = true;
     menu.close();
-    // Restore focusout behavior.
-    this.dispatchEvent(createCloseOnFocusoutEvent());
     this.active = false;
     this.selected = false;
     menu.addEventListener('closed', onClosed, {once: true});
