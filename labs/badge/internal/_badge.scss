@@ -68,6 +68,9 @@
   }
 
   .md3-badge__value {
-    font: var(--_large-label-text-type);
+    font-family: var(--_large-label-text-font);
+    font-size: var(--_large-label-text-size);
+    line-height: var(--_large-label-text-line-height);
+    font-weight: var(--_large-label-text-weight);
   }
 }

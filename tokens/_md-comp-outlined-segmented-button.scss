@@ -22,7 +22,10 @@ $supported-tokens: (
   'disabled-outline-color',
   'hover-state-layer-opacity',
   'icon-size',
-  'label-text-type',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
   'outline-color',
   'pressed-state-layer-opacity',
   'selected-container-color',
@@ -56,11 +59,8 @@ $unsupported-tokens: (
   'disabled-label-text-opacity',
   'disabled-outline-opacity',
   'focus-state-layer-opacity',
-  'label-text-font',
-  'label-text-line-height',
-  'label-text-size',
   'label-text-tracking',
-  'label-text-weight',
+  'label-text-type',
   'outline-width',
   'selected-focus-state-layer-color',
   'unselected-focus-state-layer-color',
@@ -84,14 +84,6 @@ $_default: (
       'with-icon-icon-size': 'icon-size',
       'selected-with-icon-icon-color': 'selected-icon-color',
       'unselected-with-icon-icon-color': 'unselected-icon-color'
-    )
-  );
-
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  $tokens: map.merge(
-    $tokens,
-    (
-      'label-text-type': map.get($deps, 'md-sys-typescale', 'label-large'),
     )
   );
 

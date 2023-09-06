@@ -72,7 +72,10 @@ $animation-duration: 100ms;
     position: relative;
     text-align: center;
     width: 100%;
-    font: var(--_label-text-type);
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    line-height: var(--_label-text-line-height);
+    font-weight: var(--_label-text-weight);
 
     // Firefox draws a dotted border around focused buttons unless specifically overridden.
     &::-moz-focus-inner {

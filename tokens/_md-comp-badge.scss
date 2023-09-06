@@ -19,23 +19,10 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-$_unsupported-tokens: (
-  'large-label-text-font',
-  'large-label-text-line-height',
-  'large-label-text-size',
-  'large-label-text-tracking',
-  'large-label-text-weight'
-);
+$_unsupported-tokens: ('large-label-text-tracking', 'large-label-text-type');
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: md-comp-badge.values($deps, $exclude-hardcoded-values);
   $tokens: map.remove($tokens, $_unsupported-tokens...);
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  $tokens: map.merge(
-    $tokens,
-    (
-      'large-label-text-type': map.get($deps, 'md-sys-typescale', 'label-small'),
-    )
-  );
   @return $tokens;
 }
