@@ -51,7 +51,7 @@
       )
     );
 
-    min-width: 300px;
+    min-width: 112px;
   }
 
   md-focus-ring {
@@ -72,6 +72,7 @@
     max-height: inherit;
     height: inherit;
     min-width: inherit;
+    max-width: inherit;
   }
 
   .fixed {
@@ -84,6 +85,7 @@
     display: block;
     overflow: auto;
     min-width: inherit;
+    max-width: inherit;
     border-radius: inherit;
   }
 

@@ -68,6 +68,8 @@ const sharedStyle = css`
     border: 1px solid var(--md-sys-color-on-background);
     color: var(--md-sys-color-on-background);
     width: 100px;
+    padding: 16px;
+    text-align: center;
   }
   .md-stories-bg-override {
     display: flex;
