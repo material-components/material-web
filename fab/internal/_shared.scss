@@ -136,7 +136,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font: var(--_label-text-type);
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    line-height: var(--_label-text-line-height);
+    font-weight: var(--_label-text-weight);
   }
 
   .fab.extended .icon ::slotted(*) {

@@ -393,8 +393,8 @@ Token                            | Default value
 #### Extended FAB tokens
 
 Token                      | Default value
--------------------------- | -------------------------------
-`--md-fab-label-text-type` | `500 0.875rem/1.25rem "Roboto"`
+-------------------------- | -------------------------------------
+`--md-fab-label-text-font` | `--md-sys-typescale-label-large-font`
 
 #### Extended FAB example
 
@@ -428,7 +428,7 @@ Token                              | Default value
 `--md-fab-branded-container-color` | `--md-sys-color-surface-container-high`
 `--md-fab-branded-container-shape` | `16px`
 `--md-fab-branded-icon-size`       | `36px`
-`--md-fab-branded-label-text-type` | `500 0.875rem/1.25rem "Roboto"`
+`--md-fab-branded-label-text-font` | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-fab-branded.scss)
     <!-- {.external} -->

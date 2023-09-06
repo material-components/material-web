@@ -44,7 +44,10 @@ $supported-tokens: (
   'icon-color',
   'icon-size',
   'label-text-color',
-  'label-text-type',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
   'large-container-height',
   'large-container-shape',
   'large-container-width',
@@ -148,7 +151,11 @@ $unsupported-tokens: (
     'hover-label-text-color':
       map.get($extended-surface-tokens, 'hover-label-text-color'),
     'label-text-color': map.get($extended-surface-tokens, 'label-text-color'),
-    'label-text-type': map.get($extended-surface-tokens, 'label-text-type'),
+    'label-text-font': map.get($extended-surface-tokens, 'label-text-font'),
+    'label-text-line-height':
+      map.get($extended-surface-tokens, 'label-text-line-height'),
+    'label-text-size': map.get($extended-surface-tokens, 'label-text-size'),
+    'label-text-weight': map.get($extended-surface-tokens, 'label-text-weight'),
     'large-container-height': map.get($large-tokens, 'container-height'),
     'large-container-shape': map.get($large-tokens, 'container-shape'),
     'large-container-width': map.get($large-tokens, 'container-width'),
@@ -232,14 +239,6 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values)
-  );
-
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  $tokens: map.merge(
-    $tokens,
-    (
-      'label-text-type': map.get($deps, 'md-sys-typescale', 'label-large'),
-    )
   );
 
   @return $tokens;
