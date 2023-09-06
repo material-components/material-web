@@ -15,8 +15,7 @@ import {Tabs} from './internal/tabs.js';
 export class TabHarness extends Harness<Tab> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot
-        .querySelector<HTMLButtonElement|HTMLLinkElement>('.button')!;
+    return this.element as HTMLElement;
   }
 
   private async completeIndicatorAnimation() {

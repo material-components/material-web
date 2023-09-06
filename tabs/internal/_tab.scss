@@ -21,6 +21,7 @@
     outline: none;
     -webkit-tap-highlight-color: transparent;
     vertical-align: middle;
+    user-select: none;
 
     @include ripple.theme(
       (
@@ -45,16 +46,11 @@
   }
 
   .button {
-    appearance: none;
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: none;
-    outline: none;
-    user-select: none;
     vertical-align: middle;
-    background: none;
-    text-decoration: none;
     width: 100%;
     position: relative;
     padding: 0 16px;
@@ -62,11 +58,6 @@
     z-index: 0; // Ensure this is a stacking context so the indicator displays
     font: var(--_label-text-type);
     color: var(--_label-text-color);
-
-    &::-moz-focus-inner {
-      padding: 0;
-      border: 0;
-    }
   }
 
   .button::before {

@@ -12,9 +12,7 @@ import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, queryAssignedNodes, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
+import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 import {EASING} from '../../internal/motion/animation.js';
 
 interface Tabs extends HTMLElement {
@@ -28,22 +26,13 @@ interface Tabs extends HTMLElement {
  */
 export class Tab extends LitElement {
   static {
-    requestUpdateOnAriaChange(Tab);
+    setupHostAria(Tab);
   }
-
-  /** @nocollapse */
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
   /**
    * Whether or not the tab is `selected`.
    **/
   @property({type: Boolean, reflect: true}) selected = false;
-
-  /**
-   * Whether or not the tab is `focusable`.
-   */
-  @property({type: Boolean}) focusable = false;
 
   /**
    * In SSR, set this to true when an icon is present.
@@ -55,8 +44,6 @@ export class Tab extends LitElement {
    */
   @property({type: Boolean, attribute: 'icon-only'}) iconOnly = false;
 
-  @query('.button') private readonly button!: HTMLElement|null;
-
   // note, this is public so it can participate in selection animation.
   /** @private */
   @query('.indicator') readonly indicator!: HTMLElement;
@@ -65,44 +52,33 @@ export class Tab extends LitElement {
   private readonly assignedDefaultNodes!: Node[];
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
+  private readonly internals = polyfillElementInternalsAria(
+      this, (this as HTMLElement /* needed for closure */).attachInternals());
 
   constructor() {
     super();
     if (!isServer) {
-      this.addEventListener('click', this.handleActivationClick);
+      this.internals.role = 'tab';
+      this.addEventListener('keydown', this.handleKeydown.bind(this));
     }
-  }
-
-  override focus() {
-    this.button?.focus();
-  }
-
-  override blur() {
-    this.button?.blur();
   }
 
   protected override render() {
     const indicator = html`<div class="indicator"></div>`;
-    // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      <button
-        class="button"
-        role="tab"
-        .tabIndex=${this.focusable ? 0 : -1}
-        aria-selected=${this.selected ? 'true' : 'false'}
-        aria-label=${ariaLabel || nothing}
-      >
-        <md-focus-ring part="focus-ring" inward></md-focus-ring>
+      <div class="button" role="presentation">
+        <md-focus-ring part="focus-ring" inward
+            .control=${this}></md-focus-ring>
         <md-elevation></md-elevation>
-        <md-ripple></md-ripple>
-        <div class="content ${classMap(this.getContentClasses())}">
+        <md-ripple .control=${this}></md-ripple>
+        <div class="content ${classMap(this.getContentClasses())}"
+            role="presentation">
           <slot name="icon" @slotchange=${this.handleIconSlotChange}></slot>
           <slot @slotchange=${this.handleSlotChange}></slot>
           ${this.fullWidthIndicator ? nothing : indicator}
         </div>
         ${this.fullWidthIndicator ? indicator : nothing}
-      </button>`;
+      </div>`;
   }
 
   protected getContentClasses() {
@@ -114,17 +90,24 @@ export class Tab extends LitElement {
 
   protected override updated(changed: PropertyValues) {
     if (changed.has('selected')) {
+      this.internals.ariaSelected = String(this.selected);
       this.animateSelected();
     }
   }
 
-  private readonly handleActivationClick = (event: MouseEvent) => {
-    if (!isActivationClick((event)) || !this.button) {
+  private async handleKeydown(event: KeyboardEvent) {
+    // Allow event to bubble.
+    await 0;
+    if (event.defaultPrevented) {
       return;
     }
-    this.focus();
-    dispatchActivationClick(this.button);
-  };
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      // Prevent default behavior such as scrolling when pressing spacebar.
+      event.preventDefault();
+      this.click();
+    }
+  }
 
   private animateSelected() {
     this.indicator.getAnimations().forEach(a => {

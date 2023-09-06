@@ -227,7 +227,7 @@ export class Tabs extends LitElement {
 
   private updateFocusableItem(focusableItem: HTMLElement|null) {
     for (const item of this.items) {
-      item.focusable = item === focusableItem;
+      item.tabIndex = item === focusableItem ? 0 : -1;
     }
   }
 
