@@ -28,7 +28,8 @@
     "build:css-to-ts": "wireit",
     "build:sass": "wireit",
     "test": "wireit",
-    "build:catalog": "wireit"
+    "build:catalog": "wireit",
+    "checksize": "wireit"
   },
   "type": "module",
   "files": [
@@ -48,17 +49,29 @@
     "catalog"
   ],
   "dependencies": {
-    "lit": "^2.7.4 || ^3.0.0",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@babel/plugin-syntax-decorators": "^7.22.10",
+    "@lit-labs/ssr-dom-shim": "file:lit-labs-ssr-dom-shim-1.1.1.tgz",
+    "@lit/reactive-element": "file:lit-reactive-element-2.0.0-pre.0.tgz",
+    "jscodeshift": "^0.15.0",
+    "lit": "file:lit-3.0.0-pre.0.tgz",
+    "lit-element": "file:lit-element-4.0.0-pre.0.tgz",
+    "lit-html": "file:lit-html-3.0.0-pre.0.tgz",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
+    "@babel/parser": "^7.22.14",
+    "@lit-labs/compiler": "file:lit-labs-compiler-0.0.0.tgz",
+    "@rollup/plugin-typescript": "^11.1.3",
     "@types/jasmine": "^4.0.3",
     "@web/test-runner": "^0.15.0",
     "@web/test-runner-playwright": "^0.9.0",
     "jasmine": "^4.5.0",
+    "rollup-plugin-summary": "^2.0.0",
+    "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.52.3",
     "sass-true": "^6.1.0",
-    "typescript": "4.9.4",
+    "typescript": "^5.2.0",
     "web-test-runner-jasmine": "^0.0.2",
     "wireit": "^0.9.0"
   },
@@ -85,7 +98,8 @@
         "!css-to-ts.js",
         "!web-test-runner.config.js",
         "!types/",
-        "!catalog"
+        "!catalog",
+        "!rollup.config.mjs"
       ],
       "clean": "if-file-deleted",
       "dependencies": [
@@ -120,7 +134,7 @@
     "test": {
       "command": "wtr",
       "dependencies": [
-        "build:ts"
+        "checksize"
       ],
       "files": [
         "web-test-runner.config.js"
@@ -131,6 +145,18 @@
       "dependencies": [
         "./catalog:build:prod"
       ]
+    },
+    "checksize": {
+      "command": "rollup -c rollup.checksize.config.mjs",
+      "files": [
+        "tsconfig.json",
+        "rollup.checksize.config.mjs",
+        "**/*.ts",
+        "!**/*.d.ts",
+        "!**/*.css.ts",
+        "!catalog"
+      ],
+      "output": []
     }
   }
 }
