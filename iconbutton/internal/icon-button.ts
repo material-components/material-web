@@ -193,8 +193,10 @@ export class IconButton extends LitElement implements FormSubmitter {
     super.connectedCallback();
   }
 
-  private handleClick() {
-    if (!this.toggle || this.disabled) {
+  private async handleClick(event: Event) {
+    // Allow the event to propagate
+    await 0;
+    if (!this.toggle || this.disabled || event.defaultPrevented) {
       return;
     }
 

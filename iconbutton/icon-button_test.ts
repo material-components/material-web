@@ -150,7 +150,7 @@ describe('icon button tests', () => {
        });
 
     it('button with toggled aria label toggles aria label', async () => {
-      const {element} = await setUpTest('toggle');
+      const {element, harness} = await setUpTest('toggle');
       element.ariaLabelSelected = 'aria label on';
       element.ariaLabel = 'aria label off';
       await element.updateComplete;
@@ -160,7 +160,7 @@ describe('icon button tests', () => {
       expect(button.getAttribute('aria-label')).toEqual('aria label off');
 
       // Toggle
-      button.click();
+      await harness.clickWithMouse();
       await element.updateComplete;
       expect(element.selected).toBeTrue();
       expect(button.getAttribute('aria-label')).toEqual('aria label on');
@@ -193,6 +193,20 @@ describe('icon button tests', () => {
          expect((element as unknown as IconButtonInternals).flipIcon)
              .toBeFalse();
        });
+
+    it('should allow preventing toggle click event', async () => {
+      const {element, harness} = await setUpTest('toggle');
+
+      element.addEventListener('click', event => {
+        event.preventDefault();
+      });
+
+      expect(element.selected).withContext('selected before click').toBeFalse();
+      await harness.clickWithMouse();
+      expect(element.selected)
+          .withContext('selected after prevent default click')
+          .toBeFalse();
+    });
   });
 
   async function setUpTest(type: string) {
