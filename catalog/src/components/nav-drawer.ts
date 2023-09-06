@@ -26,14 +26,14 @@ import {SignalElement} from '../signals/signal-element.js';
   /**
    * Whether or not the side drawer is collapsible or inline.
    */
-  @state() private isCollapsible = false;
+  @state() private accessor isCollapsible = false;
 
   /**
    * Whether or not the TOC should be rendered.
    */
-  @property({type: Boolean, attribute: 'has-toc'}) hasToc = false;
+  @property({type: Boolean, attribute: 'has-toc'}) accessor hasToc = false;
 
-  @property({attribute: 'page-title'}) pageTitle = '';
+  @property({attribute: 'page-title'}) accessor pageTitle = '';
 
   render() {
     const showModal = this.isCollapsible && drawerOpenSignal.value;

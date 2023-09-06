@@ -20,17 +20,18 @@ import {renderRemoveButton} from './trailing-icons.js';
  * A filter chip component.
  */
 export class FilterChip extends MultiActionChip {
-  @property({type: Boolean}) elevated = false;
-  @property({type: Boolean}) removable = false;
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean}) accessor elevated = false;
+  @property({type: Boolean}) accessor removable = false;
+  @property({type: Boolean, reflect: true}) accessor selected = false;
 
   protected get primaryId() {
     return 'option';
   }
 
-  @query('.primary.action') protected readonly primaryAction!: HTMLElement|null;
+  @query('.primary.action')
+  protected accessor primaryAction!: HTMLElement|null;
   @query('.trailing.action')
-  protected readonly trailingAction!: HTMLElement|null;
+  protected accessor trailingAction!: HTMLElement|null;
 
   protected override updated(changed: PropertyValues<this>) {
     if (changed.has('selected') && changed.get('selected') !== undefined) {

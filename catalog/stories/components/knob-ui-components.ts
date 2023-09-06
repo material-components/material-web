@@ -106,7 +106,7 @@ export class KnobColorSelector extends LitElement {
 
   private internalValue = '';
 
-  @property({type: Boolean}) hasAlpha = false;
+  @property({type: Boolean}) accessor hasAlpha = false;
 
   set value(val: string) {
     const oldVal = this.internalValue;

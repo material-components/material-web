@@ -44,26 +44,26 @@ export class Tabs extends LitElement {
   /**
    * Index of the selected item.
    */
-  @property({type: Number}) selected = 0;
+  @property({type: Number}) accessor selected = 0;
 
   /**
    * Whether or not to select an item when focused.
    */
   @property({type: Boolean, attribute: 'select-on-focus'})
-  selectOnFocus = false;
+  accessor selectOnFocus = false;
 
   private previousSelected = -1;
   private readonly scrollMargin = 48;
 
   @queryAssignedElements({flatten: true})
-  private readonly maybeTabItems!: HTMLElement[];
+  private accessor maybeTabItems!: HTMLElement[];
   private get items(): Tab[] {
     return this.maybeTabItems.filter(isTab);
   }
 
   // this tracks if items have changed, which triggers rendering so they can
   // be kept in sync
-  @state() private itemsDirty = false;
+  @state() private accessor itemsDirty = false;
 
   /**
    * The item currently selected.
@@ -87,7 +87,7 @@ export class Tabs extends LitElement {
   }
 
   private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   constructor() {
     super();

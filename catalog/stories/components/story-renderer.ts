@@ -23,7 +23,7 @@ export class StoryRenderer extends LitElement {
       }
     `,
   ];
-  @property({attribute: false}) story?: Story = undefined;
+  @property({attribute: false}) accessor story?: Story = undefined;
   private storyRenderComplete: Promise<void>|undefined = undefined;
 
   override updated(propertiesChanged: PropertyValues) {

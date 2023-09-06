@@ -15,29 +15,29 @@ import {SurfacePositionTarget} from '../../menu/internal/surfacePositionControll
  * A field component.
  */
 export class Field extends LitElement implements SurfacePositionTarget {
-  @property({type: Boolean}) disabled = false;
-  @property({type: Boolean}) error = false;
-  @property({type: Boolean}) focused = false;
-  @property() label = '';
-  @property({type: Boolean}) populated = false;
-  @property({type: Boolean}) required = false;
-  @property({attribute: 'supporting-text'}) supportingText = '';
-  @property({attribute: 'error-text'}) errorText = '';
-  @property({type: Number}) count = -1;
-  @property({type: Number}) max = -1;
+  @property({type: Boolean}) accessor disabled = false;
+  @property({type: Boolean}) accessor error = false;
+  @property({type: Boolean}) accessor focused = false;
+  @property() accessor label = '';
+  @property({type: Boolean}) accessor populated = false;
+  @property({type: Boolean}) accessor required = false;
+  @property({attribute: 'supporting-text'}) accessor supportingText = '';
+  @property({attribute: 'error-text'}) accessor errorText = '';
+  @property({type: Number}) accessor count = -1;
+  @property({type: Number}) accessor max = -1;
 
   /**
    * Whether or not the field has leading content.
    */
-  @property({type: Boolean, attribute: 'has-start'}) hasStart = false;
+  @property({type: Boolean, attribute: 'has-start'}) accessor hasStart = false;
 
   /**
    * Whether or not the field has trailing content.
    */
-  @property({type: Boolean, attribute: 'has-end'}) hasEnd = false;
+  @property({type: Boolean, attribute: 'has-end'}) accessor hasEnd = false;
 
   @queryAssignedElements({slot: 'aria-describedby'})
-  private readonly slottedAriaDescribedBy!: HTMLElement[];
+  private accessor slottedAriaDescribedBy!: HTMLElement[];
 
   private get counterText() {
     if (this.count < 0 || this.max < 0) {
@@ -51,17 +51,20 @@ export class Field extends LitElement implements SurfacePositionTarget {
     return this.error && this.errorText ? this.errorText : this.supportingText;
   }
 
-  @state() private isAnimating = false;
+  @state() private accessor isAnimating = false;
   private labelAnimation?: Animation;
   /**
    * When set to true, the error text's `role="alert"` will be removed, then
    * re-added after an animation frame. This will re-announce an error message
    * to screen readers.
    */
-  @state() private refreshErrorAlert = false;
-  @query('.label.floating') private readonly floatingLabelEl!: HTMLElement|null;
-  @query('.label.resting') private readonly restingLabelEl!: HTMLElement|null;
-  @query('.container') private readonly containerEl!: HTMLElement|null;
+  @state() private accessor refreshErrorAlert = false;
+  @query('.label.floating')
+  private accessor floatingLabelEl!: HTMLElement|null;
+  @query('.label.resting')
+  private accessor restingLabelEl!: HTMLElement|null;
+  @query('.container')
+  private accessor containerEl!: HTMLElement|null;
 
   /**
    * Re-announces the field's error supporting text to screen readers.

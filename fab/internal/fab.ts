@@ -18,7 +18,7 @@ export class Fab extends SharedFab {
   /**
    * The FAB color variant to render.
    */
-  @property() variant: FabVariant = 'surface';
+  @property() accessor variant: FabVariant = 'surface';
 
   override getRenderClasses() {
     return {

@@ -14,7 +14,7 @@ export class ListItemOnly extends ListItemEl {
   /**
    * Removes the hover and click ripples from the item when true.
    */
-  @property({type: Boolean}) noninteractive = false;
+  @property({type: Boolean}) accessor noninteractive = false;
 
   override getRenderClasses() {
     return {

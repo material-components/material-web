@@ -40,96 +40,96 @@ export class Slider extends LitElement {
   /**
    * Whether or not the slider is disabled.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
 
   /**
    * The slider minimum value
    */
-  @property({type: Number}) min = 0;
+  @property({type: Number}) accessor min = 0;
 
   /**
    * The slider maximum value
    */
-  @property({type: Number}) max = 100;
+  @property({type: Number}) accessor max = 100;
 
   /**
    * The slider value displayed when range is false.
    */
-  @property({type: Number}) value?: number;
+  @property({type: Number}) accessor value: number|undefined;
 
   /**
    * The slider start value displayed when range is true.
    */
-  @property({type: Number, attribute: 'value-start'}) valueStart?: number;
+  @property({type: Number, attribute: 'value-start'}) accessor valueStart: number|undefined;
 
   /**
    * The slider end value displayed when range is true.
    */
-  @property({type: Number, attribute: 'value-end'}) valueEnd?: number;
+  @property({type: Number, attribute: 'value-end'}) accessor valueEnd: number|undefined;
 
   /**
    * An optional label for the slider's value displayed when range is
    * false; if not set, the label is the value itself.
    */
-  @property({attribute: 'value-label'}) valueLabel = '';
+  @property({attribute: 'value-label'}) accessor valueLabel = '';
 
   /**
    * An optional label for the slider's start value displayed when
    * range is true; if not set, the label is the valueStart itself.
    */
-  @property({attribute: 'value-label-start'}) valueLabelStart = '';
+  @property({attribute: 'value-label-start'}) accessor valueLabelStart = '';
 
   /**
    * An optional label for the slider's end value displayed when
    * range is true; if not set, the label is the valueEnd itself.
    */
-  @property({attribute: 'value-label-end'}) valueLabelEnd = '';
+  @property({attribute: 'value-label-end'}) accessor valueLabelEnd = '';
 
   /**
    * Aria label for the slider's start handle displayed when
    * range is true.
    */
-  @property({attribute: 'aria-label-start'}) ariaLabelStart = '';
+  @property({attribute: 'aria-label-start'}) accessor ariaLabelStart = '';
 
   /**
    * Aria value text for the slider's start value displayed when
    * range is true.
    */
-  @property({attribute: 'aria-valuetext-start'}) ariaValueTextStart = '';
+  @property({attribute: 'aria-valuetext-start'}) accessor ariaValueTextStart = '';
 
   /**
    * Aria label for the slider's end handle displayed when
    * range is true.
    */
-  @property({attribute: 'aria-label-end'}) ariaLabelEnd = '';
+  @property({attribute: 'aria-label-end'}) accessor ariaLabelEnd = '';
 
   /**
    * Aria value text for the slider's end value displayed when
    * range is true.
    */
-  @property({attribute: 'aria-valuetext-end'}) ariaValueTextEnd = '';
+  @property({attribute: 'aria-valuetext-end'}) accessor ariaValueTextEnd = '';
 
   /**
    * The step between values.
    */
-  @property({type: Number}) step = 1;
+  @property({type: Number}) accessor step = 1;
 
   /**
    * Whether or not to show tick marks.
    */
-  @property({type: Boolean}) ticks = false;
+  @property({type: Boolean}) accessor ticks = false;
 
   /**
    * Whether or not to show a value label when activated.
    */
-  @property({type: Boolean}) labeled = false;
+  @property({type: Boolean}) accessor labeled = false;
 
   /**
    * Whether or not to show a value range. When false, the slider displays
    * a slideable handle for the value property; when true, it displays
    * slideable handles for the valueStart and valueEnd properties.
    */
-  @property({type: Boolean}) range = false;
+  @property({type: Boolean}) accessor range = false;
 
   /**
    * The HTML name to use in form submission.
@@ -179,28 +179,32 @@ export class Slider extends LitElement {
     return this.internals.labels;
   }
 
-  @query('input.start') private readonly inputStart!: HTMLInputElement|null;
-  @query('.handle.start') private readonly handleStart!: HTMLDivElement|null;
+  @query('input.start')
+  private accessor inputStart!: HTMLInputElement|null;
+  @query('.handle.start')
+  private accessor handleStart!: HTMLDivElement|null;
   @queryAsync('md-ripple.start')
-  private readonly rippleStart!: Promise<MdRipple|null>;
+  private accessor rippleStart!: Promise<MdRipple|null>;
 
-  @query('input.end') private readonly inputEnd!: HTMLInputElement|null;
-  @query('.handle.end') private readonly handleEnd!: HTMLDivElement|null;
+  @query('input.end')
+  private accessor inputEnd!: HTMLInputElement|null;
+  @query('.handle.end')
+  private accessor handleEnd!: HTMLDivElement|null;
   @queryAsync('md-ripple.end')
-  private readonly rippleEnd!: Promise<MdRipple|null>;
+  private accessor rippleEnd!: Promise<MdRipple|null>;
 
 
   // handle hover/pressed states are set manually since the handle
   // does not receive pointer events so that the native inputs are
   // interaction targets.
-  @state() private handleStartHover = false;
-  @state() private handleEndHover = false;
+  @state() private accessor handleStartHover = false;
+  @state() private accessor handleEndHover = false;
 
-  @state() private startOnTop = false;
-  @state() private handlesOverlapping = false;
+  @state() private accessor startOnTop = false;
+  @state() private accessor handlesOverlapping = false;
 
-  @state() private renderValueStart?: number;
-  @state() private renderValueEnd?: number;
+  @state() private accessor renderValueStart: number|undefined;
+  @state() private accessor renderValueEnd: number|undefined;
 
   // Note: start aria-* properties are only applied when range=true, which is
   // why they do not need to handle both cases.
@@ -250,7 +254,7 @@ export class Slider extends LitElement {
   private action?: Action;
 
   private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   constructor() {
     super();

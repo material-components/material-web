@@ -67,9 +67,12 @@ export abstract class Menu extends LitElement {
     requestUpdateOnAriaChange(Menu);
   }
 
-  @query('md-list') private readonly listElement!: List|null;
-  @query('.menu') private readonly surfaceEl!: HTMLElement|null;
-  @query('slot') private readonly slotEl!: HTMLSlotElement|null;
+  @query('md-list')
+  private accessor listElement!: List|null;
+  @query('.menu')
+  private accessor surfaceEl!: HTMLElement|null;
+  @query('slot')
+  private accessor slotEl!: HTMLSlotElement|null;
 
   /**
    * The ID of the element in the same root node in which the menu should align
@@ -78,7 +81,7 @@ export abstract class Menu extends LitElement {
    * __NOTE__: anchor or anchorElement must either be an HTMLElement or resolve
    * to an HTMLElement in order for menu to open.
    */
-  @property() anchor = '';
+  @property() accessor anchor = '';
   /**
    * Makes the element use `position:fixed` instead of `position:absolute`. In
    * most cases, the menu should position itself above most other
@@ -88,11 +91,11 @@ export abstract class Menu extends LitElement {
    * __NOTE__: Fixed menus will not scroll with the page and will be fixed to
    * the window instead.
    */
-  @property({type: Boolean}) fixed = false;
+  @property({type: Boolean}) accessor fixed = false;
   /**
    * Skips the opening and closing animations.
    */
-  @property({type: Boolean}) quick = false;
+  @property({type: Boolean}) accessor quick = false;
   /**
    * Displays overflow content like a submenu.
    *
@@ -100,12 +103,12 @@ export abstract class Menu extends LitElement {
    * `md-menu {max-height:...}`
    * and have items overflowing items in the "y" direction.
    */
-  @property({type: Boolean, attribute: 'has-overflow'}) hasOverflow = false;
+  @property({type: Boolean, attribute: 'has-overflow'}) accessor hasOverflow = false;
   /**
    * Opens the menu and makes it visible. Alternative to the `.show()` and
    * `.close()` methods
    */
-  @property({type: Boolean, reflect: true}) open = false;
+  @property({type: Boolean, reflect: true}) accessor open = false;
   /**
    * Offsets the menu's inline alignment from the anchor by the given number in
    * pixels. This value is direction aware and will follow the LTR / RTL
@@ -114,38 +117,38 @@ export abstract class Menu extends LitElement {
    * e.g. LTR: positive -> right, negative -> left
    *      RTL: positive -> left, negative -> right
    */
-  @property({type: Number, attribute: 'x-offset'}) xOffset = 0;
+  @property({type: Number, attribute: 'x-offset'}) accessor xOffset = 0;
   /**
    * Offsets the menu's block alignment from the anchor by the given number in
    * pixels.
    *
    * e.g. positive -> down, negative -> up
    */
-  @property({type: Number, attribute: 'y-offset'}) yOffset = 0;
+  @property({type: Number, attribute: 'y-offset'}) accessor yOffset = 0;
   /**
    * The tabindex of the underlying list element.
    */
-  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tabindex'}) accessor listTabIndex = 0;
   /**
    * The role of the underlying list element.
    */
-  @property() type: 'menu'|'menubar'|'listbox'|'list' = 'menu';
+  @property() accessor type: 'menu'|'menubar'|'listbox'|'list' = 'menu';
   /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.
    */
   @property({type: Number, attribute: 'typeahead-delay'})
-  typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
+  accessor typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
   /**
    * The corner of the anchor which to align the menu in the standard logical
    * property style of <block>_<inline>.
    */
-  @property({attribute: 'anchor-corner'}) anchorCorner: Corner = 'END_START';
+  @property({attribute: 'anchor-corner'}) accessor anchorCorner: Corner = 'END_START';
   /**
    * The corner of the menu which to align the anchor in the standard logical
    * property style of <block>_<inline>.
    */
-  @property({attribute: 'menu-corner'}) menuCorner: Corner = 'START_START';
+  @property({attribute: 'menu-corner'}) accessor menuCorner: Corner = 'START_START';
   /**
    * Keeps the user clicks outside the menu.
    *
@@ -153,7 +156,7 @@ export abstract class Menu extends LitElement {
    * `stayOpenOnFocusout`.
    */
   @property({type: Boolean, attribute: 'stay-open-on-outside-click'})
-  stayOpenOnOutsideClick = false;
+  accessor stayOpenOnOutsideClick = false;
   /**
    * Keeps the menu open when focus leaves the menu's composed subtree.
    *
@@ -161,20 +164,20 @@ export abstract class Menu extends LitElement {
    * this property to true to opt-out of menu's focuout handling altogether.
    */
   @property({type: Boolean, attribute: 'stay-open-on-focusout'})
-  stayOpenOnFocusout = false;
+  accessor stayOpenOnFocusout = false;
   /**
    * After closing, does not restore focus to the last focused element before
    * the menu was opened.
    */
   @property({type: Boolean, attribute: 'skip-restore-focus'})
-  skipRestoreFocus = false;
+  accessor skipRestoreFocus = false;
   /**
    * The element that should be focused by default once opened.
    */
   @property({attribute: 'default-focus'})
-  defaultFocus: DefaultFocusState = 'LIST_ROOT';
+  accessor defaultFocus: DefaultFocusState = 'LIST_ROOT';
 
-  @state() private typeaheadActive = true;
+  @state() private accessor typeaheadActive = true;
 
   private readonly openCloseAnimationSignal = createAnimationSignal();
 

@@ -17,7 +17,7 @@ export class LinearProgress extends Progress {
   /**
    * Buffer amount to display, a fraction between 0 and 1.
    */
-  @property({type: Number}) buffer = 1;
+  @property({type: Number}) accessor buffer = 1;
 
   // Note, the indeterminate animation is rendered with transform %'s
   // Previously, this was optimized to use px calculated with the resizeObserver

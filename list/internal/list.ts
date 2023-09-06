@@ -46,14 +46,14 @@ export class List extends LitElement {
   static override shadowRootOptions:
       ShadowRootInit = {mode: 'open', delegatesFocus: true};
 
-  @property() type: 'menu'|'menubar'|'listbox'|'list'|'' = 'list';
+  @property() accessor type: 'menu'|'menubar'|'listbox'|'list'|'' = 'list';
 
   /**
    * The tabindex of the underlying list.
    */
-  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tabindex'}) accessor listTabIndex = 0;
 
-  @query('.list') private listRoot!: HTMLElement|null;
+  @query('.list') private accessor listRoot!: HTMLElement|null;
 
   /**
    * An array of activatable and disableable list items. Queries every assigned
@@ -64,7 +64,7 @@ export class List extends LitElement {
    * children / directly slotted elements.
    */
   @queryAssignedElements({flatten: true, selector: '[md-list-item]'})
-  items!: ListItem[];
+  accessor items!: ListItem[];
 
   protected override render() {
     return this.renderList();

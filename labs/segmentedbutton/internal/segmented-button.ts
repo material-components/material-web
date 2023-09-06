@@ -25,15 +25,15 @@ export class SegmentedButton extends LitElement {
     requestUpdateOnAriaChange(SegmentedButton);
   }
 
-  @property({type: Boolean}) disabled = false;
-  @property({type: Boolean}) selected = false;
-  @property() label = '';
-  @property({type: Boolean, attribute: 'no-checkmark'}) noCheckmark = false;
-  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
+  @property({type: Boolean}) accessor disabled = false;
+  @property({type: Boolean}) accessor selected = false;
+  @property() accessor label = '';
+  @property({type: Boolean, attribute: 'no-checkmark'}) accessor noCheckmark = false;
+  @property({type: Boolean, attribute: 'has-icon'}) accessor hasIcon = false;
 
-  @state() private animState = '';
+  @state() private accessor animState = '';
   @queryAssignedElements({slot: 'icon', flatten: true})
-  private readonly iconElement!: HTMLElement[];
+  private accessor iconElement!: HTMLElement[];
 
   protected override update(props: PropertyValues<SegmentedButton>) {
     this.animState = this.nextAnimationState(props);

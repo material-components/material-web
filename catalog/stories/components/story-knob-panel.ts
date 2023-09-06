@@ -29,13 +29,13 @@ export const DEFAULT_DIMENSIONS = {
  */
 @customElement('story-knob-panel')
 export class StoryKnobPanel extends LitElement {
-  @query('.dragBar') dragBar!: HTMLElement|null;
+  @query('.dragBar') accessor dragBar!: HTMLElement|null;
 
-  @property({type: Boolean}) showCloseIcon = true;
-  @property({type: Boolean, reflect: true}) open = false;
-  @property({type: Boolean, reflect: true}) override draggable = false;
-  @property({type: Boolean}) hideDragIcon = false;
-  @property({type: String, reflect: true}) type: 'modal'|'inline' = 'inline';
+  @property({type: Boolean}) accessor showCloseIcon = true;
+  @property({type: Boolean, reflect: true}) accessor open = false;
+  @property({type: Boolean, reflect: true}) override accessor draggable = false;
+  @property({type: Boolean}) accessor hideDragIcon = false;
+  @property({type: String, reflect: true}) accessor type: 'modal'|'inline' = 'inline';
   private isDragging = false;
   private previousX = 0;
   private currentX = 0;

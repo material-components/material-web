@@ -32,7 +32,7 @@ export class ThemeChanger extends LitElement {
   /**
    * The currently selected color mode.
    */
-  @state() selectedColorMode: ColorMode|null = null;
+  @state() accessor selectedColorMode: ColorMode|null = null;
 
   /**
    * The currently selected hex color.
@@ -40,25 +40,25 @@ export class ThemeChanger extends LitElement {
    * NOTE: Hex colors are in the srgb color space and HCT has a much larger, so
    * this value is a clipped value of HCT.
    */
-  @state() hexColor = '';
+  @state() accessor hexColor = '';
 
   /**
    * The current hue value of the hue slider.
    */
-  @state() hue = 0;
+  @state() accessor hue = 0;
 
   /**
    * The crrent value of the chroma slider.
    */
-  @state() chroma = 0;
+  @state() accessor chroma = 0;
 
   /**
    * The current value of the tone slider.
    */
-  @state() tone = 0;
+  @state() accessor tone = 0;
 
-  @query('input') private inputEl!: HTMLInputElement;
-  @queryAll('hct-slider') private sliders!: NodeListOf<HCTSlider>;
+  @query('input') private accessor inputEl!: HTMLInputElement;
+  @queryAll('hct-slider') private accessor sliders!: NodeListOf<HCTSlider>;
 
   render() {
     return html`

@@ -34,26 +34,26 @@ export class CopyCodeButton extends LitElement {
 
   private timeoutId: number|undefined;
 
-  @state() private showCheckmark = false;
+  @state() private accessor showCheckmark = false;
 
   /**
    * The aria label for the copy button when it has not been clicked.
    */
-  @property() label = 'Copy code';
+  @property() accessor label = 'Copy code';
 
   /**
    * The aria label for the copy button when it has been clicked and the copy is
    * successul.
    */
-  @property({attribute: 'success-label'}) successLabel = 'Copy successful';
+  @property({attribute: 'success-label'}) accessor successLabel = 'Copy successful';
 
   /**
    * The title to be set on the copy button.
    */
-  @property({attribute: 'button-title'}) buttonTitle = 'Copy code';
+  @property({attribute: 'button-title'}) accessor buttonTitle = 'Copy code';
 
   @queryAssignedElements({flatten: true, selector: '*'})
-  private slottedEls!: NodeListOf<HTMLElement>;
+  private accessor slottedEls!: NodeListOf<HTMLElement>;
 
   render() {
     const label = this.showCheckmark ? this.successLabel : this.label;

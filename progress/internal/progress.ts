@@ -22,23 +22,23 @@ export abstract class Progress extends LitElement {
   /**
    * Progress to display, a fraction between 0 and `max`.
    */
-  @property({type: Number}) value = 0;
+  @property({type: Number}) accessor value = 0;
 
   /**
    * Maximum progress to display, defaults to 1.
    */
-  @property({type: Number}) max = 1;
+  @property({type: Number}) accessor max = 1;
 
   /**
    * Whether or not to display indeterminate progress, which gives no indication
    * to how long an activity will take.
    */
-  @property({type: Boolean}) indeterminate = false;
+  @property({type: Boolean}) accessor indeterminate = false;
 
   /**
    * Whether or not to render indeterminate mode using 4 colors instead of one.
    */
-  @property({type: Boolean, attribute: 'four-color'}) fourColor = false;
+  @property({type: Boolean, attribute: 'four-color'}) accessor fourColor = false;
 
   protected override render() {
     // Needed for closure conformance

@@ -30,10 +30,11 @@ export class ChipSet extends LitElement {
         (child): child is Chip => child instanceof Chip);
   }
 
-  @property() type: ChipSetType = '';
-  @property({type: Boolean, attribute: 'single-select'}) singleSelect = false;
+  @property() accessor type: ChipSetType = '';
+  @property({type: Boolean, attribute: 'single-select'}) accessor singleSelect = false;
 
-  @queryAssignedElements() private readonly childElements!: HTMLElement[];
+  @queryAssignedElements()
+  private accessor childElements!: HTMLElement[];
 
   constructor() {
     super();

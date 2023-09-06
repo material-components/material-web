@@ -30,7 +30,7 @@ class FormSubmitterButton extends LitElement {
   static formAssociated = true;
 
   type: FormSubmitterType = 'submit';
-  @property({reflect: true}) name = '';
+  @property({reflect: true}) accessor name = '';
   value = '';
 
   [internals] = this.attachInternals();

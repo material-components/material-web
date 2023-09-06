@@ -15,7 +15,7 @@ export class PrimaryTab extends Tab {
   /**
    * Whether or not the icon renders inline with label or stacked vertically.
    */
-  @property({type: Boolean, attribute: 'inline-icon'}) inlineIcon = false;
+  @property({type: Boolean, attribute: 'inline-icon'}) accessor inlineIcon = false;
 
   protected override getContentClasses() {
     return {

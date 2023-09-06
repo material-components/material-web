@@ -50,13 +50,13 @@ export abstract class TextField extends LitElement {
   /** @nocollapse  */
   static readonly formAssociated = true;
 
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
   /**
    * Gets or sets whether or not the text field is in a visually invalid state.
    *
    * Calling `reportValidity()` will automatically update `error`.
    */
-  @property({type: Boolean, reflect: true}) error = false;
+  @property({type: Boolean, reflect: true}) accessor error = false;
   /**
    * The error message that replaces supporting text when `error` is true. If
    * `errorText` is an empty string, then the supporting text will continue to
@@ -65,47 +65,47 @@ export abstract class TextField extends LitElement {
    * Calling `reportValidity()` will automatically update `errorText` to the
    * native `validationMessage`.
    */
-  @property({attribute: 'error-text'}) errorText = '';
-  @property() label = '';
-  @property({type: Boolean, reflect: true}) required = false;
+  @property({attribute: 'error-text'}) accessor errorText = '';
+  @property() accessor label = '';
+  @property({type: Boolean, reflect: true}) accessor required = false;
   /**
    * The current value of the text field. It is always a string.
    */
-  @property() value = '';
+  @property() accessor value = '';
   /**
    * An optional prefix to display before the input value.
    */
-  @property({attribute: 'prefix-text'}) prefixText = '';
+  @property({attribute: 'prefix-text'}) accessor prefixText = '';
   /**
    * An optional suffix to display after the input value.
    */
-  @property({attribute: 'suffix-text'}) suffixText = '';
+  @property({attribute: 'suffix-text'}) accessor suffixText = '';
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
   @property({type: Boolean, attribute: 'has-leading-icon'})
-  hasLeadingIcon = false;
+  accessor hasLeadingIcon = false;
   /**
    * Whether or not the text field has a trailing icon. Used for SSR.
    */
   @property({type: Boolean, attribute: 'has-trailing-icon'})
-  hasTrailingIcon = false;
+  accessor hasTrailingIcon = false;
   /**
    * Conveys additional information below the text field, such as how it should
    * be used.
    */
-  @property({attribute: 'supporting-text'}) supportingText = '';
+  @property({attribute: 'supporting-text'}) accessor supportingText = '';
   /**
    * Override the input text CSS `direction`. Useful for RTL languages that use
    * LTR notation for fractions.
    */
-  @property({attribute: 'text-direction'}) textDirection = '';
+  @property({attribute: 'text-direction'}) accessor textDirection = '';
 
   /**
    * The number of rows to display for a `type="textarea"` text field.
    * Defaults to 2.
    */
-  @property({type: Number}) rows = 2;
+  @property({type: Number}) accessor rows = 2;
 
   /**
    * The associated form element with which this element's value will submit.
@@ -132,41 +132,41 @@ export abstract class TextField extends LitElement {
   }
 
   // <input> properties
-  @property({reflect: true}) override inputMode = '';
+  @property({reflect: true}) override accessor inputMode = '';
   /**
    * Defines the greatest value in the range of permitted values.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    */
-  @property() max = '';
+  @property() accessor max = '';
   /**
    * The maximum number of characters a user can enter into the text field. Set
    * to -1 for none.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
    */
-  @property({type: Number}) maxLength = -1;
+  @property({type: Number}) accessor maxLength = -1;
   /**
    * Defines the most negative value in the range of permitted values.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
    */
-  @property() min = '';
+  @property() accessor min = '';
   /**
    * The minimum number of characters a user can enter into the text field. Set
    * to -1 for none.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
    */
-  @property({type: Number}) minLength = -1;
+  @property({type: Number}) accessor minLength = -1;
   /**
    * A regular expression that the text field's value must match to pass
    * constraint validation.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
    */
-  @property() pattern = '';
-  @property({reflect: true, converter: stringConverter}) placeholder = '';
+  @property() accessor pattern = '';
+  @property({reflect: true, converter: stringConverter}) accessor placeholder = '';
 
   /**
    * Indicates whether or not a user should be able to edit the text field's
@@ -174,7 +174,7 @@ export abstract class TextField extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
    */
-  @property({type: Boolean, reflect: true}) readOnly = false;
+  @property({type: Boolean, reflect: true}) accessor readOnly = false;
 
   /**
    * Gets or sets the direction in which selection occurred.
@@ -212,10 +212,10 @@ export abstract class TextField extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
    */
-  @property() step = '';
+  @property() accessor step = '';
 
   @property({reflect: true})
-  type: TextFieldType|UnsupportedTextFieldType = 'text';
+  accessor type: TextFieldType|UnsupportedTextFieldType = 'text';
 
   /**
    * Returns the text field's validation error message.
@@ -297,31 +297,32 @@ export abstract class TextField extends LitElement {
    * Returns true when the text field has been interacted with. Native
    * validation errors only display in response to user interactions.
    */
-  @state() private dirty = false;
-  @state() private focused = false;
+  @state() private accessor dirty = false;
+  @state() private accessor focused = false;
   /**
    * Whether or not a native error has been reported via `reportValidity()`.
    */
-  @state() private nativeError = false;
+  @state() private accessor nativeError = false;
   /**
    * The validation message displayed from a native error via
    * `reportValidity()`.
    */
-  @state() private nativeErrorText = '';
+  @state() private accessor nativeErrorText = '';
 
   private get hasError() {
     return this.error || this.nativeError;
   }
 
   @query('.input')
-  private readonly inputOrTextarea?: HTMLInputElement|HTMLTextAreaElement|null;
-  @query('.field') private readonly field?: Field|null;
+  private accessor inputOrTextarea: HTMLInputElement|HTMLTextAreaElement|null|undefined;
+  @query('.field')
+  private accessor field: Field|null|undefined;
   @queryAssignedElements({slot: 'leadingicon'})
-  private readonly leadingIcons!: Element[];
+  private accessor leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailingicon'})
-  private readonly trailingIcons!: Element[];
+  private accessor trailingIcons!: Element[];
   private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   constructor() {
     super();

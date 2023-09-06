@@ -35,25 +35,25 @@ export class Switch extends LitElement {
   /**
    * Disables the switch and makes it non-interactive.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
 
   /**
    * Puts the switch in the selected state and sets the form submission value to
    * the `value` property.
    */
-  @property({type: Boolean}) selected = false;
+  @property({type: Boolean}) accessor selected = false;
 
   /**
    * Shows both the selected and deselected icons.
    */
-  @property({type: Boolean}) icons = false;
+  @property({type: Boolean}) accessor icons = false;
 
   /**
    * Shows only the selected icon, and not the deselected icon. If `true`,
    * overrides the behavior of the `icons` property.
    */
   @property({type: Boolean, attribute: 'show-only-selected-icon'})
-  showOnlySelectedIcon = false;
+  accessor showOnlySelectedIcon = false;
 
   /**
    * When true, require the switch to be selected when participating in
@@ -61,13 +61,13 @@ export class Switch extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#validation
    */
-  @property({type: Boolean}) required = false;
+  @property({type: Boolean}) accessor required = false;
 
   /**
    * The value associated with this switch on form submission. `null` is
    * submitted when `selected` is `false`.
    */
-  @property() value = 'on';
+  @property() accessor value = 'on';
 
   /**
    * The HTML name to use in form submission.
@@ -128,9 +128,10 @@ export class Switch extends LitElement {
     return this.internals.willValidate;
   }
 
-  @query('input') private readonly input!: HTMLInputElement|null;
+  @query('input')
+  private accessor input!: HTMLInputElement|null;
   private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   constructor() {
     super();

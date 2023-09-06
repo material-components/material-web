@@ -35,19 +35,19 @@ export class Checkbox extends LitElement {
   /**
    * Whether or not the checkbox is selected.
    */
-  @property({type: Boolean}) checked = false;
+  @property({type: Boolean}) accessor checked = false;
 
   /**
    * Whether or not the checkbox is disabled.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
 
   /**
    * Whether or not the checkbox is indeterminate.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes
    */
-  @property({type: Boolean}) indeterminate = false;
+  @property({type: Boolean}) accessor indeterminate = false;
 
   /**
    * When true, require the checkbox to be selected when participating in
@@ -55,14 +55,14 @@ export class Checkbox extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#validation
    */
-  @property({type: Boolean}) required = false;
+  @property({type: Boolean}) accessor required = false;
 
   /**
    * The value of the checkbox that is submitted with a form when selected.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value
    */
-  @property() value = 'on';
+  @property() accessor value = 'on';
 
   /**
    * The HTML name to use in form submission.
@@ -123,12 +123,13 @@ export class Checkbox extends LitElement {
     return this.internals.willValidate;
   }
 
-  @state() private prevChecked = false;
-  @state() private prevDisabled = false;
-  @state() private prevIndeterminate = false;
-  @query('input') private readonly input!: HTMLInputElement|null;
+  @state() private accessor prevChecked = false;
+  @state() private accessor prevDisabled = false;
+  @state() private accessor prevIndeterminate = false;
+  @query('input')
+  private accessor input!: HTMLInputElement|null;
   private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   constructor() {
     super();

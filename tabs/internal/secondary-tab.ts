@@ -10,5 +10,5 @@ import {Tab} from './tab.js';
  * A secondary tab component.
  */
 export class SecondaryTab extends Tab {
-  protected override fullWidthIndicator = true;
+  protected override accessor fullWidthIndicator = true;
 }

@@ -27,8 +27,8 @@ export abstract class Chip extends LitElement {
     delegatesFocus: true
   };
 
-  @property({type: Boolean}) disabled = false;
-  @property() label = '';
+  @property({type: Boolean}) accessor disabled = false;
+  @property() accessor label = '';
 
   /**
    * The `id` of the action the primary focus ring and ripple are for.

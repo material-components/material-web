@@ -14,17 +14,17 @@ export class Divider extends LitElement {
   /**
    * Indents the divider with equal padding on both sides.
    */
-  @property({type: Boolean, reflect: true}) inset = false;
+  @property({type: Boolean, reflect: true}) accessor inset = false;
 
   /**
    * Indents the divider with padding on the leading side.
    */
   @property({type: Boolean, reflect: true, attribute: 'inset-start'})
-  insetStart = false;
+  accessor insetStart = false;
 
   /**
    * Indents the divider with padding on the trailing side.
    */
   @property({type: Boolean, reflect: true, attribute: 'inset-end'})
-  insetEnd = false;
+  accessor insetEnd = false;
 }

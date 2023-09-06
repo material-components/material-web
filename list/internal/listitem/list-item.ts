@@ -40,32 +40,32 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * The primary, headline text of the list item.
    */
-  @property() headline = '';
+  @property() accessor headline = '';
 
   /**
    * The one-line supporting text below the headline. Set
    * `multiLineSupportingText` to `true` to support multiple lines in the
    * supporting text.
    */
-  @property({attribute: 'supporting-text'}) supportingText = '';
+  @property({attribute: 'supporting-text'}) accessor supportingText = '';
 
   /**
    * Modifies `supportingText` to support multiple lines.
    */
   @property({type: Boolean, attribute: 'multi-line-supporting-text'})
-  multiLineSupportingText = false;
+  accessor multiLineSupportingText = false;
 
   /**
    * The supporting text placed at the end of the item. Overridden by elements
    * slotted into the `end` slot.
    */
   @property({attribute: 'trailing-supporting-text'})
-  trailingSupportingText = '';
+  accessor trailingSupportingText = '';
 
   /**
    * Disables the item and makes it non-selectable and non-interactive.
    */
-  @property({type: Boolean}) disabled = false;
+  @property({type: Boolean}) accessor disabled = false;
 
   /**
    * The tabindex of the underlying item.
@@ -73,40 +73,41 @@ export class ListItemEl extends LitElement implements ListItem {
    * __NOTE:__ this is overridden by the keyboard behavior of `md-list` and by
    * setting `selected`.
    */
-  @property({type: Number, attribute: 'item-tabindex'}) itemTabIndex = -1;
+  @property({type: Number, attribute: 'item-tabindex'}) accessor itemTabIndex = -1;
 
   /**
    * Whether or not the element is actively being interacted with by md-list.
    * When active, tabindex is set to 0, and in some list item variants (like
    * md-list-item), focuses the underlying item.
    */
-  @property({type: Boolean, reflect: true}) active = false;
+  @property({type: Boolean, reflect: true}) accessor active = false;
 
   /**
    * Sets the role of the list item. Set to 'nothing' to clear the role. This
    * property will be ignored if `href` is set since the underlying element will
    * be a native anchor tag.
    */
-  @property() type: ListItemRole = 'listitem';
+  @property() accessor type: ListItemRole = 'listitem';
 
   /**
    * READONLY. Sets the `md-list-item` attribute on the element.
    */
   @property({type: Boolean, attribute: 'md-list-item', reflect: true})
-  isListItem = true;
+  accessor isListItem = true;
 
   /**
    * Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
    */
-  @property() href = '';
+  @property() accessor href = '';
 
   /**
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is
    * set.
    */
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property() accessor target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
-  @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
+  @query('.list-item')
+  protected accessor listItemRoot!: HTMLElement|null;
 
   /**
    * Only meant to be overridden by subclassing and not by the user. This is

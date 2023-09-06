@@ -20,21 +20,22 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
    * READONLY: self-identifies as a menu item and sets its identifying attribute
    */
   @property({type: Boolean, attribute: 'md-menu-item', reflect: true})
-  isMenuItem = true;
+  accessor isMenuItem = true;
 
   /**
    * Keeps the menu open if clicked or keyboard selected.
    */
-  @property({type: Boolean, attribute: 'keep-open'}) keepOpen = false;
+  @property({type: Boolean, attribute: 'keep-open'}) accessor keepOpen = false;
 
-  @state() protected hasFocusRing = false;
+  @state() protected accessor hasFocusRing = false;
 
   /**
    * Used for overriding e.g. sub-menu-item.
    */
   protected keepOpenOnClick = false;
 
-  override readonly type: ListItemRole = 'menuitem';
+  @property()
+  override accessor type: ListItemRole = 'menuitem';
 
   protected override onClick() {
     if (this.keepOpen || this.keepOpenOnClick) return;

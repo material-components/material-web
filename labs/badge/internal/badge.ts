@@ -12,7 +12,7 @@ import {classMap} from 'lit/directives/class-map.js';
  * TODO(b/265340196): add docs
  */
 export class Badge extends LitElement {
-  @property() value = '';
+  @property() accessor value = '';
 
   protected override render() {
     const classes = {'md3-badge--large': this.value};

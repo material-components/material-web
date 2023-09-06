@@ -59,14 +59,14 @@ export class StoriesRenderer extends LitElement {
   ];
 
   /** If true, will not show the UI for any knobs on this collection. */
-  @property({type: Boolean}) hideKnobs: boolean = false;
+  @property({type: Boolean}) accessor hideKnobs: boolean = false;
   @property({attribute: false})
-  focusStories?: readonly Story[];
-  @property({attribute: false}) collection?: Collection;
-  @property({type: Boolean}) hideLabels = false;
-  @property({type: Boolean, reflect: true}) hasKnobs = false;
-  @state() knobsOpen = true;
-  @state() knobsPanelType: 'modal'|'inline' = 'inline';
+  accessor focusStories?: readonly Story[];
+  @property({attribute: false}) accessor collection?: Collection;
+  @property({type: Boolean}) accessor hideLabels = false;
+  @property({type: Boolean, reflect: true}) accessor hasKnobs = false;
+  @state() accessor knobsOpen = true;
+  @state() accessor knobsPanelType: 'modal'|'inline' = 'inline';
 
   private observedKnobs: undefined|KnobValues<PolymorphicArrayOfKnobs> =
       undefined;

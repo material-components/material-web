@@ -16,7 +16,6 @@ import {FilterChip} from './filter-chip.js';
 
 @customElement('test-filter-chip')
 class TestFilterChip extends FilterChip {
-  declare primaryAction: HTMLElement;
 }
 
 describe('Filter chip', () => {

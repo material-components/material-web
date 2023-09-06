@@ -25,15 +25,15 @@ export class NavigationTab extends LitElement implements NavigationTabState {
     requestUpdateOnAriaChange(NavigationTab);
   }
 
-  @property({type: Boolean}) disabled = false;
-  @property({type: Boolean, reflect: true}) active = false;
+  @property({type: Boolean}) accessor disabled = false;
+  @property({type: Boolean, reflect: true}) accessor active = false;
   @property({type: Boolean, attribute: 'hide-inactive-label'})
-  hideInactiveLabel = false;
-  @property() label?: string;
-  @property({attribute: 'badge-value'}) badgeValue = '';
-  @property({type: Boolean, attribute: 'show-badge'}) showBadge = false;
+  accessor hideInactiveLabel = false;
+  @property() accessor label: string | undefined;
+  @property({attribute: 'badge-value'}) accessor badgeValue = '';
+  @property({type: Boolean, attribute: 'show-badge'}) accessor showBadge = false;
 
-  @query('button') buttonElement!: HTMLElement|null;
+  @query('button') accessor buttonElement!: HTMLElement|null;
 
   protected override render() {
     // Needed for closure conformance

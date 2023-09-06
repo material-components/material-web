@@ -21,14 +21,15 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
   /**
    * Form value of the option.
    */
-  @property() value = '';
+  @property() accessor value = '';
 
   /**
    * Whether or not this option is selected.
    */
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) accessor selected = false;
 
-  override readonly type: ListItemRole = 'option';
+  @property()
+  override accessor type: ListItemRole = 'option';
 
   override willUpdate(changed: PropertyValues<this>) {
     if (changed.has('selected')) {

@@ -17,9 +17,9 @@ import {Chip, renderGridAction, renderGridContainer} from './chip.js';
  * An assist chip component.
  */
 export class AssistChip extends Chip {
-  @property({type: Boolean}) elevated = false;
-  @property() href = '';
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property({type: Boolean}) accessor elevated = false;
+  @property() accessor href = '';
+  @property() accessor target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
   protected get primaryId() {
     return this.href ? 'link' : 'button';

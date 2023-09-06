@@ -37,45 +37,45 @@ export class IconButton extends LitElement implements FormSubmitter {
   /**
    * Disables the icon button and makes it non-interactive.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
 
   /**
    * Flips the icon if it is in an RTL context at startup.
    */
   @property({type: Boolean, attribute: 'flip-icon-in-rtl'})
-  flipIconInRtl = false;
+  accessor flipIconInRtl = false;
 
   /**
    * Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
    */
-  @property() href = '';
+  @property() accessor href = '';
 
   /**
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute.
    */
-  @property() target: LinkTarget|'' = '';
+  @property() accessor target: LinkTarget|'' = '';
 
   /**
    * The `aria-label` of the button when the button is toggleable and selected.
    */
-  @property({attribute: 'aria-label-selected'}) ariaLabelSelected = '';
+  @property({attribute: 'aria-label-selected'}) accessor ariaLabelSelected = '';
 
   /**
    * When true, the button will toggle between selected and unselected
    * states
    */
-  @property({type: Boolean}) toggle = false;
+  @property({type: Boolean}) accessor toggle = false;
 
   /**
    * Sets the selected state. When false, displays the default icon. When true,
    * displays the `selectedIcon`, or the default icon If no `selectedIcon` is
    * provided.
    */
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) accessor selected = false;
 
-  @property() type: FormSubmitterType = 'submit';
+  @property() accessor type: FormSubmitterType = 'submit';
 
-  @property() value = '';
+  @property() accessor value = '';
 
   get name() {
     return this.getAttribute('name') ?? '';
@@ -98,11 +98,11 @@ export class IconButton extends LitElement implements FormSubmitter {
     return this[internals].labels;
   }
 
-  @state() private flipIcon = isRtl(this, this.flipIconInRtl);
+  @state() private accessor flipIcon = isRtl(this, this.flipIconInRtl);
 
   /** @private */
   [internals] =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   /**
    * Link buttons cannot be disabled.

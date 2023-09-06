@@ -33,29 +33,29 @@ export class SubMenuItem extends MenuItemEl {
   /**
    * The anchorCorner to set on the submenu.
    */
-  @property({attribute: 'anchor-corner'}) anchorCorner: Corner = 'START_END';
+  @property({attribute: 'anchor-corner'}) accessor anchorCorner: Corner = 'START_END';
   /**
    * The menuCorner to set on the submenu.
    */
-  @property({attribute: 'menu-corner'}) menuCorner: Corner = 'START_START';
+  @property({attribute: 'menu-corner'}) accessor menuCorner: Corner = 'START_START';
   /**
    * The delay between pointerenter and submenu opening.
    */
-  @property({type: Number, attribute: 'hover-open-delay'}) hoverOpenDelay = 400;
+  @property({type: Number, attribute: 'hover-open-delay'}) accessor hoverOpenDelay = 400;
   /**
    * The delay between ponterleave and the submenu closing.
    */
   @property({type: Number, attribute: 'hover-close-delay'})
-  hoverCloseDelay = 400;
+  accessor hoverCloseDelay = 400;
   /**
    * Sets the item in the selected visual state when a submenu is opened.
    */
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) accessor selected = false;
 
-  @state() protected submenuHover = false;
+  @state() protected accessor submenuHover = false;
 
   @queryAssignedElements({slot: 'submenu', flatten: true})
-  private readonly menus!: Menu[];
+  private accessor menus!: Menu[];
 
   protected override keepOpenOnClick = true;
   private previousOpenTimeout = 0;

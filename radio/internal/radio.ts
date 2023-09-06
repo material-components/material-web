@@ -32,10 +32,10 @@ export class Radio extends LitElement {
   /**
    * Whether or not the radio is selected.
    */
-  @property({type: Boolean})
   get checked() {
     return this[CHECKED];
   }
+  @property({type: Boolean})
   set checked(checked: boolean) {
     const wasChecked = this.checked;
     if (wasChecked === checked) {
@@ -54,12 +54,12 @@ export class Radio extends LitElement {
   /**
    * Whether or not the radio is disabled.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
 
   /**
    * The element value to use in form submission when checked.
    */
-  @property() value = 'on';
+  @property() accessor value = 'on';
 
   /**
    * The HTML name to use in form submission.
@@ -87,7 +87,7 @@ export class Radio extends LitElement {
 
   private readonly selectionController = new SingleSelectionController(this);
   private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   constructor() {
     super();

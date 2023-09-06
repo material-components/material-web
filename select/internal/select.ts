@@ -37,15 +37,15 @@ export abstract class Select extends LitElement {
   /**
    * Opens the menu synchronously with no animation.
    */
-  @property({type: Boolean}) quick = false;
+  @property({type: Boolean}) accessor quick = false;
   /**
    * Whether or not the select is required.
    */
-  @property({type: Boolean}) required = false;
+  @property({type: Boolean}) accessor required = false;
   /**
    * Disables the select.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
   /**
    * The error message that replaces supporting text when `error` is true. If
    * `errorText` is an empty string, then the supporting text will continue to
@@ -54,49 +54,51 @@ export abstract class Select extends LitElement {
    * Calling `reportValidity()` will automatically update `errorText` to the
    * native `validationMessage`.
    */
-  @property({type: String, attribute: 'error-text'}) errorText = '';
+  @property({type: String, attribute: 'error-text'}) accessor errorText = '';
   /**
    * The floating label for the field.
    */
-  @property() label = '';
+  @property() accessor label = '';
   /**
    * Conveys additional information below the text field, such as how it should
    * be used.
    */
-  @property({type: String, attribute: 'supporting-text'}) supportingText = '';
+  @property({type: String, attribute: 'supporting-text'}) accessor supportingText = '';
   /**
    * Gets or sets whether or not the text field is in a visually invalid state.
    *
    * Calling `reportValidity()` will automatically update `error`.
    */
-  @property({type: Boolean, reflect: true}) error = false;
+  @property({type: Boolean, reflect: true}) accessor error = false;
   /**
    * Whether or not the underlying md-menu should be position: fixed to display
    * in a top-level manner.
    */
-  @property({type: Boolean, attribute: 'menu-fixed'}) menuFixed = false;
+  @property({type: Boolean, attribute: 'menu-fixed'}) accessor menuFixed = false;
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
    * before it clears the typeahead buffer.
    */
   @property({type: Number, attribute: 'typeahead-delay'})
-  typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
+  accessor typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
   @property({type: Boolean, attribute: 'has-leading-icon'})
-  hasLeadingIcon = false;
+  accessor hasLeadingIcon = false;
   /**
    * Text to display in the field. Only set for SSR.
    */
-  @property({attribute: 'display-text'}) displayText = '';
+  @property({attribute: 'display-text'}) accessor displayText = '';
 
-  @state() private focused = false;
-  @state() private open = false;
-  @query('md-menu') private readonly menu!: Menu|null;
-  @query('#label') private readonly labelEl!: HTMLElement;
+  @state() private accessor focused = false;
+  @state() private accessor open = false;
+  @query('md-menu')
+  private accessor menu!: Menu|null;
+  @query('#label')
+  private accessor labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leadingicon', flatten: true})
-  private readonly leadingIcons!: Element[];
+  private accessor leadingIcons!: Element[];
 
   /**
    * The value of the currently selected option.
@@ -104,11 +106,11 @@ export abstract class Select extends LitElement {
    * Note: For SSR, set `[selected]` on the requested option and `displayText`
    * rather than setting `value` setting `value` will incur a DOM query.
    */
-  @property()
   get value(): string {
     return this[VALUE];
   }
 
+  @property()
   set value(value: string) {
     this.lastUserSetValue = value;
     this.select(value);
@@ -128,13 +130,13 @@ export abstract class Select extends LitElement {
    * rather than setting `selectedIndex` setting `selectedIndex` will incur a
    * DOM query.
    */
-  @property({type: Number, attribute: 'selected-index'})
   get selectedIndex(): number {
     // tslint:disable-next-line:enforce-name-casing
     const [_option, index] = (this.getSelectedOptions() ?? [])[0] ?? [];
     return index ?? -1;
   }
 
+  @property({type: Number, attribute: 'selected-index'})
   set selectedIndex(index: number) {
     this.lastUserSetSelectedIndex = index;
     this.selectIndex(index);

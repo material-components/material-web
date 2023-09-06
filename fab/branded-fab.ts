@@ -6,7 +6,7 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {Fab, FabVariant} from './internal/fab.js';
+import {Fab} from './internal/fab.js';
 import {styles} from './internal/fab-branded-styles.css.js';
 import {styles as forcedColors} from './internal/forced-colors-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
@@ -52,7 +52,6 @@ export class MdBrandedFab extends Fab {
   /**
    * Branded FABs have no variants
    */
-  override variant!: FabVariant;
 
   override getRenderClasses() {
     return {

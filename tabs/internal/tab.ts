@@ -44,33 +44,35 @@ export class Tab extends LitElement {
   /**
    * Whether or not the tab is `selected`.
    **/
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) accessor selected = false;
 
   /**
    * Whether or not the tab is `focusable`.
    */
-  @property({type: Boolean}) focusable = false;
+  @property({type: Boolean}) accessor focusable = false;
 
   /**
    * In SSR, set this to true when an icon is present.
    */
-  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
+  @property({type: Boolean, attribute: 'has-icon'}) accessor hasIcon = false;
 
   /**
    * In SSR, set this to true when there is no label and only an icon.
    */
-  @property({type: Boolean, attribute: 'icon-only'}) iconOnly = false;
+  @property({type: Boolean, attribute: 'icon-only'}) accessor iconOnly = false;
 
-  @query('.button') private readonly button!: HTMLElement|null;
+  @query('.button')
+  private accessor button!: HTMLElement|null;
 
   // note, this is public so it can participate in selection animation.
   /** @private */
-  @query('.indicator') readonly indicator!: HTMLElement;
-  @state() protected fullWidthIndicator = false;
+  @query('.indicator')
+  accessor indicator!: HTMLElement;
+  @state() protected accessor fullWidthIndicator = false;
   @queryAssignedNodes({flatten: true})
-  private readonly assignedDefaultNodes!: Node[];
+  private accessor assignedDefaultNodes!: Node[];
   @queryAssignedElements({slot: 'icon', flatten: true})
-  private readonly assignedIcons!: HTMLElement[];
+  private accessor assignedIcons!: HTMLElement[];
 
   constructor() {
     super();

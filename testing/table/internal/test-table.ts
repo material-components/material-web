@@ -30,10 +30,10 @@ export class TestTable<S extends string = string> extends LitElement {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {mode: 'open'};
 
-  @property() override title = 'Title';
-  @property({type: Array}) states: S[] = [];
-  @property({type: Array}) templates: Array<TestTableTemplate<S>> = [];
-  @property({type: Boolean, reflect: true}) dark = false;
+  @property() override accessor title = 'Title';
+  @property({type: Array}) accessor states: S[] = [];
+  @property({type: Array}) accessor templates: Array<TestTableTemplate<S>> = [];
+  @property({type: Boolean, reflect: true}) accessor dark = false;
 
   protected override render() {
     return html`

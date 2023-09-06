@@ -37,18 +37,18 @@ export abstract class Button extends LitElement implements FormSubmitter {
   /**
    * Whether or not the button is disabled.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
 
   /**
    * The URL that the link button points to.
    */
-  @property() href = '';
+  @property() accessor href = '';
 
   /**
    * Where to display the linked `href` URL for a link button. Common options
    * include `_blank` to open in a new tab.
    */
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property() accessor target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
   /**
    * Whether to render the icon at the inline end of the label rather than the
@@ -56,16 +56,16 @@ export abstract class Button extends LitElement implements FormSubmitter {
    *
    * _Note:_ Link buttons cannot have trailing icons.
    */
-  @property({type: Boolean, attribute: 'trailing-icon'}) trailingIcon = false;
+  @property({type: Boolean, attribute: 'trailing-icon'}) accessor trailingIcon = false;
 
   /**
    * Whether to display the icon or not.
    */
-  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
+  @property({type: Boolean, attribute: 'has-icon'}) accessor hasIcon = false;
 
-  @property() type: FormSubmitterType = 'submit';
+  @property() accessor type: FormSubmitterType = 'submit';
 
-  @property() value = '';
+  @property() accessor value = '';
 
   get name() {
     return this.getAttribute('name') ?? '';
@@ -81,14 +81,15 @@ export abstract class Button extends LitElement implements FormSubmitter {
     return this[internals].form;
   }
 
-  @query('.button') private readonly buttonElement!: HTMLElement|null;
+  @query('.button')
+  private accessor buttonElement!: HTMLElement|null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
-  private readonly assignedIcons!: HTMLElement[];
+  private accessor assignedIcons!: HTMLElement[];
 
   /** @private */
   [internals] =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+      ((this as HTMLElement) /* needed for closure */).attachInternals();
 
   constructor() {
     super();

@@ -23,12 +23,12 @@ export class FocusRing extends LitElement implements Attachable {
   /**
    * Makes the focus ring visible.
    */
-  @property({type: Boolean, reflect: true}) visible = false;
+  @property({type: Boolean, reflect: true}) accessor visible = false;
 
   /**
    * Makes the focus ring animate inwards instead of outwards.
    */
-  @property({type: Boolean, reflect: true}) inward = false;
+  @property({type: Boolean, reflect: true}) accessor inward = false;
 
   get htmlFor() {
     return this.attachableController.htmlFor;

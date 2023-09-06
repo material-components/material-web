@@ -21,8 +21,8 @@ export class NavigationDrawer extends LitElement {
     requestUpdateOnAriaChange(NavigationDrawer);
   }
 
-  @property({type: Boolean}) opened = false;
-  @property() pivot: 'start'|'end' = 'end';
+  @property({type: Boolean}) accessor opened = false;
+  @property() accessor pivot: 'start'|'end' = 'end';
 
   protected override render() {
     const ariaExpanded = this.opened ? 'true' : 'false';

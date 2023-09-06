@@ -86,7 +86,7 @@ export class Ripple extends LitElement implements Attachable {
   /**
    * Disables the ripple.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  @property({type: Boolean, reflect: true}) accessor disabled = false;
 
   get htmlFor() {
     return this.attachableController.htmlFor;
@@ -104,10 +104,11 @@ export class Ripple extends LitElement implements Attachable {
   }
 
 
-  @state() private hovered = false;
-  @state() private pressed = false;
+  @state() private accessor hovered = false;
+  @state() private accessor pressed = false;
 
-  @query('.surface') private readonly mdRoot!: HTMLElement|null;
+  @query('.surface')
+  private accessor mdRoot!: HTMLElement|null;
   private rippleSize = '';
   private rippleScale = '';
   private initialSize = 0;

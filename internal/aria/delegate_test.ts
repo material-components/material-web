@@ -25,7 +25,8 @@ class AriaDelegateElement extends LitElement {
     requestUpdateOnAriaChange(AriaDelegateElement);
   }
 
-  @queryAsync('button') readonly button!: Promise<HTMLButtonElement|null>;
+  @queryAsync('button')
+  accessor button!: Promise<HTMLButtonElement|null>;
 
   protected override render() {
     return html`<button aria-label=${this.ariaLabel || nothing}>Label</button>`;

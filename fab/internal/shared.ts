@@ -38,18 +38,18 @@ export abstract class SharedFab extends LitElement {
    * NOTE: Branded FABs cannot be sized to `small`, and Extended FABs do not
    * have different sizes.
    */
-  @property({reflect: true}) size: FabSize = 'medium';
+  @property({reflect: true}) accessor size: FabSize = 'medium';
 
   /**
    * The text to display on the FAB.
    */
-  @property() label = '';
+  @property() accessor label = '';
 
 
   /**
    * Lowers the FAB's elevation.
    */
-  @property({type: Boolean}) lowered = false;
+  @property({type: Boolean}) accessor lowered = false;
 
   protected override render() {
     // Needed for closure conformance

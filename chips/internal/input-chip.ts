@@ -17,11 +17,11 @@ import {renderRemoveButton} from './trailing-icons.js';
  * An input chip component.
  */
 export class InputChip extends MultiActionChip {
-  @property({type: Boolean}) avatar = false;
-  @property() href = '';
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
-  @property({type: Boolean, attribute: 'remove-only'}) removeOnly = false;
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean}) accessor avatar = false;
+  @property() accessor href = '';
+  @property() accessor target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property({type: Boolean, attribute: 'remove-only'}) accessor removeOnly = false;
+  @property({type: Boolean, reflect: true}) accessor selected = false;
 
   protected get primaryId() {
     if (this.href) {
@@ -51,7 +51,7 @@ export class InputChip extends MultiActionChip {
   }
 
   @query('.trailing.action')
-  protected readonly trailingAction!: HTMLElement|null;
+  protected accessor trailingAction!: HTMLElement|null;
 
   protected override renderContainer(content: unknown) {
     return renderGridContainer(content, this.getContainerClasses());

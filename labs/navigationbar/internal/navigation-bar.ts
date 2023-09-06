@@ -25,15 +25,15 @@ export class NavigationBar extends LitElement implements NavigationBarState {
     requestUpdateOnAriaChange(NavigationBar);
   }
 
-  @property({type: Number, attribute: 'active-index'}) activeIndex = 0;
+  @property({type: Number, attribute: 'active-index'}) accessor activeIndex = 0;
 
   @property({type: Boolean, attribute: 'hide-inactive-labels'})
-  hideInactiveLabels = false;
+  accessor hideInactiveLabels = false;
 
   tabs: NavigationTab[] = [];
 
   @queryAssignedElements({flatten: true})
-  private readonly tabsElement!: NavigationTab[];
+  private accessor tabsElement!: NavigationTab[];
 
   protected override render() {
     // Needed for closure conformance

@@ -39,11 +39,11 @@ export class Dialog extends LitElement {
   /**
    * Opens the dialog when set to `true` and closes it when set to `false`.
    */
-  @property({type: Boolean})
   get open() {
     return this.isOpen;
   }
 
+  @property({type: Boolean})
   set open(open: boolean) {
     if (open === this.isOpen) {
       return;
@@ -65,13 +65,13 @@ export class Dialog extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue
    */
-  @property({attribute: false}) returnValue = '';
+  @property({attribute: false}) accessor returnValue = '';
 
   /**
    * The type of dialog for accessibility. Set this to `alert` to announce a
    * dialog as an alert dialog.
    */
-  @property() type?: 'alert';
+  @property() accessor type: 'alert' | undefined;
 
   /**
    * Gets the opening animation for a dialog. Set to a new function to customize
@@ -90,23 +90,32 @@ export class Dialog extends LitElement {
   // getIsConnectedPromise() immediately sets the resolve property.
   private isConnectedPromiseResolve!: () => void;
   private isConnectedPromise = this.getIsConnectedPromise();
-  @query('dialog') private readonly dialog!: HTMLDialogElement|null;
-  @query('.scrim') private readonly scrim!: HTMLDialogElement|null;
-  @query('.container') private readonly container!: HTMLDialogElement|null;
-  @query('.headline') private readonly headline!: HTMLDialogElement|null;
-  @query('.content') private readonly content!: HTMLDialogElement|null;
-  @query('.actions') private readonly actions!: HTMLDialogElement|null;
-  @state() private isAtScrollTop = false;
-  @state() private isAtScrollBottom = false;
-  @query('.scroller') private readonly scroller!: HTMLElement|null;
-  @query('.top.anchor') private readonly topAnchor!: HTMLElement|null;
-  @query('.bottom.anchor') private readonly bottomAnchor!: HTMLElement|null;
+  @query('dialog')
+  private accessor dialog!: HTMLDialogElement|null;
+  @query('.scrim')
+  private accessor scrim!: HTMLDialogElement|null;
+  @query('.container')
+  private accessor container!: HTMLDialogElement|null;
+  @query('.headline')
+  private accessor headline!: HTMLDialogElement|null;
+  @query('.content')
+  private accessor content!: HTMLDialogElement|null;
+  @query('.actions')
+  private accessor actions!: HTMLDialogElement|null;
+  @state() private accessor isAtScrollTop = false;
+  @state() private accessor isAtScrollBottom = false;
+  @query('.scroller')
+  private accessor scroller!: HTMLElement|null;
+  @query('.top.anchor')
+  private accessor topAnchor!: HTMLElement|null;
+  @query('.bottom.anchor')
+  private accessor bottomAnchor!: HTMLElement|null;
   private nextClickIsFromContent = false;
   private intersectionObserver?: IntersectionObserver;
   // Dialogs should not be SSR'd while open, so we can just use runtime checks.
-  @state() private hasHeadline = false;
-  @state() private hasActions = false;
-  @state() private hasIcon = false;
+  @state() private accessor hasHeadline = false;
+  @state() private accessor hasActions = false;
+  @state() private accessor hasIcon = false;
 
   constructor() {
     super();

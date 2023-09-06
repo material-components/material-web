@@ -19,9 +19,9 @@ import {renderRemoveButton} from './trailing-icons.js';
 class TestMultiActionChip extends MultiActionChip {
   static override styles = css`:host { position: relative; }`;
 
-  @query('#primary') primaryAction!: HTMLElement;
-  @query('.trailing.action') trailingAction!: HTMLElement;
-  @property() noTrailingAction = false;
+  @query('#primary') accessor primaryAction!: HTMLElement;
+  @query('.trailing.action') accessor trailingAction!: HTMLElement;
+  @property() accessor noTrailingAction = false;
 
   protected primaryId = 'primary';
 

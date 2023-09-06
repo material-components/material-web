@@ -21,9 +21,9 @@ export class SegmentedButtonSet extends LitElement {
     requestUpdateOnAriaChange(SegmentedButtonSet);
   }
 
-  @property({type: Boolean}) multiselect = false;
+  @property({type: Boolean}) accessor multiselect = false;
 
-  @queryAssignedElements({flatten: true}) buttons!: SegmentedButton[];
+  @queryAssignedElements({flatten: true}) accessor buttons!: SegmentedButton[];
 
   getButtonDisabled(index: number): boolean {
     if (this.indexOutOfBounds(index)) return false;

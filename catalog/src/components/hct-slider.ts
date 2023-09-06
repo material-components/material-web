@@ -32,23 +32,23 @@ export class HCTSlider extends LitElement {
   /**
    * The visiable and accessible label for the control.
    */
-  @property({type: String}) label = '';
+  @property({type: String}) accessor label = '';
 
   /**
    * The value of the slider.
    */
-  @property({type: Number}) value = 0;
+  @property({type: Number}) accessor value = 0;
 
   /**
    * The color from which to base the preview gradient (really only useful for
    * chroma).
    */
-  @property({type: String}) color = '';
+  @property({type: String}) accessor color = '';
 
   /**
    * The type of HCT slider to display
    */
-  @property({type: String}) type: 'hue'|'chroma'|'tone' = 'hue';
+  @property({type: String}) accessor type: 'hue'|'chroma'|'tone' = 'hue';
 
   override render() {
     let range = HUE_RANGE;

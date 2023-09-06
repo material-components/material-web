@@ -26,7 +26,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
   /**
    * Whether or not the color picker menu is open.
    */
-  @state() private menuOpen = false;
+  @state() private accessor menuOpen = false;
 
   render() {
     return html`
