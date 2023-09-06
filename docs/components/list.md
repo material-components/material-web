@@ -295,9 +295,9 @@ Token                                           | Default value
 `--md-list-item-label-text-color`               | `--md-sys-color-on-surface`
 `--md-list-item-supporting-text-color`          | `--md-sys-color-on-surface-variant`
 `--md-list-item-trailing-supporting-text-color` | `--md-sys-color-on-surface-variant`
-`--md-list-item-label-text-type`                | `400 1rem/1.5rem Roboto`
-`--md-list-item-supporting-text-type`           | `400 0.875rem/1.25rem Roboto`
-`--md-list-item-trailing-supporting-text-type`  | `500 0.688rem/1rem Roboto`
+`--md-list-item-label-text-font`                | `--md-sys-typescale-label-large-font`
+`--md-list-item-supporting-text-font`           | `--md-sys-typescale-body-medium-font`
+`--md-list-item-trailing-supporting-text-font`  | `--md-sys-typescale-label-small-font`
 
 *   [All List tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-list.scss)
     <!-- {.external} -->
@@ -323,9 +323,9 @@ a different theme applied](images/list/theming-list.webp)
     --md-list-item-label-text-color: #161d1d;
     --md-list-item-supporting-text-color: #3f4948;
     --md-list-item-trailing-supporting-text-color: #3f4948;
-    --md-list-item-label-text-type: system-ui;
-    --md-list-item-supporting-text-type: system-ui;
-    --md-list-item-trailing-supporting-text-type: system-ui;
+    --md-list-item-label-text-font: system-ui;
+    --md-list-item-supporting-text-font: system-ui;
+    --md-list-item-trailing-supporting-text-font: system-ui;
   }
 </style>
 <md-list>
@@ -405,7 +405,7 @@ applied](images/list/theming-icon.webp)
 Token                                       | Default value
 ------------------------------------------- | -------------
 `--md-list-item-leading-avatar-label-color` | `--md-sys-color-on-primary-container`
-`--md-list-item-leading-avatar-label-type`  | `500 1rem/1.5rem Roboto`
+`--md-list-item-leading-avatar-label-font`  | `--md-sys-typescale-title-medium-font`
 `--md-list-item-leading-avatar-color`       | `--md-sys-color-primary-container`
 `--md-list-item-leading-avatar-size`        | `40px`
 `--md-list-item-leading-avatar-shape`       | `9999px`
@@ -430,7 +430,7 @@ Token                                       | Default value
     --md-list-item-container-color: transparent;
     --md-list-item-leading-avatar-color: #9cf1f0;
     --md-list-item-leading-avatar-label-color: #002020;
-    --md-list-item-leading-avatar-label-type: system-ui;
+    --md-list-item-leading-avatar-label-font: system-ui;
     --md-list-item-leading-avatar-shape: 0;
     --md-list-item-leading-avatar-size: 36px;
   }

@@ -37,12 +37,17 @@ $supported-tokens: (
   'hover-state-layer-opacity',
   'hover-trailing-icon-icon-color',
   'label-text-color',
+  'label-text-font',
   'label-text-line-height',
-  'label-text-type',
+  'label-text-size',
+  'label-text-weight',
   'large-leading-video-height',
   'leading-avatar-color',
   'leading-avatar-label-color',
-  'leading-avatar-label-type',
+  'leading-avatar-label-font',
+  'leading-avatar-label-line-height',
+  'leading-avatar-label-size',
+  'leading-avatar-label-weight',
   'leading-avatar-shape',
   'leading-avatar-size',
   'leading-element-leading-space',
@@ -63,15 +68,20 @@ $supported-tokens: (
   'pressed-trailing-icon-icon-color',
   'small-leading-video-height',
   'supporting-text-color',
-  'supporting-text-type',
+  'supporting-text-font',
+  'supporting-text-line-height',
+  'supporting-text-size',
+  'supporting-text-weight',
   'three-line-container-height',
   'trailing-element-headline-trailing-element-space',
   'trailing-icon-color',
   'trailing-icon-size',
   'trailing-space',
   'trailing-supporting-text-color',
+  'trailing-supporting-text-font',
   'trailing-supporting-text-line-height',
-  'trailing-supporting-text-type',
+  'trailing-supporting-text-size',
+  'trailing-supporting-text-weight',
   'two-line-container-height',
   // go/keep-sorted end
 );
@@ -89,15 +99,10 @@ $unsupported-tokens: (
   'dragged-trailing-icon-icon-color',
   'focus-state-layer-color',
   'focus-state-layer-opacity',
-  'label-text-font',
-  'label-text-size',
   'label-text-tracking',
-  'label-text-weight',
-  'leading-avatar-label-font',
-  'leading-avatar-label-line-height',
-  'leading-avatar-label-size',
+  'label-text-type',
   'leading-avatar-label-tracking',
-  'leading-avatar-label-weight',
+  'leading-avatar-label-type',
   'overline-color',
   'overline-font',
   'overline-line-height',
@@ -106,15 +111,10 @@ $unsupported-tokens: (
   'overline-type',
   'overline-weight',
   'selected-trailing-icon-color',
-  'supporting-text-font',
-  'supporting-text-line-height',
-  'supporting-text-size',
   'supporting-text-tracking',
-  'supporting-text-weight',
-  'trailing-supporting-text-font',
-  'trailing-supporting-text-size',
+  'supporting-text-type',
   'trailing-supporting-text-tracking',
-  'trailing-supporting-text-weight',
+  'trailing-supporting-text-type',
   'unselected-trailing-icon-color',
   // go/keep-sorted end
 );
@@ -129,7 +129,6 @@ $_default: (
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $original-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
-  $original-tokens: map.merge($original-tokens, _get-override-tokens($deps));
 
   $tokens: values.validate(
     $original-tokens,
@@ -170,24 +169,6 @@ $_default: (
     // 'leading-video-bottom-space': if($exclude-hardcoded-values, null, 0px),
     'trailing-element-headline-trailing-element-space': 16px,
     'trailing-space': if($exclude-hardcoded-values, null, 24px),
-    // go/keep-sorted end
-  );
-}
-
-@function _get-override-tokens($deps) {
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  @return (
-    // go/keep-sorted start
-    'list-item-label-text-type':
-      map.get($deps, 'md-sys-typescale', 'body-large'),
-    'list-item-leading-avatar-label-type':
-      map.get($deps, 'md-sys-typescale', 'title-medium'),
-    // unsupported token
-    // 'list-item-overline-type': map.get($deps, 'md-sys-typescale', 'label-small'),
-    'list-item-supporting-text-type':
-      map.get($deps, 'md-sys-typescale', 'body-medium'),
-    'list-item-trailing-supporting-text-type':
-      map.get($deps, 'md-sys-typescale', 'label-small'),
     // go/keep-sorted end
   );
 }

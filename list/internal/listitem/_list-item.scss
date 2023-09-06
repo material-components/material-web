@@ -169,7 +169,10 @@
     overflow-x: hidden;
     white-space: nowrap;
     color: var(--_label-text-color);
-    font: var(--_label-text-type);
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    line-height: var(--_label-text-line-height);
+    font-weight: var(--_label-text-weight);
 
     :hover & {
       color: var(--_hover-label-text-color);
@@ -195,7 +198,10 @@
     overflow: hidden;
     width: 100%;
     color: var(--_supporting-text-color);
-    font: var(--_supporting-text-type);
+    font-family: var(--_supporting-text-font);
+    font-size: var(--_supporting-text-size);
+    line-height: var(--_supporting-text-line-height);
+    font-weight: var(--_supporting-text-weight);
 
     // Box is supposed to be deprecated, but line-clamp is not. It's still on
     // standards track and can only be applied with display: -webkit-box and
@@ -216,7 +222,10 @@
   }
 
   .trailing-supporting-text {
-    font: var(--_trailing-supporting-text-type);
+    font-family: var(--_trailing-supporting-text-font);
+    font-size: var(--_trailing-supporting-text-size);
+    line-height: var(--_trailing-supporting-text-line-height);
+    font-weight: var(--_trailing-supporting-text-weight);
 
     .list-item:not(.disabled) & {
       color: var(--_trailing-supporting-text-color);
@@ -347,7 +356,10 @@
     width: var(--_leading-avatar-size);
     border-radius: var(--_leading-avatar-shape);
     color: var(--_leading-avatar-label-color);
-    font: var(--_leading-avatar-label-type);
+    font-family: var(--_leading-avatar-label-font);
+    font-size: var(--_leading-avatar-label-size);
+    line-height: var(--_leading-avatar-label-line-height);
+    font-weight: var(--_leading-avatar-label-weight);
   }
 }
 
