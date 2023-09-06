@@ -348,12 +348,12 @@ of color, typography, and shape.
 ### Assist chip tokens
 
 Token                               | Default value
------------------------------------ | --------------------------------
+----------------------------------- | -------------------------------------
 `--md-assist-chip-outline-color`    | `--md-sys-color-outline`
 `--md-assist-chip-container-shape`  | `8px`
 `--md-assist-chip-icon-size`        | `18px`
 `--md-assist-chip-label-text-color` | `--md-sys-color-on-surface`
-`--md-assist-chip-label-text-type`  | `--md-sys-typescale-label-large`
+`--md-assist-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-assist-chip.scss)
     <!-- {.external} -->
@@ -369,7 +369,7 @@ Token                               | Default value
 <style>
 :root {
   --md-assist-chip-container-shape: 0px;
-  --md-assist-chip-label-text-type: 400 1rem system-ui;
+  --md-assist-chip-label-text-font: system-ui;
   --md-sys-color-outline: #6F7979;
   --md-sys-color-on-surface: #191C1C;
 }
@@ -387,7 +387,7 @@ Token                                       | Default value
 `--md-filter-chip-container-shape`          | `8px`
 `--md-filter-chip-icon-size`                | `18px`
 `--md-filter-chip-label-text-color`         | `--md-sys-color-on-surface`
-`--md-filter-chip-label-text-type`          | `--md-sys-typescale-label-large`
+`--md-filter-chip-label-text-font`          | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filter-chip.scss)
     <!-- {.external} -->
@@ -403,7 +403,7 @@ Token                                       | Default value
 <style>
 :root {
   --md-filter-chip-container-shape: 0px;
-  --md-filter-chip-label-text-type: 400 1rem system-ui;
+  --md-filter-chip-label-text-font: system-ui;
   --md-sys-color-outline: #6f7979;
   --md-sys-color-on-surface: #191c1c;
   --md-sys-color-secondary-container: #cce8e7;
@@ -416,12 +416,12 @@ Token                                       | Default value
 ### Input chip tokens
 
 Token                              | Default value
----------------------------------- | --------------------------------
+---------------------------------- | -------------------------------------
 `--md-input-chip-outline-color`    | `--md-sys-color-outline`
 `--md-input-chip-container-shape`  | `8px`
 `--md-input-chip-icon-size`        | `18px`
 `--md-input-chip-label-text-color` | `--md-sys-color-on-surface`
-`--md-input-chip-label-text-type`  | `--md-sys-typescale-label-large`
+`--md-input-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-input-chip.scss)
     <!-- {.external} -->
@@ -437,7 +437,7 @@ Token                              | Default value
 <style>
 :root {
   --md-input-chip-container-shape: 0px;
-  --md-input-chip-label-text-type: 400 1rem system-ui;
+  --md-input-chip-label-text-font: system-ui;
   --md-sys-color-outline: #6f7979;
   --md-sys-color-on-surface: #191c1c;
 }
@@ -449,12 +449,12 @@ Token                              | Default value
 ### Suggestion chip tokens
 
 Token                                   | Default value
---------------------------------------- | --------------------------------
+--------------------------------------- | -------------------------------------
 `--md-suggestion-chip-outline-color`    | `--md-sys-color-outline`
 `--md-suggestion-chip-container-shape`  | `8px`
 `--md-suggestion-chip-icon-size`        | `18px`
 `--md-suggestion-chip-label-text-color` | `--md-sys-color-on-surface`
-`--md-suggestion-chip-label-text-type`  | `--md-sys-typescale-label-large`
+`--md-suggestion-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-suggestion-chip.scss)
     <!-- {.external} -->
@@ -470,7 +470,7 @@ Token                                   | Default value
 <style>
 :root {
   --md-suggestion-chip-container-shape: 0px;
-  --md-suggestion-chip-label-text-type: 400 1rem system-ui;
+  --md-suggestion-chip-label-text-font: system-ui;
   --md-sys-color-outline: #6f7979;
   --md-sys-color-on-surface: #191c1c;
 }

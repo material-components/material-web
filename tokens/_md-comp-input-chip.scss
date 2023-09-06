@@ -44,7 +44,10 @@ $supported-tokens: (
   'hover-trailing-icon-color',
   'icon-size',
   'label-text-color',
-  'label-text-type',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
   'leading-icon-color',
   'outline-color',
   'outline-width',
@@ -86,11 +89,8 @@ $unsupported-tokens: (
   'dragged-trailing-icon-color',
   'focus-state-layer-color',
   'focus-state-layer-opacity',
-  'label-text-font',
-  'label-text-line-height',
-  'label-text-size',
   'label-text-tracking',
-  'label-text-weight',
+  'label-text-type',
   'selected-dragged-label-text-color',
   'selected-dragged-leading-icon-color',
   'selected-dragged-state-layer-color',
@@ -188,14 +188,6 @@ $_default: (
       'with-trailing-icon-unselected-pressed-trailing-icon-color':
         'pressed-trailing-icon-color',
       'with-trailing-icon-unselected-trailing-icon-color': 'trailing-icon-color'
-    )
-  );
-
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  $tokens: map.merge(
-    $tokens,
-    (
-      'label-text-type': map.get($deps, 'md-sys-typescale', 'label-large'),
     )
   );
 

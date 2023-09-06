@@ -141,7 +141,10 @@
     align-items: center;
     color: var(--_label-text-color);
     display: flex;
-    font: var(--_label-text-type);
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    line-height: var(--_label-text-line-height);
+    font-weight: var(--_label-text-weight);
     height: 100%;
     text-overflow: ellipsis;
     user-select: none;
