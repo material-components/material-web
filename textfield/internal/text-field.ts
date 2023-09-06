@@ -36,23 +36,6 @@ export type InvalidTextFieldType =
     'button'|'checkbox'|'hidden'|'image'|'radio'|'range'|'reset'|'submit';
 
 /**
- * autocomplete types for the text field.
- */
-export type TextFieldAutoCompleteType =
-    'on'|'off'|'additional-name'|'address-level1'|'address-level2'|
-    'address-level3'|'address-level4'|'address-line1'|'address-line2'|
-    'address-line3'|'bday'|'bday-year'|'bday-day'|'bday-month'|'billing'|
-    'cc-additional-name'|'cc-csc'|'cc-exp'|'cc-exp-month'|'cc-exp-year'|
-    'cc-family-name'|'cc-given-name'|'cc-name'|'cc-number'|'cc-type'|
-    'country'|'country-name'|'current-password'|'email'|'family-name'|
-    'fax'|'given-name'|'home'|'honorific-prefix'|'honorific-suffix'|
-    'impp'|'language'|'mobile'|'name'|'new-password'|'nickname'|'organization'|
-    'organization-title'|'pager'|'photo'|'postal-code'|'sex'|'shipping'|
-    'street-address'|'tel'|'tel-area-code'|'tel-country-code'|'tel-extension'|
-    'tel-local'|'tel-local-prefix'|'tel-local-suffix'|'tel-national'|
-    'transaction-amount'|'transaction-currency'|'url'|'username'|'work';
-
-/**
  * A text field component.
  */
 export abstract class TextField extends LitElement {
@@ -259,8 +242,7 @@ export abstract class TextField extends LitElement {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
    */
-  @property({reflect: true})
-  autocomplete: TextFieldAutoCompleteType;
+  @property({reflect: true}) autocomplete = '';
 
   /**
    * Returns the text field's validation error message.
@@ -688,7 +670,7 @@ export abstract class TextField extends LitElement {
           ?required=${this.required}
           step=${(this.step || nothing) as unknown as number}
           type=${this.type}
-          autocomplete=${this.autocomplete || nothing}
+          autocomplete=${(this.autocomplete || nothing) as unknown as string}
           .value=${live(this.value)}
           @change=${this.redispatchEvent}
           @input=${this.handleInput}
