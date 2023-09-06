@@ -11,6 +11,7 @@ import {html, isServer, LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
+import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 import {isActivationClick} from '../../internal/controller/events.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
@@ -22,6 +23,10 @@ let maskId = 0;
  * A radio component.
  */
 export class Radio extends LitElement {
+  static {
+    setupHostAria(Radio);
+  }
+
   /** @nocollapse */
   static readonly formAssociated = true;
 
@@ -86,28 +91,17 @@ export class Radio extends LitElement {
   }
 
   private readonly selectionController = new SingleSelectionController(this);
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  private readonly internals = polyfillElementInternalsAria(
+      this, (this as HTMLElement /* needed for closure */).attachInternals());
 
   constructor() {
     super();
     this.addController(this.selectionController);
     if (!isServer) {
+      this.internals.role = 'radio';
       this.addEventListener('click', this.handleClick.bind(this));
       this.addEventListener('keydown', this.handleKeydown.bind(this));
     }
-  }
-
-  override connectedCallback() {
-    super.connectedCallback();
-    // Firefox does not support ElementInternals aria yet, so we need to hydrate
-    // an attribute.
-    if (!('role' in this.internals)) {
-      this.setAttribute('role', 'radio');
-      return;
-    }
-
-    this.internals.role = 'radio';
   }
 
   protected override render() {
@@ -140,13 +134,6 @@ export class Radio extends LitElement {
   }
 
   protected override updated() {
-    // Firefox does not support ElementInternals aria yet, so we need to hydrate
-    // an attribute.
-    if (!('ariaChecked' in this.internals)) {
-      this.setAttribute('aria-checked', String(this.checked));
-      return;
-    }
-
     this.internals.ariaChecked = String(this.checked);
   }
 

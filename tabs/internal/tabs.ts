@@ -9,6 +9,8 @@ import '../../divider/divider.js';
 import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
+import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
+
 import {Tab} from './tab.js';
 
 const NAVIGATION_KEYS = new Map([
@@ -41,6 +43,10 @@ const NAVIGATION_KEYS = new Map([
  *
  */
 export class Tabs extends LitElement {
+  static {
+    setupHostAria(Tabs, {focusable: false});
+  }
+
   /**
    * Index of the selected item.
    */
@@ -86,28 +92,17 @@ export class Tabs extends LitElement {
     return this.items.find((el: HTMLElement) => el.matches(':focus-within'));
   }
 
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  private readonly internals = polyfillElementInternalsAria(
+      this, (this as HTMLElement /* needed for closure */).attachInternals());
 
   constructor() {
     super();
     if (!isServer) {
+      this.internals.role = 'tablist';
       this.addEventListener('keydown', this.handleKeydown);
       this.addEventListener('keyup', this.handleKeyup);
       this.addEventListener('focusout', this.handleFocusout);
     }
-  }
-
-  override connectedCallback() {
-    super.connectedCallback();
-    // Firefox does not support ElementInternals aria yet, so we need to hydrate
-    // an attribute.
-    if (!('role' in this.internals)) {
-      this.setAttribute('role', 'tablist');
-      return;
-    }
-
-    this.internals.role = 'tablist';
   }
 
   // focus item on keydown and optionally select it

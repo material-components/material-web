@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {isServer, ReactiveElement} from 'lit';
+
 /**
  * Accessibility Object Model reflective aria property name types.
  */
@@ -178,3 +180,185 @@ export type ARIARole =
     'doc-glossary'|'doc-glossref'|'doc-index'|'doc-introduction'|'doc-noteref'|
     'doc-notice'|'doc-pagebreak'|'doc-pagelist'|'doc-part'|'doc-preface'|
     'doc-prologue'|'doc-pullquote'|'doc-qna'|'doc-subtitle'|'doc-tip'|'doc-toc';
+
+/**
+ * Enables a host custom element to be the target for aria roles and attributes.
+ * Components should set the `elementInternals.role` property.
+ *
+ * By default, aria components are tab focusable. Provide a `focusable: false`
+ * option for components that should not be tab focusable, such as
+ * `role="listbox"`.
+ *
+ * This function will also polyfill aria `ElementInternals` properties for
+ * Firefox.
+ *
+ * @param ctor The `ReactiveElement` constructor to set up.
+ * @param options Options to configure the element's host aria.
+ */
+export function setupHostAria(
+    ctor: typeof ReactiveElement, {focusable}: SetupHostAriaOptions = {}) {
+  if (focusable !== false) {
+    ctor.addInitializer(host => {
+      host.addController({
+        hostConnected() {
+          if (host.hasAttribute('tabindex')) {
+            return;
+          }
+
+          host.tabIndex = 0;
+        }
+      });
+    });
+  }
+
+  if (isServer || 'role' in Element.prototype) {
+    return;
+  }
+
+  // Polyfill reflective aria properties for Firefox
+  for (const ariaProperty of ARIA_PROPERTIES) {
+    ctor.createProperty(ariaProperty, {
+      attribute: ariaPropertyToAttribute(ariaProperty),
+      reflect: true,
+    });
+  }
+
+  ctor.createProperty('role', {reflect: true});
+}
+
+/**
+ * Options for setting up a host element as an aria target.
+ */
+export interface SetupHostAriaOptions {
+  /**
+   * Whether or not the element can be focused with the tab key. Defaults to
+   * true.
+   *
+   * Set this to false for aria roles that should not be tab focusable, such as
+   * `role="listbox"`.
+   */
+  focusable?: boolean;
+}
+
+/**
+ * Polyfills an element and its `ElementInternals` to support `ARIAMixin`
+ * properties on internals. This is needed for Firefox.
+ *
+ * `setupHostAria()` must be called for the element class.
+ *
+ * @example
+ * class XButton extends LitElement {
+ *   static {
+ *     setupHostAria(XButton);
+ *   }
+ *
+ *   private internals =
+ *       polyfillElementInternalsAria(this, this.attachInternals());
+ *
+ *   constructor() {
+ *     super();
+ *     this.internals.role = 'button';
+ *   }
+ * }
+ */
+export function polyfillElementInternalsAria(
+    host: ReactiveElement, internals: ElementInternals) {
+  if (checkIfElementInternalsSupportsAria(internals)) {
+    return internals;
+  }
+
+  if (!('role' in host)) {
+    throw new Error('Missing setupHostAria()');
+  }
+
+  let firstConnectedCallbacks: Array<() => void> = [];
+  let hasBeenConnected = false;
+
+  // Add support for Firefox, which has not yet implement ElementInternals aria
+  for (const ariaProperty of ARIA_PROPERTIES) {
+    let ariaValueBeforeConnected: string|null = null;
+    Object.defineProperty(internals, ariaProperty, {
+      enumerable: true,
+      configurable: true,
+      get() {
+        if (!hasBeenConnected) {
+          return ariaValueBeforeConnected;
+        }
+
+        // Dynamic lookup rather than hardcoding all properties.
+        // tslint:disable-next-line:no-dict-access-on-struct-type
+        return host[ariaProperty];
+      },
+      set(value: string|null) {
+        const setValue = () => {
+          // Dynamic lookup rather than hardcoding all properties.
+          // tslint:disable-next-line:no-dict-access-on-struct-type
+          host[ariaProperty] = value;
+        };
+
+        if (!hasBeenConnected) {
+          ariaValueBeforeConnected = value;
+          firstConnectedCallbacks.push(setValue);
+          return;
+        }
+
+        setValue();
+      },
+    });
+  }
+
+  let roleValueBeforeConnected: string|null = null;
+  Object.defineProperty(internals, 'role', {
+    enumerable: true,
+    configurable: true,
+    get() {
+      if (!hasBeenConnected) {
+        return roleValueBeforeConnected;
+      }
+
+      return host.getAttribute('role');
+    },
+    set(value: string|null) {
+      const setRole = () => {
+        if (value === null) {
+          host.removeAttribute('role');
+        } else {
+          host.setAttribute('role', value);
+        }
+      };
+
+      if (!hasBeenConnected) {
+        roleValueBeforeConnected = value;
+        firstConnectedCallbacks.push(setRole);
+        return;
+      }
+
+      setRole();
+    },
+  });
+
+  host.addController({
+    hostConnected() {
+      if (hasBeenConnected) {
+        return;
+      }
+
+      hasBeenConnected = true;
+      for (const callback of firstConnectedCallbacks) {
+        callback();
+      }
+
+      // Remove strong callback references
+      firstConnectedCallbacks = [];
+    }
+  });
+
+  return internals;
+}
+
+
+// Separate function so that typescript doesn't complain about internals being
+// "never".
+function checkIfElementInternalsSupportsAria(internals: ElementInternals) {
+  return 'role' in internals;
+}
