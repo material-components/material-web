@@ -126,7 +126,10 @@
     color: var(--_headline-color);
     display: flex;
     flex-direction: column;
-    font: var(--_headline-type);
+    font-family: var(--_headline-font);
+    font-size: var(--_headline-size);
+    line-height: var(--_headline-line-height);
+    font-weight: var(--_headline-weight);
     position: relative;
   }
 
@@ -205,7 +208,10 @@
 
   .content {
     color: var(--_supporting-text-color);
-    font: var(--_supporting-text-type);
+    font-family: var(--_supporting-text-font);
+    font-size: var(--_supporting-text-size);
+    line-height: var(--_supporting-text-line-height);
+    font-weight: var(--_supporting-text-weight);
     height: min-content; // Needed for Safari
     position: relative;
   }

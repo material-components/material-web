@@ -190,9 +190,9 @@ Token                               | Default value
 ----------------------------------- | ---------------------------------------
 `--md-dialog-container-color`       | `--md-sys-color-surface-container-high`
 `--md-dialog-headline-color`        | `--md-sys-color-on-surface`
-`--md-dialog-headline-type`         | `--md-sys-typescale-headline-small`
+`--md-dialog-headline-font`         | `--md-sys-typescale-headline-small-font`
 `--md-dialog-supporting-text-color` | `--md-sys-color-on-surface-variant`
-`--md-dialog-supporting-text-type`  | `--md-sys-typescale-body-medium`
+`--md-dialog-supporting-text-font`  | `--md-sys-typescale-body-medium-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-dialog.scss)
     <!-- {.external} -->
