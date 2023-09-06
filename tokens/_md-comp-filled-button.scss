@@ -41,7 +41,10 @@ $supported-tokens: (
   'icon-color',
   'icon-size',
   'label-text-color',
-  'label-text-type',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
   'leading-space',
   'pressed-container-elevation',
   'pressed-icon-color',
@@ -60,11 +63,8 @@ $unsupported-tokens: (
   // go/keep-sorted start
   'focus-state-layer-color',
   'focus-state-layer-opacity',
-  'label-text-font',
-  'label-text-line-height',
-  'label-text-size',
   'label-text-tracking',
-  'label-text-weight',
+  'label-text-type',
   // go/keep-sorted end
 );
 
@@ -105,14 +105,6 @@ $_default: (
       'with-icon-icon-color': 'icon-color',
       'with-icon-icon-size': 'icon-size',
       'with-icon-pressed-icon-color': 'pressed-icon-color'
-    )
-  );
-
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  $tokens: map.merge(
-    $tokens,
-    (
-      'label-text-type': map.get($deps, 'md-sys-typescale', 'label-large'),
     )
   );
 

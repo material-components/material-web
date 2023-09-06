@@ -408,11 +408,11 @@ of color, typography, and shape.
 ### Elevated button tokens
 
 Token                                   | Default value
---------------------------------------- | -------------------------------
+--------------------------------------- | -------------------------------------
 `--md-elevated-button-container-color`  | `--md-sys-color-surface`
 `--md-elevated-button-container-shape`  | `9999px`
 `--md-elevated-button-label-text-color` | `--md-sys-color-on-surface`
-`--md-elevated-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
+`--md-elevated-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-elevated-button.scss)
     <!-- {.external} -->
@@ -438,7 +438,7 @@ Token                                   | Default value
       .styled-example {
         background-color: white;
         --md-elevated-button-container-shape: 0px;
-        --md-elevated-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-elevated-button-label-text-font: system-ui;
         --md-sys-color-surface-container-low: #FAFDFC;
         --md-sys-color-primary: #191C1C;
       }
@@ -456,7 +456,7 @@ Token                                   | Default value
 <style>
 :root {
   --md-elevated-button-container-shape: 0px;
-  --md-elevated-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+  --md-elevated-button-label-text-font: system-ui;
   --md-sys-color-surface-container-low: #FAFDFC;
   --md-sys-color-primary: #191C1C;
 }
@@ -468,11 +468,11 @@ Token                                   | Default value
 ### Filled button tokens
 
 Token                                 | Default value
-------------------------------------- | -------------------------------
+------------------------------------- | -------------------------------------
 `--md-filled-button-container-color`  | `--md-sys-color-primary`
 `--md-filled-button-container-shape`  | `9999px`
 `--md-filled-button-label-text-color` | `--md-sys-color-on-primary`
-`--md-filled-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
+`--md-filled-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-button.scss)
     <!-- {.external} -->
@@ -498,7 +498,7 @@ Token                                 | Default value
       .styled-example {
         background-color: white;
         --md-filled-button-container-shape: 0px;
-        --md-filled-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-filled-button-label-text-font: system-ui;
         --md-sys-color-primary: #006A6A;
         --md-sys-color-on-primary: #FFFFFF;
       }
@@ -516,7 +516,7 @@ Token                                 | Default value
 <style>
 :root {
   --md-filled-button-container-shape: 0px;
-  --md-filled-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+  --md-filled-button-label-text-font: system-ui;
   --md-sys-color-primary: #006A6A;
   --md-sys-color-on-primary: #FFFFFF;
 }
@@ -532,7 +532,7 @@ Token                                       | Default value
 `--md-filled-tonal-button-container-color`  | `--md-sys-color-secondary-container`
 `--md-filled-tonal-button-container-shape`  | `9999px`
 `--md-filled-tonal-button-label-text-color` | `--md-sys-color-on-secondary-container`
-`--md-filled-tonal-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
+`--md-filled-tonal-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-tonal-button.scss)
     <!-- {.external} -->
@@ -558,7 +558,7 @@ Token                                       | Default value
       .styled-example {
         background-color: white;
         --md-filled-tonal-button-container-shape: 0px;
-        --md-filled-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-filled-tonal-button-label-text-font: system-ui;
         --md-sys-color-secondary-container: #CCE8E7;
         --md-sys-color-on-secondary-container: #051F1F;
       }
@@ -576,7 +576,7 @@ Token                                       | Default value
 <style>
 :root {
   --md-filled-tonal-button-container-shape: 0px;
-  --md-filled-tonal-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+  --md-filled-tonal-button-label-text-font: system-ui;
   --md-sys-color-secondary-container: #CCE8E7;
   --md-sys-color-on-secondary-container: #051F1F;
 }
@@ -588,11 +588,11 @@ Token                                       | Default value
 ### Outlined button tokens
 
 Token                                   | Default value
---------------------------------------- | -------------------------------
+--------------------------------------- | -------------------------------------
 `--md-outlined-button-outline-color`    | `--md-sys-color-outline`
 `--md-outlined-button-container-shape`  | `9999px`
 `--md-outlined-button-label-text-color` | `--md-sys-color-primary`
-`--md-outlined-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
+`--md-outlined-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-outlined-button.scss)
     <!-- {.external} -->
@@ -618,7 +618,7 @@ Token                                   | Default value
       .styled-example {
         background-color: white;
         --md-outlined-button-container-shape: 0px;
-        --md-outlined-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-outlined-button-label-text-font: system-ui;
         --md-sys-color-primary: #006A6A;
         --md-sys-color-outline: #6F7979;
       }
@@ -636,7 +636,7 @@ Token                                   | Default value
 <style>
 :root {
   --md-outlined-button-container-shape: 0px;
-  --md-outlined-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+  --md-outlined-button-label-text-font: system-ui;
   --md-sys-color-primary: #006A6A;
   --md-sys-color-outline: #6F7979;
 }
@@ -648,9 +648,9 @@ Token                                   | Default value
 ### Text button tokens
 
 Token                               | Default value
------------------------------------ | -------------------------------
+----------------------------------- | -------------------------------------
 `--md-text-button-label-text-color` | `--md-sys-color-primary`
-`--md-text-button-label-text-type`  | `500 0.875rem/1.25rem "Roboto"`
+`--md-text-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-text-button.scss)
     <!-- {.external} -->
@@ -675,7 +675,7 @@ Token                               | Default value
     <style>
       .styled-example {
         background-color: white;
-        --md-text-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+        --md-text-button-label-text-font: system-ui;
         --md-sys-color-primary: #006A6A;
       }
     </style>
@@ -691,7 +691,7 @@ Token                               | Default value
 ```html
 <style>
 :root {
-  --md-text-button-label-text-type: 500 0.875rem/1.25rem system-ui;
+  --md-text-button-label-text-font: system-ui;
   --md-sys-color-primary: #006A6A;
 }
 </style>
