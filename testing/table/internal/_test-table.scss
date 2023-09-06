@@ -78,7 +78,10 @@ $dark-theme: tokens.md-comp-test-table-values(
     border-top: none;
     caption-side: bottom;
     color: var(--_header-cell-text-color);
-    font: var(--_header-cell-text-type);
+    font-family: var(--_header-cell-text-font);
+    font-size: var(--_header-cell-text-size);
+    line-height: var(--_header-cell-text-line-height);
+    font-weight: var(--_header-cell-text-weight);
     padding: 8px;
   }
 
@@ -86,7 +89,10 @@ $dark-theme: tokens.md-comp-test-table-values(
     align-items: center;
     color: var(--_cell-text-color);
     display: flex;
-    font: var(--_cell-text-type);
+    font-family: var(--_cell-text-font);
+    font-size: var(--_cell-text-size);
+    line-height: var(--_cell-text-line-height);
+    font-weight: var(--_cell-text-weight);
     justify-content: center;
   }
 

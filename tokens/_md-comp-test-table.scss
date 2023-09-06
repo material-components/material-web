@@ -20,12 +20,23 @@ $_default: (
   @return (
     'cell-color': map.get($deps, 'md-sys-color', 'surface-container-lowest'),
     'cell-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'cell-text-type': map.get($deps, 'md-sys-typescale', 'body-medium'),
+    'cell-text-font': map.get($deps, 'md-sys-typescale', 'body-medium-font'),
+    'cell-text-size': map.get($deps, 'md-sys-typescale', 'body-medium-size'),
+    'cell-text-line-height':
+      map.get($deps, 'md-sys-typescale', 'body-medium-line-height'),
+    'cell-text-weight': map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'cell-grid-color': map.get($deps, 'md-sys-color', 'surface-variant'),
     'header-cell-color': map.get($deps, 'md-sys-color', 'surface-variant'),
     'header-cell-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'header-cell-text-type': map.get($deps, 'md-sys-typescale', 'title-medium'),
+    'header-cell-text-font':
+      map.get($deps, 'md-sys-typescale', 'title-medium-font'),
+    'header-cell-text-size':
+      map.get($deps, 'md-sys-typescale', 'title-medium-size'),
+    'header-cell-text-line-height':
+      map.get($deps, 'md-sys-typescale', 'title-medium-line-height'),
+    'header-cell-text-weight':
+      map.get($deps, 'md-sys-typescale', 'title-medium-weight'),
     'outline-color': map.get($deps, 'md-sys-color', 'outline')
   );
 }
