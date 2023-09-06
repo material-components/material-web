@@ -134,7 +134,7 @@
     "test": {
       "command": "wtr",
       "dependencies": [
-        "checksize"
+        "build"
       ],
       "files": [
         "web-test-runner.config.js"
