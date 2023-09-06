@@ -323,8 +323,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     place-items: center;
     border-radius: map.get($_md-sys-shape, 'corner-full');
 
-    color: var(--_label-label-text-color);
-    font: var(--_label-label-text-type);
+    color: var(--_label-text-color);
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    line-height: var(--_label-text-line-height);
+    font-weight: var(--_label-text-weight);
 
     inset-block-end: 100%;
     min-inline-size: var(--_label-container-height);

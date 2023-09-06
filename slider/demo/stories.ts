@@ -105,7 +105,7 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
         /* label */
         --md-slider-label-container-height: 24px;
         --md-slider-label-container-color: var(--myColor);
-        --md-slider-label-label-text-size: 20px;
+        --md-slider-label-text-size: 20px;
 
         /* track */
         --md-slider-active-track-shape: 4px;
