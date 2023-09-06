@@ -98,7 +98,10 @@
         'container-shape-start-start':
           var(--_text-field-container-shape-start-start),
         'content-color': var(--_text-field-input-text-color),
-        'content-type': var(--_text-field-input-text-type),
+        'content-font': var(--_text-field-input-text-font),
+        'content-line-height': var(--_text-field-input-text-line-height),
+        'content-size': var(--_text-field-input-text-size),
+        'content-weight': var(--_text-field-input-text-weight),
         'disabled-active-indicator-color':
           var(--_text-field-disabled-active-indicator-color),
         'disabled-active-indicator-height':
@@ -193,14 +196,21 @@
         'hover-trailing-content-color':
           var(--_text-field-hover-trailing-icon-color),
         'label-text-color': var(--_text-field-label-text-color),
+        'label-text-font': var(--_text-field-label-text-font),
+        'label-text-line-height': var(--_text-field-label-text-line-height),
         'label-text-populated-line-height':
           var(--_text-field-label-text-populated-line-height),
         'label-text-populated-size':
           var(--_text-field-label-text-populated-size),
-        'label-text-type': var(--_text-field-label-text-type),
+        'label-text-size': var(--_text-field-label-text-size),
+        'label-text-weight': var(--_text-field-label-text-weight),
         'leading-content-color': var(--_text-field-leading-icon-color),
         'supporting-text-color': var(--_text-field-supporting-text-color),
-        'supporting-text-type': var(--_text-field-supporting-text-type),
+        'supporting-text-font': var(--_text-field-supporting-text-font),
+        'supporting-text-line-height':
+          var(--_text-field-supporting-text-line-height),
+        'supporting-text-size': var(--_text-field-supporting-text-size),
+        'supporting-text-weight': var(--_text-field-supporting-text-weight),
         'trailing-content-color': var(--_text-field-trailing-icon-color),
         // go/keep-sorted end
       )

@@ -98,7 +98,10 @@ $_enter-delay: $_label-duration - $_visible-duration;
     // Use `currentColor` to inherit the various state colors that are set
     // below.
     color: currentColor;
-    font: var(--_content-type);
+    font-family: var(--_content-font);
+    font-size: var(--_content-size);
+    line-height: var(--_content-line-height);
+    font-weight: var(--_content-weight);
     width: 100%;
     white-space: pre-wrap; // Needed for Firefox textarea with "all: unset"
   }

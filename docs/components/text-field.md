@@ -357,8 +357,8 @@ Token                                                 | Default value
 `--md-filled-text-field-container-shape`              | `4px 4px 0px 0px`
 `--md-filled-text-field-container-color`              | `--md-sys-color-surface-container-highest`
 `--md-filled-text-field-focus-active-indicator-color` | `--md-sys-color-primary`
-`--md-filled-text-field-input-text-type`              | `--md-sys-typescale-body-large`
-`--md-filled-text-field-label-text-type`              | `--md-sys-typescale-body-large`
+`--md-filled-text-field-input-text-font`              | `--md-sys-typescale-body-large-font`
+`--md-filled-text-field-label-text-font`              | `--md-sys-typescale-body-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-text-field.scss)
     <!-- {.external} -->
@@ -386,11 +386,11 @@ Token                                                 | Default value
 ### Outlined text field tokens
 
 Token                                          | Default value
----------------------------------------------- | -------------------------------
+---------------------------------------------- | -------------
 `--md-outlined-text-field-container-shape`     | `4px`
 `--md-outlined-text-field-focus-outline-color` | `--md-sys-color-primary`
-`--md-outlined-text-field-input-text-type`     | `--md-sys-typescale-body-large`
-`--md-outlined-text-field-label-text-type`     | `--md-sys-typescale-body-large`
+`--md-outlined-text-field-input-text-font`     | `--md-sys-typescale-body-large-font`
+`--md-outlined-text-field-label-text-font`     | `--md-sys-typescale-body-large-font`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-outlined-text-field.scss)
     <!-- {.external} -->

@@ -7,7 +7,10 @@
   .supporting-text {
     color: var(--_supporting-text-color);
     display: flex;
-    font: var(--_supporting-text-type);
+    font-family: var(--_supporting-text-font);
+    font-size: var(--_supporting-text-size);
+    line-height: var(--_supporting-text-line-height);
+    font-weight: var(--_supporting-text-weight);
     gap: 16px;
     justify-content: space-between;
     padding-inline-start: var(--_supporting-text-leading-space);

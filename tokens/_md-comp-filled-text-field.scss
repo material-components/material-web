@@ -75,18 +75,27 @@ $supported-tokens: (
   'hover-supporting-text-color',
   'hover-trailing-icon-color',
   'input-text-color',
+  'input-text-font',
+  'input-text-line-height',
   'input-text-placeholder-color',
   'input-text-prefix-color',
+  'input-text-size',
   'input-text-suffix-color',
-  'input-text-type',
+  'input-text-weight',
   'label-text-color',
+  'label-text-font',
+  'label-text-line-height',
   'label-text-populated-line-height',
   'label-text-populated-size',
-  'label-text-type',
+  'label-text-size',
+  'label-text-weight',
   'leading-icon-color',
   'leading-icon-size',
   'supporting-text-color',
-  'supporting-text-type',
+  'supporting-text-font',
+  'supporting-text-line-height',
+  'supporting-text-size',
+  'supporting-text-weight',
   'trailing-icon-color',
   'trailing-icon-size',
   // go/keep-sorted end
@@ -94,21 +103,12 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
-  'input-text-font',
-  'input-text-line-height',
-  'input-text-size',
   'input-text-tracking',
-  'input-text-weight',
-  'label-text-font',
-  'label-text-line-height',
-  'label-text-size',
+  'input-text-type',
   'label-text-tracking',
-  'label-text-weight',
-  'supporting-text-font',
-  'supporting-text-line-height',
-  'supporting-text-size',
+  'label-text-type',
   'supporting-text-tracking',
-  'supporting-text-weight',
+  'supporting-text-type',
   // go/keep-sorted end
 );
 
@@ -129,10 +129,6 @@ $_default: (
   $tokens: map.merge(
     $tokens,
     (
-      // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-      'input-text-type': map.get($deps, 'md-sys-typescale', 'body-large'),
-      'label-text-type': map.get($deps, 'md-sys-typescale', 'body-large'),
-      'supporting-text-type': map.get($deps, 'md-sys-typescale', 'body-small'),
       // TODO(b/259455114): remove when focus tokens update to 3px
       'focus-active-indicator-height': if($exclude-hardcoded-values, null, 3px)
     )
