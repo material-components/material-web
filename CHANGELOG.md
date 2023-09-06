@@ -1,5 +1,100 @@
 # Changelog
 
+## [1.0.0-pre.17](https://github.com/material-components/material-web/compare/v1.0.0-pre.16...v1.0.0-pre.17) (2023-09-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **slider:** replace `label-text-type` tokens with `-font`, `-size`, `-line-height`, and `-weight`. Additionally, rename `label-label-*` tokens to a single `label-*`
+* **list:** replace `*-type` font tokens with `-font`, `-size`, `-line-height`, and `-weight`
+* **chips:** replace `label-text-type` tokens with `label-text-font`, `-size`, `-line-height`, and `-weight`
+* **text-field,select:** replace `*-type` font tokens with `-font`, `-size`, `-line-height`, and `-weight`
+* **fab:** replace `label-text-type` tokens with `-font`, `-size`, `-line-height`, and `-weight`
+* **dialogs:** replace `headline-text-type` and `supporting-text-type` tokens with `-font`, `-size`, `-line-height`, and `-weight`
+* **button:** replace `label-text-type` tokens with `label-text-font`, `-size`, `-line-height`, and `-weight`
+* **circularprogress:** make default width 4px
+* **textfield:** The field component must add the `resizable` attribute rather than using CSS. CSS `resize` can still customize the direction (defaults to both).
+* **list,menu,select:** menu harnesses will not automatically open menus in quick mode anymore and interactions in menu and list harnesses will not automatically go to the first item but rather the menu roots.
+* **iconbutton:** change `slot="selectedIcon"` to `slot="selected"` for toggle icon buttons.
+* **tabs:** secondary tabs always have inline icons
+* **tabs:** remove `variant` attributes and change `md-tab` to `md-primary-tab`, or `md-secondary-tab` if using `variant="secondary"
+* **menu:** allow anchoring with idref string and set element ref on anchorElement
+* **tokens:** Change "radio-button" and "progress-indicator" Sass token APIs to "radio" and "progress". This matches the tag names of their components.
+* **tabs:** Remove `--md-*tab-divider` tokens and use `md-tabs::part(divider)` and `--md-divider-*` tokens
+* **tabs:** tabs cannot be disabled per spec. If disabled tabs are required, use `pointer-events: none` and CSS to style them.
+* **iconbutton:** change visibility of `willUpdate` to protected
+
+### Features
+
+* **color:** add color folder for md-sys-color theming APIs ([cdd9b26](https://github.com/material-components/material-web/commit/cdd9b264cb18dd9c43c4691b32fd47b65a90dab9))
+* **color:** add color folder for md-sys-color theming APIs ([87af9aa](https://github.com/material-components/material-web/commit/87af9aa13022ed69dbe20961293e67b2bf5914c4))
+* **focus,ripple:** allow setting `element.control = elementRef` ([1e7aff5](https://github.com/material-components/material-web/commit/1e7aff50cf3882f711dd6eb56f08a95ee6f3c084))
+* **menu:** allow anchoring with idref string and set element ref on anchorElement ([5ba348d](https://github.com/material-components/material-web/commit/5ba348dfd07f771d0db093841353f85b2a366c5a))
+* **select:** dispatch select-(open|close)(ing|ed) events ([1a1fb93](https://github.com/material-components/material-web/commit/1a1fb93be77634d45c373bf97804ccd074cef719)), closes [#4798](https://github.com/material-components/material-web/issues/4798)
+* **switch:** add required and form validity ([9694191](https://github.com/material-components/material-web/commit/9694191ec02bb37575df8d74af6e530f3e4e45e9))
+
+
+### Bug Fixes
+
+* add aria-hidden="true" to ripple, focus ring, and elevation ([2295f12](https://github.com/material-components/material-web/commit/2295f12e711f563b05a19d1d354e37a986027d5d))
+* **badge:** center align value text ([cc195a9](https://github.com/material-components/material-web/commit/cc195a947656b2f4765be77ba2fa3cbfe680ba76))
+* **button:** remove font shorthand tokens ([8894c20](https://github.com/material-components/material-web/commit/8894c20c6becab188f6136753f538372258b8faf))
+* **button:** update demos to fix a11y ([4b61e8d](https://github.com/material-components/material-web/commit/4b61e8d2034448a0d06baddca4d6f768f82b35bd))
+* **chips:** apply cursor styling ([9389e26](https://github.com/material-components/material-web/commit/9389e26b68705e82c1cde5469ab7777790db5477))
+* **chips:** linear navigation not working in VoiceOver ([dfc87f3](https://github.com/material-components/material-web/commit/dfc87f32e8621b0bbcf8156a276bd67a5ecd1ddc))
+* **chips:** remove font shorthand tokens ([87ad1da](https://github.com/material-components/material-web/commit/87ad1dae4fbcdc037f842e65e173d0b66e210081))
+* **circularprogress:** make default width 4px ([c864d3b](https://github.com/material-components/material-web/commit/c864d3b638fffdb22a1897507595d666fb16784a))
+* **dialog, select:** allow fixed selects to render correctly in dialogs ([d6aa6b2](https://github.com/material-components/material-web/commit/d6aa6b22c794ed48f2937ea4a33f321d0b1f9b25))
+* **dialog:** content not displaying on Safari ([9b7647b](https://github.com/material-components/material-web/commit/9b7647bd3d44c433e0edad7cd4d30f6fdd220f25)), closes [#4728](https://github.com/material-components/material-web/issues/4728)
+* **dialog:** not showing if opened before connected ([d25c5e9](https://github.com/material-components/material-web/commit/d25c5e9ecade4ecc3d6ea4ceb9c5e2bc1d19dc06)), closes [#4728](https://github.com/material-components/material-web/issues/4728)
+* **dialogs:** remove font shorthand tokens ([81e11e0](https://github.com/material-components/material-web/commit/81e11e09fa5ded5ab41e7cbcb977cd7dbc3ece81))
+* **fab:** remove font shorthand tokens ([f77ee36](https://github.com/material-components/material-web/commit/f77ee3628c0ef6945f11c8045c3c2e4e0f262d68))
+* **iconbutton:** change visibility of `willUpdate` to protected ([dffff2d](https://github.com/material-components/material-web/commit/dffff2d1a31f3ed40b28f57570ba4df7f61f7210))
+* **iconbutton:** rename `selectedIcon` slot to `selected` ([9647f5e](https://github.com/material-components/material-web/commit/9647f5e5147b2d94f2db8ea6ca45c7f819714324))
+* **iconbutton:** update demos to fix a11y ([a9091fe](https://github.com/material-components/material-web/commit/a9091fe036af55986123770606a686388fd39b3f))
+* **labs:** remove font shorthand tokens ([acd40a2](https://github.com/material-components/material-web/commit/acd40a2f57277a67850c8e103a405dfcc4d3fdce))
+* **list,menu:** restrict type to only supported aria roles ([32a8c44](https://github.com/material-components/material-web/commit/32a8c4410eff4bede75c77bcdd43541967c8d0e7))
+* **list:** remove font shorthand tokens ([ca2cd56](https://github.com/material-components/material-web/commit/ca2cd56bd1b668904c6aea2b4d18602e773e1c9f))
+* **list:** remove internal md3-* class prefix ([641142d](https://github.com/material-components/material-web/commit/641142dff0fa679754a6f26518e9db7eccf5f6f5))
+* **menu,list,select:** do not stopPropagation on native events when handled only prevent default ([b85b57f](https://github.com/material-components/material-web/commit/b85b57fa792663460dbc1730c9e574e2b5ab998d))
+* **radio:** make host radio role to fix a11y ([0711f8c](https://github.com/material-components/material-web/commit/0711f8c03c2c4c743386abf490e6dddf243be5e6))
+* ripple and focus ring not centered in Safari ([0e8afc0](https://github.com/material-components/material-web/commit/0e8afc01757c3f1f8a5bf904e8cb857ea88bd7bf))
+* **select, menu:** allow item selection while animation is running in non-overflow contexts ([b905807](https://github.com/material-components/material-web/commit/b9058076b6bdf10ad135003b6c91ac46ebcb273b))
+* **select:** announce typeahead selection when select is closed ([2c892c4](https://github.com/material-components/material-web/commit/2c892c411472481c44d6d5a0bdec073d74634d89))
+* **slider:** display tick marks when forced-colors is active ([2f9cc20](https://github.com/material-components/material-web/commit/2f9cc208df53f0587e3712ec03c164bac25efade))
+* **slider:** remove font shorthand tokens ([6988a49](https://github.com/material-components/material-web/commit/6988a49a3b28273d02cad20ff0129c2906a63a26))
+* **tabs:** add nocollapse so isTab doesn't get minified ([17ddcd3](https://github.com/material-components/material-web/commit/17ddcd3c2e1c994b868d8b49d55a7457234929b2))
+* **tabs:** incorrect layout and primary indicator width ([0467c48](https://github.com/material-components/material-web/commit/0467c4845db7c31deddf7383beb199157f4c5034))
+* **tabs:** make indicator animation faster ([b542d2a](https://github.com/material-components/material-web/commit/b542d2aa12dcfc70fa250265cc82647d04218254))
+* **tabs:** remove disabled tabs ([d18db2a](https://github.com/material-components/material-web/commit/d18db2a6acb90a059856fbf74e8c2212f7680a68))
+* **tabs:** remove divider tokens in favor of md-divider ([13690a3](https://github.com/material-components/material-web/commit/13690a396f666b2073f6dc4995090d12947de59f))
+* **tabs:** secondary tabs always have inline icons ([6b2955b](https://github.com/material-components/material-web/commit/6b2955bffe68adc4c8c36ee96e2d45c2955b3a4c))
+* **tabs:** split md-tab into md-primary-tab and md-secondary-tab ([5b13b5c](https://github.com/material-components/material-web/commit/5b13b5c05bdbe7a85e30408a33a07de6480317d2))
+* **tabs:** use instanceof to check for a Tab ([58497f1](https://github.com/material-components/material-web/commit/58497f13b2ca494f233c290f6571f5f03f142d7f))
+* **testing:** harness not applying :active to parents ([327eeaf](https://github.com/material-components/material-web/commit/327eeafbf9f3f7bbf5f80d458cd9e423c5a7d98d))
+* **testing:** remove font shorthand tokens ([01a99a5](https://github.com/material-components/material-web/commit/01a99a5cc36cafe11422062d513e38cbf7442e02))
+* **text-field,select:** remove font shorthand tokens ([0c5a2a2](https://github.com/material-components/material-web/commit/0c5a2a2886fd934c598361aacc0719ad484ade9b))
+* **textfield:** don't transition colors when disabling ([11cc472](https://github.com/material-components/material-web/commit/11cc4721ce42bf63ed06637081fdeb01aa2f25bb))
+* **textfield:** line breaks not visible in Firefox ([541c0e9](https://github.com/material-components/material-web/commit/541c0e947d1ad4549256af5ebdde645a86724171)), closes [#4581](https://github.com/material-components/material-web/issues/4581)
+* **textfield:** show overflowing content like popups and focus rings ([ecac7ec](https://github.com/material-components/material-web/commit/ecac7ecbad43b90b94f61d44974312d5546877d8)), closes [#4071](https://github.com/material-components/material-web/issues/4071)
+* **textfield:** textarea resize handle overlapping outline ([cdd2ea6](https://github.com/material-components/material-web/commit/cdd2ea6c1db189495abd3b45eee5e9872fc9622c))
+* **tokens:** rename token override files ([59c44fc](https://github.com/material-components/material-web/commit/59c44fc2f9266b60d22e9bd5ff5d39e7d0ee8dff))
+
+
+### Reverts
+
+* feat(color): add color folder for md-sys-color theming APIs ([a528393](https://github.com/material-components/material-web/commit/a5283936fedd8da92af994fa0d721e07bc2686c4))
+
+
+### Miscellaneous Chores
+
+* update next version ([f41c816](https://github.com/material-components/material-web/commit/f41c8165f47e6a212b6c8ca104951187c8020622))
+
+
+### Tests
+
+* **list,menu,select:** clean up internal testing patterns from harnesses ([fcfc696](https://github.com/material-components/material-web/commit/fcfc696c4628fd2f41b09c060e6af4cd8e7658c2))
+
 ## [1.0.0-pre.16](https://github.com/material-components/material-web/compare/v1.0.0-pre.15...v1.0.0-pre.16) (2023-08-21)
 
 
