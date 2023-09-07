@@ -162,8 +162,8 @@ export class ListItemEl extends LitElement implements ListItem {
         href=${this.href || nothing}
         target=${target}
         @click=${this.onClick}
-        @pointerenter=${this.onPointerenter}
-        @pointerleave=${this.onPointerleave}
+        @mouseenter=${this.onMouseenter}
+        @mouseleave=${this.onMouseleave}
         @keydown=${this.onKeydown}
       >${content}</${tag}>
     `;
@@ -265,8 +265,8 @@ export class ListItemEl extends LitElement implements ListItem {
   // For easier overriding in menu-item
   protected onClick?(event: Event): void;
   protected onKeydown?(event: KeyboardEvent): void;
-  protected onPointerenter?(event: Event): void;
-  protected onPointerleave?(event: Event): void;
+  protected onMouseenter?(event: Event): void;
+  protected onMouseleave?(event: Event): void;
 
   protected override updated(changed: PropertyValues<this>) {
     super.updated(changed);

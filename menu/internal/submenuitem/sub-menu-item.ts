@@ -31,7 +31,7 @@ export class SubMenuItem extends MenuItemEl {
    */
   @property({attribute: 'menu-corner'}) menuCorner: Corner = 'START_START';
   /**
-   * The delay between pointerenter and submenu opening.
+   * The delay between mouseenter and submenu opening.
    */
   @property({type: Number, attribute: 'hover-open-delay'}) hoverOpenDelay = 400;
   /**
@@ -61,8 +61,14 @@ export class SubMenuItem extends MenuItemEl {
 
   /**
    * Starts the default 400ms countdown to open the submenu.
+   *
+   * NOTE: We explicitly use mouse events and not pointer events because
+   * pointer events apply to touch events. And if a user were to tap a
+   * sub-menu-item, it would fire the "pointerenter", "pointerleave", "click"
+   * events which would open the menu on click, and then set the timeout to
+   * close the menu due to pointerleave.
    */
-  protected override onPointerenter = () => {
+  protected override onMouseenter = () => {
     clearTimeout(this.previousOpenTimeout);
     clearTimeout(this.previousCloseTimeout);
     if (this.submenuEl?.open) return;
@@ -80,8 +86,14 @@ export class SubMenuItem extends MenuItemEl {
 
   /**
    * Starts the default 400ms countdown to close the submenu.
+   *
+   * NOTE: We explicitly use mouse events and not pointer events because
+   * pointer events apply to touch events. And if a user were to tap a
+   * sub-menu-item, it would fire the "pointerenter", "pointerleave", "click"
+   * events which would open the menu on click, and then set the timeout to
+   * close the menu due to pointerleave.
    */
-  protected override onPointerleave = () => {
+  protected override onMouseleave = () => {
     clearTimeout(this.previousCloseTimeout);
     clearTimeout(this.previousOpenTimeout);
 
@@ -150,8 +162,8 @@ export class SubMenuItem extends MenuItemEl {
   private renderSubMenu() {
     return html`<span class="submenu"><slot
         name="submenu"
-        @pointerenter=${this.onSubmenuPointerEnter}
-        @pointerleave=${this.onSubmenuPointerLeave}
+        @mouseenter=${this.onSubmenuMouseEnter}
+        @mouseleave=${this.onSubmenuMouseLeave}
         @keydown=${this.onSubMenuKeydown}
         @close-menu=${this.onCloseSubmenu}
     ></slot></span>`;
@@ -310,11 +322,25 @@ export class SubMenuItem extends MenuItemEl {
     }
   }
 
-  private onSubmenuPointerEnter() {
+  /**
+   * NOTE: We explicitly use mouse events and not pointer events because
+   * pointer events apply to touch events. And if a user were to tap a
+   * sub-menu-item, it would fire the "pointerenter", "pointerleave", "click"
+   * events which would open the menu on click, and then set the timeout to
+   * close the menu due to pointerleave.
+   */
+  private onSubmenuMouseEnter() {
     this.submenuHover = true;
   }
 
-  private onSubmenuPointerLeave() {
+  /**
+   * NOTE: We explicitly use mouse events and not pointer events because
+   * pointer events apply to touch events. And if a user were to tap a
+   * sub-menu-item, it would fire the "pointerenter", "pointerleave", "click"
+   * events which would open the menu on click, and then set the timeout to
+   * close the menu due to pointerleave.
+   */
+  private onSubmenuMouseLeave() {
     this.submenuHover = false;
   }
 }
