@@ -1,0 +1,37 @@
+<div class="figure-wrapper">
+  <figure
+    style="justify-content: center"
+    aria-label="A filled button that says menu with submenus. Interact with the button to interact with a menu that has two sub menus."
+  >
+    <span style="position: relative">
+      <md-filled-button id="usage-submenu-anchor">Menu with Submenus</md-filled-button>
+      <!-- Note the has-overflow attribute -->
+      <md-menu has-overflow id="usage-submenu" anchor="usage-submenu-anchor">
+        <md-sub-menu-item headline="Fruits with A">
+          <md-menu slot="submenu">
+            <md-menu-item headline="Apricot"></md-menu-item>
+            <md-menu-item headline="Avocado"></md-menu-item>
+            <md-sub-menu-item headline="Apples" menu-corner="START_END" anchor-corner="START_START">
+              <md-menu slot="submenu">
+                <md-menu-item headline="Fuji"></md-menu-item>
+                <md-menu-item headline="Granny Smith"></md-menu-item>
+                <md-menu-item headline="Red Delicious"></md-menu-item>
+              </md-menu>
+              <md-icon slot="start" data-variant="icon" style="font-size: 24px;height:24px;">arrow_left</md-icon>
+            </md-sub-menu-item>
+          </md-menu>
+          <md-icon slot="end">arrow_right</md-icon>
+        </md-sub-menu-item>
+        <md-menu-item headline="Banana"></md-menu-item>
+        <md-menu-item headline="Cucumber"></md-menu-item>
+      </md-menu>
+    </span>
+    <script type="module">
+      const anchorEl = document.body.querySelector("#usage-submenu-anchor");
+      const menuEl = document.body.querySelector("#usage-submenu");
+      anchorEl.addEventListener("click", () => {
+        menuEl.show();
+      });
+    </script>
+  </figure>
+</div>

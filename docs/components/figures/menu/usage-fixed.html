@@ -1,0 +1,24 @@
+<div class="figure-wrapper">
+  <figure
+    style="justify-content: center"
+    aria-label="A filled button that says open fixed menu. Interact with the button to open a fixed menu."
+  >
+    <div>
+      <div style="margin: 16px">
+        <md-filled-button id="usage-fixed-anchor">Open fixed menu</md-filled-button>
+      </div>
+      <md-menu fixed id="usage-fixed" anchor="usage-fixed-anchor">
+        <md-menu-item headline="Apple"></md-menu-item>
+        <md-menu-item headline="Banana"></md-menu-item>
+        <md-menu-item headline="Cucumber"></md-menu-item>
+      </md-menu>
+    </div>
+    <script type="module">
+      const anchorEl = document.body.querySelector("#usage-fixed-anchor");
+      const menuEl = document.body.querySelector("#usage-fixed");
+      anchorEl.addEventListener("click", () => {
+        menuEl.show();
+      });
+    </script>
+  </figure>
+</div>

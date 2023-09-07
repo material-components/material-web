@@ -1,0 +1,46 @@
+<div class="figure-wrapper">
+  <style>
+    main > .figure-wrapper {
+      /* prevent scrolling bars on menu open */
+      overflow: visible;
+      /* unset page styles */
+      --md-list-item-container-shape: 0px;
+    }
+  </style>
+  <figure
+    style="justify-content: center"
+    aria-label="Two filled buttons next to each other. The first one says set with idref and the other says set with element ref. Interact with them to open their respective menus."
+  >
+    <span style="position: relative; margin-inline-end: 8px">
+      <md-filled-button id="usage-anchor">Set with idref</md-filled-button>
+      <md-menu id="usage-menu" anchor="usage-anchor">
+        <md-menu-item headline="Apple"></md-menu-item>
+        <md-menu-item headline="Banana"></md-menu-item>
+        <md-menu-item headline="Cucumber"></md-menu-item>
+      </md-menu>
+    </span>
+    <script type="module">
+      const anchorEl = document.body.querySelector("#usage-anchor");
+      const menuEl = document.body.querySelector("#usage-menu");
+      anchorEl.addEventListener("click", () => {
+        menuEl.show();
+      });
+    </script>
+    <span style="position: relative">
+      <md-filled-button id="usage-anchor-2">Set with element ref</md-filled-button>
+      <md-menu id="usage-menu-2">
+        <md-menu-item headline="Apple"></md-menu-item>
+        <md-menu-item headline="Banana"></md-menu-item>
+        <md-menu-item headline="Cucumber"></md-menu-item>
+      </md-menu>
+    </span>
+    <script type="module">
+      const anchorEl = document.body.querySelector("#usage-anchor-2");
+      const menuEl = document.body.querySelector("#usage-menu-2");
+      menuEl.anchorElement = anchorEl;
+      anchorEl.addEventListener("click", () => {
+        menuEl.show();
+      });
+    </script>
+  </figure>
+</div>
