@@ -73,6 +73,14 @@ export interface SurfacePositionControllerProperties {
    */
   yOffset: number;
   /**
+   * The strategy to follow when repositioning the menu to stay inside the
+   * viewport. "move" will simply move the surface to stay in the viewport.
+   * "resize" will attempt to resize the surface.
+   *
+   * Both strategies will still attempt to flip the anchor and surface corners.
+   */
+  repositionStrategy: 'move'|'resize';
+  /**
    * A function to call after the surface has been positioned.
    */
   onOpen: () => void;
@@ -134,9 +142,10 @@ export class SurfacePositionController implements ReactiveController {
       anchorEl,
       anchorCorner: anchorCornerRaw,
       surfaceCorner: surfaceCornerRaw,
-      isTopLayer: topLayerRaw,
+      isTopLayer,
       xOffset,
       yOffset,
+      repositionStrategy,
     } = this.getProperties();
     const anchorCorner = anchorCornerRaw.toUpperCase().trim();
     const surfaceCorner = surfaceCornerRaw.toUpperCase().trim();
@@ -167,20 +176,9 @@ export class SurfacePositionController implements ReactiveController {
     const [anchorBlock, anchorInline] =
         anchorCorner.split('_') as Array<'START'|'END'>;
 
-
-    // We use number booleans to multiply values rather than `if` / ternary
-    // statements because it _heavily_ cuts down on nesting and readability
-    const isTopLayer = topLayerRaw ? 1 : 0;
     // LTR depends on the direction of the SURFACE not the anchor.
     const isLTR =
-        getComputedStyle(surfaceEl as HTMLElement).direction === 'ltr' ? 1 : 0;
-    const isRTL = isLTR ? 0 : 1;
-    const isSurfaceInlineStart = surfaceInline === 'START' ? 1 : 0;
-    const isSurfaceInlineEnd = surfaceInline === 'END' ? 1 : 0;
-    const isSurfaceBlockStart = surfaceBlock === 'START' ? 1 : 0;
-    const isSurfaceBlockEnd = surfaceBlock === 'END' ? 1 : 0;
-    const isOneInlineEnd = anchorInline !== surfaceInline ? 1 : 0;
-    const isOneBlockEnd = anchorBlock !== surfaceBlock ? 1 : 0;
+        getComputedStyle(surfaceEl as HTMLElement).direction === 'ltr';
 
     /*
      * A diagram that helps describe some of the variables used in the following
@@ -214,6 +212,193 @@ export class SurfacePositionController implements ReactiveController {
      *                                      └────┘
      */
 
+    // Calculate the block positioning properties
+    let {blockInset, blockOutOfBoundsCorrection, surfaceBlockProperty} =
+        this.calculateBlock({
+          surfaceRect,
+          anchorRect,
+          anchorBlock,
+          surfaceBlock,
+          yOffset,
+          isTopLayer
+        });
+
+    // If the surface should be out of bounds in the block direction, flip the
+    // surface and anchor corner block values and recalculate
+    if (blockOutOfBoundsCorrection) {
+      const flippedSurfaceBlock = surfaceBlock === 'START' ? 'END' : 'START';
+      const flippedAnchorBlock = anchorBlock === 'START' ? 'END' : 'START';
+
+      const flippedBlock = this.calculateBlock({
+        surfaceRect,
+        anchorRect,
+        anchorBlock: flippedAnchorBlock,
+        surfaceBlock: flippedSurfaceBlock,
+        yOffset,
+        isTopLayer
+      });
+
+      // In the case that the flipped verion would require less out of bounds
+      // correcting, use the flipped corner block values
+      if (blockOutOfBoundsCorrection >
+          flippedBlock.blockOutOfBoundsCorrection) {
+        blockInset = flippedBlock.blockInset;
+        blockOutOfBoundsCorrection = flippedBlock.blockOutOfBoundsCorrection;
+        surfaceBlockProperty = flippedBlock.surfaceBlockProperty;
+      }
+    }
+
+    // Calculate the inline positioning properties
+    let {inlineInset, inlineOutOfBoundsCorrection, surfaceInlineProperty} =
+        this.calculateInline({
+          surfaceRect,
+          anchorRect,
+          anchorInline,
+          surfaceInline,
+          xOffset,
+          isTopLayer,
+          isLTR,
+        });
+
+    // If the surface should be out of bounds in the inline direction, flip the
+    // surface and anchor corner inline values and recalculate
+    if (inlineOutOfBoundsCorrection) {
+      const flippedSurfaceInline = surfaceInline === 'START' ? 'END' : 'START';
+      const flippedAnchorInline = anchorInline === 'START' ? 'END' : 'START';
+
+      const flippedInline = this.calculateInline({
+        surfaceRect,
+        anchorRect,
+        anchorInline: flippedAnchorInline,
+        surfaceInline: flippedSurfaceInline,
+        xOffset,
+        isTopLayer,
+        isLTR,
+      });
+
+      // In the case that the flipped verion would require less out of bounds
+      // correcting, use the flipped corner inline values
+      if (Math.abs(inlineOutOfBoundsCorrection) >
+          Math.abs(flippedInline.inlineOutOfBoundsCorrection)) {
+        inlineInset = flippedInline.inlineInset;
+        inlineOutOfBoundsCorrection = flippedInline.inlineOutOfBoundsCorrection;
+        surfaceInlineProperty = flippedInline.surfaceInlineProperty;
+      }
+    }
+
+    // If we are simply repositioning the surface back inside the viewport,
+    // subtract the out of bounds correction values from the positioning.
+    if (repositionStrategy === 'move') {
+      blockInset = blockInset - blockOutOfBoundsCorrection;
+      inlineInset = inlineInset - inlineOutOfBoundsCorrection;
+    }
+
+    this.surfaceStylesInternal = {
+      'display': 'block',
+      'opacity': '1',
+      [surfaceBlockProperty]: `${blockInset}px`,
+      [surfaceInlineProperty]: `${inlineInset}px`,
+    };
+
+    // In the case that we are resizing the surface to stay inside the viewport
+    // we need to set height and width on the surface.
+    if (repositionStrategy === 'resize') {
+      // Add a height property to the styles if there is block height correction
+      if (blockOutOfBoundsCorrection) {
+        this.surfaceStylesInternal['height'] =
+            `${surfaceRect.height - blockOutOfBoundsCorrection}px`;
+      }
+
+      // Add a width property to the styles if there is block height correction
+      if (inlineOutOfBoundsCorrection) {
+        this.surfaceStylesInternal['width'] =
+            `${surfaceRect.width - inlineOutOfBoundsCorrection}px`;
+      }
+    }
+
+    this.host.requestUpdate();
+  }
+
+  /**
+   * Calculates the css property, the inset, and the out of bounds correction
+   * for the surface in the block direction.
+   */
+  private calculateBlock(config: {
+    surfaceRect: DOMRect,
+    anchorRect: DOMRect,
+    anchorBlock: 'START'|'END',
+    surfaceBlock: 'START'|'END',
+    yOffset: number,
+    isTopLayer: boolean,
+  }) {
+    const {
+      surfaceRect,
+      anchorRect,
+      anchorBlock,
+      surfaceBlock,
+      yOffset,
+      isTopLayer: isTopLayerBool,
+    } = config;
+    // We use number booleans to multiply values rather than `if` / ternary
+    // statements because it _heavily_ cuts down on nesting and readability
+    const isTopLayer = isTopLayerBool ? 1 : 0;
+    const isSurfaceBlockStart = surfaceBlock === 'START' ? 1 : 0;
+    const isSurfaceBlockEnd = surfaceBlock === 'END' ? 1 : 0;
+    const isOneBlockEnd = anchorBlock !== surfaceBlock ? 1 : 0;
+
+    // Whether or not to apply the height of the anchor
+    const blockAnchorOffset = isOneBlockEnd * anchorRect.height + yOffset;
+    // The absolute block position of the anchor relative to window
+    const blockTopLayerOffset = isSurfaceBlockStart * anchorRect.top +
+        isSurfaceBlockEnd * (window.innerHeight - anchorRect.bottom);
+    // If the surface's block would be out of bounds of the window, move it back
+    // in
+    const blockOutOfBoundsCorrection = Math.abs(Math.min(
+        0,
+        window.innerHeight - blockTopLayerOffset - blockAnchorOffset -
+            surfaceRect.height));
+
+
+    // The block logical value of the surface
+    const blockInset = isTopLayer * blockTopLayerOffset + blockAnchorOffset;
+
+    const surfaceBlockProperty =
+        surfaceBlock === 'START' ? 'inset-block-start' : 'inset-block-end';
+
+    return {blockInset, blockOutOfBoundsCorrection, surfaceBlockProperty};
+  }
+
+  /**
+   * Calculates the css property, the inset, and the out of bounds correction
+   * for the surface in the inline direction.
+   */
+  private calculateInline(config: {
+    isLTR: boolean,
+    surfaceInline: 'START'|'END',
+    anchorInline: 'START'|'END',
+    anchorRect: DOMRect,
+    surfaceRect: DOMRect,
+    xOffset: number,
+    isTopLayer: boolean,
+  }) {
+    const {
+      isLTR: isLTRBool,
+      surfaceInline,
+      anchorInline,
+      anchorRect,
+      surfaceRect,
+      xOffset,
+      isTopLayer: isTopLayerBool,
+    } = config;
+    // We use number booleans to multiply values rather than `if` / ternary
+    // statements because it _heavily_ cuts down on nesting and readability
+    const isTopLayer = isTopLayerBool ? 1 : 0;
+    const isLTR = isLTRBool ? 1 : 0;
+    const isRTL = isLTRBool ? 0 : 1;
+    const isSurfaceInlineStart = surfaceInline === 'START' ? 1 : 0;
+    const isSurfaceInlineEnd = surfaceInline === 'END' ? 1 : 0;
+    const isOneInlineEnd = anchorInline !== surfaceInline ? 1 : 0;
+
     // Whether or not to apply the width of the anchor
     const inlineAnchorOffset = isOneInlineEnd * anchorRect.width + xOffset;
     // The inline position of the anchor relative to window in LTR
@@ -226,46 +411,26 @@ export class SurfacePositionController implements ReactiveController {
     // The inline position of the anchor relative to window
     const inlineTopLayerOffset =
         isLTR * inlineTopLayerOffsetLTR + isRTL * inlineTopLayerOffsetRTL;
+
     // If the surface's inline would be out of bounds of the window, move it
     // back in
-    const inlineOutOfBoundsCorrection = Math.min(
+    const inlineOutOfBoundsCorrection = Math.abs(Math.min(
         0,
         window.innerWidth - inlineTopLayerOffset - inlineAnchorOffset -
-            surfaceRect.width);
+            surfaceRect.width));
+
 
     // The inline logical value of the surface
-    const inline = isTopLayer * inlineTopLayerOffset + inlineAnchorOffset +
-        inlineOutOfBoundsCorrection;
+    const inlineInset = isTopLayer * inlineTopLayerOffset + inlineAnchorOffset;
 
-    // Whether or not to apply the height of the anchor
-    const blockAnchorOffset = isOneBlockEnd * anchorRect.height + yOffset;
-    // The absolute block position of the anchor relative to window
-    const blockTopLayerOffset = isSurfaceBlockStart * anchorRect.top +
-        isSurfaceBlockEnd * (window.innerHeight - anchorRect.bottom);
-    // If the surface's block would be out of bounds of the window, move it back
-    // in
-    const blockOutOfBoundsCorrection = Math.min(
-        0,
-        window.innerHeight - blockTopLayerOffset - blockAnchorOffset -
-            surfaceRect.height);
-
-    // The block logical value of the surface
-    const block = isTopLayer * blockTopLayerOffset + blockAnchorOffset +
-        blockOutOfBoundsCorrection;
-
-    const surfaceBlockProperty =
-        surfaceBlock === 'START' ? 'inset-block-start' : 'inset-block-end';
     const surfaceInlineProperty =
         surfaceInline === 'START' ? 'inset-inline-start' : 'inset-inline-end';
 
-    this.surfaceStylesInternal = {
-      'display': 'block',
-      'opacity': '1',
-      [surfaceBlockProperty]: `${block}px`,
-      [surfaceInlineProperty]: `${inline}px`,
+    return {
+      inlineInset,
+      inlineOutOfBoundsCorrection,
+      surfaceInlineProperty,
     };
-
-    this.host.requestUpdate();
   }
 
   hostUpdate() {

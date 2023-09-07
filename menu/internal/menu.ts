@@ -139,11 +139,17 @@ export abstract class Menu extends LitElement {
   /**
    * The corner of the anchor which to align the menu in the standard logical
    * property style of <block>_<inline>.
+   *
+   * NOTE: This value may not be respected by the menu positioning algorithm
+   * if the menu would render outisde the viewport.
    */
   @property({attribute: 'anchor-corner'}) anchorCorner: Corner = 'END_START';
   /**
    * The corner of the menu which to align the anchor in the standard logical
    * property style of <block>_<inline>.
+   *
+   * NOTE: This value may not be respected by the menu positioning algorithm
+   * if the menu would render outisde the viewport.
    */
   @property({attribute: 'menu-corner'}) menuCorner: Corner = 'START_START';
   /**
@@ -225,7 +231,8 @@ export abstract class Menu extends LitElement {
   }
 
   /**
-   * Handles positioning the surface and aligning it to the anchor.
+   * Handles positioning the surface and aligning it to the anchor as well as
+   * keeping it in the viewport.
    */
   private readonly menuPositionController =
       new SurfacePositionController(this, () => {
@@ -241,6 +248,10 @@ export abstract class Menu extends LitElement {
           onOpen: this.onOpened,
           beforeClose: this.beforeClose,
           onClose: this.onClosed,
+          // We can't resize components that have overflow like menus with
+          // submenus because the overflow-y will show menu items / content
+          // outside the bounds of the menu. (to be fixed w/ popover API)
+          repositionStrategy: this.hasOverflow ? 'move' : 'resize',
         };
       });
 
