@@ -14,9 +14,8 @@ import '@material/web/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {CloseMenuEvent} from '@material/web/menu/internal/shared.js';
-import {Corner, DefaultFocusState, MdMenu} from '@material/web/menu/menu.js';
-import {css, html, nothing, TemplateResult} from 'lit';
-import {createRef, ref, Ref} from 'lit/directives/ref.js';
+import {Corner, DefaultFocusState, MdMenu, MenuItem} from '@material/web/menu/menu.js';
+import {css, html} from 'lit';
 
 /** Knob types for Menu stories. */
 export interface StoryKnobs {
@@ -96,52 +95,108 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   name: '<md-menu> <md-menu-item>',
   styles: sharedStyle,
   render(knobs) {
-    const showMenu = () => {
-      firstMenuRef.value?.show?.();
-    };
-
-    const menu = renderMenu(
-        knobs, firstMenuRef, displayCloseEvent(firstOutputRef), false,
-        renderItems(fruitNames, knobs));
-
     return html`
       <div class="root">
         <div style="position:relative;">
-          <md-filled-button @click=${showMenu} id="button">
+          <md-filled-button
+              @click=${showMenu}
+              @keydown=${showMenu}
+              aria-haspopup="true"
+              aria-controls="menu"
+              aria-expanded="false"
+              id="button">
             Open Menu
           </md-filled-button>
-          ${menu}
+          <md-menu
+              id="menu"
+              anchor="button"
+              .quick=${knobs.quick}
+              .hasOverflow=${knobs.hasOverflow}
+              .ariaLabel=${knobs.ariaLabel}
+              .anchorCorner="${knobs.anchorCorner!}"
+              .menuCorner="${knobs.menuCorner!}"
+              .xOffset=${knobs.xOffset}
+              .yOffset=${knobs.yOffset}
+              .fixed=${knobs.fixed}
+              .defaultFocus=${knobs.defaultFocus!}
+              .skipRestoreFocus=${knobs.skipRestoreFocus}
+              .typeaheadDelay=${knobs.typeaheadDelay}
+              .stayOpenOnOutsideClick=${knobs.stayOpenOnOutsideClick}
+              .stayOpenOnFocusout=${knobs.stayOpenOnFocusout}
+              @close-menu=${displayCloseEvent}
+              @closed=${setButtonAriaExpandedFalse}>
+            ${fruitNames.map((name, index) => html`
+            <md-menu-item
+                headline=${name}
+                id=${index}
+                .keepOpen=${knobs.keepOpen}
+                .disabled=${knobs.disabled}>
+            </md-menu-item>`)}
+          </md-menu>
         </div>
-        <div class="output" ${ref(firstOutputRef)}></div>
+        <pre class="output"></pre>
       </div>
     `;
   },
 };
 
 const linkable: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-menu-item>',
+  name: '<md-menu-item href="..."> <md-divider>',
   styles: sharedStyle,
   render(knobs) {
-    const showMenu = () => {
-      secondMenuRef.value?.show?.();
-    };
-
-    const menu = renderMenu(
-        knobs, secondMenuRef, displayCloseEvent(secondOutputRef), false,
-        renderLinkableItems(fruitNames, knobs));
+    const items = fruitNames.map((name, index) => {
+      // we want to render dividers between items, so we need to know whether
+      // it's the last item or not.
+      const isLastItem = index === fruitNames.length - 1;
+      return html`
+        <md-menu-item
+            headline=${name}
+            id=${index}
+            .disabled=${knobs.disabled}
+            .target=${
+          knobs.target as '' | '_blank' | '_parent' | '_self' | '_top'}
+            .href=${knobs.href}>
+          <md-icon data-variant="icon" slot="end">
+            ${knobs['link icon']}
+          </md-icon>
+        </md-menu-item>
+        ${!isLastItem ? html`<md-divider role="separator"></md-divider>` : ''}`;
+    });
 
     return html`
       <div class="root">
         <div style="position:relative;">
-
           <md-filled-button
-              @click=${showMenu} id="button">
+              @click=${showMenu}
+              @keydown=${showMenu}
+              aria-haspopup="true"
+              aria-controls="menu"
+              aria-expanded="false"
+              id="button">
             Open Menu
           </md-filled-button>
-          ${menu}
-
+          <md-menu
+              id="menu"
+              anchor="button"
+              .quick=${knobs.quick}
+              .hasOverflow=${knobs.hasOverflow}
+              .ariaLabel=${knobs.ariaLabel}
+              .anchorCorner="${knobs.anchorCorner!}"
+              .menuCorner="${knobs.menuCorner!}"
+              .xOffset=${knobs.xOffset}
+              .yOffset=${knobs.yOffset}
+              .fixed=${knobs.fixed}
+              .defaultFocus=${knobs.defaultFocus!}
+              .skipRestoreFocus=${knobs.skipRestoreFocus}
+              .typeaheadDelay=${knobs.typeaheadDelay}
+              .stayOpenOnOutsideClick=${knobs.stayOpenOnOutsideClick}
+              .stayOpenOnFocusout=${knobs.stayOpenOnFocusout}
+              @close-menu=${displayCloseEvent}
+              @closed=${setButtonAriaExpandedFalse}>
+            ${items}
+          </md-menu>
         </div>
-        <div class="output" ${ref(secondOutputRef)}></div>
+        <pre class="output"></pre>
       </div>
     `;
   },
@@ -151,31 +206,129 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
   name: '<md-sub-menu-item>',
   styles: sharedStyle,
   render(knobs) {
-    const layer2 = renderItems(fruitNames, knobs).slice(4);
+    let currentIndex = -1;
+
+    // This is the third layer with all menu items which close on selection
+    const layer2 = fruitNames.slice(4).map(name => {
+      currentIndex++;
+
+      return html`
+        <md-menu-item
+          headline=${name}
+          id=${currentIndex}
+          .keepOpen=${knobs.keepOpen}
+          .disabled=${knobs.disabled}>
+        </md-menu-item>`;
+    });
+
+    // This is the second layer with a mix of submenu items and menu items
     const layer1 = [
-      ...renderSubMenuItems(fruitNames, knobs, layer2).slice(0, 2),
-      ...renderItems(fruitNames.slice(2, 4), knobs),
+      ...fruitNames.slice(0, 2).map(name => {
+        currentIndex++;
+
+        return html`
+          <md-sub-menu-item
+              headline=${name}
+              id=${currentIndex}
+              .disabled=${knobs.disabled}
+              .anchorCorner=${knobs['submenu.anchorCorner']!}
+              .menuCorner=${knobs['submenu.menuCorner']!}
+              .hoverOpenDelay=${knobs.hoverOpenDelay}
+              .hoverCloseDelay=${knobs.hoverCloseDelay}>
+            <!-- NOTE: slot=submenu -->
+            <md-menu
+                slot="submenu"
+                .ariaLabel=${knobs.ariaLabel}
+                .xOffset=${knobs.xOffset}
+                .yOffset=${knobs.yOffset}
+                .fixed=${knobs.fixed}
+                .defaultFocus=${knobs.defaultFocus!}
+                .typeaheadDelay=${knobs.typeaheadDelay}>
+              ${layer2}
+            </md-menu>
+            <md-icon data-variant="icon" slot="end">
+              ${knobs['submenu icon']}
+            </md-icon>
+          </md-sub-menu-item>`;
+      }),
+      ...fruitNames.slice(2, 5).map(name => {
+        currentIndex++;
+
+        return html`
+          <md-menu-item
+              headline=${name}
+              id=${currentIndex}
+              .keepOpen=${knobs.keepOpen}
+              .disabled=${knobs.disabled}>
+          </md-menu-item>`;
+      }),
     ];
-    const layer0 = renderSubMenuItems(fruitNames, knobs, layer1);
 
-    const showMenu = () => {
-      thirdMenuRef.value?.show?.();
-    };
+    // This is the first layer with all sub menu items
+    const layer0 = fruitNames.map(name => {
+      currentIndex++;
 
-    const rootMenu = renderMenu(
-        knobs, thirdMenuRef, displayCloseEvent(thirdOutputRef), true, layer0);
+      return html`
+        <md-sub-menu-item
+            headline=${name}
+            id=${currentIndex}
+            .disabled=${knobs.disabled}
+            .anchorCorner=${knobs['submenu.anchorCorner']!}
+            .menuCorner=${knobs['submenu.menuCorner']!}
+            .hoverOpenDelay=${knobs.hoverOpenDelay}
+            .hoverCloseDelay=${knobs.hoverCloseDelay}>
+          <!-- NOTE: slot=submenu -->
+          <md-menu
+              slot="submenu"
+              .ariaLabel=${knobs.ariaLabel}
+              .xOffset=${knobs.xOffset}
+              .yOffset=${knobs.yOffset}
+              .fixed=${knobs.fixed}
+              .defaultFocus=${knobs.defaultFocus!}
+              .typeaheadDelay=${knobs.typeaheadDelay}>
+            ${layer1}
+          </md-menu>
+          <md-icon data-variant="icon" slot="end">
+            ${knobs['submenu icon']}
+          </md-icon>
+        </md-sub-menu-item>`;
+    });
 
     return html`
       <div class="root">
         <div style="position:relative;">
-
-          <md-filled-button @click=${showMenu} id="button">
+          <md-filled-button
+              @click=${showMenu}
+              @keydown=${showMenu}
+              aria-haspopup="true"
+              aria-controls="menu"
+              aria-expanded="false"
+              id="button">
             Open Menu
           </md-filled-button>
-          ${rootMenu}
-
+          <!-- NOTE: has-overflow -->
+          <md-menu
+              anchor="button"
+              id="menu"
+              has-overflow
+              .quick=${knobs.quick}
+              .ariaLabel=${knobs.ariaLabel}
+              .anchorCorner="${knobs.anchorCorner!}"
+              .menuCorner="${knobs.menuCorner!}"
+              .xOffset=${knobs.xOffset}
+              .yOffset=${knobs.yOffset}
+              .fixed=${knobs.fixed}
+              .defaultFocus=${knobs.defaultFocus!}
+              .skipRestoreFocus=${knobs.skipRestoreFocus}
+              .typeaheadDelay=${knobs.typeaheadDelay}
+              .stayOpenOnOutsideClick=${knobs.stayOpenOnOutsideClick}
+              .stayOpenOnFocusout=${knobs.stayOpenOnFocusout}
+              @close-menu=${displayCloseEvent}
+              @closed=${setButtonAriaExpandedFalse}>
+            ${layer0}
+          </md-menu>
         </div>
-        <div class="output" ${ref(thirdOutputRef)}></div>
+        <pre class="output"></pre>
       </div>
     `;
   },
@@ -220,119 +373,90 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
             .typeaheadDelay=${knobs.typeaheadDelay}
             .stayOpenOnOutsideClick=${knobs.stayOpenOnOutsideClick}
             .stayOpenOnFocusout=${knobs.stayOpenOnFocusout}
-            @close-menu=${displayCloseEvent(fourthOutputRef)}>
-          ${renderItems(fruitNames, knobs)}
+            @close-menu=${displayCloseEvent}>
+          ${fruitNames.map((name, index) => html`
+            <md-menu-item
+                headline=${name}
+                id=${index}
+                .keepOpen=${knobs.keepOpen}
+                .disabled=${knobs.disabled}>
+            </md-menu-item>
+            `)}
         </md-menu>
-        <div class="output" ${ref(fourthOutputRef)}></div>
+        <pre class="output"></pre>
       </div>
     `;
   },
 };
 
-function displayCloseEvent(outputRef: Ref<HTMLElement>) {
-  return (event: CloseMenuEvent) => {
-    if (!outputRef.value) return;
+/**
+ * Searches for an MdMenu with the id="menu" in the same shadow root and calls
+ * `menu.show()` to open the menu. If it is a keyboard event, it will call show
+ * only if the key is ArrowDown as is standard a11y practice. This function also
+ * attempts to find a menu button with `#button` set on it and sets
+ * aria-expanded=true.
+ */
+function showMenu(event: Event|KeyboardEvent) {
+  // get the menu from the event
+  const root = ((event.target as HTMLElement).getRootNode() as ShadowRoot);
+  const menu = root.querySelector('#menu') as MdMenu;
 
-    outputRef.value.innerText = `Closed by item(s) with text: ${
-        JSON.stringify(
-            event.detail.itemPath.map(item => item.headline))} For reason: ${
-        JSON.stringify(event.detail.reason)}`;
+  // determine if is keyboard event
+  const isKeyboardEvent =
+      (event: KeyboardEvent|Event): event is KeyboardEvent => {
+        return (event as KeyboardEvent).key !== undefined;
+      };
+  const isKeyboard = isKeyboardEvent(event);
+
+  // if is a click, open the menu
+  if (!isKeyboard) {
+    menu.show();
+    // if is arrow down, open the menu and prevent default to prevent scrolling
+  } else if (event.key === 'ArrowDown') {
+    menu.show();
+    event.preventDefault();
+  }
+
+  // set aria-expanded true on the button
+  root.querySelector('#button')?.setAttribute('aria-expanded', 'true');
+}
+
+/**
+ * Searches for an element with `class="output"` set on it, and updates the
+ * text of that element with the menu-closed event's content.
+ */
+function displayCloseEvent(event: CloseMenuEvent) {
+  // get the output element from the shadow root
+  const root = (event.target as HTMLElement).getRootNode() as ShadowRoot;
+  const outputEl = root.querySelector('.output') as HTMLElement;
+
+  const stringifyItem = (menuItem: MenuItem&HTMLElement) => {
+    const tagName = menuItem.tagName.toLowerCase();
+    const headline = menuItem.headline;
+    return `${tagName}${menuItem.id ? `[id="${menuItem.id}"]` : ''}[headline="${
+        headline}"]`;
   };
+
+  // display the event's details in the inner text of that output element
+  outputEl.textContent = `CustomEvent {
+  type: ${event.type},
+  target: ${stringifyItem(event.target as unknown as MenuItem)},
+  detail: {
+    initiator: ${stringifyItem(event.detail.initiator)},
+    itemPath: [
+      ${event.detail.itemPath.map(item => stringifyItem(item)).join(`,
+      `)}
+    ],
+  },
+  reason: ${JSON.stringify(event.detail.reason)}
+}`;
 }
 
-function renderItems(names: string[], knobs: StoryKnobs) {
-  return names.map(name => html`
-    <md-menu-item
-        headline=${name}
-        .keepOpen=${knobs.keepOpen}
-        .disabled=${knobs.disabled}>
-    </md-menu-item>
-  `);
+function setButtonAriaExpandedFalse(e: Event) {
+  const root = (e.target as HTMLElement).getRootNode() as ShadowRoot;
+  // get the button element and set aria-expaned="false" if exists
+  root.querySelector('#button')?.setAttribute('aria-expanded', 'false');
 }
-
-function renderLinkableItems(names: string[], knobs: StoryKnobs) {
-  return names.map(name => html`
-    <md-menu-item
-        headline=${name}
-        .disabled=${knobs.disabled}
-        .target=${knobs.target as '' | '_blank' | '_parent' | '_self' | '_top'}
-        .href=${knobs.href}>
-      <md-icon data-variant="icon" slot="end">
-        ${knobs['link icon']}
-      </md-icon>
-    </md-menu-item>
-  `);
-}
-
-function renderSubMenuItems(
-    names: string[], knobs: StoryKnobs,
-    content?: TemplateResult|TemplateResult[]) {
-  return names.map(name => html`
-    <md-sub-menu-item
-        headline=${name}
-        .disabled=${knobs.disabled}
-        .anchorCorner=${knobs['submenu.anchorCorner']!}
-        .menuCorner=${knobs['submenu.menuCorner']!}
-        .hoverOpenDelay=${knobs.hoverOpenDelay}
-        .hoverCloseDelay=${knobs.hoverCloseDelay}>
-      ${content ? renderSubMenu(knobs, content) : nothing}
-      <md-icon data-variant="icon" slot="end">
-        ${knobs['submenu icon']}
-      </md-icon>
-    </md-sub-menu-item>
-  `);
-}
-
-function renderSubMenu(
-    knobs: StoryKnobs, content: TemplateResult|TemplateResult[]) {
-  return html`
-    <md-menu
-        slot="submenu"
-        .quick=${knobs.quick}
-        .ariaLabel=${knobs.ariaLabel}
-        .xOffset=${knobs.xOffset}
-        .yOffset=${knobs.yOffset}
-        .fixed=${knobs.fixed}
-        .defaultFocus=${knobs.defaultFocus!}
-        .typeaheadDelay=${knobs.typeaheadDelay}>
-      ${content}
-      ${renderLinkableItems(['Link'], knobs)}
-    </md-menu>`;
-}
-
-function renderMenu(
-    knobs: StoryKnobs, menuRef: Ref<MdMenu>,
-    onClose: (event: CloseMenuEvent) => void, hasOverflow: boolean,
-    ...content: unknown[]) {
-  return html`
-    <md-menu
-        ${ref(menuRef)}
-        anchor="button"
-        .quick=${knobs.quick}
-        .hasOverflow=${hasOverflow ?? knobs.hasOverflow}
-        .ariaLabel=${knobs.ariaLabel}
-        .anchorCorner="${knobs.anchorCorner!}"
-        .menuCorner="${knobs.menuCorner!}"
-        .xOffset=${knobs.xOffset}
-        .yOffset=${knobs.yOffset}
-        .fixed=${knobs.fixed}
-        .defaultFocus=${knobs.defaultFocus!}
-        .skipRestoreFocus=${knobs.skipRestoreFocus}
-        .typeaheadDelay=${knobs.typeaheadDelay}
-        .stayOpenOnOutsideClick=${knobs.stayOpenOnOutsideClick}
-        .stayOpenOnFocusout=${knobs.stayOpenOnFocusout}
-        @close-menu=${onClose}>
-      ${content}
-    </md-menu>`;
-}
-
-const firstMenuRef = createRef<MdMenu>();
-const secondMenuRef = createRef<MdMenu>();
-const thirdMenuRef = createRef<MdMenu>();
-const firstOutputRef = createRef<HTMLElement>();
-const secondOutputRef = createRef<HTMLElement>();
-const thirdOutputRef = createRef<HTMLElement>();
-const fourthOutputRef = createRef<HTMLElement>();
 
 /** Menu stories. */
 export const stories = [standard, linkable, submenu, menuWithoutButton];

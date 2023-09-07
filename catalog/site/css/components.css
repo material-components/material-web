@@ -68,11 +68,16 @@ p:has(> img) {
 }
 
 main > :not(catalog-component-header) {
-  max-width: min(100%, 980px);
   margin-inline: auto;
   box-sizing: border-box;
   overflow-x: auto;
   display: block;
+}
+
+main > :not(catalog-component-header, details),
+main > details > summary {
+  max-width: min(100%, 980px);
+  margin-inline: auto;
 }
 
 table {
