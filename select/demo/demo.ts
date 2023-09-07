@@ -26,8 +26,8 @@ const collection =
       new Knob('menuFixed', {ui: boolInput(), defaultValue: false}),
 
       new Knob('md-select Slots', {ui: title()}),
-      new Knob('slot=leadingicon', {ui: textInput(), defaultValue: ''}),
-      new Knob('slot=trailingicon', {ui: textInput(), defaultValue: ''}),
+      new Knob('slot=leading-icon', {ui: textInput(), defaultValue: ''}),
+      new Knob('slot=trailing-icon', {ui: textInput(), defaultValue: ''}),
     ]);
 
 collection.addStories(...materialInitsToStoryInits(stories));

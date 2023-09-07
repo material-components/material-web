@@ -26,8 +26,8 @@ export interface StoryKnobs {
   menuFixed: boolean;
 
   'md-select Slots': void;
-  'slot=leadingicon': string;
-  'slot=trailingicon': string;
+  'slot=leading-icon': string;
+  'slot=trailing-icon': string;
 }
 
 const outlined: MaterialStoryInit<StoryKnobs> = {
@@ -44,8 +44,8 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
           .menuFixed=${knobs.menuFixed}
           .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>
-        ${renderIcon(knobs['slot=leadingicon'], 'leadingicon')}
-        ${renderIcon(knobs['slot=trailingicon'], 'trailingicon')}
+        ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
+        ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
         ${renderItems()}
       </md-outlined-select>
     `;
@@ -66,15 +66,15 @@ const filled: MaterialStoryInit<StoryKnobs> = {
           .menuFixed=${knobs.menuFixed}
           .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>
-        ${renderIcon(knobs['slot=leadingicon'], 'leadingicon')}
-        ${renderIcon(knobs['slot=trailingicon'], 'trailingicon')}
+        ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
+        ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
         ${renderItems()}
       </md-filled-select>
     `;
   }
 };
 
-function renderIcon(iconName: string, slot: 'leadingicon'|'trailingicon') {
+function renderIcon(iconName: string, slot: 'leading-icon'|'trailing-icon') {
   return iconName ?
       html`<md-icon slot=${slot}><span>${iconName}</span></md-icon>` :
       nothing;

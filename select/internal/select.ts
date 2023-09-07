@@ -95,7 +95,7 @@ export abstract class Select extends LitElement {
   @state() private open = false;
   @query('md-menu') private readonly menu!: Menu|null;
   @query('#label') private readonly labelEl!: HTMLElement;
-  @queryAssignedElements({slot: 'leadingicon', flatten: true})
+  @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
 
   /**
@@ -229,7 +229,7 @@ export abstract class Select extends LitElement {
   private renderLeadingIcon() {
     return html`
       <span class="icon leading" slot="start">
-         <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
+         <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
       </span>
      `;
   }
@@ -237,7 +237,7 @@ export abstract class Select extends LitElement {
   private renderTrailingIcon() {
     return html`
       <span class="icon trailing" slot="end">
-        <slot name="trailingicon" @slotchange=${this.handleIconChange}>
+        <slot name="trailing-icon" @slotchange=${this.handleIconChange}>
           <svg height="5" viewBox="7 10 10 5" focusable="false">
             <polygon class="down" stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
             <polygon class="up" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15"></polygon>
