@@ -191,31 +191,31 @@ describe('mwc-navigation-tab', () => {
   });
 
   describe('icons', () => {
-    it('nodes with `slot=activeIcon` will serve as the active icon',
+    it('nodes with `slot=active-icon` will serve as the active icon',
        async () => {
          const {harness} = await setupTest();
          const icons = html`
-           <i slot="activeIcon" class="material-icons">star</i>
-           <i slot="inactiveIcon" class="material-icons">star_border</i>
-         `;
-         render(icons, harness.element);
-
-         const icon =
-             harness.element.querySelector<HTMLElement>('[slot="activeIcon"]')!;
-         expect(icon.textContent!.trim()).toEqual('star');
-       });
-
-    it('nodes with `slot=inactiveIcon` will serve as the inactive icon',
-       async () => {
-         const {harness} = await setupTest();
-         const icons = html`
-           <i slot="activeIcon" class="material-icons">star</i>
-           <i slot="inactiveIcon" class="material-icons">star_border</i>
+           <i slot="active-icon" class="material-icons">star</i>
+           <i slot="inactive-icon" class="material-icons">star_border</i>
          `;
          render(icons, harness.element);
 
          const icon = harness.element.querySelector<HTMLElement>(
-             '[slot="inactiveIcon"]')!;
+             '[slot="active-icon"]')!;
+         expect(icon.textContent!.trim()).toEqual('star');
+       });
+
+    it('nodes with `slot=inactive-icon` will serve as the inactive icon',
+       async () => {
+         const {harness} = await setupTest();
+         const icons = html`
+           <i slot="active-icon" class="material-icons">star</i>
+           <i slot="inactive-icon" class="material-icons">star_border</i>
+         `;
+         render(icons, harness.element);
+
+         const icon = harness.element.querySelector<HTMLElement>(
+             '[slot="inactive-icon"]')!;
          expect(icon.textContent!.trim()).toEqual('star_border');
        });
   });

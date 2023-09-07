@@ -53,10 +53,10 @@ export class NavigationTab extends LitElement implements NavigationTabState {
         <span aria-hidden="true" class="md3-navigation-tab__icon-content"
           ><span class="md3-navigation-tab__active-indicator"
             ></span><span class="md3-navigation-tab__icon"
-          ><slot name="inactiveIcon"></slot
+          ><slot name="inactive-icon"></slot
         ></span>
         <span class="md3-navigation-tab__icon md3-navigation-tab__icon--active"
-          ><slot name="activeIcon"></slot
+          ><slot name="active-icon"></slot
         ></span>${this.renderBadge()}</span
         >${this.renderLabel()}
       </button>`;

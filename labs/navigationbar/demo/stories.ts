@@ -39,32 +39,32 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .label=${label}
               .showBadge=${showBadge}
               .badgeValue=${badgeValue}>
-            <md-icon slot="activeIcon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactiveIcon">${knobs['inactive icon']}</md-icon>
+            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
           </md-navigation-tab>
 
           <md-navigation-tab
               .label=${label}
               .showBadge=${showBadge}
               .badgeValue=${badgeValue}>
-            <md-icon slot="activeIcon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactiveIcon">${knobs['inactive icon']}</md-icon>
+            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
           </md-navigation-tab>
 
           <md-navigation-tab
               .label=${label}
               .showBadge=${showBadge}
               .badgeValue=${badgeValue}>
-            <md-icon slot="activeIcon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactiveIcon">${knobs['inactive icon']}</md-icon>
+            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
           </md-navigation-tab>
 
           <md-navigation-tab
               .label=${label}
               .showBadge=${showBadge}
               .badgeValue=${badgeValue}>
-            <md-icon slot="activeIcon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactiveIcon">${knobs['inactive icon']}</md-icon>
+            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
           </md-navigation-tab>
         </md-navigation-bar>
       </div>`;
