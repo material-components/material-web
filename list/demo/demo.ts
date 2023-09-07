@@ -36,7 +36,7 @@ export const VIDEO_URL =
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('List', [
-      new Knob('listTabIndex', {ui: numberInput(), defaultValue: 0}),
+      new Knob('listTabindex', {ui: numberInput(), defaultValue: 0}),
 
       new Knob('md-list-item', {ui: title()}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),

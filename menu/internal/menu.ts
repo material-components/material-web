@@ -125,7 +125,7 @@ export abstract class Menu extends LitElement {
   /**
    * The tabindex of the underlying list element.
    */
-  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tabindex'}) listTabindex = 0;
   /**
    * The role of the underlying list element.
    */
@@ -304,7 +304,7 @@ export abstract class Menu extends LitElement {
           id="list"
           aria-label=${ariaLabel || nothing}
           type=${this.type}
-          listTabIndex=${this.listTabIndex}
+          .listTabindex=${this.listTabindex}
           @keydown=${this.handleListKeydown}>
         ${this.renderMenuItems()}
       </md-list>`;

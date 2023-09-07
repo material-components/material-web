@@ -33,7 +33,7 @@ export interface StoryKnobs {
   xOffset: number;
   yOffset: number;
   typeaheadDelay: number;
-  listTabIndex: number;
+  listTabindex: number;
   ariaLabel: string;
 
   'menu-item': void;

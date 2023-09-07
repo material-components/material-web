@@ -89,7 +89,7 @@ const collection =
         defaultValue: 200,
         ui: numberInput(),
       }),
-      new Knob('listTabIndex', {
+      new Knob('listTabindex', {
         defaultValue: 0,
         ui: numberInput(),
       }),

@@ -51,7 +51,7 @@ export class List extends LitElement {
   /**
    * The tabindex of the underlying list.
    */
-  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tabindex'}) listTabindex = 0;
 
   @query('.list') private listRoot!: HTMLElement|null;
 
@@ -79,7 +79,7 @@ export class List extends LitElement {
     return html`
     <ul class="list"
         aria-label=${ariaLabel || nothing}
-        tabindex=${this.listTabIndex}
+        tabindex=${this.listTabindex}
         role=${this.type || nothing}
         @keydown=${this.handleKeydown}
         >
