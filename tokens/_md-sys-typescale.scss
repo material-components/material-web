@@ -9,80 +9,69 @@
 // go/keep-sorted start
 @use './md-ref-typeface';
 @use './v0_172/md-sys-typescale';
+@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
-  'body-large',
   'body-large-font',
   'body-large-line-height',
   'body-large-size',
   'body-large-weight',
-  'body-medium',
   'body-medium-font',
   'body-medium-line-height',
   'body-medium-size',
-  'body-small',
+  'body-medium-weight',
   'body-small-font',
   'body-small-line-height',
   'body-small-size',
   'body-small-weight',
-  'display-large',
   'display-large-font',
   'display-large-line-height',
   'display-large-size',
   'display-large-weight',
-  'display-medium',
   'display-medium-font',
   'display-medium-line-height',
   'display-medium-size',
   'display-medium-weight',
-  'display-small',
   'display-small-font',
   'display-small-line-height',
   'display-small-size',
   'display-small-weight',
-  'headline-large',
   'headline-large-font',
   'headline-large-line-height',
   'headline-large-size',
   'headline-large-weight',
-  'headline-medium',
   'headline-medium-font',
   'headline-medium-line-height',
   'headline-medium-size',
   'headline-medium-weight',
-  'headline-small',
   'headline-small-font',
   'headline-small-line-height',
   'headline-small-size',
   'headline-small-weight',
-  'label-large',
   'label-large-font',
   'label-large-line-height',
   'label-large-size',
   'label-large-weight',
-  'label-medium',
+  'label-large-weight-prominent',
   'label-medium-font',
   'label-medium-line-height',
   'label-medium-size',
   'label-medium-weight',
-  'label-small',
+  'label-medium-weight-prominent',
   'label-small-font',
   'label-small-line-height',
   'label-small-size',
   'label-small-weight',
-  'title-large',
   'title-large-font',
   'title-large-line-height',
   'title-large-size',
   'title-large-weight',
-  'title-medium',
   'title-medium-font',
   'title-medium-line-height',
   'title-medium-size',
   'title-medium-weight',
-  'title-small',
   'title-small-font',
   'title-small-line-height',
   'title-small-size',
@@ -90,23 +79,66 @@ $supported-tokens: (
   // go/keep-sorted end
 );
 
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'body-large',
+  'body-large-tracking',
+  'body-medium',
+  'body-medium-tracking',
+  'body-small',
+  'body-small-tracking',
+  'display-large',
+  'display-large-tracking',
+  'display-medium',
+  'display-medium-tracking',
+  'display-small',
+  'display-small-tracking',
+  'headline-large',
+  'headline-large-tracking',
+  'headline-medium',
+  'headline-medium-tracking',
+  'headline-small',
+  'headline-small-tracking',
+  'label-large',
+  'label-large-tracking',
+  'label-medium',
+  'label-medium-tracking',
+  'label-small',
+  'label-small-tracking',
+  'title-large',
+  'title-large-tracking',
+  'title-medium',
+  'title-medium-tracking',
+  'title-small',
+  'title-small-tracking',
+  // go/keep-sorted end
+);
+
 $_default: (
   'md-ref-typeface': md-ref-typeface.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: md-sys-typescale.values($deps, $exclude-hardcoded-values);
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: false
+) {
+  $tokens: md-sys-typescale.values(
+    $deps,
+    $exclude-hardcoded-values: $exclude-hardcoded-values
+  );
 
-  // TODO(b/271876162): Remove when the token compiler emits these custom properties
-  @each $token in $supported-tokens {
-    $value: map.get($tokens, $token);
-    @if $value != null {
-      $tokens: map.set(
-        $tokens,
-        $token,
-        var(--md-sys-typescale-#{$token}, #{$value})
-      );
+  @if not $exclude-custom-properties {
+    // Create --md-sys-typescale-* custom properties
+    @each $token, $value in $tokens {
+      $var: var(--md-sys-typescale-#{$token}, #{$value});
+      $tokens: map.set($tokens, $token, $var);
     }
   }
-  @return $tokens;
+
+  @return values.validate(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
+  );
 }

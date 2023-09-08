@@ -1,0 +1,50 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../tokens';
+// go/keep-sorted end
+
+/// `typescale.theme()` emits `--md-sys-typescale-*` custom properties for given
+/// typescale tokens.
+///
+/// Use `typeface.theme()` to change font family and weight for all typescales,
+/// rather than individually.
+///
+/// @example scss
+///   @use '@material/web/typography/typescale';
+///
+///   :root {
+///     @include typescale.theme(
+///       'body-medium-size': 1rem,
+///       'body-medium-line-height': 1.5rem,
+///       /* ... */
+///     );
+///   }
+///
+///   /* Generated CSS */
+///   :root {
+///     --md-sys-typescale-body-medium-size: 1rem;
+///     --md-sys-typescale-body-medium-line-height: 1.5rem;
+///     /* ... */
+///   }
+///
+/// @param {Map} $tokens - A Map with `md-sys-typescale` token name keys and
+///     their corresponding `font` shorthand values.
+/// @output Emits `--md-sys-typescale-*` custom properties for given typescales.
+@mixin theme($tokens) {
+  @each $token, $value in $tokens {
+    @if list.index(tokens.$md-sys-typescale-supported-tokens, $token) == null {
+      @error 'md-sys-typescale `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-sys-typescale-#{$token}: #{$value};
+    }
+  }
+}

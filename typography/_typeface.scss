@@ -1,0 +1,49 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../tokens';
+// go/keep-sorted end
+
+/// `typeface.theme()` emits `--md-ref-typeface-*` custom properties for given
+/// font families and weights.
+///
+/// Use this to change the font families or weights for all typescales.
+///
+/// @example scss
+///   @use '@material/web/typography/typeface';
+///
+///   :root {
+///     @include typeface.theme(
+///       'brand': 'Open Sans',
+///       'plain': sans-serif,
+///       'weight-bold': 900,
+///     );
+///   }
+///
+///   /* Generated CSS */
+///   :root {
+///     --md-ref-typeface-brand: 'Open Sans';
+///     --md-ref-typeface-plain: sans-serif;
+///     --md-ref-typeface-weight-bold: 900;
+///   }
+///
+/// @param {Map} $tokens - A Map with `md-ref-typeface` token name keys and
+///     their corresponding font family or weight values.
+/// @output Emits `--md-ref-typeface-*` custom properties.
+@mixin theme($tokens) {
+  @each $token, $value in $tokens {
+    @if list.index(tokens.$md-ref-typeface-supported-tokens, $token) == null {
+      @error 'md-ref-typeface `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-ref-typeface-#{$token}: #{$value};
+    }
+  }
+}

@@ -8,6 +8,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use './v0_172/md-ref-typeface';
+@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -20,18 +21,21 @@ $supported-tokens: (
   // go/keep-sorted end
 );
 
-@function values($exclude-hardcoded-values: false) {
-  $tokens: md-ref-typeface.values($exclude-hardcoded-values);
+@function values(
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: false
+) {
+  $tokens: md-ref-typeface.values(
+    $exclude-hardcoded-values: $exclude-hardcoded-values,
+  );
 
-  @each $token in $supported-tokens {
-    $value: map.get($tokens, $token);
-    @if $value != null {
-      $tokens: map.set(
-        $tokens,
-        $token,
-        var(--md-ref-typeface-#{$token}, #{$value})
-      );
+  @if not $exclude-custom-properties {
+    // Create --md-ref-typeface-* custom properties
+    @each $token, $value in $tokens {
+      $var: var(--md-ref-typeface-#{$token}, #{$value});
+      $tokens: map.set($tokens, $token, $var);
     }
   }
-  @return $tokens;
+
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
 }
