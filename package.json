@@ -60,7 +60,7 @@
     "sass-true": "^6.1.0",
     "typescript": "5.1.6",
     "web-test-runner-jasmine": "^0.0.2",
-    "wireit": "^0.9.0"
+    "wireit": "^0.13.0"
   },
   "wireit": {
     "build": {
