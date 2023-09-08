@@ -210,13 +210,14 @@ export class Tabs extends LitElement {
     // sync state with items.
     if (itemsChanged) {
       this.items.forEach((item, i) => {
-        item.selected = this.selected === i;
+        item.active = this.selected === i;
       });
     }
     if (itemsChanged || changed.has('selected')) {
-      if (this.previousSelectedItem !== this.selectedItem) {
-        this.previousSelectedItem?.removeAttribute('selected');
-        this.selectedItem?.setAttribute('selected', '');
+      if (this.previousSelectedItem && this.selectedItem &&
+          this.previousSelectedItem !== this.selectedItem) {
+        this.previousSelectedItem.active = false;
+        this.selectedItem.active = true;
       }
       if (this.selectedItem !== this.focusedItem) {
         this.updateFocusableItem(this.selectedItem);

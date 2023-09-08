@@ -41,7 +41,7 @@
     );
   }
 
-  :host([selected]) md-focus-ring {
+  :host([active]) md-focus-ring {
     margin-bottom: calc(var(--_active-indicator-height) + 1px);
   }
 
@@ -139,10 +139,10 @@
   }
 
   // selected styling
-  :host([selected]) .indicator {
+  :host([active]) .indicator {
     opacity: 1;
   }
-  :host([selected]) .button {
+  :host([active]) .button {
     color: var(--_active-label-text-color);
     @include elevation.theme(
       (
@@ -160,32 +160,32 @@
     );
   }
 
-  :host([selected]) .button ::slotted([slot='icon']) {
+  :host([active]) .button ::slotted([slot='icon']) {
     color: var(--_active-icon-color);
   }
 
   // selected states
-  :host([selected]) .button:hover {
+  :host([active]) .button:hover {
     color: var(--_active-hover-label-text-color);
   }
 
-  :host([selected]) .button:hover ::slotted([slot='icon']) {
+  :host([active]) .button:hover ::slotted([slot='icon']) {
     color: var(--_active-hover-icon-color);
   }
 
-  :host([selected]) .button:focus {
+  :host([active]) .button:focus {
     color: var(--_active-focus-label-text-color);
   }
 
-  :host([selected]) .button:focus ::slotted([slot='icon']) {
+  :host([active]) .button:focus ::slotted([slot='icon']) {
     color: var(--_active-focus-icon-color);
   }
 
-  :host([selected]) .button:active {
+  :host([active]) .button:active {
     color: var(--_active-pressed-label-text-color);
   }
 
-  :host([selected]) .button:active ::slotted([slot='icon']) {
+  :host([active]) .button:active ::slotted([slot='icon']) {
     color: var(--_active-pressed-icon-color);
   }
 

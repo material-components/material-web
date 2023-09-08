@@ -36,9 +36,21 @@ export class Tab extends LitElement {
   }
 
   /**
-   * Whether or not the tab is `selected`.
+   * Whether or not the tab is selected.
    **/
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean, reflect: true}) active = false;
+
+  /**
+   * TODO(b/293476210): remove after migrating
+   * @deprecated use `active`
+   */
+  @property({type: Boolean})
+  get selected() {
+    return this.active;
+  }
+  set selected(active: boolean) {
+    this.active = active;
+  }
 
   /**
    * In SSR, set this to true when an icon is present.
@@ -93,8 +105,8 @@ export class Tab extends LitElement {
   }
 
   protected override updated(changed: PropertyValues) {
-    if (changed.has('selected')) {
-      this.internals.ariaSelected = String(this.selected);
+    if (changed.has('active')) {
+      this.internals.ariaSelected = String(this.active);
       this.animateSelected();
     }
   }
@@ -130,7 +142,7 @@ export class Tab extends LitElement {
 
   private getKeyframes() {
     const reduceMotion = shouldReduceMotion();
-    if (!this.selected) {
+    if (!this.active) {
       return reduceMotion ? [{'opacity': 1}, {'transform': 'none'}] : null;
     }
 

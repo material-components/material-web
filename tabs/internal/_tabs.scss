@@ -38,7 +38,7 @@
 
   // draw selected on top so its indicator can be transitioned from the
   // previously selected tab, on top of it
-  ::slotted([selected]) {
+  ::slotted([active]) {
     z-index: 1;
   }
 }
