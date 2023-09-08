@@ -54,7 +54,10 @@ $supported-tokens: (
   'icon-color',
   'icon-size',
   'label-text-color',
-  'label-text-type',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
   'pressed-icon-color',
   'pressed-label-text-color',
   'pressed-state-layer-color',
@@ -64,29 +67,20 @@ $supported-tokens: (
 );
 
 $unsupported-tokens: (
-  'with-label-text-label-text-font',
-  'with-label-text-label-text-line-height',
-  'with-label-text-label-text-size',
-  'with-label-text-label-text-tracking',
-  'with-label-text-label-text-weight',
+  // go/keep-sorted start
   'active-focus-state-layer-color',
   'active-focus-state-layer-opacity',
   'focus-state-layer-color',
-  'focus-state-layer-opacity'
+  'focus-state-layer-opacity',
+  'label-text-tracking',
+  'label-text-type',
+  // go/keep-sorted end
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: md-comp-primary-navigation-tab.values(
     $deps,
     $exclude-hardcoded-values: $exclude-hardcoded-values
-  );
-
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  $tokens: map.merge(
-    $tokens,
-    (
-      'label-text-type': map.get($deps, 'md-sys-typescale', 'title-small'),
-    )
   );
 
   @return values.validate(
@@ -112,6 +106,11 @@ $unsupported-tokens: (
       'with-icon-inactive-icon-color': 'icon-color',
       'with-icon-inactive-pressed-icon-color': 'pressed-icon-color',
       // rename with-label-text- and inactive-
+      'with-label-text-label-text-font': 'label-text-font',
+      'with-label-text-label-text-line-height': 'label-text-line-height',
+      'with-label-text-label-text-size': 'label-text-size',
+      'with-label-text-label-text-tracking': 'label-text-tracking',
+      'with-label-text-label-text-weight': 'label-text-weight',
       'with-label-text-active-focus-label-text-color':
         'active-focus-label-text-color',
       'with-label-text-active-hover-label-text-color':

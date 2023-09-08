@@ -54,7 +54,10 @@ $supported-tokens: (
   'icon-color',
   'icon-size',
   'label-text-color',
-  'label-text-type',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
   'pressed-icon-color',
   'pressed-label-text-color',
   'pressed-state-layer-color',
@@ -66,11 +69,8 @@ $unsupported-tokens: (
   // include an icon and the size will adjust;
   // height is 48 and it's 64 with icon
   'container-shadow-color',
-  'label-text-font',
-  'label-text-line-height',
-  'label-text-size',
+  'label-text-type',
   'label-text-tracking',
-  'label-text-weight',
   'focus-state-layer-color',
   'focus-state-layer-opacity'
 );
@@ -79,14 +79,6 @@ $unsupported-tokens: (
   $tokens: md-comp-secondary-navigation-tab.values(
     $deps,
     $exclude-hardcoded-values: $exclude-hardcoded-values
-  );
-
-  // TODO(b/271876162): remove when tokens compiler emits typescale tokens
-  $tokens: map.merge(
-    $tokens,
-    (
-      'label-text-type': map.get($deps, 'md-sys-typescale', 'title-small'),
-    )
   );
 
   $tokens: _add-missing-secondary-tokens($tokens);

@@ -145,7 +145,8 @@ const custom: MaterialStoryInit<StoryKnobs> = {
     css`
       .custom {
         /* text */
-        --md-primary-tab-label-text-type: 0.8em cursive, system-ui;
+        --md-primary-tab-label-text-font: cursive, system-ui;
+        --md-primary-tab-label-text-size: 0.8em;
         /* indicator */
         --md-primary-tab-active-indicator-color: firebrick;
         --md-primary-tab-active-indicator-height: 8px;

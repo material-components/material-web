@@ -191,9 +191,9 @@ of color, typography, and shape.
 ### Primary tab tokens
 
 Token                                     | Default value
------------------------------------------ | -----------------------------------
+----------------------------------------- | -------------
 `--md-primary-tab-container-color`        | `--md-sys-color-surface`
-`--md-primary-tab-label-text-type`        | `500 0.875rem/1.25rem Roboto`
+`--md-primary-tab-label-text-font`        | `--md-sys-typescale-title-small-font`
 `--md-primary-tab-active-indicator-color` | `--md-sys-color-primary`
 `--md-primary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
 `--md-primary-tab-container-shape`        | `0px`
@@ -217,7 +217,8 @@ Token                                     | Default value
   --md-sys-color-primary: #005353;
 
   /* Component tokens */
-  --md-primary-tab-label-text-type: 0.8em cursive, system-ui;
+  --md-primary-tab-label-text-font: cursive, system-ui;
+  --md-primary-tab-label-text-size: 0.8em;
 }
 </style>
 
@@ -233,7 +234,7 @@ Token                                     | Default value
 Token                                       | Default value
 ------------------------------------------- | -------------
 `--md-secondary-tab-container-color`        | `--md-sys-color-surface`
-`--md-secondary-tab-label-text-type`        | `500 0.875rem/1.25rem Roboto`
+`--md-secondary-tab-label-text-font`        | `--md-sys-typescale-title-small-font`
 `--md-secondary-tab-active-indicator-color` | `--md-sys-color-primary`
 `--md-secondary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
 `--md-secondary-tab-container-shape`        | `0px`
@@ -255,7 +256,8 @@ Token                                       | Default value
   --md-sys-color-primary: #005353;
 
   /* Component tokens */
-  --md-secondary-tab-label-text-type: 0.8em cursive, system-ui;
+  --md-secondary-tab-label-text-font: cursive, system-ui;
+  --md-secondary-tab-label-text-size: 0.8em;
 }
 </style>
 
