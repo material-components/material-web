@@ -335,9 +335,9 @@ export abstract class TextField extends LitElement {
   @query('.input')
   private readonly inputOrTextarea?: HTMLInputElement|HTMLTextAreaElement|null;
   @query('.field') private readonly field?: Field|null;
-  @queryAssignedElements({slot: 'leadingicon'})
+  @queryAssignedElements({slot: 'leading-icon'})
   private readonly leadingIcons!: Element[];
-  @queryAssignedElements({slot: 'trailingicon'})
+  @queryAssignedElements({slot: 'trailing-icon'})
   private readonly trailingIcons!: Element[];
   private readonly internals =
       (this as HTMLElement /* needed for closure */).attachInternals();
@@ -593,7 +593,7 @@ export abstract class TextField extends LitElement {
   private renderLeadingIcon() {
     return html`
        <span class="icon leading" slot="start">
-         <slot name="leadingicon" @slotchange=${this.handleIconChange}></slot>
+         <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
        </span>
      `;
   }
@@ -601,7 +601,7 @@ export abstract class TextField extends LitElement {
   private renderTrailingIcon() {
     return html`
        <span class="icon trailing" slot="end">
-         <slot name="trailingicon" @slotchange=${this.handleIconChange}></slot>
+         <slot name="trailing-icon" @slotchange=${this.handleIconChange}></slot>
        </span>
      `;
   }

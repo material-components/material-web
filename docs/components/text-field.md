@@ -170,18 +170,18 @@ icon), or to express errors.
 
 ```html
 <md-outlined-text-field placeholder="Search for messages">
-  <md-icon slot="leadingicon">search</md-icon>
+  <md-icon slot="leading-icon">search</md-icon>
 </md-outlined-text-field>
 
 <md-outlined-text-field label="Password" type="password">
-  <md-icon-button toggle slot="trailingicon">
+  <md-icon-button toggle slot="trailing-icon">
     <md-icon>visibility</md-icon>
     <md-icon slot="selected">visibility_off</md-icon>
   </md-icon-button>
 </md-outlined-text-field>
 
 <md-outlined-text-field label="Username" error error-text="Username not available">
-  <md-icon slot="trailingicon">error</md-icon>
+  <md-icon slot="trailing-icon">error</md-icon>
 </md-outlined-text-field>
 ```
 

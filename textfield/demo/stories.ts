@@ -99,9 +99,9 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
   }
 };
 
-const LEADING_ICON = html`<md-icon slot="leadingicon">search</md-icon>`;
+const LEADING_ICON = html`<md-icon slot="leading-icon">search</md-icon>`;
 const TRAILING_ICON =
-    html`<md-icon-button slot="trailingicon"><md-icon>event</md-icon></md-icon-button>`;
+    html`<md-icon-button slot="trailing-icon"><md-icon>event</md-icon></md-icon-button>`;
 function reportValidity(event: Event) {
   (event.target as MdFilledTextField).reportValidity();
 }

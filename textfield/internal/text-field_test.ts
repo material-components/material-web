@@ -77,7 +77,7 @@ describe('TextField', () => {
        async () => {
          const {harness, input} = await setupTest();
          // Add a trailing icon button to click on
-         render(html`<button slot="trailingicon">X</button>`, harness.element);
+         render(html`<button slot="trailing-icon">X</button>`, harness.element);
          const button = harness.element.querySelector('button');
 
          expect(button).toBeDefined();
