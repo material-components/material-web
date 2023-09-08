@@ -109,6 +109,47 @@ export class Tabs extends LitElement {
     }
   }
 
+  protected override willUpdate(changed: PropertyValues) {
+    if (changed.has('selected')) {
+      this.previousSelected = changed.get('selected') ?? -1;
+    }
+    if (this.itemsDirty) {
+      this.itemsDirty = false;
+      this.previousSelected = -1;
+    }
+  }
+
+  protected override render() {
+    return html`
+      <div class="tabs">
+        <slot @slotchange=${this.handleSlotChange} @click=${
+        this.handleItemClick}></slot>
+      </div>
+      <md-divider part="divider"></md-divider>
+    `;
+  }
+
+  protected override async updated(changed: PropertyValues) {
+    const itemsChanged = changed.has('itemsDirty');
+    // sync state with items.
+    if (itemsChanged) {
+      this.tabs.forEach((item, i) => {
+        item.active = this.selected === i;
+      });
+    }
+    if (itemsChanged || changed.has('selected')) {
+      if (this.previousSelectedItem && this.selectedItem &&
+          this.previousSelectedItem !== this.selectedItem) {
+        this.previousSelectedItem.active = false;
+        this.selectedItem.active = true;
+      }
+      if (this.selectedItem !== this.focusedItem) {
+        this.updateFocusableItem(this.selectedItem);
+      }
+      await this.scrollItemIntoView();
+    }
+  }
+
   // focus item on keydown and optionally select it
   private readonly handleKeydown = async (event: KeyboardEvent) => {
     const {key} = event;
@@ -199,51 +240,10 @@ export class Tabs extends LitElement {
     this.dispatchEvent(event);
   }
 
-  protected override willUpdate(changed: PropertyValues) {
-    if (changed.has('selected')) {
-      this.previousSelected = changed.get('selected') ?? -1;
-    }
-    if (this.itemsDirty) {
-      this.itemsDirty = false;
-      this.previousSelected = -1;
-    }
-  }
-
-  protected override async updated(changed: PropertyValues) {
-    const itemsChanged = changed.has('itemsDirty');
-    // sync state with items.
-    if (itemsChanged) {
-      this.tabs.forEach((item, i) => {
-        item.active = this.selected === i;
-      });
-    }
-    if (itemsChanged || changed.has('selected')) {
-      if (this.previousSelectedItem && this.selectedItem &&
-          this.previousSelectedItem !== this.selectedItem) {
-        this.previousSelectedItem.active = false;
-        this.selectedItem.active = true;
-      }
-      if (this.selectedItem !== this.focusedItem) {
-        this.updateFocusableItem(this.selectedItem);
-      }
-      await this.scrollItemIntoView();
-    }
-  }
-
   private updateFocusableItem(focusableItem: HTMLElement|null) {
     for (const item of this.tabs) {
       item.tabIndex = item === focusableItem ? 0 : -1;
     }
-  }
-
-  protected override render() {
-    return html`
-      <div class="tabs">
-        <slot @slotchange=${this.handleSlotChange} @click=${
-        this.handleItemClick}></slot>
-      </div>
-      <md-divider part="divider"></md-divider>
-    `;
   }
 
   private async handleItemClick(event: Event) {
