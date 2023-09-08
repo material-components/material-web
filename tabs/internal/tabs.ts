@@ -11,7 +11,7 @@ import {property, queryAssignedElements, state} from 'lit/decorators.js';
 
 import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 
-import {Tab} from './tab.js';
+import {ANIMATE_INDICATOR, Tab} from './tab.js';
 
 const NAVIGATION_KEYS = new Map([
   ['default', new Set(['Home', 'End'])],
@@ -85,7 +85,7 @@ export class Tabs extends LitElement {
   /**
    * The item previously selected.
    */
-  get previousSelectedItem() {
+  private get previousSelectedItem() {
     return this.tabs[this.previousSelected];
   }
 
@@ -142,6 +142,7 @@ export class Tabs extends LitElement {
           this.previousSelectedItem !== this.selectedItem) {
         this.previousSelectedItem.active = false;
         this.selectedItem.active = true;
+        this.selectedItem[ANIMATE_INDICATOR](this.previousSelectedItem);
       }
       if (this.selectedItem !== this.focusedItem) {
         this.updateFocusableItem(this.selectedItem);

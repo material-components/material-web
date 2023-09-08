@@ -70,17 +70,14 @@ describe('<md-tabs>', () => {
       });
     });
 
-    it('updates selectedItem/previousSelectedItem', async () => {
+    it('updates selectedItem', async () => {
       const {harness} = await setupTest({selected: 1});
       expect(harness.element.selectedItem)
           .toBe(harness.harnessedItems[1].element);
-      expect(harness.element.previousSelectedItem).toBeUndefined();
       harness.element.selected = 0;
       await harness.element.updateComplete;
       expect(harness.element.selectedItem)
           .toBe(harness.harnessedItems[0].element);
-      expect(harness.element.previousSelectedItem)
-          .toBe(harness.harnessedItems[1].element);
     });
 
     it('maintains selection when tabs are mutated', async () => {

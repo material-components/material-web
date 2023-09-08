@@ -8,24 +8,24 @@ import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements, queryAssignedNodes, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 import {EASING} from '../../internal/motion/animation.js';
 
-interface Tabs extends HTMLElement {
-  selected?: number;
-  selectedItem?: Tab;
-  previousSelectedItem?: Tab;
-}
-
 /**
  * Symbol for tabs to use to animate their indicators based off another tab's
  * indicator.
  */
 const INDICATOR = Symbol('indicator');
+
+/**
+ * Symbol used by the tab bar to request a tab to animate its indicator from a
+ * previously selected tab.
+ */
+export const ANIMATE_INDICATOR = Symbol('animateIndicator');
 
 /**
  * Tab component.
@@ -104,11 +104,8 @@ export class Tab extends LitElement {
     };
   }
 
-  protected override updated(changed: PropertyValues) {
-    if (changed.has('active')) {
-      this.internals.ariaSelected = String(this.active);
-      this.animateSelected();
-    }
+  protected override updated() {
+    this.internals.ariaSelected = String(this.active);
   }
 
   private async handleKeydown(event: KeyboardEvent) {
@@ -125,7 +122,7 @@ export class Tab extends LitElement {
     }
   }
 
-  private animateSelected() {
+  [ANIMATE_INDICATOR](previousTab: Tab) {
     if (!this[INDICATOR]) {
       return;
     }
@@ -133,25 +130,22 @@ export class Tab extends LitElement {
     this[INDICATOR].getAnimations().forEach(a => {
       a.cancel();
     });
-    const frames = this.getKeyframes();
+    const frames = this.getKeyframes(previousTab);
     if (frames !== null) {
       this[INDICATOR].animate(
           frames, {duration: 250, easing: EASING.EMPHASIZED});
     }
   }
 
-  private getKeyframes() {
+  private getKeyframes(previousTab: Tab) {
     const reduceMotion = shouldReduceMotion();
     if (!this.active) {
       return reduceMotion ? [{'opacity': 1}, {'transform': 'none'}] : null;
     }
 
-    // TODO(b/298105040): avoid hardcoding selector
-    const tabs = this.closest<Tabs>('md-tabs');
     const from: Keyframe = {};
     const fromRect =
-        (tabs?.previousSelectedItem?.[INDICATOR]?.getBoundingClientRect() ??
-         ({} as DOMRect));
+        previousTab[INDICATOR]?.getBoundingClientRect() ?? ({} as DOMRect);
     const fromPos = fromRect.left;
     const fromExtent = fromRect.width;
     const toRect = this[INDICATOR]!.getBoundingClientRect();
