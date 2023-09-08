@@ -22,6 +22,12 @@ interface Tabs extends HTMLElement {
 }
 
 /**
+ * Symbol for tabs to use to animate their indicators based off another tab's
+ * indicator.
+ */
+const INDICATOR = Symbol('indicator');
+
+/**
  * Tab component.
  */
 export class Tab extends LitElement {
@@ -44,9 +50,7 @@ export class Tab extends LitElement {
    */
   @property({type: Boolean, attribute: 'icon-only'}) iconOnly = false;
 
-  // note, this is public so it can participate in selection animation.
-  /** @private */
-  @query('.indicator') readonly indicator!: HTMLElement;
+  @query('.indicator') readonly[INDICATOR]!: HTMLElement|null;
   @state() protected fullWidthIndicator = false;
   @queryAssignedNodes({flatten: true})
   private readonly assignedDefaultNodes!: Node[];
@@ -110,12 +114,16 @@ export class Tab extends LitElement {
   }
 
   private animateSelected() {
-    this.indicator.getAnimations().forEach(a => {
+    if (!this[INDICATOR]) {
+      return;
+    }
+
+    this[INDICATOR].getAnimations().forEach(a => {
       a.cancel();
     });
     const frames = this.getKeyframes();
     if (frames !== null) {
-      this.indicator.animate(
+      this[INDICATOR].animate(
           frames, {duration: 250, easing: EASING.EMPHASIZED});
     }
   }
@@ -130,11 +138,11 @@ export class Tab extends LitElement {
     const tabs = this.closest<Tabs>('md-tabs');
     const from: Keyframe = {};
     const fromRect =
-        (tabs?.previousSelectedItem?.indicator.getBoundingClientRect() ??
+        (tabs?.previousSelectedItem?.[INDICATOR]?.getBoundingClientRect() ??
          ({} as DOMRect));
     const fromPos = fromRect.left;
     const fromExtent = fromRect.width;
-    const toRect = this.indicator.getBoundingClientRect();
+    const toRect = this[INDICATOR]!.getBoundingClientRect();
     const toPos = toRect.left;
     const toExtent = toRect.width;
     const scale = fromExtent / toExtent;
