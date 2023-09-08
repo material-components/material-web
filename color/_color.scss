@@ -10,6 +10,50 @@
 @use '../tokens';
 // go/keep-sorted end
 
+/// `color.theme()` emits `--md-sys-color-*` custom properties for a given color
+/// scheme.
+///
+/// @example scss
+///   @use '@material/web/color/color';
+///
+///   :root {
+///     @include color.theme(
+///       'primary': /* ... */,
+///       'primary-container': /* ... */,
+///       'primary-fixed': /* ... */,
+///       'primary-fixed-dim': /* ... */,
+///       /* ... */
+///     );
+///   }
+///
+///   /* Generated CSS */
+///   :root {
+///     --md-sys-color-primary: /* ... */;
+///     --md-sys-color-primary-container: /* ... */;
+///     --md-sys-color-primary-fixed: /* ... */;
+///     --md-sys-color-primary-fixed-dim: /* ... */;
+///     /* ... */
+///   }
+///
+/// To generate a color scheme, use the Material Theme Builder Figma plugin.
+///
+/// @link https://www.figma.com/community/plugin/1034969338659738588/Material-Theme-Builder
+///
+/// @param {Map} $tokens - A Map with `md-sys-color` token name keys and their
+///     corresponding values.
+/// @output Emits `--md-sys-color-*` custom properties for a given color scheme.
+@mixin theme($tokens) {
+  @each $token, $value in $tokens {
+    @if list.index(tokens.$md-sys-color-supported-tokens, $token) == null {
+      @error 'md-sys-color `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-sys-color-#{$token}: #{$value};
+    }
+  }
+}
+
 /// `color.light-theme()` emits `--md-sys-color-*` custom properties for a light
 /// theme from the given color palette.
 ///
@@ -150,44 +194,4 @@
       $exclude-custom-properties: true
     )
   );
-}
-
-/// `color.theme()` emits `--md-sys-color-*` custom properties for a given color
-/// scheme.
-///
-/// @example scss
-///   @use '@material/web/color/color';
-///
-///   :root {
-///     @include color.theme(
-///       'primary': /* ... */,
-///       'primary-container': /* ... */,
-///       'primary-fixed': /* ... */,
-///       'primary-fixed-dim': /* ... */,
-///       /* ... */
-///     );
-///   }
-///
-///   /* Generated CSS */
-///   :root {
-///     --md-sys-color-primary: /* ... */;
-///     --md-sys-color-primary-container: /* ... */;
-///     --md-sys-color-primary-fixed: /* ... */;
-///     --md-sys-color-primary-fixed-dim: /* ... */;
-///     /* ... */
-///   }
-///
-/// @param {Map} $tokens - A Map with `md-sys-color` token name keys and their
-///     corresponding values.
-/// @output Emits `--md-sys-color-*` custom properties for a given color scheme.
-@mixin theme($tokens) {
-  @each $token, $value in $tokens {
-    @if list.index(tokens.$md-sys-color-supported-tokens, $token) == null {
-      @error 'md-sys-color `#{$token}` is not a supported token.';
-    }
-
-    @if $value {
-      --md-sys-color-#{$token}: #{$value};
-    }
-  }
 }

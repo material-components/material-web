@@ -131,8 +131,13 @@ $_default: (
   @if not $exclude-custom-properties {
     // Create --md-sys-typescale-* custom properties
     @each $token, $value in $tokens {
-      $var: var(--md-sys-typescale-#{$token}, #{$value});
-      $tokens: map.set($tokens, $token, $var);
+      @if $value != null {
+        $tokens: map.set(
+          $tokens,
+          $token,
+          var(--md-sys-typescale-#{$token}, #{$value})
+        );
+      }
     }
   }
 

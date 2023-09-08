@@ -16,14 +16,6 @@
 @use './values';
 // go/keep-sorted end
 
-$_default: (
-  'md-sys-color': md-sys-color.values-light(),
-  'md-sys-elevation': md-sys-elevation.values(),
-  'md-sys-shape': md-sys-shape.values(),
-  'md-sys-state': md-sys-state.values(),
-  'md-sys-typescale': md-sys-typescale.values(),
-);
-
 $supported-tokens: (
   // go/keep-sorted start
   'active-focus-icon-color',
@@ -75,6 +67,14 @@ $unsupported-tokens: (
   'label-text-tracking',
   'label-text-type',
   // go/keep-sorted end
+);
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {

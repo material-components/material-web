@@ -60,15 +60,7 @@ $supported-tokens: (
   // go/keep-sorted end
 );
 
-$_default: (
-  'md-sys-color': md-sys-color.values-light(),
-  'md-sys-elevation': md-sys-elevation.values(),
-  'md-sys-shape': md-sys-shape.values(),
-  'md-sys-state': md-sys-state.values(),
-  'md-sys-typescale': md-sys-typescale.values(),
-);
-
-$_unsupported-tokens: (
+$unsupported-tokens: (
   'disabled-handle-opacity',
   'label-container-elevation',
   'label-text-type',
@@ -85,11 +77,19 @@ $_unsupported-tokens: (
   'focus-state-layer-opacity'
 );
 
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
+);
+
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $tokens: values.validate(
     md-comp-slider.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $_unsupported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
     $renamed-tokens: (
       'label-label-text-color': 'label-text-color',
       'label-label-text-type': 'label-text-type',

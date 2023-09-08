@@ -32,8 +32,13 @@ $supported-tokens: (
   @if not $exclude-custom-properties {
     // Create --md-ref-typeface-* custom properties
     @each $token, $value in $tokens {
-      $var: var(--md-ref-typeface-#{$token}, #{$value});
-      $tokens: map.set($tokens, $token, $var);
+      @if $value != null {
+        $tokens: map.set(
+          $tokens,
+          $token,
+          var(--md-ref-typeface-#{$token}, #{$value})
+        );
+      }
     }
   }
 

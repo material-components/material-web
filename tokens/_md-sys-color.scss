@@ -79,8 +79,13 @@ $_default-dark: (
   @if not $exclude-custom-properties {
     // Create --md-sys-color-* custom properties
     @each $token, $value in $tokens {
-      $var: var(--md-sys-color-#{$token}, #{$value});
-      $tokens: map.set($tokens, $token, $var);
+      @if $value != null {
+        $tokens: map.set(
+          $tokens,
+          $token,
+          var(--md-sys-color-#{$token}, #{$value})
+        );
+      }
     }
   }
 
@@ -100,8 +105,13 @@ $_default-light: (
   @if not $exclude-custom-properties {
     // Create --md-sys-color-* custom properties
     @each $token, $value in $tokens {
-      $var: var(--md-sys-color-#{$token}, #{$value});
-      $tokens: map.set($tokens, $token, $var);
+      @if $value != null {
+        $tokens: map.set(
+          $tokens,
+          $token,
+          var(--md-sys-color-#{$token}, #{$value})
+        );
+      }
     }
   }
 
