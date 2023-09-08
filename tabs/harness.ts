@@ -53,9 +53,8 @@ export class TabsHarness extends Harness<Tabs> {
   get harnessedItems() {
     // Test access to protected property
     // tslint:disable-next-line:no-dict-access-on-struct-type
-    return (this.element['items'] as Array<ElementWithHarness<Tab>>)
-        .map(item => {
-          return (item.harness ?? new TabHarness(item)) as TabHarness;
-        });
+    return (this.element.tabs as Array<ElementWithHarness<Tab>>).map(item => {
+      return (item.harness ?? new TabHarness(item)) as TabHarness;
+    });
   }
 }
