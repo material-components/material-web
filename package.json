@@ -13,6 +13,7 @@
     "web components",
     "lit"
   ],
+  "main": "./all.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/material-components/material-web.git"
