@@ -618,6 +618,7 @@ export abstract class TextField extends LitElement {
     const style = {direction: this.textDirection};
     const ariaLabel =
         (this as ARIAMixinStrict).ariaLabel || this.label || nothing;
+    const autocomplete = this.autocomplete as any;
 
     if (this.type === 'textarea') {
       return html`
@@ -627,6 +628,7 @@ export abstract class TextField extends LitElement {
           aria-describedby="description"
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
+          autocomplete=${autocomplete}
           ?disabled=${this.disabled}
           maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
           minlength=${this.minLength > -1 ? this.minLength : nothing}
@@ -658,6 +660,7 @@ export abstract class TextField extends LitElement {
           aria-describedby="description"
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
+          autocomplete=${autocomplete}
           ?disabled=${this.disabled}
           inputmode=${inputMode || nothing}
           max=${(this.max || nothing) as unknown as number}
@@ -670,7 +673,6 @@ export abstract class TextField extends LitElement {
           ?required=${this.required}
           step=${(this.step || nothing) as unknown as number}
           type=${this.type}
-          autocomplete=${(this.autocomplete || nothing) as unknown as string}
           .value=${live(this.value)}
           @change=${this.redispatchEvent}
           @input=${this.handleInput}
