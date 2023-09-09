@@ -32,6 +32,12 @@
       display: none;
     }
 
+    // Remove built-in search icons on Chrome when type='search'
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+
     @media (forced-colors: active) {
       background-color: Field; // Remove white background in Firefox HCM
     }
