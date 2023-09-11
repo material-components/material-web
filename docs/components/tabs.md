@@ -231,7 +231,59 @@ content and establish hierarchy.
 </md-tabs>
 ```
 
-<!-- TODO: ## Accessibility -->
+## Accessibility
+
+Add an
+[`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)<!-- {.external} -->
+attribute to `<md-tabs>` and any individual tab whose label needs to be more
+descriptive, such as icon-only tabs.
+
+```html
+<md-tabs aria-label="Content to view">
+  <md-primary-tab aria-label="Photos">
+    <md-icon slot="icon">photo</md-icon>
+  </md-primary-tab>
+  <md-primary-tab aria-label="Videos">
+    <md-icon slot="icon">videocam</md-icon>
+  </md-primary-tab>
+  <md-primary-tab aria-label="Music">
+    <md-icon slot="icon">audiotrack</md-icon>
+  </md-primary-tab>
+</md-tabs>
+```
+
+### Tab panels
+
+Every tab must reference a
+[`role="tabpanel"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tabpanel_role)<!-- {.external} -->
+element with `aria-controls`. Tab panels must be labelled with `aria-label` or
+`aria-labelledby`.
+
+It's common to reference the panel's tab with `aria-labelledby`.
+
+```html
+<md-tabs aria-label="Content to view">
+  <md-primary-tab id="photos-tab" aria-controls="photos-panel">
+    Photos
+  </md-primary-tab>
+  <md-primary-tab id="videos-tab" aria-controls="videos-panel">
+    Videos
+  </md-primary-tab>
+  <md-primary-tab id="music-tab" aria-controls="music-panel">
+    Music
+  </md-primary-tab>
+</md-tabs>
+
+<div id="photos-panel" role="tabpanel" aria-labelledby="photos-tab">
+  ...
+</div>
+<div id="videos-panel" role="tabpanel" aria-labelledby="videos-tab" hidden>
+  ...
+</div>
+<div id="music-panel" role="tabpanel" aria-labelledby="music-tab" hidden>
+  ...
+</div>
+```
 
 ## Theming
 

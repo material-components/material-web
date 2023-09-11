@@ -13,6 +13,7 @@ import '@material/web/tabs/secondary-tab.js';
 import {MaterialStoryInit} from './material-collection.js';
 import {MdTabs} from '@material/web/tabs/tabs.js';
 import {css, html, nothing} from 'lit';
+import {ref} from 'lit/directives/ref.js';
 
 /** Knob types for Tabs stories. */
 export interface StoryKnobs {
@@ -23,13 +24,12 @@ export interface StoryKnobs {
 }
 
 const styles = css`
-  .content:not([hidden]) {
-    display: flex;
-    align-items: center;
-    padding: 16px;
-    gap: 8px;
-    min-block-size: 24px;
+  [role=tabpanel]:not([hidden]) {
     font-family: Roboto, Material Sans, system-ui;
+  }
+
+  [role=tabpanel]:not(.subtabs) {
+    padding: 16px;
   }
 
   md-tabs {
@@ -44,7 +44,7 @@ const styles = css`
   .controls {
     height: 48px;
   }
-  `;
+`;
 
 const primary: MaterialStoryInit<StoryKnobs> = {
   name: 'Primary Tabs',
@@ -54,26 +54,39 @@ const primary: MaterialStoryInit<StoryKnobs> = {
     const inlineIcon = knobs.inlineIcon;
 
     return html`
-      <md-tabs
+      <md-tabs aria-label="Primary tabs"
           .activeTabIndex=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
+          ${setupTabPanels()}
       >
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-one" aria-controls="panel-one"
+            .inlineIcon=${inlineIcon}>
           ${tabContent('piano', 'Keyboard')}
         </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-two" aria-controls="panel-two"
+            .inlineIcon=${inlineIcon}>
           ${tabContent('tune', 'Guitar')}
         </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-three" aria-controls="panel-three"
+            .inlineIcon=${inlineIcon}>
           ${tabContent('graphic_eq', 'Drums')}
         </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-four" aria-controls="panel-four"
+            .inlineIcon=${inlineIcon}>
           ${tabContent('speaker', 'Bass')}
         </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-five" aria-controls="panel-five"
+            .inlineIcon=${inlineIcon}>
           ${tabContent('nightlife', 'Saxophone')}
         </md-primary-tab>
-      </md-tabs>`;
+      </md-tabs>
+
+      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">Keyboard</div>
+      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden>Guitar</div>
+      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden>Drums</div>
+      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden>Bass</div>
+      <div role="tabpanel" id="panel-five" aria-labelledby="tab-five" hidden>Saxophone</div>
+    `;
   }
 };
 
@@ -84,23 +97,30 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
 
     return html`
-      <md-tabs
+      <md-tabs aria-label="Secondary tabs"
           .activeTabIndex=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
+          ${setupTabPanels()}
       >
-        <md-secondary-tab>
+        <md-secondary-tab id="tab-one" aria-controls="panel-one">
           ${tabContent('flight', 'Travel')}
         </md-secondary-tab>
-        <md-secondary-tab>
+        <md-secondary-tab id="tab-two" aria-controls="panel-two">
           ${tabContent('hotel', 'Hotel')}
         </md-secondary-tab>
-        <md-secondary-tab>
+        <md-secondary-tab id="tab-three" aria-controls="panel-three">
           ${tabContent('hiking', 'Activities')}
         </md-secondary-tab>
-        <md-secondary-tab>
+        <md-secondary-tab id="tab-four" aria-controls="panel-four">
           ${tabContent('restaurant', 'Food')}
         </md-secondary-tab>
-      </md-tabs>`;
+      </md-tabs>
+
+      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">Travel</div>
+      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden>Hotel</div>
+      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden>Activities</div>
+      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden>Food</div>
+    `;
   }
 };
 
@@ -112,7 +132,7 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
     const inlineIcon = knobs.inlineIcon;
 
     return html`
-      <md-tabs
+      <md-tabs aria-label="A tab bar that scrolls"
           class="scrolling"
           .activeTabIndex=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
@@ -171,27 +191,32 @@ const custom: MaterialStoryInit<StoryKnobs> = {
   ],
   render(knobs) {
     const tabContent = getTabContentGenerator(knobs);
-    const inlineIcon = knobs.inlineIcon;
 
     return html`
-      <md-tabs
+      <md-tabs aria-label="A custom themed tab bar"
           class="custom"
           .activeTabIndex=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
       >
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-one" aria-controls="panel-one">
           ${tabContent('flight', 'Travel')}
         </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-two" aria-controls="panel-two">
           ${tabContent('hotel', 'Hotel')}
         </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-three" aria-controls="panel-three">
           ${tabContent('hiking', 'Activities')}
         </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <md-primary-tab id="tab-four" aria-controls="panel-four">
           ${tabContent('restaurant', 'Food')}
         </md-primary-tab>
-      </md-tabs>`;
+      </md-tabs>
+
+      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">Travel</div>
+      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden>Hotel</div>
+      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden>Activities</div>
+      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden>Food</div>
+    `;
   }
 };
 
@@ -202,84 +227,77 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
 
-    // show the selected secondary tabs
-    const handlePrimaryTabsChange = ({target}: Event) => {
-      const primaryTabs = target as MdTabs;
-      const secondaryTabsContainer = primaryTabs.nextElementSibling!;
-      const secondaryTabsList = Array.from(
-          secondaryTabsContainer.querySelectorAll<MdTabs>('md-tabs'));
-      secondaryTabsList.forEach((secondaryTabs, i) => {
-        const hidden = i === primaryTabs.activeTabIndex ? false : true;
-        secondaryTabs.hidden = hidden;
-        (secondaryTabs.nextElementSibling! as HTMLElement).hidden = hidden;
-      });
-    };
-
-    // renders some relevant tabbed content based on the current selection
-    function handleSecondaryTabsChange({target}: Event) {
-      const secondaryTabs = target as MdTabs;
-      const contentContainer = secondaryTabs.nextElementSibling!;
-      const content = Array.from(secondaryTabs.activeTab?.childNodes ?? [])
-                          .map(child => child.cloneNode(true));
-      contentContainer.replaceChildren(...content);
-    }
-
     return html`
-      <div>
-        <md-tabs
+      <md-tabs
+        aria-label="Primary tabs"
+        .activeTabIndex=${knobs.activeTabIndex}
+        .autoActivate=${knobs.autoActivate}
+        ${setupTabPanels()}
+      >
+        <md-primary-tab .inlineIcon=${inlineIcon} aria-controls="movies">
+          ${tabContent('videocam', 'Movies')}
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon} aria-controls="photos">
+          ${tabContent('photo', 'Photos')}
+        </md-primary-tab>
+        <md-primary-tab .inlineIcon=${inlineIcon} aria-controls="music">
+          ${tabContent('audiotrack', 'Music')}
+        </md-primary-tab>
+      </md-tabs>
+
+      <div role="tabpanel" id="movies" class="subtabs" aria-label="Movies">
+        <md-tabs aria-label="Secondary tabs for movies"
           .activeTabIndex=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
-          @change=${handlePrimaryTabsChange}
+          ${setupTabPanels()}
         >
-          <md-primary-tab .inlineIcon=${inlineIcon}>
-            ${tabContent('videocam', 'Movies')}
-          </md-primary-tab>
-          <md-primary-tab .inlineIcon=${inlineIcon}>
-            ${tabContent('photo', 'Photos')}
-          </md-primary-tab>
-          <md-primary-tab .inlineIcon=${inlineIcon}>
-            ${tabContent('audiotrack', 'Music')}
-          </md-primary-tab>
+          <md-secondary-tab aria-controls="star-wars">Star Wars</md-secondary-tab>
+          <md-secondary-tab aria-controls="avengers">Avengers</md-secondary-tab>
+          <md-secondary-tab aria-controls="jaws">Jaws</md-secondary-tab>
+          <md-secondary-tab aria-controls="forzen">Frozen</md-secondary-tab>
         </md-tabs>
-        <div>
-          <md-tabs
-            .activeTabIndex=${knobs.activeTabIndex}
-            .autoActivate=${knobs.autoActivate}
-            @change=${handleSecondaryTabsChange}
-          >
-            <md-secondary-tab>Star Wars</md-secondary-tab>
-            <md-secondary-tab>Avengers</md-secondary-tab>
-            <md-secondary-tab>Jaws</md-secondary-tab>
-            <md-secondary-tab>Frozen</md-secondary-tab>
-          </md-tabs>
-          <div class="content"></div>
-          <md-tabs
-            hidden
-            .activeTabIndex=${knobs.activeTabIndex}
-            .autoActivate=${knobs.autoActivate}
-            @change=${handleSecondaryTabsChange}
-          >
-            <md-secondary-tab>Yosemite</md-secondary-tab>
-            <md-secondary-tab>Mona Lisa</md-secondary-tab>
-            <md-secondary-tab>Swiss Alps</md-secondary-tab>
-            <md-secondary-tab>Niagra Falls</md-secondary-tab>
-          </md-tabs>
-          <div hidden class="content"></div>
-          <md-tabs
-            hidden
-            .activeTabIndex=${knobs.activeTabIndex}
-            .autoActivate=${knobs.autoActivate}
-            @change=${handleSecondaryTabsChange}
-          >
-            <md-secondary-tab>Rock</md-secondary-tab>
-            <md-secondary-tab>Ambient</md-secondary-tab>
-            <md-secondary-tab>Soundscapes</md-secondary-tab>
-            <md-secondary-tab>White Noise</md-secondary-tab>
-          </md-tabs>
-          <div hidden class="content"></div>
-        </div>
+
+        <div role="tabpanel" id="star-wars" aria-label="Star Wars">Star Wars</div>
+        <div role="tabpanel" id="avengers" aria-label="Avengers" hidden>Avengers</div>
+        <div role="tabpanel" id="jaws" aria-label="Jaws" hidden>Jaws</div>
+        <div role="tabpanel" id="frozen" aria-label="Frozen" hidden>Frozen</div>
       </div>
-      `;
+
+      <div role="tabpanel" id="photos" class="subtabs" aria-label="Photos" hidden>
+        <md-tabs aria-label="Secondary tabs for photos"
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
+        >
+          <md-secondary-tab aria-controls="yosemite">Yosemite</md-secondary-tab>
+          <md-secondary-tab aria-controls="mona-lisa">Mona Lisa</md-secondary-tab>
+          <md-secondary-tab aria-controls="swiss-alps">Swiss Alps</md-secondary-tab>
+          <md-secondary-tab aria-controls="niagra-falls">Niagra Falls</md-secondary-tab>
+        </md-tabs>
+
+        <div role="tabpanel" id="yosemite" aria-label="Yosemite">Yosemite</div>
+        <div role="tabpanel" id="mona-lisa" aria-label="Mona Lisa" hidden>Mona Lisa</div>
+        <div role="tabpanel" id="swiss-alps" aria-label="Swiss Alps" hidden>Swiss Alps</div>
+        <div role="tabpanel" id="niagra-falls" aria-label="Niagra Falls" hidden>Niagra Falls</div>
+      </div>
+
+      <div role="tabpanel" id="music" class="subtabs" aria-label="Music" hidden>
+        <md-tabs aria-label="Secondary tabs for music"
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
+          ${setupTabPanels()}
+        >
+          <md-secondary-tab aria-controls="rock">Rock</md-secondary-tab>
+          <md-secondary-tab aria-controls="ambient">Ambient</md-secondary-tab>
+          <md-secondary-tab aria-controls="sounds">Soundscapes</md-secondary-tab>
+          <md-secondary-tab aria-controls="noise">White Noise</md-secondary-tab>
+        </md-tabs>
+
+        <div role="tabpanel" id="rock" aria-label="Rock">Rock</div>
+        <div role="tabpanel" id="ambient" aria-label="Ambient" hidden>Ambient</div>
+        <div role="tabpanel" id="sounds" aria-label="Soundscapes" hidden>Soundscapes</div>
+        <div role="tabpanel" id="noise" aria-label="White noise" hidden>White Noise</div>
+      </div>
+    `;
   }
 };
 
@@ -367,6 +385,29 @@ function getTabContentGenerator(knobs: StoryKnobs) {
       ${useLabel ? html`${label}` : nothing}
     `;
   };
+}
+
+function setupTabPanels() {
+  return ref(instance => {
+    if (!instance) {
+      return;
+    }
+
+    const tabs = instance as MdTabs;
+    let currentPanel: HTMLElement|null = null;
+    tabs.addEventListener('change', () => {
+      if (currentPanel) {
+        currentPanel.hidden = true;
+      }
+
+      const panelId = tabs.activeTab?.getAttribute('aria-controls');
+      const root = tabs.getRootNode() as Document | ShadowRoot;
+      currentPanel = root.querySelector<HTMLElement>(`#${panelId}`);
+      if (currentPanel) {
+        currentPanel.hidden = false;
+      }
+    });
+  });
 }
 
 /** Tabs stories. */

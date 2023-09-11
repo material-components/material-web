@@ -82,7 +82,7 @@ export class Tab extends LitElement {
   protected override render() {
     const indicator = html`<div class="indicator"></div>`;
     return html`
-      <div class="button" role="presentation">
+      <div class="button" role="presentation" @click=${this.handleContentClick}>
         <md-focus-ring part="focus-ring" inward
             .control=${this}></md-focus-ring>
         <md-elevation></md-elevation>
@@ -120,6 +120,13 @@ export class Tab extends LitElement {
       event.preventDefault();
       this.click();
     }
+  }
+
+  private handleContentClick(event: Event) {
+    // Ensure the "click" target is always the tab, and not content, by stopping
+    // propagation of content clicks and re-clicking the host.
+    event.stopPropagation();
+    this.click();
   }
 
   [ANIMATE_INDICATOR](previousTab: Tab) {
