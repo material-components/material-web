@@ -136,9 +136,10 @@
   slot[name='headline']::slotted(*) {
     align-items: center;
     align-self: stretch;
+    box-sizing: border-box;
     display: flex;
     gap: 8px;
-    margin: 24px 24px 0;
+    padding: 24px 24px 0;
   }
 
   .icon {
@@ -149,22 +150,22 @@
     color: var(--_icon-color);
     fill: currentColor;
     font-size: var(--_icon-size);
-    margin-top: 24px;
+    padding-top: 24px;
     height: var(--_icon-size);
     width: var(--_icon-size);
   }
 
   .has-icon slot[name='headline']::slotted(*) {
     justify-content: center;
-    margin-top: 16px;
+    padding-top: 16px;
   }
 
   .scrollable slot[name='headline']::slotted(*) {
-    margin-bottom: 16px;
+    padding-bottom: 16px;
   }
 
   .scrollable.has-headline slot[name='content']::slotted(*) {
-    margin-top: 8px;
+    padding-top: 8px;
   }
 
   .container {
@@ -217,7 +218,8 @@
   }
 
   slot[name='content']::slotted(*) {
-    margin: 24px;
+    box-sizing: border-box;
+    padding: 24px;
   }
 
   // Anchors are used with an IntersectionObserver to determine when the content
@@ -239,14 +241,15 @@
   }
 
   slot[name='actions']::slotted(*) {
+    box-sizing: border-box;
     display: flex;
     gap: 8px;
     justify-content: flex-end;
-    margin: 16px 24px 24px;
+    padding: 16px 24px 24px;
   }
 
   .has-actions slot[name='content']::slotted(*) {
-    margin-bottom: 8px;
+    padding-bottom: 8px;
   }
 
   md-divider {
