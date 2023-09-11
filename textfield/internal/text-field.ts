@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
+import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {live} from 'lit/directives/live.js';
@@ -350,15 +350,6 @@ export abstract class TextField extends LitElement {
   private readonly internals =
       (this as HTMLElement /* needed for closure */).attachInternals();
 
-  constructor() {
-    super();
-    if (!isServer) {
-      this.addEventListener('click', this.focus);
-      this.addEventListener('focusin', this.handleFocusin);
-      this.addEventListener('focusout', this.handleFocusout);
-    }
-  }
-
   /**
    * Checks the text field's native validation and returns whether or not the
    * element is valid.
@@ -372,19 +363,6 @@ export abstract class TextField extends LitElement {
   checkValidity() {
     this.syncValidity();
     return this.internals.checkValidity();
-  }
-
-  /**
-   * Focuses the text field's input text.
-   */
-  override focus() {
-    if (this.disabled || this.matches(':focus-within')) {
-      // Don't shift focus from an element within the text field, like an icon
-      // button, to the input when focus is requested.
-      return;
-    }
-
-    super.focus();
   }
 
   /**
@@ -640,6 +618,8 @@ export abstract class TextField extends LitElement {
           rows=${this.rows}
           .value=${live(this.value)}
           @change=${this.handleChange}
+          @focusin=${this.handleFocusin}
+          @focusout=${this.handleFocusout}
           @input=${this.handleInput}
           @select=${this.redispatchEvent}
         ></textarea>
@@ -677,6 +657,8 @@ export abstract class TextField extends LitElement {
           type=${this.type}
           .value=${live(this.value)}
           @change=${this.redispatchEvent}
+          @focusin=${this.handleFocusin}
+          @focusout=${this.handleFocusout}
           @input=${this.handleInput}
           @select=${this.redispatchEvent}
         >
@@ -715,11 +697,6 @@ export abstract class TextField extends LitElement {
   }
 
   private handleFocusout() {
-    if (this.matches(':focus-within')) {
-      // Changing focus to another child within the text field, like a button
-      return;
-    }
-
     this.focused = false;
   }
 

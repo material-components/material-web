@@ -78,7 +78,8 @@ export class Field extends LitElement implements SurfacePositionTarget {
 
   protected override update(props: PropertyValues<Field>) {
     // Client-side property updates
-    const isDisabledChanging = props.has('disabled') && props.get('disabled') !== undefined;
+    const isDisabledChanging =
+        props.has('disabled') && props.get('disabled') !== undefined;
     if (isDisabledChanging) {
       this.disableTransitions = true;
     }

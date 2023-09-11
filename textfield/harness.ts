@@ -75,19 +75,6 @@ export class TextFieldHarness extends Harness<TextField> {
 
     this.valueBeforeChange = textField.value;
     super.simulatePointerFocus(input);
-
-    const prevFocus = input.focus;
-    if (prevFocus === HTMLElement.prototype.focus) {
-      // Swap to a no-op if nobody is spying on this method so that we don't
-      // generate side-effects when we actually call focus().
-      input.focus = () => {};
-    }
-
-    // Call focus() as a side-effect since delegatesFocus won't be triggered
-    // with this simulation. Replace input.focus() with a no-op if needed to
-    // avoid actually calling focus.
-    textField.focus();
-    input.focus = prevFocus;
   }
 
   protected simulateInput(

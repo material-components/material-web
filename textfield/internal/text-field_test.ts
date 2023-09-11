@@ -73,7 +73,7 @@ describe('TextField', () => {
       expect(input.matches(':focus')).withContext('is input:focus').toBeTrue();
     });
 
-    it('should focus the input when elements inside text field are clicked',
+    it('should NOT focus the input when elements inside text field are clicked',
        async () => {
          const {harness, input} = await setupTest();
          // Add a trailing icon button to click on
@@ -86,12 +86,13 @@ describe('TextField', () => {
 
          expect(input.matches(':focus'))
              .withContext('is input:focus')
-             .toBeTrue();
+             .toBeFalse();
        });
 
     it('should not focus the input when disabled', async () => {
       const {harness, input} = await setupTest();
       harness.element.disabled = true;
+      await env.waitForStability();
 
       harness.element.focus();
 
