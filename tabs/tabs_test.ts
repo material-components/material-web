@@ -15,13 +15,13 @@ import {MdSecondaryTab} from './secondary-tab.js';
 import {MdTabs} from './tabs.js';
 
 interface TabsTestProps {
-  selected?: number;
+  activeTabIndex?: number;
 }
 
 function getTabsTemplate(props?: TabsTestProps) {
   return html`
     <md-tabs
-      .selected=${props?.selected ?? 0}
+      .activeTabIndex=${props?.activeTabIndex ?? 0}
     >
       <md-primary-tab>A</md-primary-tab>
       <md-primary-tab>B</md-primary-tab>
@@ -48,38 +48,38 @@ describe('<md-tabs>', () => {
 
   describe('properties', () => {
     it('renders selected with indicator', async () => {
-      const {harness} = await setupTest({selected: 1});
-      expect(harness.element.selected).toBe(1);
+      const {harness} = await setupTest({activeTabIndex: 1});
+      expect(harness.element.activeTabIndex).toBe(1);
       expect(harness.element.activeTab).toBe(harness.harnessedItems[1].element);
       harness.harnessedItems.forEach(async (tabHarness, i) => {
-        const shouldBeSelected = i === harness.element.selected;
+        const shouldBeSelected = i === harness.element.activeTabIndex;
         await tabHarness.element.updateComplete;
-        expect(tabHarness.element.selected).toBe(shouldBeSelected);
+        expect(tabHarness.element.active).toBe(shouldBeSelected);
         expect(await tabHarness.isIndicatorShowing()).toBe(shouldBeSelected);
       });
       await env.waitForStability();
-      harness.element.selected = 0;
+      harness.element.activeTabIndex = 0;
       await harness.element.updateComplete;
-      expect(harness.element.selected).toBe(0);
+      expect(harness.element.activeTabIndex).toBe(0);
       harness.harnessedItems.forEach(async (tabHarness, i) => {
-        const shouldBeSelected = i === harness.element.selected;
+        const shouldBeSelected = i === harness.element.activeTabIndex;
         await tabHarness.element.updateComplete;
-        expect(tabHarness.element.selected).toBe(shouldBeSelected);
+        expect(tabHarness.element.active).toBe(shouldBeSelected);
         expect(await tabHarness.isIndicatorShowing()).toBe(shouldBeSelected);
       });
     });
 
     it('updates activeTab', async () => {
-      const {harness} = await setupTest({selected: 1});
+      const {harness} = await setupTest({activeTabIndex: 1});
       expect(harness.element.activeTab).toBe(harness.harnessedItems[1].element);
-      harness.element.selected = 0;
+      harness.element.activeTabIndex = 0;
       await harness.element.updateComplete;
       expect(harness.element.activeTab).toBe(harness.harnessedItems[0].element);
     });
 
     it('maintains selection when tabs are mutated', async () => {
       // Note: adding and moving tabs does not change selection
-      const {harness} = await setupTest({selected: 1});
+      const {harness} = await setupTest({activeTabIndex: 1});
       const [, second] = harness.element.tabs;
       expect(harness.element.activeTab).toBe(second);
       const tab = document.createElement('md-primary-tab');
@@ -103,7 +103,7 @@ describe('<md-tabs>', () => {
     });
 
     it('selects first item when selected tab is removed', async () => {
-      const {harness} = await setupTest({selected: 1});
+      const {harness} = await setupTest({activeTabIndex: 1});
       const [first, second] = harness.element.tabs;
       expect(harness.element.activeTab).toBe(second);
       second.remove();

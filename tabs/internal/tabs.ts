@@ -109,26 +109,6 @@ export class Tabs extends LitElement {
   @queryAssignedElements({flatten: true})
   private readonly maybeTabs!: HTMLElement[];
 
-  /**
-   * TODO(b/293476210): remove
-   * @deprecated use `activeTabIndex`
-   */
-  @property({type: Number})
-  get selected() {
-    return this.activeTabIndex;
-  }
-  set selected(index: number) {
-    this.activeTabIndex = index;
-  }
-
-  /**
-   * TODO(b/293476210): remove
-   * @deprecated use `activeTab`
-   */
-  get selectedItem() {
-    return this.activeTab;
-  }
-
   private get focusedTab() {
     return this.tabs.find(tab => tab.matches(':focus-within'));
   }
