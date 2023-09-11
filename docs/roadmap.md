@@ -42,7 +42,7 @@ These features are planned for the next release.
     *   🟡 Select
     *   🟡 Slider
     *   ✅ Switch
-    *   🟡 Tabs
+    *   ✅ Tabs
     *   🟡 Text field
 
 ## Next (Q1 2024)
