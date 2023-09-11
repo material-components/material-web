@@ -15,6 +15,8 @@ Google's open-source design system.
 
 -   [Introduction](docs/intro.md)
 -   [Roadmap](docs/roadmap.md)
+-   [Quick start](docs/quick-start.md)
+-   [Component docs](docs/components/)
 
 ## Browser support
 
