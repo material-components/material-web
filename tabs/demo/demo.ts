@@ -15,7 +15,7 @@ import {stories, StoryKnobs} from './stories.js';
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Tabs', [
-      new Knob('selected', {
+      new Knob('activeTabIndex', {
         ui: numberInput(),
         defaultValue: 0,
         // fire a change event manually to sync tabbed content
@@ -29,7 +29,7 @@ const collection =
           }
         }
       }),
-      new Knob('selectOnFocus', {ui: boolInput(), defaultValue: false}),
+      new Knob('autoActivate', {ui: boolInput(), defaultValue: false}),
       new Knob('inlineIcon', {ui: boolInput(), defaultValue: false}),
       new Knob('content', {
         defaultValue: 'icon/label',

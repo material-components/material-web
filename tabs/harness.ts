@@ -43,16 +43,18 @@ export class TabsHarness extends Harness<Tabs> {
   // selected tab.
   override async getInteractiveElement() {
     await this.element.updateComplete;
+    if (!this.element.activeTab) {
+      return this.element as HTMLElement;
+    }
+
     const selectedItemHarness =
-        (this.element.selectedItem as ElementWithHarness<Tab>).harness as
+        (this.element.activeTab as ElementWithHarness<Tab>).harness as
             TabHarness ??
-        new TabHarness(this.element.selectedItem);
+        new TabHarness(this.element.activeTab);
     return await selectedItemHarness.getInteractiveElement();
   }
 
   get harnessedItems() {
-    // Test access to protected property
-    // tslint:disable-next-line:no-dict-access-on-struct-type
     return (this.element.tabs as Array<ElementWithHarness<Tab>>).map(item => {
       return (item.harness ?? new TabHarness(item)) as TabHarness;
     });

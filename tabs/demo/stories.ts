@@ -16,8 +16,8 @@ import {css, html, nothing} from 'lit';
 
 /** Knob types for Tabs stories. */
 export interface StoryKnobs {
-  selected: number;
-  selectOnFocus: boolean;
+  activeTabIndex: number;
+  autoActivate: boolean;
   inlineIcon: boolean;
   content: string;
 }
@@ -55,8 +55,8 @@ const primary: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <md-tabs
-          .selected=${knobs.selected}
-          .selectOnFocus=${knobs.selectOnFocus}
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
       >
         <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('piano', 'Keyboard')}
@@ -85,8 +85,8 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <md-tabs
-          .selected=${knobs.selected}
-          .selectOnFocus=${knobs.selectOnFocus}
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
       >
         <md-secondary-tab>
           ${tabContent('flight', 'Travel')}
@@ -114,8 +114,8 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-tabs
           class="scrolling"
-          .selected=${knobs.selected}
-          .selectOnFocus=${knobs.selectOnFocus}
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
       >
         ${new Array(10).fill(html`
         <md-primary-tab .inlineIcon=${inlineIcon}>
@@ -176,8 +176,8 @@ const custom: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-tabs
           class="custom"
-          .selected=${knobs.selected}
-          .selectOnFocus=${knobs.selectOnFocus}
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
       >
         <md-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('flight', 'Travel')}
@@ -209,7 +209,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
       const secondaryTabsList = Array.from(
           secondaryTabsContainer.querySelectorAll<MdTabs>('md-tabs'));
       secondaryTabsList.forEach((secondaryTabs, i) => {
-        const hidden = i === primaryTabs.selected ? false : true;
+        const hidden = i === primaryTabs.activeTabIndex ? false : true;
         secondaryTabs.hidden = hidden;
         (secondaryTabs.nextElementSibling! as HTMLElement).hidden = hidden;
       });
@@ -219,7 +219,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     function handleSecondaryTabsChange({target}: Event) {
       const secondaryTabs = target as MdTabs;
       const contentContainer = secondaryTabs.nextElementSibling!;
-      const content = Array.from(secondaryTabs.selectedItem?.childNodes ?? [])
+      const content = Array.from(secondaryTabs.activeTab?.childNodes ?? [])
                           .map(child => child.cloneNode(true));
       contentContainer.replaceChildren(...content);
     }
@@ -227,8 +227,8 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div>
         <md-tabs
-          .selected=${knobs.selected}
-          .selectOnFocus=${knobs.selectOnFocus}
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
           @change=${handlePrimaryTabsChange}
         >
           <md-primary-tab .inlineIcon=${inlineIcon}>
@@ -243,8 +243,8 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         </md-tabs>
         <div>
           <md-tabs
-            .selected=${knobs.selected}
-            .selectOnFocus=${knobs.selectOnFocus}
+            .activeTabIndex=${knobs.activeTabIndex}
+            .autoActivate=${knobs.autoActivate}
             @change=${handleSecondaryTabsChange}
           >
             <md-secondary-tab>Star Wars</md-secondary-tab>
@@ -255,8 +255,8 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
           <div class="content"></div>
           <md-tabs
             hidden
-            .selected=${knobs.selected}
-            .selectOnFocus=${knobs.selectOnFocus}
+            .activeTabIndex=${knobs.activeTabIndex}
+            .autoActivate=${knobs.autoActivate}
             @change=${handleSecondaryTabsChange}
           >
             <md-secondary-tab>Yosemite</md-secondary-tab>
@@ -267,8 +267,8 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
           <div hidden class="content"></div>
           <md-tabs
             hidden
-            .selected=${knobs.selected}
-            .selectOnFocus=${knobs.selectOnFocus}
+            .activeTabIndex=${knobs.activeTabIndex}
+            .autoActivate=${knobs.autoActivate}
             @change=${handleSecondaryTabsChange}
           >
             <md-secondary-tab>Rock</md-secondary-tab>
@@ -299,39 +299,32 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
       const count = tabs.childElementCount;
       const tab = document.createElement('md-primary-tab');
       tab.textContent = `Tab ${count + 1}`;
-      if (tabs.selectedItem !== undefined) {
-        tabs.selectedItem.after(tab);
-        tabs.selected++;
-      } else {
-        tabs.append(tab);
-        tabs.selected = count;
-      }
+      tabs.append(tab);
     }
     function removeTab(event: Event) {
       const tabs = getTabs(event);
-      if (tabs.selectedItem === undefined) {
-        return;
-      }
-      tabs.selectedItem?.remove();
-      const count = tabs.childElementCount;
-      tabs.selected = Math.min(count - 1, tabs.selected);
+      tabs.tabs[tabs.tabs.length - 1]?.remove();
     }
 
     function moveTabTowardsEnd(event: Event) {
       const tabs = getTabs(event);
-      const next = tabs.selectedItem?.nextElementSibling;
+      if (!tabs.activeTab) {
+        return;
+      }
+      const next = tabs.activeTab.nextElementSibling;
       if (next) {
-        next.after(tabs.selectedItem);
-        tabs.selected++;
+        next.after(tabs.activeTab);
       }
     }
 
     function moveTabTowardsStart(event: Event) {
       const tabs = getTabs(event);
-      const previous = tabs.selectedItem?.previousElementSibling;
+      if (!tabs.activeTab) {
+        return;
+      }
+      const previous = tabs.activeTab.previousElementSibling;
       if (previous) {
-        previous.before(tabs.selectedItem);
-        tabs.selected--;
+        previous.before(tabs.activeTab);
       }
     }
 
@@ -347,8 +340,8 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
       </div>
       <md-tabs
           class="scrolling"
-          .selected=${knobs.selected}
-          .selectOnFocus=${knobs.selectOnFocus}
+          .activeTabIndex=${knobs.activeTabIndex}
+          .autoActivate=${knobs.autoActivate}
       >
         <md-primary-tab .inlineIcon=${inlineIcon}>
           Tab 1

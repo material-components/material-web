@@ -6,17 +6,12 @@
 
 import '../../divider/divider.js';
 
-import {html, isServer, LitElement, PropertyValues} from 'lit';
-import {property, queryAssignedElements, state} from 'lit/decorators.js';
+import {html, isServer, LitElement} from 'lit';
+import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
 import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 
 import {ANIMATE_INDICATOR, Tab} from './tab.js';
-
-const NAVIGATION_KEYS = new Map([
-  ['default', new Set(['Home', 'End'])],
-  ['horizontal', new Set(['ArrowLeft', 'ArrowRight'])],
-]);
 
 /**
  * @fires change Fired when the selected tab changes. The target's selected or
@@ -51,49 +46,91 @@ export class Tabs extends LitElement {
    * The tabs of this tab bar.
    */
   get tabs() {
-    return this.maybeTabItems.filter(isTab);
+    return this.maybeTabs.filter(isTab);
   }
 
   /**
-   * Index of the selected item.
+   * The currently selected tab, `null` only when there are no tab children.
    */
-  @property({type: Number}) selected = 0;
+  get activeTab() {
+    return this.tabs.find(tab => tab.active) ?? null;
+  }
+  set activeTab(tab: Tab|null) {
+    // Ignore setting activeTab to null. As long as there are children, one tab
+    // must be selected.
+    if (tab) {
+      this.activateTab(tab);
+    }
+  }
 
   /**
-   * Whether or not to select an item when focused.
+   * The index of the currently selected tab.
    */
-  @property({type: Boolean, attribute: 'select-on-focus'})
-  selectOnFocus = false;
+  get activeTabIndex() {
+    return this.tabs.findIndex(tab => tab.active);
+  }
+  set activeTabIndex(index: number) {
+    const activateTabAtIndex = () => {
+      const tab = this.tabs[index];
+      // Ignore out-of-bound indices.
+      if (tab) {
+        this.activateTab(tab);
+      }
+    };
 
-  private previousSelected = -1;
-  private readonly scrollMargin = 48;
+    if (!this.slotElement) {
+      // This is needed to support setting the activeTabIndex via a lit property
+      // binding.
+      //
+      // ```ts
+      // html`
+      //   <md-tabs .activeTabIndex=${1}>
+      //     <md-tab>First</md-tab>
+      //     <md-tab>Second</md-tab>
+      //   </md-tabs>
+      // `;
+      // ```
+      //
+      // It's needed since lit's rendering lifecycle is asynchronous, and the
+      // `<slot>` element hasn't rendered, so `tabs` is empty.
+      this.updateComplete.then(activateTabAtIndex);
+      return;
+    }
 
+    activateTabAtIndex();
+  }
+
+  /**
+   * Whether or not to automatically select a tab when it is focused.
+   */
+  @property({type: Boolean, attribute: 'auto-activate'}) autoActivate = false;
+
+  @query('slot') private readonly slotElement!: HTMLSlotElement|null;
   @queryAssignedElements({flatten: true})
-  private readonly maybeTabItems!: HTMLElement[];
-
-  // this tracks if items have changed, which triggers rendering so they can
-  // be kept in sync
-  @state() private itemsDirty = false;
+  private readonly maybeTabs!: HTMLElement[];
 
   /**
-   * The item currently selected.
+   * TODO(b/293476210): remove
+   * @deprecated use `activeTabIndex`
+   */
+  @property({type: Number})
+  get selected() {
+    return this.activeTabIndex;
+  }
+  set selected(index: number) {
+    this.activeTabIndex = index;
+  }
+
+  /**
+   * TODO(b/293476210): remove
+   * @deprecated use `activeTab`
    */
   get selectedItem() {
-    return this.tabs[this.selected];
+    return this.activeTab;
   }
 
-  /**
-   * The item previously selected.
-   */
-  private get previousSelectedItem() {
-    return this.tabs[this.previousSelected];
-  }
-
-  /**
-   * The item currently focused.
-   */
-  private get focusedItem() {
-    return this.tabs.find((el: HTMLElement) => el.matches(':focus-within'));
+  private get focusedTab() {
+    return this.tabs.find(tab => tab.matches(':focus-within'));
   }
 
   private readonly internals = polyfillElementInternalsAria(
@@ -103,199 +140,192 @@ export class Tabs extends LitElement {
     super();
     if (!isServer) {
       this.internals.role = 'tablist';
-      this.addEventListener('keydown', this.handleKeydown);
-      this.addEventListener('keyup', this.handleKeyup);
-      this.addEventListener('focusout', this.handleFocusout);
+      this.addEventListener('keydown', this.handleKeydown.bind(this));
+      this.addEventListener('keyup', this.handleKeyup.bind(this));
+      this.addEventListener('focusout', this.handleFocusout.bind(this));
     }
   }
 
-  protected override willUpdate(changed: PropertyValues) {
-    if (changed.has('selected')) {
-      this.previousSelected = changed.get('selected') ?? -1;
+  /**
+   * Scrolls the toolbar, if overflowing, to the active tab, or the provided
+   * tab.
+   *
+   * @param tabToScrollTo The tab that should be scrolled to. Defaults to the
+   *     active tab.
+   * @return A Promise that resolves after the tab has been scrolled to.
+   */
+  async scrollToTab(tabToScrollTo?: Tab|null) {
+    await this.updateComplete;
+    const {tabs} = this;
+    tabToScrollTo ??= this.activeTab;
+    if (!tabToScrollTo || !tabs.includes(tabToScrollTo)) {
+      return;
     }
-    if (this.itemsDirty) {
-      this.itemsDirty = false;
-      this.previousSelected = -1;
+
+    // wait for tabs to render.
+    for (const tab of this.tabs) {
+      await tab.updateComplete;
     }
+
+    const offset = tabToScrollTo.offsetLeft;
+    const extent = tabToScrollTo.offsetWidth;
+    const scroll = this.scrollLeft;
+    const hostExtent = this.offsetWidth;
+    const scrollMargin = 48;
+    const min = offset - scrollMargin;
+    const max = offset + extent - hostExtent + scrollMargin;
+    const to = Math.min(min, Math.max(max, scroll));
+    // TODO(b/299934312): improve focus smoothness
+    const behavior = !this.focusedTab ? 'smooth' : 'instant' as const;
+    this.scrollTo({behavior, top: 0, left: to});
   }
 
   protected override render() {
     return html`
       <div class="tabs">
-        <slot @slotchange=${this.handleSlotChange} @click=${
-        this.handleItemClick}></slot>
+        <slot @slotchange=${this.handleSlotChange}
+            @click=${this.handleTabClick}></slot>
       </div>
       <md-divider part="divider"></md-divider>
     `;
   }
 
-  protected override async updated(changed: PropertyValues) {
-    const itemsChanged = changed.has('itemsDirty');
-    // sync state with items.
-    if (itemsChanged) {
-      this.tabs.forEach((item, i) => {
-        item.active = this.selected === i;
-      });
+  private async handleTabClick(event: Event) {
+    const tab = event.target;
+    // Allow event to bubble
+    await 0;
+    if (event.defaultPrevented || !isTab(tab) || tab.active) {
+      return;
     }
-    if (itemsChanged || changed.has('selected')) {
-      if (this.previousSelectedItem && this.selectedItem &&
-          this.previousSelectedItem !== this.selectedItem) {
-        this.previousSelectedItem.active = false;
-        this.selectedItem.active = true;
-        this.selectedItem[ANIMATE_INDICATOR](this.previousSelectedItem);
+
+    this.activateTab(tab);
+  }
+
+  private activateTab(activeTab: Tab) {
+    const {tabs} = this;
+    const previousTab = this.activeTab;
+    if (!tabs.includes(activeTab) || previousTab === activeTab) {
+      // Ignore setting activeTab to a tab element that is not a child.
+      return;
+    }
+
+    for (const tab of tabs) {
+      tab.active = tab === activeTab;
+    }
+
+    if (previousTab) {
+      // Don't dispatch a change event if activating a tab when no previous tabs
+      // were selected, such as when md-tabs auto-selects the first tab.
+      const defaultPrevented = !this.dispatchEvent(
+          new Event('change', {bubbles: true, cancelable: true}));
+      if (defaultPrevented) {
+        for (const tab of tabs) {
+          tab.active = tab === previousTab;
+        }
+        return;
       }
-      if (this.selectedItem !== this.focusedItem) {
-        this.updateFocusableItem(this.selectedItem);
-      }
-      await this.scrollItemIntoView();
+
+      activeTab[ANIMATE_INDICATOR](previousTab);
+    }
+
+    this.updateFocusableTab(activeTab);
+    this.scrollToTab(activeTab);
+  }
+
+  private updateFocusableTab(focusableTab: Tab) {
+    for (const tab of this.tabs) {
+      tab.tabIndex = tab === focusableTab ? 0 : -1;
     }
   }
 
   // focus item on keydown and optionally select it
-  private readonly handleKeydown = async (event: KeyboardEvent) => {
-    const {key} = event;
-    const shouldHandleKey = NAVIGATION_KEYS.get('default')!.has(key) ||
-        NAVIGATION_KEYS.get('horizontal')!.has(key);
-    // await to after user may cancel event.
-    if (!shouldHandleKey || (await this.wasEventPrevented(event, true))) {
+  private async handleKeydown(event: KeyboardEvent) {
+    // Allow event to bubble.
+    await 0;
+    const isLeft = event.key === 'ArrowLeft';
+    const isRight = event.key === 'ArrowRight';
+    const isHome = event.key === 'Home';
+    const isEnd = event.key === 'End';
+    // Ignore non-navigation keys
+    if (event.defaultPrevented || !isLeft && !isRight && !isHome && !isEnd) {
       return;
     }
-    let indexToFocus = -1;
-    const focused = this.focusedItem ?? this.selectedItem;
-    const itemCount = this.tabs.length;
-    const isPrevKey = key === 'ArrowLeft' || key === 'ArrowUp';
-    if (key === 'Home') {
-      indexToFocus = 0;
-    } else if (key === 'End') {
-      indexToFocus = itemCount - 1;
-    } else {
-      const focusedIndex = this.tabs.indexOf(focused) || 0;
-      indexToFocus = focusedIndex + (isPrevKey ? -1 : 1);
-      indexToFocus =
-          indexToFocus < 0 ? itemCount - 1 : indexToFocus % itemCount;
+
+    const {tabs} = this;
+    // Don't try to select another tab if there aren't any.
+    if (tabs.length < 2) {
+      return;
     }
-    const itemToFocus = this.tabs[indexToFocus];
-    if (itemToFocus !== null && itemToFocus !== focused) {
-      this.updateFocusableItem(itemToFocus);
-      itemToFocus.focus();
-      if (this.selectOnFocus) {
-        this.selected = indexToFocus;
-        await this.dispatchInteraction();
+
+    // Prevent default interactions, such as scrolling.
+    event.preventDefault();
+
+    let indexToFocus: number;
+    if (isHome || isEnd) {
+      indexToFocus = isHome ? 0 : tabs.length - 1;
+    } else {
+      // Check if moving forwards or backwards
+      const isRtl = getComputedStyle(this).direction === 'rtl';
+      const forwards = isRtl ? isLeft : isRight;
+      const {focusedTab} = this;
+      if (!focusedTab) {
+        // If there is not already a tab focused, select the first or last tab
+        // based on the direction we're traveling.
+        indexToFocus = forwards ? 0 : tabs.length - 1;
+      } else {
+        const focusedIndex = this.tabs.indexOf(focusedTab);
+        indexToFocus = forwards ? focusedIndex + 1 : focusedIndex - 1;
+        if (indexToFocus >= tabs.length) {
+          // Return to start if moving past the last item.
+          indexToFocus = 0;
+        } else if (indexToFocus < 0) {
+          // Go to end if moving before the first item.
+          indexToFocus = tabs.length - 1;
+        }
       }
     }
-  };
+
+    const tabToFocus = tabs[indexToFocus];
+    tabToFocus.focus();
+    if (this.autoActivate) {
+      this.activateTab(tabToFocus);
+    } else {
+      this.updateFocusableTab(tabToFocus);
+    }
+  }
 
   // scroll to item on keyup.
-  private readonly handleKeyup = () => {
-    this.scrollItemIntoView(this.focusedItem ?? this.selectedItem);
-  };
-
-  // restore focus to selected item when blurring.
-  private readonly handleFocusout = async () => {
-    await this.updateComplete;
-    const nowFocused =
-        (this.getRootNode() as unknown as DocumentOrShadowRoot).activeElement as
-        Tab;
-    if (this.tabs.indexOf(nowFocused) === -1) {
-      this.updateFocusableItem(this.selectedItem);
-    }
-  };
-
-  // Note, this is async to allow the event to bubble to user code, which
-  // may call `preventDefault`. If it does, avoid performing the tabs action
-  // which is selecting a new tab. Sometimes, the native event must be
-  // prevented to avoid, for example, scrolling. In this case, the event is
-  // patched to be able to detect if the user calls prevent default.
-  // Alternatively, the event could be stopped and re-dispatched synchroously,
-  // but this would be complicated since the event should be re-dispatched from
-  // the initial element to potentially trigger a native action (e.g. a history
-  // navigation via a tab label), and this could result in some listener hearing
-  // 2x events.
-  private async wasEventPrevented(event: Event, preventNativeDefault = false) {
-    if (preventNativeDefault) {
-      // prevent native default to stop, e.g. scrolling.
-      event.preventDefault();
-      // reset prevention to see if user is cancelling this action.
-      Object.defineProperties(event, {
-        'defaultPrevented': {value: false, writable: true, configurable: true},
-        'preventDefault': {
-          // Type needed for closure conformance. Using the Event type results
-          // in a type error.
-          value(this: {defaultPrevented: boolean}) {
-            this.defaultPrevented = true;
-          },
-          writable: true,
-          configurable: true
-        }
-      });
-    }
-    // allow event to propagate to user code.
-    await new Promise(requestAnimationFrame);
-    return event.defaultPrevented;
+  private handleKeyup() {
+    this.scrollToTab(this.focusedTab ?? this.activeTab);
   }
 
-  private async dispatchInteraction() {
-    // wait for items to render.
-    await new Promise(requestAnimationFrame);
-    const event = new Event('change', {bubbles: true});
-    this.dispatchEvent(event);
-  }
-
-  private updateFocusableItem(focusableItem: HTMLElement|null) {
-    for (const item of this.tabs) {
-      item.tabIndex = item === focusableItem ? 0 : -1;
-    }
-  }
-
-  private async handleItemClick(event: Event) {
-    const {target} = event;
-    if (await this.wasEventPrevented(event)) {
+  private handleFocusout() {
+    // restore focus to selected item when blurring the tab bar.
+    if (this.matches(':focus-within')) {
       return;
     }
-    const item = (target as Element).closest(`${this.localName} > *`) as Tab;
-    const i = this.tabs.indexOf(item);
-    if (i > -1 && this.selected !== i) {
-      this.selected = i;
-      this.updateFocusableItem(this.selectedItem);
-      // note, Safari will not focus the button here, but if focus is manually
-      // triggered, this can match focus-visible and show the focus-ring,
-      // so avoid the temptation to cal focus!
-      await this.dispatchInteraction();
+
+    const {activeTab} = this;
+    if (activeTab) {
+      this.updateFocusableTab(activeTab);
     }
   }
 
   private handleSlotChange() {
-    this.itemsDirty = true;
-  }
-
-  private async itemsUpdateComplete() {
-    for (const item of this.tabs) {
-      await item.updateComplete;
+    const firstTab = this.tabs[0];
+    if (!this.activeTab && firstTab) {
+      // If the active tab was removed, auto-select the first one. There should
+      // always be a selected tab while the bar has children.
+      this.activateTab(firstTab);
     }
-    return true;
-  }
 
-  // ensures the given item is visible in view; defaults to the selected item
-  private async scrollItemIntoView(item = this.selectedItem) {
-    if (!item) {
-      return;
-    }
-    // wait for items to render.
-    await this.itemsUpdateComplete();
-    const offset = item.offsetLeft;
-    const extent = item.offsetWidth;
-    const scroll = this.scrollLeft;
-    const hostExtent = this.offsetWidth;
-    const min = offset - this.scrollMargin;
-    const max = offset + extent - hostExtent + this.scrollMargin;
-    const to = Math.min(min, Math.max(max, scroll));
-    const behavior =
-        // type annotation because `instant` is valid but not included in type.
-        this.focusedItem !== undefined ? 'smooth' : 'instant' as ScrollBehavior;
-    this.scrollTo({behavior, top: 0, left: to});
+    // When children shift, ensure the active tab is visible. For example, if
+    // many children are added before the active tab, it'd be pushed off screen.
+    // This ensures it stays visible.
+    this.scrollToTab(this.activeTab);
   }
 }
 
-function isTab(element: HTMLElement): element is Tab {
+function isTab(element: unknown): element is Tab {
   return element instanceof Tab;
 }

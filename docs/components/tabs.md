@@ -15,7 +15,7 @@ dirname: tabs
 freshness: {
   owner: 'lizmitchell'
   owner: 'ajakubowicz'
-  reviewed: '2023-08-25'
+  reviewed: '2023-09-08'
 }
 tag: 'docType:reference'
 *-->
@@ -91,12 +91,22 @@ tab in a tab bar.
 
 ### Selection
 
+Add an `active` attribute to change which tab is selected.
+
+```html
+<md-tabs>
+  <md-primary-tab>Video</md-primary-tab>
+  <md-primary-tab active>Photos</md-primary-tab>
+  <md-primary-tab>Audio</md-primary-tab>
+</md-tabs>
+```
+
 To observe changes to tab selections, add an event listener to `<md-tabs>`,
 listening for the `change` event.
 
 ```ts
 tabs.addEventListener('change', (event: Event) => {
-  if (event.target.selected === 2) {
+  if (event.target.activeTabIndex === 2) {
     // ... perform logic only if index of selected item is 2.
   }
 });
@@ -127,6 +137,24 @@ recognizable.
 </md-tabs>
 ```
 
+Tabs may optionally show icons without a label.
+
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+
+```html
+<md-tabs>
+  <md-primary-tab>
+    <md-icon slot="icon">piano</md-icon>
+  </md-primary-tab>
+  <md-primary-tab>
+    <md-icon slot="icon">tune</md-icon>
+  </md-primary-tab>
+</md-tabs>
+```
+
 ## Primary tabs
 
 <!-- go/md-primary-tab -->
@@ -152,6 +180,28 @@ display the main content destinations.
 </md-tabs>
 ```
 
+### Inline icons
+
+Primary tabs can show their icons inline, like secondary tabs.
+
+<!-- no-catalog-start -->
+<!-- TODO: add image -->
+<!-- no-catalog-end -->
+<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+
+```html
+<md-tabs>
+  <md-primary-tab inline-icon>
+    <md-icon slot="icon">piano</md-icon>
+    Keyboard
+  </md-primary-tab>
+  <md-primary-tab inline-icon>
+    <md-icon slot="icon">tune</md-icon>
+    Guitar
+  </md-primary-tab>
+</md-tabs>
+```
+
 ## Secondary tabs
 
 <!-- go/md-secondary-tab -->
@@ -166,15 +216,15 @@ content and establish hierarchy.
 
 ```html
 <md-tabs>
-  <md-secondary-tab inline-icon>
+  <md-secondary-tab>
     <md-icon slot="icon">flight</md-icon>
     Travel
   </md-secondary-tab>
-  <md-secondary-tab inline-icon>
+  <md-secondary-tab>
     <md-icon slot="icon">hotel</md-icon>
     Hotel
   </md-secondary-tab>
-  <md-secondary-tab inline-icon>
+  <md-secondary-tab>
     <md-icon slot="icon">hiking</md-icon>
     Activities
   </md-secondary-tab>
