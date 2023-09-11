@@ -86,8 +86,8 @@ attribute to non-decorative dividers that should be announced.
 
 ## Theming
 
-Divider supports [theming](../theming.md) and can be customized with CSS custom
-property tokens.
+Divider supports [theming](../theming/README.md) and can be customized with CSS
+custom property tokens.
 
 ### Tokens
 

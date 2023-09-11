@@ -282,7 +282,7 @@ on the internal list item nodes.
 ## Theming
 
 List and List Item supports
-[Material theming](https://github.com/material-components/material-web/blob/main/docs/theming.md)<!-- {.external} -->
+[Material theming](https://github.com/material-components/material-web/blob/main/docs/theming/README.md)<!-- {.external} -->
 and can be customized in terms of color, typography, and shape.
 
 ### List & List Item

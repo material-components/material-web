@@ -208,8 +208,8 @@ Ripples are visual components and do not have assistive technology requirements.
 
 ## Theming
 
-Ripples support [Material theming](../theming.md) and can be customized in terms
-of color.
+Ripples support [Material theming](../theming/README.md) and can be customized
+in terms of color.
 
 ### Tokens
 

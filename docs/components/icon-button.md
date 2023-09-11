@@ -280,8 +280,8 @@ filled tonal icon button.
 
 ## Theming
 
-Icon Button supports [Material theming](../theming.md) and can be customized in
-terms of color, and shape.
+Icon Button supports [Material theming](../theming/README.md) and can be
+customized in terms of color, and shape.
 
 ### Icon Button tokens
 

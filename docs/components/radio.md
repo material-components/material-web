@@ -158,8 +158,8 @@ Radio groups must display a label, either with `aria-label` or
 
 ## Theming
 
-Radios support [Material theming](../theming.md) and can be customized in terms
-of color.
+Radios support [Material theming](../theming/README.md) and can be customized in
+terms of color.
 
 ### Tokens
 

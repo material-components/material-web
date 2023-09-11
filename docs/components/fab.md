@@ -341,8 +341,8 @@ sized one and a large one.](images/fab/usage-branded-sizes.webp)
 
 ## Theming
 
-FAB supports [Material theming](../theming.md) and can be customized in terms of
-color, typography, and shape.
+FAB supports [Material theming](../theming/README.md) and can be customized in
+terms of color, typography, and shape.
 
 ### FAB tokens
 

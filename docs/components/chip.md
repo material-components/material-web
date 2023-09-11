@@ -342,8 +342,8 @@ such as possible responses or search filters.
 
 ## Theming
 
-Chips support [Material theming](../theming.md) and can be customized in terms
-of color, typography, and shape.
+Chips support [Material theming](../theming/README.md) and can be customized in
+terms of color, typography, and shape.
 
 ### Assist chip tokens
 

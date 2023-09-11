@@ -247,7 +247,7 @@ while the buffer dots represent unknown progress.
 
 ## Theming
 
-Progress indicators supports [Material theming](../theming.md) and can be
+Progress indicators supports [Material theming](../theming/README.md) and can be
 customized in terms of color.
 
 ### Circular progress tokens

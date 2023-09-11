@@ -273,10 +273,10 @@ cases should be set to `role="none"`, and `md-divider` should have
 
 ## Theming
 
-Menus support [Material theming](../theming.md) and can be customized in terms
-of color. Additionally, `md-menu` composes `md-list`, and each menu item extends
-`md-list-item` ([see theming documentation](./list#theming)), so most the tokens
-for those components can also be used for Menu.
+Menus support [Material theming](../theming/README.md) and can be customized in
+terms of color. Additionally, `md-menu` composes `md-list`, and each menu item
+extends `md-list-item` ([see theming documentation](./list#theming)), so most
+the tokens for those components can also be used for Menu.
 
 ### Menu Tokens
 

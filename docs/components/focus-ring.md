@@ -98,8 +98,8 @@ requirements.
 
 ## Theming
 
-Focus rings supports [Material theming](../theming.md) and can be customized in
-terms of color and shape.
+Focus rings supports [Material theming](../theming/README.md) and can be
+customized in terms of color and shape.
 
 ### Tokens
 

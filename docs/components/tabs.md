@@ -185,8 +185,8 @@ content and establish hierarchy.
 
 ## Theming
 
-Tabs supports [Material theming](../theming.md) and can be customized in terms
-of color, typography, and shape.
+Tabs supports [Material theming](../theming/README.md) and can be customized in
+terms of color, typography, and shape.
 
 ### Primary tab tokens
 

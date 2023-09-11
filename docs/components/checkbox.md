@@ -119,8 +119,8 @@ more descriptive.
 
 ## Theming
 
-Checkbox supports [Material theming](../theming.md) and can be customized in
-terms of color and shape.
+Checkbox supports [Material theming](../theming/README.md) and can be customized
+in terms of color and shape.
 
 ### Tokens
 

@@ -171,8 +171,8 @@ descriptive.
 
 ## Theming
 
-Switches supports [Material theming](../theming.md) and can be customized in
-terms of color and shape.
+Switches supports [Material theming](../theming/README.md) and can be customized
+in terms of color and shape.
 
 ### Tokens
 

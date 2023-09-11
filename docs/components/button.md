@@ -402,8 +402,8 @@ options.
 
 ## Theming
 
-Button supports [Material theming](../theming.md) and can be customized in terms
-of color, typography, and shape.
+Button supports [Material theming](../theming/README.md) and can be customized
+in terms of color, typography, and shape.
 
 ### Elevated button tokens
 

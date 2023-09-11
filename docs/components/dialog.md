@@ -181,8 +181,8 @@ action confirmation prompts.
 
 ## Theming
 
-Dialogs supports [Material theming](../theming.md) and can be customized in
-terms of color, typography, and shape.
+Dialogs supports [Material theming](../theming/README.md) and can be customized
+in terms of color, typography, and shape.
 
 ### Tokens
 

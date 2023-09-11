@@ -347,8 +347,8 @@ for guidance on which one to use.
 
 ## Theming
 
-Text fields support [Material theming](../theming.md) and can be customized in
-terms of color, typography, and shape.
+Text fields support [Material theming](../theming/README.md) and can be
+customized in terms of color, typography, and shape.
 
 ### Filled text field tokens
 

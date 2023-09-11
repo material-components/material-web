@@ -111,8 +111,8 @@ when either handle is selected.
 
 ## Theming
 
-Slider supports [Material theming](../theming.md) and can be customized in terms
-of color and shape.
+Slider supports [Material theming](../theming/README.md) and can be customized
+in terms of color and shape.
 
 ### Tokens
 
