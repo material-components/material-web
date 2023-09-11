@@ -237,6 +237,14 @@ export abstract class TextField extends LitElement {
   type: TextFieldType|UnsupportedTextFieldType = 'text';
 
   /**
+   * Describes what, if any, type of autocomplete functionality the input
+   * should provide.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+   */
+  @property({reflect: true}) autocomplete = '';
+
+  /**
    * Returns the text field's validation error message.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
@@ -610,6 +618,9 @@ export abstract class TextField extends LitElement {
     const style = {direction: this.textDirection};
     const ariaLabel =
         (this as ARIAMixinStrict).ariaLabel || this.label || nothing;
+    // lit-anaylzer `autocomplete` types are too strict
+    // tslint:disable-next-line:no-any
+    const autocomplete = this.autocomplete as any;
 
     if (this.type === 'textarea') {
       return html`
@@ -619,6 +630,7 @@ export abstract class TextField extends LitElement {
           aria-describedby="description"
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
+          autocomplete=${autocomplete || nothing}
           ?disabled=${this.disabled}
           maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
           minlength=${this.minLength > -1 ? this.minLength : nothing}
@@ -650,6 +662,7 @@ export abstract class TextField extends LitElement {
           aria-describedby="description"
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
+          autocomplete=${autocomplete || nothing}
           ?disabled=${this.disabled}
           inputmode=${inputMode || nothing}
           max=${(this.max || nothing) as unknown as number}
