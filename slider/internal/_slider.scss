@@ -298,9 +298,13 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   .onTop.isOverlapping {
-    .handleNub,
     .label,
     .label::before {
+      outline: var(--_with-overlap-handle-outline-color) solid
+        var(--_with-overlap-handle-outline-width);
+    }
+
+    .handleNub {
       border: var(--_with-overlap-handle-outline-color) solid
         var(--_with-overlap-handle-outline-width);
     }
