@@ -271,7 +271,7 @@ export abstract class Select extends LitElement {
           @opening=${this.handleOpening}
           @opened=${this.redispatchEvent}
           @closing=${this.redispatchEvent}
-          @closed=${this.redispatchEvent}
+          @closed=${this.handleClosed}
           @close-menu=${this.handleCloseMenu}
           @request-selection=${this.handleRequestSelection}
           @request-deselection=${this.handleRequestDeselection}>
@@ -452,6 +452,11 @@ export abstract class Select extends LitElement {
 
   private redispatchEvent(e: Event) {
     redispatchEvent(this, e);
+  }
+
+  private handleClosed(e: Event) {
+    this.open = false;
+    this.redispatchEvent(e);
   }
 
   /**
