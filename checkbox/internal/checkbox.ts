@@ -127,6 +127,9 @@ export class Checkbox extends LitElement {
   @state() private prevDisabled = false;
   @state() private prevIndeterminate = false;
   @query('input') private readonly input!: HTMLInputElement|null;
+  // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
+  // Replace with this.internals.validity.customError when resolved.
+  private hasCustomValidityError = false;
   private readonly internals =
       (this as HTMLElement /* needed for closure */).attachInternals();
 
@@ -188,6 +191,7 @@ export class Checkbox extends LitElement {
    * @param error The error message to display.
    */
   setCustomValidity(error: string) {
+    this.hasCustomValidityError = !!error;
     this.internals.setValidity({customError: !!error}, error, this.getInput());
   }
 
@@ -273,7 +277,7 @@ export class Checkbox extends LitElement {
     // Sync the internal <input>'s validity and the host's ElementInternals
     // validity. We do this to re-use native `<input>` validation messages.
     const input = this.getInput();
-    if (this.internals.validity.customError) {
+    if (this.hasCustomValidityError) {
       input.setCustomValidity(this.internals.validationMessage);
     } else {
       input.setCustomValidity('');
