@@ -44,7 +44,7 @@ export class ChipSet extends LitElement {
     }
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<ChipSet>) {
     if (changed.has('singleSelect') && this.singleSelect) {
       let hasSelectedChip = false;
       for (const chip of this.chips as MaybeSelectableChip[]) {

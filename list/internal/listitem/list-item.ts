@@ -117,7 +117,7 @@ export class ListItemEl extends LitElement implements ListItem {
 
   protected isFirstUpdate = true;
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<ListItemEl>) {
     if (changed.has('active') && !this.disabled) {
       if (this.active) {
         this.itemTabIndex = 0;
@@ -268,7 +268,7 @@ export class ListItemEl extends LitElement implements ListItem {
   protected onMouseenter?(event: Event): void;
   protected onMouseleave?(event: Event): void;
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<ListItemEl>) {
     super.updated(changed);
 
     // will focus the list item root if it is selected but not on the first

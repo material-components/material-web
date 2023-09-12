@@ -142,7 +142,7 @@ export class Ripple extends LitElement implements Attachable {
     return html`<div class="surface ${classMap(classes)}"></div>`;
   }
 
-  protected override update(changedProps: PropertyValues<this>) {
+  protected override update(changedProps: PropertyValues<Ripple>) {
     if (changedProps.has('disabled') && this.disabled) {
       this.hovered = false;
       this.pressed = false;

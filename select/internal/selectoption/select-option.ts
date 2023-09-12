@@ -30,7 +30,7 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
 
   override readonly type: ListItemRole = 'option';
 
-  override willUpdate(changed: PropertyValues<this>) {
+  override willUpdate(changed: PropertyValues<SelectOptionEl>) {
     if (changed.has('selected')) {
       // Synchronize selected -> active but not the other way around because
       // active is used for keyboard navigation and doesn't mean the option
@@ -46,7 +46,7 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
     super.willUpdate(changed);
   }
 
-  override updated(changed: PropertyValues<this>) {
+  override updated(changed: PropertyValues<SelectOptionEl>) {
     super.updated(changed);
     // Restore the active = true focusing behavior which happens in
     // super.updated() if it was turned off.

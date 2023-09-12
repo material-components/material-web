@@ -32,7 +32,7 @@ export class FilterChip extends MultiActionChip {
   @query('.trailing.action')
   protected readonly trailingAction!: HTMLElement|null;
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<FilterChip>) {
     if (changed.has('selected') && changed.get('selected') !== undefined) {
       // Dispatch when `selected` changes, except for the first update.
       this.dispatchEvent(new Event('selected', {bubbles: true}));

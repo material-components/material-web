@@ -169,7 +169,7 @@ export class SubMenuItem extends MenuItemEl {
     ></slot></span>`;
   }
 
-  override firstUpdated(changed: PropertyValues<this>) {
+  override firstUpdated(changed: PropertyValues<SubMenuItem>) {
     super.firstUpdated(changed);
 
     const {handleEvent} = this.rippleEl;

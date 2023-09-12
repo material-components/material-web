@@ -195,7 +195,7 @@ export class Checkbox extends LitElement {
     this.internals.setValidity({customError: !!error}, error, this.getInput());
   }
 
-  protected override update(changed: PropertyValues<this>) {
+  protected override update(changed: PropertyValues<Checkbox>) {
     if (changed.has('checked') || changed.has('disabled') ||
         changed.has('indeterminate')) {
       this.prevChecked = changed.get('checked') ?? this.checked;

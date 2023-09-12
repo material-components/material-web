@@ -93,7 +93,7 @@ export class FocusRing extends LitElement implements Attachable {
     }
   }
 
-  override update(changed: PropertyValues<this>) {
+  override update(changed: PropertyValues<FocusRing>) {
     if (changed.has('visible')) {
       // This logic can be removed once the `:has` selector has been introduced
       // to Firefox. This is necessary to allow correct submenu styles.

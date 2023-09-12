@@ -405,7 +405,7 @@ export abstract class Select extends LitElement {
     return hasSelectedOptionChanged;
   }
 
-  protected override update(changed: PropertyValues<this>) {
+  protected override update(changed: PropertyValues<Select>) {
     // In SSR the options will be ready to query, so try to figure out what
     // the value and display text should be.
     if (!this.hasUpdated) {
@@ -415,7 +415,7 @@ export abstract class Select extends LitElement {
     super.update(changed);
   }
 
-  protected override async firstUpdated(changed: PropertyValues<this>) {
+  protected override async firstUpdated(changed: PropertyValues<Select>) {
     await this.menu?.updateComplete;
     // If this has been handled on update already due to SSR, try again.
     if (!this.lastSelectedOptionRecords.length) {
