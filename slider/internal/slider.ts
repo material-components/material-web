@@ -416,8 +416,10 @@ export class Slider extends LitElement {
   }
 
   private renderTrack() {
-    const trackClasses = {'tickmarks': this.ticks};
-    return html`<div class="track ${classMap(trackClasses)}"></div>`;
+    return html`
+        <div class="track"></div>
+        ${this.ticks ? html`<div class="tickmarks"></div>` : nothing}
+      `;
   }
 
   private renderLabel(value: string) {

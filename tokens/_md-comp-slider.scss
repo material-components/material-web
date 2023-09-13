@@ -68,8 +68,10 @@ $unsupported-tokens: (
   'track-elevation',
   // for efficiency, tick marks are rendered as radial-gradients and
   // have more limited customization
-  'with-tick-marks-active-container-opacity',
   'with-tick-marks-container-shape',
+  // Due to how opacity is multiplied together in the browser, using
+  // these tokens results in low contrast tick marks.
+  'with-tick-marks-active-container-opacity',
   'with-tick-marks-disabled-container-opacity',
   'with-tick-marks-inactive-container-opacity',
   // focus tokens no longer used.
