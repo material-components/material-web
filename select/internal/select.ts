@@ -91,13 +91,6 @@ export abstract class Select extends LitElement {
    */
   @property({attribute: 'display-text'}) displayText = '';
 
-  @state() private focused = false;
-  @state() private open = false;
-  @query('md-menu') private readonly menu!: Menu|null;
-  @query('#label') private readonly labelEl!: HTMLElement;
-  @queryAssignedElements({slot: 'leading-icon', flatten: true})
-  private readonly leadingIcons!: Element[];
-
   /**
    * The value of the currently selected option.
    *
@@ -170,6 +163,45 @@ export abstract class Select extends LitElement {
   // tslint:disable-next-line:enforce-name-casing
   private lastSelectedOptionRecords: SelectOptionRecord[] = [];
 
+  @state() private focused = false;
+  @state() private open = false;
+  @query('md-menu') private readonly menu!: Menu|null;
+  @query('#label') private readonly labelEl!: HTMLElement;
+  @queryAssignedElements({slot: 'leading-icon', flatten: true})
+  private readonly leadingIcons!: Element[];
+
+  /**
+   * Selects an option given the value of the option, and updates MdSelect's
+   * value.
+   */
+  select(value: string) {
+    const optionToSelect = this.options.find(option => option.value === value);
+    if (optionToSelect) {
+      this.selectItem(optionToSelect);
+    }
+  }
+
+  /**
+   * Selects an option given the index of the option, and updates MdSelect's
+   * value.
+   */
+  selectIndex(index: number) {
+    const optionToSelect = this.options[index];
+    if (optionToSelect) {
+      this.selectItem(optionToSelect);
+    }
+  }
+
+  protected override update(changed: PropertyValues<Select>) {
+    // In SSR the options will be ready to query, so try to figure out what
+    // the value and display text should be.
+    if (!this.hasUpdated) {
+      this.initUserSelection();
+    }
+
+    super.update(changed);
+  }
+
   protected override render() {
     return html`
       <span
@@ -179,6 +211,16 @@ export abstract class Select extends LitElement {
         ${this.renderMenu()}
       </span>
     `;
+  }
+
+  protected override async firstUpdated(changed: PropertyValues<Select>) {
+    await this.menu?.updateComplete;
+    // If this has been handled on update already due to SSR, try again.
+    if (!this.lastSelectedOptionRecords.length) {
+      this.initUserSelection();
+    }
+
+    super.firstUpdated(changed);
   }
 
   private getRenderClasses() {
@@ -405,26 +447,6 @@ export abstract class Select extends LitElement {
     return hasSelectedOptionChanged;
   }
 
-  protected override update(changed: PropertyValues<Select>) {
-    // In SSR the options will be ready to query, so try to figure out what
-    // the value and display text should be.
-    if (!this.hasUpdated) {
-      this.initUserSelection();
-    }
-
-    super.update(changed);
-  }
-
-  protected override async firstUpdated(changed: PropertyValues<Select>) {
-    await this.menu?.updateComplete;
-    // If this has been handled on update already due to SSR, try again.
-    if (!this.lastSelectedOptionRecords.length) {
-      this.initUserSelection();
-    }
-
-    super.firstUpdated(changed);
-  }
-
   /**
    * Focuses and activates the last selected item upon opening, and resets other
    * active items.
@@ -533,28 +555,6 @@ export abstract class Select extends LitElement {
     }
 
     this.updateValueAndDisplayText();
-  }
-
-  /**
-   * Selects an option given the value of the option, and updates MdSelect's
-   * value.
-   */
-  select(value: string) {
-    const optionToSelect = this.options.find(option => option.value === value);
-    if (optionToSelect) {
-      this.selectItem(optionToSelect);
-    }
-  }
-
-  /**
-   * Selects an option given the index of the option, and updates MdSelect's
-   * value.
-   */
-  selectIndex(index: number) {
-    const optionToSelect = this.options[index];
-    if (optionToSelect) {
-      this.selectItem(optionToSelect);
-    }
   }
 
   /**
