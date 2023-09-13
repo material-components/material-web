@@ -43,7 +43,7 @@ These features are planned for the next release.
     *   ✅ Slider
     *   ✅ Switch
     *   ✅ Tabs
-    *   🟡 Text field
+    *   ✅ Text field
 
 ## Next (Q1 2024)
 
