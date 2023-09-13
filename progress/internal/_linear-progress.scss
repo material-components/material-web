@@ -30,21 +30,6 @@ $_determinate-easing: cubic-bezier(0.4, 0, 0.6, 1);
 // see https://github.com/material-components/material-components-web/blob/main/packages/mdc-linear-progress/_linear-progress.scss#L218
 $_indeterminate-duration: 2s;
 
-// Note, track background is a series of animating dots sized to fit
-// the track height. Since the dots are circular, width scales with height.
-// Background width is separated because it's also used to help animate the
-// /dots.
-$_dot-size: calc(var(--_track-height) / 2);
-$_dot-background-width: calc($_dot-size * 5);
-// this is a series of sized/colored dots.
-$_dot-background: 0 / $_dot-background-width 100%
-  radial-gradient(
-    circle at calc($_dot-size * 2),
-    var(--_track-color) 0,
-    var(--_track-color) $_dot-size,
-    transparent $_dot-size
-  );
-
 @mixin styles() {
   $tokens: tokens.md-comp-linear-progress-values();
 
@@ -113,7 +98,19 @@ $_dot-background: 0 / $_dot-background-width 100%
     inset: 0;
     animation: linear infinite $_determinate-duration;
     animation-name: buffering;
-    background: $_dot-background;
+    // The color of the buffer dots, which are masked out of this background
+    // color.
+    background-color: var(--_track-color);
+    background-repeat: repeat-x;
+    // SVG is optimized for data URI (https://codepen.io/tigt/post/optimizing-svgs-in-data-uris)
+    // This svg creates a black circle on a transparent background which is used
+    // to mask out the animated buffering dots. This technique allows for dot
+    // color customization via the background-color property, and mask-image
+    // displays when forced-colors are active.
+    $svg: "data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 2' preserveAspectRatio='xMinYMin slice'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/svg%3E";
+    // required for full support with Chrome, Edge, and Opera.
+    -webkit-mask-image: url($svg);
+    mask-image: url($svg);
     z-index: -1; // Place behind tracks for Safari
   }
 
@@ -239,7 +236,9 @@ $_dot-background: 0 / $_dot-background-width 100%
 
   @keyframes buffering {
     0% {
+      $_dot-size: calc(var(--_track-height) / 2);
       // the amount to animate is aligned with the default track background
+      $_dot-background-width: calc($_dot-size * 5);
       transform: translateX(#{$_dot-background-width});
     }
   }
@@ -330,8 +329,9 @@ $_dot-background: 0 / $_dot-background-width 100%
       outline: 1px solid CanvasText;
     }
 
-    .bar-inner {
-      background: CanvasText;
+    .bar-inner,
+    .dots {
+      background-color: CanvasText;
     }
 
     // TODO(b/296262544): fix dots not being CanvasText. This need a refactor,
