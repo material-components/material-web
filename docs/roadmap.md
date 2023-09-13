@@ -40,7 +40,7 @@ These features are planned for the next release.
     *   ✅ Radio
     *   ✅ Ripple
     *   🟡 Select
-    *   🟡 Slider
+    *   ✅ Slider
     *   ✅ Switch
     *   ✅ Tabs
     *   🟡 Text field
