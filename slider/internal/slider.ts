@@ -334,7 +334,11 @@ export class Slider extends LitElement {
     }
     if (changed.has('range') || changed.has('renderValueStart') ||
         changed.has('renderValueEnd') || this.isUpdatePending) {
-      this.handlesOverlapping = isOverlapping(this.handleStart, this.handleEnd);
+      // Only check if the handle nubs are overlapping, as the ripple touch
+      // target extends subtantially beyond the boundary of the handle nub.
+      const startNub = this.handleStart?.querySelector('.handleNub');
+      const endNub = this.handleEnd?.querySelector('.handleNub');
+      this.handlesOverlapping = isOverlapping(startNub, endNub);
     }
     // called to finish the update imediately;
     // note, this is a no-op unless an update is scheduled
@@ -741,7 +745,8 @@ function inBounds({x, y}: PointerEvent, element?: HTMLElement|null) {
   return x >= left && x <= right && y >= top && y <= bottom;
 }
 
-function isOverlapping(elA: Element|null, elB: Element|null) {
+function isOverlapping(
+    elA: Element|null|undefined, elB: Element|null|undefined) {
   if (!(elA && elB)) {
     return false;
   }
