@@ -156,7 +156,7 @@ export class Tabs extends LitElement {
     const max = offset + extent - hostExtent + scrollMargin;
     const to = Math.min(min, Math.max(max, scroll));
     // TODO(b/299934312): improve focus smoothness
-    const behavior = !this.focusedTab ? 'smooth' : 'instant' as const;
+    const behavior = !this.focusedTab ? 'smooth' : 'instant' as ScrollBehavior;
     this.scrollTo({behavior, top: 0, left: to});
   }
 
