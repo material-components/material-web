@@ -120,6 +120,8 @@ export class Field extends LitElement implements SurfacePositionTarget {
       <div class="field ${classMap(classes)}">
         <div class="container-overflow">
           ${this.renderBackground?.()}
+          ${this.renderIndicator?.()}
+          ${outline}
           <div class="container">
             <div class="start">
               <slot name="start"></slot>
@@ -137,8 +139,6 @@ export class Field extends LitElement implements SurfacePositionTarget {
               <slot name="end"></slot>
             </div>
           </div>
-          ${outline}
-          ${this.renderIndicator?.()}
         </div>
         ${this.renderSupportingText()}
       </div>
