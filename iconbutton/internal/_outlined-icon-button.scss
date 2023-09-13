@@ -162,16 +162,20 @@
   }
 
   @media (forced-colors: active) {
+    :host([disabled]) {
+      --_disabled-outline-opacity: 1;
+    }
+
     // Selected button in HCM has an outline.
     .selected {
       &::before {
-        border-color: var(--_outline-color);
+        border-color: CanvasText;
         border-width: var(--_outline-width);
       }
 
       &:disabled::before {
-        border-color: var(--_disabled-outline-color);
-        opacity: var(--_disabled-outline-opacity);
+        border-color: GrayText;
+        opacity: 1;
       }
     }
   }

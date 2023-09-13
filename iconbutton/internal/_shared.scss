@@ -109,4 +109,10 @@
   :host([touch-target='none']) .touch {
     display: none;
   }
+
+  @media (forced-colors: active) {
+    :host([disabled]) {
+      --_disabled-icon-opacity: 1;
+    }
+  }
 }
