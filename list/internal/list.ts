@@ -51,7 +51,7 @@ export class List extends LitElement {
   /**
    * The tabindex of the underlying list.
    */
-  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = 0;
+  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = -1;
 
   @query('.list') private listRoot!: HTMLElement|null;
 
