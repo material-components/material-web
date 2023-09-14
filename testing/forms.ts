@@ -221,6 +221,8 @@ export function createFormTests<T extends HTMLElement>(
 
         const newControl = document.createElement(control.tagName) as
             ExpectedFormAssociatedElement;
+        // Include any children for controls like `<select>`
+        newControl.append(...control.children);
         control.remove();
         form.appendChild(newControl);
         let restoreState: FormState|null|FormData = state ?? value;

@@ -11,6 +11,7 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
+import {Field} from '../../field/internal/field.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 import {List} from '../../list/internal/list.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
@@ -34,6 +35,9 @@ const VALUE = Symbol('value');
  * closed.
  */
 export abstract class Select extends LitElement {
+  /** @nocollapse  */
+  static readonly formAssociated = true;
+
   /**
    * Opens the menu synchronously with no animation.
    */
@@ -51,8 +55,8 @@ export abstract class Select extends LitElement {
    * `errorText` is an empty string, then the supporting text will continue to
    * show.
    *
-   * Calling `reportValidity()` will automatically update `errorText` to the
-   * native `validationMessage`.
+   * This error message overrides the error message displayed by
+   * `reportValidity()`.
    */
   @property({type: String, attribute: 'error-text'}) errorText = '';
   /**
@@ -60,14 +64,15 @@ export abstract class Select extends LitElement {
    */
   @property() label = '';
   /**
-   * Conveys additional information below the text field, such as how it should
+   * Conveys additional information below the select, such as how it should
    * be used.
    */
   @property({type: String, attribute: 'supporting-text'}) supportingText = '';
   /**
-   * Gets or sets whether or not the text field is in a visually invalid state.
+   * Gets or sets whether or not the select is in a visually invalid state.
    *
-   * Calling `reportValidity()` will automatically update `error`.
+   * This error state overrides the error state controlled by
+   * `reportValidity()`.
    */
   @property({type: Boolean, reflect: true}) error = false;
   /**
@@ -142,6 +147,63 @@ export abstract class Select extends LitElement {
     return (this.getSelectedOptions() ?? []).map(([option]) => option);
   }
 
+  /**
+   * The HTML name to use in form submission.
+   */
+  get name() {
+    return this.getAttribute('name') ?? '';
+  }
+  set name(name: string) {
+    this.setAttribute('name', name);
+  }
+
+  /**
+   * The associated form element with which this element's value will submit.
+   */
+  get form() {
+    return this.internals.form;
+  }
+
+  /**
+   * The labels this element is associated with.
+   */
+  get labels() {
+    return this.internals.labels;
+  }
+
+  /**
+   * Returns a ValidityState object that represents the validity states of the
+   * checkbox.
+   *
+   * Note that selects will only set `valueMissing` if unselected and
+   * `required`.
+   */
+  get validity() {
+    this.syncValidity();
+    return this.internals.validity;
+  }
+
+  /**
+   * Returns the native validation error message.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
+   */
+  get validationMessage() {
+    this.syncValidity();
+    return this.internals.validationMessage;
+  }
+
+  /**
+   * Returns whether an element will successfully validate based on forms
+   * validation rules and constraints.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
+   */
+  get willValidate() {
+    this.syncValidity();
+    return this.internals.willValidate;
+  }
+
   protected abstract readonly fieldTag: StaticValue;
 
   /**
@@ -163,12 +225,30 @@ export abstract class Select extends LitElement {
   // tslint:disable-next-line:enforce-name-casing
   private lastSelectedOptionRecords: SelectOptionRecord[] = [];
 
+  /**
+   * Whether or not a native error has been reported via `reportValidity()`.
+   */
+  @state() private nativeError = false;
+
+  /**
+   * The validation message displayed from a native error via
+   * `reportValidity()`.
+   */
+  @state() private nativeErrorText = '';
+  private get hasError() {
+    return this.error || this.nativeError;
+  }
+
   @state() private focused = false;
   @state() private open = false;
+  @query('.field') private readonly field!: Field|null;
   @query('md-menu') private readonly menu!: Menu|null;
   @query('#label') private readonly labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
+  private customValidationMessage = '';
+  private readonly internals =
+      (this as HTMLElement /* needed for closure */).attachInternals();
 
   /**
    * Selects an option given the value of the option, and updates MdSelect's
@@ -192,6 +272,88 @@ export abstract class Select extends LitElement {
     }
   }
 
+  /**
+   * Reset the select to its default value.
+   */
+  reset() {
+    for (const option of this.options) {
+      option.selected = option.hasAttribute('selected');
+    }
+
+    this.updateValueAndDisplayText();
+    this.nativeError = false;
+    this.nativeErrorText = '';
+  }
+
+  /**
+   * Checks the select's native validation and returns whether or not the
+   * element is valid.
+   *
+   * If invalid, this method will dispatch the `invalid` event.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/checkValidity
+   *
+   * @return true if the select is valid, or false if not.
+   */
+  checkValidity() {
+    this.syncValidity();
+    return this.internals.checkValidity();
+  }
+
+  /**
+   * Checks the select's native validation and returns whether or not the
+   * element is valid.
+   *
+   * If invalid, this method will dispatch the `invalid` event.
+   *
+   * This method will display or clear an error text message equal to the
+   * select's `validationMessage`, unless the invalid event is canceled.
+   *
+   * Use `setCustomValidity()` to customize the `validationMessage`.
+   *
+   * This method can also be used to re-announce error messages to screen
+   * readers.
+   *
+   * @return true if the select is valid, or false if not.
+   */
+  reportValidity() {
+    let invalidEvent: Event|undefined;
+    this.addEventListener('invalid', event => {
+      invalidEvent = event;
+    }, {once: true});
+
+    const valid = this.checkValidity();
+    if (invalidEvent?.defaultPrevented) {
+      return valid;
+    }
+
+    const prevMessage = this.getErrorText();
+    this.nativeError = !valid;
+    this.nativeErrorText = this.validationMessage;
+
+    if (prevMessage === this.getErrorText()) {
+      this.field?.reannounceError();
+    }
+
+    return valid;
+  }
+
+  /**
+   * Sets the select's native validation error message. This is used to
+   * customize `validationMessage`.
+   *
+   * When the error is not an empty string, the select is considered invalid
+   * and `validity.customError` will be true.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity
+   *
+   * @param error The error message to display.
+   */
+  setCustomValidity(error: string) {
+    this.customValidationMessage = error;
+    this.syncValidity();
+  }
+
   protected override update(changed: PropertyValues<Select>) {
     // In SSR the options will be ready to query, so try to figure out what
     // the value and display text should be.
@@ -211,6 +373,12 @@ export abstract class Select extends LitElement {
         ${this.renderMenu()}
       </span>
     `;
+  }
+
+  protected override updated(changed: PropertyValues<Select>) {
+    if (changed.has('required')) {
+      this.syncValidity();
+    }
   }
 
   protected override async firstUpdated(changed: PropertyValues<Select>) {
@@ -247,12 +415,12 @@ export abstract class Select extends LitElement {
           .populated=${!!this.displayText}
           .disabled=${this.disabled}
           .required=${this.required}
-          .error=${this.error}
+          .error=${this.hasError}
           ?has-start=${this.hasLeadingIcon}
           has-end
           supporting-text=${this.supportingText}
-          error-text=${this.errorText}
-          @keydown =${this.handleKeydown}
+          error-text=${this.getErrorText()}
+          @keydown=${this.handleKeydown}
           @click=${this.handleClick}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}>
@@ -444,6 +612,8 @@ export abstract class Select extends LitElement {
       this.displayText = '';
     }
 
+    this.internals.setFormValue(this.value);
+    this.syncValidity();
     return hasSelectedOptionChanged;
   }
 
@@ -589,5 +759,35 @@ export abstract class Select extends LitElement {
   private dispatchInteractionEvents() {
     this.dispatchEvent(new Event('input', {bubbles: true, composed: true}));
     this.dispatchEvent(new Event('change', {bubbles: true}));
+  }
+
+  private getErrorText() {
+    return this.error ? this.errorText : this.nativeErrorText;
+  }
+
+  private syncValidity() {
+    const valueMissing = this.required && !this.value;
+    const customError = !!this.customValidationMessage;
+    const validationMessage = this.customValidationMessage ||
+        valueMissing && this.getRequiredValidationMessage() || '';
+
+    this.internals.setValidity({valueMissing, customError}, validationMessage);
+  }
+
+  // Returns the platform `<select>` validation message for i18n.
+  private getRequiredValidationMessage() {
+    const select = document.createElement('select');
+    select.required = true;
+    return select.validationMessage;
+  }
+
+  /** @private */
+  formResetCallback() {
+    this.reset();
+  }
+
+  /** @private */
+  formStateRestoreCallback(state: string) {
+    this.value = state;
   }
 }

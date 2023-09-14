@@ -54,7 +54,8 @@ export abstract class TextField extends LitElement {
   /**
    * Gets or sets whether or not the text field is in a visually invalid state.
    *
-   * Calling `reportValidity()` will automatically update `error`.
+   * This error state overrides the error state controlled by
+   * `reportValidity()`.
    */
   @property({type: Boolean, reflect: true}) error = false;
   /**
@@ -62,8 +63,8 @@ export abstract class TextField extends LitElement {
    * `errorText` is an empty string, then the supporting text will continue to
    * show.
    *
-   * Calling `reportValidity()` will automatically update `errorText` to the
-   * native `validationMessage`.
+   * This error message overrides the error message displayed by
+   * `reportValidity()`.
    */
   @property({attribute: 'error-text'}) errorText = '';
   @property() label = '';
