@@ -113,4 +113,8 @@
     height: inherit;
     max-height: inherit;
   }
+
+  ::slotted(:is(md-divider, [role='separator'])) {
+    margin: 8px 0;
+  }
 }
