@@ -113,7 +113,11 @@ export class SubMenuItem extends MenuItemEl {
   }
 
   protected override getRenderClasses() {
-    return {...super.getRenderClasses(), 'submenu-hover': this.submenuHover};
+    return {
+      ...super.getRenderClasses(),
+      'submenu-hover': this.submenuHover,
+      selected: this.selected
+    };
   }
 
   /**

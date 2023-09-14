@@ -26,7 +26,7 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
   /**
    * Whether or not this option is selected.
    */
-  @property({type: Boolean, reflect: true}) selected = false;
+  @property({type: Boolean}) selected = false;
 
   override readonly type: ListItemRole = 'option';
 
@@ -64,5 +64,12 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
         this.dispatchEvent(createRequestDeselectionEvent());
       }
     }
+  }
+
+  protected override getRenderClasses() {
+    return {
+      ...super.getRenderClasses(),
+      selected: this.selected,
+    };
   }
 }

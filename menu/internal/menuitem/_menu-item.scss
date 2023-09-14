@@ -43,10 +43,8 @@
     );
   }
 
-  .list-item {
-    :host([selected]) & {
-      background-color: var(--_selected-container-color);
-    }
+  .list-item.selected {
+    background-color: var(--_selected-container-color);
   }
 
   // Set the ripple opacity to 0 if there is a submenu that is hovered.
