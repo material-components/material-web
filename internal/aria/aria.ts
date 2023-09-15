@@ -271,67 +271,63 @@ export function polyfillElementInternalsAria(
     throw new Error('Missing setupHostAria()');
   }
 
-  let firstConnectedCallbacks: Array<() => void> = [];
+  let firstConnectedCallbacks:
+      Array<{property: ARIAProperty | 'role', callback: () => void}> = [];
   let hasBeenConnected = false;
 
   // Add support for Firefox, which has not yet implement ElementInternals aria
   for (const ariaProperty of ARIA_PROPERTIES) {
-    let ariaValueBeforeConnected: string|null = null;
+    let internalAriaValue: string|null = null;
     Object.defineProperty(internals, ariaProperty, {
       enumerable: true,
       configurable: true,
       get() {
-        if (!hasBeenConnected) {
-          return ariaValueBeforeConnected;
-        }
-
-        // Dynamic lookup rather than hardcoding all properties.
-        // tslint:disable-next-line:no-dict-access-on-struct-type
-        return host[ariaProperty];
+        return internalAriaValue;
       },
       set(value: string|null) {
         const setValue = () => {
+          internalAriaValue = value;
+          if (!hasBeenConnected) {
+            firstConnectedCallbacks.push(
+                {property: ariaProperty, callback: setValue});
+            return;
+          }
+
           // Dynamic lookup rather than hardcoding all properties.
           // tslint:disable-next-line:no-dict-access-on-struct-type
           host[ariaProperty] = value;
         };
-
-        if (!hasBeenConnected) {
-          ariaValueBeforeConnected = value;
-          firstConnectedCallbacks.push(setValue);
-          return;
-        }
 
         setValue();
       },
     });
   }
 
-  let roleValueBeforeConnected: string|null = null;
+  let internalRoleValue: string|null = null;
   Object.defineProperty(internals, 'role', {
     enumerable: true,
     configurable: true,
     get() {
-      if (!hasBeenConnected) {
-        return roleValueBeforeConnected;
-      }
-
-      return host.getAttribute('role');
+      return internalRoleValue;
     },
     set(value: string|null) {
       const setRole = () => {
+        internalRoleValue = value;
+
+        if (!hasBeenConnected) {
+          firstConnectedCallbacks.push({
+            property: 'role',
+            callback: setRole,
+          });
+          return;
+        }
+
         if (value === null) {
           host.removeAttribute('role');
         } else {
           host.setAttribute('role', value);
         }
       };
-
-      if (!hasBeenConnected) {
-        roleValueBeforeConnected = value;
-        firstConnectedCallbacks.push(setRole);
-        return;
-      }
 
       setRole();
     },
@@ -344,7 +340,31 @@ export function polyfillElementInternalsAria(
       }
 
       hasBeenConnected = true;
-      for (const callback of firstConnectedCallbacks) {
+
+      const propertiesSetByUser = new Set<ARIAProperty|'role'>();
+
+      // See which properties were set by the user on host before we apply
+      // internals values as attributes to host. Needs to be done in another
+      // for loop because the callbacks set these attributes on host.
+      for (const {property} of firstConnectedCallbacks) {
+        const wasSetByUser =
+            host.getAttribute(ariaPropertyToAttribute(property)) !== null ||
+            // Dynamic lookup rather than hardcoding all properties.
+            // tslint:disable-next-line:no-dict-access-on-struct-type
+            host[property] !== undefined;
+
+        if (wasSetByUser) {
+          propertiesSetByUser.add(property);
+        }
+      }
+
+      for (const {property, callback} of firstConnectedCallbacks) {
+        // If the user has set the attribute or property, do not override the
+        // user's value
+        if (propertiesSetByUser.has(property)) {
+          continue;
+        }
+
         callback();
       }
 
