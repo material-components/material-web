@@ -14,7 +14,7 @@
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
-@use './v0_172/md-comp-list';
+@use './v0_192/md-comp-list';
 @use './values';
 // go/keep-sorted end
 
@@ -91,6 +91,8 @@ $unsupported-tokens: (
   'container-elevation',
   'disabled-state-layer-color',
   'disabled-state-layer-opacity',
+  'divider-leading-space',
+  'divider-trailing-space',
   'dragged-container-elevation',
   'dragged-label-text-color',
   'dragged-leading-icon-icon-color',
@@ -147,8 +149,10 @@ $_default: (
   $renamed-tokens: ();
 
   @each $key in $keys {
-    $renamed-key: string.slice($key, string.length('list-item-') + 1);
-    $renamed-tokens: map.set($renamed-tokens, $key, $renamed-key);
+    @if string.index($key, 'list-item-') == 1 {
+      $renamed-key: string.slice($key, string.length('list-item-') + 1);
+      $renamed-tokens: map.set($renamed-tokens, $key, $renamed-key);
+    }
   }
 
   @return $renamed-tokens;
@@ -159,7 +163,6 @@ $_default: (
   @return (
     // go/keep-sorted start
     'leading-element-leading-space': if($exclude-hardcoded-values, null, 16px),
-    'leading-space': if($exclude-hardcoded-values, null, 16px),
     'leading-video-leading-space': if($exclude-hardcoded-values, null, 0px),
     // Commented out until the comments in the spreadsheet linked above are
     // resolved regarding vertical alignment.
@@ -168,7 +171,6 @@ $_default: (
     // 'leading-item-bottom-space': if($exclude-hardcoded-values, null, 8px),
     // 'leading-video-bottom-space': if($exclude-hardcoded-values, null, 0px),
     'trailing-element-headline-trailing-element-space': 16px,
-    'trailing-space': if($exclude-hardcoded-values, null, 24px),
     // go/keep-sorted end
   );
 }

@@ -12,7 +12,7 @@
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
-@use './v0_172/md-comp-list';
+@use './v0_192/md-comp-list';
 @use './values';
 // go/keep-sorted end
 
@@ -24,6 +24,8 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'divider-leading-space',
+  'divider-trailing-space',
   'list-item-container-elevation',
   'list-item-container-shape',
   'list-item-disabled-label-text-color',
@@ -73,6 +75,7 @@ $unsupported-tokens: (
   'list-item-leading-image-height',
   'list-item-leading-image-shape',
   'list-item-leading-image-width',
+  'list-item-leading-space',
   'list-item-leading-video-shape',
   'list-item-leading-video-width',
   'list-item-one-line-container-height',
@@ -100,6 +103,7 @@ $unsupported-tokens: (
   'list-item-three-line-container-height',
   'list-item-trailing-icon-color',
   'list-item-trailing-icon-size',
+  'list-item-trailing-space',
   'list-item-trailing-supporting-text-color',
   'list-item-trailing-supporting-text-font',
   'list-item-trailing-supporting-text-line-height',
