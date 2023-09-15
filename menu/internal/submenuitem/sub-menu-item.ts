@@ -126,11 +126,20 @@ export class SubMenuItem extends MenuItemEl {
   protected override onKeydown(event: KeyboardEvent) {
     const shouldOpenSubmenu = this.isSubmenuOpenKey(event.code);
 
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented || event.target !== this.listItemRoot) return;
 
-    if (event.code === SELECTION_KEY.SPACE) {
-      // prevent space from scrolling. Only open the submenu.
+    const openedWithLR = shouldOpenSubmenu &&
+        (NAVIGABLE_KEY.LEFT === event.code ||
+         NAVIGABLE_KEY.RIGHT === event.code);
+
+    if (event.code === SELECTION_KEY.SPACE || openedWithLR) {
+      // prevent space from scrolling and Left + Right from selecting previous /
+      // next items or opening / closing parent menus. Only open the submenu.
       event.preventDefault();
+
+      if (openedWithLR) {
+        event.stopPropagation();
+      }
     }
 
     if (!shouldOpenSubmenu) {
@@ -204,16 +213,20 @@ export class SubMenuItem extends MenuItemEl {
     this.selected = false;
   }
 
-  private async onSubMenuKeydown(event: KeyboardEvent) {
+  private onSubMenuKeydown(event: KeyboardEvent) {
     if (event.defaultPrevented) return;
-    const shouldClose = this.isSubmenuCloseKey(event.code);
-
+    const {close: shouldClose, keyCode} = this.isSubmenuCloseKey(event.code);
     if (!shouldClose) return;
 
     // Communicate that it's handled so that we don't accidentally close every
     // parent menu. Additionally, we want to isolate things like the typeahead
     // keydowns from bubbling up to the parent menu and confounding things.
     event.preventDefault();
+
+    if (keyCode === NAVIGABLE_KEY.LEFT || keyCode === NAVIGABLE_KEY.RIGHT) {
+      // Prevent this from bubbling to parents
+      event.stopPropagation();
+    }
 
     this.close(() => {
       List.deactivateActiveItem(this.submenuEl!.items);
@@ -320,9 +333,9 @@ export class SubMenuItem extends MenuItemEl {
     switch (code) {
       case arrowEnterKey:
       case KEYDOWN_CLOSE_KEYS.ESCAPE:
-        return true;
+        return {close: true, keyCode: code} as const;
       default:
-        return false;
+        return {close: false} as const;
     }
   }
 

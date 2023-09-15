@@ -12,11 +12,16 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 
 import {ListItem} from './listitem/list-item.js';
 
-const NAVIGABLE_KEYS = {
-  ArrowDown: 'ArrowDown',
-  ArrowUp: 'ArrowUp',
-  Home: 'Home',
-  End: 'End',
+/**
+ * Default keys that trigger navigation.
+ */
+export const NAVIGABLE_KEYS = {
+  ARROW_DOWN: 'ArrowDown',
+  ARROW_LEFT: 'ArrowLeft',
+  ARROW_UP: 'ArrowUp',
+  ARROW_RIGHT: 'ArrowRight',
+  HOME: 'Home',
+  END: 'End',
 } as const;
 
 /**
@@ -100,7 +105,13 @@ export class List extends LitElement {
    *
    * @param event {KeyboardEvent} The keyboard event that triggers this handler.
    */
-  private handleKeydown(event: KeyboardEvent) {
+  private async handleKeydown(event: KeyboardEvent) {
+    // Allow event to bubble to check for defaultPrevented
+    // TODO(b/293323995): clean up when we find out why await 0 doesn't work.
+    await new Promise(res => {
+      setTimeout(res, 0);
+    });
+
     const key = event.key;
     if (event.defaultPrevented || !isNavigableKey(key)) {
       return;
@@ -120,24 +131,32 @@ export class List extends LitElement {
 
     event.preventDefault();
 
+    const isLTR = getComputedStyle(this).direction === 'ltr';
+    const inlinePrevious =
+        isLTR ? NAVIGABLE_KEYS.ARROW_LEFT : NAVIGABLE_KEYS.ARROW_RIGHT;
+    const inlineNext =
+        isLTR ? NAVIGABLE_KEYS.ARROW_RIGHT : NAVIGABLE_KEYS.ARROW_LEFT;
+
     switch (key) {
       // Activate the next item
-      case NAVIGABLE_KEYS.ArrowDown:
+      case NAVIGABLE_KEYS.ARROW_DOWN:
+      case inlineNext:
         this.activateNextItemInternal(items, activeItemRecord);
         break;
 
       // Activate the previous item
-      case NAVIGABLE_KEYS.ArrowUp:
+      case NAVIGABLE_KEYS.ARROW_UP:
+      case inlinePrevious:
         this.activatePreviousItemInternal(items, activeItemRecord);
         break;
 
       // Activate the first item
-      case NAVIGABLE_KEYS.Home:
+      case NAVIGABLE_KEYS.HOME:
         List.activateFirstItem(items);
         break;
 
       // Activate the last item
-      case NAVIGABLE_KEYS.End:
+      case NAVIGABLE_KEYS.END:
         List.activateLastItem(items);
         break;
 

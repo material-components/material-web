@@ -79,6 +79,89 @@ describe('<md-list>', () => {
       expect(third.active).toBeTrue();
     });
 
+    it('preventDefault on keydown prevents navigation', async () => {
+      const root = env.render(html`
+        <md-list @keydown=${(e: KeyboardEvent) => {
+        e.preventDefault();
+      }}>
+          <md-list-item></md-list-item>
+          <md-list-item active></md-list-item>
+          <md-list-item></md-list-item>
+        </md-list>`);
+
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] =
+          Array.from(root.querySelectorAll('md-list-item'));
+
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeTrue();
+      expect(third.active).toBeFalse();
+
+      await listHarness.pressHandledKey('ArrowDown');
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeTrue();
+      expect(third.active).toBeFalse();
+    });
+
+    it('ArrowRight in LTR activates the next item', async () => {
+      const root = env.render(html`
+        <md-list>
+          <md-list-item></md-list-item>
+          <md-list-item active></md-list-item>
+          <md-list-item></md-list-item>
+        </md-list>`);
+
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] =
+          Array.from(root.querySelectorAll('md-list-item'));
+
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeTrue();
+      expect(third.active).toBeFalse();
+
+      await listHarness.pressHandledKey('ArrowRight');
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeFalse();
+      expect(third.active).toBeTrue();
+    });
+
+    it('ArrowLeft in RTL activates the next item', async () => {
+      const root = env.render(html`
+        <md-list dir="rtl">
+          <md-list-item></md-list-item>
+          <md-list-item active></md-list-item>
+          <md-list-item></md-list-item>
+        </md-list>`);
+
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] =
+          Array.from(root.querySelectorAll('md-list-item'));
+
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeTrue();
+      expect(third.active).toBeFalse();
+
+      await listHarness.pressHandledKey('ArrowLeft');
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeFalse();
+      expect(third.active).toBeTrue();
+    });
+
     it('ArrowDown will loop around', async () => {
       const root = env.render(html`
         <md-list>
@@ -217,6 +300,58 @@ describe('<md-list>', () => {
       expect(third.active).toBeFalse();
 
       await listHarness.pressHandledKey('ArrowUp');
+      await env.waitForStability();
+
+      expect(first.active).toBeTrue();
+      expect(second.active).toBeFalse();
+      expect(third.active).toBeFalse();
+    });
+
+    it('ArrowLeft in LTR activates the previous item', async () => {
+      const root = env.render(html`
+        <md-list>
+          <md-list-item></md-list-item>
+          <md-list-item active></md-list-item>
+          <md-list-item></md-list-item>
+        </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] =
+          Array.from(root.querySelectorAll('md-list-item'));
+
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeTrue();
+      expect(third.active).toBeFalse();
+
+      await listHarness.pressHandledKey('ArrowLeft');
+      await env.waitForStability();
+
+      expect(first.active).toBeTrue();
+      expect(second.active).toBeFalse();
+      expect(third.active).toBeFalse();
+    });
+
+    it('ArrowRight in RTL activates the previous item', async () => {
+      const root = env.render(html`
+        <md-list dir="rtl">
+          <md-list-item></md-list-item>
+          <md-list-item active></md-list-item>
+          <md-list-item></md-list-item>
+        </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] =
+          Array.from(root.querySelectorAll('md-list-item'));
+
+      await env.waitForStability();
+
+      expect(first.active).toBeFalse();
+      expect(second.active).toBeTrue();
+      expect(third.active).toBeFalse();
+
+      await listHarness.pressHandledKey('ArrowRight');
       await env.waitForStability();
 
       expect(first.active).toBeTrue();
@@ -1120,7 +1255,7 @@ describe('<md-list-item> link', () => {
 
     expect(internalRoot.tagName).toBe('A');
   });
-  
+
   it('setting type and href does not render a role', async () => {
     const root = env.render(
         html`<md-list-item type="menuitem" href="https://google.com"></md-list-item>`);
@@ -1134,10 +1269,10 @@ describe('<md-list-item> link', () => {
 
     expect(internalRoot.hasAttribute('role')).toBe(false);
   });
-  
+
   it('setting target without href renders nothing', async () => {
-    const root = env.render(
-        html`<md-list-item target="_blank"></md-list-item>`);
+    const root =
+        env.render(html`<md-list-item target="_blank"></md-list-item>`);
 
     const listItem = root.querySelector('md-list-item')!;
 
