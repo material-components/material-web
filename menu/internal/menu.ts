@@ -319,6 +319,7 @@ export abstract class Menu extends LitElement {
   private renderMenuItems() {
     return html`<slot
         @close-menu=${this.onCloseMenu}
+        @request-activation=${this.onRequestActivation}
         @deactivate-items=${this.onDeactivateItems}
         @deactivate-typeahead=${this.handleDeactivateTypeahead}
         @activate-typeahead=${this.handleActivateTypeahead}
@@ -398,7 +399,7 @@ export abstract class Menu extends LitElement {
     const activeItemRecord = List.getActiveItem(items);
 
     if (activeItemRecord && this.defaultFocus !== 'NONE') {
-      activeItemRecord.item.active = false;
+      activeItemRecord.item.tabIndex = -1;
     }
 
     let animationAborted = !this.quick;
@@ -416,14 +417,16 @@ export abstract class Menu extends LitElement {
       case 'FIRST_ITEM':
         const first = List.getFirstActivatableItem(items);
         if (first) {
-          first.active = true;
+          first.tabIndex = 0;
+          first.focus();
           await (first as LitElement & MenuItem).updateComplete;
         }
         break;
       case 'LAST_ITEM':
         const last = List.getLastActivatableItem(items);
         if (last) {
-          last.active = true;
+          last.tabIndex = 0;
+          last.focus();
           await (last as LitElement & MenuItem).updateComplete;
         }
         break;
@@ -713,9 +716,16 @@ export abstract class Menu extends LitElement {
     event.stopPropagation();
     const items = this.items;
     for (const item of items) {
-      item.active = false;
+      item.tabIndex = -1;
       item.selected = false;
     }
+  }
+
+  private onRequestActivation(event: Event) {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    target.tabIndex = 0;
+    target.focus();
   }
 
   private handleDeactivateTypeahead(event: DeactivateTypeaheadEvent) {

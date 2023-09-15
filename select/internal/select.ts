@@ -633,11 +633,11 @@ export abstract class Select extends LitElement {
     // thus no close-menu event is fired by an item and we can't clean up in
     // handleCloseMenu.
     if (activeItem && activeItem !== selectedItem) {
-      activeItem.active = false;
+      activeItem.tabIndex = -1;
     }
 
     if (selectedItem) {
-      selectedItem.active = true;
+      selectedItem.tabIndex = 0;
       selectedItem.focus();
     }
   }
@@ -666,7 +666,7 @@ export abstract class Select extends LitElement {
       hasChanged = this.selectItem(item);
     } else {
       // This can happen on ESC being pressed
-      item.active = false;
+      item.tabIndex = -1;
       item.blur();
     }
 

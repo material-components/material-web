@@ -15,11 +15,6 @@ interface MenuItemSelf {
    */
   headline: string;
   /**
-   * Whether or not the item is the currently active item of interest (focuses
-   * upon activation).
-   */
-  active: boolean;
-  /**
    * Whether or not the item is in the selected visual state.
    */
   selected?: boolean;
@@ -126,10 +121,26 @@ export function createDeactivateItemsEvent() {
 export type DeactivateItemsEvent =
     ReturnType<typeof createDeactivateItemsEvent>;
 
+/**
+ * Creates an event that requests the menu to set `tabindex=0` on the item and
+ * focus it. We use this pattern because List keeps track of what element is
+ * active in the List by maintaining tabindex. We do not want list items
+ * to set tabindex on themselves or focus themselves so that we can organize all
+ * that logic in the parent List and Menus, and list item stays as dumb as
+ * possible.
+ */
+export function createRequestActivationEvent() {
+  return new Event('request-activation', {bubbles: true, composed: true});
+}
 
 /**
- * Creates an event that requests the typeahead functionality of containing menu
- * be deactivated.
+ * The type of the event that requests the menu activates and focuses the item.
+ */
+export type RequestActivationEvent =
+    ReturnType<typeof createRequestActivationEvent>;
+
+/**
+ * Creates an event that requests the given item be selected.
  */
 export function createDeactivateTypeaheadEvent() {
   return new Event('deactivate-typeahead', {bubbles: true, composed: true});

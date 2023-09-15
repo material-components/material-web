@@ -97,7 +97,7 @@ export class List extends LitElement {
    * The content to be slotted into the list.
    */
   private renderContent() {
-    return html`<span><slot></slot></span>`;
+    return html`<span><slot @slotchange=${this.onSlotchange}></slot></span>`;
   }
 
   /**
@@ -126,7 +126,7 @@ export class List extends LitElement {
     const activeItemRecord = List.getActiveItem(items);
 
     if (activeItemRecord) {
-      activeItemRecord.item.active = false;
+      activeItemRecord.item.tabIndex = -1;
     }
 
     event.preventDefault();
@@ -170,7 +170,10 @@ export class List extends LitElement {
     if (activeItemRecord) {
       const next = List.getNextItem(items, activeItemRecord.index);
 
-      if (next) next.active = true;
+      if (next) {
+        next.tabIndex = 0;
+        next.focus();
+      }
 
       return next;
     } else {
@@ -182,7 +185,10 @@ export class List extends LitElement {
       items: ListItem[], activeItemRecord: null|ItemRecord): ListItem|null {
     if (activeItemRecord) {
       const prev = List.getPrevItem(items, activeItemRecord.index);
-      if (prev) prev.active = true;
+      if (prev) {
+        prev.tabIndex = 0;
+        prev.focus();
+      }
       return prev;
     } else {
       return List.activateLastItem(items);
@@ -199,7 +205,7 @@ export class List extends LitElement {
     const items = this.items;
     const activeItemRecord = List.getActiveItem(items);
     if (activeItemRecord) {
-      activeItemRecord.item.active = false;
+      activeItemRecord.item.tabIndex = -1;
     }
     return this.activateNextItemInternal(items, activeItemRecord);
   }
@@ -214,7 +220,7 @@ export class List extends LitElement {
     const items = this.items;
     const activeItemRecord = List.getActiveItem(items);
     if (activeItemRecord) {
-      activeItemRecord.item.active = false;
+      activeItemRecord.item.tabIndex = -1;
     }
     return this.activatePreviousItemInternal(items, activeItemRecord);
   }
@@ -232,7 +238,8 @@ export class List extends LitElement {
     // the DOM
     const firstItem = List.getFirstActivatableItem(items);
     if (firstItem) {
-      firstItem.active = true;
+      firstItem.tabIndex = 0;
+      firstItem.focus();
     }
     return firstItem;
   }
@@ -247,7 +254,8 @@ export class List extends LitElement {
   static activateLastItem<T extends ListItem>(items: T[]) {
     const lastItem = List.getLastActivatableItem(items);
     if (lastItem) {
-      lastItem.active = true;
+      lastItem.tabIndex = 0;
+      lastItem.focus();
     }
     return lastItem;
   }
@@ -264,7 +272,7 @@ export class List extends LitElement {
   static deactivateActiveItem<T extends ListItem>(items: T[]) {
     const activeItem = List.getActiveItem(items);
     if (activeItem) {
-      activeItem.item.active = false;
+      activeItem.item.tabIndex = -1;
     }
     return activeItem;
   }
@@ -284,7 +292,7 @@ export class List extends LitElement {
   static getActiveItem<T extends ListItem>(items: T[]) {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      if (item.active) {
+      if (item.tabIndex === 0) {
         return {
           item,
           index: i,
@@ -367,5 +375,39 @@ export class List extends LitElement {
     }
 
     return items[index] ? items[index] : null;
+  }
+
+  /**
+   * Ensures only one item is activated / focusable.
+   */
+  private onSlotchange() {
+    const items = this.items;
+
+    let encounteredFirstActivated = false;
+
+    for (const item of items) {
+      const isActivated = !item.disabled && item.tabIndex > -1;
+
+      if (isActivated && !encounteredFirstActivated) {
+        encounteredFirstActivated = true;
+        item.tabIndex = 0;
+        continue;
+      }
+
+      // Deactivate the rest including disabled
+      item.tabIndex = -1;
+    }
+
+    if (encounteredFirstActivated) {
+      return;
+    }
+
+    const firstActivatableItem = List.getFirstActivatableItem(items);
+
+    if (!firstActivatableItem) {
+      return;
+    }
+
+    firstActivatableItem.tabIndex = 0;
   }
 }

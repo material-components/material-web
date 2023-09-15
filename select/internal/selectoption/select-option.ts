@@ -32,15 +32,7 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
 
   override willUpdate(changed: PropertyValues<SelectOptionEl>) {
     if (changed.has('selected')) {
-      // Synchronize selected -> active but not the other way around because
-      // active is used for keyboard navigation and doesn't mean the option
-      // should be selected if active.
-      this.active = this.selected;
       this.ariaSelected = this.selected ? 'true' : 'false';
-      // By default active = true focuses the element. We want to prevent that
-      // in this case because we set active = this.selected and that may mess
-      // around with menu's restore focus function once the menu closes.
-      this.focusOnActivation = false;
     }
 
     super.willUpdate(changed);
@@ -48,9 +40,6 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
 
   override updated(changed: PropertyValues<SelectOptionEl>) {
     super.updated(changed);
-    // Restore the active = true focusing behavior which happens in
-    // super.updated() if it was turned off.
-    this.focusOnActivation = true;
 
     // Do not dispatch event on first update / boot-up.
     if (changed.has('selected') && changed.get('selected') !== undefined) {

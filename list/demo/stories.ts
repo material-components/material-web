@@ -19,12 +19,10 @@ export interface StoryKnobs {
   'md-list-item': void;
   disabled: boolean;
   noninteractive: boolean;
-  active: boolean;
   multiLineSupportingText: boolean;
   headline: string;
   supportingText: string;
   trailingSupportingText: string;
-  itemTabIndex: number;
 
   'data-variant=icon': void;
   'start icon': string;
@@ -66,12 +64,10 @@ const standard: MaterialStoryInit<StoryKnobs> = {
       listTabIndex,
       disabled,
       noninteractive,
-      active,
       multiLineSupportingText,
       headline,
       supportingText,
       trailingSupportingText,
-      itemTabIndex,
       href,
       target,
       image,
@@ -87,9 +83,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}
-              .itemTabIndex=${itemTabIndex}
-              .active=${active}>
+              .noninteractive=${noninteractive}>
           </md-list-item>
 
           <md-list-item
@@ -98,9 +92,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}
-              .itemTabIndex=${itemTabIndex}
-              .active=${active}>
+              .noninteractive=${noninteractive}>
             <md-icon data-variant="icon" slot="start">
               ${knobs['start icon']}
             </md-icon>
@@ -116,10 +108,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
               .noninteractive=${noninteractive}
-              .itemTabIndex=${itemTabIndex}
               .href=${href}
-              .target=${target as '' | '_blank' | '_parent' | '_self' | '_top'}
-              .active=${active}>
+              .target=${target as '' | '_blank' | '_parent' | '_self' | '_top'}>
             <md-icon data-variant="icon" slot="end">${
         knobs['link end icon']}</md-icon>
           </md-list-item>
@@ -132,9 +122,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}
-              .itemTabIndex=${itemTabIndex}
-              .active=${active}>
+              .noninteractive=${noninteractive}>
             <img src=${knobs['avatar img']} slot="start" data-variant="avatar">
           </md-list-item>
 
@@ -144,9 +132,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}
-              .itemTabIndex=${itemTabIndex}
-              .active=${active}>
+              .noninteractive=${noninteractive}>
             <span slot="start" data-variant="avatar">
               ${knobs['avatar label']}
             </span>
@@ -158,9 +144,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}
-              .itemTabIndex=${itemTabIndex}
-              .active=${active}>
+              .noninteractive=${noninteractive}>
             <img .src=${image} data-variant="image" slot="start">
           </md-list-item>
 
@@ -170,9 +154,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}
-              .itemTabIndex=${itemTabIndex}
-              .active=${active}>
+              .noninteractive=${noninteractive}>
             <video
                 slot="start"
                 muted

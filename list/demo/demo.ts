@@ -37,17 +37,14 @@ export const VIDEO_URL =
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('List', [
       new Knob('listTabIndex', {ui: numberInput(), defaultValue: -1}),
-
       new Knob('md-list-item', {ui: title()}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('noninteractive', {ui: boolInput(), defaultValue: false}),
-      new Knob('active', {ui: boolInput(), defaultValue: false}),
       new Knob(
           'multiLineSupportingText', {ui: boolInput(), defaultValue: false}),
       new Knob('headline', {ui: textInput(), defaultValue: 'Headline'}),
       new Knob('supportingText', {ui: textInput(), defaultValue: ''}),
       new Knob('trailingSupportingText', {ui: textInput(), defaultValue: ''}),
-      new Knob('itemTabIndex', {ui: numberInput(), defaultValue: 0}),
       new Knob('href', {ui: textInput(), defaultValue: 'https://google.com'}),
       new Knob('target', {ui: textInput(), defaultValue: '_blank'}),
       new Knob('link end icon', {ui: textInput(), defaultValue: 'open_in_new'}),

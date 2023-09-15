@@ -151,10 +151,10 @@ export class TypeaheadController {
         (el, index) => [index, el, el.headline.trim().toLowerCase()]);
     this.lastActiveRecord =
         this.typeaheadRecords.find(
-            record => record[TYPEAHEAD_RECORD.ITEM].active) ??
+            record => (record[TYPEAHEAD_RECORD.ITEM].tabIndex === 0)) ??
         null;
     if (this.lastActiveRecord) {
-      this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
+      this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].tabIndex = -1;
     }
     this.typeahead(event);
   }
@@ -204,7 +204,7 @@ export class TypeaheadController {
         event.code === 'Escape') {
       this.endTypeahead();
       if (this.lastActiveRecord) {
-        this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
+        this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].tabIndex = -1;
       }
       return;
     }
@@ -267,7 +267,7 @@ export class TypeaheadController {
     if (matchingRecords.length === 0) {
       clearTimeout(this.cancelTypeaheadTimeout);
       if (this.lastActiveRecord) {
-        this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
+        this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].tabIndex = -1;
       }
       this.endTypeahead();
       return;
@@ -285,11 +285,12 @@ export class TypeaheadController {
     }
 
     if (this.lastActiveRecord) {
-      this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].active = false;
+      this.lastActiveRecord[TYPEAHEAD_RECORD.ITEM].tabIndex = -1;
     }
 
     this.lastActiveRecord = nextRecord;
-    nextRecord[TYPEAHEAD_RECORD.ITEM].active = true;
+    nextRecord[TYPEAHEAD_RECORD.ITEM].tabIndex = 0;
+    nextRecord[TYPEAHEAD_RECORD.ITEM].focus();
     return;
   }
 

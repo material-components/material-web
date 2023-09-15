@@ -11,11 +11,13 @@ import {List} from '../../../list/internal/list.js';
 import {MdRipple} from '../../../ripple/ripple.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
-import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createDeactivateItemsEvent, createDeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
+import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createDeactivateItemsEvent, createDeactivateTypeaheadEvent, createRequestActivationEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
 /**
  * @fires deactivate-items Requests the parent menu to deselect other items when
  * a submenu opens
+ * @fires request-activation Requests the parent make the element focusable and
+ * focuses the item.
  * @fires deactivate-typeahead Requests the parent menu to deactivate the
  * typeahead functionality when a submenu opens
  * @fires activate-typeahead Requests the parent menu to activate the typeahead
@@ -155,7 +157,8 @@ export class SubMenuItem extends MenuItemEl {
 
     if (firstActivatableItem) {
       this.show(() => {
-        firstActivatableItem.active = true;
+        firstActivatableItem.tabIndex = 0;
+        firstActivatableItem.focus();
       });
 
       return;
@@ -202,15 +205,12 @@ export class SubMenuItem extends MenuItemEl {
     if (reason.kind === CLOSE_REASON.KEYDOWN &&
         reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
       event.stopPropagation();
-      this.active = true;
-      this.selected = false;
-      // It might already be active so manually focus
-      this.listItemRoot?.focus();
+      this.dispatchEvent(createDeactivateItemsEvent());
+      this.dispatchEvent(createRequestActivationEvent());
       return;
     }
 
-    this.active = false;
-    this.selected = false;
+    this.dispatchEvent(createDeactivateItemsEvent());
   }
 
   private onSubMenuKeydown(event: KeyboardEvent) {
@@ -231,7 +231,8 @@ export class SubMenuItem extends MenuItemEl {
     this.close(() => {
       List.deactivateActiveItem(this.submenuEl!.items);
       this.listItemRoot?.focus();
-      this.active = true;
+      this.tabIndex = 0;
+      this.focus();
     });
   }
 
@@ -244,6 +245,18 @@ export class SubMenuItem extends MenuItemEl {
     const menu = this.submenuEl;
     if (!menu || menu.open) return;
 
+    // Ensures that we deselect items when the menu closes and reactivate
+    // typeahead when the menu closes, so that we do not have dirty state of
+    // selected sub-menu-items when we reopen.
+    //
+    // This cannot happen in `close()` because the menu may close via other
+    // means Additionally, this cannot happen in onCloseSubmenu because
+    // `close-menu` may not be called via focusout of outside click and not
+    // triggered by an item
+    menu.addEventListener('closed', () => {
+      this.dispatchEvent(createActivateTypeaheadEvent());
+      this.dispatchEvent(createDeactivateItemsEvent());
+    }, {once: true});
     menu.quick = true;
     // Submenus are in overflow when not fixed. Can remove once we have native
     // popup support
@@ -295,8 +308,7 @@ export class SubMenuItem extends MenuItemEl {
     this.dispatchEvent(createActivateTypeaheadEvent());
     menu.quick = true;
     menu.close();
-    this.active = false;
-    this.selected = false;
+    this.dispatchEvent(createDeactivateItemsEvent());
     menu.addEventListener('closed', onClosed, {once: true});
   }
 
