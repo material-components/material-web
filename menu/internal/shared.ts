@@ -107,39 +107,6 @@ export type CloseMenuEvent<T extends Reason = DefaultReasons> =
     ReturnType<typeof createCloseMenuEvent<T>>;
 
 /**
- * Creates an event that requests the parent md-menu to deactivate all other
- * items.
- */
-export function createDeactivateItemsEvent() {
-  return new Event('deactivate-items', {bubbles: true, composed: true});
-}
-
-/**
- * The type of the event that requests the parent md-menu to deactivate all
- * other items.
- */
-export type DeactivateItemsEvent =
-    ReturnType<typeof createDeactivateItemsEvent>;
-
-/**
- * Creates an event that requests the menu to set `tabindex=0` on the item and
- * focus it. We use this pattern because List keeps track of what element is
- * active in the List by maintaining tabindex. We do not want list items
- * to set tabindex on themselves or focus themselves so that we can organize all
- * that logic in the parent List and Menus, and list item stays as dumb as
- * possible.
- */
-export function createRequestActivationEvent() {
-  return new Event('request-activation', {bubbles: true, composed: true});
-}
-
-/**
- * The type of the event that requests the menu activates and focuses the item.
- */
-export type RequestActivationEvent =
-    ReturnType<typeof createRequestActivationEvent>;
-
-/**
  * Creates an event that requests the given item be selected.
  */
 export function createDeactivateTypeaheadEvent() {

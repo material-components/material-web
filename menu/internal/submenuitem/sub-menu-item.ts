@@ -8,10 +8,11 @@ import {html, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 
 import {List} from '../../../list/internal/list.js';
+import {createDeactivateItemsEvent, createRequestActivationEvent} from '../../../list/internal/listitem/list-item.js';
 import {MdRipple} from '../../../ripple/ripple.js';
 import {Corner, Menu} from '../menu.js';
 import {MenuItemEl} from '../menuitem/menu-item.js';
-import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createDeactivateItemsEvent, createDeactivateTypeaheadEvent, createRequestActivationEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
+import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
 /**
  * @fires deactivate-items Requests the parent menu to deselect other items when
@@ -205,7 +206,6 @@ export class SubMenuItem extends MenuItemEl {
     if (reason.kind === CLOSE_REASON.KEYDOWN &&
         reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
       event.stopPropagation();
-      this.dispatchEvent(createDeactivateItemsEvent());
       this.dispatchEvent(createRequestActivationEvent());
       return;
     }

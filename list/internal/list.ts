@@ -97,7 +97,12 @@ export class List extends LitElement {
    * The content to be slotted into the list.
    */
   private renderContent() {
-    return html`<span><slot @slotchange=${this.onSlotchange}></slot></span>`;
+    return html`
+      <slot
+          @deactivate-items=${this.onDeactivateItems}
+          @request-activation=${this.onRequestActivation}
+          @slotchange=${this.onSlotchange}>
+      </slot>`;
   }
 
   /**
@@ -223,6 +228,20 @@ export class List extends LitElement {
       activeItemRecord.item.tabIndex = -1;
     }
     return this.activatePreviousItemInternal(items, activeItemRecord);
+  }
+
+  private onDeactivateItems() {
+    const items = this.items;
+    for (const item of items) {
+      item.tabIndex = -1;
+    }
+  }
+
+  private onRequestActivation(event: Event) {
+    this.onDeactivateItems();
+    const target = event.target as HTMLElement;
+    target.tabIndex = 0;
+    target.focus();
   }
 
   /**

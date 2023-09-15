@@ -16,6 +16,39 @@ import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 
 /**
+ * Creates an event that requests the parent md-list to deactivate all other
+ * items.
+ */
+export function createDeactivateItemsEvent() {
+  return new Event('deactivate-items', {bubbles: true, composed: true});
+}
+
+/**
+ * The type of the event that requests the parent md-list to deactivate all
+ * other items.
+ */
+export type DeactivateItemsEvent =
+    ReturnType<typeof createDeactivateItemsEvent>;
+
+/**
+ * Creates an event that requests the menu to set `tabindex=0` on the item and
+ * focus it. We use this pattern because List keeps track of what element is
+ * active in the List by maintaining tabindex. We do not want list items
+ * to set tabindex on themselves or focus themselves so that we can organize all
+ * that logic in the parent List and Menus, and list item stays as dumb as
+ * possible.
+ */
+export function createRequestActivationEvent() {
+  return new Event('request-activation', {bubbles: true, composed: true});
+}
+
+/**
+ * The type of the event that requests the list activates and focuses the item.
+ */
+export type RequestActivationEvent =
+    ReturnType<typeof createRequestActivationEvent>;
+
+/**
  * Supported roles for a list item.
  */
 export type ListItemRole = 'listitem'|'menuitem'|'option'|'link'|'none';
@@ -133,6 +166,7 @@ export class ListItemEl extends LitElement implements ListItem {
         class="list-item ${classMap(this.getRenderClasses())}"
         href=${this.href || nothing}
         target=${target}
+        @focus=${this.onFocus}
         @click=${this.onClick}
         @mouseenter=${this.onMouseenter}
         @mouseleave=${this.onMouseleave}
@@ -251,6 +285,7 @@ export class ListItemEl extends LitElement implements ListItem {
   protected onKeydown?(event: KeyboardEvent): void;
   protected onMouseenter?(event: Event): void;
   protected onMouseleave?(event: Event): void;
+  protected onFocus?(event: FocusEvent): void;
 
   override focus() {
     // TODO(b/300334509): needed for some cases where delegatesFocus doesn't

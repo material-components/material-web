@@ -319,8 +319,8 @@ export abstract class Menu extends LitElement {
   private renderMenuItems() {
     return html`<slot
         @close-menu=${this.onCloseMenu}
-        @request-activation=${this.onRequestActivation}
         @deactivate-items=${this.onDeactivateItems}
+        @request-activation=${this.onRequestActivation}
         @deactivate-typeahead=${this.handleDeactivateTypeahead}
         @activate-typeahead=${this.handleActivateTypeahead}
         @stay-open-on-focusout=${this.handleStayOpenOnFocusout}
@@ -716,16 +716,13 @@ export abstract class Menu extends LitElement {
     event.stopPropagation();
     const items = this.items;
     for (const item of items) {
-      item.tabIndex = -1;
       item.selected = false;
     }
   }
 
   private onRequestActivation(event: Event) {
     event.stopPropagation();
-    const target = event.target as HTMLElement;
-    target.tabIndex = 0;
-    target.focus();
+    this.onDeactivateItems(event);
   }
 
   private handleDeactivateTypeahead(event: DeactivateTypeaheadEvent) {

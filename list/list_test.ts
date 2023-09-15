@@ -13,7 +13,7 @@ import {html} from 'lit';
 import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
-import {ListHarness} from './harness.js';
+import {ListHarness, ListItemHarness} from './harness.js';
 import {MdList} from './list.js';
 import {MdListItem} from './list-item.js';
 
@@ -574,11 +574,11 @@ describe('<md-list>', () => {
 
     it('End will select the last item if it is already selected', async () => {
       const root = env.render(html`
-        <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-        </md-list>`);
+          <md-list>
+            <md-list-item tabindex="-1"></md-list-item>
+            <md-list-item tabindex="-1"></md-list-item>
+            <md-list-item tabindex="0"></md-list-item>
+          </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] =
@@ -597,6 +597,32 @@ describe('<md-list>', () => {
       expect(second.tabIndex).toEqual(-1);
       expect(third.tabIndex).toEqual(0);
       expect(document.activeElement).toEqual(third);
+    });
+
+    it('Clicking on an item will activate it', async () => {
+      const root = env.render(html`
+          <md-list>
+            <md-list-item tabindex="-1"></md-list-item>
+            <md-list-item tabindex="-1"></md-list-item>
+            <md-list-item tabindex="0"></md-list-item>
+          </md-list>`);
+      const [first, second, third] =
+          Array.from(root.querySelectorAll('md-list-item'));
+
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(0);
+
+      const secondHarness = new ListItemHarness(second);
+
+      await secondHarness.clickWithMouse();
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(0);
+      expect(third.tabIndex).toEqual(-1);
     });
   });
 
