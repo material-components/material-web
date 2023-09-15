@@ -12,7 +12,7 @@
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
-@use './v0_172/md-comp-menu';
+@use './v0_192/md-comp-menu';
 @use './values';
 // go/keep-sorted end
 
@@ -28,6 +28,9 @@ $supported-tokens: (
 $unsupported-tokens: (
   // go/keep-sorted start
   'list-item-selected-container-color',
+  'list-item-selected-label-text-color',
+  'list-item-selected-with-leading-icon-trailing-icon-color',
+  'menu-list-item-with-leading-icon-icon-color',
   // go/keep-sorted end
 );
 

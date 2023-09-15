@@ -47,6 +47,10 @@
     background-color: var(--_selected-container-color);
   }
 
+  .selected:not(.disabled) .label-text {
+    color: var(--_selected-label-text-color);
+  }
+
   // Set the ripple opacity to 0 if there is a submenu that is hovered.
   .submenu-hover {
     // Have to use ripple theme directly because :has selector in this case does

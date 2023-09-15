@@ -280,11 +280,11 @@ the tokens for those components can also be used for Menu.
 ### Menu Tokens
 
 Token                                     | Default value
------------------------------------------ | -------------
+----------------------------------------- | ------------------------------------
 `--md-menu-container-color`               | `--md-sys-color-surface-container`
 `--md-menu-container-shape`               | `4px`
 `--md-menu-item-container-color`          | `--md-sys-color-surface-container`
-`--md-menu-item-selected-container-color` | `--md-sys-color-surface-container-highest`
+`--md-menu-item-selected-container-color` | `--md-sys-color-secondary-container`
 
 *   [Menu tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-menu.scss)
     <!-- {.external} -->
