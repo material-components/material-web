@@ -14,8 +14,6 @@ import {css, html} from 'lit';
 
 /** Knob types for list stories. */
 export interface StoryKnobs {
-  listTabIndex: number;
-
   'md-list-item': void;
   disabled: boolean;
   noninteractive: boolean;
@@ -59,7 +57,6 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     }`,
   render(knobs) {
     const {
-      listTabIndex,
       disabled,
       noninteractive,
       multiLineSupportingText,
@@ -72,9 +69,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     } = knobs;
     return html`
       <div class="list-demo">
-        <md-list
-            .listTabIndex=${listTabIndex}
-            class="list">
+        <md-list class="list" role="listbox">
           <md-list-item
               .headline=${headline}
               .supportingText=${supportingText}

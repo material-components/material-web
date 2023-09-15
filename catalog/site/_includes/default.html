@@ -56,7 +56,7 @@
           <!-- unrelated change to components -->
           {% block content %}{{ content | safe }}{% endblock %}
         </main>
-          <md-list list-tabindex="-1">
+          <md-list>
             {% for component in collections.component|filtersort('data.name') %}
               <li>
                 <md-list-item

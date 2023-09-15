@@ -306,8 +306,8 @@ export abstract class Menu extends LitElement {
           part="list"
           id="list"
           aria-label=${ariaLabel || nothing}
-          type=${this.type}
-          listTabIndex=${this.listTabIndex}
+          role=${this.type}
+          tabindex=${this.listTabIndex}
           @keydown=${this.handleListKeydown}>
         ${this.renderMenuItems()}
       </md-list>`;

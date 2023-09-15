@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing} from 'lit';
-import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {html, isServer, LitElement} from 'lit';
+import {query, queryAssignedElements} from 'lit/decorators.js';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 
 import {ListItem} from './listitem/list-item.js';
 
@@ -44,19 +43,8 @@ function isNavigableKey(key: string): key is NavigatableValues {
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
   static {
-    requestUpdateOnAriaChange(List);
+    setupHostAria(List, {focusable: false});
   }
-
-  /** @nocollapse */
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
-  @property() type: 'menu'|'menubar'|'listbox'|'list'|'' = 'list';
-
-  /**
-   * The tabindex of the underlying list.
-   */
-  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = -1;
 
   @query('.list') private listRoot!: HTMLElement|null;
 
@@ -71,6 +59,17 @@ export class List extends LitElement {
   @queryAssignedElements({flatten: true, selector: '[md-list-item]'})
   items!: ListItem[];
 
+  private readonly internals = polyfillElementInternalsAria(
+      this, (this as HTMLElement /* needed for closure */).attachInternals());
+
+  constructor() {
+    super();
+    if (!isServer) {
+      this.internals.role = 'list';
+      this.addEventListener('keydown', this.handleKeydown.bind(this));
+    }
+  }
+
   protected override render() {
     return this.renderList();
   }
@@ -79,15 +78,8 @@ export class List extends LitElement {
    * Renders the main list element.
    */
   private renderList() {
-    // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-    <ul class="list"
-        aria-label=${ariaLabel || nothing}
-        tabindex=${this.listTabIndex}
-        role=${this.type || nothing}
-        @keydown=${this.handleKeydown}
-        >
+    <ul class="list" role="presentation">
       ${this.renderContent()}
     </ul>
   `;

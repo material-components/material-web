@@ -937,6 +937,34 @@ describe('<md-list>', () => {
          expect(document.activeElement).toEqual(first);
        });
   });
+
+  describe('aria', () => {
+    it('Sets default role to list', async () => {
+      const root = env.render(html`<md-list></md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      await env.waitForStability();
+      const internals =
+          (listEl as unknown as {internals: {role: string | null}}).internals;
+
+      expect(internals.role).toEqual('list');
+    });
+
+    it('Does not override user given role attribute', async () => {
+      const root = env.render(html`<md-list role="listbox"></md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      await env.waitForStability();
+
+      expect(listEl.getAttribute('role')).toBe('listbox');
+    });
+
+    it('Does not override user given role property', async () => {
+      const root = env.render(html`<md-list .role=${'listbox'}></md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      await env.waitForStability();
+
+      expect(listEl.role).toBe('listbox');
+    });
+  });
 });
 
 describe('<md-list-item>', () => {

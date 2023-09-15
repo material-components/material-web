@@ -8,7 +8,7 @@ import './index.js';
 import './material-collection.js';
 
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo, title} from './material-collection.js';
-import {boolInput, Knob, numberInput, textInput} from './index.js';
+import {boolInput, Knob, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 
@@ -36,7 +36,6 @@ export const VIDEO_URL =
 
 const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('List', [
-      new Knob('listTabIndex', {ui: numberInput(), defaultValue: -1}),
       new Knob('md-list-item', {ui: title()}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('noninteractive', {ui: boolInput(), defaultValue: false}),

@@ -233,11 +233,15 @@ Videos can also be slotted into list-items' `start-video"` or
 
 ## Accessibility
 
-List and List Items can have their internal `role` attribute set via the `type`
-attribute which by default is set to
-[`'list'`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role)<!-- {.external} -->
-and[ `'listitem'`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listitem_role)<!-- {.external} -->
-respectively.
+List can have its `role` and `tabindex` set via the `role` and `tabindex`
+attributes, and list items can have their internal `role` and `tabindex` set via
+the `type` and `item-tabindex` attributes respectively.
+
+By default these values are set to
+[`role="list"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role)<!-- {.external} -->
+and `tabindex="-1"` for list, and
+[`role="listitem"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listitem_role)<!-- {.external} -->
+and `tabindex="0"` for list items.
 
 The following example sets
 [`role="listbox"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role)<!-- {.external} -->
@@ -246,7 +250,7 @@ on the internal list and
 on the internal list item nodes.
 
 ```html
-<md-list type="listbox">
+<md-list role="listbox" tabindex="0">
   <md-list-item type="option" headline="icon">
     <md-icon slot="start-icon">account_circle</md-icon>
   </md-list-item>
