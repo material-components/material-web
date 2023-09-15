@@ -86,15 +86,14 @@ header which is on two lines.](images/list/usage.webp)
       supporting-text="This will link you out in a new tab"
       href="https://google.com/search?q=buy+kiwis&tbm=shop"
       target="_blank">
-    <md-icon slot="end" data-variant="icon">open_in_new</md-icon>
+    <md-icon slot="end-icon">open_in_new</md-icon>
   </md-list-item>
 </md-list>
 ```
 
 ## Icon Items
 
-Icons can be slotted into list-items' `start` slot using the
-`data-variant="icon"` attribute.
+Icons can be slotted into list-items' `start-icon` or `end-icon` slot.
 
 <!-- no-catalog-start -->
 
@@ -109,18 +108,18 @@ Angular.](images/list/usage-icon.webp)
 ```html
 <md-list style="max-width: 300px;">
   <md-list-item headline="Lit">
-    <svg slot="start" data-variant="icon" viewBox="0 0 160 200">
+    <svg slot="start-icon" viewBox="0 0 160 200">
       <path
         d="m160 80v80l-40-40zm-40 40v80l40-40zm0-80v80l-40-40zm-40 40v80l40-40zm-40-40v80l40-40zm40-40v80l-40-40zm-40 120v80l-40-40zm-40-40v80l40-40z"/>
     </svg>
   </md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="Polymer">
-    <md-icon slot="start" data-variant="icon">polymer</md-icon>
+    <md-icon slot="start-icon">polymer</md-icon>
   </md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="Angular">
-    <svg slot="start" data-variant="icon" viewBox="0 0 250 250">
+    <svg slot="start-icon" viewBox="0 0 250 250">
       <polygon points="108,135.4 125,135.4 125,135.4 125,135.4 142,135.4 125,94.5"/>
       <path d="M125,30L125,30L125,30L31.9,63.2l14.2,123.1L125,230l0,0l0,0l78.9-43.7l14.2-123.1L125,30z M183.1,182.6h-21.7h0 l-11.7-29.2H125h0h0h-24.7l-11.7,29.2h0H66.9h0L125,52.1l0,0l0,0l0,0l0,0L183.1,182.6L183.1,182.6z"/>
     </svg>
@@ -130,8 +129,7 @@ Angular.](images/list/usage-icon.webp)
 
 ## Avatar Items
 
-Image or text avatars can be slotted into list-items' `start` slot using the
-`data-variant="avatar"` attribute.
+Image or text avatars can be slotted into list-items' `start-avatar` slot.
 
 <!-- no-catalog-start -->
 
@@ -145,19 +143,18 @@ item has a circular image of a person silhouette](images/list/usage-avatar.webp)
 ```html
 <md-list style="max-width: 300px;">
   <md-list-item headline="User 1">
-    <span slot="start" data-variant="avatar">EM</span>
+    <span slot="start-avatar">EM</span>
   </md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="User 2">
-    <img slot="start" data-variant="avatar" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAAAAADH8yjkAAABsklEQVR4Ae3WBaLjMAxF0dn/np4hVEY3cQqOupNh/i4oVT76buAUEkmfzgOXgAS8QiABCUhAAg71dlsfhgJOc4vv2flpAICWGr/TS5IGQoV/qoIs0OX4r7wTBcZ40lgSqBGplgMoQ6SMxACPaF4MmCPaXAwoEa0UAyyiWTFAIZoSAwyiGTGgQLRCDJgh2kwMaBCtEQPIIpIluVnkEMkJDjuq8KSKJMd1eDLusiC70U45/ik/Se/kbqbwOzXrBrgqDtOfhJoeBrqLyLvl0nlKp2MCXi1Ap1Prndv59iQOdPVqkqu/J9FoWQcp4LguES1f7B8HaJPhStk6PASElcGN9CL0B9YKd6TWPYFjgTsrjn2ARuPudMMHdgqM1I4LtAqsVMsDyIKZJRawBLslC7BgZzlAQI8CA+gM2JmOAZy9AjPleY/pAswWZx5AFVhVxATOVIJRSfxZRAXurqA+07Qb4c5GXb99QAvc1YJ6bzSncTPtHtnJYYwbjcODV0WT40p5I3C21AUQr6iFDi8/M5HZM/OSp2O7HP+FmPGyHeD4Db5x261rfEjnewISkIAEJODDAV8A/z6x+ahJu3sAAAAASUVORK5CYII=">
+    <img slot="start-avatar" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAAAAADH8yjkAAABsklEQVR4Ae3WBaLjMAxF0dn/np4hVEY3cQqOupNh/i4oVT76buAUEkmfzgOXgAS8QiABCUhAAg71dlsfhgJOc4vv2flpAICWGr/TS5IGQoV/qoIs0OX4r7wTBcZ40lgSqBGplgMoQ6SMxACPaF4MmCPaXAwoEa0UAyyiWTFAIZoSAwyiGTGgQLRCDJgh2kwMaBCtEQPIIpIluVnkEMkJDjuq8KSKJMd1eDLusiC70U45/ik/Se/kbqbwOzXrBrgqDtOfhJoeBrqLyLvl0nlKp2MCXi1Ap1Prndv59iQOdPVqkqu/J9FoWQcp4LguES1f7B8HaJPhStk6PASElcGN9CL0B9YKd6TWPYFjgTsrjn2ARuPudMMHdgqM1I4LtAqsVMsDyIKZJRawBLslC7BgZzlAQI8CA+gM2JmOAZy9AjPleY/pAswWZx5AFVhVxATOVIJRSfxZRAXurqA+07Qb4c5GXb99QAvc1YJ6bzSncTPtHtnJYYwbjcODV0WT40p5I3C21AUQr6iFDi8/M5HZM/OSp2O7HP+FmPGyHeD4Db5x261rfEjnewISkIAEJODDAV8A/z6x+ahJu3sAAAAASUVORK5CYII=">
   </md-list-item>
 </md-list>
 ```
 
 ## Image Items
 
-Images can be slotted into list-items' `start` slot using the
-`data-variant="image"` attribute.
+Images can be slotted into list-items' `start-image` slot.
 
 <!-- no-catalog-start -->
 
@@ -172,23 +169,23 @@ Cate.](images/list/usage-image.webp)
 ```html
 <md-list style="max-width: 300px;">
   <md-list-item headline="Cat">
-    <img slot="start" data-variant="image" src="https://placekitten.com/112/112">
+    <img slot="start-image" src="https://placekitten.com/112/112">
   </md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="Kitty Cat">
-    <img slot="start" data-variant="image" src="https://placekitten.com/114/114">
+    <img slot="start-image" src="https://placekitten.com/114/114">
   </md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="Cate">
-    <img slot="start" data-variant="image" src="https://placekitten.com/116/116">
+    <img slot="start-image" src="https://placekitten.com/116/116">
   </md-list-item>
 </md-list>
 ```
 
 ## Video Items
 
-Videos can also be slotted into list-items' `start` slot using the
-`data-variant="video"` attribute.
+Videos can also be slotted into list-items' `start-video"` or
+`start-video-large` slots.
 
 <!-- no-catalog-start -->
 
@@ -201,8 +198,7 @@ Videos can also be slotted into list-items' `start` slot using the
 <md-list style="max-width: 300px;">
   <md-list-item headline="Expressiveness">
     <video
-        slot="start"
-        data-variant="video"
+        slot="start-video"
         playsinline
         muted
         autoplay
@@ -213,8 +209,7 @@ Videos can also be slotted into list-items' `start` slot using the
   <md-divider></md-divider>
   <md-list-item headline="Personalization">
     <video
-        slot="start"
-        data-variant="video"
+        slot="start-video"
         playsinline
         muted
         autoplay
@@ -225,8 +220,7 @@ Videos can also be slotted into list-items' `start` slot using the
   <md-divider></md-divider>
   <md-list-item headline="Accessible">
     <video
-        slot="start"
-        data-variant="video"
+        slot="start-video"
         playsinline
         muted
         autoplay
@@ -254,23 +248,23 @@ on the internal list item nodes.
 ```html
 <md-list type="listbox">
   <md-list-item type="option" headline="icon">
-    <md-icon data-variant="icon" slot="start">account_circle</md-icon>
+    <md-icon slot="start-icon">account_circle</md-icon>
   </md-list-item>
 
   <md-list-item type="option" headline="image">
-    <img alt="a photo of a cat" data-variant="image" slot="start" src="https://placekitten.com/112/112">
+    <img alt="a photo of a cat" slot="start-image" src="https://placekitten.com/112/112">
   </md-list-item>
 
   <md-list-item type="option" headline="avatar">
-    <img alt="a photo of a cat" data-variant="avatar" slot="start" src="https://placekitten.com/112/112">
+    <img alt="a photo of a cat" slot="start-avatar" src="https://placekitten.com/112/112">
   </md-list-item>
 
   <md-list-item type="option" headline="avatar text">
-    <span role="img" alt="stylized text EM" data-variant="avatar" slot="start">EM</span>
+    <span role="img" alt="stylized text EM" slot="start-avatar">EM</span>
   </md-list-item>
 
   <md-list-item type="option" headline="video">
-    <video slot="start" data-variant="video" playsinline muted autoplay loop
+    <video slot="start-video" playsinline muted autoplay loop
         src="https://kstatic.googleusercontent.com/files/f925638d73101f91d11db39e191ec6ed4101ee96c063283ddc4ea1f01b7d1ebe3ae360c124448d5759a7ecfbcb05af96cf746122ee3b898b4bf7db8d6882de1c">
       <track src="link-to-subtitles-en.vtt" label="English captions" kind="captions" srclang="en" default>
       <track src="link-to-subtitles-zh.vtt" label="中文字幕" kind="captions" srclang="zh">
@@ -386,16 +380,16 @@ applied](images/list/theming-icon.webp)
 </style>
 <md-list>
   <md-list-item headline="Eggs">
-    <md-icon slot="start" data-variant="icon">egg</md-icon>
-    <md-icon slot="end" data-variant="icon">recommend</md-icon>
+    <md-icon slot="start-icon">egg</md-icon>
+    <md-icon slot="end-icon">recommend</md-icon>
   </md-list-item>
   <md-list-item headline="Ice cream" class="unhealthy">
-    <md-icon slot="start" data-variant="icon">icecream</md-icon>
-    <md-icon slot="end" data-variant="icon">dangerous</md-icon>
+    <md-icon slot="start-icon">icecream</md-icon>
+    <md-icon slot="end-icon">dangerous</md-icon>
   </md-list-item>
   <md-list-item headline="Orange">
-    <md-icon slot="start" data-variant="icon">nutrition</md-icon>
-    <md-icon slot="end" data-variant="icon">recommend</md-icon>
+    <md-icon slot="start-icon">nutrition</md-icon>
+    <md-icon slot="end-icon">recommend</md-icon>
   </md-list-item>
 </md-list>
 ```
@@ -437,13 +431,13 @@ Token                                       | Default value
 </style>
 <md-list>
   <md-list-item headline="Elliott Marquez">
-    <span data-variant="avatar" slot="start">EM</span>
+    <span slot="start-avatar">EM</span>
   </md-list-item>
   <md-list-item headline="Elizabeth Mitchell">
-    <span data-variant="avatar" slot="start">LM</span>
+    <span slot="start-avatar">LM</span>
   </md-list-item>
   <md-list-item headline="Andrew Jackubowicz">
-    <span data-variant="avatar" slot="start">AJ</span>
+    <span slot="start-avatar">AJ</span>
   </md-list-item>
 </md-list>
 ```
@@ -481,13 +475,13 @@ Token                                 | Default value
 </style>
 <md-list>
   <md-list-item headline="Wide Cat">
-    <img slot="start" data-variant="image" src="https://placekitten.com/200/100">
+    <img slot="start-image" src="https://placekitten.com/200/100">
   </md-list-item>
   <md-list-item headline="Round kitty cat">
-    <img slot="start" data-variant="image" src="https://placekitten.com/202/101">
+    <img slot="start-image" src="https://placekitten.com/202/101">
   </md-list-item>
   <md-list-item headline="Softe cate">
-    <img slot="start" data-variant="image" src="https://placekitten.com/212/106">
+    <img slot="start-image" src="https://placekitten.com/212/106">
   </md-list-item>
 </md-list>
 ```
@@ -525,19 +519,19 @@ Token                                 | Default value
 </style>
 <md-list>
   <md-list-item headline="Expressiveness">
-    <video slot="start" data-variant="video" playsinline muted autoplay loop
+    <video slot="start-video" playsinline muted autoplay loop
       src="https://kstatic.googleusercontent.com/files/f925638d73101f91d11db39e191ec6ed4101ee96c063283ddc4ea1f01b7d1ebe3ae360c124448d5759a7ecfbcb05af96cf746122ee3b898b4bf7db8d6882de1c"
     ></video>
   </md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="Personalization">
-    <video slot="start" data-variant="video" playsinline muted autoplay loop
+    <video slot="start-video" playsinline muted autoplay loop
       src="https://kstatic.googleusercontent.com/files/e07831809bfeeef1acd74cc5fbf20fc2974984c7e011f01e3df62c96a5a18b309af71e58e01a07ae89e30d7243e692affcf8fbf159fe0e078e35612d0851e8ea"
     ></video>
   </md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="Accessible">
-    <video slot="start" data-variant="video" playsinline muted autoplay loop
+    <video slot="start-video" playsinline muted autoplay loop
       src="https://kstatic.googleusercontent.com/files/9430d9604eff1ecd370d688cb57eb95781e546279ed9bbb04c15dd0b80881c564addc8aaed5d37b3a5fc656b1fc673cfbd25c4b6a08b9d3e7ea396808f00ba20"
     ></video>
   </md-list-item>

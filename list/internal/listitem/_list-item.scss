@@ -126,12 +126,13 @@
     }
   }
 
-  slot[name='start'] {
-    &::slotted([data-variant='icon']),
-    &::slotted([data-variant='image']),
-    &::slotted([data-variant='avatar']) {
-      margin-inline-start: var(--_leading-element-leading-space);
-    }
+  slot[name='start']::slotted([data-variant='icon']),
+  slot[name='start']::slotted([data-variant='image']),
+  slot[name='start']::slotted([data-variant='avatar']),
+  slot[name='start-icon']::slotted(*),
+  slot[name='start-image']::slotted(*),
+  slot[name='start-avatar']::slotted(*) {
+    margin-inline-start: var(--_leading-element-leading-space);
   }
 
   .body {
@@ -158,6 +159,7 @@
   }
 
   slot[name='end']::slotted(*),
+  slot[name='end-icon']::slotted(*),
   .trailing-supporting-text {
     margin-inline-start: var(
       --_trailing-element-headline-trailing-element-space
@@ -254,7 +256,8 @@
 }
 
 @mixin _image() {
-  ::slotted([data-variant='image']) {
+  ::slotted([data-variant='image']),
+  slot[name='start-image']::slotted(*) {
     display: inline-flex;
     height: var(--_leading-image-height);
     width: var(--_leading-image-width);
@@ -275,7 +278,8 @@
     fill: currentColor;
   }
 
-  slot[name='start']::slotted([data-variant='icon']) {
+  slot[name='start']::slotted([data-variant='icon']),
+  slot[name='start-icon']::slotted(*) {
     font-size: var(--_leading-icon-size);
     width: var(--_leading-icon-size);
     height: var(--_leading-icon-size);
@@ -289,7 +293,8 @@
     }
   }
 
-  slot[name='end']::slotted([data-variant='icon']) {
+  slot[name='end']::slotted([data-variant='icon']),
+  slot[name='end-icon']::slotted(*) {
     font-size: var(--_trailing-icon-size);
     width: var(--_trailing-icon-size);
     height: var(--_trailing-icon-size);
@@ -304,42 +309,50 @@
   }
 
   :hover {
-    slot[name='start']::slotted([data-variant='icon']) {
+    slot[name='start']::slotted([data-variant='icon']),
+    slot[name='start-icon']::slotted(*) {
       color: var(--_hover-leading-icon-icon-color);
     }
 
-    slot[name='end']::slotted([data-variant='icon']) {
+    slot[name='end']::slotted([data-variant='icon']),
+    slot[name='end-icon']::slotted(*) {
       color: var(--_hover-trailing-icon-icon-color);
     }
   }
 
   :focus {
-    slot[name='start']::slotted([data-variant='icon']) {
+    slot[name='start']::slotted([data-variant='icon']),
+    slot[name='start-icon']::slotted(*) {
       color: var(--_focus-leading-icon-icon-color);
     }
 
-    slot[name='end']::slotted([data-variant='icon']) {
+    slot[name='end']::slotted([data-variant='icon']),
+    slot[name='end-icon']::slotted(*) {
       color: var(--_focus-trailing-icon-icon-color);
     }
   }
 
   :active {
-    slot[name='start']::slotted([data-variant='icon']) {
+    slot[name='start']::slotted([data-variant='icon']),
+    slot[name='start-icon']::slotted(*) {
       color: var(--_pressed-leading-icon-icon-color);
     }
 
-    slot[name='end']::slotted([data-variant='icon']) {
+    slot[name='end']::slotted([data-variant='icon']),
+    slot[name='end-icon']::slotted(*) {
       color: var(--_pressed-trailing-icon-icon-color);
     }
   }
 
   .disabled {
-    slot[name='start']::slotted([data-variant='icon']) {
+    slot[name='start']::slotted([data-variant='icon']),
+    slot[name='start-icon']::slotted(*) {
       opacity: var(--_disabled-leading-icon-opacity);
       color: var(--_disabled-leading-icon-color);
     }
 
-    slot[name='end']::slotted([data-variant='icon']) {
+    slot[name='end']::slotted([data-variant='icon']),
+    slot[name='end-icon']::slotted(*) {
       opacity: var(--_disabled-trailing-icon-opacity);
       color: var(--_disabled-trailing-icon-color);
     }
@@ -347,7 +360,8 @@
 }
 
 @mixin _avatar() {
-  ::slotted([data-variant='avatar']) {
+  ::slotted([data-variant='avatar']),
+  slot[name='start-avatar']::slotted(*) {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -365,7 +379,9 @@
 
 @mixin _video() {
   ::slotted([data-variant='video']),
-  ::slotted([data-variant='video-large']) {
+  ::slotted([data-variant='video-large']),
+  slot[name='start-video']::slotted(*),
+  slot[name='start-video-large']::slotted(*) {
     display: inline-flex;
     object-fit: cover;
     height: var(--_small-leading-video-height);
@@ -385,7 +401,8 @@
     }
   }
 
-  ::slotted([data-variant='video-large']) {
+  ::slotted([data-variant='video-large']),
+  slot[name='start-video-large']::slotted(*) {
     // Min height is three-line height
     margin-block: calc(
       (var(--_three-line-container-height) - var(--_large-leading-video-height)) /

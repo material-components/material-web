@@ -49,20 +49,21 @@ const collection =
       new Knob('target', {ui: textInput(), defaultValue: '_blank'}),
       new Knob('link end icon', {ui: textInput(), defaultValue: 'open_in_new'}),
 
-      new Knob('data-variant=icon', {ui: title()}),
+      new Knob('slot[name=start|end-icon]', {ui: title()}),
       new Knob('start icon', {ui: textInput(), defaultValue: 'account_circle'}),
       new Knob('end icon', {ui: textInput(), defaultValue: 'check_circle'}),
 
-      new Knob('data-variant=avatar', {ui: title()}),
+      new Knob('slot[name=start-avatar]', {ui: title()}),
       new Knob('avatar img', {ui: textInput(), defaultValue: AVATAR_URL}),
       new Knob('avatar label', {ui: textInput(), defaultValue: 'EM'}),
 
-      new Knob('data-variant=image', {ui: title()}),
+      new Knob('slot[name=start-image]', {ui: title()}),
       new Knob('image', {ui: textInput(), defaultValue: IMAGE_URL}),
 
-      new Knob('data-variant=video', {ui: title()}),
+      new Knob('slot[name=start-video]', {ui: title()}),
       new Knob(
-          'data-variant=video-large', {ui: boolInput(), defaultValue: false}),
+          'slot[name=start-video-large]',
+          {ui: boolInput(), defaultValue: false}),
       new Knob('video src', {ui: textInput(), defaultValue: VIDEO_URL}),
     ]);
 

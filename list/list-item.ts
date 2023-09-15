@@ -36,20 +36,26 @@ declare global {
  *   item in a collection and act on it.
  * - Lists should present icons, text, and actions in a consistent format.
  *
- * Acceptable slottable child variants are:
+ * Acceptable slot child variants are:
  *
- * - `video[data-variant=video]`
- * - `img,span[data-variant=avatar]`
- * - `img[data-variant=image]`
- * - `md-icon[data-variant=icon]`
+ * - `video[slot=start-video]`
+ * - `video[slot=start-video-large]`
+ * - `img,span[slot=start-avatar]`
+ * - `img[slot=start-image]`
+ * - `md-icon[slot=start-icon]`
+ * - `svg[slot=start-icon]`
+ * - `img[slot=start-icon]`
+ * - `md-icon[slot=end-icon]`
+ * - `svg[slot=end-icon]`
+ * - `img[slot=end-icon]`
  *
  *  @example
  * ```html
  * <md-list-item
  *     headline="User Name"
  *     supportingText="user@name.com">
- *   <md-icon data-variant="icon" slot="start">account_circle</md-icon>
- *   <md-icon data-variant="icon" slot="end">check</md-icon>
+ *   <md-icon slot="start-icon">account_circle</md-icon>
+ *   <md-icon slot="end-icon">check</md-icon>
  * </md-list-item>
  * ```
  *

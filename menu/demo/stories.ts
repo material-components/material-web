@@ -156,7 +156,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
             .target=${
           knobs.target as '' | '_blank' | '_parent' | '_self' | '_top'}
             .href=${knobs.href}>
-          <md-icon data-variant="icon" slot="end">
+          <md-icon slot="end-icon">
             ${knobs['link icon']}
           </md-icon>
         </md-menu-item>
@@ -246,7 +246,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
                 .typeaheadDelay=${knobs.typeaheadDelay}>
               ${layer2}
             </md-menu>
-            <md-icon data-variant="icon" slot="end">
+            <md-icon slot="end-icon">
               ${knobs['submenu icon']}
             </md-icon>
           </md-sub-menu-item>`;
@@ -288,7 +288,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
               .typeaheadDelay=${knobs.typeaheadDelay}>
             ${layer1}
           </md-menu>
-          <md-icon data-variant="icon" slot="end">
+          <md-icon slot="end-icon">
             ${knobs['submenu icon']}
           </md-icon>
         </md-sub-menu-item>`;

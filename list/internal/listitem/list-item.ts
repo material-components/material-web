@@ -185,7 +185,15 @@ export class ListItemEl extends LitElement implements ListItem {
    * The content rendered at the start of the list item.
    */
   protected renderStart() {
-    return html`<div class="start"><slot name="start"></slot></div>`;
+    return html`
+      <div class="start">
+        <slot name="start"></slot>
+        <slot name="start-icon"></slot>
+        <slot name="start-image"></slot>
+        <slot name="start-avatar"></slot>
+        <slot name="start-video"></slot>
+        <slot name="start-video-large"></slot>
+      </div>`;
   }
 
   /**
@@ -222,8 +230,12 @@ export class ListItemEl extends LitElement implements ListItem {
     const supportingText = this.trailingSupportingText !== '' ?
         this.renderTrailingSupportingText() :
         '';
-    return html`<div class="end"
-      ><slot name="end">${supportingText}</slot></div>`;
+    return html`
+      <div class="end">
+        ${supportingText}
+        <slot name="end"></slot>
+        <slot name="end-icon"></slot>
+      </div>`;
   }
 
   /**

@@ -23,25 +23,23 @@ export interface StoryKnobs {
   headline: string;
   supportingText: string;
   trailingSupportingText: string;
-
-  'data-variant=icon': void;
-  'start icon': string;
-  'end icon': string;
-
-  'data-variant=link': void;
   href: string;
   target: string;
   'link end icon': string;
 
-  'data-variant=avatar': void;
+  'slot[name=start|end-icon]': void;
+  'start icon': string;
+  'end icon': string;
+
+  'slot[name=start-avatar]': void;
   'avatar img': string;
   'avatar label': string;
 
-  'data-variant=image': void;
+  'slot[name=start-image]': void;
   image: string;
 
-  'data-variant=video': void;
-  'data-variant=video-large': boolean;
+  'slot[name=start-video]': void;
+  'slot[name=start-video-large]': boolean;
   'video src': string;
 }
 
@@ -93,10 +91,10 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
               .noninteractive=${noninteractive}>
-            <md-icon data-variant="icon" slot="start">
+            <md-icon slot="start-icon">
               ${knobs['start icon']}
             </md-icon>
-            <md-icon data-variant="icon" slot="end">
+            <md-icon slot="end-icon">
               ${knobs['end icon']}
             </md-icon>
           </md-list-item>
@@ -110,8 +108,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .noninteractive=${noninteractive}
               .href=${href}
               .target=${target as '' | '_blank' | '_parent' | '_self' | '_top'}>
-            <md-icon data-variant="icon" slot="end">${
-        knobs['link end icon']}</md-icon>
+            <md-icon slot="end-icon">${knobs['link end icon']}</md-icon>
           </md-list-item>
 
           <md-divider></md-divider>
@@ -123,7 +120,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
               .noninteractive=${noninteractive}>
-            <img src=${knobs['avatar img']} slot="start" data-variant="avatar">
+            <img src=${knobs['avatar img']} slot="start-avatar">
           </md-list-item>
 
           <md-list-item
@@ -133,7 +130,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
               .noninteractive=${noninteractive}>
-            <span slot="start" data-variant="avatar">
+            <span slot="start-avatar">
               ${knobs['avatar label']}
             </span>
           </md-list-item>
@@ -145,7 +142,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
               .noninteractive=${noninteractive}>
-            <img .src=${image} data-variant="image" slot="start">
+            <img .src=${image} slot="start-image">
           </md-list-item>
 
           <md-list-item
@@ -156,14 +153,14 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .disabled=${disabled}
               .noninteractive=${noninteractive}>
             <video
-                slot="start"
                 muted
                 autoplay
                 loop
                 playsinline
                 .src=${knobs['video src']}
-                data-variant=${
-        knobs['data-variant=video-large'] ? 'video-large' : 'video'}
+                slot=${
+        knobs['slot[name=start-video-large]'] ? 'start-video-large' :
+                                                'start-video'}
             ></video>
           </md-list-item>
         </md-list>

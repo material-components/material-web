@@ -162,8 +162,7 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
 
           <!-- Arrow icons are helpful affordances -->
           <md-icon
-              slot="start"
-              data-variant="icon"
+              slot="start-icon"
               style="font-size: 24px;height:24px;">
             arrow_left
           </md-icon>
