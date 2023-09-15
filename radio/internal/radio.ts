@@ -155,6 +155,8 @@ export class Radio extends LitElement {
     // Per spec, clicking on a radio input always selects it.
     this.checked = true;
     this.dispatchEvent(new Event('change', {bubbles: true}));
+    this.dispatchEvent(
+        new InputEvent('input', {bubbles: true, composed: true}));
   }
 
   private async handleKeydown(event: KeyboardEvent) {

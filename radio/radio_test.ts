@@ -139,6 +139,21 @@ describe('<md-radio>', () => {
       expect(changeHandler).toHaveBeenCalledTimes(1);
       expect(changeHandler).toHaveBeenCalledWith(jasmine.any(Event));
     });
+
+    it('Should trigger input event when a radio is selected', async () => {
+      const {harnesses, root} = await setupTest(radioGroupPreSelected);
+      const inputHandler = jasmine.createSpy('inputHandler');
+      root.addEventListener('input', inputHandler);
+
+      const a3 = harnesses[2];
+      await a3.clickWithMouse();
+
+      expect(a3.element.checked)
+          .withContext('clicked radio checked')
+          .toBeTrue();
+      expect(inputHandler).toHaveBeenCalledTimes(1);
+      expect(inputHandler).toHaveBeenCalledWith(jasmine.any(InputEvent));
+    });
   });
 
   describe('navigation', () => {
