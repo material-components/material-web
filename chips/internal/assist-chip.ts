@@ -11,7 +11,7 @@ import {property} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
-import {Chip, renderGridAction, renderGridContainer} from './chip.js';
+import {Chip} from './chip.js';
 
 /**
  * An assist chip component.
@@ -30,10 +30,6 @@ export class AssistChip extends Chip {
     return !this.href && this.disabled;
   }
 
-  protected override renderContainer(content: unknown) {
-    return renderGridContainer(content, this.getContainerClasses());
-  }
-
   protected override getContainerClasses() {
     return {
       ...super.getContainerClasses(),
@@ -47,24 +43,24 @@ export class AssistChip extends Chip {
   protected override renderPrimaryAction(content: unknown) {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
-      return renderGridAction(html`
+      return html`
         <a class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
         >${content}</a>
-      `);
+      `;
     }
 
-    return renderGridAction(html`
+    return html`
       <button class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
-        ?disabled=${this.disabled}
+        ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"
       >${content}</button>
-    `);
+    `;
   }
 
   protected override renderOutline() {

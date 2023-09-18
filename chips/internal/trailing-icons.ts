@@ -14,22 +14,24 @@ import {Chip} from './chip.js';
 interface RemoveButtonProperties {
   ariaLabel: string;
   disabled: boolean;
+  focusListener: EventListener;
   tabbable?: boolean;
 }
 
 /** @protected */
 export function renderRemoveButton(
-    {ariaLabel, disabled, tabbable = false}: RemoveButtonProperties) {
+    {ariaLabel, disabled, focusListener, tabbable = false}:
+        RemoveButtonProperties) {
   return html`
     <button class="trailing action"
       aria-label=${ariaLabel}
-      ?disabled=${disabled}
       tabindex=${!tabbable ? -1 : nothing}
       @click=${handleRemoveClick}
+      @focus=${focusListener}
     >
       <md-focus-ring part="trailing-focus-ring"></md-focus-ring>
-      <md-ripple></md-ripple>
-      <svg class="trailing icon" viewBox="0 96 960 960">
+      <md-ripple ?disabled=${disabled}></md-ripple>
+      <svg class="trailing icon" viewBox="0 96 960 960" aria-hidden="true">
         <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
       </svg>
       <span class="touch"></span>

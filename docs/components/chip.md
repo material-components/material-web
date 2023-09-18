@@ -83,18 +83,21 @@ Choose the type of chip based on its purpose and author.
 <!-- TODO: catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-assist-chip label="Assist"></md-assist-chip>
-<md-filter-chip label="Filter"></md-filter-chip>
-<md-input-chip label="Input"></md-input-chip>
-<md-suggestion-chip label="Suggestion"></md-suggestion-chip>
+<md-chip-set>
+  <md-assist-chip label="Assist"></md-assist-chip>
+  <md-filter-chip label="Filter"></md-filter-chip>
+  <md-input-chip label="Input"></md-input-chip>
+  <md-suggestion-chip label="Suggestion"></md-suggestion-chip>
+</md-chip-set>
 ```
 
 ### Chip sets
 
 <!-- go/md-chip-set -->
 
-Chips should always appear in a set. Use the same type of chip for chip set
-children.
+Chips should always appear in a set. Chip sets are
+[toolbars](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/toolbar_role)<!-- {.external} -->
+that can display any type of chip or other toolbar items.
 
 <!-- no-catalog-start -->
 <!-- TODO: add image -->
@@ -103,16 +106,10 @@ children.
 
 ```html
 <h3>New event</h3>
-<md-chip-set type="assist">
+<md-chip-set>
+  <md-filter-chip label="All day"></md-filter-chip>
   <md-assist-chip label="Add to calendar"></md-assist-chip>
   <md-assist-chip label="Set a reminder"></md-assist-chip>
-</md-chip-set>
-
-<h3>Favorite foods</h3>
-<md-chip-set type="filter" single-select>
-  <md-filter-chip label="Pizza"></md-filter-chip>
-  <md-filter-chip label="Ice cream"></md-filter-chip>
-  <md-filter-chip label="Sandwich"></md-filter-chip>
 </md-chip-set>
 ```
 
@@ -128,13 +125,15 @@ picture is displayed.
 <!-- catalog-only-end -->
 
 ```html
-<md-assist-chip label="Add to calendar">
-  <md-icon slot="icon">event</md-icon>
-</md-assist-chip>
+<md-chip-set>
+  <md-assist-chip label="Add to calendar">
+    <md-icon slot="icon">event</md-icon>
+  </md-assist-chip>
 
-<md-input-chip label="Ping Qiang" avatar>
-  <img slot="icon" src="...">
-</md-input-chip>
+  <md-input-chip label="Ping Qiang" avatar>
+    <img slot="icon" src="...">
+  </md-input-chip>
+</md-chip-set>
 ```
 
 ### Elevated
@@ -151,7 +150,7 @@ protection, such as on top of an image.
 ```html
 <div>
   <img src="...">
-  <md-chip-set type="suggestion">
+  <md-chip-set>
     <md-suggestion-chip label="Share" elevated></md-suggestion-chip>
     <md-suggestion-chip label="Favorite" elevated></md-suggestion-chip>
   </md-chip-set>
@@ -162,16 +161,39 @@ protection, such as on top of an image.
 
 Add an
 [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)<!-- {.external} -->
-attribute to chip sets without labels or chips whose labels need to be more
-descriptive.
+attribute to chip sets or reference a label with
+[`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)<!-- {.external} -->.
+Add an `aria-label` to chips whose labels need to be more descriptive.
 
 ```html
-<md-chip-set type="filter" aria-label="Select dates">
+<h3 id="dates-label">Dates</h3>
+<md-chip-set aria-labelledby="dates-label">
   <md-filter-chip label="Mon" aria-label="Monday"></md-filter-chip>
   <md-filter-chip label="Tue" aria-label="Tuesday"></md-filter-chip>
   <md-filter-chip label="Wed" aria-label="Wednesday"></md-filter-chip>
-  <!-- ... -->
 </md-chip-set>
+```
+
+### Focusable and disabled
+
+By default, disabled chips are not focusable with the keyboard. Some use cases
+encourage focusability of disabled toolbar items to increase their
+discoverability.
+
+See the
+[ARIA guidelines on focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls)<!-- {.external} -->
+for guidance on when this is recommended.
+
+```html
+<md-chip-set aria-label="Actions">
+  <!--
+    Disabled until text is selected. Since both are disabled by default, keep
+    them focusable so that screen readers can discover the actions available.
+  -->
+  <md-assist-chip label="Copy" disabled always-focusable></md-assist-chip>
+  <md-assist-chip label="Paste" disabled always-focusable></md-assist-chip>
+</md-chip-set>
+<md-outlined-text-field type="textarea"></md-outlined-text-field>
 ```
 
 ## Assist chip
@@ -193,7 +215,7 @@ action. They should appear dynamically and contextually in a UI.
 
 ```html
 <h3>A restaraunt location</h3>
-<md-chip-set type="assist">
+<md-chip-set>
   <md-assist-chip label="Add to my itinerary">
     <md-icon slot="icon">calendar</md-icon>
   </md-assist-chip>
@@ -219,31 +241,11 @@ to toggle buttons or checkboxes.
 
 ```html
 <h3>Choose where to share</h3>
-<md-chip-set type="filter">
+<md-chip-set>
   <md-filter-chip label="Docs"></md-filter-chip>
   <md-filter-chip label="Slides" selected></md-filter-chip>
   <md-filter-chip label="Sheets" selected></md-filter-chip>
   <md-filter-chip label="Images"></md-filter-chip>
-</md-chip-set>
-```
-
-### Single select
-
-Filter chip sets can add a `single-select` attribute to only allow a single
-filter chip to be selected at one time.
-
-<!-- no-catalog-start -->
-<!-- TODO: add image -->
-<!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
-
-```html
-<h3>Shopping category</h3>
-<md-chip-set type="filter" single-select>
-  <md-filter-chip label="Cameras" selected></md-filter-chip>
-  <md-filter-chip label="Laptops"></md-filter-chip>
-  <md-filter-chip label="Phones"></md-filter-chip>
 </md-chip-set>
 ```
 
@@ -260,7 +262,7 @@ a trailing remove icon.
 
 ```html
 <h3>Colors</h3>
-<md-chip-set type="filter">
+<md-chip-set>
   <md-filter-chip label="Red" removable selected></md-filter-chip>
   <md-filter-chip label="Yellow" removable></md-filter-chip>
   <md-filter-chip label="Blue" removable></md-filter-chip>
@@ -288,7 +290,7 @@ display the image in a larger circle.
 ```html
 <md-outlined-text-field label="Attendees" type="email"></md-outlined-text-field>
 
-<md-chip-set type="input">
+<md-chip-set>
   <md-input-chip label="Ping Qiang" avatar>
     <img slot="icon" src="...">
   </md-input-chip>
@@ -311,7 +313,7 @@ associated with clicking on it, it may be marked as `remove-only`.
 
 ```html
 <h3>Favorite movies</h3>
-<md-chip-set type="input">
+<md-chip-set>
   <md-input-chip label="Star Wars" remove-only></md-input-chip>
   <md-input-chip label="Star Trek" remove-only></md-input-chip>
 </md-chip-set>
@@ -333,7 +335,7 @@ such as possible responses or search filters.
 
 ```html
 <h3>Suggested reply</h3>
-<md-chip-set type="suggestion">
+<md-chip-set>
   <md-suggestion-chip label="I agree"></md-suggestion-chip>
   <md-suggestion-chip label="Looks good to me"></md-suggestion-chip>
   <md-suggestion-chip label="Thank you"></md-suggestion-chip>

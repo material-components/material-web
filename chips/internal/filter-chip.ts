@@ -6,9 +6,8 @@
 
 import '../../elevation/elevation.js';
 
-import {html, nothing, PropertyValues, svg} from 'lit';
+import {html, nothing} from 'lit';
 import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
@@ -25,27 +24,12 @@ export class FilterChip extends MultiActionChip {
   @property({type: Boolean, reflect: true}) selected = false;
 
   protected get primaryId() {
-    return 'option';
+    return 'button';
   }
 
   @query('.primary.action') protected readonly primaryAction!: HTMLElement|null;
   @query('.trailing.action')
   protected readonly trailingAction!: HTMLElement|null;
-
-  protected override updated(changed: PropertyValues<FilterChip>) {
-    if (changed.has('selected') && changed.get('selected') !== undefined) {
-      // Dispatch when `selected` changes, except for the first update.
-      this.dispatchEvent(new Event('selected', {bubbles: true}));
-    }
-  }
-
-  protected override renderContainer(content: unknown) {
-    const classes = this.getContainerClasses();
-    // Note: an explicit `role="presentation"` is needed for VoiceOver. Without
-    // it, linear navigation gets stuck on the first filter chip.
-    return html`<div class="container ${
-        classMap(classes)}" role="presentation">${content}</div>`;
-  }
 
   protected override getContainerClasses() {
     return {
@@ -60,11 +44,10 @@ export class FilterChip extends MultiActionChip {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <button class="primary action"
-        id="option"
+        id="button"
         aria-label=${ariaLabel || nothing}
-        aria-selected=${this.selected}
-        ?disabled=${this.disabled || nothing}
-        role="option"
+        aria-pressed=${this.selected}
+        ?disabled=${this.disabled && !this.alwaysFocusable}
         @click=${this.handleClick}
       >${content}</button>
     `;
@@ -75,17 +58,20 @@ export class FilterChip extends MultiActionChip {
       return super.renderLeadingIcon();
     }
 
-    return svg`
+    return html`
       <svg class="checkmark" viewBox="0 0 18 18" aria-hidden="true">
         <path d="M6.75012 12.1274L3.62262 8.99988L2.55762 10.0574L6.75012 14.2499L15.7501 5.24988L14.6926 4.19238L6.75012 12.1274Z" />
       </svg>
     `;
   }
 
-  protected override renderTrailingAction() {
+  protected override renderTrailingAction(focusListener: EventListener) {
     if (this.removable) {
-      return renderRemoveButton(
-          {ariaLabel: this.ariaLabelRemove, disabled: this.disabled});
+      return renderRemoveButton({
+        focusListener,
+        ariaLabel: this.ariaLabelRemove,
+        disabled: this.disabled
+      });
     }
 
     return nothing;

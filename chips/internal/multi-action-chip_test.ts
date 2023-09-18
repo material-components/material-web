@@ -25,21 +25,20 @@ class TestMultiActionChip extends MultiActionChip {
 
   protected primaryId = 'primary';
 
-  protected override renderContainer(content: unknown) {
-    return html`<div>${content}</div>`;
-  }
-
   protected override renderPrimaryAction() {
     return html`<button id="primary"></button>`;
   }
 
-  protected override renderTrailingAction() {
+  protected override renderTrailingAction(focusListener: EventListener) {
     if (this.noTrailingAction) {
       return nothing;
     }
 
-    return renderRemoveButton(
-        {ariaLabel: this.ariaLabelRemove, disabled: this.disabled});
+    return renderRemoveButton({
+      focusListener,
+      ariaLabel: this.ariaLabelRemove,
+      disabled: this.disabled
+    });
   }
 }
 

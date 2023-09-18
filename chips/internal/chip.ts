@@ -7,7 +7,7 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
@@ -27,7 +27,26 @@ export abstract class Chip extends LitElement {
     delegatesFocus: true
   };
 
+  /**
+   * Whether or not the chip is disabled.
+   *
+   * Disabled chips are not focusable, unless `always-focusable` is set.
+   */
   @property({type: Boolean}) disabled = false;
+
+  /**
+   * When true, allow disabled chips to be focused with arrow keys.
+   *
+   * Add this when a chip needs increased visibility when disabled. See
+   * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
+   * for more guidance on when this is needed.
+   */
+  @property({type: Boolean, attribute: 'always-focusable'})
+  alwaysFocusable = false;
+
+  /**
+   * The label of the chip.
+   */
   @property() label = '';
 
   /**
@@ -43,15 +62,31 @@ export abstract class Chip extends LitElement {
     return this.disabled;
   }
 
-  protected override render() {
-    return this.renderContainer(this.renderContainerContent());
+  override focus(options?: FocusOptions) {
+    if (this.disabled && !this.alwaysFocusable) {
+      return;
+    }
+
+    super.focus(options);
   }
 
-  protected abstract renderContainer(content: unknown): unknown;
+  protected override render() {
+    return html`
+      <div class="container ${classMap(this.getContainerClasses())}">
+        ${this.renderContainerContent()}
+      </div>
+    `;
+  }
 
-  protected getContainerClasses() {
+  protected override updated(changed: PropertyValues<Chip>) {
+    if (changed.has('disabled') && changed.get('disabled') !== undefined) {
+      this.dispatchEvent(new Event('update-focus', {bubbles: true}));
+    }
+  }
+
+  protected getContainerClasses(): ClassInfo {
     return {
-      disabled: this.disabled,
+      'disabled': this.disabled,
     };
   }
 
@@ -85,28 +120,4 @@ export abstract class Chip extends LitElement {
       <span class="touch"></span>
     `;
   }
-}
-
-/**
- * Renders a chip container that follows the grid/row/cell a11y pattern.
- *
- * This renders the container with `role="row"`.
- */
-export function renderGridContainer(content: unknown, classes: ClassInfo) {
-  return html`
-    <div class="container ${classMap(classes)}" role="row">${content}</div>
-  `;
-}
-
-/**
- * Renders a chip action that follows the grid/row/cell a11y pattern.
- *
- * This wraps actions in a `role="cell"` div.
- */
-export function renderGridAction(content: unknown) {
-  if (content === nothing) {
-    return content;
-  }
-
-  return html`<div class="cell" role="cell">${content}</div>`;
 }

@@ -9,7 +9,6 @@ import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 
-import {renderGridAction, renderGridContainer} from './chip.js';
 import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-icons.js';
 
@@ -53,10 +52,6 @@ export class InputChip extends MultiActionChip {
   @query('.trailing.action')
   protected readonly trailingAction!: HTMLElement|null;
 
-  protected override renderContainer(content: unknown) {
-    return renderGridContainer(content, this.getContainerClasses());
-  }
-
   protected override getContainerClasses() {
     return {
       ...super.getContainerClasses(),
@@ -72,39 +67,40 @@ export class InputChip extends MultiActionChip {
   protected override renderPrimaryAction(content: unknown) {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
-      return renderGridAction(html`
+      return html`
         <a class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
         >${content}</a>
-      `);
+      `;
     }
 
     if (this.removeOnly) {
-      return renderGridAction(html`
+      return html`
         <span class="primary action" aria-label=${ariaLabel || nothing}>
           ${content}
         </span>
-      `);
+      `;
     }
 
-    return renderGridAction(html`
+    return html`
       <button class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
-        ?disabled=${this.disabled}
+        ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"
       >${content}</button>
-    `);
+    `;
   }
 
-  protected override renderTrailingAction() {
-    return renderGridAction(renderRemoveButton({
+  protected override renderTrailingAction(focusListener: EventListener) {
+    return renderRemoveButton({
+      focusListener,
       ariaLabel: this.ariaLabelRemove,
       disabled: !this.href && this.disabled,
       tabbable: this.removeOnly,
-    }));
+    });
   }
 }

@@ -53,30 +53,6 @@ describe('Filter chip', () => {
       expect(chip.selected).withContext('chip.selected').toBeFalse();
     });
 
-    it('should dispatch "selected" event when selected changes programmatically',
-       async () => {
-         const {chip} = await setupTest();
-         const handler = jasmine.createSpy();
-         chip.addEventListener('selected', handler);
-
-         chip.selected = true;
-         await env.waitForStability();
-         chip.selected = false;
-         await env.waitForStability();
-         expect(handler).toHaveBeenCalledTimes(2);
-       });
-
-    it('should dispatch "selected" event when selected changes by click',
-       async () => {
-         const {chip, harness} = await setupTest();
-         const handler = jasmine.createSpy();
-         chip.addEventListener('selected', handler);
-
-         await harness.clickWithMouse();
-         await harness.clickWithMouse();
-         expect(handler).toHaveBeenCalledTimes(2);
-       });
-
     it('can prevent default', async () => {
       const {chip, harness} = await setupTest();
       const handler = jasmine.createSpy();

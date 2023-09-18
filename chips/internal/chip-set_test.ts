@@ -16,7 +16,6 @@ import {ChipHarness} from '../harness.js';
 import {AssistChip} from './assist-chip.js';
 import {Chip} from './chip.js';
 import {ChipSet} from './chip-set.js';
-import {FilterChip} from './filter-chip.js';
 import {InputChip} from './input-chip.js';
 
 @customElement('test-chip-set')
@@ -27,9 +26,6 @@ class TestAssistChip extends AssistChip {
 }
 @customElement('test-chip-set-input-chip')
 class TestInputChip extends InputChip {
-}
-@customElement('test-chip-set-filter-chip')
-class TestFilterChip extends FilterChip {
 }
 
 describe('Chip set', () => {
@@ -68,9 +64,9 @@ describe('Chip set', () => {
       const chipSet = await setupTest(
           [new TestAssistChip(), new TestAssistChip(), new TestAssistChip()]);
 
-      expect(chipSet.chips[0].hasAttribute('tabindex'))
-          .withContext('first chip does not have tabindex')
-          .toBeFalse();
+      expect(chipSet.chips[0].getAttribute('tabindex'))
+          .withContext('first tabindex')
+          .toBe('0');
       expect(chipSet.chips[1].getAttribute('tabindex'))
           .withContext('second tabindex')
           .toBe('-1');
@@ -117,20 +113,6 @@ describe('Chip set', () => {
       });
     });
 
-    it('should navigate forward on vertical arrow keys', async () => {
-      const first = new TestAssistChip();
-      const second = new TestAssistChip();
-      const third = new TestAssistChip();
-      const chipSet = await setupTest([first, second, third]);
-      await testNavigation({
-        chipSet,
-        ltrKey: 'ArrowDown',
-        rtlKey: 'ArrowUp',
-        current: first,
-        next: second
-      });
-    });
-
     it('should navigate backward on horizontal keys', async () => {
       const first = new TestAssistChip();
       const second = new TestAssistChip();
@@ -140,20 +122,6 @@ describe('Chip set', () => {
         chipSet,
         ltrKey: 'ArrowLeft',
         rtlKey: 'ArrowRight',
-        current: second,
-        next: first
-      });
-    });
-
-    it('should navigate backward on vertical keys', async () => {
-      const first = new TestAssistChip();
-      const second = new TestAssistChip();
-      const third = new TestAssistChip();
-      const chipSet = await setupTest([first, second, third]);
-      await testNavigation({
-        chipSet,
-        ltrKey: 'ArrowUp',
-        rtlKey: 'ArrowDown',
         current: second,
         next: first
       });
@@ -232,6 +200,22 @@ describe('Chip set', () => {
       });
     });
 
+    it('should NOT skip over disabled always focusable chips', async () => {
+      const first = new TestAssistChip();
+      const second = new TestAssistChip();
+      second.disabled = true;
+      second.alwaysFocusable = true;
+      const third = new TestAssistChip();
+      const chipSet = await setupTest([first, second, third]);
+      await testNavigation({
+        chipSet,
+        ltrKey: 'ArrowRight',
+        rtlKey: 'ArrowLeft',
+        current: first,
+        next: second
+      });
+    });
+
     it('should focus trailing actions when navigating backwards', async () => {
       const first = new TestInputChip();
       const second = new TestInputChip();
@@ -276,94 +260,5 @@ describe('Chip set', () => {
           .withContext('single chip is still focused')
           .toBeTrue();
     });
-  });
-
-  describe('single selection', () => {
-    it('should allow multi-selection if singleSelect is false', async () => {
-      const first = new TestFilterChip();
-      const second = new TestFilterChip();
-      const chipSet = await setupTest([first, second]);
-      chipSet.singleSelect = false;
-
-      await new ChipHarness(first).clickWithMouse();
-      await new ChipHarness(second).clickWithMouse();
-
-      expect(first.selected).withContext('first chip is selected').toBeTrue();
-      expect(second.selected).withContext('second chip is selected').toBeTrue();
-    });
-
-    it('should deselect other chips when another chip is selected',
-       async () => {
-         const first = new TestFilterChip();
-         const second = new TestFilterChip();
-         second.selected = true;
-         const chipSet = await setupTest([first, second]);
-         chipSet.singleSelect = true;
-
-         await new ChipHarness(first).clickWithMouse();
-
-         expect(first.selected)
-             .withContext('first chip is selected')
-             .toBeTrue();
-         expect(second.selected)
-             .withContext('second chip is not selected')
-             .toBeFalse();
-       });
-
-    it('should not do anything if all chips are deselected and the property changes',
-       async () => {
-         const first = new TestFilterChip();
-         const second = new TestFilterChip();
-
-         const chipSet = await setupTest([first, second]);
-         chipSet.singleSelect = true;
-         await env.waitForStability();
-
-         expect(first.selected)
-             .withContext('first chip is still unselected')
-             .toBeFalse();
-         expect(second.selected)
-             .withContext('second chip is still unselected')
-             .toBeFalse();
-       });
-
-    it('should ensure one chip is selected when property changes', async () => {
-      const first = new TestFilterChip();
-      first.selected = true;
-      const second = new TestFilterChip();
-      second.selected = true;
-
-      const chipSet = await setupTest([first, second]);
-      chipSet.singleSelect = true;
-      await env.waitForStability();
-
-      expect(first.selected).withContext('first chip is selected').toBeTrue();
-      expect(second.selected)
-          .withContext('second chip is deselected')
-          .toBeFalse();
-    });
-
-    it('should prefer setting the first selected chip as the single selected chip when property changes',
-       async () => {
-         const first = new TestFilterChip();
-         const second = new TestFilterChip();
-         second.selected = true;
-         const third = new TestFilterChip();
-         second.selected = true;
-
-         const chipSet = await setupTest([first, second, third]);
-         chipSet.singleSelect = true;
-         await env.waitForStability();
-
-         expect(first.selected)
-             .withContext('first chip is still unselected')
-             .toBeFalse();
-         expect(second.selected)
-             .withContext('second chip remains selected')
-             .toBeTrue();
-         expect(third.selected)
-             .withContext('third chip is deselected')
-             .toBeFalse();
-       });
   });
 });
