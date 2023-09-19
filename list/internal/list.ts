@@ -9,7 +9,7 @@ import {query, queryAssignedElements} from 'lit/decorators.js';
 
 import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 
-import {ListItem} from './listitem/list-item.js';
+import {ListItem, ListItemEl} from './listitem/list-item.js';
 
 /**
  * Default keys that trigger navigation.
@@ -38,6 +38,12 @@ const navigableKeySet = new Set(Object.values(NAVIGABLE_KEYS));
 
 function isNavigableKey(key: string): key is NavigatableValues {
   return navigableKeySet.has(key as NavigatableValues);
+}
+
+function isActivatableListItem(item: ListItem): boolean {
+  // Setting an href means the list item is an anchor, and is therefore
+  // activatable. Otherwise it's not possible to focus the link.
+  return !item.disabled && ((!!item.href) || item.interactive !== false);
 }
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
@@ -230,8 +236,11 @@ export class List extends LitElement {
   }
 
   private onRequestActivation(event: Event) {
-    this.onDeactivateItems();
     const target = event.target as HTMLElement;
+    if (!(target instanceof ListItemEl) || !isActivatableListItem(target)) {
+      return;
+    }
+    this.onDeactivateItems();
     target.tabIndex = 0;
     target.focus();
   }
@@ -323,7 +332,7 @@ export class List extends LitElement {
    */
   static getFirstActivatableItem<T extends ListItem>(items: T[]) {
     for (const item of items) {
-      if (!item.disabled) {
+      if (isActivatableListItem(item)) {
         return item;
       }
     }
@@ -341,7 +350,7 @@ export class List extends LitElement {
   static getLastActivatableItem<T extends ListItem>(items: T[]) {
     for (let i = items.length - 1; i >= 0; i--) {
       const item = items[i];
-      if (!item.disabled) {
+      if (isActivatableListItem(item)) {
         return item;
       }
     }
@@ -350,7 +359,7 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the next non-disabled item of a given array of items.
+   * Retrieves the next activatable item of a given array of items.
    *
    * @param items {Array<ListItem>} The items to search.
    * @param index {{index: number}} The index to search from.
@@ -360,7 +369,7 @@ export class List extends LitElement {
     for (let i = 1; i < items.length; i++) {
       const nextIndex = (i + index) % items.length;
       const item = items[nextIndex];
-      if (!item.disabled) {
+      if (isActivatableListItem(item)) {
         return item;
       }
     }
@@ -380,7 +389,7 @@ export class List extends LitElement {
       const prevIndex = (index - i + items.length) % items.length;
       const item = items[prevIndex];
 
-      if (!item.disabled) {
+      if (isActivatableListItem(item)) {
         return item;
       }
     }
@@ -397,7 +406,7 @@ export class List extends LitElement {
     let encounteredFirstActivated = false;
 
     for (const item of items) {
-      const isActivated = !item.disabled && item.tabIndex > -1;
+      const isActivated = isActivatableListItem(item) && item.tabIndex > -1;
 
       if (isActivated && !encounteredFirstActivated) {
         encounteredFirstActivated = true;

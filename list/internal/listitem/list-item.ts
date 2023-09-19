@@ -55,6 +55,8 @@ export type ListItemRole = 'listitem'|'menuitem'|'option'|'link'|'none';
 
 interface ListItemSelf {
   disabled: boolean;
+  interactive?: boolean;
+  href: string;
 }
 
 /**
