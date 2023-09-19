@@ -254,7 +254,7 @@ Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `returnValue` |  | `string` | `''` | Gets or sets the dialog's return value, usually to indicate which button<br>a user pressed to close it.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue
 `type` | `type` | `string` | `undefined` | The type of dialog for accessibility. Set this to `alert` to announce a<br>dialog as an alert dialog.
-`open` | `open` | `boolean` | `undefined` | Opens the dialog when set to `true` and closes it when set to `false`.
+`open` | `open` | `boolean` | `undefined` | 
 `getOpenAnimation` |  | `() => DialogAnimation` | `function { ... }` | Gets the opening animation for a dialog. Set to a new function to customize<br>the animation.
 `getCloseAnimation` |  | `() => DialogAnimation` | `function { ... }` | Gets the closing animation for a dialog. Set to a new function to customize<br>the animation.
 
