@@ -1,0 +1,27 @@
+<div class="figure-wrapper">
+  <style>
+    main > .figure-wrapper {
+      /* prevent scrolling bars on dropdown menu open */
+      overflow: visible;
+      /* unset page styles */
+      --md-list-item-container-shape: 0px;
+    }
+  </style>
+  <figure
+    style="justify-content: center; gap: 8px"
+    title="Example usage of an outlined dropdown menu and a filled dropdown menu."
+    aria-label="An outlined dropdown menu filled with Apple, and a filled dropdown menu."
+  >
+    <md-outlined-select>
+      <md-select-option headline=""></md-select-option>
+      <md-select-option selected value="apple" headline="Apple"></md-select-option>
+      <md-select-option value="apricot" headline="Apricot"></md-select-option>
+    </md-outlined-select>
+
+    <md-filled-select>
+      <md-select-option headline=""></md-select-option>
+      <md-select-option value="apple" headline="Apple"></md-select-option>
+      <md-select-option value="apricot" headline="Apricot"></md-select-option>
+    </md-filled-select>
+  </figure>
+</div>

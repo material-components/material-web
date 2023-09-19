@@ -1,0 +1,25 @@
+<div class="figure-wrapper">
+  <figure
+    class="styled-example filled"
+    title="Filled select theming example"
+    aria-label="Image of a filled select with a different theme applied"
+  >
+    <style>
+      .styled-example.filled {
+        --md-filled-select-text-field-container-shape: 0px;
+        --md-filled-select-text-field-container-color: #f7faf9;
+        --md-filled-field-content-color: #005353;
+        --md-filled-field-content-font: system-ui;
+      }
+      .styled-example.filled md-filled-select::part(menu) {
+        --md-menu-container-color: #f4fbfa;
+        --md-menu-container-shape: 0px;
+        --md-menu-item-container-color: transparent;
+      }
+    </style>
+    <md-filled-select>
+      <md-select-option selected value="apple" headline="Apple"></md-select-option>
+      <md-select-option value="tomato" headline="Tomato"></md-select-option>
+    </md-filled-select>
+  </figure>
+</div>
