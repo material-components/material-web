@@ -80,7 +80,7 @@
     // hide android tap color since we have ripple
     -webkit-tap-highlight-color: transparent;
 
-    &:not(.disabled):not(.noninteractive) {
+    &:not(.disabled).interactive {
       cursor: pointer;
     }
 

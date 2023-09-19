@@ -1087,7 +1087,7 @@ describe('<md-list-item>', () => {
     expect(rootEl.classList.contains('with-three-line')).toBeTrue();
   });
 
-  it('ripple and focus ring not rendered on noninteractive', async () => {
+  it('ripple and focus ring rendered on interactive', async () => {
     const root = env.render(html`<md-list-item></md-list-item>`);
 
     const listItem = root.querySelector('md-list-item')!;
@@ -1097,18 +1097,18 @@ describe('<md-list-item>', () => {
     let rippleEl = listItem.renderRoot.querySelector('md-ripple');
     let focusRingEl = listItem.renderRoot.querySelector('md-focus-ring');
 
-    expect(rippleEl).toBeTruthy();
-    expect(focusRingEl).toBeTruthy();
+    expect(rippleEl).toBeNull();
+    expect(focusRingEl).toBeNull();
 
-    listItem.noninteractive = true;
+    listItem.interactive = true;
 
     await env.waitForStability();
 
     rippleEl = listItem.renderRoot.querySelector('md-ripple');
     focusRingEl = listItem.renderRoot.querySelector('md-focus-ring');
 
-    expect(rippleEl).toBeNull();
-    expect(focusRingEl).toBeNull();
+    expect(rippleEl).toBeTruthy();
+    expect(focusRingEl).toBeTruthy();
   });
 });
 

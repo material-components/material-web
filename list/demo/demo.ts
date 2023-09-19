@@ -38,7 +38,7 @@ const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('List', [
       new Knob('md-list-item', {ui: title()}),
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
-      new Knob('noninteractive', {ui: boolInput(), defaultValue: false}),
+      new Knob('interactive', {ui: boolInput(), defaultValue: false}),
       new Knob(
           'multiLineSupportingText', {ui: boolInput(), defaultValue: false}),
       new Knob('headline', {ui: textInput(), defaultValue: 'Headline'}),

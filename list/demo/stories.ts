@@ -16,7 +16,7 @@ import {css, html} from 'lit';
 export interface StoryKnobs {
   'md-list-item': void;
   disabled: boolean;
-  noninteractive: boolean;
+  interactive: boolean;
   multiLineSupportingText: boolean;
   headline: string;
   supportingText: string;
@@ -58,7 +58,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const {
       disabled,
-      noninteractive,
+      interactive,
       multiLineSupportingText,
       headline,
       supportingText,
@@ -76,7 +76,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}>
+              .interactive=${interactive}>
           </md-list-item>
 
           <md-list-item
@@ -85,7 +85,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}>
+              .interactive=${interactive}>
             <md-icon slot="start-icon">
               ${knobs['start icon']}
             </md-icon>
@@ -100,7 +100,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}
+              .interactive=${interactive}
               .href=${href}
               .target=${target as '' | '_blank' | '_parent' | '_self' | '_top'}>
             <md-icon slot="end-icon">${knobs['link end icon']}</md-icon>
@@ -114,7 +114,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}>
+              .interactive=${interactive}>
             <img src=${knobs['avatar img']} slot="start-avatar">
           </md-list-item>
 
@@ -124,7 +124,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}>
+              .interactive=${interactive}>
             <span slot="start-avatar">
               ${knobs['avatar label']}
             </span>
@@ -136,7 +136,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}>
+              .interactive=${interactive}>
             <img .src=${image} slot="start-image">
           </md-list-item>
 
@@ -146,7 +146,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .multiLineSupportingText=${multiLineSupportingText}
               .trailingSupportingText=${trailingSupportingText}
               .disabled=${disabled}
-              .noninteractive=${noninteractive}>
+              .interactive=${interactive}>
             <video
                 muted
                 autoplay

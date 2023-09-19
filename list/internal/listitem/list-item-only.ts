@@ -12,23 +12,24 @@ import {createRequestActivationEvent, ListItemEl} from './list-item.js';
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class ListItemOnly extends ListItemEl {
   /**
-   * Removes the hover and click ripples from the item when true.
+   * Enables focusing the list item, and adds hover and click ripples when set
+   * to true. By default `interactive` is false.
    */
-  @property({type: Boolean}) noninteractive = false;
+  @property({type: Boolean}) interactive = false;
 
   override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
-      'noninteractive': this.noninteractive,
+      'interactive': this.interactive,
     };
   }
 
   override renderRipple() {
-    return this.noninteractive ? nothing : super.renderRipple();
+    return this.interactive ? super.renderRipple() : nothing;
   }
 
   override renderFocusRing() {
-    return this.noninteractive ? nothing : super.renderFocusRing();
+    return this.interactive ? super.renderFocusRing() : nothing;
   }
 
   override onFocus() {

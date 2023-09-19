@@ -71,7 +71,7 @@ header which is on two lines.](images/list/usage.webp)
 
 ```html
 <md-list style="max-width: 300px;">
-  <md-list-item headline="Fruits" noninteractive></md-list-item>
+  <md-list-item headline="Fruits"></md-list-item>
   <md-divider></md-divider>
   <md-list-item headline="Apple"></md-list-item>
   <md-list-item headline="Banana" supporting-text="Banana is a yellow fruit">
@@ -82,6 +82,7 @@ header which is on two lines.](images/list/usage.webp)
       supporting-text="Cucumbers are long green fruits that are just as long as this multi-line description">
   </md-list-item>
   <md-list-item
+      interactive
       headline="Shop for Kiwis"
       supporting-text="This will link you out in a new tab"
       href="https://google.com/search?q=buy+kiwis&tbm=shop"

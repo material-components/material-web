@@ -129,9 +129,6 @@ export class ListItemEl extends LitElement implements ListItem {
    */
   @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
-  // Use a lit property to handle reflecting with preset attributes
-  @property({type: Number, reflect: true}) override tabIndex = 0;
-
   @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
 
   protected override render() {
