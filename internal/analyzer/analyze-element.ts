@@ -248,6 +248,7 @@ function nameToAttribute(propertyName: string) {
  * These are methods we do not want to expose on the API docs.
  */
 const METHODS_TO_IGNORE = new Set([
+  'attributeChangedCallback',
   'connectedCallback',
   'disconnectedCallback',
   'update',
