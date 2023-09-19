@@ -28,7 +28,9 @@
     "build:css-to-ts": "wireit",
     "build:sass": "wireit",
     "test": "wireit",
-    "build:catalog": "wireit"
+    "build:catalog": "wireit",
+    "build:analyzer": "wireit",
+    "update-docs": "wireit"
   },
   "type": "module",
   "files": [
@@ -42,7 +44,8 @@
     "!**/testing/**",
     "!**/*_test.*",
     "!.wireit/**",
-    "!catalog"
+    "!catalog",
+    "!internal/analyzer"
   ],
   "workspaces": [
     "catalog"
@@ -52,6 +55,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
+    "@lit-labs/analyzer": "^0.9.2",
     "@types/jasmine": "^4.0.3",
     "@web/test-runner": "^0.15.0",
     "@web/test-runner-playwright": "^0.9.0",
@@ -75,7 +79,8 @@
         "**/*.ts",
         "!**/*.d.ts",
         "!**/*.css.ts",
-        "!catalog"
+        "!catalog",
+        "!internal/analyzer"
       ],
       "output": [
         ".tsbuildinfo",
@@ -85,7 +90,8 @@
         "!css-to-ts.js",
         "!web-test-runner.config.js",
         "!types/",
-        "!catalog"
+        "!catalog",
+        "!internal/analyzer"
       ],
       "clean": "if-file-deleted",
       "dependencies": [
@@ -95,11 +101,13 @@
     "build:css-to-ts": {
       "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
       "files": [
-        "css-to-ts.js"
+        "css-to-ts.js",
+        "!internal/analyzer"
       ],
       "output": [
         "**/*.css.ts",
-        "!catalog"
+        "!catalog",
+        "!internal/analyzer"
       ],
       "dependencies": [
         "build:sass"
@@ -109,12 +117,14 @@
       "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
       "files": [
         "**/*.scss",
-        "!catalog"
+        "!catalog",
+        "!internal/analyzer"
       ],
       "output": [
         "**/*.css",
         "**/*.css.map",
-        "!catalog"
+        "!catalog",
+        "!internal/analyzer"
       ]
     },
     "test": {
@@ -130,6 +140,32 @@
     "build:catalog": {
       "dependencies": [
         "./catalog:build:prod"
+      ]
+    },
+    "build:analyzer": {
+      "command": "tsc -b internal/analyzer/tsconfig.json --pretty",
+      "files": [
+        "internal/analyzer/tsconfig.json",
+        "internal/analyzer/**/*.ts",
+        "!**/*.d.ts",
+        "!**/*.css.ts"
+      ],
+      "output": [
+        "internal/analyzer/.tsbuildinfo",
+        "internal/analyzer/**/*.js",
+        "internal/analyzer/**/*.js.map",
+        "internal/analyzer/**/*.d.ts"
+      ],
+      "clean": "if-file-deleted"
+    },
+    "update-docs": {
+      "command": "node internal/analyzer/update-docs.js",
+      "files": [
+        "docs/components/*.md"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:analyzer"
       ]
     }
   }

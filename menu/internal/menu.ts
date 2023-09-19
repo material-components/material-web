@@ -149,7 +149,7 @@ export abstract class Menu extends LitElement {
   typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
   /**
    * The corner of the anchor which to align the menu in the standard logical
-   * property style of <block>_<inline>.
+   * property style of <block>-<inline> e.g. `'end-start'`.
    *
    * NOTE: This value may not be respected by the menu positioning algorithm
    * if the menu would render outisde the viewport.
@@ -158,7 +158,7 @@ export abstract class Menu extends LitElement {
   anchorCorner: Corner = Corner.END_START;
   /**
    * The corner of the menu which to align the anchor in the standard logical
-   * property style of <block>_<inline>.
+   * property style of <block>-<inline> e.g. `'start-start'`.
    *
    * NOTE: This value may not be respected by the menu positioning algorithm
    * if the menu would render outisde the viewport.

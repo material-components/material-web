@@ -28,6 +28,7 @@
   },
   "exclude": [
     "catalog",
-    "**/demo"
+    "**/demo",
+    "internal/analyzer/",
   ]
 }
