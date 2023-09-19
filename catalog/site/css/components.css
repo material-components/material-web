@@ -34,10 +34,6 @@ main > * {
   max-width: 1760px;
 }
 
-main > table {
-  max-width: max-content;
-}
-
 img:not(figure *),
 figure {
   border-radius: var(--catalog-image-border-radius);
@@ -82,6 +78,10 @@ main > :not(catalog-component-header, details),
 main > details > summary {
   max-width: min(100%, 980px);
   margin-inline: auto;
+}
+
+main > table {
+  max-width: max-content;
 }
 
 table {
