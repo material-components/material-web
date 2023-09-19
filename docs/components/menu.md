@@ -152,8 +152,8 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
         <!-- Nest as many as you want and control menu anchoring -->
         <md-sub-menu-item
             headline="Apples"
-            menu-corner="START_END"
-            anchor-corner="START_START">
+            menu-corner="start-end"
+            anchor-corner="start-start">
           <md-menu slot="submenu">
             <md-menu-item headline="Fuji"></md-menu-item>
             <md-menu-item headline="Granny Smith"></md-menu-item>

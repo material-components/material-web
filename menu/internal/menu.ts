@@ -32,7 +32,18 @@ export const DEFAULT_TYPEAHEAD_BUFFER_TIME = 200;
 /**
  * Element to focus on when menu is first opened.
  */
-export type DefaultFocusState = 'NONE'|'LIST_ROOT'|'FIRST_ITEM'|'LAST_ITEM';
+// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
+export const FocusState = {
+  NONE: 'none',
+  LIST_ROOT: 'list-root',
+  FIRST_ITEM: 'first-item',
+  LAST_ITEM: 'last-item'
+} as const;
+
+/**
+ * Element to focus on when menu is first opened.
+ */
+export type FocusState = typeof FocusState[keyof typeof FocusState];
 
 /**
  * Gets the currently focused element on the page.
@@ -143,7 +154,8 @@ export abstract class Menu extends LitElement {
    * NOTE: This value may not be respected by the menu positioning algorithm
    * if the menu would render outisde the viewport.
    */
-  @property({attribute: 'anchor-corner'}) anchorCorner: Corner = 'END_START';
+  @property({attribute: 'anchor-corner'})
+  anchorCorner: Corner = Corner.END_START;
   /**
    * The corner of the menu which to align the anchor in the standard logical
    * property style of <block>_<inline>.
@@ -151,7 +163,7 @@ export abstract class Menu extends LitElement {
    * NOTE: This value may not be respected by the menu positioning algorithm
    * if the menu would render outisde the viewport.
    */
-  @property({attribute: 'menu-corner'}) menuCorner: Corner = 'START_START';
+  @property({attribute: 'menu-corner'}) menuCorner: Corner = Corner.START_START;
   /**
    * Keeps the user clicks outside the menu.
    *
@@ -181,7 +193,7 @@ export abstract class Menu extends LitElement {
    * `list-tabindex` to `0` when necessary.
    */
   @property({attribute: 'default-focus'})
-  defaultFocus: DefaultFocusState = 'FIRST_ITEM';
+  defaultFocus: FocusState = FocusState.FIRST_ITEM;
 
   @state() private typeaheadActive = true;
 
@@ -398,7 +410,7 @@ export abstract class Menu extends LitElement {
     const items = this.listElement.items;
     const activeItemRecord = List.getActiveItem(items);
 
-    if (activeItemRecord && this.defaultFocus !== 'NONE') {
+    if (activeItemRecord && this.defaultFocus !== FocusState.NONE) {
       activeItemRecord.item.tabIndex = -1;
     }
 
@@ -414,7 +426,7 @@ export abstract class Menu extends LitElement {
     // the items before the animation has begun and causes the list to slide
     // (block-padding-of-the-menu)px at the end of the animation
     switch (this.defaultFocus) {
-      case 'FIRST_ITEM':
+      case FocusState.FIRST_ITEM:
         const first = List.getFirstActivatableItem(items);
         if (first) {
           first.tabIndex = 0;
@@ -422,7 +434,7 @@ export abstract class Menu extends LitElement {
           await (first as LitElement & MenuItem).updateComplete;
         }
         break;
-      case 'LAST_ITEM':
+      case FocusState.LAST_ITEM:
         const last = List.getLastActivatableItem(items);
         if (last) {
           last.tabIndex = 0;
@@ -430,11 +442,11 @@ export abstract class Menu extends LitElement {
           await (last as LitElement & MenuItem).updateComplete;
         }
         break;
-      case 'LIST_ROOT':
+      case FocusState.LIST_ROOT:
         this.listElement?.focus();
         break;
       default:
-      case 'NONE':
+      case FocusState.NONE:
         // Do nothing.
         break;
     }

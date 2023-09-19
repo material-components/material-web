@@ -8,9 +8,20 @@ import {ReactiveController, ReactiveControllerHost} from 'lit';
 import {StyleInfo} from 'lit/directives/style-map.js';
 
 /**
+ * An enum of supported Menu corners
+ */
+// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
+export const Corner = {
+  END_START: 'end-start',
+  END_END: 'end-end',
+  START_START: 'start-start',
+  START_END: 'start-end',
+} as const;
+
+/**
  * A corner of a box in the standard logical property style of <block>_<inline>
  */
-export type Corner = 'END_START'|'END_END'|'START_START'|'START_END';
+export type Corner = typeof Corner[keyof typeof Corner];
 
 /**
  * An interface that provides a method to customize the rect from which to
@@ -147,8 +158,8 @@ export class SurfacePositionController implements ReactiveController {
       yOffset,
       repositionStrategy,
     } = this.getProperties();
-    const anchorCorner = anchorCornerRaw.toUpperCase().trim();
-    const surfaceCorner = surfaceCornerRaw.toUpperCase().trim();
+    const anchorCorner = anchorCornerRaw.toLowerCase().trim();
+    const surfaceCorner = surfaceCornerRaw.toLowerCase().trim();
 
     if (!surfaceEl || !anchorEl) {
       return;
@@ -172,9 +183,9 @@ export class SurfacePositionController implements ReactiveController {
         anchorEl.getSurfacePositionClientRect() :
         anchorEl.getBoundingClientRect();
     const [surfaceBlock, surfaceInline] =
-        surfaceCorner.split('_') as Array<'START'|'END'>;
+        surfaceCorner.split('-') as Array<'start'|'end'>;
     const [anchorBlock, anchorInline] =
-        anchorCorner.split('_') as Array<'START'|'END'>;
+        anchorCorner.split('-') as Array<'start'|'end'>;
 
     // LTR depends on the direction of the SURFACE not the anchor.
     const isLTR =
@@ -226,8 +237,8 @@ export class SurfacePositionController implements ReactiveController {
     // If the surface should be out of bounds in the block direction, flip the
     // surface and anchor corner block values and recalculate
     if (blockOutOfBoundsCorrection) {
-      const flippedSurfaceBlock = surfaceBlock === 'START' ? 'END' : 'START';
-      const flippedAnchorBlock = anchorBlock === 'START' ? 'END' : 'START';
+      const flippedSurfaceBlock = surfaceBlock === 'start' ? 'end' : 'start';
+      const flippedAnchorBlock = anchorBlock === 'start' ? 'end' : 'start';
 
       const flippedBlock = this.calculateBlock({
         surfaceRect,
@@ -263,8 +274,8 @@ export class SurfacePositionController implements ReactiveController {
     // If the surface should be out of bounds in the inline direction, flip the
     // surface and anchor corner inline values and recalculate
     if (inlineOutOfBoundsCorrection) {
-      const flippedSurfaceInline = surfaceInline === 'START' ? 'END' : 'START';
-      const flippedAnchorInline = anchorInline === 'START' ? 'END' : 'START';
+      const flippedSurfaceInline = surfaceInline === 'start' ? 'end' : 'start';
+      const flippedAnchorInline = anchorInline === 'start' ? 'end' : 'start';
 
       const flippedInline = this.calculateInline({
         surfaceRect,
@@ -326,8 +337,8 @@ export class SurfacePositionController implements ReactiveController {
   private calculateBlock(config: {
     surfaceRect: DOMRect,
     anchorRect: DOMRect,
-    anchorBlock: 'START'|'END',
-    surfaceBlock: 'START'|'END',
+    anchorBlock: 'start'|'end',
+    surfaceBlock: 'start'|'end',
     yOffset: number,
     isTopLayer: boolean,
   }) {
@@ -342,8 +353,8 @@ export class SurfacePositionController implements ReactiveController {
     // We use number booleans to multiply values rather than `if` / ternary
     // statements because it _heavily_ cuts down on nesting and readability
     const isTopLayer = isTopLayerBool ? 1 : 0;
-    const isSurfaceBlockStart = surfaceBlock === 'START' ? 1 : 0;
-    const isSurfaceBlockEnd = surfaceBlock === 'END' ? 1 : 0;
+    const isSurfaceBlockStart = surfaceBlock === 'start' ? 1 : 0;
+    const isSurfaceBlockEnd = surfaceBlock === 'end' ? 1 : 0;
     const isOneBlockEnd = anchorBlock !== surfaceBlock ? 1 : 0;
 
     // Whether or not to apply the height of the anchor
@@ -363,7 +374,7 @@ export class SurfacePositionController implements ReactiveController {
     const blockInset = isTopLayer * blockTopLayerOffset + blockAnchorOffset;
 
     const surfaceBlockProperty =
-        surfaceBlock === 'START' ? 'inset-block-start' : 'inset-block-end';
+        surfaceBlock === 'start' ? 'inset-block-start' : 'inset-block-end';
 
     return {blockInset, blockOutOfBoundsCorrection, surfaceBlockProperty};
   }
@@ -374,8 +385,8 @@ export class SurfacePositionController implements ReactiveController {
    */
   private calculateInline(config: {
     isLTR: boolean,
-    surfaceInline: 'START'|'END',
-    anchorInline: 'START'|'END',
+    surfaceInline: 'start'|'end',
+    anchorInline: 'start'|'end',
     anchorRect: DOMRect,
     surfaceRect: DOMRect,
     xOffset: number,
@@ -395,8 +406,8 @@ export class SurfacePositionController implements ReactiveController {
     const isTopLayer = isTopLayerBool ? 1 : 0;
     const isLTR = isLTRBool ? 1 : 0;
     const isRTL = isLTRBool ? 0 : 1;
-    const isSurfaceInlineStart = surfaceInline === 'START' ? 1 : 0;
-    const isSurfaceInlineEnd = surfaceInline === 'END' ? 1 : 0;
+    const isSurfaceInlineStart = surfaceInline === 'start' ? 1 : 0;
+    const isSurfaceInlineEnd = surfaceInline === 'end' ? 1 : 0;
     const isOneInlineEnd = anchorInline !== surfaceInline ? 1 : 0;
 
     // Whether or not to apply the width of the anchor
@@ -424,7 +435,7 @@ export class SurfacePositionController implements ReactiveController {
     const inlineInset = isTopLayer * inlineTopLayerOffset + inlineAnchorOffset;
 
     const surfaceInlineProperty =
-        surfaceInline === 'START' ? 'inset-inline-start' : 'inset-inline-end';
+        surfaceInline === 'start' ? 'inset-inline-start' : 'inset-inline-end';
 
     return {
       inlineInset,

@@ -14,7 +14,7 @@ import '@material/web/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {CloseMenuEvent} from '@material/web/menu/internal/shared.js';
-import {Corner, DefaultFocusState, MdMenu, MenuItem} from '@material/web/menu/menu.js';
+import {Corner, FocusState, MdMenu, MenuItem} from '@material/web/menu/menu.js';
 import {css, html} from 'lit';
 
 /** Knob types for Menu stories. */
@@ -22,7 +22,7 @@ export interface StoryKnobs {
   menu: void;
   anchorCorner: Corner|undefined;
   menuCorner: Corner|undefined;
-  defaultFocus: DefaultFocusState|undefined;
+  defaultFocus: FocusState|undefined;
   open: boolean;
   fixed: boolean;
   quick: boolean;

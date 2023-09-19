@@ -60,8 +60,8 @@ import {materialDesign} from '../svg/material-design-logo.js';
             >
               <md-menu
                 anchor="theme-button"
-                menu-corner="START_END"
-                anchor-corner="END_END"
+                menu-corner="start-end"
+                anchor-corner="end-end"
                 stay-open-on-focusout
                 .open=${this.menuOpen}
                 @closed=${this.onMenuClosed}

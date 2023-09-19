@@ -28,11 +28,12 @@ export class SubMenuItem extends MenuItemEl {
   /**
    * The anchorCorner to set on the submenu.
    */
-  @property({attribute: 'anchor-corner'}) anchorCorner: Corner = 'START_END';
+  @property({attribute: 'anchor-corner'})
+  anchorCorner: Corner = Corner.START_END;
   /**
    * The menuCorner to set on the submenu.
    */
-  @property({attribute: 'menu-corner'}) menuCorner: Corner = 'START_START';
+  @property({attribute: 'menu-corner'}) menuCorner: Corner = Corner.START_START;
   /**
    * The delay between mouseenter and submenu opening.
    */
@@ -267,7 +268,7 @@ export class SubMenuItem extends MenuItemEl {
     // We manually set focus with `active` on keyboard navigation. And we
     // want to focus the root on hover, so the user can pick up navigation with
     // keyboard after hover.
-    menu.defaultFocus = 'LIST_ROOT';
+    menu.defaultFocus = 'list-root';
     // This is required in the case where we have a leaf menu open and and the
     // user hovers a parent menu's item which is not an md-sub-menu item.
     // If this were set to true, then the menu would close and focus would be

@@ -11,7 +11,7 @@ import {Menu} from './internal/menu.js';
 import {styles} from './internal/menu-styles.css.js';
 
 export {ListItem} from '../list/internal/listitem/list-item.js';
-export {Corner, DefaultFocusState} from './internal/menu.js';
+export {Corner, FocusState} from './internal/menu.js';
 export {CloseMenuEvent, MenuItem} from './internal/shared.js';
 
 declare global {

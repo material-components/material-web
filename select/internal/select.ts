@@ -467,7 +467,7 @@ export abstract class Select extends LitElement {
     return html`
       <md-menu
           id="listbox"
-          default-focus="NONE"
+          default-focus="none"
           list-tabindex="-1"
           type="listbox"
           stay-open-on-focusout

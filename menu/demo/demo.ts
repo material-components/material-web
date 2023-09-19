@@ -8,7 +8,7 @@ import './index.js';
 import './material-collection.js';
 
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo, title} from './material-collection.js';
-import {Corner, DefaultFocusState} from '@material/web/menu/menu.js';
+import {Corner, FocusState} from '@material/web/menu/menu.js';
 import {boolInput, Knob, numberInput, selectDropdown, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
@@ -17,35 +17,35 @@ const collection =
     new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>('Menu', [
       new Knob('menu', {ui: title()}),
       new Knob('anchorCorner', {
-        defaultValue: 'END_START' as Corner,
+        defaultValue: Corner.END_START as Corner,
         ui: selectDropdown<Corner>({
           options: [
-            {label: 'START_START', value: 'START_START'},
-            {label: 'START_END', value: 'START_END'},
-            {label: 'END_START', value: 'END_START'},
-            {label: 'END_END', value: 'END_END'},
+            {label: Corner.START_START, value: Corner.START_START},
+            {label: Corner.START_END, value: Corner.START_END},
+            {label: Corner.END_START, value: Corner.END_START},
+            {label: Corner.END_END, value: Corner.END_END},
           ]
         }),
       }),
       new Knob('menuCorner', {
-        defaultValue: 'START_START' as Corner,
+        defaultValue: Corner.START_START as Corner,
         ui: selectDropdown<Corner>({
           options: [
-            {label: 'START_START', value: 'START_START'},
-            {label: 'START_END', value: 'START_END'},
-            {label: 'END_START', value: 'END_START'},
-            {label: 'END_END', value: 'END_END'},
+            {label: Corner.START_START, value: Corner.START_START},
+            {label: Corner.START_END, value: Corner.START_END},
+            {label: Corner.END_START, value: Corner.END_START},
+            {label: Corner.END_END, value: Corner.END_END},
           ]
         }),
       }),
       new Knob('defaultFocus', {
-        defaultValue: 'FIRST_ITEM' as const,
-        ui: selectDropdown<DefaultFocusState>({
+        defaultValue: FocusState.FIRST_ITEM as FocusState,
+        ui: selectDropdown<FocusState>({
           options: [
-            {label: 'FIRST_ITEM', value: 'FIRST_ITEM'},
-            {label: 'LAST_ITEM', value: 'LAST_ITEM'},
-            {label: 'LIST_ROOT', value: 'LIST_ROOT'},
-            {label: 'NONE', value: 'NONE'},
+            {label: FocusState.FIRST_ITEM, value: FocusState.FIRST_ITEM},
+            {label: FocusState.LAST_ITEM, value: FocusState.LAST_ITEM},
+            {label: FocusState.LIST_ROOT, value: FocusState.LIST_ROOT},
+            {label: FocusState.NONE, value: FocusState.NONE},
           ]
         }),
       }),
@@ -125,24 +125,24 @@ const collection =
       // sub-menu-item knobs
       new Knob('sub-menu-item', {ui: title()}),
       new Knob('submenu.anchorCorner', {
-        defaultValue: 'START_END' as Corner,
+        defaultValue: Corner.START_END as Corner,
         ui: selectDropdown<Corner>({
           options: [
-            {label: 'START_START', value: 'START_START'},
-            {label: 'START_END', value: 'START_END'},
-            {label: 'END_START', value: 'END_START'},
-            {label: 'END_END', value: 'END_END'},
+            {label: Corner.START_START, value: Corner.START_START},
+            {label: Corner.START_END, value: Corner.START_END},
+            {label: Corner.END_START, value: Corner.END_START},
+            {label: Corner.END_END, value: Corner.END_END},
           ]
         }),
       }),
       new Knob('submenu.menuCorner', {
-        defaultValue: 'START_START' as Corner,
+        defaultValue: Corner.START_START as Corner,
         ui: selectDropdown<Corner>({
           options: [
-            {label: 'START_START', value: 'START_START'},
-            {label: 'START_END', value: 'START_END'},
-            {label: 'END_START', value: 'END_START'},
-            {label: 'END_END', value: 'END_END'},
+            {label: Corner.START_START, value: Corner.START_START},
+            {label: Corner.START_END, value: Corner.START_END},
+            {label: Corner.END_START, value: Corner.END_START},
+            {label: Corner.END_END, value: Corner.END_END},
           ]
         }),
       }),
