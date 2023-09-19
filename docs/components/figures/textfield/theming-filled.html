@@ -1,0 +1,22 @@
+<div class="figure-wrapper">
+  <style>
+    figure.themed {
+      background-color: #f4fbfa;
+    }
+    figure.themed.filled {
+      --md-filled-text-field-container-shape: 0px;
+      --md-sys-typescale-body-large: 400 1rem system-ui;
+      --md-sys-color-primary: #006a6a;
+      --md-sys-color-surface-container-highest: #e0e3e2;
+      --md-filled-text-field-label-text-color: #3f4948;
+      --md-filled-text-field-input-text-color: #161d1d;
+    }
+  </style>
+  <figure
+    class="themed filled"
+    aria-label="A filled text field with the label filled themed to a greenish color"
+    style="padding-block: 16px; gap: 16px"
+  >
+    <md-filled-text-field label="Filled" value="Value"> </md-filled-text-field>
+  </figure>
+</div>

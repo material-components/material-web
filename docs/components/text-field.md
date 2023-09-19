@@ -32,7 +32,7 @@ users enter text into a UI.
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/textfield/hero.png" alt="Several text fields in a form"
+<img class="hero" src="images/textfield/hero.webp" alt="Several text fields in a form"
 title="Text fields">
 
 </catalog-component-header>
@@ -66,14 +66,19 @@ Text fields behave like
 elements. They provide a container with labels for user input.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![A filled textfield next to an outlined textfield. Both have a value of Value
+prefilled](images/textfield/usage.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage.html" -->
 
 ```html
-<md-filled-text-field label="Label" value="Value"></md-filled-text-field>
+<md-filled-text-field label="Label" value="Value">
+</md-filled-text-field>
 
-<md-outlined-text-field label="Label" value="Value"></md-outlined-text-field>
+<md-outlined-text-field label="Label" value="Value">
+</md-outlined-text-field>
 ```
 
 ### Input type
@@ -99,13 +104,19 @@ displaying a different keyboard or providing default validation.
     <!-- {.external} -->
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![Two filled textfields next to each other. The first has a label of Username
+and the outlined one has a label of Password](images/textfield/usage-type.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage-type.html" -->
 
 ```html
-<md-filled-text-field label="Username" type="email"></md-filled-text-field>
-<md-filled-text-field label="Password" type="password"></md-filled-text-field>
+<md-filled-text-field label="Username" type="email">
+</md-filled-text-field>
+
+<md-filled-text-field label="Password" type="password">
+</md-filled-text-field>
 ```
 
 > Tip: use the
@@ -118,17 +129,25 @@ Text fields should label their value with a floating `label`, a `placeholder`,
 or an external label. Labels help the user understand what value to input.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![Three outlined textfields next to each other. the first has a label of
+Favorite food, the second one a placeholder of email@domain.com and there is a
+label that says First name and an empty outlined textfield next to
+it](images/textfield/usage-label.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage-label.html" -->
 
 ```html
-<md-outlined-text-field label="Favorite food"></md-outlined-text-field>
+<md-outlined-text-field label="Favorite food">
+</md-outlined-text-field>
 
-<md-outlined-text-field placeholder="email@domain.com"></md-outlined-text-field>
+<md-outlined-text-field placeholder="email@domain.com">
+</md-outlined-text-field>
 
 <div>First name</div>
-<md-outlined-text-field aria-label="First name"></md-outlined-text-field>
+<md-outlined-text-field aria-label="First name">
+</md-outlined-text-field>
 ```
 
 > Note: text fields do not currently support `aria-labelledby`. External labels
@@ -144,9 +163,12 @@ Textareas can specify the initial number of `rows`. Use CSS `width`, `height`,
 and `resize` to control the resize behavior of a textarea.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![A filled textarea that is vertically larger and has a label that says Vertical
+resize](images/textfield/usage-textarea.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage-textarea.html" -->
 
 ```html
 <style>
@@ -154,7 +176,11 @@ and `resize` to control the resize behavior of a textarea.
     resize: vertical;
   }
 </style>
-<md-filled-text-field type="textarea" label="Vertical resize" rows="3"></md-filled-text-field>
+<md-filled-text-field
+    type="textarea"
+    label="Vertical resize"
+    rows="3">
+</md-filled-text-field>
 ```
 
 ### Icons
@@ -164,9 +190,16 @@ Text fields may display optional icons. Use icons to describe the input method
 icon), or to express errors.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![Three outlined textfields next to each other the first has a search icon at
+the start the label Search Messages, the second a label that says Password and
+an eye icon toggle button at the end, and a red, visually errored outlined
+textfield with the label Username with an exclamation icon at the end and helper
+error text under the field that says Username not
+available](images/textfield/usage-icons.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage-icons.html" -->
 
 ```html
 <md-outlined-text-field placeholder="Search for messages">
@@ -180,7 +213,10 @@ icon), or to express errors.
   </md-icon-button>
 </md-outlined-text-field>
 
-<md-outlined-text-field label="Username" error error-text="Username not available">
+<md-outlined-text-field
+    label="Username"
+    error
+    error-text="Username not available">
   <md-icon slot="trailing-icon">error</md-icon>
 </md-outlined-text-field>
 ```
@@ -191,13 +227,22 @@ Add `prefix-text` and `suffix-text` attributes to text fields to display
 additional context for the value.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![An outlined textfield with a floating label that says Dollar amount, a prefix
+dollar sign, the number zero as a value and a suffix of decimal zero zero at the
+end of the field](images/textfield/usage-prefix.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage-prefix.html" -->
 
 ```html
-<md-outlined-text-field label="Dollar amount" type="number"
-    value="0" prefix-text="$" suffix-text=".00"></md-outlined-text-field>
+<md-outlined-text-field
+    label="Dollar amount"
+    type="number"
+    value="0"
+    prefix-text="$"
+    suffix-text=".00">
+</md-outlined-text-field>
 ```
 
 ### Supporting text
@@ -207,17 +252,28 @@ how it will be used. Supporting text can be replaced with error text when
 [validating](#validation).
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![Two filled fields next to each other. The first has a label that says comments
+and supporting text under the field that says Provide comments for the issue.
+The second field has a label of Name with an asterisk and supporting text under
+the field that has an asterisk followed by the word
+required](images/textfield/usage-supporting-text.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage-supporting-text.html" -->
 
 ```html
-<md-filled-text-field label="Comments"
-    supporting-text="Provide comments for the issue"></md-filled-text-field>
+<md-filled-text-field
+    label="Comments"
+    supporting-text="Provide comments for the issue">
+</md-filled-text-field>
 
-<md-filled-text-field label="Name" required
+<md-filled-text-field
+    label="Name"
+    required
     supporting-text="*required"
-    error-text="Please fill out this field"></md-filled-text-field>
+    error-text="Please fill out this field">
+</md-filled-text-field>
 ```
 
 ### Character counter
@@ -225,12 +281,17 @@ how it will be used. Supporting text can be replaced with error text when
 Text fields with a `maxlength` attribute will display a character counter.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![An outlined textfield with a floating label that says Title and a filled value
+that says Short and the text 5 / 10 under the field at the
+end](images/textfield/usage-char-counter.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/textfield/usage-char-counter.html" -->
 
 ```html
-<md-outlined-text-field label="Title" value="Short" maxlength="10"></md-outlined-text-field>
+<md-outlined-text-field label="Title" value="Short" maxlength="10">
+</md-outlined-text-field>
 ```
 
 ### Validation
@@ -249,17 +310,19 @@ to validate it.
 Text fields in a `<form>` will validate on submission, or by calling
 `textField.reportValidity()`.
 
-<!-- no-catalog-start -->
-<!-- TODO: add image -->
-<!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
-
 ```html
 <form>
-  <md-filled-text-field name="name" label="Name"
-      required></md-filled-text-field>
-  <md-filled-text-field name="email" label="Email"
-      pattern="[\w\d-]+" suffix-text="@gmail.com"></md-filled-text-field>
+  <md-filled-text-field
+      name="name"
+      label="Name"
+      required>
+  </md-filled-text-field>
+  <md-filled-text-field
+      name="email"
+      label="Email"
+      pattern="[\w\d-]+"
+      suffix-text="@gmail.com">
+  </md-filled-text-field>
 </form>
 ```
 
@@ -283,14 +346,13 @@ Alternatively, text fields can manually control their error state and error
 message. Use manual validation if the text fields are driven by application
 state logic.
 
-<!-- no-catalog-start -->
-<!-- TODO: add image -->
-<!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
-
 ```html
-<md-outlined-text-field label="Username" value="jdoe"
-    error error-text="Username is not available"></md-outlined-text-field>
+<md-outlined-text-field
+    label="Username"
+    value="jdoe"
+    error
+    error-text="Username is not available">
+</md-outlined-text-field>
 ```
 
 > Tip: Prefer [constraint validation](#constraint-validation) when possible for
@@ -319,11 +381,6 @@ Filled and outlined text fields are functionally identical. See
 [choosing a text field](https://m3.material.io/components/text-fields/guidelines#83956188-4d8f-4c11-9389-aaba30b10214)<!-- {.external} -->
 for guidance on which one to use.
 
-<!-- no-catalog-start -->
-<!-- TODO: add image -->
-<!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
-
 ```html
 <md-filled-text-field label="Filled" value="Value"></md-filled-text-field>
 ```
@@ -335,11 +392,6 @@ for guidance on which one to use.
 Filled and outlined text fields are functionally identical. See
 [choosing a text field](https://m3.material.io/components/text-fields/guidelines#83956188-4d8f-4c11-9389-aaba30b10214)<!-- {.external} -->
 for guidance on which one to use.
-
-<!-- no-catalog-start -->
-<!-- TODO: add image -->
-<!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-outlined-text-field label="Outlined" value="Value"></md-outlined-text-field>
@@ -366,9 +418,11 @@ Token                                                 | Default value
 ### Filled text field example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![A filled text field with the label filled themed to a greenish color](images/textfield/theming-filled.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- catalog-include "figures/textfield/theming-filled.html" -->
 
 ```html
 <style>
@@ -377,10 +431,13 @@ Token                                                 | Default value
   --md-sys-typescale-body-large: 400 1rem system-ui;
   --md-sys-color-primary: #006a6a;
   --md-sys-color-surface-container-highest: #e0e3e2;
+  --md-filled-text-field-label-text-color: #3f4948;
+  --md-filled-text-field-input-text-color: #161d1d;
 }
 </style>
 
-<md-filled-text-field label="Filled" value="Value"></md-filled-text-field>
+<md-filled-text-field label="Filled" value="Value">
+</md-filled-text-field>
 ```
 
 ### Outlined text field tokens
@@ -398,9 +455,11 @@ Token                                          | Default value
 ### Outlined text field example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+
+![An outlined text field with the label outlined themed to a greenish color](images/textfield/theming-outlined.webp)
+
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- catalog-include "figures/textfield/theming-outlined.html" -->
 
 ```html
 <style>
@@ -408,8 +467,10 @@ Token                                          | Default value
   --md-outlined-text-field-container-shape: 0px;
   --md-sys-typescale-body-large: 400 1rem system-ui;
   --md-sys-color-primary: #006a6a;
+  --md-outlined-text-field-label-text-color: #3f4948;
+  --md-outlined-text-field-input-text-color: #161d1d;
 }
 </style>
 
-<md-outlined-text-field label="Filled" value="Value"></md-outlined-text-field>
+<md-outlined-text-field label="Outlined" value="Value"></md-outlined-text-field>
 ```

@@ -1,0 +1,19 @@
+<div class="figure-wrapper">
+  <figure
+    aria-label="Three outlined textfields next to each other the first has a search icon at the start the label Search Messages, the second a label that says Password and an eye icon toggle button at the end, and a red, visually errored outlined textfield with the label Username with an exclamation icon at the end and helper error text under the field that says Username not available"
+    style="padding-block: 16px; gap: 16px"
+  >
+    <md-outlined-text-field placeholder="Search for messages">
+      <md-icon slot="leading-icon">search</md-icon>
+    </md-outlined-text-field>
+    <md-outlined-text-field label="Password" type="password">
+      <md-icon-button toggle slot="trailing-icon">
+        <md-icon>visibility</md-icon>
+        <md-icon slot="selected">visibility_off</md-icon>
+      </md-icon-button>
+    </md-outlined-text-field>
+    <md-outlined-text-field label="Username" error error-text="Username not available">
+      <md-icon slot="trailing-icon">error</md-icon>
+    </md-outlined-text-field>
+  </figure>
+</div>
