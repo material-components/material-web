@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -197,6 +197,8 @@ export abstract class Menu extends LitElement {
 
   @state() private typeaheadActive = true;
 
+  private isPointerDown = false;
+
   private readonly openCloseAnimationSignal = createAnimationSignal();
 
   /**
@@ -362,7 +364,7 @@ export abstract class Menu extends LitElement {
   }
 
   private async handleFocusout(event: FocusEvent) {
-    if (this.stayOpenOnFocusout) {
+    if (this.stayOpenOnFocusout || !this.open) {
       return;
     }
 
@@ -370,6 +372,14 @@ export abstract class Menu extends LitElement {
       // Don't close the menu if we are switching focus between menu,
       // md-menu-item, and md-list
       if (isElementInSubtree(event.relatedTarget, this)) {
+        return;
+      }
+
+      const anchorEl = this.anchorElement!;
+      const wasAnchorClickFocused =
+          isElementInSubtree(event.relatedTarget, anchorEl) &&
+          this.isPointerDown;
+      if (wasAnchorClickFocused) {
         return;
       }
     }
@@ -701,6 +711,8 @@ export abstract class Menu extends LitElement {
     super.connectedCallback();
     if (!isServer) {
       window.addEventListener('click', this.onWindowClick, {capture: true});
+      window.addEventListener('pointerdown', this.onWindowPointerdown);
+      window.addEventListener('pointerup', this.onWindowPointerup);
     }
 
     // need to self-identify as an md-menu for submenu ripple identification.
@@ -711,11 +723,28 @@ export abstract class Menu extends LitElement {
     super.disconnectedCallback();
     if (!isServer) {
       window.removeEventListener('click', this.onWindowClick, {capture: true});
+      window.removeEventListener('pointerdown', this.onWindowPointerdown);
+      window.removeEventListener('pointerup', this.onWindowPointerup);
     }
   }
 
+  private readonly onWindowPointerdown = () => {
+    this.isPointerDown = true;
+  };
+
+  private readonly onWindowPointerup = () => {
+    this.isPointerDown = false;
+  };
+
   private readonly onWindowClick = (event: MouseEvent) => {
-    if (!this.stayOpenOnOutsideClick && !event.composedPath().includes(this)) {
+    if (!this.open) {
+      return;
+    }
+
+    const path = event.composedPath();
+
+    if (!this.stayOpenOnOutsideClick && !path.includes(this) &&
+        !path.includes(this.anchorElement!)) {
       this.open = false;
     }
   };

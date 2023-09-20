@@ -160,6 +160,8 @@ export class ListItemEl extends LitElement implements ListItem {
         role=${role}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
+        aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
+        aria-haspopup=${(this as ARIAMixinStrict).ariaHasPopup || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"
         href=${this.href || nothing}
         target=${target}

@@ -6,25 +6,17 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as listItemForcedColorsStyles} from '../list/internal/listitem/forced-colors-styles.css.js';
-import {styles as listItemStyles} from '../list/internal/listitem/list-item-styles.css.js';
-
-import {styles as forcedColorsStyles} from './internal/menuitem/forced-colors-styles.css.js';
-import {styles} from './internal/menuitem/menu-item-styles.css.js';
-import {SubMenuItem} from './internal/submenuitem/sub-menu-item.js';
-
-export {ListItem} from '../list/internal/listitem/list-item.js';
-export {CloseMenuEvent, MenuItem} from './internal/shared.js';
+import {SubMenu} from './internal/submenu/sub-menu.js';
+import {styles} from './internal/submenu/sub-menu-styles.css.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-sub-menu-item': MdSubMenuItem;
+    'md-sub-menu': MdSubMenu;
   }
 }
 
 /**
  * @summary Menus display a list of choices on a temporary surface.
- * @deprecated Use <md-submenu>
  *
  * @description
  * Menu items are the selectable choices within the menu. Menu items must
@@ -70,8 +62,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-sub-menu-item')
-export class MdSubMenuItem extends SubMenuItem {
-  static override styles =
-      [listItemStyles, styles, listItemForcedColorsStyles, forcedColorsStyles];
+@customElement('md-sub-menu')
+export class MdSubMenu extends SubMenu {
+  static override styles = styles;
 }

@@ -43,10 +43,6 @@ export class SubMenuItem extends MenuItemEl {
    */
   @property({type: Number, attribute: 'hover-close-delay'})
   hoverCloseDelay = 400;
-  /**
-   * Sets the item in the selected visual state when a submenu is opened.
-   */
-  @property({type: Boolean, reflect: true}) selected = false;
 
   @state() protected submenuHover = false;
 
@@ -120,7 +116,6 @@ export class SubMenuItem extends MenuItemEl {
     return {
       ...super.getRenderClasses(),
       'submenu-hover': this.submenuHover,
-      selected: this.selected
     };
   }
 
@@ -265,10 +260,7 @@ export class SubMenuItem extends MenuItemEl {
     menu.anchorCorner = this.anchorCorner;
     menu.menuCorner = this.menuCorner;
     menu.anchorElement = this;
-    // We manually set focus with `active` on keyboard navigation. And we
-    // want to focus the root on hover, so the user can pick up navigation with
-    // keyboard after hover.
-    menu.defaultFocus = 'list-root';
+    menu.defaultFocus = 'first-item';
     // This is required in the case where we have a leaf menu open and and the
     // user hovers a parent menu's item which is not an md-sub-menu item.
     // If this were set to true, then the menu would close and focus would be

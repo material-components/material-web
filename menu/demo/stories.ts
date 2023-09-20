@@ -7,6 +7,7 @@
 
 import '@material/web/menu/menu-item.js';
 import '@material/web/menu/sub-menu-item.js';
+import '@material/web/menu/sub-menu.js';
 import '@material/web/menu/menu.js';
 import '@material/web/button/filled-button.js';
 import '@material/web/divider/divider.js';
@@ -43,12 +44,12 @@ export interface StoryKnobs {
   target: string;
   'link icon': string;
 
-  'sub-menu-item': void;
+  'sub-menu': void;
   'submenu.anchorCorner': Corner|undefined;
   'submenu.menuCorner': Corner|undefined;
   hoverOpenDelay: number;
   hoverCloseDelay: number;
-  'submenu icon': string;
+  'submenu item icon': string;
 }
 
 const fruitNames = [
@@ -203,7 +204,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
 };
 
 const submenu: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-sub-menu-item>',
+  name: '<md-sub-menu>',
   styles: sharedStyle,
   render(knobs) {
     let currentIndex = -1;
@@ -227,17 +228,23 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
         currentIndex++;
 
         return html`
-          <md-sub-menu-item
-              headline=${name}
-              id=${currentIndex}
-              .disabled=${knobs.disabled}
+          <md-sub-menu
               .anchorCorner=${knobs['submenu.anchorCorner']!}
               .menuCorner=${knobs['submenu.menuCorner']!}
               .hoverOpenDelay=${knobs.hoverOpenDelay}
               .hoverCloseDelay=${knobs.hoverCloseDelay}>
+            <md-menu-item
+                slot="item"
+                headline=${name}
+                id=${currentIndex}
+                .disabled=${knobs.disabled}>
+              <md-icon slot="end-icon">
+                ${knobs['submenu item icon']}
+              </md-icon>
+            </md-menu-item>
             <!-- NOTE: slot=submenu -->
             <md-menu
-                slot="submenu"
+                slot="menu"
                 .ariaLabel=${knobs.ariaLabel}
                 .xOffset=${knobs.xOffset}
                 .yOffset=${knobs.yOffset}
@@ -246,10 +253,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
                 .typeaheadDelay=${knobs.typeaheadDelay}>
               ${layer2}
             </md-menu>
-            <md-icon slot="end-icon">
-              ${knobs['submenu icon']}
-            </md-icon>
-          </md-sub-menu-item>`;
+          </md-sub-menu>`;
       }),
       ...fruitNames.slice(2, 5).map(name => {
         currentIndex++;
@@ -269,17 +273,23 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
       currentIndex++;
 
       return html`
-        <md-sub-menu-item
-            headline=${name}
-            id=${currentIndex}
-            .disabled=${knobs.disabled}
-            .anchorCorner=${knobs['submenu.anchorCorner']!}
-            .menuCorner=${knobs['submenu.menuCorner']!}
-            .hoverOpenDelay=${knobs.hoverOpenDelay}
-            .hoverCloseDelay=${knobs.hoverCloseDelay}>
+        <md-sub-menu
+              .anchorCorner=${knobs['submenu.anchorCorner']!}
+              .menuCorner=${knobs['submenu.menuCorner']!}
+              .hoverOpenDelay=${knobs.hoverOpenDelay}
+              .hoverCloseDelay=${knobs.hoverCloseDelay}>
+          <md-menu-item
+              slot="item"
+              headline=${name}
+              id=${currentIndex}
+              .disabled=${knobs.disabled}>
+              <md-icon slot="end-icon">
+              ${knobs['submenu item icon']}
+            </md-icon>
+          </md-menu-item>
           <!-- NOTE: slot=submenu -->
           <md-menu
-              slot="submenu"
+              slot="menu"
               .ariaLabel=${knobs.ariaLabel}
               .xOffset=${knobs.xOffset}
               .yOffset=${knobs.yOffset}
@@ -288,10 +298,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
               .typeaheadDelay=${knobs.typeaheadDelay}>
             ${layer1}
           </md-menu>
-          <md-icon slot="end-icon">
-            ${knobs['submenu icon']}
-          </md-icon>
-        </md-sub-menu-item>`;
+        </md-sub-menu>`;
     });
 
     return html`

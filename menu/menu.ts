@@ -37,10 +37,6 @@ declare global {
  * @example
  * ```html
  * <div style="position:relative;">
- *   <!--
- *     The menu ref in this example can be achieved by any method such as the
- *     preferred `@query` decorator in Lit or a ref in React.
- *   -->
  *   <button
  *       id="anchor"
  *       @click=${() => this.menuRef.value.show()}>
@@ -55,13 +51,17 @@ declare global {
  *     necessary.
  *   -->
  *   <md-menu anchor="anchor" has-overflow ${ref(menuRef)}>
- *     <md-menu-item header="This is a header"></md-menu-item>
- *     <md-sub-menu-item header="this is a submenu item">
- *       <md-menu slot="submenu">
- *         <md-menu-item
- *           header="This is an item inside a submenu"></md-menu-item>
+ *     <md-menu-item headline="This is a headline"></md-menu-item>
+ *     <md-sub-menu>
+ *       <md-menu-item
+ *           slot="item"
+ *           headline="this is a submenu item">
+ *       </md-menu-item>
+ *       <md-menu slot="menu">
+ *         <md-menu-item headline="This is an item inside a submenu">
+ *         </md-menu-item>
  *       </md-menu>
- *     </md-sub-menu-item>
+ *     </md-sub-menu>
  *   </md-menu>
  * </div>
  * ```

@@ -119,7 +119,7 @@ Cucumber."](images/menu/usage.webp)
 
 ### Submenus
 
-You can compose submenus inside of an `<md-sub-menu-item>`'s `submenu` slot, but
+You can compose `<md-menu>`s inside of an `<md-sub-menu>`'s `menu` slot, but
 first the `has-overflow` attribute must be set on the root `<md-menu>` to
 disable overflow scrolling and display the nested submenus.
 
@@ -143,35 +143,37 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
   </md-filled-button>
   <!-- Note the has-overflow attribute -->
   <md-menu has-overflow id="usage-submenu" anchor="usage-submenu-anchor">
-    <md-sub-menu-item headline="Fruits with A">
-      <!-- Submenu must be slotted into sub-menu-item's submenu slot -->
-      <md-menu slot="submenu">
+    <md-sub-menu>
+      <md-menu-item slot="item" headline="Fruits with A">
+        <!-- Arrow icons are helpful affordances -->
+        <md-icon slot="end-icon">arrow_right</md-icon>
+      </md-menu-item>
+      <!-- Submenu must be slotted into sub-menu's menu slot -->
+      <md-menu slot="menu">
         <md-menu-item headline="Apricot"></md-menu-item>
         <md-menu-item headline="Avocado"></md-menu-item>
 
         <!-- Nest as many as you want and control menu anchoring -->
-        <md-sub-menu-item
-            headline="Apples"
+        <md-sub-menu
             menu-corner="start-end"
             anchor-corner="start-start">
-          <md-menu slot="submenu">
+          <md-menu-item slot="item" headline="Apples">
+            <!-- Arrow icons are helpful affordances -->
+            <md-icon
+                slot="start-icon"
+                style="font-size: 24px;height:24px;">
+              arrow_left
+            </md-icon>
+          </md-menu-item>
+          <md-menu slot="menu">
             <md-menu-item headline="Fuji"></md-menu-item>
             <md-menu-item headline="Granny Smith"></md-menu-item>
             <md-menu-item headline="Red Delicious"></md-menu-item>
           </md-menu>
 
-          <!-- Arrow icons are helpful affordances -->
-          <md-icon
-              slot="start-icon"
-              style="font-size: 24px;height:24px;">
-            arrow_left
-          </md-icon>
-        </md-sub-menu-item>
+        </md-sub-menu>
       </md-menu>
-
-      <!-- Arrow icons are helpful affordances -->
-      <md-icon slot="end">arrow_right</md-icon>
-    </md-sub-menu-item>
+    </md-sub-menu>
 
     <md-menu-item headline="Banana"></md-menu-item>
     <md-menu-item headline="Cucumber"></md-menu-item>

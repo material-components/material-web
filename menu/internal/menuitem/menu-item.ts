@@ -27,6 +27,11 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
    */
   @property({type: Boolean, attribute: 'keep-open'}) keepOpen = false;
 
+  /**
+   * Sets the item in the selected visual state when a submenu is opened.
+   */
+  @property({type: Boolean}) selected = false;
+
   @state() protected hasFocusRing = false;
 
   /**
@@ -47,6 +52,7 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
     return {
       ...super.getRenderClasses(),
       'has-focus-ring': this.hasFocusRing,
+      selected: this.selected
     };
   }
 

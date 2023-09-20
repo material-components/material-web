@@ -56,8 +56,29 @@ export class List extends LitElement {
    * `HTMLSlotElement.queryAssignedElements` and thus will _only_ include direct
    * children / directly slotted elements.
    */
-  @queryAssignedElements({flatten: true, selector: '[md-list-item]'})
-  items!: ListItem[];
+  @queryAssignedElements({flatten: true})
+  protected slotItems!: Array<ListItem|HTMLElement&{item?: ListItem}>;
+
+  /** @export */
+  get items() {
+    const items = [];
+
+    for (const itemOrParent of this.slotItems) {
+      // if the item is a list item, add it to the list of items
+      if (itemOrParent.hasAttribute('md-list-item')) {
+        items.push(itemOrParent as ListItem);
+        continue;
+      }
+
+      // If the item exposes an `item` property check if it is a list item.
+      const subItem = (itemOrParent as HTMLElement & {item?: ListItem}).item;
+      if (subItem && subItem?.hasAttribute?.('md-list-item')) {
+        items.push(subItem);
+      }
+    }
+
+    return items;
+  }
 
   private readonly internals = polyfillElementInternalsAria(
       this, (this as HTMLElement /* needed for closure */).attachInternals());

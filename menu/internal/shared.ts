@@ -15,6 +15,10 @@ interface MenuItemSelf {
    */
   headline: string;
   /**
+   * Whether it should keep the menu open after click.
+   */
+  keepOpen?: boolean;
+  /**
    * Whether or not the item is in the selected visual state.
    */
   selected?: boolean;

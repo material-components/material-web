@@ -37,7 +37,7 @@ export const docsToElementMapping: {[key: string]: string[]} = {
   ],
   'icon.md': ['icon/icon.ts'],
   'list.md': ['list/list.ts', 'list/list-item.ts'],
-  'menu.md': ['menu/menu.ts', 'menu/menu-item.ts', 'menu/sub-menu-item.ts'],
+  'menu.md': ['menu/menu.ts', 'menu/menu-item.ts', 'menu/sub-menu.ts'],
   'progress.md':
       ['progress/linear-progress.ts', 'progress/circular-progress.ts'],
   'radio.md': ['radio/radio.ts'],

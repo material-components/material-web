@@ -4,24 +4,34 @@
     aria-label="A filled button that says menu with submenus. Interact with the button to interact with a menu that has two sub menus."
   >
     <span style="position: relative">
-      <md-filled-button id="usage-submenu-anchor">Menu with Submenus</md-filled-button>
+      <md-filled-button id="usage-submenu-anchor"> Menu with Submenus </md-filled-button>
       <!-- Note the has-overflow attribute -->
       <md-menu has-overflow id="usage-submenu" anchor="usage-submenu-anchor">
-        <md-sub-menu-item headline="Fruits with A">
-          <md-menu slot="submenu">
+        <md-sub-menu>
+          <md-menu-item slot="item" headline="Fruits with A">
+            <!-- Arrow icons are helpful affordances -->
+            <md-icon slot="end-icon">arrow_right</md-icon>
+          </md-menu-item>
+          <!-- Submenu must be slotted into sub-menu's menu slot -->
+          <md-menu slot="menu">
             <md-menu-item headline="Apricot"></md-menu-item>
             <md-menu-item headline="Avocado"></md-menu-item>
-            <md-sub-menu-item headline="Apples" menu-corner="start-end" anchor-corner="start-start">
-              <md-menu slot="submenu">
+            <!-- Nest as many as you want and control menu anchoring -->
+            <md-sub-menu menu-corner="start-end" anchor-corner="start-start">
+              <md-menu-item slot="item" headline="Apples">
+                <!-- Arrow icons are helpful affordances -->
+                <md-icon slot="start-icon" style="font-size: 24px; height: 24px">
+                  arrow_left
+                </md-icon>
+              </md-menu-item>
+              <md-menu slot="menu">
                 <md-menu-item headline="Fuji"></md-menu-item>
                 <md-menu-item headline="Granny Smith"></md-menu-item>
                 <md-menu-item headline="Red Delicious"></md-menu-item>
               </md-menu>
-              <md-icon slot="start-icon" style="font-size: 24px;height:24px;">arrow_left</md-icon>
-            </md-sub-menu-item>
+            </md-sub-menu>
           </md-menu>
-          <md-icon slot="end">arrow_right</md-icon>
-        </md-sub-menu-item>
+        </md-sub-menu>
         <md-menu-item headline="Banana"></md-menu-item>
         <md-menu-item headline="Cucumber"></md-menu-item>
       </md-menu>

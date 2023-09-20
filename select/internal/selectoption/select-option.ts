@@ -23,11 +23,6 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
    */
   @property() value = '';
 
-  /**
-   * Whether or not this option is selected.
-   */
-  @property({type: Boolean}) selected = false;
-
   override readonly type: ListItemRole = 'option';
 
   override willUpdate(changed: PropertyValues<SelectOptionEl>) {

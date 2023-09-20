@@ -90,11 +90,11 @@ const collection =
         ui: numberInput(),
       }),
       new Knob('listTabIndex', {
-        defaultValue: 0,
+        defaultValue: -1,
         ui: numberInput(),
       }),
       new Knob('ariaLabel', {
-        defaultValue: '0',
+        defaultValue: 'Menu of Fruit',
         ui: textInput(),
       }),
 
@@ -123,7 +123,7 @@ const collection =
 
 
       // sub-menu-item knobs
-      new Knob('sub-menu-item', {ui: title()}),
+      new Knob('sub-menu', {ui: title()}),
       new Knob('submenu.anchorCorner', {
         defaultValue: Corner.START_END as Corner,
         ui: selectDropdown<Corner>({
@@ -154,7 +154,7 @@ const collection =
         defaultValue: 400,
         ui: numberInput(),
       }),
-      new Knob('submenu icon', {
+      new Knob('submenu item icon', {
         defaultValue: 'navigate_next',
         ui: textInput(),
       }),
