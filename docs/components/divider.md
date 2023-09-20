@@ -123,7 +123,7 @@ Token                    | Default value
 ## API
 
 
-### MdDivider
+### MdDivider &lt;md-divider&gt;
 
 #### Properties
 

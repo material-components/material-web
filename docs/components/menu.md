@@ -352,7 +352,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 ## API
 
 
-### MdMenu
+### MdMenu &lt;md-menu&gt;
 
 #### Properties
 
@@ -360,25 +360,25 @@ a sharp 0px border radius.](images/menu/theming.webp)
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`anchor` | `anchor` | `string` | `''` | The ID of the element in the same root node in which the menu should align<br>to. Overrides setting `anchorElement = elementReference`.<br><br>__NOTE__: anchor or anchorElement must either be an HTMLElement or resolve<br>to an HTMLElement in order for menu to open.
-`fixed` | `fixed` | `boolean` | `false` | Makes the element use `position:fixed` instead of `position:absolute`. In<br>most cases, the menu should position itself above most other<br>`position:absolute` or `position:fixed` elements when placed inside of<br>them. e.g. using a menu inside of an `md-dialog`.<br><br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to<br>the window instead.
+`anchor` | `anchor` | `string` | `''` | The ID of the element in the same root node in which the menu should align to. Overrides setting `anchorElement = elementReference`.<br>__NOTE__: anchor or anchorElement must either be an HTMLElement or resolve to an HTMLElement in order for menu to open.
+`fixed` | `fixed` | `boolean` | `false` | Makes the element use `position:fixed` instead of `position:absolute`. In most cases, the menu should position itself above most other `position:absolute` or `position:fixed` elements when placed inside of them. e.g. using a menu inside of an `md-dialog`.<br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to the window instead.
 `quick` | `quick` | `boolean` | `false` | Skips the opening and closing animations.
-`hasOverflow` | `has-overflow` | `boolean` | `false` | Displays overflow content like a submenu.<br><br>__NOTE__: This may cause adverse effects if you set<br>`md-menu {max-height:...}`<br>and have items overflowing items in the "y" direction.
-`open` | `open` | `boolean` | `false` | Opens the menu and makes it visible. Alternative to the `.show()` and<br>`.close()` methods
-`xOffset` | `x-offset` | `number` | `0` | Offsets the menu's inline alignment from the anchor by the given number in<br>pixels. This value is direction aware and will follow the LTR / RTL<br>direction.<br><br>e.g. LTR: positive -> right, negative -> left<br> RTL: positive -> left, negative -> right
-`yOffset` | `y-offset` | `number` | `0` | Offsets the menu's block alignment from the anchor by the given number in<br>pixels.<br><br>e.g. positive -> down, negative -> up
+`hasOverflow` | `has-overflow` | `boolean` | `false` | Displays overflow content like a submenu.<br>__NOTE__: This may cause adverse effects if you set `md-menu {max-height:...}` and have items overflowing items in the "y" direction.
+`open` | `open` | `boolean` | `false` | Opens the menu and makes it visible. Alternative to the `.show()` and `.close()` methods
+`xOffset` | `x-offset` | `number` | `0` | Offsets the menu's inline alignment from the anchor by the given number in pixels. This value is direction aware and will follow the LTR / RTL direction.<br>e.g. LTR: positive -> right, negative -> left RTL: positive -> left, negative -> right
+`yOffset` | `y-offset` | `number` | `0` | Offsets the menu's block alignment from the anchor by the given number in pixels.<br>e.g. positive -> down, negative -> up
 `listTabIndex` | `list-tabindex` | `number` | `-1` | The tabindex of the underlying list element.
 `type` | `type` | `string` | `'menu'` | The role of the underlying list element.
-`typeaheadDelay` | `typeahead-delay` | `number` | `200` | The max time between the keystrokes of the typeahead menu behavior before<br>it clears the typeahead buffer.
-`anchorCorner` | `anchor-corner` | `string` | `Corner.END_START` | The corner of the anchor which to align the menu in the standard logical<br>property style of <block>-<inline> e.g. `'end-start'`.<br><br>NOTE: This value may not be respected by the menu positioning algorithm<br>if the menu would render outisde the viewport.
-`menuCorner` | `menu-corner` | `string` | `Corner.START_START` | The corner of the menu which to align the anchor in the standard logical<br>property style of <block>-<inline> e.g. `'start-start'`.<br><br>NOTE: This value may not be respected by the menu positioning algorithm<br>if the menu would render outisde the viewport.
-`stayOpenOnOutsideClick` | `stay-open-on-outside-click` | `boolean` | `false` | Keeps the user clicks outside the menu.<br><br>NOTE: clicking outside may still cause focusout to close the menu so see<br>`stayOpenOnFocusout`.
-`stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br><br>NOTE: Focusout behavior will stop propagation of the focusout event. Set<br>this property to true to opt-out of menu's focuout handling altogether.
-`skipRestoreFocus` | `skip-restore-focus` | `boolean` | `false` | After closing, does not restore focus to the last focused element before<br>the menu was opened.
-`defaultFocus` | `default-focus` | `string` | `FocusState.FIRST_ITEM` | The element that should be focused by default once opened.<br><br>NOTE: When setting default focus to 'LIST_ROOT', remember to change<br>`list-tabindex` to `0` when necessary.
+`typeaheadDelay` | `typeahead-delay` | `number` | `200` | The max time between the keystrokes of the typeahead menu behavior before it clears the typeahead buffer.
+`anchorCorner` | `anchor-corner` | `string` | `Corner.END_START` | The corner of the anchor which to align the menu in the standard logical property style of <block>-<inline> e.g. `'end-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport.
+`menuCorner` | `menu-corner` | `string` | `Corner.START_START` | The corner of the menu which to align the anchor in the standard logical property style of <block>-<inline> e.g. `'start-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport.
+`stayOpenOnOutsideClick` | `stay-open-on-outside-click` | `boolean` | `false` | Keeps the user clicks outside the menu.<br>NOTE: clicking outside may still cause focusout to close the menu so see `stayOpenOnFocusout`.
+`stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br>NOTE: Focusout behavior will stop propagation of the focusout event. Set this property to true to opt-out of menu's focuout handling altogether.
+`skipRestoreFocus` | `skip-restore-focus` | `boolean` | `false` | After closing, does not restore focus to the last focused element before the menu was opened.
+`defaultFocus` | `default-focus` | `string` | `FocusState.FIRST_ITEM` | The element that should be focused by default once opened.<br>NOTE: When setting default focus to 'LIST_ROOT', remember to change `list-tabindex` to `0` when necessary.
 `typeaheadController` |  | `TypeaheadController` | `function { ... }` | Handles typeahead navigation through the menu.
-`anchorElement` |  | `HTMLElement & Partial<SurfacePositionTarget>` | `undefined` | The element which the menu should align to. If `anchor` is set to a<br>non-empty idref string, then `anchorEl` will resolve to the element with<br>the given id in the same root node. Otherwise, `null`.
-`items` |  | `MenuItem[]` | `undefined` | The menu items associated with this menu. The items must be `MenuItem`s and<br>have both the `md-menu-item` and `md-list-item` attributes.
+`anchorElement` |  | `HTMLElement & Partial<SurfacePositionTarget>` | `undefined` | 
+`items` |  | `MenuItem[]` | `undefined` | 
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -390,8 +390,8 @@ Method | Parameters | Returns | Description
 --- | --- | --- | ---
 `close` | _None_ | `void` | 
 `show` | _None_ | `void` | 
-`activateNextItem` | _None_ | `MenuItem` | Activates the next item in the menu. If at the end of the menu, the first<br>item will be activated.
-`activatePreviousItem` | _None_ | `MenuItem` | Activates the previous item in the menu. If at the start of the menu, the<br>last item will be activated.
+`activateNextItem` | _None_ | `MenuItem` | Activates the next item in the menu. If at the end of the menu, the first item will be activated.
+`activatePreviousItem` | _None_ | `MenuItem` | Activates the previous item in the menu. If at the start of the menu, the last item will be activated.
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -399,16 +399,16 @@ Method | Parameters | Returns | Description
 
 <!-- mdformat off(autogenerated might break rendering in catalog) -->
 
-Event | Type | Description
---- | --- | ---
-`opening` | `undefined` | Fired before the opening animation begins
-`opened` | `undefined` | Fired once the menu is open, after any animations
-`closing` | `undefined` | Fired before the closing animation begins
-`closed` | `undefined` | Fired once the menu is closed, after any animations
+Event | Description
+--- | ---
+`opening` | Fired before the opening animation begins
+`opened` | Fired once the menu is open, after any animations
+`closing` | Fired before the closing animation begins
+`closed` | Fired once the menu is closed, after any animations
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdMenuItem
+### MdMenuItem &lt;md-menu-item&gt;
 
 #### Properties
 
@@ -418,15 +418,13 @@ Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `keepOpen` | `keep-open` | `boolean` | `false` | Keeps the menu open if clicked or keyboard selected.
 `headline` | `headline` | `string` | `''` | The primary, headline text of the list item.
-`supportingText` | `supporting-text` | `string` | `''` | The one-line supporting text below the headline. Set<br>`multiLineSupportingText` to `true` to support multiple lines in the<br>supporting text.
+`supportingText` | `supporting-text` | `string` | `''` | The one-line supporting text below the headline. Set `multiLineSupportingText` to `true` to support multiple lines in the supporting text.
 `multiLineSupportingText` | `multi-line-supporting-text` | `boolean` | `false` | Modifies `supportingText` to support multiple lines.
-`trailingSupportingText` | `trailing-supporting-text` | `string` | `''` | The supporting text placed at the end of the item. Overridden by elements<br>slotted into the `end` slot.
+`trailingSupportingText` | `trailing-supporting-text` | `string` | `''` | The supporting text placed at the end of the item. Overridden by elements slotted into the `end` slot.
 `disabled` | `disabled` | `boolean` | `false` | Disables the item and makes it non-selectable and non-interactive.
-`type` | `type` | `string` | `'listitem'` | Sets the role of the list item. Set to 'nothing' to clear the role. This<br>property will be ignored if `href` is set since the underlying element will<br>be a native anchor tag.
+`type` | `type` | `string` | `'listitem'` | Sets the role of the list item. Set to 'nothing' to clear the role. This property will be ignored if `href` is set since the underlying element will be a native anchor tag.
 `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
-`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is<br>set.
-`tabIndex` | `tabindex` | `number` | `0` | 
-`type` |  | `string` | `'menuitem'` | 
+`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is set.
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -434,13 +432,13 @@ Property | Attribute | Type | Default | Description
 
 <!-- mdformat off(autogenerated might break rendering in catalog) -->
 
-Event | Type | Description
---- | --- | ---
-`close-menu` | `CloseMenuEvent` | 
+Event | Description
+--- | ---
+`close-menu` | 
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdSubMenuItem
+### MdSubMenuItem &lt;md-sub-menu-item&gt;
 
 #### Properties
 
@@ -455,15 +453,13 @@ Property | Attribute | Type | Default | Description
 `selected` | `selected` | `boolean` | `false` | Sets the item in the selected visual state when a submenu is opened.
 `keepOpen` | `keep-open` | `boolean` | `false` | Keeps the menu open if clicked or keyboard selected.
 `headline` | `headline` | `string` | `''` | The primary, headline text of the list item.
-`supportingText` | `supporting-text` | `string` | `''` | The one-line supporting text below the headline. Set<br>`multiLineSupportingText` to `true` to support multiple lines in the<br>supporting text.
+`supportingText` | `supporting-text` | `string` | `''` | The one-line supporting text below the headline. Set `multiLineSupportingText` to `true` to support multiple lines in the supporting text.
 `multiLineSupportingText` | `multi-line-supporting-text` | `boolean` | `false` | Modifies `supportingText` to support multiple lines.
-`trailingSupportingText` | `trailing-supporting-text` | `string` | `''` | The supporting text placed at the end of the item. Overridden by elements<br>slotted into the `end` slot.
+`trailingSupportingText` | `trailing-supporting-text` | `string` | `''` | The supporting text placed at the end of the item. Overridden by elements slotted into the `end` slot.
 `disabled` | `disabled` | `boolean` | `false` | Disables the item and makes it non-selectable and non-interactive.
-`type` | `type` | `string` | `'listitem'` | Sets the role of the list item. Set to 'nothing' to clear the role. This<br>property will be ignored if `href` is set since the underlying element will<br>be a native anchor tag.
+`type` | `type` | `string` | `'listitem'` | Sets the role of the list item. Set to 'nothing' to clear the role. This property will be ignored if `href` is set since the underlying element will be a native anchor tag.
 `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
-`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is<br>set.
-`tabIndex` | `tabindex` | `number` | `0` | 
-`type` |  | `string` | `'menuitem'` | 
+`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is set.
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -482,13 +478,13 @@ Method | Parameters | Returns | Description
 
 <!-- mdformat off(autogenerated might break rendering in catalog) -->
 
-Event | Type | Description
---- | --- | ---
-`deactivate-items` | `undefined` | Requests the parent menu to deselect other items when<br>a submenu opens
-`request-activation` | `undefined` | Requests the parent make the element focusable and<br>focuses the item.
-`deactivate-typeahead` | `undefined` | Requests the parent menu to deactivate the<br>typeahead functionality when a submenu opens
-`activate-typeahead` | `undefined` | Requests the parent menu to activate the typeahead<br>functionality when a submenu closes
-`close-menu` | `CloseMenuEvent` | 
+Event | Description
+--- | ---
+`deactivate-items` | Requests the parent menu to deselect other items when a submenu opens
+`request-activation` | Requests the parent make the element focusable and focuses the item.
+`deactivate-typeahead` | Requests the parent menu to deactivate the typeahead functionality when a submenu opens
+`activate-typeahead` | Requests the parent menu to activate the typeahead functionality when a submenu closes
+`close-menu` | 
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 

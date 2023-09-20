@@ -480,7 +480,7 @@ Token                                          | Default value
 ## API
 
 
-### MdFilledTextField
+### MdFilledTextField &lt;md-filled-text-field&gt;
 
 #### Properties
 
@@ -489,8 +489,8 @@ Token                                          | Default value
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `disabled` | `disabled` | `boolean` | `false` | 
-`error` | `error` | `boolean` | `false` | Gets or sets whether or not the text field is in a visually invalid state.<br><br>This error state overrides the error state controlled by<br>`reportValidity()`.
-`errorText` | `error-text` | `string` | `''` | The error message that replaces supporting text when `error` is true. If<br>`errorText` is an empty string, then the supporting text will continue to<br>show.<br><br>This error message overrides the error message displayed by<br>`reportValidity()`.
+`error` | `error` | `boolean` | `false` | Gets or sets whether or not the text field is in a visually invalid state.<br>This error state overrides the error state controlled by `reportValidity()`.
+`errorText` | `error-text` | `string` | `''` | The error message that replaces supporting text when `error` is true. If `errorText` is an empty string, then the supporting text will continue to show.<br>This error message overrides the error message displayed by `reportValidity()`.
 `label` | `label` | `string` | `''` | 
 `required` | `required` | `boolean` | `false` | 
 `value` | `value` | `string` | `''` | The current value of the text field. It is always a string.
@@ -498,31 +498,31 @@ Property | Attribute | Type | Default | Description
 `suffixText` | `suffix-text` | `string` | `''` | An optional suffix to display after the input value.
 `hasLeadingIcon` | `has-leading-icon` | `boolean` | `false` | Whether or not the text field has a leading icon. Used for SSR.
 `hasTrailingIcon` | `has-trailing-icon` | `boolean` | `false` | Whether or not the text field has a trailing icon. Used for SSR.
-`supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the text field, such as how it should<br>be used.
-`textDirection` | `text-direction` | `string` | `''` | Override the input text CSS `direction`. Useful for RTL languages that use<br>LTR notation for fractions.
-`rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field.<br>Defaults to 2.
+`supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the text field, such as how it should be used.
+`textDirection` | `text-direction` | `string` | `''` | Override the input text CSS `direction`. Useful for RTL languages that use LTR notation for fractions.
+`rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field. Defaults to 2.
 `inputMode` | `inputmode` | `string` | `''` | 
-`max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
-`maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set<br>to -1 for none.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
-`min` | `min` | `string` | `''` | Defines the most negative value in the range of permitted values.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
-`minLength` | `minlength` | `number` | `-1` | The minimum number of characters a user can enter into the text field. Set<br>to -1 for none.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
-`pattern` | `pattern` | `string` | `''` | A regular expression that the text field's value must match to pass<br>constraint validation.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
+`max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
+`maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
+`min` | `min` | `string` | `''` | Defines the most negative value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+`minLength` | `minlength` | `number` | `-1` | The minimum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
+`pattern` | `pattern` | `string` | `''` | A regular expression that the text field's value must match to pass constraint validation.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
 `placeholder` | `placeholder` | `string` | `''` | 
-`readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's<br>value.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
-`step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max<br>to limit the increments at which a numeric or date-time value can be set.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
-`type` | `type` | `string` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how<br>the text field behaves.<br><br>Text fields support a limited number of `<input>` types:<br><br>- text<br>- textarea<br>- email<br>- number<br>- password<br>- search<br>- tel<br>- url<br><br>See<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types<br>for more details on each input type.
-`autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input<br>should provide.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
-`form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit.
-`labels` |  | `NodeList` | `undefined` | The labels this element is associated with.
-`name` |  | `string` | `undefined` | The HTML name to use in form submission.
-`selectionDirection` |  | `string` | `undefined` | Gets or sets the direction in which selection occurred.
-`selectionEnd` |  | `number` | `undefined` | Gets or sets the end position or offset of a text selection.
-`selectionStart` |  | `number` | `undefined` | Gets or sets the starting position or offset of a text selection.
-`validationMessage` |  | `string` | `undefined` | Returns the text field's validation error message.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
-`validity` |  | `ValidityState` | `undefined` | Returns a `ValidityState` object that represents the validity states of the<br>text field.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
-`valueAsNumber` |  | `number` | `undefined` | The text field's value as a number.
-`valueAsDate` |  | `Date` | `undefined` | The text field's value as a Date.
-`willValidate` |  | `boolean` | `undefined` | Returns whether an element will successfully validate based on forms<br>validation rules and constraints.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/willValidate
+`readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's value.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+`step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max to limit the increments at which a numeric or date-time value can be set.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+`type` | `type` | `string` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type.
+`autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+`form` |  | `HTMLFormElement` | `undefined` | 
+`labels` |  | `NodeList` | `undefined` | 
+`name` |  | `string` | `undefined` | 
+`selectionDirection` |  | `string` | `undefined` | 
+`selectionEnd` |  | `number` | `undefined` | 
+`selectionStart` |  | `number` | `undefined` | 
+`validationMessage` |  | `string` | `undefined` | 
+`validity` |  | `ValidityState` | `undefined` | 
+`valueAsNumber` |  | `number` | `undefined` | 
+`valueAsDate` |  | `Date` | `undefined` | 
+`willValidate` |  | `boolean` | `undefined` | 
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -532,19 +532,19 @@ Property | Attribute | Type | Default | Description
 
 Method | Parameters | Returns | Description
 --- | --- | --- | ---
-`checkValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the<br>element is valid.<br><br>If invalid, this method will dispatch the `invalid` event.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
-`reportValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the<br>element is valid.<br><br>If invalid, this method will dispatch the `invalid` event.<br><br>This method will display or clear an error text message equal to the text<br>field's `validationMessage`, unless the invalid event is canceled.<br><br>Use `setCustomValidity()` to customize the `validationMessage`.<br><br>This method can also be used to re-announce error messages to screen<br>readers.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
-`select` | _None_ | `void` | Selects all the text in the text field.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
-`setCustomValidity` | `error` | `void` | Sets a custom validation error message for the text field. Use this for<br>custom error message.<br><br>When the error is not an empty string, the text field is considered invalid<br>and `validity.customError` will be true.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
+`checkValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the element is valid.<br>If invalid, this method will dispatch the `invalid` event.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
+`reportValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the element is valid.<br>If invalid, this method will dispatch the `invalid` event.<br>This method will display or clear an error text message equal to the text field's `validationMessage`, unless the invalid event is canceled.<br>Use `setCustomValidity()` to customize the `validationMessage`.<br>This method can also be used to re-announce error messages to screen readers.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
+`select` | _None_ | `void` | Selects all the text in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
+`setCustomValidity` | `error` | `void` | Sets a custom validation error message for the text field. Use this for custom error message.<br>When the error is not an empty string, the text field is considered invalid and `validity.customError` will be true.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
 `setRangeText` | `args` | `void` | 
-`setSelectionRange` | `start`, `end`, `direction` | `void` | Sets the start and end positions of a selection in the text field.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
-`stepDown` | `stepDecrement` | `void` | Decrements the value of a numeric type text field by `step` or `n` `step`<br>number of times.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
-`stepUp` | `stepIncrement` | `void` | Increments the value of a numeric type text field by `step` or `n` `step`<br>number of times.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
+`setSelectionRange` | `start`, `end`, `direction` | `void` | Sets the start and end positions of a selection in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
+`stepDown` | `stepDecrement` | `void` | Decrements the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
+`stepUp` | `stepIncrement` | `void` | Increments the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
 `reset` | _None_ | `void` | Reset the text field to its default value.
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdOutlinedTextField
+### MdOutlinedTextField &lt;md-outlined-text-field&gt;
 
 #### Properties
 
@@ -553,8 +553,8 @@ Method | Parameters | Returns | Description
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `disabled` | `disabled` | `boolean` | `false` | 
-`error` | `error` | `boolean` | `false` | Gets or sets whether or not the text field is in a visually invalid state.<br><br>This error state overrides the error state controlled by<br>`reportValidity()`.
-`errorText` | `error-text` | `string` | `''` | The error message that replaces supporting text when `error` is true. If<br>`errorText` is an empty string, then the supporting text will continue to<br>show.<br><br>This error message overrides the error message displayed by<br>`reportValidity()`.
+`error` | `error` | `boolean` | `false` | Gets or sets whether or not the text field is in a visually invalid state.<br>This error state overrides the error state controlled by `reportValidity()`.
+`errorText` | `error-text` | `string` | `''` | The error message that replaces supporting text when `error` is true. If `errorText` is an empty string, then the supporting text will continue to show.<br>This error message overrides the error message displayed by `reportValidity()`.
 `label` | `label` | `string` | `''` | 
 `required` | `required` | `boolean` | `false` | 
 `value` | `value` | `string` | `''` | The current value of the text field. It is always a string.
@@ -562,31 +562,31 @@ Property | Attribute | Type | Default | Description
 `suffixText` | `suffix-text` | `string` | `''` | An optional suffix to display after the input value.
 `hasLeadingIcon` | `has-leading-icon` | `boolean` | `false` | Whether or not the text field has a leading icon. Used for SSR.
 `hasTrailingIcon` | `has-trailing-icon` | `boolean` | `false` | Whether or not the text field has a trailing icon. Used for SSR.
-`supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the text field, such as how it should<br>be used.
-`textDirection` | `text-direction` | `string` | `''` | Override the input text CSS `direction`. Useful for RTL languages that use<br>LTR notation for fractions.
-`rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field.<br>Defaults to 2.
+`supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the text field, such as how it should be used.
+`textDirection` | `text-direction` | `string` | `''` | Override the input text CSS `direction`. Useful for RTL languages that use LTR notation for fractions.
+`rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field. Defaults to 2.
 `inputMode` | `inputmode` | `string` | `''` | 
-`max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
-`maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set<br>to -1 for none.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
-`min` | `min` | `string` | `''` | Defines the most negative value in the range of permitted values.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
-`minLength` | `minlength` | `number` | `-1` | The minimum number of characters a user can enter into the text field. Set<br>to -1 for none.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
-`pattern` | `pattern` | `string` | `''` | A regular expression that the text field's value must match to pass<br>constraint validation.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
+`max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
+`maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
+`min` | `min` | `string` | `''` | Defines the most negative value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+`minLength` | `minlength` | `number` | `-1` | The minimum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
+`pattern` | `pattern` | `string` | `''` | A regular expression that the text field's value must match to pass constraint validation.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
 `placeholder` | `placeholder` | `string` | `''` | 
-`readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's<br>value.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
-`step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max<br>to limit the increments at which a numeric or date-time value can be set.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
-`type` | `type` | `string` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how<br>the text field behaves.<br><br>Text fields support a limited number of `<input>` types:<br><br>- text<br>- textarea<br>- email<br>- number<br>- password<br>- search<br>- tel<br>- url<br><br>See<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types<br>for more details on each input type.
-`autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input<br>should provide.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
-`form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit.
-`labels` |  | `NodeList` | `undefined` | The labels this element is associated with.
-`name` |  | `string` | `undefined` | The HTML name to use in form submission.
-`selectionDirection` |  | `string` | `undefined` | Gets or sets the direction in which selection occurred.
-`selectionEnd` |  | `number` | `undefined` | Gets or sets the end position or offset of a text selection.
-`selectionStart` |  | `number` | `undefined` | Gets or sets the starting position or offset of a text selection.
-`validationMessage` |  | `string` | `undefined` | Returns the text field's validation error message.<br><br>https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
-`validity` |  | `ValidityState` | `undefined` | Returns a `ValidityState` object that represents the validity states of the<br>text field.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
-`valueAsNumber` |  | `number` | `undefined` | The text field's value as a number.
-`valueAsDate` |  | `Date` | `undefined` | The text field's value as a Date.
-`willValidate` |  | `boolean` | `undefined` | Returns whether an element will successfully validate based on forms<br>validation rules and constraints.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/willValidate
+`readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's value.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+`step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max to limit the increments at which a numeric or date-time value can be set.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+`type` | `type` | `string` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type.
+`autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+`form` |  | `HTMLFormElement` | `undefined` | 
+`labels` |  | `NodeList` | `undefined` | 
+`name` |  | `string` | `undefined` | 
+`selectionDirection` |  | `string` | `undefined` | 
+`selectionEnd` |  | `number` | `undefined` | 
+`selectionStart` |  | `number` | `undefined` | 
+`validationMessage` |  | `string` | `undefined` | 
+`validity` |  | `ValidityState` | `undefined` | 
+`valueAsNumber` |  | `number` | `undefined` | 
+`valueAsDate` |  | `Date` | `undefined` | 
+`willValidate` |  | `boolean` | `undefined` | 
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -596,14 +596,14 @@ Property | Attribute | Type | Default | Description
 
 Method | Parameters | Returns | Description
 --- | --- | --- | ---
-`checkValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the<br>element is valid.<br><br>If invalid, this method will dispatch the `invalid` event.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
-`reportValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the<br>element is valid.<br><br>If invalid, this method will dispatch the `invalid` event.<br><br>This method will display or clear an error text message equal to the text<br>field's `validationMessage`, unless the invalid event is canceled.<br><br>Use `setCustomValidity()` to customize the `validationMessage`.<br><br>This method can also be used to re-announce error messages to screen<br>readers.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
-`select` | _None_ | `void` | Selects all the text in the text field.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
-`setCustomValidity` | `error` | `void` | Sets a custom validation error message for the text field. Use this for<br>custom error message.<br><br>When the error is not an empty string, the text field is considered invalid<br>and `validity.customError` will be true.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
+`checkValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the element is valid.<br>If invalid, this method will dispatch the `invalid` event.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
+`reportValidity` | _None_ | `boolean` | Checks the text field's native validation and returns whether or not the element is valid.<br>If invalid, this method will dispatch the `invalid` event.<br>This method will display or clear an error text message equal to the text field's `validationMessage`, unless the invalid event is canceled.<br>Use `setCustomValidity()` to customize the `validationMessage`.<br>This method can also be used to re-announce error messages to screen readers.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
+`select` | _None_ | `void` | Selects all the text in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
+`setCustomValidity` | `error` | `void` | Sets a custom validation error message for the text field. Use this for custom error message.<br>When the error is not an empty string, the text field is considered invalid and `validity.customError` will be true.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
 `setRangeText` | `args` | `void` | 
-`setSelectionRange` | `start`, `end`, `direction` | `void` | Sets the start and end positions of a selection in the text field.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
-`stepDown` | `stepDecrement` | `void` | Decrements the value of a numeric type text field by `step` or `n` `step`<br>number of times.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
-`stepUp` | `stepIncrement` | `void` | Increments the value of a numeric type text field by `step` or `n` `step`<br>number of times.<br><br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
+`setSelectionRange` | `start`, `end`, `direction` | `void` | Sets the start and end positions of a selection in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
+`stepDown` | `stepDecrement` | `void` | Decrements the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
+`stepUp` | `stepIncrement` | `void` | Increments the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
 `reset` | _None_ | `void` | Reset the text field to its default value.
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
