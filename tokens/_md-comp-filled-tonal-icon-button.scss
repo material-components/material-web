@@ -7,15 +7,16 @@
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
-@use './v0_172/md-comp-filled-tonal-icon-button';
+@use './v0_192/md-comp-filled-tonal-icon-button';
 @use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
   'container-color',
+  'container-height',
   'container-shape',
-  'container-size',
+  'container-width',
   'disabled-container-color',
   'disabled-container-opacity',
   'disabled-icon-color',

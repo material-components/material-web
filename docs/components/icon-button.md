@@ -323,7 +323,8 @@ Token                                              | Default value
 -------------------------------------------------- | ------------------------
 `--md-filled-icon-button-selected-container-color` | `--md-sys-color-primary`
 `--md-filled-icon-button-container-shape`          | `9999px`
-`--md-filled-icon-button-container-size`           | `40px`
+`--md-filled-icon-button-container-width`          | `40px`
+`--md-filled-icon-button-container-height`         | `40px`
 `--md-filled-icon-button-icon-size`                | `24px`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-icon-button.scss)
@@ -341,7 +342,8 @@ Token                                              | Default value
 ```html
 <style>
 :root {
-  --md-filled-icon-button-container-size: 80px;
+  --md-filled-icon-button-container-width: 80px;
+  --md-filled-icon-button-container-height: 80px;
   --md-filled-icon-button-icon-size: 40px;
   --md-filled-icon-button-container-shape: 0px;
   --md-sys-color-primary: #dc362e;
@@ -359,7 +361,8 @@ Token                                                    | Default value
 -------------------------------------------------------- | -------------
 `--md-filled-tonal-icon-button-selected-container-color` | `--md-sys-color-secondary-container`
 `--md-filled-tonal-icon-button-container-shape`          | `9999px`
-`--md-filled-tonal-icon-button-container-size`           | `40px`
+`--md-filled-tonal-icon-button-container-width`          | `40px`
+`--md-filled-tonal-icon-button-container-height`         | `40px`
 `--md-filled-tonal-icon-button-icon-size`                | `24px`
 
 ### Filled Tonal Icon Button example
@@ -374,7 +377,8 @@ Token                                                    | Default value
 ```html
 <style>
 :root {
-  --md-filled-tonal-icon-button-container-size: 80px;
+  --md-filled-tonal-icon-button-container-width: 80px;
+  --md-filled-tonal-icon-button-container-height: 80px;
   --md-filled-tonal-icon-button-container-shape: 0px;
   --md-filled-tonal-icon-button-icon-size: 40px;
   --md-sys-color-secondary-container: #006A6A;
@@ -387,13 +391,14 @@ Token                                                    | Default value
 
 ### Outlined Icon Button tokens
 
-Token                                       | Default value
-------------------------------------------- | ------------------------
-`--md-outlined-icon-button-outline-color`   | `--md-sys-color-outline`
-`--md-outlined-icon-button-outline-width`   | `1px`
-`--md-outlined-icon-button-container-shape` | `9999px`
-`--md-outlined-icon-button-container-size`  | `40px`
-`--md-outlined-icon-button-icon-size`       | `24px`
+Token                                        | Default value
+-------------------------------------------- | ------------------------
+`--md-outlined-icon-button-outline-color`    | `--md-sys-color-outline`
+`--md-outlined-icon-button-outline-width`    | `1px`
+`--md-outlined-icon-button-container-shape`  | `9999px`
+`--md-outlined-icon-button-container-width`  | `40px`
+`--md-outlined-icon-button-container-height` | `40px`
+`--md-outlined-icon-button-icon-size`        | `24px`
 
 ### Outlined Icon Button example
 
@@ -407,7 +412,8 @@ Token                                       | Default value
 ```html
 <style>
 :root {
-  --md-outlined-icon-button-container-size: 80px;
+  --md-outlined-icon-button-container-width: 80px;
+  --md-outlined-icon-button-container-height: 80px;
   --md-outlined-icon-button-container-shape: 0px;
   --md-outlined-icon-button-icon-size: 40px;
   --md-outlined-icon-button-outline-width: 4px;

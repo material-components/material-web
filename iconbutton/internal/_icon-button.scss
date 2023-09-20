@@ -41,14 +41,16 @@
     --_container-shape-start-end: 0;
     --_container-shape-end-end: 0;
     --_container-shape-end-start: 0;
-    --_container-size: 0;
+    --_container-height: 0;
+    --_container-width: 0;
 
-    height: var(--_state-layer-size);
-    width: var(--_state-layer-size);
+    height: var(--_state-layer-height);
+    width: var(--_state-layer-width);
   }
 
   :host([touch-target='wrapper']) {
-    margin: max(0px, (48px - var(--_state-layer-size)) / 2);
+    margin: max(0px, (48px - var(--_state-layer-height))/2)
+      max(0px, (48px - var(--_state-layer-width))/2);
   }
 
   md-focus-ring {

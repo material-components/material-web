@@ -259,7 +259,8 @@ export class ThemeChanger extends LitElement {
 
     copy-code-button {
       --md-icon-button-icon-size: var(--_copy-button-icon-size);
-      --md-icon-button-state-layer-size: var(--_copy-button-button-size);
+      --md-icon-button-state-layer-width: var(--_copy-button-button-size);
+      --md-icon-button-state-layer-height: var(--_copy-button-button-size);
       /*
        * Center the copy icon with the h2 text
        * -(icon button size - intrinsic icon size) / 2

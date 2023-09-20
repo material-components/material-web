@@ -7,7 +7,7 @@
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
-@use './v0_172/md-comp-icon-button';
+@use './v0_192/md-comp-icon-button';
 @use './values';
 // go/keep-sorted end
 
@@ -32,8 +32,9 @@ $supported-tokens: (
   'selected-pressed-icon-color',
   'selected-pressed-state-layer-color',
   'selected-pressed-state-layer-opacity',
+  'state-layer-height',
   'state-layer-shape',
-  'state-layer-size',
+  'state-layer-width',
   // go/keep-sorted end
 );
 

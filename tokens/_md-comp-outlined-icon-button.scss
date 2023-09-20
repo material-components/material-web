@@ -7,14 +7,15 @@
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
-@use './v0_172/md-comp-outlined-icon-button';
+@use './v0_192/md-comp-outlined-icon-button';
 @use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
+  'container-height',
   'container-shape',
-  'container-size',
+  'container-width',
   'disabled-icon-color',
   'disabled-icon-opacity',
   'disabled-outline-color',
