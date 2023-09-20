@@ -100,8 +100,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
       <div class="root">
         <div style="position:relative;">
           <md-filled-button
-              @click=${showMenu}
-              @keydown=${showMenu}
+              @click=${toggleMenu}
+              @keydown=${toggleMenu}
               aria-haspopup="true"
               aria-controls="menu"
               aria-expanded="false"
@@ -168,8 +168,8 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
       <div class="root">
         <div style="position:relative;">
           <md-filled-button
-              @click=${showMenu}
-              @keydown=${showMenu}
+              @click=${toggleMenu}
+              @keydown=${toggleMenu}
               aria-haspopup="true"
               aria-controls="menu"
               aria-expanded="false"
@@ -305,8 +305,8 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
       <div class="root">
         <div style="position:relative;">
           <md-filled-button
-              @click=${showMenu}
-              @keydown=${showMenu}
+              @click=${toggleMenu}
+              @keydown=${toggleMenu}
               aria-haspopup="true"
               aria-controls="menu"
               aria-expanded="false"
@@ -403,7 +403,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
  * attempts to find a menu button with `#button` set on it and sets
  * aria-expanded=true.
  */
-function showMenu(event: Event|KeyboardEvent) {
+function toggleMenu(event: Event|KeyboardEvent) {
   // get the menu from the event
   const root = ((event.target as HTMLElement).getRootNode() as ShadowRoot);
   const menu = root.querySelector('#menu') as MdMenu;
@@ -417,10 +417,10 @@ function showMenu(event: Event|KeyboardEvent) {
 
   // if is a click, open the menu
   if (!isKeyboard) {
-    menu.show();
+    menu.open = !menu.open;
     // if is arrow down, open the menu and prevent default to prevent scrolling
   } else if (event.key === 'ArrowDown') {
-    menu.show();
+    menu.open = !menu.open;
     event.preventDefault();
   }
 
