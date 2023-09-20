@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LitElement, PropertyValues} from 'lit';
+import {isServer, LitElement, PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {Attachable, AttachableController} from '../../internal/controller/attachable-controller.js';
@@ -87,6 +87,8 @@ export class FocusRing extends LitElement implements Attachable {
   }
 
   private onControlChange(prev: HTMLElement|null, next: HTMLElement|null) {
+    if (isServer) return;
+
     for (const event of EVENTS) {
       prev?.removeEventListener(event, this);
       next?.addEventListener(event, this);

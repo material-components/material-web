@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, PropertyValues} from 'lit';
+import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -452,6 +452,8 @@ export class Ripple extends LitElement implements Attachable {
   }
 
   private onControlChange(prev: HTMLElement|null, next: HTMLElement|null) {
+    if (isServer) return;
+
     for (const event of EVENTS) {
       prev?.removeEventListener(event, this);
       next?.addEventListener(event, this);
