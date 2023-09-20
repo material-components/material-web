@@ -1,0 +1,87 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-typescale';
+@use './v0_192/md-comp-list';
+@use './values';
+// go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'label-text-color',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
+  'overline-color',
+  'overline-font',
+  'overline-line-height',
+  'overline-size',
+  'overline-weight',
+  'supporting-text-color',
+  'supporting-text-font',
+  'supporting-text-line-height',
+  'supporting-text-size',
+  'supporting-text-weight',
+  'trailing-supporting-text-color',
+  'trailing-supporting-text-font',
+  'trailing-supporting-text-line-height',
+  'trailing-supporting-text-size',
+  'trailing-supporting-text-weight',
+  // go/keep-sorted end
+);
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-typescale': md-sys-typescale.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  $list-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
+
+  $tokens: (
+    // go/keep-sorted start
+    'label-text-color': map.get($list-tokens, 'list-item-label-text-color'),
+    'label-text-font': map.get($list-tokens, 'list-item-label-text-font'),
+    'label-text-line-height':
+      map.get($list-tokens, 'list-item-label-text-line-height'),
+    'label-text-size': map.get($list-tokens, 'list-item-label-text-size'),
+    'label-text-weight': map.get($list-tokens, 'list-item-label-text-weight'),
+    'overline-color': map.get($list-tokens, 'list-item-overline-color'),
+    'overline-font': map.get($list-tokens, 'list-item-overline-font'),
+    'overline-line-height':
+      map.get($list-tokens, 'list-item-overline-line-height'),
+    'overline-size': map.get($list-tokens, 'list-item-overline-size'),
+    'overline-weight': map.get($list-tokens, 'list-item-overline-weight'),
+    'supporting-text-color':
+      map.get($list-tokens, 'list-item-supporting-text-color'),
+    'supporting-text-font':
+      map.get($list-tokens, 'list-item-supporting-text-font'),
+    'supporting-text-line-height':
+      map.get($list-tokens, 'list-item-supporting-text-line-height'),
+    'supporting-text-size':
+      map.get($list-tokens, 'list-item-supporting-text-size'),
+    'supporting-text-weight':
+      map.get($list-tokens, 'list-item-supporting-text-weight'),
+    'trailing-supporting-text-color':
+      map.get($list-tokens, 'list-item-trailing-supporting-text-color'),
+    'trailing-supporting-text-font':
+      map.get($list-tokens, 'list-item-trailing-supporting-text-font'),
+    'trailing-supporting-text-line-height':
+      map.get($list-tokens, 'list-item-trailing-supporting-text-line-height'),
+    'trailing-supporting-text-size':
+      map.get($list-tokens, 'list-item-trailing-supporting-text-size'),
+    'trailing-supporting-text-weight':
+      map.get($list-tokens, 'list-item-trailing-supporting-text-weight'),
+    // go/keep-sorted end
+  );
+
+  @return values.validate($tokens, $supported-tokens: $supported-tokens);
+}

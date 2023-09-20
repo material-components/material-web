@@ -1,0 +1,99 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../tokens';
+// go/keep-sorted end
+
+/// `<md-item>` does not provide `--md-item-*` custom properties. Instead, use
+/// CSS on slotted elements to change their styles.
+///
+/// @example css
+///   md-item {
+///     color: var(--headline-color);
+///     font: var(--headline-font);
+///   }
+///   md-item [slot='supporting-text'] {
+///     color: var(--supporting-text-color);
+///     font: var(--supporting-text-font);
+///   }
+///   // ...
+///
+@mixin styles() {
+  $tokens: tokens.md-comp-item-values();
+
+  :host {
+    color: map.get($tokens, 'label-text-color');
+    font-family: map.get($tokens, 'label-text-font');
+    font-size: map.get($tokens, 'label-text-size');
+    font-weight: map.get($tokens, 'label-text-weight');
+    line-height: map.get($tokens, 'label-text-line-height');
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    gap: 16px;
+    min-height: 56px;
+    overflow: hidden;
+    padding: 12px 16px;
+    position: relative;
+    text-overflow: ellipsis;
+  }
+
+  :host([multiline]) {
+    min-height: 72px;
+  }
+
+  [name='overline'] {
+    color: map.get($tokens, 'overline-color');
+    font-family: map.get($tokens, 'overline-font');
+    font-size: map.get($tokens, 'overline-size');
+    font-weight: map.get($tokens, 'overline-weight');
+    line-height: map.get($tokens, 'overline-line-height');
+  }
+
+  [name='supporting-text'] {
+    color: map.get($tokens, 'supporting-text-color');
+    font-family: map.get($tokens, 'supporting-text-font');
+    font-size: map.get($tokens, 'supporting-text-size');
+    font-weight: map.get($tokens, 'supporting-text-weight');
+    line-height: map.get($tokens, 'supporting-text-line-height');
+  }
+
+  [name='trailing-supporting-text'] {
+    color: map.get($tokens, 'trailing-supporting-text-color');
+    font-family: map.get($tokens, 'trailing-supporting-text-font');
+    font-size: map.get($tokens, 'trailing-supporting-text-size');
+    font-weight: map.get($tokens, 'trailing-supporting-text-weight');
+    line-height: map.get($tokens, 'trailing-supporting-text-line-height');
+  }
+
+  // A slot for background container elements, such as ripples and focus rings.
+  [name='container']::slotted(*) {
+    inset: 0;
+    position: absolute;
+  }
+
+  .default-slot {
+    // Needed since the default slot can have just text content, and ellipsis
+    // need an inline display.
+    display: inline;
+  }
+
+  .default-slot,
+  ::slotted(*) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+  }
+}
