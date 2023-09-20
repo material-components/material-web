@@ -120,3 +120,6 @@ Token                         | Default value
   <!-- Content -->
 </div>
 ```
+
+<!-- auto-generated API docs start -->
+<!-- auto-generated API docs end -->

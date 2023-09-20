@@ -80,6 +80,10 @@ main > details > summary {
   margin-inline: auto;
 }
 
+main > table {
+  max-width: max-content;
+}
+
 table {
   border-spacing: 0;
 }
