@@ -113,7 +113,7 @@
       "dependencies": ["./catalog:build:prod"]
     },
     "build:analyzer": {
-      "command": "tsc -b scripts/analyzer/tsconfig.json --pretty",
+      "command": "tsc -b scripts/tsconfig.json --pretty",
       "files": [
         "scripts/tsconfig.json",
         "scripts/analyzer/**/*.ts",
