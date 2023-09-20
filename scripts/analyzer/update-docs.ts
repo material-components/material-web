@@ -5,14 +5,12 @@
  */
 
 import {AbsolutePath, Analyzer, createPackageAnalyzer,} from '@lit-labs/analyzer/package-analyzer.js';
-import * as fs from 'fs/promises.js';
+import * as fs from 'fs/promises';
 import * as path from 'path';
 
-import {analyzeElementApi, MdModuleInfo, MdPropertyInfo,} from './analyze-element.js';
+import {analyzeElementApi, MdMethodParameterInfo, MdModuleInfo, MdPropertyInfo,} from './analyze-element.js';
 import {docsToElementMapping} from './element-docs-map.js';
 import {MarkdownTable} from './markdown-tree-builder.js';
-
-type DocFileName = keyof typeof docsToElementMapping;
 
 interface MarkdownTableSection {
   name: string;
@@ -40,7 +38,7 @@ async function updateApiDocs() {
   // Analyzes the entire material-web repository.
   const analyzer = createPackageAnalyzer(packagePath as AbsolutePath);
   const documentationFileNames =
-      Object.keys(docsToElementMapping) as DocFileName[];
+      Object.keys(docsToElementMapping);
 
   const filesWritten: Array<Promise<void>> = [];
 
@@ -66,7 +64,7 @@ async function updateApiDocs() {
  * @returns A promise that resolves when the file has been updated.
  */
 async function updateDocFileApiSection(
-    docFileName: DocFileName, analyzer: Analyzer, packagePath: string) {
+    docFileName: string, analyzer: Analyzer, packagePath: string) {
   const elementEntrypoints = docsToElementMapping[docFileName];
   // This is a data structure that describes an element and its associated API
   // tables. e.g. a single section for MdFilledButton represents MdFilledButton
