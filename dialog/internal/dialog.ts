@@ -31,6 +31,7 @@ export class Dialog extends LitElement {
     requestUpdateOnAriaChange(Dialog);
   }
 
+  /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true
