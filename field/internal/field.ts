@@ -9,12 +9,11 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {EASING} from '../../internal/motion/animation.js';
-import {SurfacePositionTarget} from '../../menu/internal/surfacePositionController.js';
 
 /**
  * A field component.
  */
-export class Field extends LitElement implements SurfacePositionTarget {
+export class Field extends LitElement {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) error = false;
   @property({type: Boolean}) focused = false;
