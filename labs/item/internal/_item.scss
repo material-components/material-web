@@ -7,7 +7,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../tokens';
+@use '../../../tokens';
 // go/keep-sorted end
 
 /// `<md-item>` does not provide `--md-item-*` custom properties. Instead, use

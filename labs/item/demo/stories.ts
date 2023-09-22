@@ -5,7 +5,7 @@
  */
 
 import '@material/web/icon/icon.js';
-import '@material/web/item/item.js';
+import '@material/web/labs/item/item.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';
