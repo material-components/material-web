@@ -23,7 +23,7 @@ export interface StoryKnobs {
   errorText: string;
   supportingText: string;
   error: boolean;
-  menuFixed: boolean;
+  menuPositioning: 'absolute'|'fixed'|undefined;
 
   'md-select Slots': void;
   'slot=leading-icon': string;
@@ -41,7 +41,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
           .disabled=${knobs.disabled}
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
-          .menuFixed=${knobs.menuFixed}
+          .menuPositioning=${knobs.menuPositioning!}
           .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>
         ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
@@ -63,7 +63,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
           .disabled=${knobs.disabled}
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
-          .menuFixed=${knobs.menuFixed}
+          .menuPositioning=${knobs.menuPositioning!}
           .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>
         ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}

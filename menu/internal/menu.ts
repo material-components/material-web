@@ -17,7 +17,7 @@ import {createAnimationSignal, EASING} from '../../internal/motion/animation.js'
 
 import {ListController, NavigableKeys} from './list-controller.js';
 import {getActiveItem, getFirstActivatableItem, getLastActivatableItem} from './list-navigation-helpers.js';
-import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isClosableKey, isElementInSubtree, MenuItem} from './shared.js';
+import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, FocusState, isClosableKey, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
 import {TypeaheadController} from './typeaheadController.js';
 
@@ -40,22 +40,6 @@ const menuNavKeys = new Set<string>([
   NavigableKeys.ArrowRight,
   ...submenuNavKeys,
 ]);
-
-/**
- * Element to focus on when menu is first opened.
- */
-// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
-export const FocusState = {
-  NONE: 'none',
-  LIST_ROOT: 'list-root',
-  FIRST_ITEM: 'first-item',
-  LAST_ITEM: 'last-item'
-} as const;
-
-/**
- * Element to focus on when menu is first opened.
- */
-export type FocusState = typeof FocusState[keyof typeof FocusState];
 
 /**
  * Gets the currently focused element on the page.
@@ -101,15 +85,26 @@ export abstract class Menu extends LitElement {
    */
   @property() anchor = '';
   /**
-   * Makes the element use `position:fixed` instead of `position:absolute`. In
-   * most cases, the menu should position itself above most other
-   * `position:absolute` or `position:fixed` elements when placed inside of
-   * them. e.g. using a menu inside of an `md-dialog`.
+   * Whether the positioning algorithim should calculate relative to the parent
+   * of the anchor element (absolute) or relative to the window (fixed).
+   *
+   * Examples for `position = 'fixed'`:
+   *
+   * - If there is no `position:relative` in the given parent tree and the
+   *   surface is `position:absolute`
+   * - If the surface is `position:fixed`
+   * - If the surface is in the "top layer"
+   * - The anchor and the surface do not share a common `position:relative`
+   *   ancestor
+   *
+   * When using positioning = fixed, in most cases, the menu should position
+   * itself above most other `position:absolute` or `position:fixed` elements
+   * when placed inside of them. e.g. using a menu inside of an `md-dialog`.
    *
    * __NOTE__: Fixed menus will not scroll with the page and will be fixed to
    * the window instead.
    */
-  @property({type: Boolean}) fixed = false;
+  @property() positioning: 'absolute'|'fixed' = 'absolute';
   /**
    * Skips the opening and closing animations.
    */
@@ -325,7 +320,7 @@ export abstract class Menu extends LitElement {
           surfaceCorner: this.menuCorner,
           surfaceEl: this.surfaceEl,
           anchorEl: this.anchorElement,
-          isTopLayer: this.fixed,
+          positioning: this.positioning,
           isOpen: this.open,
           xOffset: this.xOffset,
           yOffset: this.yOffset,
@@ -403,7 +398,7 @@ export abstract class Menu extends LitElement {
   private getSurfaceClasses() {
     return {
       open: this.open,
-      fixed: this.fixed,
+      fixed: this.positioning === 'fixed',
       'has-overflow': this.hasOverflow,
     };
   }

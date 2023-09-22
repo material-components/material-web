@@ -23,8 +23,8 @@ export interface StoryKnobs {
   anchorCorner: Corner|undefined;
   menuCorner: Corner|undefined;
   defaultFocus: FocusState|undefined;
+  positioning: 'absolute'|'fixed'|undefined;
   open: boolean;
-  fixed: boolean;
   quick: boolean;
   hasOverflow: boolean;
   stayOpenOnOutsideClick: boolean;
@@ -120,7 +120,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               .menuCorner="${knobs.menuCorner!}"
               .xOffset=${knobs.xOffset}
               .yOffset=${knobs.yOffset}
-              .fixed=${knobs.fixed}
+              .positioning=${knobs.positioning!}
               .defaultFocus=${knobs.defaultFocus!}
               .skipRestoreFocus=${knobs.skipRestoreFocus}
               .typeaheadDelay=${knobs.typeaheadDelay}
@@ -188,7 +188,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
               .menuCorner="${knobs.menuCorner!}"
               .xOffset=${knobs.xOffset}
               .yOffset=${knobs.yOffset}
-              .fixed=${knobs.fixed}
+              .positioning=${knobs.positioning!}
               .defaultFocus=${knobs.defaultFocus!}
               .skipRestoreFocus=${knobs.skipRestoreFocus}
               .typeaheadDelay=${knobs.typeaheadDelay}
@@ -250,7 +250,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
                 .ariaLabel=${knobs.ariaLabel}
                 .xOffset=${knobs.xOffset}
                 .yOffset=${knobs.yOffset}
-                .fixed=${knobs.fixed}
+                .positioning=${knobs.positioning!}
                 .defaultFocus=${knobs.defaultFocus!}
                 .typeaheadDelay=${knobs.typeaheadDelay}>
               ${layer2}
@@ -296,7 +296,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
               .ariaLabel=${knobs.ariaLabel}
               .xOffset=${knobs.xOffset}
               .yOffset=${knobs.yOffset}
-              .fixed=${knobs.fixed}
+              .positioning=${knobs.positioning!}
               .defaultFocus=${knobs.defaultFocus!}
               .typeaheadDelay=${knobs.typeaheadDelay}>
             ${layer1}
@@ -327,7 +327,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
               .menuCorner="${knobs.menuCorner!}"
               .xOffset=${knobs.xOffset}
               .yOffset=${knobs.yOffset}
-              .fixed=${knobs.fixed}
+              .positioning=${knobs.positioning!}
               .defaultFocus=${knobs.defaultFocus!}
               .skipRestoreFocus=${knobs.skipRestoreFocus}
               .typeaheadDelay=${knobs.typeaheadDelay}
@@ -377,7 +377,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
             .yOffset=${knobs.yOffset}
-            .fixed=${knobs.fixed}
+            .positioning=${knobs.positioning!}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
             .typeaheadDelay=${knobs.typeaheadDelay}

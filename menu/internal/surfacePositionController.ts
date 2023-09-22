@@ -53,10 +53,10 @@ export interface SurfacePositionControllerProperties {
    */
   anchorEl: SurfacePositionTarget|null;
   /**
-   * Whether or not the calculation should be relative to the top layer rather
-   * than relative to the parent of the anchor.
+   * Whether the positioning algorithim should calculate relative to the parent
+   * of the anchor element (absolute) or relative to the window (fixed).
    *
-   * Examples for `isTopLayer:true`:
+   * Examples for `position = 'fixed'`:
    *
    * - If there is no `position:relative` in the given parent tree and the
    *   surface is `position:absolute`
@@ -65,7 +65,7 @@ export interface SurfacePositionControllerProperties {
    * - The anchor and the surface do not share a common `position:relative`
    *   ancestor
    */
-  isTopLayer: boolean;
+  positioning: 'absolute'|'fixed';
   /**
    * Whether or not the surface should be "open" and visible
    */
@@ -153,7 +153,7 @@ export class SurfacePositionController implements ReactiveController {
       anchorEl,
       anchorCorner: anchorCornerRaw,
       surfaceCorner: surfaceCornerRaw,
-      isTopLayer,
+      positioning,
       xOffset,
       yOffset,
       repositionStrategy,
@@ -231,7 +231,7 @@ export class SurfacePositionController implements ReactiveController {
           anchorBlock,
           surfaceBlock,
           yOffset,
-          isTopLayer
+          positioning
         });
 
     // If the surface should be out of bounds in the block direction, flip the
@@ -246,7 +246,7 @@ export class SurfacePositionController implements ReactiveController {
         anchorBlock: flippedAnchorBlock,
         surfaceBlock: flippedSurfaceBlock,
         yOffset,
-        isTopLayer
+        positioning
       });
 
       // In the case that the flipped verion would require less out of bounds
@@ -267,7 +267,7 @@ export class SurfacePositionController implements ReactiveController {
           anchorInline,
           surfaceInline,
           xOffset,
-          isTopLayer,
+          positioning,
           isLTR,
         });
 
@@ -283,7 +283,7 @@ export class SurfacePositionController implements ReactiveController {
         anchorInline: flippedAnchorInline,
         surfaceInline: flippedSurfaceInline,
         xOffset,
-        isTopLayer,
+        positioning,
         isLTR,
       });
 
@@ -340,7 +340,7 @@ export class SurfacePositionController implements ReactiveController {
     anchorBlock: 'start'|'end',
     surfaceBlock: 'start'|'end',
     yOffset: number,
-    isTopLayer: boolean,
+    positioning: 'absolute'|'fixed',
   }) {
     const {
       surfaceRect,
@@ -348,11 +348,11 @@ export class SurfacePositionController implements ReactiveController {
       anchorBlock,
       surfaceBlock,
       yOffset,
-      isTopLayer: isTopLayerBool,
+      positioning,
     } = config;
     // We use number booleans to multiply values rather than `if` / ternary
     // statements because it _heavily_ cuts down on nesting and readability
-    const isTopLayer = isTopLayerBool ? 1 : 0;
+    const relativeToWindow = positioning === 'fixed' ? 1 : 0;
     const isSurfaceBlockStart = surfaceBlock === 'start' ? 1 : 0;
     const isSurfaceBlockEnd = surfaceBlock === 'end' ? 1 : 0;
     const isOneBlockEnd = anchorBlock !== surfaceBlock ? 1 : 0;
@@ -371,7 +371,8 @@ export class SurfacePositionController implements ReactiveController {
 
 
     // The block logical value of the surface
-    const blockInset = isTopLayer * blockTopLayerOffset + blockAnchorOffset;
+    const blockInset =
+        relativeToWindow * blockTopLayerOffset + blockAnchorOffset;
 
     const surfaceBlockProperty =
         surfaceBlock === 'start' ? 'inset-block-start' : 'inset-block-end';
@@ -390,7 +391,7 @@ export class SurfacePositionController implements ReactiveController {
     anchorRect: DOMRect,
     surfaceRect: DOMRect,
     xOffset: number,
-    isTopLayer: boolean,
+    positioning: 'absolute'|'fixed',
   }) {
     const {
       isLTR: isLTRBool,
@@ -399,11 +400,11 @@ export class SurfacePositionController implements ReactiveController {
       anchorRect,
       surfaceRect,
       xOffset,
-      isTopLayer: isTopLayerBool,
+      positioning,
     } = config;
     // We use number booleans to multiply values rather than `if` / ternary
     // statements because it _heavily_ cuts down on nesting and readability
-    const isTopLayer = isTopLayerBool ? 1 : 0;
+    const relativeToWindow = positioning === 'fixed' ? 1 : 0;
     const isLTR = isLTRBool ? 1 : 0;
     const isRTL = isLTRBool ? 0 : 1;
     const isSurfaceInlineStart = surfaceInline === 'start' ? 1 : 0;
@@ -432,7 +433,8 @@ export class SurfacePositionController implements ReactiveController {
 
 
     // The inline logical value of the surface
-    const inlineInset = isTopLayer * inlineTopLayerOffset + inlineAnchorOffset;
+    const inlineInset =
+        relativeToWindow * inlineTopLayerOffset + inlineAnchorOffset;
 
     const surfaceInlineProperty =
         surfaceInline === 'start' ? 'inset-inline-start' : 'inset-inline-end';

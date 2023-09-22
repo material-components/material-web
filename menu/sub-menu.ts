@@ -28,8 +28,9 @@ declare global {
  * `deselect-items` events.
  *
  * This menu item will open a sub-menu that is slotted in the `submenu` slot.
- * Additionally, the containing menu must either have `has-overflow` or `fixed`
- * set to `true` in order to display the containing menu properly.
+ * Additionally, the containing menu must either have `has-overflow` or
+ * `positioning=fixed` set to `true` in order to display the containing menu
+ * properly.
  *
  * @example
  * ```html

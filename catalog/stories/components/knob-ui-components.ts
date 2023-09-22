@@ -398,7 +398,7 @@ export function selectDropdown<T extends string>({
         <label>
           <md-filled-select
               @change="${valueChanged}"
-              menu-fixed
+              menu-positioning="fixed"
               style=${styleMap(sharedTextFieldStyles)}>
             ${listItems}
           </md-filled-select>

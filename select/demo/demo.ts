@@ -8,7 +8,7 @@ import './index.js';
 import './material-collection.js';
 
 import {KnobTypesToKnobs, MaterialCollection, materialInitsToStoryInits, setUpDemo, title} from './material-collection.js';
-import {boolInput, Knob, numberInput, textInput} from './index.js';
+import {boolInput, Knob, numberInput, selectDropdown, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 
@@ -22,8 +22,16 @@ const collection =
       new Knob('disabled', {ui: boolInput(), defaultValue: false}),
       new Knob('errorText', {ui: textInput(), defaultValue: ''}),
       new Knob('supportingText', {ui: textInput(), defaultValue: ''}),
+      new Knob('menuPositioning', {
+        defaultValue: 'absolute' as const,
+        ui: selectDropdown<'absolute'|'fixed'>({
+          options: [
+            {label: 'absolute', value: 'absolute'},
+            {label: 'fixed', value: 'fixed'},
+          ]
+        })
+      }),
       new Knob('error', {ui: boolInput(), defaultValue: false}),
-      new Knob('menuFixed', {ui: boolInput(), defaultValue: false}),
 
       new Knob('md-select Slots', {ui: title()}),
       new Knob('slot=leading-icon', {ui: textInput(), defaultValue: ''}),

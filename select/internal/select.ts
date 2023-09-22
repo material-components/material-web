@@ -77,9 +77,13 @@ export abstract class Select extends LitElement {
   @property({type: Boolean, reflect: true}) error = false;
   /**
    * Whether or not the underlying md-menu should be position: fixed to display
-   * in a top-level manner.
+   * in a top-level manner, or position: absolute.
+   *
+   * position:fixed is useful for cases where select is inside of another
+   * element with stacking context and hidden overflows such as `md-dialog`.
    */
-  @property({type: Boolean, attribute: 'menu-fixed'}) menuFixed = false;
+  @property({attribute: 'menu-positioning'})
+  menuPositioning: 'absolute'|'fixed' = 'absolute';
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
    * before it clears the typeahead buffer.
@@ -478,7 +482,7 @@ export abstract class Select extends LitElement {
           anchor="field"
           .open=${this.open}
           .quick=${this.quick}
-          .fixed=${this.menuFixed}
+          .positioning=${this.menuPositioning}
           .typeaheadDelay=${this.typeaheadDelay}
           @opening=${this.handleOpening}
           @opened=${this.redispatchEvent}

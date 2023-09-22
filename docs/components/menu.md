@@ -194,8 +194,8 @@ Internally menu uses `position: absolute` by default. Though there are cases
 when the anchor and the node cannot share a common ancestor that is `position:
 relative`, or sometimes, menu will render below another item due to limitations
 with `position: absolute`. In most of these cases, you would want to use the
-`fixed` attribute to position the menu relative to the window instead of
-relative to the parent.
+`positioning="fixed"` attribute to position the menu relative to the window
+instead of relative to the parent.
 
 > Note: Fixed menu positions are positioned relative to the window and not the
 > document. This means that the menu will not scroll with the anchor as the page
@@ -217,7 +217,7 @@ Cucumber."](images/menu/usage-fixed.webp)
 </div>
 
 <!-- Fixed menus do not require a common ancestor with the anchor. -->
-<md-menu fixed id="usage-fixed" anchor="usage-fixed-anchor">
+<md-menu positioning="fixed" id="usage-fixed" anchor="usage-fixed-anchor">
   <md-menu-item headline="Apple"></md-menu-item>
   <md-menu-item headline="Banana"></md-menu-item>
   <md-menu-item headline="Cucumber"></md-menu-item>
@@ -352,7 +352,6 @@ a sharp 0px border radius.](images/menu/theming.webp)
 <!-- auto-generated API docs start -->
 
 ## API
-
 
 ### MdMenu &lt;md-menu&gt;
 

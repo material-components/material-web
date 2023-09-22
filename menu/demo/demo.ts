@@ -49,11 +49,16 @@ const collection =
           ]
         }),
       }),
-      new Knob('open', {
-        defaultValue: false,
-        ui: boolInput(),
+      new Knob('positioning', {
+        defaultValue: 'absolute' as const,
+        ui: selectDropdown<'absolute'|'fixed'>({
+          options: [
+            {label: 'absolute', value: 'absolute'},
+            {label: 'fixed', value: 'fixed'},
+          ]
+        })
       }),
-      new Knob('fixed', {
+      new Knob('open', {
         defaultValue: false,
         ui: boolInput(),
       }),

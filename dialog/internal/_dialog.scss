@@ -195,7 +195,7 @@
     overflow: hidden;
     // needed to display scrollbars on Chrome linux. Also needs to be > 0 so
     // that content that is position: fixed in the content can render above the
-    // actions bar. e.g. <md-select menu-fixed>
+    // actions bar. e.g. <md-select positioning="menu-fixed">
     z-index: 1;
   }
 

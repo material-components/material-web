@@ -227,3 +227,19 @@ export function isElementInSubtree(
   const isContained = composedPath.length > 0;
   return isContained;
 }
+
+/**
+ * Element to focus on when menu is first opened.
+ */
+// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
+export const FocusState = {
+  NONE: 'none',
+  LIST_ROOT: 'list-root',
+  FIRST_ITEM: 'first-item',
+  LAST_ITEM: 'last-item'
+} as const;
+
+/**
+ * Element to focus on when menu is first opened.
+ */
+export type FocusState = typeof FocusState[keyof typeof FocusState];
