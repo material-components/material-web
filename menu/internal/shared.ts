@@ -26,10 +26,6 @@ interface MenuItemAdditions {
    */
   selected: boolean;
   /**
-   * If it is a sub-menu-item, a method that can close the submenu.
-   */
-  close?: () => void;
-  /**
    * Focuses the item.
    */
   focus: () => void;

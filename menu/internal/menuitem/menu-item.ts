@@ -34,15 +34,10 @@ export class MenuItemEl extends ListItemEl implements MenuItem {
 
   @state() protected hasFocusRing = false;
 
-  /**
-   * Used for overriding e.g. sub-menu-item.
-   */
-  protected keepOpenOnClick = false;
-
   override readonly type: ListItemRole = 'menuitem';
 
   protected override onClick() {
-    if (this.keepOpen || this.keepOpenOnClick) return;
+    if (this.keepOpen) return;
 
     this.dispatchEvent(createDefaultCloseMenuEvent(
         this, {kind: CLOSE_REASON.CLICK_SELECTION}));

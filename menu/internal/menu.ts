@@ -809,14 +809,14 @@ export abstract class Menu extends LitElement {
 
   private handleDeactivateTypeahead(event: DeactivateTypeaheadEvent) {
     // stopPropagation so that this does not deactivate any typeaheads in menus
-    // nested above it e.g. md-sub-menu-item
+    // nested above it e.g. md-sub-menu
     event.stopPropagation();
     this.typeaheadActive = false;
   }
 
   private handleActivateTypeahead(event: ActivateTypeaheadEvent) {
     // stopPropagation so that this does not activate any typeaheads in menus
-    // nested above it e.g. md-sub-menu-item
+    // nested above it e.g. md-sub-menu
     event.stopPropagation();
     this.typeaheadActive = true;
   }
@@ -833,8 +833,9 @@ export abstract class Menu extends LitElement {
 
   close() {
     this.open = false;
-    const slotItems = this.slotItems as Array<HTMLElement&{close?: () => void}>;
-    slotItems.forEach(item => {
+    const maybeSubmenu =
+        this.slotItems as Array<HTMLElement&{close?: () => void}>;
+    maybeSubmenu.forEach(item => {
       item.close?.();
     });
   }

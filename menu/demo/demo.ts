@@ -122,7 +122,7 @@ const collection =
       }),
 
 
-      // sub-menu-item knobs
+      // sub-menu knobs
       new Knob('sub-menu', {ui: title()}),
       new Knob('submenu.anchorCorner', {
         defaultValue: Corner.START_END as Corner,

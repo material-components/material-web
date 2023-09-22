@@ -100,7 +100,7 @@ export class SubMenu extends LitElement {
 
     // Ensures that we deselect items when the menu closes and reactivate
     // typeahead when the menu closes, so that we do not have dirty state of
-    // selected sub-menu-items when we reopen.
+    // `sub-menu > menu-item[selected]` when we reopen.
     //
     // This cannot happen in `close()` because the menu may close via other
     // means Additionally, this cannot happen in onCloseSubmenu because
@@ -193,9 +193,9 @@ export class SubMenu extends LitElement {
    *
    * NOTE: We explicitly use mouse events and not pointer events because
    * pointer events apply to touch events. And if a user were to tap a
-   * sub-menu-item, it would fire the "pointerenter", "pointerleave", "click"
-   * events which would open the menu on click, and then set the timeout to
-   * close the menu due to pointerleave.
+   * sub-menu, it would fire the "pointerenter", "pointerleave", "click" events
+   * which would open the menu on click, and then set the timeout to close the
+   * menu due to pointerleave.
    */
   protected onMouseenter = () => {
     clearTimeout(this.previousOpenTimeout);
@@ -218,9 +218,9 @@ export class SubMenu extends LitElement {
    *
    * NOTE: We explicitly use mouse events and not pointer events because
    * pointer events apply to touch events. And if a user were to tap a
-   * sub-menu-item, it would fire the "pointerenter", "pointerleave", "click"
-   * events which would open the menu on click, and then set the timeout to
-   * close the menu due to pointerleave.
+   * sub-menu, it would fire the "pointerenter", "pointerleave", "click" events
+   * which would open the menu on click, and then set the timeout to close the
+   * menu due to pointerleave.
    */
   protected onMouseleave = () => {
     clearTimeout(this.previousCloseTimeout);
