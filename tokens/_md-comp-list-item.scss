@@ -10,8 +10,6 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use './md-sys-color';
-@use './md-sys-elevation';
-@use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-list';
@@ -20,62 +18,29 @@
 
 $supported-tokens: (
   // go/keep-sorted start
-  'container-color',
-  'container-shape',
-  'disabled-label-text-color',
-  'disabled-label-text-opacity',
-  'disabled-leading-icon-color',
-  'disabled-leading-icon-opacity',
-  'disabled-trailing-icon-color',
-  'disabled-trailing-icon-opacity',
-  'focus-label-text-color',
-  'focus-leading-icon-icon-color',
-  'focus-trailing-icon-icon-color',
-  'hover-label-text-color',
-  'hover-leading-icon-icon-color',
+  'bottom-space',
+  'disabled-opacity',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
   'hover-state-layer-color',
   'hover-state-layer-opacity',
-  'hover-trailing-icon-icon-color',
   'label-text-color',
   'label-text-font',
   'label-text-line-height',
   'label-text-size',
   'label-text-weight',
-  'large-leading-video-height',
-  'leading-avatar-color',
-  'leading-avatar-label-color',
-  'leading-avatar-label-font',
-  'leading-avatar-label-line-height',
-  'leading-avatar-label-size',
-  'leading-avatar-label-weight',
-  'leading-avatar-shape',
-  'leading-avatar-size',
-  'leading-element-leading-space',
   'leading-icon-color',
-  'leading-icon-size',
-  'leading-image-height',
-  'leading-image-shape',
-  'leading-image-width',
   'leading-space',
-  'leading-video-leading-space',
-  'leading-video-shape',
-  'leading-video-width',
   'one-line-container-height',
-  'pressed-label-text-color',
-  'pressed-leading-icon-icon-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
-  'pressed-trailing-icon-icon-color',
-  'small-leading-video-height',
   'supporting-text-color',
   'supporting-text-font',
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-weight',
-  'three-line-container-height',
-  'trailing-element-headline-trailing-element-space',
+  'top-space',
   'trailing-icon-color',
-  'trailing-icon-size',
   'trailing-space',
   'trailing-supporting-text-color',
   'trailing-supporting-text-font',
@@ -88,9 +53,17 @@ $supported-tokens: (
 
 $unsupported-tokens: (
   // go/keep-sorted start
+  'container-color',
   'container-elevation',
+  'container-shape',
+  'disabled-label-text-color',
+  'disabled-label-text-opacity',
+  'disabled-leading-icon-color',
+  'disabled-leading-icon-opacity',
   'disabled-state-layer-color',
   'disabled-state-layer-opacity',
+  'disabled-trailing-icon-color',
+  'disabled-trailing-icon-opacity',
   'divider-leading-space',
   'divider-trailing-space',
   'dragged-container-elevation',
@@ -99,12 +72,31 @@ $unsupported-tokens: (
   'dragged-state-layer-color',
   'dragged-state-layer-opacity',
   'dragged-trailing-icon-icon-color',
-  'focus-state-layer-color',
-  'focus-state-layer-opacity',
+  'focus-label-text-color',
+  'focus-leading-icon-icon-color',
+  'focus-trailing-icon-icon-color',
+  'hover-label-text-color',
+  'hover-leading-icon-icon-color',
+  'hover-trailing-icon-icon-color',
   'label-text-tracking',
   'label-text-type',
+  'large-leading-video-height',
+  'leading-avatar-color',
+  'leading-avatar-label-color',
+  'leading-avatar-label-font',
+  'leading-avatar-label-line-height',
+  'leading-avatar-label-size',
   'leading-avatar-label-tracking',
   'leading-avatar-label-type',
+  'leading-avatar-label-weight',
+  'leading-avatar-shape',
+  'leading-avatar-size',
+  'leading-icon-size',
+  'leading-image-height',
+  'leading-image-shape',
+  'leading-image-width',
+  'leading-video-shape',
+  'leading-video-width',
   'overline-color',
   'overline-font',
   'overline-line-height',
@@ -112,9 +104,15 @@ $unsupported-tokens: (
   'overline-tracking',
   'overline-type',
   'overline-weight',
+  'pressed-label-text-color',
+  'pressed-leading-icon-icon-color',
+  'pressed-trailing-icon-icon-color',
   'selected-trailing-icon-color',
+  'small-leading-video-height',
   'supporting-text-tracking',
   'supporting-text-type',
+  'three-line-container-height',
+  'trailing-icon-size',
   'trailing-supporting-text-tracking',
   'trailing-supporting-text-type',
   'unselected-trailing-icon-color',
@@ -123,8 +121,6 @@ $unsupported-tokens: (
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
-  'md-sys-elevation': md-sys-elevation.values(),
-  'md-sys-shape': md-sys-shape.values(),
   'md-sys-state': md-sys-state.values(),
   'md-sys-typescale': md-sys-typescale.values(),
 );
@@ -136,7 +132,12 @@ $_default: (
     $original-tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
-    $new-tokens: _get-new-tokens($deps, $exclude-hardcoded-values),
+    $new-tokens: (
+      'top-space': if($exclude-hardcoded-values, null, 12px),
+      'bottom-space': if($exclude-hardcoded-values, null, 12px),
+      'disabled-opacity':
+        map.get($original-tokens, 'list-item-disabled-label-text-opacity'),
+    ),
     $renamed-tokens: _get-renamed-tokens($original-tokens)
   );
 
@@ -156,21 +157,4 @@ $_default: (
   }
 
   @return $renamed-tokens;
-}
-
-@function _get-new-tokens($deps, $exclude-hardcoded-values) {
-  // Values pulled from b/198759625 spreadsheet
-  @return (
-    // go/keep-sorted start
-    'leading-element-leading-space': if($exclude-hardcoded-values, null, 16px),
-    'leading-video-leading-space': if($exclude-hardcoded-values, null, 0px),
-    // Commented out until the comments in the spreadsheet linked above are
-    // resolved regarding vertical alignment.
-    // 'leading-item-top-space': if($exclude-hardcoded-values, null, 8px),
-    // 'leading-video-top-space': if($exclude-hardcoded-values, null, 0px),
-    // 'leading-item-bottom-space': if($exclude-hardcoded-values, null, 8px),
-    // 'leading-video-bottom-space': if($exclude-hardcoded-values, null, 0px),
-    'trailing-element-headline-trailing-element-space': 16px,
-    // go/keep-sorted end
-  );
 }

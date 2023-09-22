@@ -92,30 +92,13 @@ export class List extends LitElement {
   }
 
   protected override render() {
-    return this.renderList();
-  }
-
-  /**
-   * Renders the main list element.
-   */
-  private renderList() {
-    return html`
-    <ul class="list" role="presentation">
-      ${this.renderContent()}
-    </ul>
-  `;
-  }
-
-  /**
-   * The content to be slotted into the list.
-   */
-  private renderContent() {
     return html`
       <slot
           @deactivate-items=${this.onDeactivateItems}
           @request-activation=${this.onRequestActivation}
           @slotchange=${this.onSlotchange}>
-      </slot>`;
+      </slot>
+    `;
   }
 
   /**

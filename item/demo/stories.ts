@@ -144,7 +144,7 @@ function getKnobContent(knobs: StoryKnobs, threeLines = false) {
       html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>` :
       nothing;
 
-  return html`${overline}${trailingText}${leadingIcon}${trailingIcon}`;
+  return [overline, trailingText, leadingIcon, trailingIcon];
 }
 
 /** Item stories. */

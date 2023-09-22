@@ -1008,85 +1008,6 @@ describe('<md-list-item>', () => {
     expect(internalRoot.tabIndex).toBe(-1);
   });
 
-  it('supportingText is rendered only when set', async () => {
-    const root = env.render(html`<md-list-item></md-list-item>`);
-
-    const listItem = root.querySelector('md-list-item')!;
-
-    await env.waitForStability();
-
-    let supporingTextEl = listItem.renderRoot.querySelector('.supporting-text');
-
-    expect(supporingTextEl).toBeNull();
-
-    listItem.supportingText = 'Yolo';
-
-    await env.waitForStability();
-
-    supporingTextEl = listItem.renderRoot.querySelector('.supporting-text');
-    expect(supporingTextEl).toBeTruthy();
-  });
-
-  it('trailingSupportingText is rendered only when set', async () => {
-    const root = env.render(html`<md-list-item></md-list-item>`);
-
-    const listItem = root.querySelector('md-list-item')!;
-
-    await env.waitForStability();
-
-    let supporingTextEl =
-        listItem.renderRoot.querySelector('.trailing-supporting-text');
-
-    expect(supporingTextEl).toBeNull();
-
-    listItem.trailingSupportingText = 'Yolo';
-
-    await env.waitForStability();
-
-    supporingTextEl =
-        listItem.renderRoot.querySelector('.trailing-supporting-text');
-    expect(supporingTextEl).toBeTruthy();
-  });
-
-  it('only one "with-*-line" class is set at a time', async () => {
-    const root = env.render(html`<md-list-item></md-list-item>`);
-
-    const listItem = root.querySelector('md-list-item')!;
-
-    await env.waitForStability();
-
-    const rootEl = listItem.renderRoot.querySelector('#item') as HTMLElement;
-
-    expect(rootEl.classList.contains('with-one-line')).toBeTrue();
-    expect(rootEl.classList.contains('with-two-line')).toBeFalse();
-    expect(rootEl.classList.contains('with-three-line')).toBeFalse();
-
-    listItem.multiLineSupportingText = true;
-
-    await env.waitForStability();
-
-    expect(rootEl.classList.contains('with-one-line')).toBeTrue();
-    expect(rootEl.classList.contains('with-two-line')).toBeFalse();
-    expect(rootEl.classList.contains('with-three-line')).toBeFalse();
-
-    listItem.multiLineSupportingText = false;
-    listItem.supportingText = 'YOLO';
-
-    await env.waitForStability();
-
-    expect(rootEl.classList.contains('with-one-line')).toBeFalse();
-    expect(rootEl.classList.contains('with-two-line')).toBeTrue();
-    expect(rootEl.classList.contains('with-three-line')).toBeFalse();
-
-    listItem.multiLineSupportingText = true;
-
-    await env.waitForStability();
-
-    expect(rootEl.classList.contains('with-one-line')).toBeFalse();
-    expect(rootEl.classList.contains('with-two-line')).toBeFalse();
-    expect(rootEl.classList.contains('with-three-line')).toBeTrue();
-  });
-
   it('ripple and focus ring rendered on interactive', async () => {
     const root = env.render(html`<md-list-item></md-list-item>`);
 
@@ -1100,7 +1021,7 @@ describe('<md-list-item>', () => {
     expect(rippleEl).toBeNull();
     expect(focusRingEl).toBeNull();
 
-    listItem.interactive = true;
+    listItem.type = 'button';
 
     await env.waitForStability();
 
@@ -1131,20 +1052,6 @@ describe('<md-list-item> link', () => {
         listItem.renderRoot.querySelector('#item') as HTMLElement;
 
     expect(internalRoot.tagName).toBe('A');
-  });
-
-  it('setting type and href does not render a role', async () => {
-    const root = env.render(
-        html`<md-list-item type="menuitem" href="https://google.com"></md-list-item>`);
-
-    const listItem = root.querySelector('md-list-item')!;
-
-    await env.waitForStability();
-
-    const internalRoot =
-        listItem.renderRoot.querySelector('#item') as HTMLElement;
-
-    expect(internalRoot.hasAttribute('role')).toBe(false);
   });
 
   it('setting target without href renders nothing', async () => {

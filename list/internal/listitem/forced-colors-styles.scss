@@ -8,16 +8,9 @@
 // go/keep-sorted end
 
 @media (forced-colors: active) {
-  :host {
-    @include list-item.theme(
-      (
-        disabled-label-text-color: GrayText,
-        disabled-label-text-opacity: 1,
-        disabled-leading-icon-color: GrayText,
-        disabled-leading-icon-opacity: 1,
-        disabled-trailing-icon-color: GrayText,
-        disabled-trailing-icon-opacity: 1,
-      )
-    );
+  :host([disabled]),
+  :host([disabled]) slot {
+    color: GrayText;
+    opacity: 1;
   }
 }

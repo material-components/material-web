@@ -7,10 +7,10 @@
 import {customElement} from 'lit/decorators.js';
 
 import {styles as forcedColors} from './internal/listitem/forced-colors-styles.css.js';
-import {ListItemOnly as ListItem} from './internal/listitem/list-item-only.js';
+import {ListItemEl as ListItem} from './internal/listitem/list-item.js';
 import {styles} from './internal/listitem/list-item-styles.css.js';
 
-export {ListItemRole} from './internal/listitem/list-item.js';
+export {ListItemType} from './internal/listitem/list-item.js';
 
 declare global {
   interface HTMLElementTagNameMap {

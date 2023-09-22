@@ -10,159 +10,113 @@ import '@material/web/list/list.js';
 import '@material/web/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {css, html} from 'lit';
+import {css, html, nothing} from 'lit';
+import {classMap} from 'lit/directives/class-map.js';
 
 /** Knob types for list stories. */
 export interface StoryKnobs {
-  'md-list-item': void;
   disabled: boolean;
-  interactive: boolean;
-  multiLineSupportingText: boolean;
-  headline: string;
-  supportingText: string;
+  overline: string;
   trailingSupportingText: string;
-  href: string;
-  target: string;
-  'link end icon': string;
-
-  'slot[name=start|end-icon]': void;
-  'start icon': string;
-  'end icon': string;
-
-  'slot[name=start-avatar]': void;
-  'avatar img': string;
-  'avatar label': string;
-
-  'slot[name=start-image]': void;
-  image: string;
-
-  'slot[name=start-video]': void;
-  'slot[name=start-video-large]': boolean;
-  'video src': string;
+  leadingIcon: boolean;
+  trailingIcon: boolean;
 }
 
+const styles = css`
+  md-list {
+    border-radius: 8px;
+    outline: 1px solid var(--md-sys-color-outline);
+    max-width: 360px;
+    overflow: hidden;
+    width: 100%;
+  }
+`;
+
 const standard: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-list>',
-  styles: css`
-    .list-demo {
-      border-radius: 8px;
-      border: 1px solid var(--md-sys-color-outline);
-      max-width: 360px;
-      overflow: hidden;
-      width: 100%;
-    }
-
-    .list {
-      max-width: 200px;
-    }`,
+  name: 'List',
+  styles,
   render(knobs) {
-    const {
-      disabled,
-      interactive,
-      multiLineSupportingText,
-      headline,
-      supportingText,
-      trailingSupportingText,
-      href,
-      target,
-      image,
-    } = knobs;
     return html`
-      <div class="list-demo">
-        <md-list class="list" role="listbox">
-          <md-list-item
-              .headline=${headline}
-              .supportingText=${supportingText}
-              .multiLineSupportingText=${multiLineSupportingText}
-              .trailingSupportingText=${trailingSupportingText}
-              .disabled=${disabled}
-              .interactive=${interactive}>
-          </md-list-item>
+      <md-list>
+        <md-list-item ?disabled=${knobs.disabled}>
+          Single line item
+          ${getKnobContent(knobs)}
+        </md-list-item>
 
-          <md-list-item
-              .headline=${headline}
-              .supportingText=${supportingText}
-              .multiLineSupportingText=${multiLineSupportingText}
-              .trailingSupportingText=${trailingSupportingText}
-              .disabled=${disabled}
-              .interactive=${interactive}>
-            <md-icon slot="start-icon">
-              ${knobs['start icon']}
-            </md-icon>
-            <md-icon slot="end-icon">
-              ${knobs['end icon']}
-            </md-icon>
-          </md-list-item>
+        <md-list-item ?disabled=${knobs.disabled}>
+          Two line item
+          <div slot="supporting-text">Supporting text</div>
+          ${getKnobContent(knobs)}
+        </md-list-item>
 
-          <md-list-item
-              .headline=${headline}
-              .supportingText=${supportingText}
-              .multiLineSupportingText=${multiLineSupportingText}
-              .trailingSupportingText=${trailingSupportingText}
-              .disabled=${disabled}
-              .interactive=${interactive}
-              .href=${href}
-              .target=${target as '' | '_blank' | '_parent' | '_self' | '_top'}>
-            <md-icon slot="end-icon">${knobs['link end icon']}</md-icon>
-          </md-list-item>
-
-          <md-divider></md-divider>
-
-          <md-list-item
-              .headline=${headline}
-              .supportingText=${supportingText}
-              .multiLineSupportingText=${multiLineSupportingText}
-              .trailingSupportingText=${trailingSupportingText}
-              .disabled=${disabled}
-              .interactive=${interactive}>
-            <img src=${knobs['avatar img']} slot="start-avatar">
-          </md-list-item>
-
-          <md-list-item
-              .headline=${headline}
-              .supportingText=${supportingText}
-              .multiLineSupportingText=${multiLineSupportingText}
-              .trailingSupportingText=${trailingSupportingText}
-              .disabled=${disabled}
-              .interactive=${interactive}>
-            <span slot="start-avatar">
-              ${knobs['avatar label']}
-            </span>
-          </md-list-item>
-
-          <md-list-item
-              .headline=${headline}
-              .supportingText=${supportingText}
-              .multiLineSupportingText=${multiLineSupportingText}
-              .trailingSupportingText=${trailingSupportingText}
-              .disabled=${disabled}
-              .interactive=${interactive}>
-            <img .src=${image} slot="start-image">
-          </md-list-item>
-
-          <md-list-item
-              .headline=${headline}
-              .supportingText=${supportingText}
-              .multiLineSupportingText=${multiLineSupportingText}
-              .trailingSupportingText=${trailingSupportingText}
-              .disabled=${disabled}
-              .interactive=${interactive}>
-            <video
-                muted
-                autoplay
-                loop
-                playsinline
-                .src=${knobs['video src']}
-                slot=${
-        knobs['slot[name=start-video-large]'] ? 'start-video-large' :
-                                                'start-video'}
-            ></video>
-          </md-list-item>
-        </md-list>
-      </div>
+        <md-list-item ?disabled=${knobs.disabled}>
+          Three line item
+          <div slot="supporting-text">
+            <div>Second line text</div>
+            <div>Third line text</div>
+          </div>
+          ${getKnobContent(knobs, /* threeLines */ true)}
+        </md-list-item>
+      </md-list>
   `;
   },
 };
 
+const interactive: MaterialStoryInit<StoryKnobs> = {
+  name: 'Interactive list',
+  styles,
+  render(knobs) {
+    const knobsNoTrailing = {...knobs, trailingIcon: false};
+    return html`
+      <md-list>
+        <md-list-item ?disabled=${knobs.disabled}
+          type="link"
+          href="https://google.com"
+          target="_blank"
+        >
+          Link item
+          <md-icon slot="end">link</md-icon>
+          ${getKnobContent(knobsNoTrailing)}
+        </md-list-item>
+
+        <md-list-item type="button" ?disabled=${knobs.disabled}>
+          Button item
+          ${getKnobContent(knobs)}
+        </md-list-item>
+
+        <md-list-item ?disabled=${knobs.disabled}>
+          Non-interactive item
+          ${getKnobContent(knobs)}
+        </md-list-item>
+      </md-list>
+    `;
+  },
+};
+
+function getKnobContent(knobs: StoryKnobs, threeLines = false) {
+  const overline = knobs.overline ?
+      html`<div slot="overline">${knobs.overline}</div>` :
+      nothing;
+
+  const classes = {
+    'align-start': threeLines,
+  };
+
+  const trailingText = knobs.trailingSupportingText ?
+      html`<div class=${classMap(classes)} slot="trailing-supporting-text">${
+          knobs.trailingSupportingText}</div>` :
+      nothing;
+
+  const leadingIcon = knobs.leadingIcon ?
+      html`<md-icon class=${classMap(classes)} slot="start">event</md-icon>` :
+      nothing;
+
+  const trailingIcon = knobs.trailingIcon ?
+      html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>` :
+      nothing;
+
+  return [overline, trailingText, leadingIcon, trailingIcon];
+}
+
 /** List stories. */
-export const stories = [standard];
+export const stories = [standard, interactive];

@@ -35,7 +35,7 @@ export class ListHarness extends Harness<List> {
    */
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.list') as HTMLElement;
+    return this.element as List;
   }
 
   /** @return List item harnesses. */
@@ -60,8 +60,7 @@ export class ListHarness extends Harness<List> {
    * @param key The key to dispatch on the list.
    */
   override async keypress(key: string, init = {} as KeyboardEventInit) {
-    const nativeList = this.element.renderRoot.querySelector('ul')!;
     init = {code: key, ...init};
-    this.simulateKeypress(nativeList, key, init);
+    await super.keypress(key, init);
   }
 }

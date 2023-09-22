@@ -6,7 +6,6 @@
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
-@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../../focus/focus-ring';
@@ -31,35 +30,32 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-list-item-values();
-
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-list-item-#{$token}, #{$value});
-    }
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-list-item-#{$token}, #{$value}));
   }
 
-  @include _list-item;
-  @include _image;
-  @include _icon;
-  @include _avatar;
-  @include _video;
-}
-
-@mixin _list-item() {
   :host {
-    color: unset;
+    border-radius: map.get($tokens, 'container-shape');
+    display: flex;
 
     @include ripple.theme(
       (
-        hover-color: var(--_hover-state-layer-color),
-        hover-opacity: var(--_hover-state-layer-opacity),
-        pressed-color: var(--_pressed-state-layer-color),
-        pressed-opacity: var(--_pressed-state-layer-opacity),
+        hover-color: map.get($tokens, 'hover-state-layer-color'),
+        hover-opacity: map.get($tokens, 'hover-state-layer-opacity'),
+        pressed-color: map.get($tokens, 'pressed-state-layer-color'),
+        pressed-opacity: map.get($tokens, 'pressed-state-layer-opacity'),
       )
     );
   }
 
+  :host([disabled]) {
+    opacity: map.get($tokens, 'disabled-opacity');
+    pointer-events: none;
+  }
+
   md-focus-ring {
+    z-index: 1;
+
     @include focus-ring.theme(
       (
         'shape': 8px,
@@ -67,329 +63,84 @@
     );
   }
 
-  .list-item {
-    align-items: center;
-    box-sizing: border-box;
-    display: flex;
-    outline: none;
-    position: relative;
-    width: 100%;
+  a,
+  button,
+  li {
+    // Resets. These can be removed once we're no longer use these tags
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: unset;
     text-decoration: none;
-    background-color: var(--_container-color);
-    border-radius: var(--_container-shape);
+  }
+
+  .list-item {
+    border-radius: inherit;
+    display: flex;
+    flex: 1;
+    outline: none;
     // hide android tap color since we have ripple
     -webkit-tap-highlight-color: transparent;
 
     &:not(.disabled).interactive {
       cursor: pointer;
     }
-
-    &.disabled {
-      pointer-events: none;
-    }
   }
 
-  .content-wrapper {
-    display: flex;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: inherit;
-    padding-inline-end: var(--_trailing-space);
+  [slot='container'] {
+    pointer-events: none;
   }
 
   md-ripple {
     border-radius: inherit;
   }
 
-  .with-one-line {
-    min-height: var(--_one-line-container-height);
+  md-item {
+    border-radius: inherit;
+    flex: 1;
+    height: 100%;
+    color: map.get($tokens, 'label-text-color');
+    font-family: map.get($tokens, 'label-text-font');
+    font-size: map.get($tokens, 'label-text-size');
+    line-height: map.get($tokens, 'label-text-line-height');
+    font-weight: map.get($tokens, 'label-text-weight');
+    min-height: map.get($tokens, 'one-line-container-height');
+    padding-top: map.get($tokens, 'top-space');
+    padding-bottom: map.get($tokens, 'bottom-space');
+    padding-inline-start: map.get($tokens, 'leading-space');
+    padding-inline-end: map.get($tokens, 'trailing-space');
   }
 
-  .with-two-line {
-    min-height: var(--_two-line-container-height);
+  md-item[multiline] {
+    min-height: map.get($tokens, 'two-line-container-height');
   }
 
-  .with-three-line {
-    min-height: var(--_three-line-container-height);
+  [slot='supporting-text'] {
+    color: map.get($tokens, 'supporting-text-color');
+    font-family: map.get($tokens, 'supporting-text-font');
+    font-size: map.get($tokens, 'supporting-text-size');
+    line-height: map.get($tokens, 'supporting-text-line-height');
+    font-weight: map.get($tokens, 'supporting-text-weight');
   }
 
-  .start {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 0 0 auto;
-    z-index: 1;
-
-    .with-three-line & {
-      justify-content: start;
-    }
+  [slot='trailing-supporting-text'] {
+    color: map.get($tokens, 'trailing-supporting-text-color');
+    font-family: map.get($tokens, 'trailing-supporting-text-font');
+    font-size: map.get($tokens, 'trailing-supporting-text-size');
+    line-height: map.get($tokens, 'trailing-supporting-text-line-height');
+    font-weight: map.get($tokens, 'trailing-supporting-text-weight');
   }
 
-  slot[name='start-icon']::slotted(*),
-  slot[name='start-image']::slotted(*),
-  slot[name='start-avatar']::slotted(*) {
-    margin-inline-start: var(--_leading-element-leading-space);
-  }
-
-  .body {
-    display: inline-flex;
-    justify-content: center;
-    flex-direction: column;
-    min-width: 0;
-    box-sizing: border-box;
-    flex: 1 0 0;
-    padding-inline-start: var(--_leading-space);
-    z-index: 1;
-  }
-
-  .end {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 0 0 auto;
-    z-index: 1;
-
-    .with-three-line & {
-      justify-content: start;
-    }
-  }
-
-  slot[name='end']::slotted(*),
-  slot[name='end-icon']::slotted(*),
-  .trailing-supporting-text {
-    margin-inline-start: var(
-      --_trailing-element-headline-trailing-element-space
-    );
-  }
-
-  .label-text {
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    white-space: nowrap;
-    color: var(--_label-text-color);
-    font-family: var(--_label-text-font);
-    font-size: var(--_label-text-size);
-    line-height: var(--_label-text-line-height);
-    font-weight: var(--_label-text-weight);
-
-    :hover & {
-      color: var(--_hover-label-text-color);
-    }
-
-    :focus & {
-      color: var(--_focus-label-text-color);
-    }
-
-    :active & {
-      color: var(--_pressed-label-text-color);
-    }
-
-    .disabled & {
-      color: var(--_disabled-label-text-color);
-      opacity: var(--_disabled-label-text-opacity);
-    }
-  }
-
-  .supporting-text {
-    text-overflow: ellipsis;
-    white-space: normal;
-    overflow: hidden;
-    width: 100%;
-    color: var(--_supporting-text-color);
-    font-family: var(--_supporting-text-font);
-    font-size: var(--_supporting-text-size);
-    line-height: var(--_supporting-text-line-height);
-    font-weight: var(--_supporting-text-weight);
-
-    // Box is supposed to be deprecated, but line-clamp is not. It's still on
-    // standards track and can only be applied with display: -webkit-box and
-    // -webkit-box-orient: vertical. Must change once un-prefixed line-clamp
-    // ships
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    display: -webkit-box;
-
-    .disabled & {
-      color: var(--_disabled-label-text-color);
-      opacity: var(--_disabled-label-text-opacity);
-    }
-  }
-
-  .supporting-text--multi-line {
-    -webkit-line-clamp: 2;
-  }
-
-  .trailing-supporting-text {
-    font-family: var(--_trailing-supporting-text-font);
-    font-size: var(--_trailing-supporting-text-size);
-    line-height: var(--_trailing-supporting-text-line-height);
-    font-weight: var(--_trailing-supporting-text-weight);
-
-    .list-item:not(.disabled) & {
-      color: var(--_trailing-supporting-text-color);
-    }
-
-    .disabled & {
-      color: var(--_disabled-label-text-color);
-      opacity: var(--_disabled-label-text-opacity);
-    }
-
-    .with-three-line & {
-      // In three line, trailing-supporting-text must align with the mid-line of
-      // the headline text.
-      margin-block-start: calc(
-        (
-            var(--_label-text-line-height) -
-              var(--_trailing-supporting-text-line-height)
-          ) / 2
-      );
-    }
-  }
-
-  .focus-ring {
-    z-index: 1;
-  }
-}
-
-@mixin _image() {
-  slot[name='start-image']::slotted(*) {
-    display: inline-flex;
-    height: var(--_leading-image-height);
-    width: var(--_leading-image-width);
-    border-radius: var(--_leading-image-shape);
-    // Min height is two-line height
-    margin-block: calc(
-      (var(--_two-line-container-height) - var(--_leading-image-height)) / 2
-    );
-
-    .with-three-line & {
-      margin-block: 0;
-    }
-  }
-}
-
-@mixin _icon() {
-  ::slotted(*) {
+  :is([slot='start'], [slot='end'])::slotted(*) {
     fill: currentColor;
   }
 
-  slot[name='start-icon']::slotted(*) {
-    font-size: var(--_leading-icon-size);
-    width: var(--_leading-icon-size);
-    height: var(--_leading-icon-size);
-    color: var(--_leading-icon-color);
-
-    .with-three-line & {
-      // In three line, icon must align with the mid-line of headline text
-      margin-block-start: calc(
-        (var(--_label-text-line-height) - var(--_leading-icon-size)) / 2
-      );
-    }
+  [slot='start'] {
+    color: map.get($tokens, 'leading-icon-color');
   }
 
-  slot[name='end-icon']::slotted(*) {
-    font-size: var(--_trailing-icon-size);
-    width: var(--_trailing-icon-size);
-    height: var(--_trailing-icon-size);
-    color: var(--_trailing-icon-color);
-
-    .with-three-line & {
-      // In three line, icon must align with the mid-line of headline text
-      margin-block-start: calc(
-        (var(--_label-text-line-height) - var(--_trailing-icon-size)) / 2
-      );
-    }
-  }
-
-  :hover {
-    slot[name='start-icon']::slotted(*) {
-      color: var(--_hover-leading-icon-icon-color);
-    }
-
-    slot[name='end-icon']::slotted(*) {
-      color: var(--_hover-trailing-icon-icon-color);
-    }
-  }
-
-  :focus {
-    slot[name='start-icon']::slotted(*) {
-      color: var(--_focus-leading-icon-icon-color);
-    }
-
-    slot[name='end-icon']::slotted(*) {
-      color: var(--_focus-trailing-icon-icon-color);
-    }
-  }
-
-  :active {
-    slot[name='start-icon']::slotted(*) {
-      color: var(--_pressed-leading-icon-icon-color);
-    }
-
-    slot[name='end-icon']::slotted(*) {
-      color: var(--_pressed-trailing-icon-icon-color);
-    }
-  }
-
-  .disabled {
-    slot[name='start-icon']::slotted(*) {
-      opacity: var(--_disabled-leading-icon-opacity);
-      color: var(--_disabled-leading-icon-color);
-    }
-
-    slot[name='end-icon']::slotted(*) {
-      opacity: var(--_disabled-trailing-icon-opacity);
-      color: var(--_disabled-trailing-icon-color);
-    }
-  }
-}
-
-@mixin _avatar() {
-  slot[name='start-avatar']::slotted(*) {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--_leading-avatar-color);
-    height: var(--_leading-avatar-size);
-    width: var(--_leading-avatar-size);
-    border-radius: var(--_leading-avatar-shape);
-    color: var(--_leading-avatar-label-color);
-    font-family: var(--_leading-avatar-label-font);
-    font-size: var(--_leading-avatar-label-size);
-    line-height: var(--_leading-avatar-label-line-height);
-    font-weight: var(--_leading-avatar-label-weight);
-  }
-}
-
-@mixin _video() {
-  slot[name='start-video']::slotted(*),
-  slot[name='start-video-large']::slotted(*) {
-    display: inline-flex;
-    object-fit: cover;
-    height: var(--_small-leading-video-height);
-    width: var(--_leading-video-width);
-    border-radius: var(--_leading-video-shape);
-    margin-inline-start: var(--_leading-video-leading-space);
-    // Min height is three-line height
-    margin-block: calc(
-      (var(--_three-line-container-height) - var(--_small-leading-video-height)) /
-        2
-    );
-
-    // Let it auto-layout so that we don't mess with the icons and supporting
-    // text that is supposed to be top-aligned in three-line.
-    .with-three-line & {
-      margin-block: 0;
-    }
-  }
-
-  slot[name='start-video-large']::slotted(*) {
-    // Min height is three-line height
-    margin-block: calc(
-      (var(--_three-line-container-height) - var(--_large-leading-video-height)) /
-        2
-    );
-    height: var(--_large-leading-video-height);
+  [slot='end'] {
+    color: map.get($tokens, 'trailing-icon-color');
   }
 }

@@ -6,7 +6,6 @@
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
-@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
@@ -29,23 +28,15 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-list-values();
-
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-list-#{$token}, #{$value});
-    }
-
-    color: unset;
-    display: flex;
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-list-#{$token}, #{$value}));
   }
 
-  .list {
-    background-color: var(--_container-color);
-    border-radius: inherit;
-    display: block;
-    list-style-type: none;
-    margin: 0;
-    min-width: inherit;
+  :host {
+    background: map.get($tokens, 'container-color');
+    color: unset;
+    display: flex;
+    flex-direction: column;
     outline: none;
     padding: 8px 0;
     // Add position so the elevation overlay (which is absolutely positioned)
