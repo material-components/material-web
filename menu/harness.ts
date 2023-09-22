@@ -22,8 +22,7 @@ export class MenuHarness extends Harness<Menu> {
    */
   protected override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('md-list')!.renderRoot
-               .querySelector('.list') as HTMLElement;
+    return this.element as Menu;
   }
 
   /** @return ListItem harnesses for the menu's items. */

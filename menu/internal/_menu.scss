@@ -32,38 +32,33 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-menu-values();
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-menu-#{$token}, #{$value}));
+  }
 
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-menu-#{$token}, #{$value});
-    }
-
-    @include md-list.theme(
-      (
-        'container-color': var(--_container-color),
-      )
-    );
-
     @include elevation.theme(
       (
-        'level': var(--_container-elevation),
-        'shadow-color': var(--_container-shadow-color),
+        'level': map.get($tokens, 'container-elevation'),
+        'shadow-color': map.get($tokens, 'container-shadow-color'),
       )
     );
 
     min-width: 112px;
+    color: unset;
+    display: contents;
   }
 
   md-focus-ring {
     @include focus-ring.theme(
       (
-        'shape': var(--_container-shape),
+        'shape': map.get($tokens, 'container-shape'),
       )
     );
   }
 
   .menu {
-    border-radius: var(--_container-shape);
+    border-radius: map.get($tokens, 'container-shape');
     display: none;
     opacity: 0;
     z-index: 20;
@@ -79,25 +74,34 @@
     position: fixed;
   }
 
-  md-list {
+  .items {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    outline: none;
+    box-sizing: border-box;
+    background-color: map.get($tokens, 'container-color');
     height: inherit;
     max-height: inherit;
-    display: block;
     overflow: auto;
     min-width: inherit;
     max-width: inherit;
     border-radius: inherit;
   }
 
-  .has-overflow md-list {
+  .item-padding {
+    padding-block: 8px;
+  }
+
+  .has-overflow .items {
     overflow: visible;
   }
 
-  .animating md-list {
+  .animating .items {
     overflow: hidden;
   }
 
-  .has-overflow.animating md-list {
+  .has-overflow.animating .items {
     // Often has-overlow is set because there are submenus. Since we need
     // overflow to be hidden to make the animation work, we need to disable
     // submenus opening mid-animation or else it looks completely wrong.

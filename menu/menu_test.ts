@@ -42,10 +42,6 @@ describe('<md-menu>', () => {
     const menu = root.querySelector('md-menu')!;
     menu.anchorElement = button;
     menu.show();
-    await menu.updateComplete;
-    const listEl = menu.renderRoot.querySelector('md-list')!;
-    await listEl.updateComplete;
-    const listRoot = listEl.renderRoot.querySelector('ul')!;
 
     expect(menu.open).toBeTrue();
 
@@ -56,7 +52,7 @@ describe('<md-menu>', () => {
       composed: true,
       cancelable: true
     });
-    listRoot.dispatchEvent(escapeKeydownEvent);
+    menu.dispatchEvent(escapeKeydownEvent);
 
     await menu.updateComplete;
 

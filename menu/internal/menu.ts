@@ -4,20 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../list/list.js';
 import '../../focus/md-focus-ring.js';
 import '../../elevation/elevation.js';
 
-import {html, isServer, LitElement, nothing} from 'lit';
-import {eventOptions, property, query, state} from 'lit/decorators.js';
+import {html, isServer, LitElement} from 'lit';
+import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
-import {List} from '../../list/internal/list.js';
 
+import {ListController, NavigableKeys} from './list-controller.js';
+import {getActiveItem, getFirstActivatableItem, getLastActivatableItem} from './list-navigation-helpers.js';
 import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, isClosableKey, isElementInSubtree, MenuItem} from './shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
 import {TypeaheadController} from './typeaheadController.js';
@@ -28,6 +27,19 @@ export {Corner} from './surfacePositionController.js';
  * The default value for the typeahead buffer time in Milliseconds.
  */
 export const DEFAULT_TYPEAHEAD_BUFFER_TIME = 200;
+
+const submenuNavKeys = new Set<string>([
+  NavigableKeys.ArrowDown,
+  NavigableKeys.ArrowUp,
+  NavigableKeys.Home,
+  NavigableKeys.End,
+]);
+
+const menuNavKeys = new Set<string>([
+  NavigableKeys.ArrowLeft,
+  NavigableKeys.ArrowRight,
+  ...submenuNavKeys,
+]);
 
 /**
  * Element to focus on when menu is first opened.
@@ -54,14 +66,12 @@ export type FocusState = typeof FocusState[keyof typeof FocusState];
  */
 function getFocusedElement(activeDoc: Document|ShadowRoot = document):
     HTMLElement|null {
-  const activeEl = activeDoc.activeElement as HTMLElement | null;
+  let activeEl = activeDoc.activeElement as HTMLElement | null;
 
-  if (!activeEl) {
-    return null;
-  }
-
-  if (activeEl.shadowRoot) {
-    return getFocusedElement(activeEl.shadowRoot) ?? activeEl;
+  // Check for activeElement in the case that an element with a shadow root host
+  // is currently focused.
+  while (activeEl && activeEl?.shadowRoot?.activeElement) {
+    activeEl = activeEl.shadowRoot.activeElement as HTMLElement | null;
   }
 
   return activeEl;
@@ -75,10 +85,10 @@ function getFocusedElement(activeDoc: Document|ShadowRoot = document):
  */
 export abstract class Menu extends LitElement {
   static {
-    requestUpdateOnAriaChange(Menu);
+    // We want to manage tabindex ourselves.
+    setupHostAria(Menu, {focusable: false});
   }
 
-  @query('md-list') private readonly listElement!: List|null;
   @query('.menu') private readonly surfaceEl!: HTMLElement|null;
   @query('slot') private readonly slotEl!: HTMLSlotElement|null;
 
@@ -134,14 +144,6 @@ export abstract class Menu extends LitElement {
    */
   @property({type: Number, attribute: 'y-offset'}) yOffset = 0;
   /**
-   * The tabindex of the underlying list element.
-   */
-  @property({type: Number, attribute: 'list-tabindex'}) listTabIndex = -1;
-  /**
-   * The role of the underlying list element.
-   */
-  @property() type: 'menu'|'menubar'|'listbox'|'list' = 'menu';
-  /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.
    */
@@ -195,11 +197,61 @@ export abstract class Menu extends LitElement {
   @property({attribute: 'default-focus'})
   defaultFocus: FocusState = FocusState.FIRST_ITEM;
 
+  @queryAssignedElements({flatten: true}) protected slotItems!: HTMLElement[];
   @state() private typeaheadActive = true;
 
-  private isPointerDown = false;
+  /**
+   * Whether or not the current menu is a submenu and should not handle specific
+   * navigation keys.
+   *
+   * @exports
+   */
+  isSubmenu = false;
 
+  /**
+   * The event path of the last window pointerdown event.
+   */
+  private pointerPath: EventTarget[] = [];
+  private isPointerDown = false;
   private readonly openCloseAnimationSignal = createAnimationSignal();
+
+  private readonly listController = new ListController<MenuItem>({
+    isItem: (maybeItem: HTMLElement): maybeItem is MenuItem => {
+      return maybeItem.hasAttribute('md-menu-item');
+    },
+    getPossibleItems: () => this.slotItems,
+    isRtl: () => (getComputedStyle(this).direction === 'rtl'),
+    deactivateItem:
+        (item: MenuItem) => {
+          item.selected = false;
+          item.tabIndex = -1;
+        },
+    activateItem:
+        (item: MenuItem) => {
+          item.selected = true;
+          item.tabIndex = 0;
+        },
+    isNavigableKey:
+        (key: string) => {
+          if (!this.isSubmenu) {
+            return menuNavKeys.has(key);
+          }
+
+          const isRtl = getComputedStyle(this).direction === 'rtl';
+          // we want md-submenu to handle the submenu's left/right arrow exit
+          // key so it can close the menu instead of navigate the list.
+          // Therefore we need to include all keys but left/right arrow close
+          // key
+          const arrowOpen =
+              isRtl ? NavigableKeys.ArrowLeft : NavigableKeys.ArrowRight;
+
+          if (key === arrowOpen) {
+            return true;
+          }
+
+          return submenuNavKeys.has(key);
+        },
+  });
 
   /**
    * Whether the menu is animating upwards or downwards when opening. This is
@@ -247,6 +299,21 @@ export abstract class Menu extends LitElement {
     this.requestUpdate('anchorElement');
   }
 
+  private readonly internals = polyfillElementInternalsAria(
+      this, (this as HTMLElement /* needed for closure */).attachInternals());
+
+  constructor() {
+    super();
+    if (!isServer) {
+      this.internals.role = 'menu';
+      this.addEventListener('keydown', this.listController.handleKeydown);
+      // Capture so that we can grab the event before it reaches the menu item
+      // istelf. Specifically useful for the case where typeahead encounters a
+      // space and we don't want the menu item to close the menu.
+      this.addEventListener('keydown', this.captureKeydown, {capture: true});
+    }
+  }
+
   /**
    * Handles positioning the surface and aligning it to the anchor as well as
    * keeping it in the viewport.
@@ -277,14 +344,7 @@ export abstract class Menu extends LitElement {
    * have both the `md-menu-item` and `md-list-item` attributes.
    */
   get items(): MenuItem[] {
-    const listElement = this.listElement;
-
-    if (listElement) {
-      return listElement.items.filter(el => el.hasAttribute('md-menu-item')) as
-          MenuItem[];
-    }
-
-    return [];
+    return this.listController.items;
   }
 
   protected override render() {
@@ -295,36 +355,20 @@ export abstract class Menu extends LitElement {
    * Renders the positionable surface element and its contents.
    */
   private renderSurface() {
-    // TODO(b/274140618): elevation should be an underlay, not an overlay that
-    // tints content
     return html`
        <div
           class="menu ${classMap(this.getSurfaceClasses())}"
           style=${styleMap(this.menuPositionController.surfaceStyles)}
           @focusout=${this.handleFocusout}>
         ${this.renderElevation()}
-        ${this.renderList()}
+        <div class="items">
+          <div class="item-padding">
+            ${this.renderMenuItems()}
+          </div>
+        </div>
         ${this.renderFocusRing()}
        </div>
      `;
-  }
-
-  /**
-   * Renders the List element and its items
-   */
-  private renderList() {
-    // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
-    return html`
-      <md-list
-          part="list"
-          id="list"
-          aria-label=${ariaLabel || nothing}
-          role=${this.type}
-          tabindex=${this.listTabIndex}
-          @keydown=${this.handleListKeydown}>
-        ${this.renderMenuItems()}
-      </md-list>`;
   }
 
   /**
@@ -338,7 +382,8 @@ export abstract class Menu extends LitElement {
         @deactivate-typeahead=${this.handleDeactivateTypeahead}
         @activate-typeahead=${this.handleActivateTypeahead}
         @stay-open-on-focusout=${this.handleStayOpenOnFocusout}
-        @close-on-focusout=${this.handleCloseOnFocusout}></slot>`;
+        @close-on-focusout=${this.handleCloseOnFocusout}
+        @slotchange=${this.listController.onSlotchange}></slot>`;
   }
 
   /**
@@ -382,6 +427,10 @@ export abstract class Menu extends LitElement {
       if (wasAnchorClickFocused) {
         return;
       }
+    } else if (this.isPointerDown && this.pointerPath.includes(this)) {
+      // If menu tabindex == -1 and the user clicks on the menu or a divider, we
+      // want to keep the menu open.
+      return;
     }
 
     const oldRestoreFocus = this.skipRestoreFocus;
@@ -394,12 +443,8 @@ export abstract class Menu extends LitElement {
     this.skipRestoreFocus = oldRestoreFocus;
   }
 
-  // Capture so that we can grab the event before it reaches the list item
-  // istelf. Specifically useful for the case where typeahead encounters a space
-  // and we don't want the menu item to close the menu.
-  @eventOptions({capture: true})
-  private handleListKeydown(event: KeyboardEvent) {
-    if (event.target === this.listElement && !event.defaultPrevented &&
+  private captureKeydown(event: KeyboardEvent) {
+    if (event.target === this && !event.defaultPrevented &&
         isClosableKey(event.code)) {
       event.preventDefault();
       this.close();
@@ -415,10 +460,8 @@ export abstract class Menu extends LitElement {
   private readonly onOpened = async () => {
     this.lastFocusedElement = getFocusedElement();
 
-    if (!this.listElement) return;
-
-    const items = this.listElement.items;
-    const activeItemRecord = List.getActiveItem(items);
+    const items = this.items;
+    const activeItemRecord = getActiveItem(items);
 
     if (activeItemRecord && this.defaultFocus !== FocusState.NONE) {
       activeItemRecord.item.tabIndex = -1;
@@ -437,7 +480,7 @@ export abstract class Menu extends LitElement {
     // (block-padding-of-the-menu)px at the end of the animation
     switch (this.defaultFocus) {
       case FocusState.FIRST_ITEM:
-        const first = List.getFirstActivatableItem(items);
+        const first = getFirstActivatableItem(items);
         if (first) {
           first.tabIndex = 0;
           first.focus();
@@ -445,7 +488,7 @@ export abstract class Menu extends LitElement {
         }
         break;
       case FocusState.LAST_ITEM:
-        const last = List.getLastActivatableItem(items);
+        const last = getLastActivatableItem(items);
         if (last) {
           last.tabIndex = 0;
           last.focus();
@@ -453,7 +496,7 @@ export abstract class Menu extends LitElement {
         }
         break;
       case FocusState.LIST_ROOT:
-        this.listElement?.focus();
+        this.focus();
         break;
       default:
       case FocusState.NONE:
@@ -728,8 +771,9 @@ export abstract class Menu extends LitElement {
     }
   }
 
-  private readonly onWindowPointerdown = () => {
+  private readonly onWindowPointerdown = (event: PointerEvent) => {
     this.isPointerDown = true;
+    this.pointerPath = event.composedPath();
   };
 
   private readonly onWindowPointerup = () => {
@@ -755,15 +799,12 @@ export abstract class Menu extends LitElement {
 
   private onDeactivateItems(event: Event) {
     event.stopPropagation();
-    const items = this.items;
-    for (const item of items) {
-      item.selected = false;
-    }
+    this.listController.onDeactivateItems();
   }
 
   private onRequestActivation(event: Event) {
     event.stopPropagation();
-    this.onDeactivateItems(event);
+    this.listController.onRequestActivation(event);
   }
 
   private handleDeactivateTypeahead(event: DeactivateTypeaheadEvent) {
@@ -790,13 +831,10 @@ export abstract class Menu extends LitElement {
     this.stayOpenOnFocusout = false;
   }
 
-  override focus() {
-    this.listElement?.focus();
-  }
-
   close() {
     this.open = false;
-    this.items.forEach(item => {
+    const slotItems = this.slotItems as Array<HTMLElement&{close?: () => void}>;
+    slotItems.forEach(item => {
       item.close?.();
     });
   }
@@ -812,7 +850,7 @@ export abstract class Menu extends LitElement {
    * @return The activated menu item or `null` if there are no items.
    */
   activateNextItem() {
-    return this.listElement?.activateNextItem() as MenuItem ?? null;
+    return this.listController.activateNextItem() ?? null;
   }
 
   /**
@@ -822,6 +860,6 @@ export abstract class Menu extends LitElement {
    * @return The activated menu item or `null` if there are no items.
    */
   activatePreviousItem() {
-    return this.listElement?.activatePreviousItem() as MenuItem ?? null;
+    return this.listController.activatePreviousItem() ?? null;
   }
 }

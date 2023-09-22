@@ -4,14 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ListItem} from '../../list/internal/listitem/list-item.js';
-
 /**
- * Interface specific to menu item and not list item.
+ * Interface specific to menu item and not HTMLElement.
  */
-interface MenuItemSelf {
+interface MenuItemAdditions {
   /**
-   * The visible headline text of the item.
+   * Whether or not the item is in the disabled state.
+   */
+  disabled: boolean;
+  /**
+   * The text of the item that will be used for typeahead or Select's visible
+   * text when this item is selected.
    */
   headline: string;
   /**
@@ -21,7 +24,7 @@ interface MenuItemSelf {
   /**
    * Whether or not the item is in the selected visual state.
    */
-  selected?: boolean;
+  selected: boolean;
   /**
    * If it is a sub-menu-item, a method that can close the submenu.
    */
@@ -37,7 +40,7 @@ interface MenuItemSelf {
  * should implement this interface to be compatible with md-menu. Additionally
  * they should have both the `md-menu-item` and `md-list-item` attributes set.
  */
-export type MenuItem = MenuItemSelf&ListItem;
+export type MenuItem = MenuItemAdditions&HTMLElement;
 
 /**
  * The reason the `close-menu` event was dispatched.

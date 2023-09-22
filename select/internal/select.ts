@@ -6,7 +6,7 @@
 
 import '../../menu/menu.js';
 
-import {html, LitElement, PropertyValues} from 'lit';
+import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
@@ -409,6 +409,7 @@ export abstract class Select extends LitElement {
           id="field"
           tabindex=${this.disabled ? '-1' : '0'}
           aria-expanded=${this.open ? 'true' : 'false'}
+          aria-controls="listbox"
           class="field"
           label=${this.label}
           .focused=${this.focused || this.open}
@@ -468,8 +469,9 @@ export abstract class Select extends LitElement {
       <md-menu
           id="listbox"
           default-focus="none"
-          list-tabindex="-1"
-          type="listbox"
+          tabindex="-1"
+          role="listbox"
+          aria-hidden=${this.open ? nothing : 'true'}
           stay-open-on-focusout
           part="menu"
           exportparts="focus-ring: menu-focus-ring"
