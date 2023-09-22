@@ -61,11 +61,10 @@
               <li>
                 <md-list-item
                   href="{{ component.url }}"
-                  headline="{{ component.data.name }}"
                   {% if component.url == page.url %}selected{% endif %}
                   data-role=""
                   item-tabindex="0"
-                ></md-list-item>
+                >{{ component.data.name }}</md-list-item>
               </li>
             {% endfor %}
           </md-list>
