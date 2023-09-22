@@ -753,9 +753,6 @@ export abstract class Menu extends LitElement {
       window.addEventListener('pointerdown', this.onWindowPointerdown);
       window.addEventListener('pointerup', this.onWindowPointerup);
     }
-
-    // need to self-identify as an md-menu for submenu ripple identification.
-    this.toggleAttribute('md-menu', true);
   }
 
   override disconnectedCallback() {

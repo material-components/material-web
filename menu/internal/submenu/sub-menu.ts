@@ -8,9 +8,9 @@ import {html, isServer, LitElement} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {MenuItem} from '../controllers/menuItemController.js';
-import {CloseMenuEvent, CloseReason, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KeydownCloseKey, NavigableKey, SelectionKey} from '../controllers/shared.js';
+import {CloseMenuEvent, CloseReason, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KeydownCloseKey, Menu, NavigableKey, SelectionKey} from '../controllers/shared.js';
 import {createDeactivateItemsEvent, createRequestActivationEvent, deactivateActiveItem, getFirstActivatableItem} from '../list-navigation-helpers.js';
-import {Corner, Menu} from '../menu.js';
+import {Corner} from '../menu.js';
 
 /**
  * @fires deactivate-items Requests the parent menu to deselect other items when

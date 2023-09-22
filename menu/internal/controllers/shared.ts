@@ -4,7 +4,76 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {LitElement} from 'lit';
+
 import {MenuItem} from './menuItemController.js';
+import type {Corner, SurfacePositionTarget} from './surfacePositionController.js';
+
+/**
+ * The interface needed for a Menu to work with other md-menu elements.
+ */
+export interface MenuSelf {
+  /**
+   * Whether or not the menu is currently opened.
+   */
+  open: boolean;
+  /**
+   * Skips the opening and closing animations.
+   */
+  quick: boolean;
+  /**
+   * Displays overflow content like a submenu.
+   *
+   * __NOTE__: This may cause adverse effects if you set
+   * `md-menu {max-height:...}`
+   * and have items overflowing items in the "y" direction.
+   */
+  hasOverflow: boolean;
+  /**
+   * Communicates to the menu that it is a submenu and should not handle the
+   * ArrowLeft button in LTR and ArrowRight button in RTL.
+   */
+  isSubmenu: boolean;
+  /**
+   * After closing, does not restore focus to the last focused element before
+   * the menu was opened.
+   */
+  skipRestoreFocus: boolean;
+  /**
+   * The corner of the anchor in which the menu should anchor to.
+   */
+  anchorCorner: Corner;
+  /**
+   * The corner of the menu in which the menu should anchor from.
+   */
+  menuCorner: Corner;
+  /**
+   * The element the menu should anchor to.
+   */
+  anchorElement: (HTMLElement&Partial<SurfacePositionTarget>)|null;
+  /**
+   * What the menu should focus by default when opened.
+   */
+  defaultFocus: FocusState;
+  /**
+   * An array of items managed by the list.
+   */
+  items: MenuItem[];
+  /**
+   * Opens the menu.
+   */
+  show: () => void;
+  /**
+   * Closes the menu.
+   */
+  close: () => void;
+}
+
+/**
+ * The interface needed for a Menu to work with other md-menu elements. Useful
+ * for keeping your types safe when wrapping `md-menu`.
+ */
+export type Menu = MenuSelf&LitElement;
 
 /**
  * The reason the `close-menu` event was dispatched.
