@@ -11,8 +11,9 @@ import {Menu} from './internal/menu.js';
 import {styles} from './internal/menu-styles.css.js';
 
 export {ListItem} from '../list/internal/listitem/list-item.js';
+export {MenuItem} from './internal/controllers/menuItemController.js';
+export {CloseMenuEvent, FocusState} from './internal/controllers/shared.js';
 export {Corner} from './internal/menu.js';
-export {CloseMenuEvent, FocusState, MenuItem} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

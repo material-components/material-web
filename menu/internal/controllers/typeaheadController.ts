@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {MenuItem} from './shared.js';
+import {MenuItem} from './menuItemController.js';
 
 /**
  * The options that are passed to the typeahead controller.

@@ -4,39 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/**
- * Interface specific to menu item and not HTMLElement.
- */
-interface MenuItemAdditions {
-  /**
-   * Whether or not the item is in the disabled state.
-   */
-  disabled: boolean;
-  /**
-   * The text of the item that will be used for typeahead. If not set, defaults
-   * to the textContent of the element slotted into the headline.
-   */
-  typeaheadText: string;
-  /**
-   * Whether it should keep the menu open after click.
-   */
-  keepOpen: boolean;
-  /**
-   * Whether or not the item is in the selected visual state.
-   */
-  selected: boolean;
-  /**
-   * Focuses the item.
-   */
-  focus: () => void;
-}
-
-/**
- * The interface of every menu item interactive with a menu. All menu items
- * should implement this interface to be compatible with md-menu. Additionally
- * they should have both the `md-menu-item` and `md-list-item` attributes set.
- */
-export type MenuItem = MenuItemAdditions&HTMLElement;
+import {MenuItem} from './menuItemController.js';
 
 /**
  * The reason the `close-menu` event was dispatched.
@@ -50,7 +18,7 @@ export interface Reason {
  * because an item was selected via user click.
  */
 export interface ClickReason extends Reason {
-  kind: typeof CLOSE_REASON.CLICK_SELECTION;
+  kind: typeof CloseReason.CLICK_SELECTION;
 }
 
 /**
@@ -59,7 +27,7 @@ export interface ClickReason extends Reason {
  * `md-menu-item` are, Space, Enter or Escape.
  */
 export interface KeydownReason extends Reason {
-  kind: typeof CLOSE_REASON.KEYDOWN;
+  kind: typeof CloseReason.KEYDOWN;
   key: string;
 }
 
@@ -141,7 +109,8 @@ export type ActivateTypeaheadEvent =
 /**
  * Keys that are used to navigate menus.
  */
-export const NAVIGABLE_KEY = {
+// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
+export const NavigableKey = {
   UP: 'ArrowUp',
   DOWN: 'ArrowDown',
   RIGHT: 'ArrowRight',
@@ -151,7 +120,8 @@ export const NAVIGABLE_KEY = {
 /**
  * Keys that are used for selection in menus.
  */
-export const SELECTION_KEY = {
+// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
+export const SelectionKey = {
   SPACE: 'Space',
   ENTER: 'Enter',
 } as const;
@@ -159,18 +129,20 @@ export const SELECTION_KEY = {
 /**
  * Default close `Reason` kind values.
  */
-export const CLOSE_REASON = {
-  CLICK_SELECTION: 'CLICK_SELECTION',
-  KEYDOWN: 'KEYDOWN',
+// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
+export const CloseReason = {
+  CLICK_SELECTION: 'click-selection',
+  KEYDOWN: 'keydown',
 } as const;
 
 /**
  * Keys that can close menus.
  */
-export const KEYDOWN_CLOSE_KEYS = {
+// tslint:disable-next-line:enforce-name-casing We are mimicking enum style
+export const KeydownCloseKey = {
   ESCAPE: 'Escape',
-  SPACE: SELECTION_KEY.SPACE,
-  ENTER: SELECTION_KEY.ENTER,
+  SPACE: SelectionKey.SPACE,
+  ENTER: SelectionKey.ENTER,
 } as const;
 
 type Values<T> = T[keyof T];
@@ -184,8 +156,8 @@ type Values<T> = T[keyof T];
  * menu.
  */
 export function isClosableKey(code: string):
-    code is Values<typeof KEYDOWN_CLOSE_KEYS> {
-  return Object.values(KEYDOWN_CLOSE_KEYS).some(value => (value === code));
+    code is Values<typeof KeydownCloseKey> {
+  return Object.values(KeydownCloseKey).some(value => (value === code));
 }
 
 /**
@@ -197,8 +169,8 @@ export function isClosableKey(code: string):
  * menu item.
  */
 export function isSelectableKey(code: string):
-    code is Values<typeof SELECTION_KEY> {
-  return Object.values(SELECTION_KEY).some(value => (value === code));
+    code is Values<typeof SelectionKey> {
+  return Object.values(SelectionKey).some(value => (value === code));
 }
 
 /**

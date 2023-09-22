@@ -8,19 +8,14 @@ import '../../../ripple/ripple.js';
 import '../../../focus/md-focus-ring.js';
 import '../../../item/item.js';
 
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, literal, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
-import {CLOSE_REASON, createDefaultCloseMenuEvent, isClosableKey, MenuItem} from '../shared.js';
-
-/**
- * Supported behaviors for a menu item.
- */
-export type MenuItemType = 'menuitem'|'option'|'button'|'link';
+import {MenuItem, MenuItemController, MenuItemType} from '../controllers/menuItemController.js';
 
 /**
  * @fires close-menu {CloseMenuEvent}
@@ -58,12 +53,6 @@ export class MenuItemEl extends LitElement implements MenuItem {
   @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
 
   /**
-   * READONLY: self-identifies as a menu item and sets its identifying attribute
-   */
-  @property({type: Boolean, attribute: 'md-menu-item', reflect: true})
-  isMenuItem = true;
-
-  /**
    * Keeps the menu open if clicked or keyboard selected.
    */
   @property({type: Boolean, attribute: 'keep-open'}) keepOpen = false;
@@ -83,35 +72,18 @@ export class MenuItemEl extends LitElement implements MenuItem {
    * innerText of the item slotted into the `"headline"` slot.
    */
   get typeaheadText() {
-    if (this.internalTypeaheadText !== null) {
-      return this.internalTypeaheadText;
-    }
-
-    const headlineElements = this.headlineElements;
-
-    let text = '';
-    headlineElements.forEach((headlineElement) => {
-      if (headlineElement.textContent && headlineElement.textContent.trim()) {
-        text += ` ${headlineElement.textContent.trim()}`;
-      }
-    });
-
-    return '';
+    return this.menuItemController.typeaheadText;
   }
 
   set typeaheadText(text: string) {
-    this.internalTypeaheadText = text;
+    this.menuItemController.setTypeaheadText(text);
   }
 
-  private internalTypeaheadText: string|null = null;
-
-  protected override willUpdate(changed: PropertyValues<MenuItemEl>) {
-    if (this.href) {
-      this.type = 'link';
+  private readonly menuItemController = new MenuItemController(this, {
+    getHeadlineElements: () => {
+      return this.headlineElements;
     }
-
-    super.willUpdate(changed);
-  }
+  });
 
   protected override render() {
     return this.renderListItem(html`
@@ -135,21 +107,16 @@ export class MenuItemEl extends LitElement implements MenuItem {
   protected renderListItem(content: unknown) {
     const isAnchor = this.type === 'link';
     let tag: StaticValue;
-    let role: 'menuitem'|'option' = 'menuitem';
-    switch (this.type) {
-      case 'link':
+    switch (this.menuItemController.tagName) {
+      case 'a':
         tag = literal`a`;
         break;
       case 'button':
         tag = literal`button`;
         break;
       default:
-      case 'menuitem':
+      case 'li':
         tag = literal`li`;
-        break;
-      case 'option':
-        tag = literal`li`;
-        role = 'option';
         break;
     }
 
@@ -160,7 +127,7 @@ export class MenuItemEl extends LitElement implements MenuItem {
       <${tag}
         id="item"
         tabindex=${this.disabled && !isAnchor ? -1 : 0}
-        role=${role}
+        role=${this.menuItemController.role}
         aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
@@ -169,8 +136,8 @@ export class MenuItemEl extends LitElement implements MenuItem {
         class="list-item ${classMap(this.getRenderClasses())}"
         href=${this.href || nothing}
         target=${target}
-        @click=${this.onClick}
-        @keydown=${this.onKeydown}
+        @click=${this.menuItemController.onClick}
+        @keydown=${this.menuItemController.onKeydown}
       >${content}</${tag}>
     `;
   }
@@ -225,23 +192,5 @@ export class MenuItemEl extends LitElement implements MenuItem {
     // TODO(b/300334509): needed for some cases where delegatesFocus doesn't
     // work programmatically like in FF and select-option
     this.listItemRoot?.focus();
-  }
-
-  protected onClick() {
-    if (this.keepOpen) return;
-
-    this.dispatchEvent(createDefaultCloseMenuEvent(
-        this, {kind: CLOSE_REASON.CLICK_SELECTION}));
-  }
-
-  protected onKeydown(event: KeyboardEvent) {
-    if (this.keepOpen || event.defaultPrevented) return;
-    const keyCode = event.code;
-
-    if (!event.defaultPrevented && isClosableKey(keyCode)) {
-      event.preventDefault();
-      this.dispatchEvent(createDefaultCloseMenuEvent(
-          this, {kind: CLOSE_REASON.KEYDOWN, key: keyCode}));
-    }
   }
 }

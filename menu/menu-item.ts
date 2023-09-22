@@ -10,7 +10,8 @@ import {styles as forcedColorsStyles} from './internal/menuitem/forced-colors-st
 import {MenuItemEl} from './internal/menuitem/menu-item.js';
 import {styles} from './internal/menuitem/menu-item-styles.css.js';
 
-export {CloseMenuEvent, MenuItem} from './internal/shared.js';
+export {MenuItem} from './internal/controllers/menuItemController.js';
+export {CloseMenuEvent} from './internal/controllers/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

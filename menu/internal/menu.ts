@@ -15,13 +15,14 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
 
+import {MenuItem} from './controllers/menuItemController.js';
+import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, FocusState, isClosableKey, isElementInSubtree} from './controllers/shared.js';
+import {Corner, SurfacePositionController, SurfacePositionTarget} from './controllers/surfacePositionController.js';
+import {TypeaheadController} from './controllers/typeaheadController.js';
 import {ListController, NavigableKeys} from './list-controller.js';
 import {getActiveItem, getFirstActivatableItem, getLastActivatableItem} from './list-navigation-helpers.js';
-import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, FocusState, isClosableKey, isElementInSubtree, MenuItem} from './shared.js';
-import {Corner, SurfacePositionController, SurfacePositionTarget} from './surfacePositionController.js';
-import {TypeaheadController} from './typeaheadController.js';
 
-export {Corner} from './surfacePositionController.js';
+export {Corner} from './controllers/surfacePositionController.js';
 
 /**
  * The default value for the typeahead buffer time in Milliseconds.

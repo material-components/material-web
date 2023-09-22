@@ -14,9 +14,9 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 import {Field} from '../../field/internal/field.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 import {List} from '../../list/internal/list.js';
+import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/controllers/shared.js';
+import {TYPEAHEAD_RECORD} from '../../menu/internal/controllers/typeaheadController.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
-import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/shared.js';
-import {TYPEAHEAD_RECORD} from '../../menu/internal/typeaheadController.js';
 
 import {createRequestDeselectionEvent, createRequestSelectionEvent, getSelectedItems, SelectOption, SelectOptionRecord} from './shared.js';
 
@@ -666,9 +666,9 @@ export abstract class Select extends LitElement {
     this.open = false;
     let hasChanged = false;
 
-    if (reason.kind === 'CLICK_SELECTION') {
+    if (reason.kind === 'click-selection') {
       hasChanged = this.selectItem(item);
-    } else if (reason.kind === 'KEYDOWN' && isSelectableKey(reason.key)) {
+    } else if (reason.kind === 'keydown' && isSelectableKey(reason.key)) {
       hasChanged = this.selectItem(item);
     } else {
       // This can happen on ESC being pressed

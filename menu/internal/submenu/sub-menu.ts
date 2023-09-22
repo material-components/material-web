@@ -7,9 +7,10 @@
 import {html, isServer, LitElement} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
+import {MenuItem} from '../controllers/menuItemController.js';
+import {CloseMenuEvent, CloseReason, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KeydownCloseKey, NavigableKey, SelectionKey} from '../controllers/shared.js';
 import {createDeactivateItemsEvent, createRequestActivationEvent, deactivateActiveItem, getFirstActivatableItem} from '../list-navigation-helpers.js';
 import {Corner, Menu} from '../menu.js';
-import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, MenuItem, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
 /**
  * @fires deactivate-items Requests the parent menu to deselect other items when
@@ -261,10 +262,9 @@ export class SubMenu extends LitElement {
     if (event.defaultPrevented) return;
 
     const openedWithLR = shouldOpenSubmenu &&
-        (NAVIGABLE_KEY.LEFT === event.code ||
-         NAVIGABLE_KEY.RIGHT === event.code);
+        (NavigableKey.LEFT === event.code || NavigableKey.RIGHT === event.code);
 
-    if (event.code === SELECTION_KEY.SPACE || openedWithLR) {
+    if (event.code === SelectionKey.SPACE || openedWithLR) {
       // prevent space from scrolling and Left + Right from selecting previous /
       // next items or opening / closing parent menus. Only open the submenu.
       event.preventDefault();
@@ -301,8 +301,8 @@ export class SubMenu extends LitElement {
     this.dispatchEvent(createActivateTypeaheadEvent());
     // Escape should only close one menu not all of the menus unlike space or
     // click selection which should close all menus.
-    if (reason.kind === CLOSE_REASON.KEYDOWN &&
-        reason.key === KEYDOWN_CLOSE_KEYS.ESCAPE) {
+    if (reason.kind === CloseReason.KEYDOWN &&
+        reason.key === KeydownCloseKey.ESCAPE) {
       event.stopPropagation();
       this.item.dispatchEvent(createRequestActivationEvent());
       return;
@@ -321,7 +321,7 @@ export class SubMenu extends LitElement {
     // keydowns from bubbling up to the parent menu and confounding things.
     event.preventDefault();
 
-    if (keyCode === NAVIGABLE_KEY.LEFT || keyCode === NAVIGABLE_KEY.RIGHT) {
+    if (keyCode === NavigableKey.LEFT || keyCode === NavigableKey.RIGHT) {
       // Prevent this from bubbling to parents
       event.stopPropagation();
     }
@@ -343,11 +343,11 @@ export class SubMenu extends LitElement {
    */
   private isSubmenuOpenKey(code: string) {
     const isRtl = getComputedStyle(this).direction === 'rtl';
-    const arrowEnterKey = isRtl ? NAVIGABLE_KEY.LEFT : NAVIGABLE_KEY.RIGHT;
+    const arrowEnterKey = isRtl ? NavigableKey.LEFT : NavigableKey.RIGHT;
     switch (code) {
       case arrowEnterKey:
-      case SELECTION_KEY.SPACE:
-      case SELECTION_KEY.ENTER:
+      case SelectionKey.SPACE:
+      case SelectionKey.ENTER:
         return true;
       default:
         return false;
@@ -363,10 +363,10 @@ export class SubMenu extends LitElement {
    */
   private isSubmenuCloseKey(code: string) {
     const isRtl = getComputedStyle(this).direction === 'rtl';
-    const arrowEnterKey = isRtl ? NAVIGABLE_KEY.RIGHT : NAVIGABLE_KEY.LEFT;
+    const arrowEnterKey = isRtl ? NavigableKey.RIGHT : NavigableKey.LEFT;
     switch (code) {
       case arrowEnterKey:
-      case KEYDOWN_CLOSE_KEYS.ESCAPE:
+      case KeydownCloseKey.ESCAPE:
         return {close: true, keyCode: code} as const;
       default:
         return {close: false} as const;

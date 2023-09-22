@@ -13,7 +13,7 @@ import '@material/web/divider/divider.js';
 import '@material/web/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {CloseMenuEvent} from '@material/web/menu/internal/shared.js';
+import {CloseMenuEvent} from '@material/web/menu/internal/controllers/shared.js';
 import {Corner, FocusState, MdMenu, MenuItem} from '@material/web/menu/menu.js';
 import {css, html} from 'lit';
 
