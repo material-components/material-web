@@ -1,0 +1,24 @@
+name: 🐛 Documentation Bug
+description: Report a bug that affects Material Web documentation (https://material-web.dev/)
+
+body:
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Description
+      description: |
+        Please describe the documentation issue in as much detail as possible.
+      placeholder: |
+        Add issue description here.
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Browser/OS Environment
+      description: |
+        Please list which browser and operating system combination(s) you are using.
+      placeholder: |
+        Browser: Chrome 103.0.5060.53
+        OS: macOS 12.4

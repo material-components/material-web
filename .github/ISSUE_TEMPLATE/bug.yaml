@@ -1,0 +1,98 @@
+name: 🐛 Bug Report
+description: Report a bug that affects a Material Web component
+
+body:
+  - type: dropdown
+    id: affected
+    validations:
+      required: true
+    attributes:
+      label: What is affected?
+      multiple: true
+      description: Note you can select more than one.
+      options:
+        - Accessibility
+        - Component
+        - Theming
+        - Tooling
+        - Other/unknown
+
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Description
+      description: |
+        Please describe the bug in as much detail as possible. Include what you expected to happen, and what actually happened. If you have an error message, please include as much of the error message as possible.
+      placeholder: |
+        When I do '...'.
+        I would expect '...'.
+        However, instead '...' happens.
+
+
+  - type: textarea
+    id: reproduction
+    validations:
+      required: true
+    attributes:
+      label: Reproduction
+      description: |
+        If possible, please link to a working reproduction that will help us verify and understand the bug.
+        Bugs that provide a reproduction in CodePen, Fiddle, or lit.dev playground ([Example Playground](https://lit.dev/playground/#project=W3sibmFtZSI6Im1hdGVyaWFsLWltcG9ydHMuanMiLCJjb250ZW50IjoiaW1wb3J0IFwiQG1hdGVyaWFsL3dlYi9idXR0b24vb3V0bGluZWQtYnV0dG9uLmpzXCI7In0seyJuYW1lIjoiaW5kZXguaHRtbCIsImNvbnRlbnQiOiI8IURPQ1RZUEUgaHRtbD5cbjxzY3JpcHQgdHlwZT1cIm1vZHVsZVwiIHNyYz1cIi4vbWF0ZXJpYWwtaW1wb3J0cy5qc1wiPjwvc2NyaXB0PlxuXG48bWQtb3V0bGluZWQtYnV0dG9uPkEgbWF0ZXJpYWwgYnV0dG9uPC9tZC1vdXRsaW5lZC1idXR0b24-XG4ifSx7Im5hbWUiOiJwYWNrYWdlLmpzb24iLCJjb250ZW50Ijoie1xuICBcImRlcGVuZGVuY2llc1wiOiB7XG4gICAgXCJsaXRcIjogXCJeMi4wLjBcIixcbiAgICBcIkBsaXQvcmVhY3RpdmUtZWxlbWVudFwiOiBcIl4xLjAuMFwiLFxuICAgIFwibGl0LWVsZW1lbnRcIjogXCJeMy4wLjBcIixcbiAgICBcImxpdC1odG1sXCI6IFwiXjIuMC4wXCJcbiAgfVxufSIsImhpZGRlbiI6dHJ1ZX1d))
+        can be triaged much faster.
+
+        For bugs that show up on the command-line, please create a [Stackblitz](https://stackblitz.com/) Node.js/Vite project, and provide step-by-step instructions for setting up, and observing the bug.
+      placeholder: |
+        The text should update when the button is clicked, but it doesn't:
+        https://lit.dev/playground/#gist=f9817b9c703e037b5ac576030110a983
+
+  - type: textarea
+    id: workaround
+    validations:
+      required: true
+    attributes:
+      label: Workaround
+      description: |
+        If you have found a workaround for this problem, please explain it here. If you have not found a workaround, please write "I have not found a workaround".
+      placeholder: |
+        I have worked around this problem by registering the event handler manually with `addEventListener`.
+
+        ... or:
+
+        I have not found a workaround.
+
+  - type: dropdown
+    id: regression
+    validations:
+      required: true
+    attributes:
+      label: Is this a regression?
+      multiple: false
+      options:
+        - Yes. This used to work, but now it doesn't.
+        - No or unsure. This never worked, or I haven't tried before.
+
+  - type: input
+    id: version
+    validations:
+      required: true
+    attributes:
+      label: Affected versions
+      description: Please specify which version of the package you are using, and if this is a known regression, what is the last known version that worked? Run e.g. `npm ls @material/web` to check your installed version.
+      placeholder: |
+        Failing in X.X.X, worked in X.X.X
+
+  - type: textarea
+    id: environment
+    validations:
+      required: true
+    attributes:
+      label: Browser/OS/Node environment
+      description: |
+        Please list which browser and operating system combination(s) you are using, and/or if this bug affects a command-line tool, please list your Node and npm versions.
+      placeholder: |
+        Browser: Chrome 103.0.5060.53
+        OS: macOS 12.4
+        Node version: 16.15.0
+        npm version: 8.11.0
