@@ -13,14 +13,14 @@ interface MenuItemAdditions {
    */
   disabled: boolean;
   /**
-   * The text of the item that will be used for typeahead or Select's visible
-   * text when this item is selected.
+   * The text of the item that will be used for typeahead. If not set, defaults
+   * to the textContent of the element slotted into the headline.
    */
-  headline: string;
+  typeaheadText: string;
   /**
    * Whether it should keep the menu open after click.
    */
-  keepOpen?: boolean;
+  keepOpen: boolean;
   /**
    * Whether or not the item is in the selected visual state.
    */

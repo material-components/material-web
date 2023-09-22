@@ -1,0 +1,162 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// TODO: delete this file when we merge the list-item fixes
+
+// go/keep-sorted start
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './md-sys-color';
+@use './md-sys-state';
+@use './md-sys-typescale';
+@use './v0_192/md-comp-list';
+@use './values';
+// go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'bottom-space',
+  'disabled-opacity',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'label-text-color',
+  'label-text-font',
+  'label-text-line-height',
+  'label-text-size',
+  'label-text-weight',
+  'leading-icon-color',
+  'leading-space',
+  'one-line-container-height',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
+  'supporting-text-color',
+  'supporting-text-font',
+  'supporting-text-line-height',
+  'supporting-text-size',
+  'supporting-text-weight',
+  'top-space',
+  'trailing-icon-color',
+  'trailing-space',
+  'trailing-supporting-text-color',
+  'trailing-supporting-text-font',
+  'trailing-supporting-text-line-height',
+  'trailing-supporting-text-size',
+  'trailing-supporting-text-weight',
+  'two-line-container-height',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'container-color',
+  'container-elevation',
+  'container-shape',
+  'disabled-label-text-color',
+  'disabled-label-text-opacity',
+  'disabled-leading-icon-color',
+  'disabled-leading-icon-opacity',
+  'disabled-state-layer-color',
+  'disabled-state-layer-opacity',
+  'disabled-trailing-icon-color',
+  'disabled-trailing-icon-opacity',
+  'divider-leading-space',
+  'divider-trailing-space',
+  'dragged-container-elevation',
+  'dragged-label-text-color',
+  'dragged-leading-icon-icon-color',
+  'dragged-state-layer-color',
+  'dragged-state-layer-opacity',
+  'dragged-trailing-icon-icon-color',
+  'focus-label-text-color',
+  'focus-leading-icon-icon-color',
+  'focus-trailing-icon-icon-color',
+  'hover-label-text-color',
+  'hover-leading-icon-icon-color',
+  'hover-trailing-icon-icon-color',
+  'label-text-tracking',
+  'label-text-type',
+  'large-leading-video-height',
+  'leading-avatar-color',
+  'leading-avatar-label-color',
+  'leading-avatar-label-font',
+  'leading-avatar-label-line-height',
+  'leading-avatar-label-size',
+  'leading-avatar-label-tracking',
+  'leading-avatar-label-type',
+  'leading-avatar-label-weight',
+  'leading-avatar-shape',
+  'leading-avatar-size',
+  'leading-icon-size',
+  'leading-image-height',
+  'leading-image-shape',
+  'leading-image-width',
+  'leading-video-shape',
+  'leading-video-width',
+  'overline-color',
+  'overline-font',
+  'overline-line-height',
+  'overline-size',
+  'overline-tracking',
+  'overline-type',
+  'overline-weight',
+  'pressed-label-text-color',
+  'pressed-leading-icon-icon-color',
+  'pressed-trailing-icon-icon-color',
+  'selected-trailing-icon-color',
+  'small-leading-video-height',
+  'supporting-text-tracking',
+  'supporting-text-type',
+  'three-line-container-height',
+  'trailing-icon-size',
+  'trailing-supporting-text-tracking',
+  'trailing-supporting-text-type',
+  'unselected-trailing-icon-color',
+  // go/keep-sorted end
+);
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-state': md-sys-state.values(),
+  'md-sys-typescale': md-sys-typescale.values(),
+);
+
+@function values($deps: $_default, $exclude-hardcoded-values: false) {
+  $original-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
+
+  $tokens: values.validate(
+    $original-tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: (
+      'top-space': if($exclude-hardcoded-values, null, 12px),
+      'bottom-space': if($exclude-hardcoded-values, null, 12px),
+      'disabled-opacity':
+        map.get($original-tokens, 'list-item-disabled-label-text-opacity'),
+    ),
+    $renamed-tokens: _get-renamed-tokens($original-tokens)
+  );
+
+  @return $tokens;
+}
+
+// remove list-item prefix from tokens
+@function _get-renamed-tokens($tokens) {
+  $keys: map.keys($tokens);
+  $renamed-tokens: ();
+
+  @each $key in $keys {
+    @if string.index($key, 'list-item-') == 1 {
+      $renamed-key: string.slice($key, string.length('list-item-') + 1);
+      $renamed-tokens: map.set($renamed-tokens, $key, $renamed-key);
+    }
+  }
+
+  @return $renamed-tokens;
+}

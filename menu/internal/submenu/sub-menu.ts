@@ -7,8 +7,7 @@
 import {html, isServer, LitElement} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
-import {List} from '../../../list/internal/list.js';
-import {createDeactivateItemsEvent, createRequestActivationEvent} from '../../../list/internal/listitem/list-item.js';
+import {createDeactivateItemsEvent, createRequestActivationEvent, deactivateActiveItem, getFirstActivatableItem} from '../list-navigation-helpers.js';
 import {Corner, Menu} from '../menu.js';
 import {CLOSE_REASON, CloseMenuEvent, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KEYDOWN_CLOSE_KEYS, MenuItem, NAVIGABLE_KEY, SELECTION_KEY} from '../shared.js';
 
@@ -110,6 +109,8 @@ export class SubMenu extends LitElement {
       this.item.ariaExpanded = 'false';
       this.dispatchEvent(createActivateTypeaheadEvent());
       this.dispatchEvent(createDeactivateItemsEvent());
+      // aria-hidden required so ChromeVox doesn't announce the closed menu
+      menu.ariaHidden = 'true';
     }, {once: true});
     menu.quick = true;
     // Submenus are in overflow when not fixed. Can remove once we have native
@@ -119,6 +120,9 @@ export class SubMenu extends LitElement {
     menu.menuCorner = this.menuCorner;
     menu.anchorElement = this.item;
     menu.defaultFocus = 'first-item';
+    // aria-hidden management required so ChromeVox doesn't announce the closed
+    // menu. Remove it here since we are about to show and focus it.
+    menu.removeAttribute('aria-hidden');
     // This is required in the case where we have a leaf menu open and and the
     // user hovers a parent menu's item which is not an md-sub-menu item.
     // If this were set to true, then the menu would close and focus would be
@@ -186,6 +190,13 @@ export class SubMenu extends LitElement {
       this.item.setAttribute('aria-controls', this.menu.id);
     }
     this.item.keepOpen = true;
+
+    const menu = this.menu;
+    if (!menu) return;
+
+    menu.isSubmenu = true;
+    // Required for ChromeVox to not linearly navigate to the menu while closed
+    menu.ariaHidden = 'true';
   }
 
   /**
@@ -271,7 +282,7 @@ export class SubMenu extends LitElement {
     if (!submenu) return;
 
     const submenuItems = submenu.items;
-    const firstActivatableItem = List.getFirstActivatableItem(submenuItems);
+    const firstActivatableItem = getFirstActivatableItem(submenuItems);
 
     if (firstActivatableItem) {
       await this.show();
@@ -317,9 +328,9 @@ export class SubMenu extends LitElement {
 
     await this.close();
 
-    List.deactivateActiveItem(this.menu.items);
+    deactivateActiveItem(this.menu.items);
     this.item?.focus();
-    this.tabIndex = 0;
+    this.item.tabIndex = 0;
     this.item.focus();
   }
 

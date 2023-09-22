@@ -9,57 +9,162 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../../focus/focus-ring';
+@use '../../../icon/icon';
 @use '../../../list/list-item';
 @use '../../../ripple/ripple';
 @use '../../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
+  $list-item-supported-tokens: tokens.$md-comp-menu-list-item-supported-tokens;
   $supported-tokens: tokens.$md-comp-menu-item-supported-tokens;
 
   @each $token, $value in $tokens {
-    @if list.index($supported-tokens, $token) == null {
+    @if list.index($supported-tokens, $token) ==
+      null and
+      list.index($list-item-supported-tokens, $token) ==
+      null
+    {
       @error 'Token `#{$token}` is not a supported token.';
     }
 
-    @if $value {
+    @if $value and list.index($supported-tokens, $token) == null {
       --md-menu-item-#{$token}: #{$value};
+    }
+
+    @if $value and list.index($list-item-supported-tokens, $token) == null {
+      --md-list-item-#{$token}: #{$value};
     }
   }
 }
 
 @mixin styles() {
+  $list-item-tokens: tokens.md-comp-menu-list-item-values();
   $tokens: tokens.md-comp-menu-item-values();
 
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-menu-item-#{$token}, #{$value});
-    }
+    border-radius: map.get($list-item-tokens, 'container-shape');
+    display: flex;
 
-    @include list-item.theme(
+    @include ripple.theme(
       (
-        'container-color': var(--_container-color),
+        hover-color: map.get($list-item-tokens, 'hover-state-layer-color'),
+        hover-opacity: map.get($list-item-tokens, 'hover-state-layer-opacity'),
+        pressed-color: map.get($list-item-tokens, 'pressed-state-layer-color'),
+        pressed-opacity:
+          map.get($list-item-tokens, 'pressed-state-layer-opacity'),
       )
     );
+  }
+
+  :host([disabled]) {
+    opacity: map.get($list-item-tokens, 'disabled-opacity');
+    pointer-events: none;
+  }
+
+  md-focus-ring {
+    z-index: 1;
+
+    @include focus-ring.theme(
+      (
+        'shape': 8px,
+      )
+    );
+  }
+
+  a,
+  button,
+  li {
+    // Resets. These can be removed once we're no longer use these tags
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: unset;
+    text-decoration: none;
+  }
+
+  .list-item {
+    border-radius: inherit;
+    display: flex;
+    flex: 1;
+    outline: none;
+    // hide android tap color since we have ripple
+    -webkit-tap-highlight-color: transparent;
+
+    &:not(.disabled) {
+      cursor: pointer;
+    }
+  }
+
+  [slot='container'] {
+    pointer-events: none;
+  }
+
+  md-ripple {
+    border-radius: inherit;
+  }
+
+  md-item {
+    border-radius: inherit;
+    flex: 1;
+    color: map.get($list-item-tokens, 'label-text-color');
+    font-family: map.get($list-item-tokens, 'label-text-font');
+    font-size: map.get($list-item-tokens, 'label-text-size');
+    line-height: map.get($list-item-tokens, 'label-text-line-height');
+    font-weight: map.get($list-item-tokens, 'label-text-weight');
+    min-height: map.get($list-item-tokens, 'one-line-container-height');
+    padding-top: map.get($list-item-tokens, 'top-space');
+    padding-bottom: map.get($list-item-tokens, 'bottom-space');
+    padding-inline-start: map.get($list-item-tokens, 'leading-space');
+    padding-inline-end: map.get($list-item-tokens, 'trailing-space');
+  }
+
+  md-item[multiline] {
+    min-height: map.get($list-item-tokens, 'two-line-container-height');
+  }
+
+  [slot='supporting-text'] {
+    color: map.get($list-item-tokens, 'supporting-text-color');
+    font-family: map.get($list-item-tokens, 'supporting-text-font');
+    font-size: map.get($list-item-tokens, 'supporting-text-size');
+    line-height: map.get($list-item-tokens, 'supporting-text-line-height');
+    font-weight: map.get($list-item-tokens, 'supporting-text-weight');
+  }
+
+  [slot='trailing-supporting-text'] {
+    color: map.get($list-item-tokens, 'trailing-supporting-text-color');
+    font-family: map.get($list-item-tokens, 'trailing-supporting-text-font');
+    font-size: map.get($list-item-tokens, 'trailing-supporting-text-size');
+    line-height: map.get(
+      $list-item-tokens,
+      'trailing-supporting-text-line-height'
+    );
+    font-weight: map.get($list-item-tokens, 'trailing-supporting-text-weight');
+  }
+
+  :is([slot='start'], [slot='end'])::slotted(*) {
+    fill: currentColor;
+  }
+
+  [slot='start'] {
+    color: map.get($list-item-tokens, 'leading-icon-color');
+  }
+
+  [slot='end'] {
+    color: map.get($list-item-tokens, 'trailing-icon-color');
+  }
+
+  .list-item {
+    background-color: map.get($list-item-tokens, 'container-color');
   }
 
   .list-item.selected {
-    background-color: var(--_selected-container-color);
+    background-color: map.get($tokens, 'selected-container-color');
   }
 
   .selected:not(.disabled) .label-text {
-    color: var(--_selected-label-text-color);
-  }
-
-  // Set the ripple opacity to 0 if there is a submenu that is hovered.
-  .submenu-hover {
-    // Have to use ripple theme directly because :has selector in this case does
-    // not work in this case with the :has selector, thus we cannot override the
-    // custom props set in :host
-    @include ripple.theme(
-      (
-        hover-opacity: 0,
-      )
-    );
+    color: map.get($tokens, 'selected-label-text-color');
   }
 }

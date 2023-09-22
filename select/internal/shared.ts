@@ -19,6 +19,11 @@ interface SelectOptionSelf {
    * Whether or not the SelectOption is selected.
    */
   selected: boolean;
+  /**
+   * The text to display in the select when selected. Defaults to the
+   * textContent of the Element slotted into the headline.
+   */
+  displayText: string;
 }
 
 /**

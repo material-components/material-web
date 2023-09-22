@@ -6,8 +6,6 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as listItemForcedColorsStyles} from '../list/internal/listitem/forced-colors-styles.css.js';
-import {styles as listItemStyles} from '../list/internal/listitem/list-item-styles.css.js';
 import {styles as forcedColorsStyles} from '../menu/internal/menuitem/forced-colors-styles.css.js';
 import {styles} from '../menu/internal/menuitem/menu-item-styles.css.js';
 
@@ -52,6 +50,5 @@ declare global {
  */
 @customElement('md-select-option')
 export class MdSelectOption extends SelectOptionEl {
-  static override styles =
-      [listItemStyles, styles, listItemForcedColorsStyles, forcedColorsStyles];
+  static override styles = [styles, forcedColorsStyles];
 }

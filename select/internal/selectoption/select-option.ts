@@ -7,7 +7,7 @@
 import {PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
-import {ListItemRole, MenuItemEl} from '../../../menu/internal/menuitem/menu-item.js';
+import {MenuItemEl} from '../../../menu/internal/menuitem/menu-item.js';
 import {createRequestDeselectionEvent, createRequestSelectionEvent, SelectOption} from '../shared.js';
 
 /**
@@ -23,7 +23,31 @@ export class SelectOptionEl extends MenuItemEl implements SelectOption {
    */
   @property() value = '';
 
-  override readonly type: ListItemRole = 'option';
+  override readonly type = 'option';
+
+  private internalDisplayText: string|null = null;
+
+  /**
+   * The text that is displayed in the select field when selected. If not set,
+   * defaults to the textContent of the item slotted into the `"headline"` slot.
+   */
+  get displayText() {
+    if (this.internalDisplayText !== null) {
+      return this.internalDisplayText;
+    }
+
+    const headlineElement = this.headlineElements[0];
+
+    if (headlineElement) {
+      return (headlineElement.textContent ?? '').trim();
+    }
+
+    return '';
+  }
+
+  set displayText(text: string) {
+    this.internalDisplayText = text;
+  }
 
   override willUpdate(changed: PropertyValues<SelectOptionEl>) {
     if (changed.has('selected')) {

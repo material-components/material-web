@@ -4,13 +4,17 @@
 //
 
 @media (forced-colors: active) {
+  :host([disabled]),
+  :host([disabled]) slot {
+    color: GrayText;
+    opacity: 1;
+  }
+
   .list-item {
     position: relative;
   }
 
-  // Show double border only when selected, and the current list item does not
-  // have a focus ring on it.
-  .list-item.selected:not(.has-focus-ring)::before {
+  .list-item.selected::before {
     content: '';
     position: absolute;
     inset: 0;

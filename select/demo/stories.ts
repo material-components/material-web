@@ -82,15 +82,31 @@ function renderIcon(iconName: string, slot: 'leading-icon'|'trailing-icon') {
 
 function renderItems() {
   return html`
-    <md-select-option headline=""></md-select-option>
-    <md-select-option selected value="apple" headline="Apple"></md-select-option>
-    <md-select-option value="apricot" headline="Apricot"></md-select-option>
-    <md-select-option value="apricot" headline="Apricots"></md-select-option>
-    <md-select-option value="avocado" headline="Avocado"></md-select-option>
-    <md-select-option value="green_apple" headline="Green Apple"></md-select-option>
-    <md-select-option value="green_grapes" headline="Green Grapes"></md-select-option>
-    <md-select-option value="olive" headline="Olive"></md-select-option>
-    <md-select-option value="orange" headline="Orange"></md-select-option>`;
+    <md-select-option aria-label="blank" value=""></md-select-option>
+    <md-select-option selected value="apple">
+      <div slot="headline">Apple</div>
+    </md-select-option>
+    <md-select-option value="apricot" >
+      <div slot="headline">Apricot</div>
+    </md-select-option>
+    <md-select-option value="apricot" >
+      <div slot="headline">Apricots</div>
+    </md-select-option>
+    <md-select-option value="avocado" >
+      <div slot="headline">Avocado</div>
+    </md-select-option>
+    <md-select-option value="green_apple" >
+      <div slot="headline">Green Apple</div>
+    </md-select-option>
+    <md-select-option value="green_grapes" >
+      <div slot="headline">Green Grapes</div>
+    </md-select-option>
+    <md-select-option value="olive" >
+      <div slot="headline">Olive</div>
+    </md-select-option>
+    <md-select-option value="orange">
+      <div slot="headline">Orange</div>
+    </md-select-option>`;
 }
 
 /** Select stories. */

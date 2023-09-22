@@ -148,7 +148,7 @@ export class TypeaheadController {
     // Generates the record array data structure which is the index, the element
     // and a normalized header.
     this.typeaheadRecords = this.items.map(
-        (el, index) => [index, el, el.headline.trim().toLowerCase()]);
+        (el, index) => [index, el, el.typeaheadText.trim().toLowerCase()]);
     this.lastActiveRecord =
         this.typeaheadRecords.find(
             record => (record[TYPEAHEAD_RECORD.ITEM].tabIndex === 0)) ??

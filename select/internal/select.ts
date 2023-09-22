@@ -605,7 +605,7 @@ export abstract class Select extends LitElement {
           this.lastSelectedOption !== firstSelectedOption;
       this.lastSelectedOption = firstSelectedOption;
       this[VALUE] = firstSelectedOption.value;
-      this.displayText = firstSelectedOption.headline;
+      this.displayText = firstSelectedOption.displayText;
 
     } else {
       hasSelectedOptionChanged = this.lastSelectedOption !== null;

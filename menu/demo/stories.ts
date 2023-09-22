@@ -89,6 +89,9 @@ const sharedStyle = css`
   [dir=rtl] md-icon {
     transform: scaleX(-1);
   }
+  [slot="headline"] {
+    white-space: nowrap;
+  }
 `;
 
 const standard: MaterialStoryInit<StoryKnobs> = {
@@ -127,10 +130,10 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               @closed=${setButtonAriaExpandedFalse}>
             ${fruitNames.map((name, index) => html`
             <md-menu-item
-                headline=${name}
                 id=${index}
                 .keepOpen=${knobs.keepOpen}
                 .disabled=${knobs.disabled}>
+              <div slot="headline">${name}</div>
             </md-menu-item>`)}
           </md-menu>
         </div>
@@ -150,13 +153,13 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
       const isLastItem = index === fruitNames.length - 1;
       return html`
         <md-menu-item
-            headline=${name}
             id=${index}
             .disabled=${knobs.disabled}
             .target=${
           knobs.target as '' | '_blank' | '_parent' | '_self' | '_top'}
             .href=${knobs.href}>
-          <md-icon slot="end-icon">
+          <div slot="headline">${name}</div>
+          <md-icon slot="end">
             ${knobs['link icon']}
           </md-icon>
         </md-menu-item>
@@ -214,10 +217,9 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
 
       return html`
         <md-menu-item
-          headline=${name}
-          id=${currentIndex}
-          .keepOpen=${knobs.keepOpen}
-          .disabled=${knobs.disabled}>
+            .keepOpen=${knobs.keepOpen}
+            .disabled=${knobs.disabled}>
+          <div slot="headline">${name}</div>
         </md-menu-item>`;
     });
 
@@ -228,16 +230,17 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
 
         return html`
           <md-sub-menu
+              id=${currentIndex}
               .anchorCorner=${knobs['submenu.anchorCorner']!}
               .menuCorner=${knobs['submenu.menuCorner']!}
               .hoverOpenDelay=${knobs.hoverOpenDelay}
               .hoverCloseDelay=${knobs.hoverCloseDelay}>
             <md-menu-item
                 slot="item"
-                headline=${name}
-                id=${currentIndex}
+                id=${++currentIndex}
                 .disabled=${knobs.disabled}>
-              <md-icon slot="end-icon">
+              <div slot="headline">${name}</div>
+              <md-icon slot="end">
                 ${knobs['submenu item icon']}
               </md-icon>
             </md-menu-item>
@@ -259,10 +262,10 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
 
         return html`
           <md-menu-item
-              headline=${name}
               id=${currentIndex}
               .keepOpen=${knobs.keepOpen}
               .disabled=${knobs.disabled}>
+            <div slot="headline">${name}</div>
           </md-menu-item>`;
       }),
     ];
@@ -273,16 +276,17 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
 
       return html`
         <md-sub-menu
+              id=${currentIndex}
               .anchorCorner=${knobs['submenu.anchorCorner']!}
               .menuCorner=${knobs['submenu.menuCorner']!}
               .hoverOpenDelay=${knobs.hoverOpenDelay}
               .hoverCloseDelay=${knobs.hoverCloseDelay}>
           <md-menu-item
               slot="item"
-              headline=${name}
-              id=${currentIndex}
+              id=${++currentIndex}
               .disabled=${knobs.disabled}>
-              <md-icon slot="end-icon">
+            <div slot="headline">${name}</div>
+            <md-icon slot="end">
               ${knobs['submenu item icon']}
             </md-icon>
           </md-menu-item>
@@ -382,10 +386,10 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
             @close-menu=${displayCloseEvent}>
           ${fruitNames.map((name, index) => html`
             <md-menu-item
-                headline=${name}
                 id=${index}
                 .keepOpen=${knobs.keepOpen}
                 .disabled=${knobs.disabled}>
+              <div slot="headline">${name}</div>
             </md-menu-item>
             `)}
         </md-menu>
@@ -438,9 +442,10 @@ function displayCloseEvent(event: CloseMenuEvent) {
 
   const stringifyItem = (menuItem: MenuItem&HTMLElement) => {
     const tagName = menuItem.tagName.toLowerCase();
-    const headline = menuItem.headline;
-    return `${tagName}${menuItem.id ? `[id="${menuItem.id}"]` : ''}[headline="${
-        headline}"]`;
+    const headline = menuItem.typeaheadText;
+    return `${tagName}${
+        menuItem.id ? `[id="${menuItem.id}"]` :
+                      ''} > [slot="headline"] > ${headline}`;
   };
 
   // display the event's details in the inner text of that output element
