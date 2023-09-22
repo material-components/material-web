@@ -11,26 +11,9 @@ body:
       multiple: true
       description: Note you can select more than one.
       options:
-        - Button
-        - Checkbox
-        - Chips
-        - Dialog
-        - Divider
-        - Elevation
-        - FAB
-        - Field
-        - Focus
-        - Icon Button
-        - List
-        - Menu
-        - Progress indicators
-        - Radio
-        - Ripple
-        - Select
-        - Slider
-        - Switch
-        - Tabs
-        - Textfield
+        - Accessibility
+        - Component
+        - Theming
         - Tooling
         - Other/unknown
 
@@ -57,20 +40,12 @@ body:
       description: |
         If possible, please link to a working reproduction that will help us verify and understand the bug.
         Bugs that provide a reproduction in CodePen, Fiddle, or lit.dev playground ([Example Playground](https://lit.dev/playground/#project=W3sibmFtZSI6Im1hdGVyaWFsLWltcG9ydHMuanMiLCJjb250ZW50IjoiaW1wb3J0IFwiQG1hdGVyaWFsL3dlYi9idXR0b24vb3V0bGluZWQtYnV0dG9uLmpzXCI7In0seyJuYW1lIjoiaW5kZXguaHRtbCIsImNvbnRlbnQiOiI8IURPQ1RZUEUgaHRtbD5cbjxzY3JpcHQgdHlwZT1cIm1vZHVsZVwiIHNyYz1cIi4vbWF0ZXJpYWwtaW1wb3J0cy5qc1wiPjwvc2NyaXB0PlxuXG48bWQtb3V0bGluZWQtYnV0dG9uPkEgbWF0ZXJpYWwgYnV0dG9uPC9tZC1vdXRsaW5lZC1idXR0b24-XG4ifSx7Im5hbWUiOiJwYWNrYWdlLmpzb24iLCJjb250ZW50Ijoie1xuICBcImRlcGVuZGVuY2llc1wiOiB7XG4gICAgXCJsaXRcIjogXCJeMi4wLjBcIixcbiAgICBcIkBsaXQvcmVhY3RpdmUtZWxlbWVudFwiOiBcIl4xLjAuMFwiLFxuICAgIFwibGl0LWVsZW1lbnRcIjogXCJeMy4wLjBcIixcbiAgICBcImxpdC1odG1sXCI6IFwiXjIuMC4wXCJcbiAgfVxufSIsImhpZGRlbiI6dHJ1ZX1d))
-        can be traiged much faster.
+        can be triaged much faster.
 
-        For bugs that show up on the command-line, please create a public GitHub repo, and provide step-by-step instructions for cloning, setting up, and observing the bug.
+        For bugs that show up on the command-line, please create a [Stackblitz](https://stackblitz.com/) Node.js/Vite project, and provide step-by-step instructions for setting up, and observing the bug.
       placeholder: |
         The text should update when the button is clicked, but it doesn't:
-        https://lit.dev/playground/#gist=b90fc1b4d2ee57120763d2e7db934511
-
-        ... or for command-line issues:
-
-        1. git clone git@github.com:<user>/<repo>.git
-        2. cd <repo>
-        3. npm ci
-        4. npm run serve
-        5. Observe the error "Error: Cannot do something"
+        https://lit.dev/playground/#gist=f9817b9c703e037b5ac576030110a983
 
   - type: textarea
     id: workaround

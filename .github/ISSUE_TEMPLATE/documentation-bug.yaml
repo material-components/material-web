@@ -15,8 +15,6 @@ body:
 
   - type: textarea
     id: environment
-    validations:
-      required: true
     attributes:
       label: Browser/OS Environment
       description: |
