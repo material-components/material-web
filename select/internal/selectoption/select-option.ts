@@ -4,11 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {PropertyValues} from 'lit';
-import {property} from 'lit/decorators.js';
+import '../../../ripple/ripple.js';
+import '../../../focus/md-focus-ring.js';
+import '../../../item/item.js';
 
-import {MenuItemEl} from '../../../menu/internal/menuitem/menu-item.js';
-import {createRequestDeselectionEvent, createRequestSelectionEvent, SelectOption} from '../shared.js';
+import {html, LitElement, nothing} from 'lit';
+import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+
+import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+
+import {SelectOption, SelectOptionController} from './selectOptionController.js';
 
 /**
  * @fires close-menu Closes the encapsulating menu on
@@ -17,67 +24,160 @@ import {createRequestDeselectionEvent, createRequestSelectionEvent, SelectOption
  * @fires request-deselection Requests the parent md-select to deselect this
  * element when `selected` changed to `false`.
  */
-export class SelectOptionEl extends MenuItemEl implements SelectOption {
+export class SelectOptionEl extends LitElement implements SelectOption {
+  static {
+    requestUpdateOnAriaChange(SelectOptionEl);
+  }
+
+  /** @nocollapse */
+  static override shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true
+  };
+
+  /**
+   * Disables the item and makes it non-selectable and non-interactive.
+   */
+  @property({type: Boolean, reflect: true}) disabled = false;
+
+  /**
+   * READONLY: self-identifies as a menu item and sets its identifying attribute
+   */
+  @property({type: Boolean, attribute: 'md-menu-item', reflect: true})
+  isMenuItem = true;
+
+  /**
+   * Sets the item in the selected visual state when a submenu is opened.
+   */
+  @property({type: Boolean}) selected = false;
   /**
    * Form value of the option.
    */
   @property() value = '';
 
-  override readonly type = 'option';
+  @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
 
-  private internalDisplayText: string|null = null;
+  @queryAssignedElements({slot: 'headline'})
+  protected readonly headlineElements!: HTMLElement[];
+
+  type = 'option' as const;
+
+  /**
+   * The text that is selectable via typeahead. If not set, defaults to the
+   * innerText of the item slotted into the `"headline"` slot.
+   */
+  get typeaheadText() {
+    return this.selectOptionController.typeaheadText;
+  }
+
+  set typeaheadText(text: string) {
+    this.selectOptionController.setTypeaheadText(text);
+  }
 
   /**
    * The text that is displayed in the select field when selected. If not set,
    * defaults to the textContent of the item slotted into the `"headline"` slot.
    */
   get displayText() {
-    if (this.internalDisplayText !== null) {
-      return this.internalDisplayText;
-    }
-
-    const headlineElement = this.headlineElements[0];
-
-    if (headlineElement) {
-      return (headlineElement.textContent ?? '').trim();
-    }
-
-    return '';
+    return this.selectOptionController.displayText;
   }
 
   set displayText(text: string) {
-    this.internalDisplayText = text;
+    this.selectOptionController.setDisplayText(text);
   }
 
-  override willUpdate(changed: PropertyValues<SelectOptionEl>) {
-    if (changed.has('selected')) {
-      this.ariaSelected = this.selected ? 'true' : 'false';
+  private readonly selectOptionController = new SelectOptionController(this, {
+    getHeadlineElements: () => {
+      return this.headlineElements;
     }
+  });
 
-    super.willUpdate(changed);
+  protected override render() {
+    return this.renderListItem(html`
+      <md-item>
+        <div slot="container">
+          ${this.renderRipple()}
+          ${this.renderFocusRing()}
+        </div>
+        <slot name="start" slot="start"></slot>
+        <slot name="end" slot="end"></slot>
+        ${this.renderBody()}
+      </md-item>
+    `);
   }
 
-  override updated(changed: PropertyValues<SelectOptionEl>) {
-    super.updated(changed);
-
-    // Do not dispatch event on first update / boot-up.
-    if (changed.has('selected') && changed.get('selected') !== undefined) {
-      // This section is really useful for when the user sets selected on the
-      // option programmatically. Most other cases (click and keyboard) are
-      // handled by md-select because it needs to coordinate the
-      // single-selection behavior.
-      if (this.selected) {
-        this.dispatchEvent(createRequestSelectionEvent());
-      } else {
-        this.dispatchEvent(createRequestDeselectionEvent());
-      }
-    }
+  /**
+   * Renders the root list item.
+   *
+   * @param content the child content of the list item.
+   */
+  protected renderListItem(content: unknown) {
+    return html`
+      <li
+        id="item"
+        tabindex=${this.disabled ? -1 : 0}
+        role=${this.selectOptionController.role}
+        aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
+        aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
+        aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
+        aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
+        aria-haspopup=${(this as ARIAMixinStrict).ariaHasPopup || nothing}
+        class="list-item ${classMap(this.getRenderClasses())}"
+        @click=${this.selectOptionController.onClick}
+        @keydown=${this.selectOptionController.onKeydown}
+      >${content}</li>
+    `;
   }
 
-  protected override getRenderClasses() {
+  /**
+   * Handles rendering of the ripple element.
+   */
+  protected renderRipple() {
+    return html`
+      <md-ripple
+          part="ripple"
+          for="item"
+          ?disabled=${this.disabled}></md-ripple>`;
+  }
+
+  /**
+   * Handles rendering of the focus ring.
+   */
+  protected renderFocusRing() {
+    return html`
+      <md-focus-ring
+          part="focus-ring"
+          for="item"
+          inward></md-focus-ring>`;
+  }
+
+  /**
+   * Classes applied to the list item root.
+   */
+  protected getRenderClasses(): ClassInfo {
     return {
-      ...super.getRenderClasses(),
-      selected: this.selected,
+      'disabled': this.disabled,
+      'selected': this.selected,
     };
+  }
+
+  /**
+   * Handles rendering the headline and supporting text.
+   */
+  protected renderBody() {
+    return html`
+      <slot></slot>
+      <slot name="overline" slot="overline"></slot>
+      <slot name="headline" slot="headline"></slot>
+      <slot name="supporting-text" slot="supporting-text"></slot>
+      <slot name="trailing-supporting-text"
+          slot="trailing-supporting-text"></slot>
+    `;
+  }
+
+  override focus() {
+    // TODO(b/300334509): needed for some cases where delegatesFocus doesn't
+    // work programmatically like in FF and select-option
+    this.listItemRoot?.focus();
   }
 }

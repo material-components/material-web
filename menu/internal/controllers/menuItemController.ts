@@ -103,14 +103,14 @@ export class MenuItemController implements ReactiveController {
 
     const headlineElements = this.getHeadlineElements();
 
-    let text = '';
+    const textParts: string[] = [];
     headlineElements.forEach((headlineElement) => {
       if (headlineElement.textContent && headlineElement.textContent.trim()) {
-        text += ` ${headlineElement.textContent.trim()}`;
+        textParts.push(headlineElement.textContent.trim());
       }
     });
 
-    return '';
+    return textParts.join(' ');
   }
 
   /**

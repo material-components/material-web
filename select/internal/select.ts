@@ -18,7 +18,8 @@ import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/in
 import {TYPEAHEAD_RECORD} from '../../menu/internal/controllers/typeaheadController.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
 
-import {createRequestDeselectionEvent, createRequestSelectionEvent, getSelectedItems, SelectOption, SelectOptionRecord} from './shared.js';
+import {createRequestDeselectionEvent, createRequestSelectionEvent, SelectOption} from './selectoption/selectOptionController.js';
+import {getSelectedItems, SelectOptionRecord} from './shared.js';
 
 const VALUE = Symbol('value');
 
