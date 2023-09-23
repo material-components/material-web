@@ -60,11 +60,12 @@ export class HCTSlider extends LitElement {
     }
 
     return html`<section>
-      <label id="label" class="color-on-surface-text" for="source">${
-        this.label}</label>
+      <span id="label" class="color-on-surface-text">${
+        this.label}</span>
       <md-slider
           id="source"
-          withLabel
+          labeled
+          aria-label=${this.label}
           .min=${range[0]}
           .max=${range[1]}
           .value=${this.value}

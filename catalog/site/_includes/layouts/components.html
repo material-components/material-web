@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block toc%}
-{{ content | toc | safe }}
+{{ content | toc | filterToc | safe }}
 {% endblock %}
 
 {% block content %}

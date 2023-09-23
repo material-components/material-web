@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {animate, fadeIn, fadeOut} from '@lit-labs/motion';
-import {EASING} from '@material/web/internal/motion/animation.js';
-import {css, html, LitElement, nothing} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
+import { EASING } from '@material/web/internal/motion/animation.js';
+import { css, html, LitElement, nothing, PropertyValues } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 
-import {drawerOpenSignal} from '../signals/drawer-open-state.js';
-import {inertContentSignal, inertSidebarSignal} from '../signals/inert.js';
-import {SignalElement} from '../signals/signal-element.js';
+import { drawerOpenSignal } from '../signals/drawer-open-state.js';
+import { inertContentSignal, inertSidebarSignal } from '../signals/inert.js';
+import { SignalElement } from '../signals/signal-element.js';
 
 /**
  * A layout element that positions the top-app-bar, the main page content, and
@@ -21,8 +21,8 @@ import {SignalElement} from '../signals/signal-element.js';
  * widths, and position itself inline with the page at wider page widths. Most
  * importantly, this sidebar is SSR compatible.
  */
-@customElement('nav-drawer') export class NavDrawer extends SignalElement
-(LitElement) {
+@customElement('nav-drawer')
+export class NavDrawer extends SignalElement(LitElement) {
   /**
    * Whether or not the side drawer is collapsible or inline.
    */
@@ -31,9 +31,11 @@ import {SignalElement} from '../signals/signal-element.js';
   /**
    * Whether or not the TOC should be rendered.
    */
-  @property({type: Boolean, attribute: 'has-toc'}) hasToc = false;
+  @property({ type: Boolean, attribute: 'has-toc' }) hasToc = false;
 
-  @property({attribute: 'page-title'}) pageTitle = '';
+  @property({ attribute: 'page-title' }) pageTitle = '';
+
+  private lastDrawerOpen = drawerOpenSignal.value;
 
   render() {
     const showModal = this.isCollapsible && drawerOpenSignal.value;
@@ -43,8 +45,9 @@ import {SignalElement} from '../signals/signal-element.js';
     const drawerContentOpacityDuration = showModal ? 300 : 150;
     const scrimOpacityDuration = 150;
 
-    const drawerSlideAnimationEasing =
-        showModal ? EASING.EMPHASIZED : EASING.EMPHASIZED_ACCELERATE;
+    const drawerSlideAnimationEasing = showModal
+      ? EASING.EMPHASIZED
+      : EASING.EMPHASIZED_ACCELERATE;
 
     return html`
       <div class="root">
@@ -88,8 +91,7 @@ import {SignalElement} from '../signals/signal-element.js';
             </aside>
           </div>
           <div class="panes">
-            ${this.renderTocPane(showModal)}
-            ${this.renderContent(showModal)}
+            ${this.renderTocPane(showModal)} ${this.renderContent(showModal)}
           </div>
         </div>
       </div>
@@ -97,14 +99,14 @@ import {SignalElement} from '../signals/signal-element.js';
   }
 
   private renderContent(showModal: boolean) {
-    return html`
-      <div
-          class="pane content-pane"
-          ?inert=${showModal || inertContentSignal.value}>
-        <div class="content">
-          <slot name="app-content"></slot>
-        </div>
-      </div>`;
+    return html` <div
+      class="pane content-pane"
+      ?inert=${showModal || inertContentSignal.value}
+    >
+      <div class="content">
+        <slot name="app-content"></slot>
+      </div>
+    </div>`;
   }
 
   private renderTocPane(showModal: boolean) {
@@ -112,12 +114,14 @@ import {SignalElement} from '../signals/signal-element.js';
       return nothing;
     }
 
-    return html`
-      <div class="pane toc" ?inert=${showModal || inertContentSignal.value}>
-        <p>On this page:</p>
-        <h2>${this.pageTitle}</h2>
-        <slot name="toc"></slot>
-      </div>`;
+    return html` <div
+      class="pane toc"
+      ?inert=${showModal || inertContentSignal.value}
+    >
+      <p>On this page:</p>
+      <h2>${this.pageTitle}</h2>
+      <slot name="toc"></slot>
+    </div>`;
   }
 
   /**
@@ -137,6 +141,21 @@ import {SignalElement} from '../signals/signal-element.js';
     });
   }
 
+  updated(changed: PropertyValues<this>) {
+    super.updated(changed);
+    if (
+      this.lastDrawerOpen !== drawerOpenSignal.value &&
+      drawerOpenSignal.value &&
+      this.isCollapsible
+    ) {
+      (
+        this.querySelector(
+          'md-list.nav md-list-item[tabindex=0]'
+        ) as HTMLElement
+      )?.focus();
+    }
+  }
+
   static styles = css`
     :host {
       --_drawer-width: var(--catalog-drawer-width, 300px);
@@ -150,9 +169,8 @@ import {SignalElement} from '../signals/signal-element.js';
       flex-direction: column;
     }
 
-    ::slotted(*) {
-      --catalog-list-item-shape: var(--catalog-shape-xl);
-      --md-focus-ring-shape: var(--catalog-shape-xl);
+    ::slotted(nav) {
+      list-style: none;
     }
 
     .body {
@@ -189,7 +207,7 @@ import {SignalElement} from '../signals/signal-element.js';
     .panes {
       /* emphasized – duration matching render fn for sidebar */
       transition: 0.5s cubic-bezier(0.3, 0, 0, 1);
-      transition-property: margin, height, border-radius, max-width, width;;
+      transition-property: margin, height, border-radius, max-width, width;
     }
 
     .panes {
@@ -197,9 +215,13 @@ import {SignalElement} from '../signals/signal-element.js';
       justify-content: start;
       flex-direction: row-reverse;
       gap: var(--_pane-margin-inline-end);
-      margin-inline: var(--_pane-margin-inline-start) var(--_pane-margin-inline-end);
+      margin-inline: var(--_pane-margin-inline-start)
+        var(--_pane-margin-inline-end);
       width: 100%;
-      max-width: calc(100% - var(--_drawer-width) - var(--_pane-margin-inline-start) - var(--_pane-margin-inline-end));
+      max-width: calc(
+        100% - var(--_drawer-width) - var(--_pane-margin-inline-start) -
+          var(--_pane-margin-inline-end)
+      );
     }
 
     .pane.content-pane {
@@ -268,8 +290,10 @@ import {SignalElement} from '../signals/signal-element.js';
       }
 
       .panes {
-
-      max-width: calc(100% - var(--_pane-margin-inline-start) - var(--_pane-margin-inline-end));
+        max-width: calc(
+          100% - var(--_pane-margin-inline-start) -
+            var(--_pane-margin-inline-end)
+        );
       }
 
       .content {

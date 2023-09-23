@@ -4,13 +4,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {AbsolutePath, Analyzer, createPackageAnalyzer,} from '@lit-labs/analyzer/package-analyzer.js';
+import {
+  AbsolutePath,
+  Analyzer,
+  createPackageAnalyzer,
+} from '@lit-labs/analyzer/package-analyzer.js';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
-import {analyzeElementApi, MdMethodParameterInfo, MdModuleInfo, MdPropertyInfo,} from './analyze-element.js';
-import {docsToElementMapping} from './element-docs-map.js';
-import {MarkdownTable} from './markdown-tree-builder.js';
+import {
+  analyzeElementApi,
+  MdMethodParameterInfo,
+  MdModuleInfo,
+  MdPropertyInfo,
+} from './analyze-element.js';
+import { docsToElementMapping } from './element-docs-map.js';
+import { MarkdownTable } from './markdown-tree-builder.js';
 
 interface MarkdownTableSection {
   name: string;
@@ -22,7 +31,7 @@ interface ElementTableSection {
   customElementName: string;
   summary: string;
   description: string;
-  tables: Array<{name: string; table: MarkdownTable}>;
+  tables: Array<{ name: string; table: MarkdownTable }>;
 }
 
 /**
@@ -37,15 +46,15 @@ async function updateApiDocs() {
   const packagePath = path.resolve('.');
   // Analyzes the entire material-web repository.
   const analyzer = createPackageAnalyzer(packagePath as AbsolutePath);
-  const documentationFileNames =
-      Object.keys(docsToElementMapping);
+  const documentationFileNames = Object.keys(docsToElementMapping);
 
   const filesWritten: Array<Promise<void>> = [];
 
   // Update all the documentation files in parallel
   for (const docFileName of documentationFileNames) {
     filesWritten.push(
-        updateDocFileApiSection(docFileName, analyzer, packagePath));
+      updateDocFileApiSection(docFileName, analyzer, packagePath)
+    );
   }
 
   // Wait for all the files to be written
@@ -64,7 +73,10 @@ async function updateApiDocs() {
  * @returns A promise that resolves when the file has been updated.
  */
 async function updateDocFileApiSection(
-    docFileName: string, analyzer: Analyzer, packagePath: string) {
+  docFileName: string,
+  analyzer: Analyzer,
+  packagePath: string
+) {
   const elementEntrypoints = docsToElementMapping[docFileName];
   // This is a data structure that describes an element and its associated API
   // tables. e.g. a single section for MdFilledButton represents MdFilledButton
@@ -73,18 +85,23 @@ async function updateDocFileApiSection(
 
   for (const elementEntrypoint of elementEntrypoints) {
     elementTableSections.push(
-        generateTableSection(elementEntrypoint, packagePath, analyzer));
+      generateTableSection(elementEntrypoint, packagePath, analyzer)
+    );
   }
 
   const documentationFileContents = await fs.readFile(
-      path.resolve(packagePath, 'docs', 'components', docFileName));
+    path.resolve(packagePath, 'docs', 'components', docFileName)
+  );
 
   const updatedFileContents = insertMarkdownTables(
-      documentationFileContents.toString(), elementTableSections);
+    documentationFileContents.toString(),
+    elementTableSections
+  );
 
   await fs.writeFile(
-      path.resolve(packagePath, 'docs', 'components', docFileName),
-      updatedFileContents);
+    path.resolve(packagePath, 'docs', 'components', docFileName),
+    updatedFileContents
+  );
 }
 
 /**
@@ -100,10 +117,14 @@ async function updateDocFileApiSection(
  * associated with this element's section e.g. Properties, Methods, and Events.
  */
 function generateTableSection(
-    elementEntrypoint: string, packagePath: string,
-    analyzer: Analyzer): ElementTableSection {
-  const elementDoc =
-      analyzeElementApi(analyzer, path.resolve(packagePath, elementEntrypoint));
+  elementEntrypoint: string,
+  packagePath: string,
+  analyzer: Analyzer
+): ElementTableSection {
+  const elementDoc = analyzeElementApi(
+    analyzer,
+    path.resolve(packagePath, elementEntrypoint)
+  );
   const tables: MarkdownTableSection[] = [];
 
   const propertiesTable = generateFieldMarkdownTable(elementDoc);
@@ -111,15 +132,15 @@ function generateTableSection(
   const eventsTable = generateEventsMarkdownTable(elementDoc);
 
   if (propertiesTable.rows.length > 0) {
-    tables.push({name: 'Properties', table: propertiesTable});
+    tables.push({ name: 'Properties', table: propertiesTable });
   }
 
   if (methodsTable.rows.length > 0) {
-    tables.push({name: 'Methods', table: methodsTable});
+    tables.push({ name: 'Methods', table: methodsTable });
   }
 
   if (eventsTable.rows.length > 0) {
-    tables.push({name: 'Events', table: eventsTable});
+    tables.push({ name: 'Events', table: eventsTable });
   }
 
   return {
@@ -130,8 +151,6 @@ function generateTableSection(
     tables,
   };
 }
-
-
 
 /**
  * Given an object that represents a row in a markdown table, and another object
@@ -145,8 +164,10 @@ function generateTableSection(
  *     update the subclassRow.
  * @returns The mutated subclass row object.
  */
-function updateRow<T extends {[key: string]: unknown}>(
-    subclassRow: T, superClassRow: T) {
+function updateRow<T extends { [key: string]: unknown }>(
+  subclassRow: T,
+  superClassRow: T
+) {
   const keys = Object.keys(superClassRow) as Array<keyof T>;
   // update the row values if they are not defined
   for (const key of keys) {
@@ -176,15 +197,16 @@ function generateFieldMarkdownTable(element: MdModuleInfo): MarkdownTable {
     'Description',
   ]);
   const fieldNameOrder: string[] = [];
-  const fieldToRow = new Map < string, {
-    name: string;
-    attribute?: string;
-    type?: string;
-    default:
-      string;
+  const fieldToRow = new Map<
+    string,
+    {
+      name: string;
+      attribute?: string;
+      type?: string;
+      default: string;
       description?: string;
-  }
-  > ();
+    }
+  >();
 
   /**
    * Adds rows to the fieldToRow map and fieldNameOrder array but deduplicates
@@ -273,13 +295,15 @@ function generateMethodMarkdownTable(element: MdModuleInfo): MarkdownTable {
     'Description',
   ]);
   const methodNameOrder: string[] = [];
-  const methodToRow = new Map < string, {
-    name: string;
-    parameters: MdMethodParameterInfo[];
-    returns?: string;
-    description?: string;
-  }
-  > ();
+  const methodToRow = new Map<
+    string,
+    {
+      name: string;
+      parameters: MdMethodParameterInfo[];
+      returns?: string;
+      description?: string;
+    }
+  >();
 
   let currentClass = element;
   while (currentClass) {
@@ -340,15 +364,17 @@ function generateEventsMarkdownTable(element: MdModuleInfo): MarkdownTable {
     'Description',
   ]);
   const eventNameOrder: string[] = [];
-  const eventToRow = new Map < string, {
-    name: string;
-    // TODO reenable these once we update our docs to support them
-    // type?: string;
-    // bubbles: boolean;
-    // composed: boolean;
-    description?: string;
-  }
-  > ();
+  const eventToRow = new Map<
+    string,
+    {
+      name: string;
+      // TODO reenable these once we update our docs to support them
+      // type?: string;
+      // bubbles: boolean;
+      // composed: boolean;
+      description?: string;
+    }
+  >();
 
   let currentClass = element;
 
@@ -403,7 +429,9 @@ function generateEventsMarkdownTable(element: MdModuleInfo): MarkdownTable {
  * @returns The updated documentation file contents with the API section.
  */
 function insertMarkdownTables(
-    fileContents: string, elementTableSections: ElementTableSection[]) {
+  fileContents: string,
+  elementTableSections: ElementTableSection[]
+) {
   // A file that has no tables to insert should have its API section cleared.
   const hasContent = elementTableSections.reduce((hasContent, element) => {
     return hasContent || element.tables.length > 0;
@@ -430,21 +458,25 @@ function insertMarkdownTables(
  */
 function replaceFileContents(fileContents: string, tablesStrings?: string) {
   const injectionPointRegex =
-      /<!-- auto-generated API docs start -->.*<!-- auto-generated API docs end -->/s;
+    /<!-- auto-generated API docs start -->.*<!-- auto-generated API docs end -->/s;
 
   if (!tablesStrings) {
     return fileContents.replace(
-        injectionPointRegex, `<!-- auto-generated API docs start -->
-<!-- auto-generated API docs end -->`);
+      injectionPointRegex,
+      `<!-- auto-generated API docs start -->
+<!-- auto-generated API docs end -->`
+    );
   }
 
   return fileContents.replace(
-      injectionPointRegex, `<!-- auto-generated API docs start -->
+    injectionPointRegex,
+    `<!-- auto-generated API docs start -->
 
 ## API
 
 ${tablesStrings}
-<!-- auto-generated API docs end -->`);
+<!-- auto-generated API docs end -->`
+  );
 }
 
 /**
@@ -460,14 +492,20 @@ function stringifyMarkdownTableSections(elements: ElementTableSection[]) {
   let tablesStrings = '';
 
   for (const element of elements) {
-    const {className, tables, customElementName} = element;
+    const { className, tables, customElementName } = element;
     tablesStrings += `
-### ${className}${customElementName ? ` &lt;${customElementName}&gt;` : ''}
-${tables.map(({name, table}) => `
+### ${className}${
+      customElementName ? ` <code>&lt;${customElementName}&gt;</code>` : ''
+    }
+${tables
+  .map(
+    ({ name, table }) => `
 #### ${name}
 
 ${table.toString()}
-`).join('')}`;
+`
+  )
+  .join('')}`;
   }
 
   return tablesStrings;

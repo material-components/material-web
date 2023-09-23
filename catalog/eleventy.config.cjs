@@ -12,6 +12,7 @@ const minifyHTML = require('./eleventy-helpers/transforms/minify-html.cjs');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const pluginTOC = require('eleventy-plugin-nesting-toc');
 const permalinks = require('./eleventy-helpers/plugins/permalinks.cjs');
+const filterToc = require('./eleventy-helpers/filters/filter-toc.cjs');
 const filterSort = require('./eleventy-helpers/filters/filter-sort.cjs');
 const copyCodeButtonPlugin = require('./eleventy-helpers/plugins/copy-code-button.cjs');
 const markdownIt = require('markdown-it');
@@ -53,6 +54,8 @@ module.exports = function (eleventyConfig) {
 
   // install filters
   filterSort(eleventyConfig);
+
+  filterToc(eleventyConfig);
 
   // install transforms
   minifyHTML(eleventyConfig, DEV);

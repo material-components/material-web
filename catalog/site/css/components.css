@@ -192,3 +192,12 @@ a .offscreen {
   justify-content: center;
   align-items: center;
 }
+
+blockquote {
+  margin: var(--catalog-spacing-l);
+  padding: var(--catalog-spacing-l);
+  border-radius: var(--catalog-shape-l);
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font-style: italic;
+}

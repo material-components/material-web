@@ -3,5 +3,6 @@
   "tags": [
     "component"
   ],
-  "hasToc": true
+  "hasToc": true,
+  "isComponent": true
 }

@@ -7,8 +7,15 @@
 import '@material/web/iconbutton/icon-button.js';
 import '@material/web/icon/icon.js';
 
-import {css, html, LitElement} from 'lit';
-import {customElement, property, queryAssignedElements, state} from 'lit/decorators.js';
+import { css, html, LitElement } from 'lit';
+import {
+  customElement,
+  property,
+  query,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
+import { MdIconButton } from '@material/web/iconbutton/icon-button.js';
 
 /**
  * A custom element that places a copy button at the top right corner of a
@@ -27,12 +34,16 @@ export class CopyCodeButton extends LitElement {
     md-icon-button {
       color: red;
       position: absolute;
-      inset: var(--catalog-copy-code-button-inset, var(--_border-radius) var(--_border-radius) auto auto);
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
       --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
     }
   `;
 
-  private timeoutId: number|undefined;
+  private timeoutId: number | undefined;
 
   @state() private showCheckmark = false;
 
@@ -45,25 +56,32 @@ export class CopyCodeButton extends LitElement {
    * The aria label for the copy button when it has been clicked and the copy is
    * successul.
    */
-  @property({attribute: 'success-label'}) successLabel = 'Copy successful';
+  @property({ attribute: 'success-label' }) successLabel = 'Copy successful';
 
   /**
    * The title to be set on the copy button.
    */
-  @property({attribute: 'button-title'}) buttonTitle = 'Copy code';
+  @property({ attribute: 'button-title' }) buttonTitle = 'Copy code';
 
-  @queryAssignedElements({flatten: true, selector: '*'})
+  @query('md-icon-button') private copyButton!: MdIconButton;
+
+  @queryAssignedElements({ flatten: true, selector: '*' })
   private slottedEls!: NodeListOf<HTMLElement>;
 
   render() {
-    const label = this.showCheckmark ? this.successLabel : this.label;
-    const icon = this.showCheckmark ? 'check' : 'content_copy';
     return html`
       <slot></slot>
-      <md-icon-button @click=${this.onClick} title=${this.buttonTitle}>
-        <md-icon aria-live="polite" aria-label=${label}>
-          <span aria-hidden="true">${icon}</span>
-        </md-icon>
+      <md-icon-button
+        toggle
+        @click=${this.onClick}
+        @input=${this.onInput}
+        title=${this.buttonTitle}
+        .selected=${this.showCheckmark}
+        aria-label=${this.label}
+        aria-label-selected=${this.successLabel}
+      >
+        <md-icon>content_copy</md-icon>
+        <md-icon slot="selected">checkmark</md-icon>
       </md-icon-button>
     `;
   }
@@ -71,6 +89,10 @@ export class CopyCodeButton extends LitElement {
   private async onClick() {
     await navigator.clipboard.writeText(this.getCopyText());
     this.onCopySuccess();
+  }
+
+  private onInput() {
+    this.showCheckmark = this.copyButton.selected;
   }
 
   /**
