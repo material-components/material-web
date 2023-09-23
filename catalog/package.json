@@ -18,7 +18,7 @@
     "build:prod": "wireit",
     "build:prod:eleventy": "wireit",
     "build:prod:ts": "wireit",
-    "build:copy-readmes": "wireit",
+    "build:copy-docs": "wireit",
     "build:copy-stories": "wireit"
   },
   "wireit": {
@@ -43,7 +43,7 @@
       ],
       "dependencies": [
         "build:dev:ts",
-        "build:copy-readmes",
+        "build:copy-docs",
         "build:copy-stories"
       ]
     },
@@ -96,7 +96,7 @@
       ],
       "dependencies": [
         "build:prod:ts",
-        "build:copy-readmes",
+        "build:copy-docs",
         "build:copy-stories"
       ]
     },
@@ -114,15 +114,22 @@
         "..:build"
       ]
     },
-    "build:copy-readmes": {
-      "command": "node scripts/copy-readmes.mjs",
+    "build:copy-docs": {
+      "command": "node scripts/copy-docs.mjs",
       "files": [
         "../docs/components",
-        "scripts/copy-readmes.mjs"
+        "../docs/theming",
+        "../docs/*.md",
+        "../docs/images/",
+        "scripts/copy-docs.mjs"
       ],
       "output": [
         "site/components/**/*.md",
-        "site/components/images"
+        "site/components/images",
+        "site/theming/**/*.md",
+        "site/theming/images",
+        "site/about/**/*.md",
+        "site/about/images"
       ]
     },
     "serve:dev": {
@@ -179,6 +186,7 @@
     "@luncheon/esbuild-plugin-gzip": "^0.1.0",
     "@web/dev-server": "^0.1.35",
     "@webcomponents/template-shadowroot": "^0.2.1",
+    "cheerio": "^1.0.0-rc.12",
     "clean-css": "^5.3.1",
     "eleventy-plugin-compress": "^1.0.5",
     "eleventy-plugin-nesting-toc": "^1.3.0",

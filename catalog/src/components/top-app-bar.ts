@@ -155,9 +155,8 @@ export class TopAppBar extends SignalElement(LitElement) {
       inset: 0 0 auto 0;
       display: flex;
       align-items: center;
-      padding-block-start: var(--catalog-spacing-m);
       box-sizing: border-box;
-      padding: var(--catalog-spacing-m) var(--catalog-spacing-s);
+      padding: var(--catalog-spacing-m) var(--catalog-spacing-l);
       background-color: var(--md-sys-color-surface-container);
       color: var(--md-sys-color-on-surface);
       z-index: 12;

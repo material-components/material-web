@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- :root {
+:root {
   --catalog-image-border-radius: 22px;
 }
 
@@ -32,6 +32,11 @@ details:not([open]) #top-app-bar-nav {
 
 main > * {
   max-width: 1760px;
+}
+
+main > p img,
+main > img {
+  max-width: 100%;
 }
 
 img:not(figure *),
@@ -195,9 +200,43 @@ a .offscreen {
 
 blockquote {
   margin: var(--catalog-spacing-l);
+}
+
+main > blockquote:not(catalog-component-header, details) {
   padding: var(--catalog-spacing-l);
   border-radius: var(--catalog-shape-l);
   background-color: var(--md-sys-color-secondary-container);
+  display: flex;
+  gap: var(--catalog-spacing-s);
+}
+
+main > blockquote:not(catalog-component-header, details) .content {
+  flex-grow: 1;
+}
+
+blockquote .content > *:first-child {
+  margin-block-start: 0;
+}
+
+blockquote .content > *:last-child {
+  margin-block-end: 0;
+}
+
+blockquote,
+blockquote a {
   color: var(--md-sys-color-on-secondary-container);
-  font-style: italic;
+}
+
+blockquote a {
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+blockquote.important {
+  background-color: var(--md-sys-color-primary-container);
+}
+
+blockquote.important,
+  blockquote.important a {
+  color: var(--md-sys-color-on-primary-container);
 }

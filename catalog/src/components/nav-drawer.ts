@@ -79,6 +79,7 @@ export class NavDrawer extends SignalElement(LitElement) {
                 },
               })}
             >
+            <div class="scroll-wrapper">
               <slot
                 ${animate({
                   properties: ['opacity'],
@@ -88,6 +89,7 @@ export class NavDrawer extends SignalElement(LitElement) {
                   },
                 })}
               ></slot>
+              </div>
             </aside>
           </div>
           <div class="panes">
@@ -103,8 +105,10 @@ export class NavDrawer extends SignalElement(LitElement) {
       class="pane content-pane"
       ?inert=${showModal || inertContentSignal.value}
     >
-      <div class="content">
-        <slot name="app-content"></slot>
+      <div class="scroll-wrapper">
+        <div class="content">
+          <slot name="app-content"></slot>
+        </div>
       </div>
     </div>`;
   }
@@ -118,9 +122,11 @@ export class NavDrawer extends SignalElement(LitElement) {
       class="pane toc"
       ?inert=${showModal || inertContentSignal.value}
     >
-      <p>On this page:</p>
-      <h2>${this.pageTitle}</h2>
-      <slot name="toc"></slot>
+      <div class="scroll-wrapper">
+        <p>On this page:</p>
+        <h2>${this.pageTitle}</h2>
+        <slot name="toc"></slot>
+      </div>
     </div>`;
   }
 
@@ -150,7 +156,7 @@ export class NavDrawer extends SignalElement(LitElement) {
     ) {
       (
         this.querySelector(
-          'md-list.nav md-list-item[tabindex=0]'
+          'md-list.nav md-list-item[tabindex="0"]'
         ) as HTMLElement
       )?.focus();
     }
@@ -200,7 +206,6 @@ export class NavDrawer extends SignalElement(LitElement) {
       );
       background-color: var(--md-sys-color-surface);
       border-radius: var(--catalog-shape-xl);
-      padding-block: var(--catalog-spacing-xl);
     }
 
     .pane,
@@ -267,7 +272,18 @@ export class NavDrawer extends SignalElement(LitElement) {
       inset: var(--catalog-top-app-bar-height) 0 0 0;
       z-index: 12;
       background-color: var(--md-sys-color-surface-container);
+      overflow: hidden;
+    }
+
+    .scroll-wrapper {
       overflow-y: auto;
+      max-height: 100%;
+      border-radius: inherit;
+      box-sizing: border-box;
+    }
+
+    .pane .scroll-wrapper {
+      padding-block: var(--catalog-spacing-xl);
     }
 
     aside slot {
@@ -356,7 +372,7 @@ export class NavDrawer extends SignalElement(LitElement) {
         --_scrollbar-width: 8px;
       }
 
-      .pane {
+      .scroll-wrapper {
         /* firefox */
         scrollbar-color: var(--md-sys-color-primary) transparent;
         scrollbar-width: thin;
@@ -370,12 +386,12 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
 
       /* Chromium + Safari */
-      .pane::-webkit-scrollbar {
+      .scroll-wrapper::-webkit-scrollbar {
         background-color: transparent;
         width: var(--_scrollbar-width);
       }
 
-      .pane::-webkit-scrollbar-thumb {
+      .scroll-wrapper::-webkit-scrollbar-thumb {
         background-color: var(--md-sys-color-primary);
         border-radius: calc(var(--_scrollbar-width) / 2);
       }
@@ -398,12 +414,12 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
 
       @media (pointer: fine) {
-        .pane {
+        .scroll-wrapper {
           /* firefox */
           scrollbar-color: CanvasText transparent;
         }
 
-        .pane::-webkit-scrollbar-thumb {
+        .scroll-wrapper::-webkit-scrollbar-thumb {
           /* Chromium + Safari */
           background-color: CanvasText;
         }

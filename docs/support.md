@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Support
+title: Support
+order: 4
+-----><!-- catalog-only-end -->
+
 # Support
 
 <!-- go/mwc-support -->

@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Material Theming
+title: Theming
+order: 1
+-----><!-- catalog-only-end -->
+
 # Theming
 
 <!-- go/mwc-theming -->

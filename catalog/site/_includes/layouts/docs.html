@@ -1,7 +1,6 @@
 {% extends 'default.html' %}
 
 {% block head %}
-  <script type="module" src="/js/pages/components.js"></script>
   <link rel="stylesheet" href="/css/md-layout.css" />
   <link rel="stylesheet" href="/css/syntax-highlight.css" />
 {% endblock %}
@@ -11,12 +10,5 @@
 {% endblock %}
 
 {% block content %}
-{% if not ssrOnly %}
-<!-- Loads page JS on idle callback at src/hydration-entrypoints/components/md-file-name.ts -->
-<lit-island
-    on:idle
-    import="/js/hydration-entrypoints{{ page.filePathStem }}.js">
-</lit-island>
-{% endif %}
 {{ content | mdMarkdown | safe }}
 {% endblock %}

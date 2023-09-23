@@ -119,8 +119,17 @@ nav-drawer md-list.nav md-list-item[href] {
   border-radius: var(--catalog-shape-xl);
 }
 
-nav-drawer md-list.nav md-list-item[href]:first-of-type {
-  margin-block: 4px;
+nav-drawer md-list.nav md-item:first-of-type {
+  padding-block: 0;
+}
+
+nav-drawer md-list.nav md-item {
+  font-size: var(--catalog-headline-s-font-size);
+  padding-block-end: 0;
+}
+
+nav-drawer md-list.nav md-item + md-list-item[href] {
+  margin-block-start: 0;
 }
 
 h1 {

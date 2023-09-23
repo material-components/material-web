@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Intoduction
+title: Intoduction
+order: 1
+-----><!-- catalog-only-end -->
+
 # Intro to Material Web Components
 
 <!-- go/mwc-intro -->

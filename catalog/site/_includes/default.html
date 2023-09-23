@@ -59,22 +59,45 @@
         <main id="main-content" slot="app-content" tabindex="0">
           <!-- this is the content of the page -->
           <!-- unrelated change to components -->
-          {% block content %}{{ content | safe }}{% endblock %}
+          {% block content %}{{ content | mdMarkdown | safe }}{% endblock %}
         </main>
-          <md-list
-              aria-label="List of pages and components"
-              role="menubar"
-              class="nav">
-            {% for component in collections.component|filtersort('data.name') %}
-              <md-list-item
-                href="{{ component.url }}"
-                role="menuitem"
-                {% if component.url == page.url %}selected{% endif %}
-                type="link"
-                tabindex="{% if component.url == page.url %}0{% else %}-1{% endif %}"
-              >{{ component.data.name }}</md-list-item>
-            {% endfor %}
-          </md-list>
+        <md-list
+            aria-label="List of pages and components"
+            role="menubar"
+            class="nav">
+          <md-item>About:</md-item>
+          {% for file in collections.about|filtersort('data.order') %}
+            <md-list-item
+              href="{{ file.url }}"
+              role="menuitem"
+              {% if file.url == page.url %}selected{% endif %}
+              type="link"
+              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
+            >{{ file.data.name }}</md-list-item>
+          {% endfor %}
+          <md-divider role="separator"></md-divider>
+          <md-item>Theming:</md-item>
+          {% for file in collections.theming|filtersort('data.order') %}
+            <md-list-item
+              href="{{ file.url }}"
+              type="menuitem"
+              {% if file.url == page.url %}selected{% endif %}
+              type="link"
+              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
+            >{{ file.data.name }}</md-list-item>
+          {% endfor %}
+          <md-divider role="separator"></md-divider>
+          <md-item>Components:</md-item>
+          {% for file in collections.component|filtersort('data.name') %}
+            <md-list-item
+              href="{{ file.url }}"
+              role="menuitem"
+              {% if file.url == page.url %}selected{% endif %}
+              type="link"
+              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
+            >{{ file.data.name }}</md-list-item>
+          {% endfor %}
+        </md-list>
       </nav-drawer>
     </lit-island>
   </body>

@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Typography
+title: Typography
+order: 3
+-----><!-- catalog-only-end -->
+
 # Typography
 
 <!-- go/mwc-typography -->

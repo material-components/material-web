@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Color
+title: Color
+order: 2
+-----><!-- catalog-only-end -->
+
 # Color
 
 <!--*
