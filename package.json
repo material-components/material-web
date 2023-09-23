@@ -76,7 +76,8 @@
         "!**/*.d.ts",
         "!**/*.css.ts",
         "!catalog",
-        "!scripts/"
+        "!scripts/",
+        "!node_modules"
       ],
       "output": [
         ".tsbuildinfo",
@@ -94,13 +95,13 @@
     },
     "build:css-to-ts": {
       "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
-      "files": ["css-to-ts.js", "!scripts/"],
+      "files": ["css-to-ts.js", "!scripts/", "!node_modules"],
       "output": ["**/*.css.ts", "!catalog", "!scripts/"],
       "dependencies": ["build:sass"]
     },
     "build:sass": {
       "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
-      "files": ["**/*.scss", "!catalog", "!scripts/"],
+      "files": ["**/*.scss", "!catalog", "!scripts/", "!node_modules"],
       "output": ["**/*.css", "**/*.css.map", "!catalog", "!scripts/"]
     },
     "test": {
@@ -137,7 +138,8 @@
         "!**/*.css.ts",
         "!catalog",
         "!scripts/",
-        "scripts/analyzer/update-docs.js"
+        "scripts/analyzer/update-docs.js",
+        "!node_modules"
       ],
       "output": [],
       "dependencies": ["build:analyzer"]

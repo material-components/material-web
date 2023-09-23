@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Material Theming
+title: Theming
+order: 1
+-----><!-- catalog-only-end -->
+
 # Theming
 
 <!-- go/mwc-theming -->
@@ -117,8 +123,7 @@ md-filled-button.error {
 }
 ```
 
-Refer to each [components' documentation](../components/) for available
-tokens.
+Refer to each [components' documentation](../components/) for available tokens.
 
 > Note: unlike `--md-ref-*` and `--md-sys-*` tokens, which are prefixed with
 > `ref` and `sys`, component tokens are *not* prefixed with `comp`.

@@ -16,7 +16,7 @@ import {css, html, LitElement} from 'lit';
 import {customElement, query, queryAll, state} from 'lit/decorators.js';
 import {live} from 'lit/directives/live.js';
 
-import {ChangeColorEvent, ChangeDarkModeEvent,} from '../types/color-events.js';
+import {ChangeColorEvent, ChangeDarkModeEvent} from '../types/color-events.js';
 import {hctFromHex, hexFromHct} from '../utils/material-color-helpers.js';
 import {getCurrentMode, getCurrentSeedColor, getCurrentThemeString} from '../utils/theme.js';
 import type {ColorMode} from '../utils/theme.js';
@@ -29,6 +29,11 @@ import type {HCTSlider} from './hct-slider.js';
  */
 @customElement('theme-changer')
 export class ThemeChanger extends LitElement {
+  static override shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
   /**
    * The currently selected color mode.
    */
@@ -62,14 +67,16 @@ export class ThemeChanger extends LitElement {
 
   render() {
     return html`
-      <h2>
-        Theme Controls
+      <div id="head-wrapper">
+        <h2>
+          Theme Controls
+        </h2>
         <copy-code-button
             button-title="Copy current theme to clipboard"
             label="Copy current theme"
             .getCopyText=${getCurrentThemeString}>
         </copy-code-button>
-      </h2>
+      </div>
       ${this.renderHexPicker()}
       ${this.renderHctPicker()}
       ${this.renderColorModePicker()}
@@ -81,7 +88,7 @@ export class ThemeChanger extends LitElement {
    */
   protected renderHexPicker() {
     return html`<div>
-      <label id="hex">
+      <label id="hex" for="color-input">
         <span class="label">Hex Source Color</span>
         <span class="input-wrapper">
           <div class="overflow">
@@ -134,6 +141,7 @@ export class ThemeChanger extends LitElement {
   private renderColorModePicker() {
     return html`<md-outlined-segmented-button-set
         @segmented-button-set-selection=${this.onColorModeSelection}
+        aria-label="Color mode"
     >
       ${this.renderModeButton('dark', 'dark_mode')}
       ${this.renderModeButton('auto', 'brightness_medium')}
@@ -152,6 +160,7 @@ export class ThemeChanger extends LitElement {
     return html`<md-outlined-segmented-button
       data-value=${mode}
       title=${mode}
+      aria-label="${mode} color scheme"
       .selected=${this.selectedColorMode === mode}
     >
       <md-icon slot="icon">${icon}</md-icon>
@@ -227,6 +236,11 @@ export class ThemeChanger extends LitElement {
 
     :host > *:last-child {
       margin-block-end: 0;
+    }
+
+    #head-wrapper {
+      display: flex;
+      align-items: space-between;
     }
 
     input {

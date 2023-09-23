@@ -37,8 +37,7 @@ async function updateApiDocs() {
   const packagePath = path.resolve('.');
   // Analyzes the entire material-web repository.
   const analyzer = createPackageAnalyzer(packagePath as AbsolutePath);
-  const documentationFileNames =
-      Object.keys(docsToElementMapping);
+  const documentationFileNames = Object.keys(docsToElementMapping);
 
   const filesWritten: Array<Promise<void>> = [];
 
@@ -130,8 +129,6 @@ function generateTableSection(
     tables,
   };
 }
-
-
 
 /**
  * Given an object that represents a row in a markdown table, and another object
@@ -462,7 +459,8 @@ function stringifyMarkdownTableSections(elements: ElementTableSection[]) {
   for (const element of elements) {
     const {className, tables, customElementName} = element;
     tablesStrings += `
-### ${className}${customElementName ? ` &lt;${customElementName}&gt;` : ''}
+### ${className}${
+        customElementName ? ` <code>&lt;${customElementName}&gt;</code>` : ''}
 ${tables.map(({name, table}) => `
 #### ${name}
 

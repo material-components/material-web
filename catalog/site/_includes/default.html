@@ -7,9 +7,16 @@
       name="viewport"
       content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"
     />
+    {% if isComponent %}
+      {% set pageTitle = title or name %}
+    {% else %}
+      {% set pageTitle = title %}
+    {% endif %}
     <!-- Use the 11ty data system to set the title -->
-    <title>{% if title %}{{ title }}{% endif %}</title>
-
+    <title>Material Web{% if pageTitle %} - {{ pageTitle }}{% endif %}</title>
+    <!-- Set the color of the url bar on mobile to match theme -->
+    <meta name="theme-color" content="#251f16" />
+    <link href="/images/favicon.svg" rel="icon" sizes="any" type="image/svg+xml">
     <!-- Inlines the global css in site/css/global.css -->
     {% inlinecss "global.css" %}
     <!-- MUST be loaded before any lit bundle. allows hydration of SSRd components -->
@@ -51,23 +58,51 @@
           <section slot="toc">{% block toc %}{% endblock %}</section>
         {% endif %}
 
-        <main slot="app-content">
+        <main id="main-content" slot="app-content" tabindex="0">
           <!-- this is the content of the page -->
           <!-- unrelated change to components -->
-          {% block content %}{{ content | safe }}{% endblock %}
+          {% block content %}{{ content | mdMarkdown | safe }}{% endblock %}
         </main>
-          <md-list>
-            {% for component in collections.component|filtersort('data.name') %}
-              <li>
-                <md-list-item
-                  href="{{ component.url }}"
-                  {% if component.url == page.url %}selected{% endif %}
-                  data-role=""
-                  item-tabindex="0"
-                >{{ component.data.name }}</md-list-item>
-              </li>
-            {% endfor %}
-          </md-list>
+        <md-list
+            aria-label="List of pages and components"
+            role="menubar"
+            class="nav">
+          <!-- About section -->
+          <md-item><div slot="headline">About</div></md-item>
+          {% for file in collections.about|filtersort('data.order') %}
+            <md-list-item
+              href="{{ file.url }}"
+              role="menuitem"
+              {% if file.url == page.url %}selected{% endif %}
+              type="link"
+              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
+            >{{ file.data.name }}</md-list-item>
+          {% endfor %}
+          <md-divider role="separator"></md-divider>
+          <!-- Theming section -->
+          <md-item><div slot="headline">Theming</div></md-item>
+          {% for file in collections.theming|filtersort('data.order') %}
+            <md-list-item
+              href="{{ file.url }}"
+              type="menuitem"
+              {% if file.url == page.url %}selected{% endif %}
+              type="link"
+              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
+            >{{ file.data.name }}</md-list-item>
+          {% endfor %}
+          <md-divider role="separator"></md-divider>
+          <!-- Components section -->
+          <md-item><div slot="headline">Components</div></md-item>
+          {% for file in collections.component|filtersort('data.name') %}
+            <md-list-item
+              href="{{ file.url }}"
+              role="menuitem"
+              {% if file.url == page.url %}selected{% endif %}
+              type="link"
+              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
+            >{{ file.data.name }}</md-list-item>
+          {% endfor %}
+        </md-list>
       </nav-drawer>
     </lit-island>
   </body>

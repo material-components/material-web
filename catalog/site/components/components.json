@@ -1,7 +1,6 @@
 {
   "layout": "layouts/components.html",
-  "tags": [
-    "component"
-  ],
-  "hasToc": true
+  "tags": ["component"],
+  "hasToc": true,
+  "isComponent": true
 }

@@ -11,16 +11,25 @@ import tinyGlob from 'tiny-glob';
 /**
  * Recursively copies the images from
  *
- * /docs/components/images
+ * /docs/${path}/images
  * to
- * /catalog/site/components/images
+ * /catalog/site/${includedPath}/${path}/images
+ *
+ * @param {string?} path The directory from which to copy the `images/`
+ *     directory
+ * @param {string?} includedPath A path to include to the beginning of the
+ *     destination in the `site` directory
  */
-async function copyImages() {
-  await cp(
-      join('..', 'docs', 'components', 'images'),
-      join('site', 'components', 'images'), {recursive: true}, (err) => {
-        if (err) throw err;
-      });
+async function copyImages(path = '', includePath = '') {
+  const origin = join('..', 'docs', path, 'images');
+  const desination = join('site', includePath, path, 'images');
+
+  console.log(`Copying images from ${origin} to ${desination}...`);
+  await cp(origin, desination, {recursive: true}, (err) => {
+    if (err) throw err;
+  });
+
+  console.log(`Copied images from ${origin} to ${desination}!`);
 }
 
 /**
@@ -29,8 +38,8 @@ async function copyImages() {
  *
  * @return A promise of all the markdwon filepaths in /docs/components/
  */
-async function getReadmeFiles() {
-  const readmeFilesGlob = ['../docs/components/**/*.md'];
+async function getReadmeFiles(path = '', deep = false) {
+  const readmeFilesGlob = [join('../docs', path, deep ? '/**/' : '', '*.md')];
   const readmeFiles = readmeFilesGlob.map(async (entry) => tinyGlob(entry));
   return (await Promise.all(readmeFiles)).flat();
 }
@@ -51,8 +60,7 @@ const transforms = [
   // removes everything in between github-only-start and github-only-end
   // comments
   {
-    before:
-        /\s*<!-- no-catalog-start -->(.|\n)*?<!-- no-catalog-end -->\s*/gm,
+    before: /\s*<!-- no-catalog-start -->(.|\n)*?<!-- no-catalog-end -->\s*/gm,
     after: '\n\n',
   },
   // eleventy pages end with `/` so `components/checkbox.md` will turn into the
@@ -109,8 +117,10 @@ async function fileIncludeTransform(filepath, fileContents) {
  * result to /catalog/site/components/<component-name>.md
  *
  * @param {Array<string>} filepaths The readme file paths to transform.
+ * @param {[string|RegExp, string|(match: string, ...patterns: string[])][]}
+ *     replacements File path transforms to apply to output.
  */
-async function transformReadmes(filepaths) {
+async function transformReadmes(filepaths, outdir = '', replacements = []) {
   const readmePromises = filepaths.map(async (entry) => {
     let readme = await readFile(entry, 'utf8');
     console.log(`Transforming ${entry}`);
@@ -122,10 +132,18 @@ async function transformReadmes(filepaths) {
     readme = await fileIncludeTransform(entry, readme);
 
     // The `components/<component-name>.md` path.
-    const localPath = relative(join('..', 'docs'), entry);
+    let localPath = relative(join('..', 'docs'), entry);
+
+    for (const [pattern, replacement] of replacements) {
+      const regex = new RegExp(pattern);
+      localPath = localPath.replace(regex, replacement);
+    }
+
+
     // The output path at
     // /catalog/site/components/<?local path>/<component name>.md
-    const outputPath = join('site', localPath);
+    const outputPath = join('site', outdir, localPath);
+
     console.log(`Writing trasnformed file to: ${outputPath}`);
     return writeFile(outputPath, readme);
   });
@@ -133,11 +151,19 @@ async function transformReadmes(filepaths) {
   await Promise.all(readmePromises);
 }
 
-const readmeFiles = await getReadmeFiles();
+const aboutFiles = await getReadmeFiles('.');
+const componentsReadmes = await getReadmeFiles('components', true);
+const themingFiles = await getReadmeFiles('theming', true);
 
 console.log('Copying images...');
-await copyImages();
+await copyImages('.', 'about');
+await copyImages('components');
+await copyImages('theming');
 console.log('Images copied!');
 console.log('Transforming readmes...');
-await transformReadmes(readmeFiles);
+await transformReadmes(aboutFiles, 'about');
+await transformReadmes(componentsReadmes);
+await transformReadmes(themingFiles, '', [
+  ['README', 'material-theming'],
+]);
 console.log('Transformations complete!');

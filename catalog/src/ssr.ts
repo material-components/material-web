@@ -12,3 +12,5 @@ import './components/top-app-bar.js';
 import './components/nav-drawer.js';
 import './components/theme-changer.js';
 import '@material/web/all.js';
+// 🤫
+import '@material/web/labs/item/item.js';
