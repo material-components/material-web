@@ -83,9 +83,15 @@ Cucumber."](images/menu/usage.webp)
 <span style="position: relative">
   <md-filled-button id="usage-anchor">Set with idref</md-filled-button>
   <md-menu id="usage-menu" anchor="usage-anchor">
-    <md-menu-item headline="Apple"></md-menu-item>
-    <md-menu-item headline="Banana"></md-menu-item>
-    <md-menu-item headline="Cucumber"></md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Apple</div>
+    </md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Banana</div>
+    </md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Cucumber</div>
+    </md-menu-item>
   </md-menu>
 </span>
 
@@ -94,15 +100,21 @@ Cucumber."](images/menu/usage.webp)
   const anchorEl = document.body.querySelector('#usage-anchor');
   const menuEl = document.body.querySelector('#usage-menu');
 
-  anchorEl.addEventListener('click', () => { menuEl.show(); });
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
 </script>
 
 <span style="position: relative">
   <md-filled-button id="usage-anchor-2">Set with element ref</md-filled-button>
   <md-menu id="usage-menu-2">
-    <md-menu-item headline="Apple"></md-menu-item>
-    <md-menu-item headline="Banana"></md-menu-item>
-    <md-menu-item headline="Cucumber"></md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Apple</div>
+    </md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Banana</div>
+    </md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Cucumber</div>
+    </md-menu-item>
   </md-menu>
 </span>
 
@@ -113,7 +125,7 @@ Cucumber."](images/menu/usage.webp)
   const menuEl = document.body.querySelector('#usage-menu-2');
   menuEl.anchorElement = anchorEl;
 
-  anchorEl.addEventListener('click', () => { menuEl.show(); });
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
 </script>
 ```
 
@@ -144,39 +156,53 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
   <!-- Note the has-overflow attribute -->
   <md-menu has-overflow id="usage-submenu" anchor="usage-submenu-anchor">
     <md-sub-menu>
-      <md-menu-item slot="item" headline="Fruits with A">
+      <md-menu-item slot="item">
+      <div slot="headline">Fruits with A</div>
         <!-- Arrow icons are helpful affordances -->
-        <md-icon slot="end-icon">arrow_right</md-icon>
+        <md-icon slot="end">arrow_right</md-icon>
       </md-menu-item>
       <!-- Submenu must be slotted into sub-menu's menu slot -->
       <md-menu slot="menu">
-        <md-menu-item headline="Apricot"></md-menu-item>
-        <md-menu-item headline="Avocado"></md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Apricot</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Avocado</div>
+        </md-menu-item>
 
         <!-- Nest as many as you want and control menu anchoring -->
         <md-sub-menu
             menu-corner="start-end"
             anchor-corner="start-start">
-          <md-menu-item slot="item" headline="Apples">
+          <md-menu-item slot="item">
+            <div slot="headline">Apples</div>
             <!-- Arrow icons are helpful affordances -->
-            <md-icon
-                slot="start-icon"
-                style="font-size: 24px;height:24px;">
+            <md-icon slot="start">
               arrow_left
             </md-icon>
           </md-menu-item>
           <md-menu slot="menu">
-            <md-menu-item headline="Fuji"></md-menu-item>
-            <md-menu-item headline="Granny Smith"></md-menu-item>
-            <md-menu-item headline="Red Delicious"></md-menu-item>
+            <md-menu-item>
+              <div slot="headline">Fuji</div>
+            </md-menu-item>
+            <md-menu-item>
+              <div slot="headline" style="white-space: nowrap;">Granny Smith</div>
+            </md-menu-item>
+            <md-menu-item>
+              <div slot="headline" style="white-space: nowrap;">Red Delicious</div>
+            </md-menu-item>
           </md-menu>
 
         </md-sub-menu>
       </md-menu>
     </md-sub-menu>
 
-    <md-menu-item headline="Banana"></md-menu-item>
-    <md-menu-item headline="Cucumber"></md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Banana</div>
+    </md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Cucumber</div>
+    </md-menu-item>
   </md-menu>
 </span>
 
@@ -184,7 +210,7 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
   const anchorEl = document.body.querySelector('#usage-submenu-anchor');
   const menuEl = document.body.querySelector('#usage-submenu');
 
-  anchorEl.addEventListener('click', () => { menuEl.show(); });
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
 </script>
 ```
 
@@ -218,16 +244,22 @@ Cucumber."](images/menu/usage-fixed.webp)
 
 <!-- Fixed menus do not require a common ancestor with the anchor. -->
 <md-menu positioning="fixed" id="usage-fixed" anchor="usage-fixed-anchor">
-  <md-menu-item headline="Apple"></md-menu-item>
-  <md-menu-item headline="Banana"></md-menu-item>
-  <md-menu-item headline="Cucumber"></md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Apple</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Banana</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Cucumber</div>
+  </md-menu-item>
 </md-menu>
 
 <script type="module">
   const anchorEl = document.body.querySelector('#usage-fixed-anchor');
   const menuEl = document.body.querySelector('#usage-fixed');
 
-  anchorEl.addEventListener('click', () => { menuEl.show(); });
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
 </script>
 ```
 
@@ -265,9 +297,12 @@ cases should be set to `role="none"`, and `md-divider` should have
     role="listbox"
     aria-label="states"
     open>
-  <md-menu-item type="option" id="0" headline="Alabama"></md-menu-item>
+  <md-menu-item type="option" id="0">
+    <div slot="headline">Alabama</div>
+  </md-menu-item>
   <md-divider role="separator"></md-divider>
-  <md-menu-item type="option" id="1" headline="Alaska" aria-selected="true">
+  <md-menu-item type="option" id="1" selected aria-selected="true">
+    <div slot="headline">Alabama</div>
   </md-menu-item>
 </md-menu>
 ```
@@ -310,18 +345,18 @@ a sharp 0px border radius.](images/menu/theming.webp)
 
 ```html
 <style>
-  ::root {
+  :root {
     background-color: #f4fbfa;
     --md-menu-container-color: #f4fbfa;
     --md-menu-container-shape: 0px;
-    --md-menu-item-container-color: transparent;
-    --md-list-item-container-shape: 28px;
-    --md-list-item-label-text-color: #161d1d;
-    --md-list-item-supporting-text-color: #3f4948;
-    --md-list-item-trailing-supporting-text-color: #3f4948;
-    --md-list-item-label-text-type: system-ui;
-    --md-list-item-supporting-text-type: system-ui;
-    --md-list-item-trailing-supporting-text-type: system-ui;
+    --md-sys-color-on-surface: #161d1d;
+    --md-sys-typescale-body-large-font: system-ui;
+  }
+  md-menu-item {
+    border-radius: 28px;
+  }
+  md-menu-item::part(focus-ring) {
+    border-radius: 28px;
   }
   /* Styles for button and not relevant to menu */
   md-filled-button {
@@ -333,9 +368,15 @@ a sharp 0px border radius.](images/menu/theming.webp)
 <span style="position: relative">
   <md-filled-button id="theming-anchor">Themed menu</md-filled-button>
   <md-menu id="theming-menu" anchor="theming-anchor">
-    <md-menu-item headline="Apple"></md-menu-item>
-    <md-menu-item headline="Banana"></md-menu-item>
-    <md-menu-item headline="Cucumber"></md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Apple</div>
+    </md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Banana</div>
+    </md-menu-item>
+    <md-menu-item>
+      <div slot="headline">Cucumber</div>
+    </md-menu-item>
   </md-menu>
 </span>
 

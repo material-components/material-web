@@ -14,24 +14,36 @@
     <span style="position: relative; margin-inline-end: 8px">
       <md-filled-button id="usage-anchor">Set with idref</md-filled-button>
       <md-menu id="usage-menu" anchor="usage-anchor">
-        <md-menu-item headline="Apple"></md-menu-item>
-        <md-menu-item headline="Banana"></md-menu-item>
-        <md-menu-item headline="Cucumber"></md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Apple</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Banana</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Cucumber</div>
+        </md-menu-item>
       </md-menu>
     </span>
     <script type="module">
       const anchorEl = document.body.querySelector("#usage-anchor");
       const menuEl = document.body.querySelector("#usage-menu");
       anchorEl.addEventListener("click", () => {
-        menuEl.show();
+        menuEl.open = !menuEl.open;
       });
     </script>
     <span style="position: relative">
       <md-filled-button id="usage-anchor-2">Set with element ref</md-filled-button>
       <md-menu id="usage-menu-2">
-        <md-menu-item headline="Apple"></md-menu-item>
-        <md-menu-item headline="Banana"></md-menu-item>
-        <md-menu-item headline="Cucumber"></md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Apple</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Banana</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Cucumber</div>
+        </md-menu-item>
       </md-menu>
     </span>
     <script type="module">
@@ -39,7 +51,7 @@
       const menuEl = document.body.querySelector("#usage-menu-2");
       menuEl.anchorElement = anchorEl;
       anchorEl.addEventListener("click", () => {
-        menuEl.show();
+        menuEl.open = !menuEl.open;
       });
     </script>
   </figure>

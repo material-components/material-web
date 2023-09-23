@@ -8,16 +8,22 @@
         <md-filled-button id="usage-fixed-anchor">Open fixed menu</md-filled-button>
       </div>
       <md-menu positioning="fixed" id="usage-fixed" anchor="usage-fixed-anchor">
-        <md-menu-item headline="Apple"></md-menu-item>
-        <md-menu-item headline="Banana"></md-menu-item>
-        <md-menu-item headline="Cucumber"></md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Apple</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Banana</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Cucumber</div>
+        </md-menu-item>
       </md-menu>
     </div>
     <script type="module">
       const anchorEl = document.body.querySelector("#usage-fixed-anchor");
       const menuEl = document.body.querySelector("#usage-fixed");
       anchorEl.addEventListener("click", () => {
-        menuEl.show();
+        menuEl.open = !menuEl.open;
       });
     </script>
   </figure>

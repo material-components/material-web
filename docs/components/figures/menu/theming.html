@@ -15,22 +15,28 @@
       .styled-example.menu md-menu {
         --md-menu-container-color: #f4fbfa;
         --md-menu-container-shape: 0px;
-        --md-menu-item-container-color: transparent;
-        --md-list-item-container-shape: 28px;
-        --md-list-item-label-text-color: #161d1d;
-        --md-list-item-supporting-text-color: #3f4948;
-        --md-list-item-trailing-supporting-text-color: #3f4948;
-        --md-list-item-label-text-type: system-ui;
-        --md-list-item-supporting-text-type: system-ui;
-        --md-list-item-trailing-supporting-text-type: system-ui;
+        --md-sys-color-on-surface: #161d1d;
+        --md-sys-typescale-body-large-font: system-ui;
+      }
+      .styled-example.menu md-menu-item {
+        border-radius: 28px;
+      }
+      .styled-example.menu md-menu-item::part(focus-ring) {
+        border-radius: 28px;
       }
     </style>
     <span style="position: relative">
       <md-filled-button id="theming-anchor">Themed menu</md-filled-button>
       <md-menu id="theming-menu" anchor="theming-anchor">
-        <md-menu-item headline="Apple"></md-menu-item>
-        <md-menu-item headline="Banana"></md-menu-item>
-        <md-menu-item headline="Cucumber"></md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Apple</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Banana</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Cucumber</div>
+        </md-menu-item>
       </md-menu>
     </span>
     <script type="module">
