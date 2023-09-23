@@ -13,7 +13,7 @@ order: 1
 freshness: { owner: 'lizmitchell' reviewed: '2023-08-10' }
 *-->
 
-Material Web Components, also known as MWC or `@material/web`, is a library of
+Material web, also known as Material Web Components or MWC, is a library of
 [web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)<!-- {.external} -->
 that follows Google's [Material Design](https://material.io/)<!-- {.external} -->
 guidelines.
