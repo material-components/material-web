@@ -213,6 +213,7 @@ export class TopAppBar extends SignalElement(LitElement) {
       background-color: var(--md-sys-color-inverse-surface);
       color: var(--md-sys-color-inverse-on-surface);
       opacity: 0;
+      position: absolute;
       pointer-events: none;
     }
 

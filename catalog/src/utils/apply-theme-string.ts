@@ -33,6 +33,12 @@ export function applyThemeString(
     doc.adoptedStyleSheets.push(sheet);
   }
 
+  // Set the color of the URL bar because we are cool like that.
+  const surfaceContainer = themeString.match(/--md-sys-color-surface-container:(.+?);/)?.[1];
+  if (surfaceContainer) {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', surfaceContainer);
+  }
+
   sheet.replaceSync(themeString);
   localStorage.setItem(ssName, themeString);
 }

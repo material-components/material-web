@@ -14,7 +14,9 @@
     {% endif %}
     <!-- Use the 11ty data system to set the title -->
     <title>Material Web{% if pageTitle %} - {{ pageTitle }}{% endif %}</title>
-
+    <!-- Set the color of the url bar on mobile to match theme -->
+    <meta name="theme-color" content="#251f16" />
+    <link href="/images/favicon.svg" rel="icon" sizes="any" type="image/svg+xml">
     <!-- Inlines the global css in site/css/global.css -->
     {% inlinecss "global.css" %}
     <!-- MUST be loaded before any lit bundle. allows hydration of SSRd components -->
