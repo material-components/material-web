@@ -71,7 +71,7 @@ export class SelectOptionController implements ReactiveController {
       SelectOptionConfig['getHeadlineElements'];
   private internalDisplayText: string|null = null;
   private lastSelected = this.host.selected;
-  private firstUpdate = false;
+  private firstUpdate = true;
 
   /**
    * The recommended role of the select option.

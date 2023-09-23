@@ -70,6 +70,7 @@ export class SelectOptionEl extends LitElement implements SelectOption {
     return this.selectOptionController.typeaheadText;
   }
 
+  @property({attribute: 'typeahead-text'})
   set typeaheadText(text: string) {
     this.selectOptionController.setTypeaheadText(text);
   }
@@ -82,6 +83,7 @@ export class SelectOptionEl extends LitElement implements SelectOption {
     return this.selectOptionController.displayText;
   }
 
+  @property({attribute: 'display-text'})
   set displayText(text: string) {
     this.selectOptionController.setDisplayText(text);
   }

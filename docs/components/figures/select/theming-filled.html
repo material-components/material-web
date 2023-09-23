@@ -8,18 +8,21 @@
       .styled-example.filled {
         --md-filled-select-text-field-container-shape: 0px;
         --md-filled-select-text-field-container-color: #f7faf9;
-        --md-filled-field-content-color: #005353;
-        --md-filled-field-content-font: system-ui;
+        --md-filled-select-text-field-input-text-color: #005353;
+        --md-filled-select-text-field-input-text-font: system-ui;
       }
       .styled-example.filled md-filled-select::part(menu) {
         --md-menu-container-color: #f4fbfa;
         --md-menu-container-shape: 0px;
-        --md-menu-item-container-color: transparent;
       }
     </style>
     <md-filled-select>
-      <md-select-option selected value="apple" headline="Apple"></md-select-option>
-      <md-select-option value="tomato" headline="Tomato"></md-select-option>
+      <md-select-option selected value="apple">
+        <div slot="headline">Apple</div>
+      </md-select-option>
+      <md-select-option value="tomato">
+        <div slot="headline">Tomato</div>
+      </md-select-option>
     </md-filled-select>
   </figure>
 </div>

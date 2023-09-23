@@ -5,6 +5,9 @@
     aria-label="Image of an outlined select with a different theme applied"
   >
     <style>
+      .styled-example {
+        background-color: #f4fbfa;
+      }
       .styled-example.outlined {
         --md-outlined-select-text-field-outline-color: #6e7979;
         --md-outlined-select-text-field-container-shape: 0px;
@@ -14,13 +17,16 @@
       .styled-example.outlined md-outlined-select::part(menu) {
         --md-menu-container-color: #f4fbfa;
         --md-menu-container-shape: 0px;
-        --md-menu-item-container-color: transparent;
       }
     </style>
 
     <md-outlined-select>
-      <md-select-option selected value="apple" headline="Apple"></md-select-option>
-      <md-select-option value="tomato" headline="Tomato"></md-select-option>
+      <md-select-option selected value="apple">
+        <div slot="headline">Apple</div>
+      </md-select-option>
+      <md-select-option value="tomato">
+        <div slot="headline">Tomato</div>
+      </md-select-option>
     </md-outlined-select>
   </figure>
 </div>

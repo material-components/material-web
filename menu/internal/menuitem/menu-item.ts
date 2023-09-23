@@ -75,6 +75,7 @@ export class MenuItemEl extends LitElement implements MenuItem {
     return this.menuItemController.typeaheadText;
   }
 
+  @property({attribute: 'typeahead-text'})
   set typeaheadText(text: string) {
     this.menuItemController.setTypeaheadText(text);
   }

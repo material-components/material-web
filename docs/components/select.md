@@ -57,15 +57,23 @@ fixed list of available options. It is analogous to the native HTML
 
 ```html
 <md-outlined-select>
-  <md-select-option headline=""></md-select-option>
-  <md-select-option selected value="apple" headline="Apple"></md-select-option>
-  <md-select-option value="apricot" headline="Apricot"></md-select-option>
+  <md-select-option aria-label="blank"></md-select-option>
+  <md-select-option selected value="apple">
+    <div slot="headline">Apple</div>
+  </md-select-option>
+  <md-select-option value="apricot">
+    <div slot="headline">Apricot</div>
+  </md-select-option>
 </md-outlined-select>
 
 <md-filled-select>
-  <md-select-option headline=""></md-select-option>
-  <md-select-option value="apple" headline="Apple"></md-select-option>
-  <md-select-option value="apricot" headline="Apricot"></md-select-option>
+  <md-select-option aria-label="blank"></md-select-option>
+  <md-select-option value="apple">
+    <div slot="headline">Apple</div>
+  </md-select-option>
+  <md-select-option value="apricot">
+    <div slot="headline">Apricot</div>
+  </md-select-option>
 </md-filled-select>
 ```
 
@@ -75,8 +83,12 @@ Indicate that a selection is mandatory by adding the `required` attribute.
 
 ```html
 <md-filled-select required>
-  <md-select-option value="one" headline="One"></md-select-option>
-  <md-select-option value="two" headline="Two"></md-select-option>
+  <md-select-option value="one">
+    <div slot="headline">One</div>
+  </md-select-option>
+  <md-select-option value="two">
+    <div slot="headline">Two</div>
+  </md-select-option>
 </md-filled-select>
 ```
 
@@ -101,12 +113,12 @@ and can be customized in terms of color, typography, and shape.
 
 ### Filled Select tokens
 
-Token                                           | Default value
------------------------------------------------ | -------------
-`--md-filled-select-text-field-container-color` | `--md-sys-color-surface-container-highest`
-`--md-filled-select-text-field-container-shape` | `4px`
-`--md-filled-field-content-color`               | `--md-sys-color-on-surface`
-`--md-filled-field-content-font`                | `--md-sys-typescale-body-large-font`
+Token                                            | Default value
+------------------------------------------------ | -------------
+`--md-filled-select-text-field-container-color`  | `--md-sys-color-surface-container-highest`
+`--md-filled-select-text-field-container-shape`  | `4px`
+`--md-filled-select-text-field-input-text-color` | `--md-sys-color-on-surface`
+`--md-filled-select-text-field-input-text-font`  | `--md-sys-typescale-body-large-font`
 
 *   [Filled Select tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-select.scss)
     <!-- {.external} -->
@@ -128,20 +140,23 @@ To theme the select's dropdown menu, use the `md-menu` component tokens on the
 :root {
   --md-filled-select-text-field-container-shape: 0px;
   --md-filled-select-text-field-container-color: #f7faf9;
-  --md-filled-field-content-color: #005353;
-  --md-filled-field-content-font: system-ui;
+  --md-filled-select-text-field-input-text-color: #005353;
+  --md-filled-select-text-field-input-text-font: system-ui;
 }
 
 md-filled-select::part(menu) {
   --md-menu-container-color: #f4fbfa;
   --md-menu-container-shape: 0px;
-  --md-menu-item-container-color: transparent;
 }
 </style>
 
 <md-filled-select>
-  <md-select-option selected value="apple" headline="Apple"></md-select-option>
-  <md-select-option value="tomato" headline="Tomato"></md-select-option>
+  <md-select-option selected value="apple">
+    <div slot="headline">Apple</div>
+  </md-select-option>
+  <md-select-option value="tomato">
+    <div slot="headline">Tomato</div>
+  </md-select-option>
 </md-filled-select>
 ```
 
@@ -178,13 +193,16 @@ Token                                              | Default value
 md-outlined-select::part(menu) {
   --md-menu-container-color: #f4fbfa;
   --md-menu-container-shape: 0px;
-  --md-menu-item-container-color: transparent;
 }
 </style>
 
 <md-outlined-select>
-  <md-select-option selected value="apple" headline="Apple"></md-select-option>
-  <md-select-option value="tomato" headline="Tomato"></md-select-option>
+  <md-select-option selected value="apple">
+    <div slot="headline">Apple</div>
+  </md-select-option>
+  <md-select-option value="tomato">
+    <div slot="headline">Tomato</div>
+  </md-select-option>
 </md-outlined-select>
 ```
 

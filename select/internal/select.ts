@@ -6,7 +6,7 @@
 
 import '../../menu/menu.js';
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
@@ -113,6 +113,7 @@ export abstract class Select extends LitElement {
   }
 
   set value(value: string) {
+    if (isServer) return;
     this.lastUserSetValue = value;
     this.select(value);
   }
@@ -391,6 +392,15 @@ export abstract class Select extends LitElement {
     // If this has been handled on update already due to SSR, try again.
     if (!this.lastSelectedOptionRecords.length) {
       this.initUserSelection();
+    }
+
+    // Case for when the DOM is streaming, there are no children, and a child
+    // has [selected] set on it, we need to wait for DOM to render something.
+    if (!this.lastSelectedOptionRecords.length && !isServer &&
+        !this.options.length) {
+      setTimeout(() => {
+        this.updateValueAndDisplayText();
+      });
     }
 
     super.firstUpdated(changed);
