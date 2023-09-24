@@ -56,6 +56,8 @@ export type ListItemType = 'text'|'button'|'link';
 
 interface ListItemSelf {
   disabled: boolean;
+  interactive?: boolean;
+  href: string;
 }
 
 /**

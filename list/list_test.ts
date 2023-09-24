@@ -28,9 +28,9 @@ describe('<md-list>', () => {
     it('non-nagivable key does nothing', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
@@ -55,9 +55,9 @@ describe('<md-list>', () => {
     it('ArrowDown activates the next item', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
@@ -84,9 +84,9 @@ describe('<md-list>', () => {
         <md-list @keydown=${(e: KeyboardEvent) => {
         e.preventDefault();
       }}>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
@@ -111,9 +111,9 @@ describe('<md-list>', () => {
     it('ArrowRight in LTR activates the next item', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
@@ -138,9 +138,9 @@ describe('<md-list>', () => {
     it('ArrowLeft in RTL activates the next item', async () => {
       const root = env.render(html`
         <md-list dir="rtl">
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
@@ -165,9 +165,9 @@ describe('<md-list>', () => {
     it('ArrowDown will loop around', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -191,8 +191,8 @@ describe('<md-list>', () => {
     it('ArrowDown will do nothing if nothing is selectable', async () => {
       const root = env.render(html`
           <md-list>
-            <md-list-item disabled></md-list-item>
-            <md-list-item disabled></md-list-item>
+            <md-list-item interactive disabled></md-list-item>
+            <md-list-item interactive disabled></md-list-item>
           </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -213,9 +213,9 @@ describe('<md-list>', () => {
     it('ArrowDown does not activate disabled items', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item></md-list-item>
-          <md-list-item disabled></md-list-item>
-          <md-list-item></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive disabled></md-list-item>
+          <md-list-item interactive></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -240,7 +240,7 @@ describe('<md-list>', () => {
     it('ArrowDown will select itself if its the only activatable', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -260,9 +260,9 @@ describe('<md-list>', () => {
     it('ArrowUp activates the previous item', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -287,9 +287,9 @@ describe('<md-list>', () => {
     it('ArrowLeft in LTR activates the previous item', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -313,9 +313,9 @@ describe('<md-list>', () => {
     it('ArrowRight in RTL activates the previous item', async () => {
       const root = env.render(html`
         <md-list dir="rtl">
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -339,9 +339,9 @@ describe('<md-list>', () => {
     it('activatePreviousItem will loop around', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -366,8 +366,8 @@ describe('<md-list>', () => {
     it('ArrowUp will return null if nothing is selectable', async () => {
       const root = env.render(html`
           <md-list>
-            <md-list-item disabled></md-list-item>
-            <md-list-item disabled></md-list-item>
+            <md-list-item interactive disabled></md-list-item>
+            <md-list-item interactive disabled></md-list-item>
           </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -388,9 +388,9 @@ describe('<md-list>', () => {
     it('ArrowUp does not activate disabled items', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item disabled></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive disabled></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -415,7 +415,7 @@ describe('<md-list>', () => {
     it('ArrowUp will select itself if its the only activatable', async () => {
       const root = env.render(html`
           <md-list>
-            <md-list-item></md-list-item>
+            <md-list-item interactive></md-list-item>
           </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -436,9 +436,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive></md-list-item>
         </md-list>`);
          const listEl = root.querySelector('md-list')!;
          const listHarness = new ListHarness(listEl);
@@ -464,9 +464,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
         <md-list>
-          <md-list-item disabled></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
+          <md-list-item interactive disabled></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
         </md-list>`);
          const listEl = root.querySelector('md-list')!;
          const listHarness = new ListHarness(listEl);
@@ -492,9 +492,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
          const listEl = root.querySelector('md-list')!;
          const listHarness = new ListHarness(listEl);
@@ -520,9 +520,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
          const listEl = root.querySelector('md-list')!;
          const listHarness = new ListHarness(listEl);
@@ -548,9 +548,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
         <md-list>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
-          <md-list-item disabled></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive disabled></md-list-item>
         </md-list>`);
          const listEl = root.querySelector('md-list')!;
          const listHarness = new ListHarness(listEl);
@@ -575,9 +575,9 @@ describe('<md-list>', () => {
     it('End will select the last item if it is already selected', async () => {
       const root = env.render(html`
           <md-list>
-            <md-list-item tabindex="-1"></md-list-item>
-            <md-list-item tabindex="-1"></md-list-item>
-            <md-list-item tabindex="0"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="0"></md-list-item>
           </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
@@ -602,9 +602,9 @@ describe('<md-list>', () => {
     it('Clicking on an item will activate it', async () => {
       const root = env.render(html`
           <md-list>
-            <md-list-item tabindex="-1"></md-list-item>
-            <md-list-item tabindex="-1"></md-list-item>
-            <md-list-item tabindex="0"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="0"></md-list-item>
           </md-list>`);
       const [first, second, third] =
           Array.from(root.querySelectorAll('md-list-item'));
@@ -624,15 +624,68 @@ describe('<md-list>', () => {
       expect(second.tabIndex).toEqual(0);
       expect(third.tabIndex).toEqual(-1);
     });
+
+    it('Clicking on a non interactive item will not activate it', async () => {
+      const root = env.render(html`
+          <md-list>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="0"></md-list-item>
+          </md-list>`);
+      const [first, second, third] =
+          Array.from(root.querySelectorAll('md-list-item'));
+
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(0);
+
+      const secondHarness = new ListItemHarness(second);
+
+      await secondHarness.clickWithMouse();
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(0);
+    });
+
+    it('Clicking on a non interactive item with an href will activate it',
+       async () => {
+         const root = env.render(html`
+          <md-list>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item href="#" tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="0"></md-list-item>
+          </md-list>`);
+         const [first, second, third] =
+             Array.from(root.querySelectorAll('md-list-item'));
+
+         await env.waitForStability();
+
+         expect(first.tabIndex).toEqual(-1);
+         expect(second.tabIndex).toEqual(-1);
+         expect(third.tabIndex).toEqual(0);
+
+         const secondHarness = new ListItemHarness(second);
+
+         await secondHarness.clickWithMouse();
+         await env.waitForStability();
+
+         expect(first.tabIndex).toEqual(-1);
+         expect(second.tabIndex).toEqual(0);
+         expect(third.tabIndex).toEqual(-1);
+       });
   });
 
   describe('activate items methods', () => {
     it('List will activate only first item by default', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
         </md-list>`);
       const [first, second, third] =
           Array.from(root.querySelectorAll('md-list-item'));
@@ -649,9 +702,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
         <md-list>
-          <md-list-item disabled></md-list-item>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
+          <md-list-item interactive disabled></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
         </md-list>`);
          const [first, second, third] =
              Array.from(root.querySelectorAll('md-list-item'));
@@ -668,9 +721,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
           <md-list>
-            <md-list-item tabindex="-1"></md-list-item>
-            <md-list-item tabindex="-1"></md-list-item>
-            <md-list-item tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
           </md-list>`);
          const [first, second, third] =
              Array.from(root.querySelectorAll('md-list-item'));
@@ -687,9 +740,9 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
           <md-list>
-            <md-list-item tabindex="-1"></md-list-item>
-            <md-list-item tabindex="2"></md-list-item>
-            <md-list-item tabindex="1"></md-list-item>
+            <md-list-item interactive tabindex="-1"></md-list-item>
+            <md-list-item interactive tabindex="2"></md-list-item>
+            <md-list-item interactive tabindex="1"></md-list-item>
           </md-list>`);
          const [first, second, third] =
              Array.from(root.querySelectorAll('md-list-item'));
@@ -705,9 +758,9 @@ describe('<md-list>', () => {
     it('activateNextItem activates the next item', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const [first, second, third] =
@@ -732,9 +785,9 @@ describe('<md-list>', () => {
     it('activateNextItem will loop around', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const [first, second, third] =
@@ -774,9 +827,9 @@ describe('<md-list>', () => {
     it('activateNextItem does not activate disabled items', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item></md-list-item>
-          <md-list-item disabled></md-list-item>
-          <md-list-item></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive disabled></md-list-item>
+          <md-list-item interactive></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const [first, second, third] =
@@ -802,7 +855,7 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
         </md-list>`);
          const listEl = root.querySelector('md-list')!;
          const first = root.querySelector('md-list-item')!;
@@ -822,9 +875,9 @@ describe('<md-list>', () => {
     it('activatePreviousItem activates the previous item', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const [first, second, third] =
@@ -849,9 +902,9 @@ describe('<md-list>', () => {
     it('activatePreviousItem will loop around', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
-          <md-list-item></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
+          <md-list-item interactive></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const [first, second, third] =
@@ -892,9 +945,9 @@ describe('<md-list>', () => {
     it('activatePreviousItem does not activate disabled items', async () => {
       const root = env.render(html`
         <md-list>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item disabled></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
+          <md-list-item interactive tabindex="-1"></md-list-item>
+          <md-list-item interactive disabled></md-list-item>
+          <md-list-item interactive tabindex="0"></md-list-item>
         </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const [first, second, third] =
@@ -920,7 +973,7 @@ describe('<md-list>', () => {
        async () => {
          const root = env.render(html`
           <md-list>
-            <md-list-item></md-list-item>
+            <md-list-item interactive></md-list-item>
           </md-list>`);
          const listEl = root.querySelector('md-list')!;
          const first = root.querySelector('md-list-item')!;
@@ -1030,6 +1083,34 @@ describe('<md-list-item>', () => {
 
     expect(rippleEl).toBeTruthy();
     expect(focusRingEl).toBeTruthy();
+  });
+
+  it('non-interactive list should not be focusable', async () => {
+    const root = env.render(html`
+      <md-list>
+        <md-list-item></md-list-item>
+        <md-list-item></md-list-item>
+      </md-list>`);
+
+    await env.waitForStability();
+    const tabIndexes = Array.from(root.querySelectorAll('md-list-item'))
+                           .map(el => el.tabIndex);
+
+    expect(tabIndexes).toEqual([-1, -1]);
+  });
+
+  it('disabled list should not be focusable', async () => {
+    const root = env.render(html`
+      <md-list>
+        <md-list-item disabled></md-list-item>
+        <md-list-item disabled></md-list-item>
+      </md-list>`);
+
+    await env.waitForStability();
+    const tabIndexes = Array.from(root.querySelectorAll('md-list-item'))
+                           .map(el => el.tabIndex);
+
+    expect(tabIndexes).toEqual([-1, -1]);
   });
 });
 
