@@ -47,4 +47,9 @@ export const docsToElementMapping: {[key: string]: string[]} = {
   'tabs.md': ['tabs/tabs.ts', 'tabs/primary-tab.ts', 'tabs/secondary-tab.ts'],
   'text-field.md':
       ['textfield/filled-text-field.ts', 'textfield/outlined-text-field.ts'],
+  'select.md': [
+    'select/filled-select.ts',
+    'select/outlined-select.ts',
+    'select/select-option.ts',
+  ],
 };
