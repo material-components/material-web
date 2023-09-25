@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 import '@material/web/menu/menu-item.js';
 import '@material/web/menu/sub-menu.js';
 import '@material/web/menu/menu.js';
@@ -34,7 +33,6 @@ export interface StoryKnobs {
   yOffset: number;
   typeaheadDelay: number;
   listTabIndex: number;
-  ariaLabel: string;
 
   'menu-item': void;
   keepOpen: boolean;
@@ -95,7 +93,7 @@ const sharedStyle = css`
 `;
 
 const standard: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-menu> <md-menu-item>',
+  name: 'Menu with items',
   styles: sharedStyle,
   render(knobs) {
     return html`
@@ -117,7 +115,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               style=${knobs.defaultFocus === 'list-root' ? 'display:flex;' : ''}
               .quick=${knobs.quick}
               .hasOverflow=${knobs.hasOverflow}
-              .ariaLabel=${knobs.ariaLabel}
+              aria-label="Menu of fruit"
               .anchorCorner="${knobs.anchorCorner!}"
               .menuCorner="${knobs.menuCorner!}"
               .xOffset=${knobs.xOffset}
@@ -146,7 +144,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 };
 
 const linkable: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-menu-item href="..."> <md-divider>',
+  name: 'Menu with links',
   styles: sharedStyle,
   render(knobs) {
     const items = fruitNames.map((name, index) => {
@@ -187,7 +185,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
               style=${knobs.defaultFocus === 'list-root' ? 'display:flex;' : ''}
               .quick=${knobs.quick}
               .hasOverflow=${knobs.hasOverflow}
-              .ariaLabel=${knobs.ariaLabel}
+              aria-label="Menu with links"
               .anchorCorner="${knobs.anchorCorner!}"
               .menuCorner="${knobs.menuCorner!}"
               .xOffset=${knobs.xOffset}
@@ -210,7 +208,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
 };
 
 const submenu: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-sub-menu>',
+  name: 'Menu with sub-menus',
   styles: sharedStyle,
   render(knobs) {
     let currentIndex = -1;
@@ -251,7 +249,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
             <!-- NOTE: slot=submenu -->
             <md-menu
                 slot="menu"
-                .ariaLabel=${knobs.ariaLabel}
+                aria-label="Second sub-menu of fruit"
                 .xOffset=${knobs.xOffset}
                 .yOffset=${knobs.yOffset}
                 .positioning=${knobs.positioning!}
@@ -297,7 +295,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
           <!-- NOTE: slot=submenu -->
           <md-menu
               slot="menu"
-              .ariaLabel=${knobs.ariaLabel}
+              aria-label="Sub-menu of fruit"
               .xOffset=${knobs.xOffset}
               .yOffset=${knobs.yOffset}
               .positioning=${knobs.positioning!}
@@ -328,7 +326,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
               style=${knobs.defaultFocus === 'list-root' ? 'display:flex;' : ''}
               has-overflow
               .quick=${knobs.quick}
-              .ariaLabel=${knobs.ariaLabel}
+              aria-label="Menu of fruit"
               .anchorCorner="${knobs.anchorCorner!}"
               .menuCorner="${knobs.menuCorner!}"
               .xOffset=${knobs.xOffset}
@@ -351,7 +349,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
 };
 
 const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
-  name: 'menu without menu-button',
+  name: 'Menu without button',
   styles: [
     sharedStyle, css`
       #anchor {
@@ -378,7 +376,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
             .open=${knobs.open}
             .quick=${knobs.quick}
             .hasOverflow=${knobs.hasOverflow}
-            .ariaLabel=${knobs.ariaLabel}
+            aria-label="Menu of fruit"
             .anchorCorner="${knobs.anchorCorner!}"
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}

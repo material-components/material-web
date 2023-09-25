@@ -98,10 +98,6 @@ const collection =
         defaultValue: -1,
         ui: numberInput(),
       }),
-      new Knob('ariaLabel', {
-        defaultValue: 'Menu of Fruit',
-        ui: textInput(),
-      }),
 
       // menu-item knobs
       new Knob('menu-item', {ui: title()}),
