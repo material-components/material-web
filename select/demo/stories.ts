@@ -30,48 +30,41 @@ export interface StoryKnobs {
   'slot=trailing-icon': string;
 }
 
-const outlined: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-outlined-select> <md-select-option>',
+const selects: MaterialStoryInit<StoryKnobs> = {
+  name: 'Selects',
   render(knobs) {
     return html`
-      <md-outlined-select
-          aria-label="select a fruit"
-          .label=${knobs.label}
-          .quick=${knobs.quick}
-          .required=${knobs.required}
-          .disabled=${knobs.disabled}
-          .errorText=${knobs.errorText}
-          .supportingText=${knobs.supportingText}
-          .menuPositioning=${knobs.menuPositioning!}
-          .typeaheadDelay=${knobs.typeaheadDelay}
-          .error=${knobs.error}>
-        ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
-        ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
-        ${renderItems()}
-      </md-outlined-select>
-    `;
-  }
-};
+      <div style="display: flex; gap: 16px">
+        <md-filled-select
+            .label=${knobs.label}
+            .quick=${knobs.quick}
+            .required=${knobs.required}
+            .disabled=${knobs.disabled}
+            .errorText=${knobs.errorText}
+            .supportingText=${knobs.supportingText}
+            .menuPositioning=${knobs.menuPositioning!}
+            .typeaheadDelay=${knobs.typeaheadDelay}
+            .error=${knobs.error}>
+          ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
+          ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
+          ${renderItems()}
+        </md-filled-select>
 
-const filled: MaterialStoryInit<StoryKnobs> = {
-  name: '<md-filled-select> <md-select-option>',
-  render(knobs) {
-    return html`
-      <md-filled-select
-          aria-label="select a fruit"
-          .label=${knobs.label}
-          .quick=${knobs.quick}
-          .required=${knobs.required}
-          .disabled=${knobs.disabled}
-          .errorText=${knobs.errorText}
-          .supportingText=${knobs.supportingText}
-          .menuPositioning=${knobs.menuPositioning!}
-          .typeaheadDelay=${knobs.typeaheadDelay}
-          .error=${knobs.error}>
-        ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
-        ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
-        ${renderItems()}
-      </md-filled-select>
+        <md-outlined-select
+            .label=${knobs.label}
+            .quick=${knobs.quick}
+            .required=${knobs.required}
+            .disabled=${knobs.disabled}
+            .errorText=${knobs.errorText}
+            .supportingText=${knobs.supportingText}
+            .menuPositioning=${knobs.menuPositioning!}
+            .typeaheadDelay=${knobs.typeaheadDelay}
+            .error=${knobs.error}>
+          ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
+          ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
+          ${renderItems()}
+        </md-outlined-select>
+      </div>
     `;
   }
 };
@@ -112,4 +105,4 @@ function renderItems() {
 }
 
 /** Select stories. */
-export const stories = [outlined, filled];
+export const stories = [selects];

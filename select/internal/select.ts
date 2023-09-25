@@ -489,13 +489,14 @@ export abstract class Select extends LitElement {
   }
 
   private renderMenu() {
+    const ariaLabel = this.label || (this as ARIAMixinStrict).ariaLabel;
     return html`
       <md-menu
           id="listbox"
           default-focus="none"
           role="listbox"
           tabindex="-1"
-          aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
+          aria-label=${ariaLabel || nothing}
           stay-open-on-focusout
           part="menu"
           exportparts="focus-ring: menu-focus-ring"
