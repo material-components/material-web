@@ -277,7 +277,7 @@ The role of the `md-list` inside the menu can be set with the `type` attribute.
 The role of each individual `md-menu-item` can also be set with the `type`
 attribute. Anything else slotted into the menu that is not a list item in most
 cases should be set to `role="none"`, and `md-divider` should have
-`role="separator"`.
+`role="separator"` and `tabindex="-1"`.
 
 ```html
 <!--
@@ -301,7 +301,7 @@ cases should be set to `role="none"`, and `md-divider` should have
   <md-menu-item type="option" id="0">
     <div slot="headline">Alabama</div>
   </md-menu-item>
-  <md-divider role="separator"></md-divider>
+  <md-divider role="separator" tabindex="-1"></md-divider>
   <md-menu-item type="option" id="1" selected aria-selected="true">
     <div slot="headline">Alabama</div>
   </md-menu-item>

@@ -7,7 +7,7 @@
 import '../../focus/md-focus-ring.js';
 import '../../elevation/elevation.js';
 
-import {html, isServer, LitElement} from 'lit';
+import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -345,6 +345,19 @@ export abstract class Menu extends LitElement {
     return this.listController.items;
   }
 
+  protected override willUpdate(changed: PropertyValues<Menu>) {
+    if (!changed.has('open')) {
+      return;
+    }
+
+    if (this.open) {
+      this.removeAttribute('aria-hidden');
+      return;
+    }
+
+    this.setAttribute('aria-hidden', 'true');
+  }
+
   protected override render() {
     return this.renderSurface();
   }
@@ -363,7 +376,6 @@ export abstract class Menu extends LitElement {
             ${this.renderMenuItems()}
           </div>
         </div>
-        ${this.renderFocusRing()}
        </div>
      `;
   }
@@ -388,14 +400,6 @@ export abstract class Menu extends LitElement {
    */
   private renderElevation() {
     return html`<md-elevation part="elevation"></md-elevation>`;
-  }
-
-  /**
-   * Renders the focus ring component.
-   */
-  private renderFocusRing() {
-    return html`<md-focus-ring part="focus-ring" .control=${this}>
-      </md-focus-ring>`;
   }
 
   private getSurfaceClasses() {

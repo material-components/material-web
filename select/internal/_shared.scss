@@ -17,6 +17,7 @@
   :host {
     color: unset;
     min-width: 210px;
+    display: flex;
   }
 
   .field {
@@ -26,6 +27,7 @@
 
   .select {
     position: relative;
+    flex-direction: column;
   }
 
   .icon.trailing svg,
@@ -64,6 +66,7 @@
     min-width: inherit;
     width: inherit;
     max-width: inherit;
+    display: flex;
   }
 
   .field,

@@ -150,9 +150,6 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
   styles: sharedStyle,
   render(knobs) {
     const items = fruitNames.map((name, index) => {
-      // we want to render dividers between items, so we need to know whether
-      // it's the last item or not.
-      const isLastItem = index === fruitNames.length - 1;
       return html`
         <md-menu-item
             id=${index}
@@ -165,7 +162,10 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
             ${knobs['link icon']}
           </md-icon>
         </md-menu-item>
-        ${!isLastItem ? html`<md-divider role="separator"></md-divider>` : ''}`;
+        ${
+          index === 2 ?
+              html`<md-divider role="separator" tabindex="-1"></md-divider>` :
+              ''}`;
     });
 
     return html`
@@ -471,8 +471,8 @@ function displayCloseEvent(event: CloseMenuEvent) {
 
 function setButtonAriaExpandedFalse(e: Event) {
   const root = (e.target as HTMLElement).getRootNode() as ShadowRoot;
-  // get the button element and set aria-expaned="false" if exists
-  root.querySelector('#button')?.setAttribute('aria-expanded', 'false');
+  // get the button element and remove aria-expaned if exists
+  root.querySelector('#button')?.removeAttribute('aria-expanded');
 }
 
 /** Menu stories. */

@@ -35,6 +35,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <md-outlined-select
+          aria-label="select a fruit"
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}
@@ -57,6 +58,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <md-filled-select
+          aria-label="select a fruit"
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}

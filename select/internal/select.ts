@@ -12,6 +12,8 @@ import {classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
+import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 import {getActiveItem} from '../../list/internal/list-navigation-helpers.js';
 import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/controllers/shared.js';
@@ -36,6 +38,10 @@ const VALUE = Symbol('value');
  * closed.
  */
 export abstract class Select extends LitElement {
+  static {
+    requestUpdateOnAriaChange(Select);
+  }
+
   /** @nocollapse  */
   static readonly formAssociated = true;
 
@@ -423,7 +429,9 @@ export abstract class Select extends LitElement {
           part="field"
           id="field"
           tabindex=${this.disabled ? '-1' : '0'}
-          aria-expanded=${this.open ? 'true' : 'false'}
+          aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
+          aria-describedby="description"
+          aria-expanded=${this.open ? 'true' : nothing}
           aria-controls="listbox"
           class="field"
           label=${this.label}
@@ -440,7 +448,8 @@ export abstract class Select extends LitElement {
           @click=${this.handleClick}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}>
-        ${this.renderFieldContent()}
+         ${this.renderFieldContent()}
+         <div id="description" slot="aria-describedby"></div>
       </${this.fieldTag}>`;
   }
 
@@ -484,9 +493,9 @@ export abstract class Select extends LitElement {
       <md-menu
           id="listbox"
           default-focus="none"
-          tabindex="-1"
           role="listbox"
-          aria-hidden=${this.open ? nothing : 'true'}
+          tabindex="-1"
+          aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
           stay-open-on-focusout
           part="menu"
           exportparts="focus-ring: menu-focus-ring"
