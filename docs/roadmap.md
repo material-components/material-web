@@ -41,7 +41,7 @@ These features are planned for the next release.
     *   ✅ Elevation
     *   ✅ Focus ring
     *   ✅ List
-    *   🟡 Menu
+    *   ✅ Menu
     *   ✅ Progress indicators
     *   ✅ Radio
     *   ✅ Ripple
