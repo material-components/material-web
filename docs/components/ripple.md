@@ -266,7 +266,7 @@ Token                    | Default value
 ## API
 
 
-### MdRipple &lt;md-ripple&gt;
+### MdRipple <code>&lt;md-ripple&gt;</code>
 
 #### Properties
 

@@ -244,7 +244,7 @@ Token                               | Default value
 ## API
 
 
-### MdDialog &lt;md-dialog&gt;
+### MdDialog <code>&lt;md-dialog&gt;</code>
 
 #### Properties
 
