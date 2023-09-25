@@ -113,6 +113,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           <md-menu
               id="menu"
               anchor="button"
+              tabindex=${knobs.defaultFocus === 'list-root' ? '0' : '-1'}
+              style=${knobs.defaultFocus === 'list-root' ? 'display:flex;' : ''}
               .quick=${knobs.quick}
               .hasOverflow=${knobs.hasOverflow}
               .ariaLabel=${knobs.ariaLabel}
@@ -181,6 +183,8 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
           <md-menu
               id="menu"
               anchor="button"
+              tabindex=${knobs.defaultFocus === 'list-root' ? '0' : '-1'}
+              style=${knobs.defaultFocus === 'list-root' ? 'display:flex;' : ''}
               .quick=${knobs.quick}
               .hasOverflow=${knobs.hasOverflow}
               .ariaLabel=${knobs.ariaLabel}
@@ -320,6 +324,8 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
           <md-menu
               anchor="button"
               id="menu"
+              tabindex=${knobs.defaultFocus === 'list-root' ? '0' : '-1'}
+              style=${knobs.defaultFocus === 'list-root' ? 'display:flex;' : ''}
               has-overflow
               .quick=${knobs.quick}
               .ariaLabel=${knobs.ariaLabel}

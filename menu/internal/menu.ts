@@ -14,13 +14,13 @@ import {styleMap} from 'lit/directives/style-map.js';
 
 import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
+import {ListController, NavigableKeys} from '../../list/internal/list-controller.js';
+import {getActiveItem, getFirstActivatableItem, getLastActivatableItem} from '../../list/internal/list-navigation-helpers.js';
 
 import {MenuItem} from './controllers/menuItemController.js';
 import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, FocusState, isClosableKey, isElementInSubtree} from './controllers/shared.js';
 import {Corner, SurfacePositionController, SurfacePositionTarget} from './controllers/surfacePositionController.js';
 import {TypeaheadController} from './controllers/typeaheadController.js';
-import {ListController, NavigableKeys} from './list-controller.js';
-import {getActiveItem, getFirstActivatableItem, getLastActivatableItem} from './list-navigation-helpers.js';
 
 export {Corner} from './controllers/surfacePositionController.js';
 
@@ -188,7 +188,8 @@ export abstract class Menu extends LitElement {
    * The element that should be focused by default once opened.
    *
    * NOTE: When setting default focus to 'LIST_ROOT', remember to change
-   * `list-tabindex` to `0` when necessary.
+   * `tabindex` to `0` and change md-menu's display to something other than
+   * `display: contents` when necessary.
    */
   @property({attribute: 'default-focus'})
   defaultFocus: FocusState = FocusState.FIRST_ITEM;
@@ -307,6 +308,7 @@ export abstract class Menu extends LitElement {
       // istelf. Specifically useful for the case where typeahead encounters a
       // space and we don't want the menu item to close the menu.
       this.addEventListener('keydown', this.captureKeydown, {capture: true});
+      this.addEventListener('focusout', this.handleFocusout);
     }
   }
 
@@ -354,8 +356,7 @@ export abstract class Menu extends LitElement {
     return html`
        <div
           class="menu ${classMap(this.getSurfaceClasses())}"
-          style=${styleMap(this.menuPositionController.surfaceStyles)}
-          @focusout=${this.handleFocusout}>
+          style=${styleMap(this.menuPositionController.surfaceStyles)}>
         ${this.renderElevation()}
         <div class="items">
           <div class="item-padding">
@@ -393,7 +394,8 @@ export abstract class Menu extends LitElement {
    * Renders the focus ring component.
    */
   private renderFocusRing() {
-    return html`<md-focus-ring part="focus-ring" for="list"></md-focus-ring>`;
+    return html`<md-focus-ring part="focus-ring" .control=${this}>
+      </md-focus-ring>`;
   }
 
   private getSurfaceClasses() {
@@ -404,7 +406,7 @@ export abstract class Menu extends LitElement {
     };
   }
 
-  private async handleFocusout(event: FocusEvent) {
+  private readonly handleFocusout = async (event: FocusEvent) => {
     if (this.stayOpenOnFocusout || !this.open) {
       return;
     }
@@ -437,7 +439,7 @@ export abstract class Menu extends LitElement {
     await this.updateComplete;
     // return to previous behavior
     this.skipRestoreFocus = oldRestoreFocus;
-  }
+  };
 
   private captureKeydown(event: KeyboardEvent) {
     if (event.target === this && !event.defaultPrevented &&

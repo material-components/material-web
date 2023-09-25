@@ -7,22 +7,14 @@
 import {LitElement} from 'lit';
 
 import {Harness} from '../../../testing/harness.js';
-
-import {ListItem} from './list-item.js';
-
-const NAVIGABLE_KEYS = {
-  'ArrowDown': 'ArrowDown',
-  'ArrowUp': 'ArrowUp',
-  'Home': 'Home',
-  'End': 'End',
-} as const;
+import {NavigableKeys} from '../list-controller.js';
+import {ListItem} from '../list-navigation-helpers.js';
 
 /**
  * Keys that are handled by MdList. Keys not included in this are not handled by
  * MdList and should be dispatched by yourself.
  */
-export type HandledListKeys =
-    typeof NAVIGABLE_KEYS[keyof typeof NAVIGABLE_KEYS];
+export type HandledListKeys = typeof NavigableKeys[keyof typeof NavigableKeys];
 
 /**
  * Test harness for list item.

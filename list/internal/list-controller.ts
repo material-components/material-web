@@ -206,23 +206,23 @@ export class ListController<Item extends ListItem> {
   /**
    * Listener to be bound to the `deactivate-items` item event.
    */
-  onDeactivateItems() {
+  onDeactivateItems = () => {
     const items = this.items;
 
     for (const item of items) {
       this.deactivateItem(item);
     }
-  }
+  };
 
   /**
    * Listener to be bound to the `request-activation` item event..
    */
-  onRequestActivation(event: Event) {
+  onRequestActivation = (event: Event) => {
     this.onDeactivateItems();
     const target = event.target as Item;
     this.activateItem(target);
     target.focus();
-  }
+  };
 
   /**
    * Listener to be bound to the `slotchange` event for the slot that renders

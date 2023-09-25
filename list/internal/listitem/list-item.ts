@@ -15,54 +15,12 @@ import {html as staticHtml, literal, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
-
-/**
- * Creates an event that requests the parent md-list to deactivate all other
- * items.
- */
-export function createDeactivateItemsEvent() {
-  return new Event('deactivate-items', {bubbles: true, composed: true});
-}
-
-/**
- * The type of the event that requests the parent md-list to deactivate all
- * other items.
- */
-export type DeactivateItemsEvent =
-    ReturnType<typeof createDeactivateItemsEvent>;
-
-/**
- * Creates an event that requests the menu to set `tabindex=0` on the item and
- * focus it. We use this pattern because List keeps track of what element is
- * active in the List by maintaining tabindex. We do not want list items
- * to set tabindex on themselves or focus themselves so that we can organize all
- * that logic in the parent List and Menus, and list item stays as dumb as
- * possible.
- */
-export function createRequestActivationEvent() {
-  return new Event('request-activation', {bubbles: true, composed: true});
-}
-
-/**
- * The type of the event that requests the list activates and focuses the item.
- */
-export type RequestActivationEvent =
-    ReturnType<typeof createRequestActivationEvent>;
+import {createRequestActivationEvent, ListItem} from '../list-navigation-helpers.js';
 
 /**
  * Supported behaviors for a list item.
  */
 export type ListItemType = 'text'|'button'|'link';
-
-interface ListItemSelf {
-  disabled: boolean;
-}
-
-/**
- * The interface of an item that is compatible with md-list. An item that is
- * selectable and disablable.
- */
-export type ListItem = ListItemSelf&HTMLElement;
 
 /**
  * @fires request-activation

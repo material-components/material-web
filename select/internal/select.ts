@@ -13,7 +13,7 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
-import {List} from '../../list/internal/list.js';
+import {getActiveItem} from '../../list/internal/list-navigation-helpers.js';
 import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/controllers/shared.js';
 import {TYPEAHEAD_RECORD} from '../../menu/internal/controllers/typeaheadController.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
@@ -642,9 +642,9 @@ export abstract class Select extends LitElement {
     this.labelEl?.removeAttribute?.('aria-live');
     this.redispatchEvent(e);
 
-    const items = this.menu!.items;
-    const activeItem = List.getActiveItem(items)?.item;
-    const [selectedItem] = this.lastSelectedOptionRecords[0] ?? [null];
+    const items = this.menu!.items as SelectOption[];
+    const activeItem = getActiveItem(items)?.item;
+    let [selectedItem] = this.lastSelectedOptionRecords[0] ?? [null];
 
     // This is true if the user keys through the list but clicks out of the menu
     // thus no close-menu event is fired by an item and we can't clean up in
@@ -652,6 +652,9 @@ export abstract class Select extends LitElement {
     if (activeItem && activeItem !== selectedItem) {
       activeItem.tabIndex = -1;
     }
+
+    // in the case that nothing is selected, focus the first item
+    selectedItem = selectedItem ?? items[0];
 
     if (selectedItem) {
       selectedItem.tabIndex = 0;

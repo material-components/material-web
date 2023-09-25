@@ -7,9 +7,9 @@
 import {html, isServer, LitElement} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
+import {createDeactivateItemsEvent, createRequestActivationEvent, deactivateActiveItem, getFirstActivatableItem} from '../../../list/internal/list-navigation-helpers.js';
 import {MenuItem} from '../controllers/menuItemController.js';
 import {CloseMenuEvent, CloseReason, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KeydownCloseKey, Menu, NavigableKey, SelectionKey} from '../controllers/shared.js';
-import {createDeactivateItemsEvent, createRequestActivationEvent, deactivateActiveItem, getFirstActivatableItem} from '../list-navigation-helpers.js';
 import {Corner} from '../menu.js';
 
 /**

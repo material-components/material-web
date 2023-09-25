@@ -79,35 +79,6 @@ describe('<md-list>', () => {
       expect(third.tabIndex).toEqual(0);
     });
 
-    it('preventDefault on keydown prevents navigation', async () => {
-      const root = env.render(html`
-        <md-list @keydown=${(e: KeyboardEvent) => {
-        e.preventDefault();
-      }}>
-          <md-list-item tabindex="-1"></md-list-item>
-          <md-list-item tabindex="0"></md-list-item>
-          <md-list-item tabindex="-1"></md-list-item>
-        </md-list>`);
-
-      const listEl = root.querySelector('md-list')!;
-      const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
-
-      await env.waitForStability();
-
-      expect(first.tabIndex).toEqual(-1);
-      expect(second.tabIndex).toEqual(0);
-      expect(third.tabIndex).toEqual(-1);
-
-      await listHarness.pressHandledKey('ArrowDown');
-      await env.waitForStability();
-
-      expect(first.tabIndex).toEqual(-1);
-      expect(second.tabIndex).toEqual(0);
-      expect(third.tabIndex).toEqual(-1);
-    });
-
     it('ArrowRight in LTR activates the next item', async () => {
       const root = env.render(html`
         <md-list>
