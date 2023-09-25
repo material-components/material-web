@@ -45,7 +45,7 @@ These features are planned for the next release.
     *   ✅ Progress indicators
     *   ✅ Radio
     *   ✅ Ripple
-    *   🟡 Select
+    *   ✅ Select
     *   ✅ Slider
     *   ✅ Switch
     *   ✅ Tabs
