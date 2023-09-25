@@ -41,7 +41,17 @@
 
 @mixin styles() {
   $list-item-tokens: tokens.md-comp-menu-list-item-values();
+  @each $token, $value in $list-item-tokens {
+    $list-item-tokens: map.set(
+      $list-item-tokens,
+      $token,
+      var(--md-menu-item-#{$token}, #{$value})
+    );
+  }
   $tokens: tokens.md-comp-menu-item-values();
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-menu-item-#{$token}, #{$value}));
+  }
 
   :host {
     border-radius: map.get($list-item-tokens, 'container-shape');
@@ -164,7 +174,7 @@
     background-color: map.get($tokens, 'selected-container-color');
   }
 
-  .selected:not(.disabled) .label-text {
+  .selected:not(.disabled) ::slotted(*) {
     color: map.get($tokens, 'selected-label-text-color');
   }
 }
