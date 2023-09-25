@@ -38,7 +38,7 @@ selected menu item above the menu.
 </catalog-component-header>
 
 *   Design article (*coming soon*)
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/select)
     <!-- {.external} -->
 

@@ -19,7 +19,7 @@ define tappable regions in an accordion.
 ![Screenshot of five stacked dividers](images/divider/hero.png "Dividers separating items in a list.")
 
 *   [Design article](https://m3.material.io/components/divider) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/divider)
     <!-- {.external} -->
 

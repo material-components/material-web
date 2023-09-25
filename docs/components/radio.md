@@ -37,7 +37,7 @@ people select one option from a set of options.
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/radio-button) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/radio)
     <!-- {.external} -->
 

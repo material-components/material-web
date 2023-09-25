@@ -230,8 +230,11 @@ import {SignalElement} from '../signals/signal-element.js';
     .pane.toc {
       width: auto;
       box-sizing: border-box;
-      padding-inline: var(--catalog-spacing-xl);
       width: var(--_toc-pane-width);
+    }
+
+    .toc .scroll-wrapper {
+      padding-inline: var(--catalog-spacing-xl);
     }
 
     .pane.toc p {

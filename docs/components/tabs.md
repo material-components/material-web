@@ -44,7 +44,7 @@ related content that are at the same level of hierarchy.
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/tabs) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/tabs)
     <!-- {.external} -->
 

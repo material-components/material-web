@@ -44,7 +44,7 @@ title="A bounded and unbounded ripple.">
 
 *   [Design article](https://m3.material.io/foundations/interaction/states/state-layers)
     <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/ripple)
     <!-- {.external} -->
 

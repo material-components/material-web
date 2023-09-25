@@ -88,8 +88,9 @@ payment'"
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/extended-fabs.html" -->
 
-1.  [Extended FAB with both icon and label text](#extended)
-2.  [Extended FAB without icon](#without-icon)
+*   [Extended FAB with both icon and label text](#extended)
+*   [API Documentation](#api)
+*   [Extended FAB without icon](#without-icon)
 
 ## Usage
 

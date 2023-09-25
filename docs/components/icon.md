@@ -17,7 +17,7 @@ created at seven weights across three different styles.
 ![Array of icons with various stylistic attributes](images/icon/hero.gif)
 
 *   [Design article](https://m3.material.io/styles/icons) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/icon)
     <!-- {.external} -->
 

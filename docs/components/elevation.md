@@ -20,7 +20,7 @@ UI’s elevation story.
 ![Diagram showing the five elevation levels and their respective dp values](images/elevation/hero.png "Material uses six levels of elevation, each with a corresponding dp value. These values are named for their relative distance above the UI’s surface: 0, +1, +2, +3, +4, and +5. An element’s resting state can be on levels 0 to +3, while levels +4 and +5 are reserved for user-interacted states such as hover and dragged.")
 
 *   [Design article](https://m3.material.io/styles/elevation) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/elevation)
     <!-- {.external} -->
 

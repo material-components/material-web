@@ -18,8 +18,7 @@ to determine when they are visible.
 
 ![Three elements with a focus ring that moves between them.](images/focus/hero.gif "A focus ring moving across elements.")
 
-*   Design article (*coming soon*)
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/focus)
     <!-- {.external} -->
 

@@ -26,6 +26,11 @@ function fixLinks($, redirects) {
 
     let [path, hash] = href.split('#');
 
+    // it's probably a href="#section" link
+    if (path.length === 0) {
+      continue;
+    }
+
     for (const [pattern, replacement] of redirects) {
       const regex = new RegExp(pattern);
       path = path.replace(regex, replacement);

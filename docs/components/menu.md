@@ -40,6 +40,7 @@ choices on a temporary surface.
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/menus) <!-- {.external} -->
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/menu)
     <!-- {.external} -->
 

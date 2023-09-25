@@ -46,7 +46,7 @@ payment'"
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/buttons) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/button)
     <!-- {.external} -->
 

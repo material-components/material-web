@@ -43,7 +43,7 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/sliders) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/slider)
     <!-- {.external} -->
 

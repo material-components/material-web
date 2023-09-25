@@ -41,7 +41,7 @@ of an item on or off.
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/switch) <!-- {.external} -->
-*   API Documentation (*coming soon*)
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/switch)
     <!-- {.external} -->
 

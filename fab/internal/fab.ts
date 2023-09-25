@@ -20,7 +20,7 @@ export class Fab extends SharedFab {
    */
   @property() variant: FabVariant = 'surface';
 
-  override getRenderClasses() {
+  protected override getRenderClasses() {
     return {
       ...super.getRenderClasses(),
       'primary': this.variant === 'primary',

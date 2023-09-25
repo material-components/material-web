@@ -39,6 +39,7 @@ vertical indexes of text and images
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/lists) <!-- {.external} -->
+*   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/list)
     <!-- {.external} -->
 
