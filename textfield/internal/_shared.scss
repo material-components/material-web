@@ -42,6 +42,12 @@
     resize: inherit;
   }
 
+  .textarea::selection,
+  .input::selection {
+    background-color: var(--_text-selection-background-color);
+    color: var(--_text-selection-color);
+  }
+
   @include icon.styles;
   @include input.styles;
 }

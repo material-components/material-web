@@ -88,6 +88,8 @@ $supported-tokens: (
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-weight',
+  'text-selection-background-color',
+  'text-selection-color',
   'trailing-icon-color',
   'trailing-icon-size',
   // go/keep-sorted end
@@ -114,14 +116,15 @@ $_default: (
   $tokens: values.validate(
     md-comp-outlined-text-field.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
-  );
-
-  $tokens: map.merge(
-    $tokens,
-    (
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: (
       // TODO(b/259455114): remove when focus tokens update to 3px
-      'focus-outline-width': if($exclude-hardcoded-values, null, 3px)
+      'focus-outline-width': if($exclude-hardcoded-values, null, 3px),
+      // TODO(b/231336988): remove when text selection tokens are added
+      'text-selection-background-color':
+        if($exclude-hardcoded-values, null, 'Highlight'),
+      'text-selection-color':
+        if($exclude-hardcoded-values, null, 'HighlightText')
     )
   );
 
