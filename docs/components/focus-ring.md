@@ -135,7 +135,7 @@ md-focus-ring {
 ## API
 
 
-### MdFocusRing &lt;md-focus-ring&gt;
+### MdFocusRing <code>&lt;md-focus-ring&gt;</code>
 
 #### Properties
 

@@ -211,7 +211,7 @@ Token                            | Default value
 ## API
 
 
-### MdRadio &lt;md-radio&gt;
+### MdRadio <code>&lt;md-radio&gt;</code>
 
 #### Properties
 

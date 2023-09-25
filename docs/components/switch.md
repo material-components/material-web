@@ -233,7 +233,7 @@ Token                               | Default value
 ## API
 
 
-### MdSwitch &lt;md-switch&gt;
+### MdSwitch <code>&lt;md-switch&gt;</code>
 
 #### Properties
 

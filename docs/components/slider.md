@@ -161,7 +161,7 @@ Token                              | Default value
 ## API
 
 
-### MdSlider &lt;md-slider&gt;
+### MdSlider <code>&lt;md-slider&gt;</code>
 
 #### Properties
 

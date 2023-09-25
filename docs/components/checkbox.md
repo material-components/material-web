@@ -165,7 +165,7 @@ Token                                    | Default value
 ## API
 
 
-### MdCheckbox &lt;md-checkbox&gt;
+### MdCheckbox <code>&lt;md-checkbox&gt;</code>
 
 #### Properties
 
