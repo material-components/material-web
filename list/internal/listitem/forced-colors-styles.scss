@@ -8,8 +8,11 @@
 // go/keep-sorted end
 
 @media (forced-colors: active) {
-  :host([disabled]),
-  :host([disabled]) slot {
+  .disabled slot {
+    color: GrayText;
+  }
+
+  .list-item.disabled {
     color: GrayText;
     opacity: 1;
   }

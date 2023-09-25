@@ -4,19 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// TODO: move this file to List
-
 export interface ListItem extends HTMLElement {
   disabled: boolean;
-}
-
-/**
- * A record that describes a list item in a list with metadata such a reference
- * to the item and its index in the list.
- */
-export interface ItemRecord<Item extends ListItem> {
-  item: Item;
-  index: number;
 }
 
 /**
@@ -32,13 +21,16 @@ export interface ItemRecord<Item extends ListItem> {
  * Activates the first non-disabled item of a given array of items.
  *
  * @param items {Array<ListItem>} The items from which to activate the
- * first item.
+ *     first item.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  */
-export function activateFirstItem<Item extends ListItem>(items: Item[]) {
+export function activateFirstItem<Item extends ListItem>(
+    items: Item[], isActivatable = isItemNotDisabled<Item>) {
   // NOTE: These selector functions are static and not on the instance such
   // that multiple operations can be chained and we do not have to re-query
   // the DOM
-  const firstItem = getFirstActivatableItem(items);
+  const firstItem = getFirstActivatableItem(items, isActivatable);
   if (firstItem) {
     firstItem.tabIndex = 0;
     firstItem.focus();
@@ -50,11 +42,14 @@ export function activateFirstItem<Item extends ListItem>(items: Item[]) {
  * Activates the last non-disabled item of a given array of items.
  *
  * @param items {Array<ListItem>} The items from which to activate the
- * last item.
+ *     last item.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  * @nocollapse
  */
-export function activateLastItem<Item extends ListItem>(items: Item[]) {
-  const lastItem = getLastActivatableItem(items);
+export function activateLastItem<Item extends ListItem>(
+    items: Item[], isActivatable = isItemNotDisabled<Item>) {
+  const lastItem = getLastActivatableItem(items, isActivatable);
   if (lastItem) {
     lastItem.tabIndex = 0;
     lastItem.focus();
@@ -66,13 +61,16 @@ export function activateLastItem<Item extends ListItem>(items: Item[]) {
  * Deactivates the currently active item of a given array of items.
  *
  * @param items {Array<ListItem>} The items from which to deactivate the
- * active item.
+ *     active item.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  * @return A record of the deleselcted activated item including the item and
- * the index of the item or `null` if none are deactivated.
+ *     the index of the item or `null` if none are deactivated.
  * @nocollapse
  */
-export function deactivateActiveItem<Item extends ListItem>(items: Item[]) {
-  const activeItem = getActiveItem(items);
+export function deactivateActiveItem<Item extends ListItem>(
+    items: Item[], isActivatable = isItemNotDisabled<Item>) {
+  const activeItem = getActiveItem(items, isActivatable);
   if (activeItem) {
     activeItem.item.tabIndex = -1;
   }
@@ -83,14 +81,17 @@ export function deactivateActiveItem<Item extends ListItem>(items: Item[]) {
  * Retrieves the first activated item of a given array of items.
  *
  * @param items {Array<ListItem>} The items to search.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  * @return A record of the first activated item including the item and the
- * index of the item or `null` if none are activated.
+ *     index of the item or `null` if none are activated.
  * @nocollapse
  */
-export function getActiveItem<Item extends ListItem>(items: Item[]) {
+export function getActiveItem<Item extends ListItem>(
+    items: Item[], isActivatable = isItemNotDisabled<Item>) {
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-    if (item.tabIndex === 0 && !item.disabled) {
+    if (item.tabIndex === 0 && isActivatable(item)) {
       return {
         item,
         index: i,
@@ -105,12 +106,15 @@ export function getActiveItem<Item extends ListItem>(items: Item[]) {
  * the first item that is not disabled.
  *
  * @param items {Array<ListItem>} The items to search.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  * @return The first activatable item or `null` if none are activatable.
  * @nocollapse
  */
-export function getFirstActivatableItem<Item extends ListItem>(items: Item[]) {
+export function getFirstActivatableItem<Item extends ListItem>(
+    items: Item[], isActivatable = isItemNotDisabled<Item>) {
   for (const item of items) {
-    if (!item.disabled) {
+    if (isActivatable(item)) {
       return item;
     }
   }
@@ -122,13 +126,16 @@ export function getFirstActivatableItem<Item extends ListItem>(items: Item[]) {
  * Retrieves the last non-disabled item of a given array of items.
  *
  * @param items {Array<ListItem>} The items to search.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  * @return The last activatable item or `null` if none are activatable.
  * @nocollapse
  */
-export function getLastActivatableItem<Item extends ListItem>(items: Item[]) {
+export function getLastActivatableItem<Item extends ListItem>(
+    items: Item[], isActivatable = isItemNotDisabled<Item>) {
   for (let i = items.length - 1; i >= 0; i--) {
     const item = items[i];
-    if (!item.disabled) {
+    if (isActivatable(item)) {
       return item;
     }
   }
@@ -141,14 +148,16 @@ export function getLastActivatableItem<Item extends ListItem>(items: Item[]) {
  *
  * @param items {Array<ListItem>} The items to search.
  * @param index {{index: number}} The index to search from.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  * @return The next activatable item or `null` if none are activatable.
  */
 export function getNextItem<Item extends ListItem>(
-    items: Item[], index: number) {
+    items: Item[], index: number, isActivatable = isItemNotDisabled<Item>) {
   for (let i = 1; i < items.length; i++) {
     const nextIndex = (i + index) % items.length;
     const item = items[nextIndex];
-    if (!item.disabled) {
+    if (isActivatable(item)) {
       return item;
     }
   }
@@ -161,15 +170,17 @@ export function getNextItem<Item extends ListItem>(
  *
  * @param items {Array<ListItem>} The items to search.
  * @param index {{index: number}} The index to search from.
+ * @param isActivatable Function to determine if an item can be  activated.
+ *     Defaults to non-disabled items.
  * @return The previous activatable item or `null` if none are activatable.
  */
 export function getPrevItem<Item extends ListItem>(
-    items: Item[], index: number) {
+    items: Item[], index: number, isActivatable = isItemNotDisabled<Item>) {
   for (let i = 1; i < items.length; i++) {
     const prevIndex = (index - i + items.length) % items.length;
     const item = items[prevIndex];
 
-    if (!item.disabled) {
+    if (isActivatable(item)) {
       return item;
     }
   }
@@ -182,9 +193,10 @@ export function getPrevItem<Item extends ListItem>(
  * activates the first item.
  */
 export function activateNextItem<Item extends ListItem>(
-    items: Item[], activeItemRecord: null|ItemRecord<Item>): Item|null {
+    items: Item[], activeItemRecord: null|ItemRecord<Item>,
+    isActivatable = isItemNotDisabled<Item>): Item|null {
   if (activeItemRecord) {
-    const next = getNextItem(items, activeItemRecord.index);
+    const next = getNextItem(items, activeItemRecord.index, isActivatable);
 
     if (next) {
       next.tabIndex = 0;
@@ -193,7 +205,7 @@ export function activateNextItem<Item extends ListItem>(
 
     return next;
   } else {
-    return activateFirstItem(items);
+    return activateFirstItem(items, isActivatable);
   }
 }
 
@@ -202,16 +214,17 @@ export function activateNextItem<Item extends ListItem>(
  * activated, activates the last item.
  */
 export function activatePreviousItem<Item extends ListItem>(
-    items: Item[], activeItemRecord: null|ItemRecord<Item>): Item|null {
+    items: Item[], activeItemRecord: null|ItemRecord<Item>,
+    isActivatable = isItemNotDisabled<Item>): Item|null {
   if (activeItemRecord) {
-    const prev = getPrevItem(items, activeItemRecord.index);
+    const prev = getPrevItem(items, activeItemRecord.index, isActivatable);
     if (prev) {
       prev.tabIndex = 0;
       prev.focus();
     }
     return prev;
   } else {
-    return activateLastItem(items);
+    return activateLastItem(items, isActivatable);
   }
 }
 
@@ -247,3 +260,14 @@ export function createRequestActivationEvent() {
  */
 export type RequestActivationEvent =
     ReturnType<typeof createRequestActivationEvent>;
+
+/**
+ * The default `isActivatable` function, which checks if an item is not
+ * disabled.
+ *
+ * @param item The item to check.
+ * @return true if `item.disabled` is `false.
+ */
+function isItemNotDisabled<Item extends ListItem>(item: Item) {
+  return !item.disabled;
+}

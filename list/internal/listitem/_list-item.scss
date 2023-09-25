@@ -48,11 +48,6 @@
     );
   }
 
-  :host([disabled]) {
-    opacity: map.get($tokens, 'disabled-opacity');
-    pointer-events: none;
-  }
-
   md-focus-ring {
     z-index: 1;
 
@@ -82,10 +77,15 @@
     outline: none;
     // hide android tap color since we have ripple
     -webkit-tap-highlight-color: transparent;
+  }
 
-    &:not(.disabled).interactive {
-      cursor: pointer;
-    }
+  .list-item.interactive {
+    cursor: pointer;
+  }
+
+  .list-item.disabled {
+    opacity: map.get($tokens, 'disabled-opacity');
+    pointer-events: none;
   }
 
   [slot='container'] {

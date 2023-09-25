@@ -37,7 +37,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-list>
+      <md-list aria-label="Static example">
         <md-list-item ?disabled=${knobs.disabled}>
           Single line item
           ${getKnobContent(knobs)}
@@ -68,7 +68,7 @@ const interactive: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const knobsNoTrailing = {...knobs, trailingIcon: false};
     return html`
-      <md-list>
+      <md-list aria-label="Interactive example">
         <md-list-item ?disabled=${knobs.disabled}
           type="link"
           href="https://google.com"

@@ -10,9 +10,13 @@ import {queryAssignedElements} from 'lit/decorators.js';
 import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
 
 import {ListController, NavigableKeys} from './list-controller.js';
-import {ListItem} from './list-navigation-helpers.js';
+import {ListItem as SharedListItem} from './list-navigation-helpers.js';
 
 const NAVIGABLE_KEY_SET = new Set<string>(Object.values(NavigableKeys));
+
+interface ListItem extends SharedListItem {
+  type: 'text'|'button'|'link';
+}
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
@@ -50,6 +54,7 @@ export class List extends LitElement {
           item.tabIndex = 0;
         },
     isNavigableKey: (key) => NAVIGABLE_KEY_SET.has(key),
+    isActivatable: (item) => !item.disabled && item.type !== 'text',
   });
 
   private readonly internals = polyfillElementInternalsAria(

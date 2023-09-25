@@ -66,6 +66,10 @@ export class ListItemEl extends LitElement implements ListItem {
 
   @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
 
+  private get isDisabled() {
+    return this.disabled && this.type !== 'link';
+  }
+
   protected override willUpdate(changed: PropertyValues<ListItemEl>) {
     if (this.href) {
       this.type = 'link';
@@ -109,13 +113,15 @@ export class ListItemEl extends LitElement implements ListItem {
         break;
     }
 
+    const isInteractive = this.type !== 'text';
     // TODO(b/265339866): announce "button"/"link" inside of a list item. Until
     // then all are "listitem" roles for correct announcement.
     const target = isAnchor && !!this.target ? this.target : nothing;
     return staticHtml`
       <${tag}
         id="item"
-        tabindex="${this.disabled && !isAnchor ? -1 : 0}"
+        tabindex="${this.isDisabled || !isInteractive ? -1 : 0}"
+        ?disabled=${this.isDisabled}
         role="listitem"
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
@@ -141,7 +147,7 @@ export class ListItemEl extends LitElement implements ListItem {
       <md-ripple
           part="ripple"
           for="item"
-          ?disabled=${this.disabled}></md-ripple>`;
+          ?disabled=${this.isDisabled}></md-ripple>`;
   }
 
   /**
@@ -166,8 +172,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * Classes applied to the list item root.
    */
   protected getRenderClasses(): ClassInfo {
-    // TODO(b/265339866): links may not be disabled
-    return {'disabled': this.disabled};
+    return {'disabled': this.isDisabled};
   }
 
   /**

@@ -58,6 +58,11 @@ export interface ListControllerConfig<Item extends ListItem> {
    * Whether or not the key should be handled by the list for navigation.
    */
   isNavigableKey: (key: string) => boolean;
+  /**
+   * Whether or not the item can be activated. Defaults to items that are not
+   * disabled.
+   */
+  isActivatable?: (item: Item) => boolean;
 }
 
 /**
@@ -70,6 +75,7 @@ export class ListController<Item extends ListItem> {
   private readonly deactivateItem: (item: Item) => void;
   private readonly activateItem: (item: Item) => void;
   private readonly isNavigableKey: (key: string) => boolean;
+  private readonly isActivatable?: (item: Item) => boolean;
 
   constructor(config: ListControllerConfig<Item>) {
     const {
@@ -79,6 +85,7 @@ export class ListController<Item extends ListItem> {
       deactivateItem,
       activateItem,
       isNavigableKey,
+      isActivatable,
     } = config;
     this.isItem = isItem;
     this.getPossibleItems = getPossibleItems;
@@ -86,6 +93,7 @@ export class ListController<Item extends ListItem> {
     this.deactivateItem = deactivateItem;
     this.activateItem = activateItem;
     this.isNavigableKey = isNavigableKey;
+    this.isActivatable = isActivatable;
   }
 
   /**
@@ -131,7 +139,7 @@ export class ListController<Item extends ListItem> {
       return;
     }
 
-    const activeItemRecord = getActiveItem(items);
+    const activeItemRecord = getActiveItem(items, this.isActivatable);
 
     if (activeItemRecord) {
       activeItemRecord.item.tabIndex = -1;
@@ -149,23 +157,23 @@ export class ListController<Item extends ListItem> {
       // Activate the next item
       case NavigableKeys.ArrowDown:
       case inlineNext:
-        activateNextItem(items, activeItemRecord);
+        activateNextItem(items, activeItemRecord, this.isActivatable);
         break;
 
       // Activate the previous item
       case NavigableKeys.ArrowUp:
       case inlinePrevious:
-        activatePreviousItem(items, activeItemRecord);
+        activatePreviousItem(items, activeItemRecord, this.isActivatable);
         break;
 
       // Activate the first item
       case NavigableKeys.Home:
-        activateFirstItem(items);
+        activateFirstItem(items, this.isActivatable);
         break;
 
       // Activate the last item
       case NavigableKeys.End:
-        activateLastItem(items);
+        activateLastItem(items, this.isActivatable);
         break;
 
       default:
@@ -179,13 +187,13 @@ export class ListController<Item extends ListItem> {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activateNextItem(): ListItem|null {
+  activateNextItem(): Item|null {
     const items = this.items;
-    const activeItemRecord = getActiveItem(items);
+    const activeItemRecord = getActiveItem(items, this.isActivatable);
     if (activeItemRecord) {
       activeItemRecord.item.tabIndex = -1;
     }
-    return activateNextItem(items, activeItemRecord);
+    return activateNextItem(items, activeItemRecord, this.isActivatable);
   }
 
   /**
@@ -194,13 +202,13 @@ export class ListController<Item extends ListItem> {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activatePreviousItem(): ListItem|null {
+  activatePreviousItem(): Item|null {
     const items = this.items;
-    const activeItemRecord = getActiveItem(items);
+    const activeItemRecord = getActiveItem(items, this.isActivatable);
     if (activeItemRecord) {
       activeItemRecord.item.tabIndex = -1;
     }
-    return activatePreviousItem(items, activeItemRecord);
+    return activatePreviousItem(items, activeItemRecord, this.isActivatable);
   }
 
   /**
@@ -250,7 +258,8 @@ export class ListController<Item extends ListItem> {
       return;
     }
 
-    const firstActivatableItem = getFirstActivatableItem(items);
+    const firstActivatableItem =
+        getFirstActivatableItem(items, this.isActivatable);
 
     if (!firstActivatableItem) {
       return;
