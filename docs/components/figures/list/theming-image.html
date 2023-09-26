@@ -7,21 +7,28 @@
     <style>
       .styled-example.image md-list {
         --md-list-container-color: #f4fbfa;
-        --md-list-item-container-color: transparent;
-        --md-list-item-leading-image-height: 50px;
-        --md-list-item-leading-image-width: 100px;
-        --md-list-item-leading-image-shape: 25px;
+        --md-list-item-label-text-color: #161d1d;
+        --md-list-item-supporting-text-color: #3f4948;
+        --md-list-item-trailing-supporting-text-color: #3f4948;
+      }
+      .styled-example.image md-list img {
+        height: 50px;
+        width: 100px;
+        border-radius: 25px;
       }
     </style>
     <md-list>
-      <md-list-item headline="Wide Cat">
-        <img loading="lazy" slot="start-image" src="https://placekitten.com/200/100">
+      <md-list-item>
+        <div slot="headline">Wide Cat</div>
+        <img loading="lazy" slot="start" src="https://placekitten.com/200/100">
       </md-list-item>
-      <md-list-item headline="Round kitty cat">
-        <img loading="lazy" slot="start-image" src="https://placekitten.com/202/101">
+      <md-list-item>
+        <div slot="headline">Round kitty cat</div>
+        <img loading="lazy" slot="start" src="https://placekitten.com/202/101">
       </md-list-item>
-      <md-list-item headline="Softe cate">
-        <img loading="lazy" slot="start-image" src="https://placekitten.com/212/106">
+      <md-list-item>
+        <div slot="headline">Softe cate</div>
+        <img loading="lazy" slot="start" src="https://placekitten.com/212/106">
       </md-list-item>
     </md-list>
   </figure>

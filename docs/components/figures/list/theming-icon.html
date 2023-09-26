@@ -6,7 +6,9 @@
     <style>
       .styled-example.icon md-list {
         --md-list-container-color: #f4fbfa;
-        --md-list-item-container-color: transparent;
+        --md-list-item-label-text-color: #161d1d;
+        --md-list-item-supporting-text-color: #3f4948;
+        --md-list-item-trailing-supporting-text-color: #3f4948;
         --md-list-item-leading-icon-color: #006a6a;
         --md-list-item-trailing-icon-color: #006a6a;
         --md-list-item-leading-icon-size: 20px;
@@ -17,17 +19,20 @@
       }
     </style>
     <md-list>
-      <md-list-item headline="Eggs">
-        <md-icon slot="start-icon">egg</md-icon>
-        <md-icon slot="end-icon">recommend</md-icon>
+      <md-list-item>
+        <div slot="headline">Eggs</div>
+        <md-icon slot="start">egg</md-icon>
+        <md-icon slot="end">recommend</md-icon>
       </md-list-item>
-      <md-list-item headline="Ice cream" class="unhealthy">
-        <md-icon slot="start-icon">icecream</md-icon>
-        <md-icon slot="end-icon">dangerous</md-icon>
+      <md-list-item class="unhealthy">
+        <div slot="headline">Ice Cream</div>
+        <md-icon slot="start">icecream</md-icon>
+        <md-icon slot="end">dangerous</md-icon>
       </md-list-item>
-      <md-list-item headline="Orange">
-        <md-icon slot="start-icon">nutrition</md-icon>
-        <md-icon slot="end-icon">recommend</md-icon>
+      <md-list-item>
+        <div slot="headline">Orange</div>
+        <md-icon slot="start">nutrition</md-icon>
+        <md-icon slot="end">recommend</md-icon>
       </md-list-item>
     </md-list>
   </figure>
