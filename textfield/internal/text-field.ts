@@ -626,7 +626,7 @@ export abstract class TextField extends LitElement {
           ?readonly=${this.readOnly}
           ?required=${this.required}
           rows=${this.rows}
-		cols=${this.cols}
+          cols=${this.cols}
           .value=${live(this.value)}
           @change=${this.handleChange}
           @focusin=${this.handleFocusin}
