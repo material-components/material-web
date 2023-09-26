@@ -1,6 +1,6 @@
 {
   "name": "@material/web",
-  "version": "1.0.0-pre.17",
+  "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -47,7 +47,9 @@
     "!catalog",
     "!scripts/"
   ],
-  "workspaces": ["catalog"],
+  "workspaces": [
+    "catalog"
+  ],
   "dependencies": {
     "lit": "^2.7.4 || ^3.0.0",
     "tslib": "^2.4.0"
@@ -66,7 +68,9 @@
   },
   "wireit": {
     "build": {
-      "dependencies": ["build:ts"]
+      "dependencies": [
+        "build:ts"
+      ]
     },
     "build:ts": {
       "command": "tsc --pretty",
@@ -91,27 +95,55 @@
         "!scripts/"
       ],
       "clean": "if-file-deleted",
-      "dependencies": ["build:css-to-ts"]
+      "dependencies": [
+        "build:css-to-ts"
+      ]
     },
     "build:css-to-ts": {
       "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
-      "files": ["css-to-ts.js", "!scripts/", "!node_modules"],
-      "output": ["**/*.css.ts", "!catalog", "!scripts/"],
-      "dependencies": ["build:sass"]
+      "files": [
+        "css-to-ts.js",
+        "!scripts/",
+        "!node_modules"
+      ],
+      "output": [
+        "**/*.css.ts",
+        "!catalog",
+        "!scripts/"
+      ],
+      "dependencies": [
+        "build:sass"
+      ]
     },
     "build:sass": {
       "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
-      "files": ["**/*.scss", "!catalog", "!scripts/", "!node_modules"],
-      "output": ["**/*.css", "**/*.css.map", "!catalog", "!scripts/"]
+      "files": [
+        "**/*.scss",
+        "!catalog",
+        "!scripts/",
+        "!node_modules"
+      ],
+      "output": [
+        "**/*.css",
+        "**/*.css.map",
+        "!catalog",
+        "!scripts/"
+      ]
     },
     "test": {
       "command": "wtr",
-      "dependencies": ["build:ts"],
-      "files": ["web-test-runner.config.js"],
+      "dependencies": [
+        "build:ts"
+      ],
+      "files": [
+        "web-test-runner.config.js"
+      ],
       "output": []
     },
     "build:catalog": {
-      "dependencies": ["./catalog:build:prod"]
+      "dependencies": [
+        "./catalog:build:prod"
+      ]
     },
     "build:analyzer": {
       "command": "tsc -b scripts/tsconfig.json --pretty",
@@ -142,7 +174,9 @@
         "!node_modules"
       ],
       "output": [],
-      "dependencies": ["build:analyzer"]
+      "dependencies": [
+        "build:analyzer"
+      ]
     }
   }
 }
