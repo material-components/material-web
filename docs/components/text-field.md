@@ -366,11 +366,26 @@ Add an
 attribute to text fields with external labels or text fields whose labels need
 to be more descriptive.
 
+Additionally, when the character counter is visible when `maxLength` is defined,
+you can set the `getCharCountAccessibleText` and `getCharCountRemainingText`
+methods to override the English announcements for number of characters typed and
+remaining.
+
+> Tip: You may want to use a localization library to hook into these functions.
+> If you are using Material web with Lit, you may want to consider using
+> [`@lit/localize`](https://lit.dev/docs/localization/overview/).
+
 ```html
 <div>Username</div>
-<md-filled-text-field aria-label="Username"></md-filled-text-field>
+<md-filled-text-field aria-label="Username" max-length="20"></md-filled-text-field>
 
 <md-filled-text-field label="First" aria-label="First name"></md-filled-text-field>
+
+<script>
+  const textfield = document.querySelector('md-filled-text-field[max-length]);
+  textfield.getCharCountAccessibleText = (cuenta, maximo) => `${cuenta} de ${maximo} caracteres ingresados`;
+  textfield.getCharCountRemainingText = (restante, maximo) => `Quedan ${restante} de ${maximo} caracteres`;
+</script>
 ```
 
 ## Filled text field
@@ -478,7 +493,6 @@ Token                                          | Default value
 <!-- auto-generated API docs start -->
 
 ## API
-
 
 ### MdFilledTextField <code>&lt;md-filled-text-field&gt;</code>
 

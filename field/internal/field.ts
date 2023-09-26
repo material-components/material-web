@@ -27,6 +27,42 @@ export class Field extends LitElement {
   @property({type: Number}) max = -1;
 
   /**
+   * A function that announces the number of characters entered and the total
+   * number of characters allowed when the caracter counter is visible –
+   * max-length is defined. This defaults to the English sentence:
+   *
+   * `${count} of ${max} characters entered`
+   *
+   * @param count The count of characters entered
+   * @param max The total number of allowed characters
+   * @returns An accessible string that announces the characters entered and the
+   *     total number characters allowed.
+   */
+  @property({attribute: false})
+  getCharCountAccessibleText = (count: number, max: number) => {
+    return `${count} of ${max} characters entered`;
+  };
+
+  /**
+   * A function that announces the number of characters remaining and the total
+   * number of characters allowed when the caracter counter is visible –
+   * max-length is defined. Announces only when there are 15, 10, and 5
+   * characters remaining. This defaults to the English sentence:
+   *
+   * `${remaining} of ${max} characters remaining`
+   *
+   * @param remaining The count of characters remaining until the max character
+   *     limit is reached.
+   * @param max The total number of allowed characters
+   * @returns An accessible string that announces the characters remaining and
+   *     the total number characters allowed.
+   */
+  @property({attribute: false})
+  getCharCountRemainingText = (remaining: number, max: number) => {
+    return `${remaining} of ${max} characters remaining`;
+  };
+
+  /**
    * Whether or not the field has leading content.
    */
   @property({type: Boolean, attribute: 'has-start'}) hasStart = false;
@@ -175,14 +211,30 @@ export class Field extends LitElement {
       return nothing;
     }
 
+    const accessibleCountText = html`<span class="visually-hidden">${
+        this.getCharCountAccessibleText(this.count, this.max)}</span>`;
+
+    const charsRemaining = this.max - this.count;
+    const shouldAnnounceRemaining =
+        charsRemaining <= 15 && charsRemaining % 5 === 0 && charsRemaining > 0;
+
+    const charsRemainingText = shouldAnnounceRemaining ?
+        html`<span class="visually-hidden" aria-live="assertive">${
+            this.getCharCountRemainingText(charsRemaining, this.max)}</span>` :
+        nothing;
+
     // Always render the supporting text span so that our `space-around`
     // container puts the counter at the end.
     const start = html`<span>${supportingOrErrorText}</span>`;
     // Conditionally render counter so we don't render the extra `gap`.
     // TODO(b/244473435): add aria-label and announcements
-    const end = counterText ?
-        html`<span class="counter">${counterText}</span>` :
-        nothing;
+    const end = counterText ? html`
+      <span class="counter">
+        <span aria-hidden="true">${counterText}</span>
+        ${accessibleCountText}
+        ${charsRemainingText}
+      </span>` :
+                              nothing;
 
     // Announce if there is an error and error text visible.
     // If refreshErrorAlert is true, do not announce. This will remove the
@@ -192,7 +244,7 @@ export class Field extends LitElement {
         this.error && this.errorText && !this.refreshErrorAlert;
     const role = shouldErrorAnnounce ? 'alert' : nothing;
     return html`
-      <div class="supporting-text" role=${role}>${start}${end}</div>
+      <div class="supporting-text" role=${role}><p>${start}</p>${end}</div>
       <slot name="aria-describedby" @slotchange=${
         this.updateSlottedAriaDescribedBy}></slot>
     `;

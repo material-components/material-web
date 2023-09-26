@@ -109,6 +109,38 @@ export abstract class TextField extends LitElement {
   @property({type: Number}) rows = 2;
 
   /**
+   * A function that announces the number of characters entered and the total
+   * number of characters allowed when the caracter counter is visible –
+   * max-length is defined. This defaults to the English sentence:
+   *
+   * `${count} of ${max} characters entered`
+   *
+   * @param count The count of characters entered
+   * @param max The total number of allowed characters
+   * @returns An accessible string that announces the characters entered and the
+   *     total number characters allowed.
+   */
+  @property({attribute: false})
+  getCharCountAccessibleText?: (count: number, max: number) => string;
+
+  /**
+   * A function that announces the number of characters remaining and the total
+   * number of characters allowed when the caracter counter is visible –
+   * max-length is defined. Announces only when there are 15, 10, and 5
+   * characters remaining. This defaults to the English sentence:
+   *
+   * `${remaining} of ${max} characters remaining`
+   *
+   * @param remaining The count of characters remaining until the max character
+   *     limit is reached.
+   * @param max The total number of allowed characters
+   * @returns An accessible string that announces the characters remaining and
+   *     the total number characters allowed.
+   */
+  @property({attribute: false})
+  getCharCountRemainingText?: (remaining: number, max: number) => string;
+
+  /**
    * The associated form element with which this element's value will submit.
    */
   get form() {
@@ -573,6 +605,8 @@ export abstract class TextField extends LitElement {
       ?required=${this.required}
       ?resizable=${this.type === 'textarea'}
       supporting-text=${this.supportingText}
+      .getCharCountAccessibleText=${this.getCharCountAccessibleText ?? nothing}
+      .getCharCountRemainingText=${this.getCharCountRemainingText ?? nothing}
     >
       ${this.renderLeadingIcon()}
       ${this.renderInputOrTextarea()}

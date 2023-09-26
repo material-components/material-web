@@ -23,6 +23,10 @@
     flex-shrink: 0;
   }
 
+  .supporting-text p {
+    margin: 0;
+  }
+
   :hover .supporting-text {
     color: var(--_hover-supporting-text-color);
   }
@@ -46,5 +50,14 @@
 
   .error.focus .supporting-text {
     color: var(--_error-focus-supporting-text-color);
+  }
+
+  .counter .visually-hidden {
+    position: absolute;
+    overflow: hidden;
+    left: -1px;
+    top: auto;
+    width: 1px;
+    height: 1px;
   }
 }
