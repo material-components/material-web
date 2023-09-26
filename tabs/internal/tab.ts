@@ -36,6 +36,13 @@ export class Tab extends LitElement {
   }
 
   /**
+   * Indicates that the element is a tab for `<md-tabs>`. Useful when
+   * clients implement their own custom `md-tab` components.
+   * @nocollapse
+   */
+  static readonly isTab = true;
+
+  /**
    * Whether or not the tab is selected.
    **/
   @property({type: Boolean, reflect: true}) active = false;
