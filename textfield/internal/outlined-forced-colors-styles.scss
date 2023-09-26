@@ -4,8 +4,14 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use '../../tokens';
 @use './outlined-text-field';
 // go/keep-sorted end
+
+$outlined-field-tokens: tokens.md-comp-outlined-field-values();
 
 @media (forced-colors: active) {
   :host {
@@ -24,6 +30,26 @@
         disabled-trailing-icon-color: GrayText,
         disabled-trailing-icon-opacity: 1,
       )
+    );
+  }
+
+  .textarea:not(.has-start) .input {
+    // A focused textfield will clip the inline-start outline of the field, so
+    // shift it over the width of the outline
+    margin-inline-start: var(--_focus-outline-width);
+    // Padding - the extra margin we added. This calc was taken from md-field.
+    padding-inline-start: calc(
+      max(
+          var(--_leading-space),
+          max(
+              var(--_container-shape-start-start),
+              var(--_container-shape-end-start)
+            ) +
+            var(
+              --md-outlined-field-outline-label-padding,
+              #{map.get($outlined-field-tokens, 'outline-label-padding')}
+            )
+        ) - var(--_focus-outline-width)
     );
   }
 }

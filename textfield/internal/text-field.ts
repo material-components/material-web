@@ -529,6 +529,7 @@ export abstract class TextField extends LitElement {
       'disabled': this.disabled,
       'error': !this.disabled && this.hasError,
       'textarea': this.type === 'textarea',
+      'has-start': this.hasLeadingIcon,
     };
 
     return html`
