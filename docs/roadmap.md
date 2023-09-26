@@ -23,9 +23,62 @@ This roadmap outlines the current and future goals for Material Web Components.
 *   🟡 In progress
 *   ✅ Complete
 
-## Current (Sep 2023)
+## Cards and more | Q4 2023
 
-These features are planned for the next release.
+_What that the team is currently working on._
+
+*   Components
+    *   💤 Card
+    *   💤 Segmented button
+*   Features
+    *   💤 Support more screen readers
+    *   💤 Prevent event default behavior
+    *   💤 Size tracking
+    *   💤 Performance improvements
+    *   💤 Docs and examples
+
+## Planned
+
+_What that the team is planning to work on after the current goal._
+
+*   Components
+    *   💤 Navigation drawer
+    *   💤 Snackbar
+    *   💤 Tooltip
+*   Features
+    *   💤 Catalog
+    *   💤 Spacing tokens
+    *   💤 Density
+    *   💤 SSR
+
+## Future
+
+_What is not yet organized into a planned goal._
+
+*   Components
+    *   💤 Autocomplete
+    *   💤 Badge
+    *   💤 Banner
+    *   💤 Bottom app bar
+    *   💤 Bottom sheet
+    *   💤 Data table
+    *   💤 Date picker
+    *   💤 Navigation bar
+    *   💤 Navigation rail
+    *   💤 Search
+    *   💤 Time picker
+    *   💤 Top app bar
+*   Features
+    *   💤 Motion theming
+    *   💤 Shape theming
+    *   💤 Typescript-based theming
+    *   💤 Side-effect free imports
+
+## Complete
+
+_Completed goals and releases._
+
+### Material 1.0 | Sep 2023
 
 *   Features
     *   ✅ Color theming
@@ -50,47 +103,3 @@ These features are planned for the next release.
     *   ✅ Switch
     *   ✅ Tabs
     *   ✅ Text field
-
-## Next (Q1 2024)
-
-These features are planned for the release after the next one.
-
-*   Features
-    *   💤 Catalog
-    *   💤 Density
-*   Components
-    *   💤 Card
-    *   💤 Navigation drawer
-    *   💤 Segmented button
-    *   💤 Snackbar
-    *   💤 Tooltip
-
-## Future
-
-These features are planned for future releases.
-
-*   Features
-    *   💤 Motion theming
-    *   💤 Shape theming
-    *   💤 Typescript theming
-*   Components
-    *   💤 Autocomplete
-    *   💤 Badge
-    *   💤 Banner
-    *   💤 Bottom app bar
-    *   💤 Bottom sheet
-    *   💤 Data table
-    *   💤 Date picker
-    *   💤 Navigation bar
-    *   💤 Navigation rail
-    *   💤 Search
-    *   💤 Time picker
-    *   💤 Top app bar
-
-<!-- ## Past
-
-Past release roadmaps.
-
-### 1.0 (Sep 2023) -->
-
-<!-- Move 1.0 once released -->
