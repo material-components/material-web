@@ -307,6 +307,5 @@ export class Tabs extends LitElement {
 }
 
 function isTab(element: unknown): element is Tab {
-  if (!element) return false;
-  return 'isTab' in element.constructor && element.constructor.isTab === true;
+  return element instanceof Tab;
 }
