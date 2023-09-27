@@ -85,7 +85,7 @@
   }
 
   .default-slot,
-  :not([name='start'])::slotted(*) {
+  .text ::slotted(*) {
     overflow: hidden;
     text-overflow: ellipsis;
   }
