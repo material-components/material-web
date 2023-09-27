@@ -255,8 +255,8 @@ export abstract class Menu extends LitElement {
    * helpful for calculating some animation calculations.
    */
   private get openDirection(): 'UP'|'DOWN' {
-    const menuCornerBlock = this.menuCorner.split('_')[0];
-    return menuCornerBlock === 'START' ? 'DOWN' : 'UP';
+    const menuCornerBlock = this.menuCorner.split('-')[0];
+    return menuCornerBlock === 'start' ? 'DOWN' : 'UP';
   }
 
   /**
