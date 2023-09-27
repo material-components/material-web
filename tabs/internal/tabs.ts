@@ -45,9 +45,8 @@ export class Tabs extends LitElement {
   /**
    * The tabs of this tab bar.
    */
-  get tabs() {
-    return this.maybeTabs.filter(isTab);
-  }
+  @queryAssignedElements({flatten: true, selector: '[md-tab]'})
+  readonly tabs!: Tab[];
 
   /**
    * The currently selected tab, `null` only when there are no tab children.
@@ -106,8 +105,6 @@ export class Tabs extends LitElement {
   @property({type: Boolean, attribute: 'auto-activate'}) autoActivate = false;
 
   @query('slot') private readonly slotElement!: HTMLSlotElement|null;
-  @queryAssignedElements({flatten: true})
-  private readonly maybeTabs!: HTMLElement[];
 
   private get focusedTab() {
     return this.tabs.find(tab => tab.matches(':focus-within'));
@@ -307,5 +304,5 @@ export class Tabs extends LitElement {
 }
 
 function isTab(element: unknown): element is Tab {
-  return element instanceof Tab;
+  return element instanceof HTMLElement && element.hasAttribute('md-tab');
 }

@@ -36,6 +36,14 @@ export class Tab extends LitElement {
   }
 
   /**
+   * The attribute `md-tab` indicates that the element is a tab for the parent
+   * element, `<md-tabs>`. Make sure if you're implementing your own `md-tab`
+   * component that you have an `md-tab` attribute set.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'md-tab'})
+  readonly isTab = true;
+
+  /**
    * Whether or not the tab is selected.
    **/
   @property({type: Boolean, reflect: true}) active = false;
