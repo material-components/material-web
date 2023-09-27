@@ -72,30 +72,34 @@ header which is on two lines.](images/list/usage.webp)
 
 ```html
 <md-list style="max-width: 300px;">
-  <md-list-item headline="Fruits"></md-list-item>
-  <md-divider></md-divider>
-  <md-list-item headline="Apple"></md-list-item>
-  <md-list-item headline="Banana" supporting-text="Banana is a yellow fruit">
+  <md-list-item>
+    Fruits
   </md-list-item>
-  <md-list-item
-      headline="Cucumber"
-      multi-line-supporting-text
-      supporting-text="Cucumbers are long green fruits that are just as long as this multi-line description">
+  <md-divider></md-divider>
+  <md-list-item>
+    Apple
+</md-list-item>
+  <md-list-item>
+    Banana
+  </md-list-item>
+  <md-list-item>
+    <div slot="headline">Cucumber</div>
+    <div slot="supporting-text">Cucumbers are long green fruits that are just as long as this multi-line description</div>
   </md-list-item>
   <md-list-item
       interactive
-      headline="Shop for Kiwis"
-      supporting-text="This will link you out in a new tab"
       href="https://google.com/search?q=buy+kiwis&tbm=shop"
       target="_blank">
-    <md-icon slot="end-icon">open_in_new</md-icon>
+    <div slot="headline">Shop for Kiwis</div>
+    <div slot="supporting-text">This will link you out in a new tab</div>
+    <md-icon slot="end">open_in_new</md-icon>
   </md-list-item>
 </md-list>
 ```
 
 ## Icon Items
 
-Icons can be slotted into list-items' `start-icon` or `end-icon` slot.
+Icons can be slotted into list-items' `start` or `end` slot.
 
 <!-- no-catalog-start -->
 
@@ -108,55 +112,38 @@ Angular.](images/list/usage-icon.webp)
 <!-- catalog-include "figures/list/usage-icon.html" -->
 
 ```html
-<md-list style="max-width: 300px;">
-  <md-list-item headline="Lit">
-    <svg slot="start-icon" viewBox="0 0 160 200">
+<md-list style="max-width: 300px">
+  <md-list-item>
+    Lit
+    <svg  slot="start" style="height: 24px" viewBox="0 0 160 200">
       <path
-        d="m160 80v80l-40-40zm-40 40v80l40-40zm0-80v80l-40-40zm-40 40v80l40-40zm-40-40v80l40-40zm40-40v80l-40-40zm-40 120v80l-40-40zm-40-40v80l40-40z"/>
+        fill="currentColor"
+        d="m160 80v80l-40-40zm-40 40v80l40-40zm0-80v80l-40-40zm-40 40v80l40-40zm-40-40v80l40-40zm40-40v80l-40-40zm-40 120v80l-40-40zm-40-40v80l40-40z"
+      />
     </svg>
   </md-list-item>
   <md-divider></md-divider>
-  <md-list-item headline="Polymer">
-    <md-icon slot="start-icon">polymer</md-icon>
+  <md-list-item>
+    Polymer
+    <md-icon slot="start">polymer</md-icon>
   </md-list-item>
   <md-divider></md-divider>
-  <md-list-item headline="Angular">
-    <svg slot="start-icon" viewBox="0 0 250 250">
-      <polygon points="108,135.4 125,135.4 125,135.4 125,135.4 142,135.4 125,94.5"/>
-      <path d="M125,30L125,30L125,30L31.9,63.2l14.2,123.1L125,230l0,0l0,0l78.9-43.7l14.2-123.1L125,30z M183.1,182.6h-21.7h0 l-11.7-29.2H125h0h0h-24.7l-11.7,29.2h0H66.9h0L125,52.1l0,0l0,0l0,0l0,0L183.1,182.6L183.1,182.6z"/>
+  <md-list-item>
+    Angular
+    <svg slot="start" style="height: 24px" viewBox="0 0 250 250">
+      <polygon points="108,135.4 125,135.4 125,135.4 125,135.4 142,135.4 125,94.5   " />
+      <path
+        d="M125,30L125,30L125,30L31.9,63.2l14.2,123.1L125,230l0,0l0,0l78.9-43.7l14.2-123.1L125,30z M183.1,182.6h-21.7h0
+          l-11.7-29.2H125h0h0h-24.7l-11.7,29.2h0H66.9h0L125,52.1l0,0l0,0l0,0l0,0L183.1,182.6L183.1,182.6z"
+      />
     </svg>
-  </md-list-item>
-</md-list>
-```
-
-## Avatar Items
-
-Image or text avatars can be slotted into list-items' `start-avatar` slot.
-
-<!-- no-catalog-start -->
-
-![A list with two avatar items. The first item has white text EM in a blue
-circle and then the visible label User 1. There is a divider and then the second
-item has a circular image of a person silhouette](images/list/usage-avatar.webp)
-
-<!-- no-catalog-end -->
-<!-- catalog-include "figures/list/usage-avatar.html" -->
-
-```html
-<md-list style="max-width: 300px;">
-  <md-list-item headline="User 1">
-    <span slot="start-avatar">EM</span>
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item headline="User 2">
-    <img slot="start-avatar" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAAAAADH8yjkAAABsklEQVR4Ae3WBaLjMAxF0dn/np4hVEY3cQqOupNh/i4oVT76buAUEkmfzgOXgAS8QiABCUhAAg71dlsfhgJOc4vv2flpAICWGr/TS5IGQoV/qoIs0OX4r7wTBcZ40lgSqBGplgMoQ6SMxACPaF4MmCPaXAwoEa0UAyyiWTFAIZoSAwyiGTGgQLRCDJgh2kwMaBCtEQPIIpIluVnkEMkJDjuq8KSKJMd1eDLusiC70U45/ik/Se/kbqbwOzXrBrgqDtOfhJoeBrqLyLvl0nlKp2MCXi1Ap1Prndv59iQOdPVqkqu/J9FoWQcp4LguES1f7B8HaJPhStk6PASElcGN9CL0B9YKd6TWPYFjgTsrjn2ARuPudMMHdgqM1I4LtAqsVMsDyIKZJRawBLslC7BgZzlAQI8CA+gM2JmOAZy9AjPleY/pAswWZx5AFVhVxATOVIJRSfxZRAXurqA+07Qb4c5GXb99QAvc1YJ6bzSncTPtHtnJYYwbjcODV0WT40p5I3C21AUQr6iFDi8/M5HZM/OSp2O7HP+FmPGyHeD4Db5x261rfEjnewISkIAEJODDAV8A/z6x+ahJu3sAAAAASUVORK5CYII=">
   </md-list-item>
 </md-list>
 ```
 
 ## Image Items
 
-Images can be slotted into list-items' `start-image` slot.
+Images should be slotted into list-items' `start` slot.
 
 <!-- no-catalog-start -->
 
@@ -170,65 +157,19 @@ Cate.](images/list/usage-image.webp)
 
 ```html
 <md-list style="max-width: 300px;">
-  <md-list-item headline="Cat">
-    <img slot="start-image" src="https://placekitten.com/112/112">
+  <md-list-item>
+    Cat
+    <img slot="start" style="width: 56px" src="https://placekitten.com/112/112">
   </md-list-item>
   <md-divider></md-divider>
-  <md-list-item headline="Kitty Cat">
-    <img slot="start-image" src="https://placekitten.com/114/114">
+  <md-list-item>
+    Kitty Cat
+    <img slot="start" style="width: 56px" src="https://placekitten.com/114/114">
   </md-list-item>
   <md-divider></md-divider>
-  <md-list-item headline="Cate">
-    <img slot="start-image" src="https://placekitten.com/116/116">
-  </md-list-item>
-</md-list>
-```
-
-## Video Items
-
-Videos can also be slotted into list-items' `start-video"` or
-`start-video-large` slots.
-
-<!-- no-catalog-start -->
-
-<video src="images/list/usage-video.mp4" autoplay loop muted playsinline alt="Three video items in a list. The first item shows the Material You intro video autoplaying and says Expressiveness. The second item is autoplaying a color customization video and says Personalization. The third item has a bunch of animating components and says Accessible."></video>
-
-<!-- no-catalog-end -->
-<!-- catalog-include "figures/list/usage-video.html" -->
-
-```html
-<md-list style="max-width: 300px;">
-  <md-list-item headline="Expressiveness">
-    <video
-        slot="start-video"
-        playsinline
-        muted
-        autoplay
-        loop
-        src="https://kstatic.googleusercontent.com/files/f925638d73101f91d11db39e191ec6ed4101ee96c063283ddc4ea1f01b7d1ebe3ae360c124448d5759a7ecfbcb05af96cf746122ee3b898b4bf7db8d6882de1c">
-    </video>
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item headline="Personalization">
-    <video
-        slot="start-video"
-        playsinline
-        muted
-        autoplay
-        loop
-        src="https://kstatic.googleusercontent.com/files/e07831809bfeeef1acd74cc5fbf20fc2974984c7e011f01e3df62c96a5a18b309af71e58e01a07ae89e30d7243e692affcf8fbf159fe0e078e35612d0851e8ea">
-    </video>
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item headline="Accessible">
-    <video
-        slot="start-video"
-        playsinline
-        muted
-        autoplay
-        loop
-        src="https://kstatic.googleusercontent.com/files/9430d9604eff1ecd370d688cb57eb95781e546279ed9bbb04c15dd0b80881c564addc8aaed5d37b3a5fc656b1fc673cfbd25c4b6a08b9d3e7ea396808f00ba20">
-    </video>
+  <md-list-item>
+    Cate
+    <img slot="start" style="width: 56px" src="https://placekitten.com/116/116">
   </md-list-item>
 </md-list>
 ```
@@ -236,48 +177,19 @@ Videos can also be slotted into list-items' `start-video"` or
 ## Accessibility
 
 List can have its `role` and `tabindex` set via the `role` and `tabindex`
-attributes, and list items can have their internal `role` and `tabindex` set via
-the `type` and `item-tabindex` attributes respectively.
+attributes, and list items can have their `role` and `tabindex` set via the
+`type` and `tabindex` attributes respectively.
+
+> NOTE: List item has a limited set of `type`s that can be set on it. This is to
+> ensure that your list remains accessible with all other properties and options
+> presented to it. See the `ListItemType` TypeScript type exported by list item
+> for the current accepted values.
 
 By default these values are set to
 [`role="list"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/list_role)<!-- {.external} -->
 and `tabindex="-1"` for list, and
 [`role="listitem"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listitem_role)<!-- {.external} -->
 and `tabindex="0"` for list items.
-
-The following example sets
-[`role="listbox"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role)<!-- {.external} -->
-on the internal list and
-[`role="option"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/option_role)<!-- {.external} -->
-on the internal list item nodes.
-
-```html
-<md-list role="listbox" tabindex="0">
-  <md-list-item type="option" headline="icon">
-    <md-icon slot="start-icon">account_circle</md-icon>
-  </md-list-item>
-
-  <md-list-item type="option" headline="image">
-    <img alt="a photo of a cat" slot="start-image" src="https://placekitten.com/112/112">
-  </md-list-item>
-
-  <md-list-item type="option" headline="avatar">
-    <img alt="a photo of a cat" slot="start-avatar" src="https://placekitten.com/112/112">
-  </md-list-item>
-
-  <md-list-item type="option" headline="avatar text">
-    <span role="img" alt="stylized text EM" slot="start-avatar">EM</span>
-  </md-list-item>
-
-  <md-list-item type="option" headline="video">
-    <video slot="start-video" playsinline muted autoplay loop
-        src="https://kstatic.googleusercontent.com/files/f925638d73101f91d11db39e191ec6ed4101ee96c063283ddc4ea1f01b7d1ebe3ae360c124448d5759a7ecfbcb05af96cf746122ee3b898b4bf7db8d6882de1c">
-      <track src="link-to-subtitles-en.vtt" label="English captions" kind="captions" srclang="en" default>
-      <track src="link-to-subtitles-zh.vtt" label="中文字幕" kind="captions" srclang="zh">
-    </video>
-  </md-list-item>
-</md-list>
-```
 
 ## Theming
 
@@ -290,7 +202,6 @@ and can be customized in terms of color, typography, and shape.
 Token                                           | Default value
 ----------------------------------------------- | -------------
 `--md-list-container-color`                     | `--md-sys-color-surface`
-`--md-list-item-container-color`                | `--md-sys-color-surface`
 `--md-list-item-container-shape`                | `0px`
 `--md-list-item-label-text-color`               | `--md-sys-color-on-surface`
 `--md-list-item-supporting-text-color`          | `--md-sys-color-on-surface-variant`
@@ -317,9 +228,7 @@ a different theme applied](images/list/theming-list.webp)
 ```html
 <style>
   :root {
-    background-color: #f4fbfa;
     --md-list-container-color: #f4fbfa;
-    --md-list-item-container-color: transparent;
     --md-list-item-label-text-color: #161d1d;
     --md-list-item-supporting-text-color: #3f4948;
     --md-list-item-trailing-supporting-text-color: #3f4948;
@@ -327,22 +236,26 @@ a different theme applied](images/list/theming-list.webp)
     --md-list-item-supporting-text-font: system-ui;
     --md-list-item-trailing-supporting-text-font: system-ui;
   }
+  [slot="trailing-supporting-text"] {
+    width: 30px;
+    text-align: end;
+  }
 </style>
 <md-list>
-  <md-list-item
-      headline="Apple"
-      supporting-text="In stock"
-      trailing-supporting-text="+100">
+  <md-list-item type="button">
+    <div slot="headline">Apple</div>
+    <div slot="supporting-text">In stock</div>
+    <div slot="trailing-supporting-text">+100</div>
   </md-list-item>
-  <md-list-item
-      headline="Banana"
-      supporting-text="In stock"
-      trailing-supporting-text="56">
+  <md-list-item type="button">
+    <div slot="headline">Banana</div>
+    <div slot="supporting-text">In stock</div>
+    <div slot="trailing-supporting-text">56</div>
   </md-list-item>
-  <md-list-item
-      headline="Cucumber"
-      supporting-text="Low stock"
-      trailing-supporting-text="5">
+  <md-list-item type="button">
+    <div slot="headline">Cucumber</div>
+    <div slot="supporting-text">Low stock</div>
+    <div slot="trailing-supporting-text">5</div>
   </md-list-item>
 </md-list>
 ```
@@ -374,7 +287,7 @@ applied](images/list/theming-icon.webp)
   :root {
     background-color: #f4fbfa;
     --md-list-container-color: #f4fbfa;
-    --md-list-item-container-color: transparent;
+    --md-list-item-label-text-color: #161d1d;
     --md-list-item-leading-icon-color: #006a6a;
     --md-list-item-trailing-icon-color: #006a6a;
     --md-list-item-leading-icon-size: 20px;
@@ -385,17 +298,20 @@ applied](images/list/theming-icon.webp)
   }
 </style>
 <md-list>
-  <md-list-item headline="Eggs">
-    <md-icon slot="start-icon">egg</md-icon>
-    <md-icon slot="end-icon">recommend</md-icon>
+  <md-list-item>
+    <div slot="headline">Eggs</div>
+    <md-icon slot="start">egg</md-icon>
+    <md-icon slot="end">recommend</md-icon>
   </md-list-item>
-  <md-list-item headline="Ice cream" class="unhealthy">
-    <md-icon slot="start-icon">icecream</md-icon>
-    <md-icon slot="end-icon">dangerous</md-icon>
+  <md-list-item class="unhealthy">
+    <div slot="headline">Ice Cream</div>
+    <md-icon slot="start">icecream</md-icon>
+    <md-icon slot="end">dangerous</md-icon>
   </md-list-item>
-  <md-list-item headline="Orange">
-    <md-icon slot="start-icon">nutrition</md-icon>
-    <md-icon slot="end-icon">recommend</md-icon>
+  <md-list-item>
+    <div slot="headline">Orange</div>
+    <md-icon slot="start">nutrition</md-icon>
+    <md-icon slot="end">recommend</md-icon>
   </md-list-item>
 </md-list>
 ```
@@ -412,41 +328,6 @@ Token                                       | Default value
 
 *   [All List Item tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-list-item.scss)
     <!-- {.external} -->
-
-### Avatar List Item Example
-
-<!-- no-catalog-start -->
-
-![Image of a list and avatar list items with a different theme applied](images/list/theming-avatar.webp)
-
-<!-- no-catalog-end -->
-<!-- catalog-include "figures/list/theming-avatar.html" -->
-
-```html
-<style>
-  :root {
-    background-color: #f4fbfa;
-    --md-list-container-color: #f4fbfa;
-    --md-list-item-container-color: transparent;
-    --md-list-item-leading-avatar-color: #9cf1f0;
-    --md-list-item-leading-avatar-label-color: #002020;
-    --md-list-item-leading-avatar-label-font: system-ui;
-    --md-list-item-leading-avatar-shape: 0;
-    --md-list-item-leading-avatar-size: 36px;
-  }
-</style>
-<md-list>
-  <md-list-item headline="Elliott Marquez">
-    <span slot="start-avatar">EM</span>
-  </md-list-item>
-  <md-list-item headline="Elizabeth Mitchell">
-    <span slot="start-avatar">LM</span>
-  </md-list-item>
-  <md-list-item headline="Andrew Jackubowicz">
-    <span slot="start-avatar">AJ</span>
-  </md-list-item>
-</md-list>
-```
 
 ### Image List Item
 
@@ -473,7 +354,7 @@ Token                                 | Default value
   :root {
     background-color: #f4fbfa;
     --md-list-container-color: #f4fbfa;
-    --md-list-item-container-color: transparent;
+    --md-list-item-label-text-color: #161d1d;
     --md-list-item-leading-image-height: 50px;
     --md-list-item-leading-image-width: 100px;
     --md-list-item-leading-image-shape: 25px;
@@ -492,62 +373,9 @@ Token                                 | Default value
 </md-list>
 ```
 
-### Video List Item
-
-Token                                 | Default value
-------------------------------------- | -------------
-`--md-list-item-leading-image-height` | `56px`
-`--md-list-item-leading-image-width`  | `100px`
-`--md-list-item-leading-image-shape`  | `0px`
-
-*   [All List Item tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-list-item.scss)
-    <!-- {.external} -->
-
-### Video List Item Example
-
-<!-- no-catalog-start -->
-
-<video src="images/list/theming-video.mp4" autoplay loop muted playsinline alt="Image of a list and video list items of material design concepts with a different theme applied"></video>
-
-<!-- no-catalog-end -->
-<!-- catalog-include "figures/list/theming-video.html" -->
-
-```html
-<style>
-  :root {
-    background-color: #f4fbfa;
-    --md-list-container-color: #f4fbfa;
-    --md-list-item-container-color: transparent;
-    --md-list-item-leading-video-height: 60px;
-    --md-list-item-leading-video-width: 60px;
-    --md-list-item-leading-video-shape: 30px;
-  }
-</style>
-<md-list>
-  <md-list-item headline="Expressiveness">
-    <video slot="start-video" playsinline muted autoplay loop
-      src="https://kstatic.googleusercontent.com/files/f925638d73101f91d11db39e191ec6ed4101ee96c063283ddc4ea1f01b7d1ebe3ae360c124448d5759a7ecfbcb05af96cf746122ee3b898b4bf7db8d6882de1c"
-    ></video>
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item headline="Personalization">
-    <video slot="start-video" playsinline muted autoplay loop
-      src="https://kstatic.googleusercontent.com/files/e07831809bfeeef1acd74cc5fbf20fc2974984c7e011f01e3df62c96a5a18b309af71e58e01a07ae89e30d7243e692affcf8fbf159fe0e078e35612d0851e8ea"
-    ></video>
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item headline="Accessible">
-    <video slot="start-video" playsinline muted autoplay loop
-      src="https://kstatic.googleusercontent.com/files/9430d9604eff1ecd370d688cb57eb95781e546279ed9bbb04c15dd0b80881c564addc8aaed5d37b3a5fc656b1fc673cfbd25c4b6a08b9d3e7ea396808f00ba20"
-    ></video>
-  </md-list-item>
-</md-list>
-```
-
 <!-- auto-generated API docs start -->
 
 ## API
-
 
 ### MdList <code>&lt;md-list&gt;</code>
 

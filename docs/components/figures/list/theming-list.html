@@ -4,15 +4,11 @@
       aria-label="Image of a list and list items of foods with their inventory stock number with a different theme applied"
       style="padding-block: 16px;">
     <style>
-      figure md-list-item {
-        --md-list-item-container-shape: 0;
-      }
       .styled-example {
         background-color: #f4fbfa;
       }
       .styled-example.list md-list {
         --md-list-container-color: #f4fbfa;
-        --md-list-item-container-color: transparent;
         --md-list-item-label-text-color: #161d1d;
         --md-list-item-supporting-text-color: #3f4948;
         --md-list-item-trailing-supporting-text-color: #3f4948;
@@ -20,22 +16,26 @@
         --md-list-item-supporting-text-font: system-ui;
         --md-list-item-trailing-supporting-text-font: system-ui;
       }
+      .styled-example.list md-list [slot="trailing-supporting-text"] {
+        width: 30px;
+        text-align: end;
+      }
     </style>
     <md-list>
-      <md-list-item
-          headline="Apple"
-          supporting-text="In stock"
-          trailing-supporting-text="+100">
+      <md-list-item type="button">
+        <div slot="headline">Apple</div>
+        <div slot="supporting-text">In stock</div>
+        <div slot="trailing-supporting-text">+100</div>
       </md-list-item>
-      <md-list-item
-          headline="Banana"
-          supporting-text="In stock"
-          trailing-supporting-text="56">
+      <md-list-item type="button">
+        <div slot="headline">Banana</div>
+        <div slot="supporting-text">In stock</div>
+        <div slot="trailing-supporting-text">56</div>
       </md-list-item>
-      <md-list-item
-          headline="Cucumber"
-          supporting-text="Low stock"
-          trailing-supporting-text="5">
+      <md-list-item type="button">
+        <div slot="headline">Cucumber</div>
+        <div slot="supporting-text">Low stock</div>
+        <div slot="trailing-supporting-text">5</div>
       </md-list-item>
     </md-list>
   </figure>

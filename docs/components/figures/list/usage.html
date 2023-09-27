@@ -2,26 +2,29 @@
   <figure
     aria-label="Three items in a list. The first item says Apple as its headline. The second one says Banana in its headline as well as Banana is a yellow fruit as its sub header. The third list item says Cucumber in its headline and Cucumbers are long green fruits that are just as long as this multi-line description as its sub header which is on two lines."
   >
-    <md-list style="max-width: 300px">
-      <md-list-item headline="Fruits"></md-list-item>
-      <md-divider></md-divider>
-      <md-list-item headline="Apple"></md-list-item>
-      <md-list-item headline="Banana" supporting-text="Banana is a yellow fruit"> </md-list-item>
-      <md-list-item
-        headline="Cucumber"
-        multi-line-supporting-text
-        supporting-text="Cucumbers are long green fruits that are just as long as this multi-line description"
-      >
-      </md-list-item>
-      <md-list-item
+  <md-list style="max-width: 300px;">
+    <md-list-item>
+      Fruits
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-list-item>
+      Apple
+    </md-list-item>
+    <md-list-item>
+      Banana
+    </md-list-item>
+    <md-list-item>
+      <div slot="headline">Cucumber</div>
+      <div slot="supporting-text">Cucumbers are long green fruits that are just as long as this multi-line description</div>
+    </md-list-item>
+    <md-list-item
         interactive
-        headline="Shop for Kiwis"
-        supporting-text="This will link you out in a new tab"
         href="https://google.com/search?q=buy+kiwis&tbm=shop"
-        target="_blank"
-      >
-        <md-icon slot="end-icon">open_in_new</md-icon>
-      </md-list-item>
-    </md-list>
+        target="_blank">
+      <div slot="headline">Shop for Kiwis</div>
+      <div slot="supporting-text">This will link you out in a new tab</div>
+      <md-icon slot="end">open_in_new</md-icon>
+    </md-list-item>
+  </md-list>
   </figure>
 </div>
