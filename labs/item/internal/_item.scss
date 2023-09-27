@@ -85,7 +85,7 @@
   }
 
   .default-slot,
-  ::slotted(*) {
+  .text ::slotted(*) {
     overflow: hidden;
     text-overflow: ellipsis;
   }
