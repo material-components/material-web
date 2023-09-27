@@ -21,6 +21,11 @@ let maskId = 0;
 
 /**
  * A radio component.
+ *
+ * @fires input Dispatched when the value changes from user interaction.
+ * --bubbles
+ * @fires change Dispatched when the value changes from user interaction.
+ * --bubbles --composed
  */
 export class Radio extends LitElement {
   static {
