@@ -96,7 +96,7 @@ export function transformPseudoClasses(
 function visitRule(
     rule: CSSRule, stylesheet: CSSStyleSheet|CSSGroupingRule, index: number,
     pseudoClasses: string[]) {
-  if (rule instanceof CSSMediaRule || rule instanceof CSSSupportsRule) {
+  if (rule instanceof CSSGroupingRule) {
     for (let i = rule.cssRules.length - 1; i >= 0; i--) {
       visitRule(rule.cssRules[i], rule, i, pseudoClasses);
     }
