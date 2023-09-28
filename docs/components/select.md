@@ -22,7 +22,7 @@ tag: 'docType:reference'
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/<component>/)**
+[Material Web catalog](https://material-web.dev/components/select/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
