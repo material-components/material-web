@@ -8,15 +8,17 @@ order: 2
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-01-23' }
+freshness: { owner: 'lizmitchell' reviewed: '2023-09-28' }
 tag: 'docType:gettingStarted'
 *-->
 
-<!-- go/mwc/docs/quick-start -->
+<!-- go/mwc-quick-start -->
 
 <!-- [TOC] -->
 
 ## Install
+
+<!--#include file="../googlers/quick-start-install.md" -->
 
 Install Material web components using
 [npm and node](https://nodejs.org)<!-- {.external} -->.
@@ -36,6 +38,8 @@ import '@material/web/button/filled-button.js';
 import '@material/web/button/outlined-button.js';
 import '@material/web/checkbox/checkbox.js';
 ```
+
+<!--#include file="../googlers/quick-start-import.md" -->
 
 ## Usage
 
@@ -57,6 +61,8 @@ Use the `<component-name>` tag in HTML markup. Refer to the
 ```
 
 ## Building
+
+<!--#include file="../googlers/quick-start-build.md" -->
 
 Material web components uses bare module specifiers that must be resolved with
 tools until [import maps](https://github.com/WICG/import-maps)<!-- {.external} --> are
@@ -81,7 +87,7 @@ Create a bundle from an entrypoint `index.js` file and use it in a `<script>`
 `"src"` attribute.
 
 ```shell
-npx rollup -p @rollup/plugin-node-resolve index.js > bundle.js
+npx rollup -p @rollup/plugin-node-resolve index.js -o bundle.js
 ```
 
 ```html
