@@ -384,7 +384,7 @@ Token                                       | Default value
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `autoActivate` | `auto-activate` | `boolean` | `false` | Whether or not to automatically select a tab when it is focused.
-`tabs` |  | `Tab[]` | `undefined` | 
+`tabs` |  | `Tab[]` | `undefined` | The tabs of this tab bar.
 `activeTab` |  | `Tab` | `undefined` | 
 `activeTabIndex` |  | `number` | `undefined` | 
 
@@ -419,6 +419,7 @@ Event | Description
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `inlineIcon` | `inline-icon` | `boolean` | `false` | Whether or not the icon renders inline with label or stacked vertically.
+`isTab` | `md-tab` | `boolean` | `true` | The attribute `md-tab` indicates that the element is a tab for the parent element, `<md-tabs>`. Make sure if you're implementing your own `md-tab` component that you have an `md-tab` attribute set.
 `active` | `active` | `boolean` | `false` | Whether or not the tab is selected.
 `hasIcon` | `has-icon` | `boolean` | `false` | In SSR, set this to true when an icon is present.
 `iconOnly` | `icon-only` | `boolean` | `false` | In SSR, set this to true when there is no label and only an icon.
@@ -434,6 +435,7 @@ Property | Attribute | Type | Default | Description
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
+`isTab` | `md-tab` | `boolean` | `true` | The attribute `md-tab` indicates that the element is a tab for the parent element, `<md-tabs>`. Make sure if you're implementing your own `md-tab` component that you have an `md-tab` attribute set.
 `active` | `active` | `boolean` | `false` | Whether or not the tab is selected.
 `hasIcon` | `has-icon` | `boolean` | `false` | In SSR, set this to true when an icon is present.
 `iconOnly` | `icon-only` | `boolean` | `false` | In SSR, set this to true when there is no label and only an icon.
