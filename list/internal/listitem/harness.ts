@@ -19,7 +19,8 @@ export type HandledListKeys = typeof NavigableKeys[keyof typeof NavigableKeys];
 /**
  * Test harness for list item.
  */
-export class ListItemHarness extends Harness<ListItem&LitElement> {
+export class ListItemHarness<T extends LitElement = ListItem &
+                                 LitElement> extends Harness<T> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
     return this.element.renderRoot.querySelector('.list-item') as HTMLElement;
@@ -31,7 +32,7 @@ export class ListItemHarness extends Harness<ListItem&LitElement> {
    *
    * @param key The key to dispatch on the list.
    */
-  async pressHandledKey<T extends string = HandledListKeys>(key: T) {
+  async pressHandledKey<U extends string = HandledListKeys>(key: U) {
     await this.keypress(key, {code: key});
   }
 }
