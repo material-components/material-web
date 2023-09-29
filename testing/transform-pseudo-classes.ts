@@ -96,7 +96,9 @@ export function transformPseudoClasses(
 function visitRule(
     rule: CSSRule, stylesheet: CSSStyleSheet|CSSGroupingRule, index: number,
     pseudoClasses: string[]) {
-  if (rule instanceof CSSMediaRule || rule instanceof CSSSupportsRule) {
+  // Closure externs don't know about `CSSGroupingRule`, which is why we need to
+  // reference `globalThis` and use quotes to ensure it is not renamed.
+  if (rule instanceof globalThis['CSSGroupingRule']) {
     for (let i = rule.cssRules.length - 1; i >= 0; i--) {
       visitRule(rule.cssRules[i], rule, i, pseudoClasses);
     }
