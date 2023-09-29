@@ -110,6 +110,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     pointer-events: none;
     position: absolute;
     width: 100%;
+    z-index: 1;
 
     &::before,
     &::after {
