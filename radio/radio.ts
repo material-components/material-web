@@ -6,6 +6,7 @@
 
 import {customElement} from 'lit/decorators.js';
 
+import {styles as forcedColorsStyles} from './internal/forced-colors-styles.css.js';
 import {Radio} from './internal/radio.js';
 import {styles} from './internal/radio-styles.css.js';
 
@@ -33,5 +34,5 @@ declare global {
  */
 @customElement('md-radio')
 export class MdRadio extends Radio {
-  static override styles = [styles];
+  static override styles = [styles, forcedColorsStyles];
 }
