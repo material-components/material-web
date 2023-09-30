@@ -362,13 +362,13 @@ Token                                 | Default value
 </style>
 <md-list>
   <md-list-item headline="Wide Cat">
-    <img slot="start-image" src="https://placekitten.com/200/100">
+    <img slot="start" style="width: 40px" src="https://placekitten.com/200/100">
   </md-list-item>
   <md-list-item headline="Round kitty cat">
-    <img slot="start-image" src="https://placekitten.com/202/101">
+    <img slot="start" style="width: 40px" src="https://placekitten.com/202/101">
   </md-list-item>
   <md-list-item headline="Softe cate">
-    <img slot="start-image" src="https://placekitten.com/212/106">
+    <img slot="start" style="width: 40px" src="https://placekitten.com/212/106">
   </md-list-item>
 </md-list>
 ```
