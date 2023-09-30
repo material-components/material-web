@@ -91,6 +91,11 @@ export class SubMenu extends LitElement {
     `;
   }
 
+  protected override firstUpdated() {
+    // slotchange is not fired if the contents have been SSRd
+    this.onSlotchange();
+  }
+
   /**
    * Shows the submenu.
    */
