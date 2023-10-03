@@ -45,7 +45,7 @@ export class ListItemEl extends LitElement implements ListItem {
    * Sets the behavior of the list item, defaults to "text". Change to "link" or
    * "button" for interactive items.
    */
-  @property() type: ListItemType = 'text';
+  @property({reflect: true}) type: ListItemType = 'text';
 
   /**
    * READONLY. Sets the `md-list-item` attribute on the element.

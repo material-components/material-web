@@ -48,6 +48,10 @@
     );
   }
 
+  :host(:is([type='button']:not([disabled]), [type='link'])) {
+    cursor: pointer;
+  }
+
   md-focus-ring {
     z-index: 1;
 
@@ -64,6 +68,7 @@
     // Resets. These can be removed once we're no longer use these tags
     background: none;
     border: none;
+    cursor: inherit;
     padding: 0;
     margin: 0;
     text-align: unset;
