@@ -199,7 +199,7 @@ export class Checkbox extends LitElement {
     if (changed.has('checked') || changed.has('disabled') ||
         changed.has('indeterminate')) {
       this.prevChecked = changed.get('checked') ?? this.checked;
-      this.prevDisabled = changed.get('disabled') ?? this.disabled;
+      this.prevDisabled = changed.get('disabled') ?? this.shouldBeDisabled;
       this.prevIndeterminate =
           changed.get('indeterminate') ?? this.indeterminate;
     }
@@ -218,7 +218,7 @@ export class Checkbox extends LitElement {
     const isIndeterminate = this.indeterminate;
 
     const containerClasses = classMap({
-      'disabled': this.disabled,
+      'disabled': this.shouldBeDisabled,
       'selected': isChecked || isIndeterminate,
       'unselected': !isChecked && !isIndeterminate,
       'checked': isChecked,
@@ -240,7 +240,7 @@ export class Checkbox extends LitElement {
           aria-checked=${isIndeterminate ? 'mixed' : nothing}
           aria-label=${ariaLabel || nothing}
           aria-invalid=${ariaInvalid || nothing}
-          ?disabled=${this.disabled}
+          ?disabled=${this.shouldBeDisabled}
           ?required=${this.required}
           .indeterminate=${this.indeterminate}
           .checked=${this.checked}
@@ -250,7 +250,7 @@ export class Checkbox extends LitElement {
         <div class="outline"></div>
         <div class="background"></div>
         <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
-        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
+        <md-ripple for="input" ?disabled=${this.shouldBeDisabled}></md-ripple>
         <svg class="icon" viewBox="0 0 18 18" aria-hidden="true">
           <rect class="mark short" />
           <rect class="mark long" />
@@ -314,5 +314,24 @@ export class Checkbox extends LitElement {
   /** @private */
   formStateRestoreCallback(state: string) {
     this.checked = state === 'true';
+  }
+
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }

@@ -114,7 +114,7 @@ export class Radio extends LitElement {
     return html`
       <div class="container ${classMap(classes)}" aria-hidden="true">
         <md-ripple part="ripple" .control=${this}
-            ?disabled=${this.disabled}></md-ripple>
+            ?disabled=${this.shouldBeDisabled}></md-ripple>
         <md-focus-ring part="focus-ring" .control=${this}></md-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
           <mask id="${this.maskId}">
@@ -132,7 +132,7 @@ export class Radio extends LitElement {
           tabindex="-1"
           .checked=${this.checked}
           .value=${this.value}
-          ?disabled=${this.disabled}
+          ?disabled=${this.shouldBeDisabled}
         >
       </div>
     `;
@@ -143,7 +143,7 @@ export class Radio extends LitElement {
   }
 
   private async handleClick(event: Event) {
-    if (this.disabled) {
+    if (this.shouldBeDisabled) {
       return;
     }
 
@@ -184,5 +184,24 @@ export class Radio extends LitElement {
   /** @private */
   formStateRestoreCallback(state: string) {
     this.checked = state === 'true';
+  }
+
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+  
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }

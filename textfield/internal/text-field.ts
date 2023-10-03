@@ -526,8 +526,8 @@ export abstract class TextField extends LitElement {
 
   protected override render() {
     const classes = {
-      'disabled': this.disabled,
-      'error': !this.disabled && this.hasError,
+      'disabled': this.shouldBeDisabled,
+      'error': !this.shouldBeDisabled && this.hasError,
       'textarea': this.type === 'textarea',
     };
 
@@ -561,7 +561,7 @@ export abstract class TextField extends LitElement {
     return staticHtml`<${this.fieldTag}
       class="field"
       count=${this.value.length}
-      ?disabled=${this.disabled}
+      ?disabled=${this.shouldBeDisabled}
       ?error=${this.hasError}
       error-text=${this.getErrorText()}
       ?focused=${this.focused}
@@ -614,7 +614,7 @@ export abstract class TextField extends LitElement {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
-          ?disabled=${this.disabled}
+          ?disabled=${this.shouldBeDisabled}
           maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
           minlength=${this.minLength > -1 ? this.minLength : nothing}
           placeholder=${this.placeholder || nothing}
@@ -648,7 +648,7 @@ export abstract class TextField extends LitElement {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
-          ?disabled=${this.disabled}
+          ?disabled=${this.shouldBeDisabled}
           inputmode=${inputMode || nothing}
           max=${(this.max || nothing) as unknown as number}
           maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
@@ -778,5 +778,24 @@ export abstract class TextField extends LitElement {
   /** @private */
   formStateRestoreCallback(state: string) {
     this.value = state;
+  }
+
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+  
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }

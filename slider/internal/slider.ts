@@ -434,8 +434,8 @@ export class Slider extends LitElement {
 
   private renderHandle({start, hover, label}:
                            {start: boolean, hover: boolean, label: string}) {
-    const onTop = !this.disabled && start === this.startOnTop;
-    const isOverlapping = !this.disabled && this.handlesOverlapping;
+    const onTop = !this.shouldBeDisabled && start === this.startOnTop;
+    const isOverlapping = !this.shouldBeDisabled && this.handlesOverlapping;
     const name = start ? 'start' : 'end';
     return html`<div class="handle ${classMap({
       [name]: true,
@@ -447,7 +447,7 @@ export class Slider extends LitElement {
       ${when(this.labeled, () => this.renderLabel(label))}
       <md-focus-ring part="focus-ring" for=${name}></md-focus-ring>
       <md-ripple for=${name} class=${name} ?disabled=${
-        this.disabled}></md-ripple>
+        this.shouldBeDisabled}></md-ripple>
     </div>`;
   }
 
@@ -478,7 +478,7 @@ export class Slider extends LitElement {
       @input=${this.handleInput}
       @change=${this.handleChange}
       id=${name}
-      .disabled=${this.disabled}
+      .disabled=${this.shouldBeDisabled}
       .min=${String(this.min)}
       aria-valuemin=${ariaMin}
       .max=${String(this.max)}
@@ -543,8 +543,8 @@ export class Slider extends LitElement {
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
     this.handleStartHover =
-        !this.disabled && isStart && Boolean(this.handleStart);
-    this.handleEndHover = !this.disabled && !isStart && Boolean(this.handleEnd);
+        !this.shouldBeDisabled && isStart && Boolean(this.handleStart);
+    this.handleEndHover = !this.shouldBeDisabled && !isStart && Boolean(this.handleEnd);
   }
 
   private async handleUp(event: PointerEvent) {
@@ -583,8 +583,8 @@ export class Slider extends LitElement {
    * slider is updated.
    */
   private handleMove(event: PointerEvent) {
-    this.handleStartHover = !this.disabled && inBounds(event, this.handleStart);
-    this.handleEndHover = !this.disabled && inBounds(event, this.handleEnd);
+    this.handleStartHover = !this.shouldBeDisabled && inBounds(event, this.handleStart);
+    this.handleEndHover = !this.shouldBeDisabled && inBounds(event, this.handleEnd);
   }
 
   private handleEnter(event: PointerEvent) {
@@ -734,6 +734,25 @@ export class Slider extends LitElement {
 
     this.value = Number(state);
     this.range = false;
+  }
+
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+  
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }
 

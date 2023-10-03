@@ -107,7 +107,7 @@ export abstract class Button extends LitElement implements FormSubmitter {
 
   protected override render() {
     // Link buttons may not be disabled
-    const isDisabled = this.disabled && !this.href;
+    const isDisabled = this.shouldBeDisabled && !this.href;
 
     const button = this.href ? literal`a` : literal`button`;
     // Needed for closure conformance
@@ -163,5 +163,24 @@ export abstract class Button extends LitElement implements FormSubmitter {
 
   private handleSlotChange() {
     this.hasIcon = this.assignedIcons.length > 0;
+  }
+  
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+  
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }

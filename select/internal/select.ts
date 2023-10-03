@@ -414,7 +414,7 @@ export abstract class Select extends LitElement {
 
   private getRenderClasses() {
     return {
-      'disabled': this.disabled,
+      'disabled': this.shouldBeDisabled,
       'error': this.error,
       'open': this.open,
     };
@@ -428,7 +428,7 @@ export abstract class Select extends LitElement {
           role="combobox"
           part="field"
           id="field"
-          tabindex=${this.disabled ? '-1' : '0'}
+          tabindex=${this.shouldBeDisabled ? '-1' : '0'}
           aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
           aria-describedby="description"
           aria-expanded=${this.open ? 'true' : nothing}
@@ -437,7 +437,7 @@ export abstract class Select extends LitElement {
           label=${this.label}
           .focused=${this.focused || this.open}
           .populated=${!!this.displayText}
-          .disabled=${this.disabled}
+          .disabled=${this.shouldBeDisabled}
           .required=${this.required}
           .error=${this.hasError}
           ?has-start=${this.hasLeadingIcon}
@@ -525,7 +525,7 @@ export abstract class Select extends LitElement {
    * is closed.
    */
   private handleKeydown(event: KeyboardEvent) {
-    if (this.open || this.disabled || !this.menu) {
+    if (this.open || this.shouldBeDisabled || !this.menu) {
       return;
     }
 
@@ -819,5 +819,24 @@ export abstract class Select extends LitElement {
   /** @private */
   formStateRestoreCallback(state: string) {
     this.value = state;
+  }
+
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+  
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }

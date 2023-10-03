@@ -216,7 +216,7 @@ export class Switch extends LitElement {
           role="switch"
           aria-label=${(this as ARIAMixin).ariaLabel || nothing}
           ?checked=${this.selected}
-          ?disabled=${this.disabled}
+          ?disabled=${this.shouldBeDisabled}
           ?required=${this.required}
           @change=${this.handleChange}
         >
@@ -239,7 +239,7 @@ export class Switch extends LitElement {
     return {
       'selected': this.selected,
       'unselected': !this.selected,
-      'disabled': this.disabled,
+      'disabled': this.shouldBeDisabled,
     };
   }
 
@@ -250,7 +250,7 @@ export class Switch extends LitElement {
     return html`
       ${this.renderTouchTarget()}
       <span class="handle-container">
-        <md-ripple for="switch" ?disabled="${this.disabled}"></md-ripple>
+        <md-ripple for="switch" ?disabled="${this.shouldBeDisabled}"></md-ripple>
         <span class="handle ${classMap(classes)}">
           ${this.shouldShowIcons() ? this.renderIcons() : html``}
         </span>
@@ -344,5 +344,24 @@ export class Switch extends LitElement {
   /** @private */
   formStateRestoreCallback(state: string) {
     this.selected = state === 'true';
+  }
+
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+  
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }

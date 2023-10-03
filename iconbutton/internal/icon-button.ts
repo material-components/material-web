@@ -132,7 +132,7 @@ export class IconButton extends LitElement implements FormSubmitter {
         aria-haspopup="${!this.href && ariaHasPopup || nothing}"
         aria-expanded="${!this.href && ariaExpanded || nothing}"
         aria-pressed="${ariaPressedValue}"
-        ?disabled="${!this.href && this.disabled}"
+        ?disabled="${!this.href && this.shouldBeDisabled}"
         @click="${this.handleClick}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}
@@ -184,7 +184,7 @@ export class IconButton extends LitElement implements FormSubmitter {
   private renderRipple() {
     return html`<md-ripple
       for=${this.href ? 'link' : nothing}
-      ?disabled="${!this.href && this.disabled}"
+      ?disabled="${!this.href && this.shouldBeDisabled}"
     ></md-ripple>`;
   }
 
@@ -196,7 +196,7 @@ export class IconButton extends LitElement implements FormSubmitter {
   private async handleClick(event: Event) {
     // Allow the event to propagate
     await 0;
-    if (!this.toggle || this.disabled || event.defaultPrevented) {
+    if (!this.toggle || this.shouldBeDisabled || event.defaultPrevented) {
       return;
     }
 
@@ -206,5 +206,24 @@ export class IconButton extends LitElement implements FormSubmitter {
     // Bubbles but does not compose to mimic native browser <input> & <select>
     // Additionally, native change event is not an InputEvent.
     this.dispatchEvent(new Event('change', {bubbles: true}));
+  }
+
+  /**
+   * Whether the element should be disabled either through its own `disabled` or
+   * its formDisabled.
+   */
+  private get shouldBeDisabled() {
+    return this.disabled || this.formDisabled;
+  }
+  
+  /**
+   * Whether the element is currently disabled due to form state.
+   */
+  private formDisabled = false;
+
+  /** @private */
+  formDisabledCallback(formDisabled: boolean) {
+    this.formDisabled = formDisabled;
+    this.requestUpdate();
   }
 }
