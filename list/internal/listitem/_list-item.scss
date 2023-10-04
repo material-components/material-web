@@ -148,4 +148,15 @@
   [slot='end'] {
     color: map.get($tokens, 'trailing-icon-color');
   }
+
+  @media (forced-colors: active) {
+    .disabled slot {
+      color: GrayText;
+    }
+
+    .list-item.disabled {
+      color: GrayText;
+      opacity: 1;
+    }
+  }
 }
