@@ -15,146 +15,164 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
 @mixin styles() {
-  .handle-container {
-    display: flex;
-    place-content: center;
-    place-items: center;
-    position: relative;
-    // this easing is custom to perform the "overshoot" animation
-    transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  @layer styles {
+    .handle-container {
+      display: flex;
+      place-content: center;
+      place-items: center;
+      position: relative;
+      // this easing is custom to perform the "overshoot" animation
+      transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    $margin: calc(var(--_track-width) - var(--_track-height));
+
+    .selected .handle-container {
+      margin-inline-start: $margin;
+    }
+
+    .unselected .handle-container {
+      margin-inline-end: $margin;
+    }
+
+    .disabled .handle-container {
+      transition: none;
+    }
+
+    .handle {
+      // Handle shape
+      border-start-start-radius: var(--_handle-shape-start-start);
+      border-start-end-radius: var(--_handle-shape-start-end);
+      border-end-end-radius: var(--_handle-shape-end-end);
+      border-end-start-radius: var(--_handle-shape-end-start);
+      height: var(--_handle-height);
+      width: var(--_handle-width);
+
+      transform-origin: center;
+      transition-property: height, width;
+      transition-duration: 250ms, 250ms;
+      transition-timing-function: $_easing-standard, $_easing-standard;
+      z-index: 0;
+    }
+
+    .handle::before {
+      content: '';
+      display: flex;
+      inset: 0;
+      position: absolute;
+      border-radius: inherit;
+      box-sizing: border-box;
+      transition: background-color 67ms linear;
+    }
+
+    .disabled .handle,
+    .disabled .handle::before {
+      transition: none;
+    }
+
+    .selected .handle {
+      height: var(--_selected-handle-height);
+      width: var(--_selected-handle-width);
+    }
+
+    .handle.with-icon {
+      height: var(--_with-icon-handle-height);
+      width: var(--_with-icon-handle-width);
+    }
+
+    .selected:not(.disabled):active .handle,
+    .unselected:not(.disabled):active .handle {
+      height: var(--_pressed-handle-height);
+      width: var(--_pressed-handle-width);
+      transition-timing-function: linear;
+      transition-duration: 100ms;
+    }
+
+    .selected .handle::before {
+      background-color: var(--_selected-handle-color);
+    }
+
+    .selected:hover .handle::before {
+      background-color: var(--_selected-hover-handle-color);
+    }
+
+    .selected:focus-within .handle::before {
+      background-color: var(--_selected-focus-handle-color);
+    }
+
+    .selected:active .handle::before {
+      background-color: var(--_selected-pressed-handle-color);
+    }
+
+    .selected.disabled .handle::before {
+      background-color: var(--_disabled-selected-handle-color);
+      opacity: var(--_disabled-selected-handle-opacity);
+    }
+
+    .unselected .handle::before {
+      background-color: var(--_handle-color);
+    }
+
+    .unselected:hover .handle::before {
+      background-color: var(--_hover-handle-color);
+    }
+
+    .unselected:focus-within .handle::before {
+      background-color: var(--_focus-handle-color);
+    }
+
+    .unselected:active .handle::before {
+      background-color: var(--_pressed-handle-color);
+    }
+
+    .unselected.disabled .handle::before {
+      background-color: var(--_disabled-handle-color);
+      opacity: var(--_disabled-handle-opacity);
+    }
+
+    md-ripple {
+      border-radius: var(--_state-layer-shape);
+      height: var(--_state-layer-size);
+      inset: unset;
+      width: var(--_state-layer-size);
+    }
+
+    .selected md-ripple {
+      @include ripple.theme(
+        (
+          'hover-color': var(--_selected-hover-state-layer-color),
+          'pressed-color': var(--_selected-pressed-state-layer-color),
+          'hover-opacity': var(--_selected-hover-state-layer-opacity),
+          'pressed-opacity': var(--_selected-pressed-state-layer-opacity),
+        )
+      );
+    }
+
+    .unselected md-ripple {
+      @include ripple.theme(
+        (
+          'hover-color': var(--_hover-state-layer-color),
+          'pressed-color': var(--_pressed-state-layer-color),
+          'hover-opacity': var(--_hover-state-layer-opacity),
+          'pressed-opacity': var(--_pressed-state-layer-opacity),
+        )
+      );
+    }
   }
 
-  $margin: calc(var(--_track-width) - var(--_track-height));
+  @layer hcm {
+    @media (forced-colors: active) {
+      .unselected .handle::before {
+        background: ButtonText;
+      }
 
-  .selected .handle-container {
-    margin-inline-start: $margin;
-  }
+      .disabled .handle::before {
+        opacity: 1;
+      }
 
-  .unselected .handle-container {
-    margin-inline-end: $margin;
-  }
-
-  .disabled .handle-container {
-    transition: none;
-  }
-
-  .handle {
-    // Handle shape
-    border-start-start-radius: var(--_handle-shape-start-start);
-    border-start-end-radius: var(--_handle-shape-start-end);
-    border-end-end-radius: var(--_handle-shape-end-end);
-    border-end-start-radius: var(--_handle-shape-end-start);
-    height: var(--_handle-height);
-    width: var(--_handle-width);
-
-    transform-origin: center;
-    transition-property: height, width;
-    transition-duration: 250ms, 250ms;
-    transition-timing-function: $_easing-standard, $_easing-standard;
-    z-index: 0;
-  }
-
-  .handle::before {
-    content: '';
-    display: flex;
-    inset: 0;
-    position: absolute;
-    border-radius: inherit;
-    box-sizing: border-box;
-    transition: background-color 67ms linear;
-  }
-
-  .disabled .handle,
-  .disabled .handle::before {
-    transition: none;
-  }
-
-  .selected .handle {
-    height: var(--_selected-handle-height);
-    width: var(--_selected-handle-width);
-  }
-
-  .handle.with-icon {
-    height: var(--_with-icon-handle-height);
-    width: var(--_with-icon-handle-width);
-  }
-
-  .selected:not(.disabled):active .handle,
-  .unselected:not(.disabled):active .handle {
-    height: var(--_pressed-handle-height);
-    width: var(--_pressed-handle-width);
-    transition-timing-function: linear;
-    transition-duration: 100ms;
-  }
-
-  .selected .handle::before {
-    background-color: var(--_selected-handle-color);
-  }
-
-  .selected:hover .handle::before {
-    background-color: var(--_selected-hover-handle-color);
-  }
-
-  .selected:focus-within .handle::before {
-    background-color: var(--_selected-focus-handle-color);
-  }
-
-  .selected:active .handle::before {
-    background-color: var(--_selected-pressed-handle-color);
-  }
-
-  .selected.disabled .handle::before {
-    background-color: var(--_disabled-selected-handle-color);
-    opacity: var(--_disabled-selected-handle-opacity);
-  }
-
-  .unselected .handle::before {
-    background-color: var(--_handle-color);
-  }
-
-  .unselected:hover .handle::before {
-    background-color: var(--_hover-handle-color);
-  }
-
-  .unselected:focus-within .handle::before {
-    background-color: var(--_focus-handle-color);
-  }
-
-  .unselected:active .handle::before {
-    background-color: var(--_pressed-handle-color);
-  }
-
-  .unselected.disabled .handle::before {
-    background-color: var(--_disabled-handle-color);
-    opacity: var(--_disabled-handle-opacity);
-  }
-
-  md-ripple {
-    border-radius: var(--_state-layer-shape);
-    height: var(--_state-layer-size);
-    inset: unset;
-    width: var(--_state-layer-size);
-  }
-
-  .selected md-ripple {
-    @include ripple.theme(
-      (
-        'hover-color': var(--_selected-hover-state-layer-color),
-        'pressed-color': var(--_selected-pressed-state-layer-color),
-        'hover-opacity': var(--_selected-hover-state-layer-opacity),
-        'pressed-opacity': var(--_selected-pressed-state-layer-opacity),
-      )
-    );
-  }
-
-  .unselected md-ripple {
-    @include ripple.theme(
-      (
-        'hover-color': var(--_hover-state-layer-color),
-        'pressed-color': var(--_pressed-state-layer-color),
-        'hover-opacity': var(--_hover-state-layer-opacity),
-        'pressed-opacity': var(--_pressed-state-layer-opacity),
-      )
-    );
+      .disabled.unselected .handle::before {
+        background: GrayText;
+      }
+    }
   }
 }

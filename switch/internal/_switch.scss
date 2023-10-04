@@ -44,108 +44,97 @@
 @mixin styles() {
   $tokens: tokens.md-comp-switch-values();
 
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-switch-#{$token}, #{$value});
+  @layer styles, hcm;
+  @layer styles {
+    :host {
+      @each $token, $value in $tokens {
+        --_#{$token}: var(--md-switch-#{$token}, #{$value});
+      }
+
+      // Support logical shape properties
+      --_handle-shape-start-start: var(
+        --md-switch-handle-shape-start-start,
+        var(--_handle-shape)
+      );
+      --_handle-shape-start-end: var(
+        --md-switch-handle-shape-start-end,
+        var(--_handle-shape)
+      );
+      --_handle-shape-end-end: var(
+        --md-switch-handle-shape-end-end,
+        var(--_handle-shape)
+      );
+      --_handle-shape-end-start: var(
+        --md-switch-handle-shape-end-start,
+        var(--_handle-shape)
+      );
+      --_track-shape-start-start: var(
+        --md-switch-track-shape-start-start,
+        var(--_track-shape)
+      );
+      --_track-shape-start-end: var(
+        --md-switch-track-shape-start-end,
+        var(--_track-shape)
+      );
+      --_track-shape-end-end: var(
+        --md-switch-track-shape-end-end,
+        var(--_track-shape)
+      );
+      --_track-shape-end-start: var(
+        --md-switch-track-shape-end-start,
+        var(--_track-shape)
+      );
+
+      display: inline-flex;
+      outline: none;
+      vertical-align: top;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    // Support logical shape properties
-    --_handle-shape-start-start: var(
-      --md-switch-handle-shape-start-start,
-      var(--_handle-shape)
-    );
-    --_handle-shape-start-end: var(
-      --md-switch-handle-shape-start-end,
-      var(--_handle-shape)
-    );
-    --_handle-shape-end-end: var(
-      --md-switch-handle-shape-end-end,
-      var(--_handle-shape)
-    );
-    --_handle-shape-end-start: var(
-      --md-switch-handle-shape-end-start,
-      var(--_handle-shape)
-    );
-    --_track-shape-start-start: var(
-      --md-switch-track-shape-start-start,
-      var(--_track-shape)
-    );
-    --_track-shape-start-end: var(
-      --md-switch-track-shape-start-end,
-      var(--_track-shape)
-    );
-    --_track-shape-end-end: var(
-      --md-switch-track-shape-end-end,
-      var(--_track-shape)
-    );
-    --_track-shape-end-start: var(
-      --md-switch-track-shape-end-start,
-      var(--_track-shape)
-    );
+    :host([touch-target='wrapper']) {
+      margin: max(0px, (48px - var(--_track-height)) / 2) 0px;
+    }
 
-    display: inline-flex;
-    outline: none;
-    vertical-align: top;
-    -webkit-tap-highlight-color: transparent;
-  }
+    md-focus-ring {
+      @include focus-ring.theme(
+        (
+          'shape-start-start': var(--_track-shape-start-start),
+          'shape-start-end': var(--_track-shape-start-end),
+          'shape-end-end': var(--_track-shape-end-end),
+          'shape-end-start': var(--_track-shape-end-start),
+        )
+      );
+    }
 
-  :host([touch-target='wrapper']) {
-    margin: max(0px, (48px - var(--_track-height)) / 2) 0px;
-  }
+    .switch {
+      align-items: center;
+      display: inline-flex;
+      flex-shrink: 0; // Stop from collapsing in flex containers
+      position: relative;
+      width: var(--_track-width);
+      height: var(--_track-height);
 
-  md-focus-ring {
-    @include focus-ring.theme(
-      (
-        'shape-start-start': var(--_track-shape-start-start),
-        'shape-start-end': var(--_track-shape-start-end),
-        'shape-end-end': var(--_track-shape-end-end),
-        'shape-end-start': var(--_track-shape-end-start),
-      )
-    );
-  }
+      // Track shape
+      border-start-start-radius: var(--_track-shape-start-start);
+      border-start-end-radius: var(--_track-shape-start-end);
+      border-end-end-radius: var(--_track-shape-end-end);
+      border-end-start-radius: var(--_track-shape-end-start);
+    }
 
-  .switch {
-    align-items: center;
-    display: inline-flex;
-    flex-shrink: 0; // Stop from collapsing in flex containers
-    position: relative;
-    width: var(--_track-width);
-    height: var(--_track-height);
+    // Input is also touch target
+    input {
+      appearance: none;
+      height: 48px;
+      outline: none;
+      margin: 0;
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+    }
 
-    // Track shape
-    border-start-start-radius: var(--_track-shape-start-start);
-    border-start-end-radius: var(--_track-shape-start-end);
-    border-end-end-radius: var(--_track-shape-end-end);
-    border-end-start-radius: var(--_track-shape-end-start);
-  }
-
-  // Input is also touch target
-  input {
-    appearance: none;
-    height: 48px;
-    outline: none;
-    margin: 0;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-  }
-
-  :host([touch-target='none']) input {
-    display: none;
-  }
-
-  // Disabled - Track
-  .disabled .track {
-    background-color: transparent;
-    border-color: transparent;
-  }
-
-  .disabled .track::before {
-    background-clip: content-box;
-  }
-
-  .selected.disabled .track {
-    background-clip: border-box;
+    :host([touch-target='none']) input {
+      display: none;
+    }
   }
 
   @include track.styles();
