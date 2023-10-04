@@ -16,31 +16,6 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 $_md-sys-shape: tokens.md-sys-shape-values();
 
-// Returns a list of rtl selectors to construct distinct rulesets. Seprating
-// rulesets ensure they are not dropped on browsers where one is not supported;
-// note, `:where` cannot be used to create compound selectors that contain
-// pseudo elements
-// (e.g. this does not work: `:where(:host([dir="rtl"]) .foo::after)`),
-@function _get-rtl-selectors($selector: '', $suffix: '') {
-  @return (
-    // TODO(b/279152429) remove selectors other than `:dir` when browser
-    // support improves.
-    ':host-context([dir="rtl"]) #{$selector}#{$suffix}',
-    ':host([dir="rtl"]) #{$selector}#{$suffix}',
-    '#{$selector}:dir(rtl)#{$suffix}'
-  );
-}
-
-// Returns a background-image with sized circular ticks of the given color.
-@function _get-tick-image($color) {
-  @return radial-gradient(
-    circle at var(--_with-tick-marks-container-size) center,
-    #{$color} 0,
-    #{$color} calc(var(--_with-tick-marks-container-size) / 2),
-    transparent calc(var(--_with-tick-marks-container-size) / 2)
-  );
-}
-
 @mixin theme($tokens) {
   $supported-tokens: tokens.$md-comp-slider-supported-tokens;
 
@@ -430,14 +405,15 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   ::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    // note, this is sized to align with thumb but is 0 width so that
-    // fine adjustments are possible
-    block-size: var(--_state-layer-size);
-    inline-size: var(--_state-layer-size);
-    transform: scaleX(0);
+    // note, this is sized to align with thumb
+    block-size: var(--_handle-height);
+    inline-size: var(--_handle-width);
     opacity: 0;
     z-index: 2;
   }
+
+  @include _get-safari-knob-translate('end');
+  @include _get-safari-knob-translate('start');
 
   ::-moz-range-thumb {
     appearance: none;
@@ -504,5 +480,67 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     border-radius: 50%;
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
+  }
+}
+
+// Returns a list of rtl selectors to construct distinct rulesets. Seprating
+// rulesets ensure they are not dropped on browsers where one is not supported;
+// note, `:where` cannot be used to create compound selectors that contain
+// pseudo elements
+// (e.g. this does not work: `:where(:host([dir="rtl"]) .foo::after)`),
+@function _get-rtl-selectors($selector: '', $suffix: '') {
+  @return (
+    // TODO(b/279152429) remove selectors other than `:dir` when browser
+    // support improves.
+    ':host-context([dir="rtl"]) #{$selector}#{$suffix}',
+    ':host([dir="rtl"]) #{$selector}#{$suffix}',
+    '#{$selector}:dir(rtl)#{$suffix}'
+  );
+}
+
+// Returns a background-image with sized circular ticks of the given color.
+@function _get-tick-image($color) {
+  @return radial-gradient(
+    circle at var(--_with-tick-marks-container-size) center,
+    #{$color} 0,
+    #{$color} calc(var(--_with-tick-marks-container-size) / 2),
+    transparent calc(var(--_with-tick-marks-container-size) / 2)
+  );
+}
+
+// Webkit on iOS requires _some_ size on the thumb. We want to make this the
+// same as --_handle-size but also be centered on the handle.
+//
+// the layout is similar to this:
+// [()---[()===========]----]
+//
+// where - is the native input and the == is the material track.
+// at 0 we want to shift the native knob right (padding + knob-size / 2):
+// [----[(())===========]----]
+//
+// at the end we want to shift the native knob left by the same amount:
+// [----[===========(())]----]
+//
+// Therefore we can do `layout-shift - 2 * `percent-fraction` * `layout-shift`
+// and in RTL we want to do the the same * -1
+@mixin _get-safari-knob-translate($start-or-end) {
+  input.#{$start-or-end}::-webkit-slider-thumb {
+    // AKA `layout-shift` in the equations above
+    --_track-and-knob-padding: calc(
+      (var(--_state-layer-size) - var(--_handle-width)) / 2
+    );
+    --_x-translate: calc(
+      var(--_track-and-knob-padding) - 2 * var(--_#{$start-or-end}-fraction) *
+        var(--_track-and-knob-padding)
+    );
+    transform: translateX(var(--_x-translate));
+  }
+
+  @each $_rtl-selectors
+    in _get-rtl-selectors('input.#{$start-or-end}', '::-webkit-slider-thumb')
+  {
+    #{$_rtl-selectors} {
+      transform: translateX(calc(-1 * var(--_x-translate)));
+    }
   }
 }
