@@ -67,6 +67,13 @@ export interface MenuItemControllerConfig {
    * A function that returns the headline element of the menu item.
    */
   getHeadlineElements: () => HTMLElement[];
+
+  /**
+   * The HTML Element that accepts user interactions like click. Used for
+   * occasions like programmatically clicking anchor tags when `Enter` is
+   * pressed.
+   */
+  getInteractiveElement: () => HTMLElement | null;
 }
 
 /**
@@ -77,6 +84,8 @@ export class MenuItemController implements ReactiveController {
   private internalTypeaheadText: string|null = null;
   private readonly getHeadlineElements:
       MenuItemControllerConfig['getHeadlineElements'];
+  private readonly getInteractiveElement:
+      MenuItemControllerConfig['getInteractiveElement'];
 
   /**
    * @param host The MenuItem in which to attach this controller to.
@@ -87,8 +96,10 @@ export class MenuItemController implements ReactiveController {
       config: MenuItemControllerConfig) {
     const {
       getHeadlineElements,
+      getInteractiveElement,
     } = config;
     this.getHeadlineElements = getHeadlineElements;
+    this.getInteractiveElement = getInteractiveElement;
     this.host.addController(this);
   }
 
@@ -164,6 +175,14 @@ export class MenuItemController implements ReactiveController {
    * menu.
    */
   onKeydown = (event: KeyboardEvent) => {
+    // Check if the interactive element is an anchor tag. If so, click it.
+    if (this.host.href && event.code === 'Enter') {
+      const interactiveElement = this.getInteractiveElement();
+      if (interactiveElement instanceof HTMLAnchorElement) {
+        interactiveElement.click();
+      }
+    }
+
     if (this.host.keepOpen || event.defaultPrevented) return;
     const keyCode = event.code;
 

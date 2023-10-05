@@ -91,7 +91,8 @@ export class SelectOptionEl extends LitElement implements SelectOption {
   private readonly selectOptionController = new SelectOptionController(this, {
     getHeadlineElements: () => {
       return this.headlineElements;
-    }
+    },
+    getInteractiveElement: () => this.listItemRoot,
   });
 
   protected override render() {

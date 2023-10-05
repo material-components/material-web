@@ -83,7 +83,8 @@ export class MenuItemEl extends LitElement implements MenuItem {
   private readonly menuItemController = new MenuItemController(this, {
     getHeadlineElements: () => {
       return this.headlineElements;
-    }
+    },
+    getInteractiveElement: () => this.listItemRoot,
   });
 
   protected override render() {
