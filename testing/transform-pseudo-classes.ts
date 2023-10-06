@@ -85,6 +85,17 @@ export function transformPseudoClasses(
 }
 
 /**
+ * Determines whether or not the CSSRule is a CSSGroupingRule.
+ *
+ * Cannot check instanceof because FF treats a CSSStyleRule as a subclass of
+ * CSSGroupingRule unlike Chrome and Safari
+ */
+function isCSSGroupingRule(rule: CSSRule): rule is CSSGroupingRule {
+  return !!(rule as CSSGroupingRule)?.cssRules &&
+      !(rule as CSSStyleRule).selectorText;
+}
+
+/**
  * Visits a rule for the given stylesheet and adds a rule that replaces any
  * pseudo classes with a regular transformed class for simulation styling.
  *
@@ -96,9 +107,7 @@ export function transformPseudoClasses(
 function visitRule(
     rule: CSSRule, stylesheet: CSSStyleSheet|CSSGroupingRule, index: number,
     pseudoClasses: string[]) {
-  // Closure externs don't know about `CSSGroupingRule`, which is why we need to
-  // reference `globalThis` and use quotes to ensure it is not renamed.
-  if (rule instanceof globalThis['CSSGroupingRule']) {
+  if (isCSSGroupingRule(rule)) {
     for (let i = rule.cssRules.length - 1; i >= 0; i--) {
       visitRule(rule.cssRules[i], rule, i, pseudoClasses);
     }
