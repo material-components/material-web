@@ -20,7 +20,7 @@ import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../..
 import {MdRipple} from '../../ripple/ripple.js';
 
 // Disable warning for classMap with destructuring
-// tslint:disable:quoted-properties-on-dictionary
+// tslint:disable:no-implicit-dictionary-conversion
 
 /**
  * Slider component.
