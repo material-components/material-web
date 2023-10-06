@@ -121,4 +121,12 @@
   ::slotted(:is(md-divider, [role='separator'])) {
     margin: 8px 0;
   }
+
+  @media (forced-colors: active) {
+    .menu {
+      border-style: solid;
+      border-color: CanvasText;
+      border-width: 1px;
+    }
+  }
 }

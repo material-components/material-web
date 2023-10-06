@@ -6,7 +6,6 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as forcedColorsStyles} from '../menu/internal/menuitem/forced-colors-styles.css.js';
 import {styles} from '../menu/internal/menuitem/menu-item-styles.css.js';
 
 // TODO(b/236285090): update with HCM best practices
@@ -50,5 +49,5 @@ declare global {
  */
 @customElement('md-select-option')
 export class MdSelectOption extends SelectOptionEl {
-  static override styles = [styles, forcedColorsStyles];
+  static override styles = [styles];
 }
