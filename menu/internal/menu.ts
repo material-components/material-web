@@ -209,7 +209,6 @@ export abstract class Menu extends LitElement {
    * The event path of the last window pointerdown event.
    */
   private pointerPath: EventTarget[] = [];
-  private isPointerDown = false;
   private readonly openCloseAnimationSignal = createAnimationSignal();
 
   private readonly listController = new ListController<MenuItem>({
@@ -303,7 +302,7 @@ export abstract class Menu extends LitElement {
     super();
     if (!isServer) {
       this.internals.role = 'menu';
-      this.addEventListener('keydown', this.listController.handleKeydown);
+      this.addEventListener('keydown', this.handleKeydown);
       // Capture so that we can grab the event before it reaches the menu item
       // istelf. Specifically useful for the case where typeahead encounters a
       // space and we don't want the menu item to close the menu.
@@ -356,6 +355,30 @@ export abstract class Menu extends LitElement {
     }
 
     this.setAttribute('aria-hidden', 'true');
+  }
+
+  override update(changed: PropertyValues<Menu>) {
+    if (changed.has('open')) {
+      if (this.open) {
+        this.setUpGlobalEventListeners();
+      } else {
+        this.cleanUpGlobalEventListeners();
+      }
+    }
+
+    super.update(changed);
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    if (this.open) {
+      this.setUpGlobalEventListeners();
+    }
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.cleanUpGlobalEventListeners();
   }
 
   protected override render() {
@@ -411,25 +434,23 @@ export abstract class Menu extends LitElement {
   }
 
   private readonly handleFocusout = async (event: FocusEvent) => {
-    if (this.stayOpenOnFocusout || !this.open) {
+    const anchorEl = this.anchorElement!;
+    // Do not close if we focused out by clicking on the anchor element. We
+    // can't assume anchor buttons can be the related target because of iOS does
+    // not focus buttons.
+    if (this.stayOpenOnFocusout || !this.open ||
+        this.pointerPath.includes(anchorEl)) {
       return;
     }
 
     if (event.relatedTarget) {
       // Don't close the menu if we are switching focus between menu,
-      // md-menu-item, and md-list
-      if (isElementInSubtree(event.relatedTarget, this)) {
+      // md-menu-item, and md-list or if the anchor was click focused.
+      if (isElementInSubtree(event.relatedTarget, this) ||
+          isElementInSubtree(event.relatedTarget, anchorEl)) {
         return;
       }
-
-      const anchorEl = this.anchorElement!;
-      const wasAnchorClickFocused =
-          isElementInSubtree(event.relatedTarget, anchorEl) &&
-          this.isPointerDown;
-      if (wasAnchorClickFocused) {
-        return;
-      }
-    } else if (this.isPointerDown && this.pointerPath.includes(this)) {
+    } else if (this.pointerPath.includes(this)) {
       // If menu tabindex == -1 and the user clicks on the menu or a divider, we
       // want to keep the menu open.
       return;
@@ -752,34 +773,35 @@ export abstract class Menu extends LitElement {
     return animationEnded;
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
-    if (!isServer) {
-      window.addEventListener('click', this.onWindowClick, {capture: true});
-      window.addEventListener('pointerdown', this.onWindowPointerdown);
-      window.addEventListener('pointerup', this.onWindowPointerup);
-    }
+  private handleKeydown(event: KeyboardEvent) {
+    // At any key event, the pointer interaction is done so we need to clear our
+    // cached pointerpath. This handles the case where the user clicks on the
+    // anchor, and then hits shift+tab
+    this.pointerPath = [];
+    this.listController.handleKeydown(event);
   }
 
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    if (!isServer) {
-      window.removeEventListener('click', this.onWindowClick, {capture: true});
-      window.removeEventListener('pointerdown', this.onWindowPointerdown);
-      window.removeEventListener('pointerup', this.onWindowPointerup);
-    }
+  private setUpGlobalEventListeners() {
+    document.addEventListener('click', this.onDocumentClick, {capture: true});
+    window.addEventListener('pointerdown', this.onWindowPointerdown);
+  }
+
+  private cleanUpGlobalEventListeners() {
+    document.removeEventListener(
+        'click', this.onDocumentClick, {capture: true});
+    window.removeEventListener('pointerdown', this.onWindowPointerdown);
   }
 
   private readonly onWindowPointerdown = (event: PointerEvent) => {
-    this.isPointerDown = true;
     this.pointerPath = event.composedPath();
   };
 
-  private readonly onWindowPointerup = () => {
-    this.isPointerDown = false;
-  };
-
-  private readonly onWindowClick = (event: MouseEvent) => {
+  /**
+   * We cannot listen to window click because Safari on iOS will not bubble a
+   * click event on window if the item clicked is not a "clickable" item such as
+   * <body>
+   */
+  private readonly onDocumentClick = (event: Event) => {
     if (!this.open) {
       return;
     }
