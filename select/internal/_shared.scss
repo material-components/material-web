@@ -69,6 +69,10 @@
     display: flex;
   }
 
+  md-menu ::slotted(:not[disabled]) {
+    cursor: pointer;
+  }
+
   .field,
   .select {
     width: 100%;
