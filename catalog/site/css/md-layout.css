@@ -207,6 +207,7 @@ main > blockquote:not(catalog-component-header, details) {
   border-radius: var(--catalog-shape-l);
   background-color: var(--md-sys-color-secondary-container);
   display: flex;
+  align-items: center;
   gap: var(--catalog-spacing-s);
 }
 
