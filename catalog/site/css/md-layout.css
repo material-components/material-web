@@ -207,7 +207,6 @@ main > blockquote:not(catalog-component-header, details) {
   border-radius: var(--catalog-shape-l);
   background-color: var(--md-sys-color-secondary-container);
   display: flex;
-  align-items: center;
   gap: var(--catalog-spacing-s);
 }
 
@@ -216,7 +215,7 @@ main > blockquote:not(catalog-component-header, details) .content {
 }
 
 blockquote .content > *:first-child {
-  margin-block-start: 0;
+  margin-block-start: 4px;
 }
 
 blockquote .content > *:last-child {
