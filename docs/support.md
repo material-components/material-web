@@ -69,6 +69,31 @@ states.
 Rather than setting all of them, or use the `--md-sys-color-*` token that the
 component maps to (see the previous question).
 
+### Why doesn't `prefers-color-scheme: dark` work?
+
+It's up to the app to decide when and how dark mode is applied. Any selector can
+be used with `--md-sys-color-*` dark theme tokens to scope how the changes
+apply.
+
+For example, using Sass:
+
+```scss
+@use '@material/web/color/color';
+
+:root {
+  @media (prefers-color-scheme: dark) {
+    @include color.dark-theme;
+  }
+}
+```
+
+> **Why not automatically?** Not all apps need dark mode, and the CSS size for
+> automatically supporting it is much higher and not as flexible.
+
+See
+[How do I use `--md-sys-*` custom properties in my styles?](#how-do-i-use-md-sys-custom-properties-in-my-styles)
+for more info on how to generate a set of dark theme tokens.
+
 ### How do I use `--md-sys-*` custom properties in my styles?
 
 -   Use Sass APIs.
