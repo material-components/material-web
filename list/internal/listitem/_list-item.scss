@@ -79,6 +79,8 @@
     border-radius: inherit;
     display: flex;
     flex: 1;
+    max-width: inherit;
+    min-width: inherit;
     outline: none;
     // hide android tap color since we have ripple
     -webkit-tap-highlight-color: transparent;
