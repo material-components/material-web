@@ -165,6 +165,11 @@ export class SurfacePositionController implements ReactiveController {
       return;
     }
 
+    // Store these before we potentially resize the window with the next set of
+    // lines
+    const windowInnerWidth = window.innerWidth;
+    const windowInnerHeight = window.innerHeight;
+
     // Paint the surface transparently so that we can get the position and the
     // rect info of the surface.
     this.surfaceStylesInternal = {
@@ -231,7 +236,8 @@ export class SurfacePositionController implements ReactiveController {
           anchorBlock,
           surfaceBlock,
           yOffset,
-          positioning
+          positioning,
+          windowInnerHeight,
         });
 
     // If the surface should be out of bounds in the block direction, flip the
@@ -246,7 +252,8 @@ export class SurfacePositionController implements ReactiveController {
         anchorBlock: flippedAnchorBlock,
         surfaceBlock: flippedSurfaceBlock,
         yOffset,
-        positioning
+        positioning,
+        windowInnerHeight,
       });
 
       // In the case that the flipped verion would require less out of bounds
@@ -269,6 +276,7 @@ export class SurfacePositionController implements ReactiveController {
           xOffset,
           positioning,
           isLTR,
+          windowInnerWidth,
         });
 
     // If the surface should be out of bounds in the inline direction, flip the
@@ -285,6 +293,7 @@ export class SurfacePositionController implements ReactiveController {
         xOffset,
         positioning,
         isLTR,
+        windowInnerWidth,
       });
 
       // In the case that the flipped verion would require less out of bounds
@@ -341,6 +350,7 @@ export class SurfacePositionController implements ReactiveController {
     surfaceBlock: 'start'|'end',
     yOffset: number,
     positioning: 'absolute'|'fixed',
+    windowInnerHeight: number,
   }) {
     const {
       surfaceRect,
@@ -349,6 +359,7 @@ export class SurfacePositionController implements ReactiveController {
       surfaceBlock,
       yOffset,
       positioning,
+      windowInnerHeight,
     } = config;
     // We use number booleans to multiply values rather than `if` / ternary
     // statements because it _heavily_ cuts down on nesting and readability
@@ -361,12 +372,12 @@ export class SurfacePositionController implements ReactiveController {
     const blockAnchorOffset = isOneBlockEnd * anchorRect.height + yOffset;
     // The absolute block position of the anchor relative to window
     const blockTopLayerOffset = isSurfaceBlockStart * anchorRect.top +
-        isSurfaceBlockEnd * (window.innerHeight - anchorRect.bottom);
+        isSurfaceBlockEnd * (windowInnerHeight - anchorRect.bottom);
     // If the surface's block would be out of bounds of the window, move it back
     // in
     const blockOutOfBoundsCorrection = Math.abs(Math.min(
         0,
-        window.innerHeight - blockTopLayerOffset - blockAnchorOffset -
+        windowInnerHeight - blockTopLayerOffset - blockAnchorOffset -
             surfaceRect.height));
 
 
@@ -392,6 +403,7 @@ export class SurfacePositionController implements ReactiveController {
     surfaceRect: DOMRect,
     xOffset: number,
     positioning: 'absolute'|'fixed',
+    windowInnerWidth: number,
   }) {
     const {
       isLTR: isLTRBool,
@@ -401,6 +413,7 @@ export class SurfacePositionController implements ReactiveController {
       surfaceRect,
       xOffset,
       positioning,
+      windowInnerWidth,
     } = config;
     // We use number booleans to multiply values rather than `if` / ternary
     // statements because it _heavily_ cuts down on nesting and readability
@@ -415,10 +428,10 @@ export class SurfacePositionController implements ReactiveController {
     const inlineAnchorOffset = isOneInlineEnd * anchorRect.width + xOffset;
     // The inline position of the anchor relative to window in LTR
     const inlineTopLayerOffsetLTR = isSurfaceInlineStart * anchorRect.left +
-        isSurfaceInlineEnd * (window.innerWidth - anchorRect.right);
+        isSurfaceInlineEnd * (windowInnerWidth - anchorRect.right);
     // The inline position of the anchor relative to window in RTL
     const inlineTopLayerOffsetRTL =
-        isSurfaceInlineStart * (window.innerWidth - anchorRect.right) +
+        isSurfaceInlineStart * (windowInnerWidth - anchorRect.right) +
         isSurfaceInlineEnd * anchorRect.left;
     // The inline position of the anchor relative to window
     const inlineTopLayerOffset =
@@ -428,7 +441,7 @@ export class SurfacePositionController implements ReactiveController {
     // back in
     const inlineOutOfBoundsCorrection = Math.abs(Math.min(
         0,
-        window.innerWidth - inlineTopLayerOffset - inlineAnchorOffset -
+        windowInnerWidth - inlineTopLayerOffset - inlineAnchorOffset -
             surfaceRect.width));
 
 
