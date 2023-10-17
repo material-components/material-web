@@ -178,6 +178,13 @@ export abstract class TextField extends LitElement {
   @property({type: Boolean, reflect: true}) readOnly = false;
 
   /**
+   * Indicates that input accepts multiple email addresses.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#multiple
+   */
+  @property({type: Boolean, reflect: true}) multiple = false;
+
+  /**
    * Gets or sets the direction in which selection occurred.
    */
   get selectionDirection() {
@@ -658,6 +665,7 @@ export abstract class TextField extends LitElement {
           placeholder=${this.placeholder || nothing}
           ?readonly=${this.readOnly}
           ?required=${this.required}
+          ?multiple=${this.multiple}
           step=${(this.step || nothing) as unknown as number}
           type=${this.type}
           .value=${live(this.value)}
