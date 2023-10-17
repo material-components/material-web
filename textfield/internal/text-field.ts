@@ -779,4 +779,10 @@ export abstract class TextField extends LitElement {
   formStateRestoreCallback(state: string) {
     this.value = state;
   }
+
+  override focus() {
+    // Required for the case that the user slots a focusable element into the
+    // leading icon slot such as an iconbutton due to how delegatesFocus works.
+    this.getInputOrTextarea().focus();
+  }
 }
