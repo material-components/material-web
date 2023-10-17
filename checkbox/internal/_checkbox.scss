@@ -104,6 +104,7 @@ $_checkmark-bottom-left: 7px, -14px;
     position: absolute;
     width: 48px;
     z-index: 1;
+    cursor: pointer;
   }
 
   :host([touch-target='none']) input {
@@ -371,6 +372,10 @@ $_checkmark-bottom-left: 7px, -14px;
     border-color: var(--_disabled-outline-color);
     border-width: var(--_disabled-outline-width);
     opacity: var(--_disabled-container-opacity);
+  }
+
+  .disabled input {
+    cursor: default;
   }
 
   :where(.selected.disabled) .outline {
