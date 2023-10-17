@@ -509,6 +509,7 @@ Property | Attribute | Type | Default | Description
 `pattern` | `pattern` | `string` | `''` | A regular expression that the text field's value must match to pass constraint validation.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
 `placeholder` | `placeholder` | `string` | `''` | 
 `readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's value.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+`multiple` | `multiple` | `boolean` | `false` | Indicates that input accepts multiple email addresses.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#multiple
 `step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max to limit the increments at which a numeric or date-time value can be set.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
 `type` | `type` | `string` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type.
 `autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
@@ -573,6 +574,7 @@ Property | Attribute | Type | Default | Description
 `pattern` | `pattern` | `string` | `''` | A regular expression that the text field's value must match to pass constraint validation.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
 `placeholder` | `placeholder` | `string` | `''` | 
 `readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's value.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+`multiple` | `multiple` | `boolean` | `false` | Indicates that input accepts multiple email addresses.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#multiple
 `step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max to limit the increments at which a numeric or date-time value can be set.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
 `type` | `type` | `string` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type.
 `autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
