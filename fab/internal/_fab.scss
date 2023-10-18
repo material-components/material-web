@@ -100,6 +100,8 @@
       --md-fab-small-container-shape-end-start,
       var(--_small-container-shape)
     );
+
+    cursor: pointer;
   }
 
   :host([size='small'][touch-target='wrapper']) {
@@ -115,6 +117,8 @@
         'pressed-icon-color': var(--_pressed-icon-color),
       )
     );
+
+    cursor: inherit;
 
     &.primary {
       @include color(
