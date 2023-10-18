@@ -89,6 +89,11 @@
       outline: none;
       vertical-align: top;
       -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+
+    :host([disabled]) {
+      cursor: default;
     }
 
     :host([touch-target='wrapper']) {
@@ -130,6 +135,7 @@
       position: absolute;
       width: 100%;
       z-index: 1;
+      cursor: inherit;
     }
 
     :host([touch-target='none']) input {
