@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.0.1](https://github.com/material-components/material-web/compare/v1.0.0...v1.0.1) (2023-10-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tabs:** use `md-tab` attribute to brand individual tab children
+
+### Bug Fixes
+
+* **catalog:** align one liners to center ([fbc1fa6](https://github.com/material-components/material-web/commit/fbc1fa626a92299c627004efa9d41151b44febb0))
+* **catalog:** center items in blockquotes ([5235b3e](https://github.com/material-components/material-web/commit/5235b3ea52b7aa5a27c2b00a49712a3ce0e22378))
+* **checkbox:** cursor should be pointer when not disabled ([18fe451](https://github.com/material-components/material-web/commit/18fe45170a66588e84ecaac9ef2be0f96bec5d8d)), closes [#5079](https://github.com/material-components/material-web/issues/5079)
+* **fab:** cursor should be pointer ([5280c6e](https://github.com/material-components/material-web/commit/5280c6ec27ee54f82df4f4a25f0a1343961c168b)), closes [#5017](https://github.com/material-components/material-web/issues/5017)
+* **list:** list items will not escape their parent when parent width is restricted ([4b00a95](https://github.com/material-components/material-web/commit/4b00a9561c39b8f87299daed36e4aff0679e1263))
+* **list:** show pointer cursor for button list items ([16480d0](https://github.com/material-components/material-web/commit/16480d0e5d1c24f24ef143f8401192e6fa7e2c52)), closes [#5045](https://github.com/material-components/material-web/issues/5045)
+* **md-item:** exclude start slot from hidden overflow ([5607059](https://github.com/material-components/material-web/commit/56070593cebeb1b25b87fbe7e4767f6291548004))
+* **md-item:** exclude start slot from hidden overflow ([e087141](https://github.com/material-components/material-web/commit/e0871411dd70554dd47bd256da9c2c50b44404c2))
+* **menu,select:** enter clicks href items ([8ae8c02](https://github.com/material-components/material-web/commit/8ae8c02866d9284ee2e3a4e95b7cf573fdebf984))
+* **menu:** fix menu item fade in order animation ([73eb15e](https://github.com/material-components/material-web/commit/73eb15ebee06d1ac12e94a43d7b59234b8bd48ee)), closes [#5014](https://github.com/material-components/material-web/issues/5014)
+* **menu:** fix menu OOB from resizing window ([863109e](https://github.com/material-components/material-web/commit/863109e2043d82af2acf28c90a9393509b6ef5ee)), closes [#5063](https://github.com/material-components/material-web/issues/5063)
+* **menu:** fix menu tapping behaviors on iOS and do not close on anchor click ([8bbb4b4](https://github.com/material-components/material-web/commit/8bbb4b4ffffa45373bc539da95152af5724713a8))
+* **menu:** fix submenu SSR left keyboard close navigation ([d6f7220](https://github.com/material-components/material-web/commit/d6f7220f0b0d394ae265ca1546eb0af4f63c07d9))
+* **radio:** cursor should be pointer except when disabled ([7779987](https://github.com/material-components/material-web/commit/7779987118a6c88091ad378eeee24b96f0c2c037))
+* **select:** cursor on select options should be pointer ([ff250dc](https://github.com/material-components/material-web/commit/ff250dc983794e356c329a9bef8f391583948d71)), closes [#5066](https://github.com/material-components/material-web/issues/5066)
+* **slider:** slider knob has size to drag on ios safari ([6298cd2](https://github.com/material-components/material-web/commit/6298cd2cf04cc4c62e940972068d7469a9f1a1cc)), closes [#5016](https://github.com/material-components/material-web/issues/5016)
+* **switch:** cursor should be pointer except when disabled ([9a3ff28](https://github.com/material-components/material-web/commit/9a3ff289f5343e4350afa5951cf09527f270c2c6)), closes [#5075](https://github.com/material-components/material-web/issues/5075)
+* **tabs:** revert `isTab` check so it is possible to create your own tab ([db3c865](https://github.com/material-components/material-web/commit/db3c8651c2407e777042cace9ba7aac4eb75f988))
+* **tabs:** revert `isTab` check so it is possible to create your own tab ([e10186e](https://github.com/material-components/material-web/commit/e10186e91b35e4844e437914394e5581ff63fbc1))
+* **tabs:** use `md-tab` attribute to brand individual tab children ([8ec0813](https://github.com/material-components/material-web/commit/8ec08133af05c0755fbac764b3275af0f8ae0c1c))
+* **textfield:** calling focus on textfield with a leading icon focuses the input ([8f999d4](https://github.com/material-components/material-web/commit/8f999d4a0db80658664437e38bb51f2eaee6fe2d))
+* **textfield:** forward the `multiple` field to the native input ([03e5a7e](https://github.com/material-components/material-web/commit/03e5a7ec8be9690368677693f95e3ba1c640852f)), closes [#5064](https://github.com/material-components/material-web/issues/5064)
+* **textfield:** missing focused left border for textarea in HCM ([9194cc9](https://github.com/material-components/material-web/commit/9194cc94db76c5395cfff3e2bd2bb205c702d1a4))
+
+
+### Reverts
+
+* fix(tabs)!: use md-tab attribute to brand individual tab children ([d1f3887](https://github.com/material-components/material-web/commit/d1f3887613bf9eda7a148b8c3cebd1f370b4cc26))
+* pardon the mess, "use `md-tab` attribute to brand individual tab children" is not a breaking change ([43af3ba](https://github.com/material-components/material-web/commit/43af3baa7f599c0d9cf3f5562e2a772e229d95c2))
+
 ## [1.0.0](https://github.com/material-components/material-web/compare/v1.0.0-pre.17...v1.0.0) (2023-09-26)
 
 
