@@ -56,6 +56,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       width: var(--_icon-size);
       // Remove highlight color for mobile Safari
       -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+
+    :host([disabled]) {
+      cursor: default;
     }
 
     :host([touch-target='wrapper']) {
@@ -94,6 +99,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       margin: 0;
       position: absolute;
       width: 48px;
+      cursor: inherit;
     }
 
     :host([touch-target='none']) input {
