@@ -50,6 +50,8 @@ export class Tabs extends LitElement {
 
   /**
    * The currently selected tab, `null` only when there are no tab children.
+   *
+   * @export
    */
   get activeTab() {
     return this.tabs.find(tab => tab.active) ?? null;
@@ -64,6 +66,8 @@ export class Tabs extends LitElement {
 
   /**
    * The index of the currently selected tab.
+   *
+   * @export
    */
   get activeTabIndex() {
     return this.tabs.findIndex(tab => tab.active);
