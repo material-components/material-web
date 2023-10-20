@@ -22,6 +22,15 @@
         ]
       },
       {
+        "source": "**/[!chunk-]*.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "0"
+          }
+        ]
+      },
+      {
         "source": "**/@(*.woff2|playground-typescript-worker.js)",
         "headers": [
           {
