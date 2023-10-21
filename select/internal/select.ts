@@ -801,7 +801,9 @@ export abstract class Select extends LitElement {
     const validationMessage = this.customValidationMessage ||
         valueMissing && this.getRequiredValidationMessage() || '';
 
-    this.internals.setValidity({valueMissing, customError}, validationMessage);
+    this.internals.setValidity(
+        {valueMissing, customError}, validationMessage,
+        this.field ?? undefined);
   }
 
   // Returns the platform `<select>` validation message for i18n.
