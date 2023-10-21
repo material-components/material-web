@@ -102,7 +102,7 @@ export class Dialog extends LitElement {
   @query('.scroller') private readonly scroller!: HTMLElement|null;
   @query('.top.anchor') private readonly topAnchor!: HTMLElement|null;
   @query('.bottom.anchor') private readonly bottomAnchor!: HTMLElement|null;
-  private nextClickIsFromContent = false;
+  private pointerIsFromContent = false;
   private intersectionObserver?: IntersectionObserver;
   // Dialogs should not be SSR'd while open, so we can just use runtime checks.
   @state() private hasHeadline = false;
@@ -239,7 +239,7 @@ export class Dialog extends LitElement {
         .returnValue=${this.returnValue || nothing}
       >
         <div class="container"
-          @click=${this.handleContentClick}
+          @pointerdown=${this.handleContentPointerDown}
         >
           <div class="headline">
             <div class="icon" aria-hidden="true">
@@ -279,11 +279,18 @@ export class Dialog extends LitElement {
     this.intersectionObserver.observe(this.bottomAnchor!);
   }
 
-  private handleDialogClick() {
-    if (this.nextClickIsFromContent) {
+  private handleDialogClick(event: MouseEvent) {
+
+    if (this.pointerIsFromContent) {
+      if (event.target === this.dialog) {
+        // Click was pressed inside the content
+        // but released outside content.
+        // Prevent closing.
+        event.preventDefault();
+      }
       // Avoid doing a layout calculation below if we know the click came from
       // content.
-      this.nextClickIsFromContent = false;
+      this.pointerIsFromContent = false;
       return;
     }
 
@@ -298,8 +305,8 @@ export class Dialog extends LitElement {
     this.close();
   }
 
-  private handleContentClick() {
-    this.nextClickIsFromContent = true;
+  private handleContentPointerDown() {
+    this.pointerIsFromContent = true;
   }
 
   private handleSubmit(event: SubmitEvent) {
