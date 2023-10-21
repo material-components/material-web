@@ -17,7 +17,16 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "604800"
+            "value": "max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "**/[!chunk-]*.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=3600"
           }
         ]
       },
@@ -26,7 +35,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "31536000"
+            "value": "max-age=31536000"
           }
         ]
       }
