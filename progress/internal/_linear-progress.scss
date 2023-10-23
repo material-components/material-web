@@ -43,7 +43,7 @@ $_indeterminate-duration: 2s;
     position: relative;
     // note, this matches the `meter` element and is just done so
     // there's a default width.
-    width: 80px;
+    min-width: 80px;
     height: var(--_track-height);
     content-visibility: auto;
     contain: strict;
