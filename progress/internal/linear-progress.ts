@@ -15,7 +15,7 @@ import {Progress} from './progress.js';
  */
 export class LinearProgress extends Progress {
   /**
-   * Buffer amount to display, a fraction between 0 and max.
+   * Buffer amount to display, a fraction between 0 and `max`.
    */
   @property({type: Number}) buffer = 1;
 
