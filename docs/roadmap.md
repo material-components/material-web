@@ -28,7 +28,7 @@ This roadmap outlines the current and future goals for Material Web Components.
 _What that the team is currently working on._
 
 *   Components
-    *   💤 Card
+    *   🟡 Card
     *   💤 Segmented button
 *   Features
     *   💤 Support more screen readers
