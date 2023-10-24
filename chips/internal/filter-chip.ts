@@ -90,11 +90,12 @@ export class FilterChip extends MultiActionChip {
       return;
     }
 
+    this.selected = !this.selected;
+
     const preventDefault = !redispatchEvent(this, event);
     if (preventDefault) {
+      this.selected = !this.selected;
       return;
     }
-
-    this.selected = !this.selected;
   }
 }
