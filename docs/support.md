@@ -51,13 +51,13 @@ Use `--md-sys-color-*` tokens to change the key color that the component uses.
 ```css
 /* Buttons use the `primary` key color */
 md-filled-button.spooky {
-  --md-sys-color-primary: black;
-  --md-sys-color-on-primary: yellow;
+    --md-sys-color-primary: black;
+    --md-sys-color-on-primary: yellow;
 }
 
 md-filled-button.error {
-  --md-sys-color-primary: var(--md-sys-color-error);
-  --md-sys-color-on-primary: var(--md-sys-color-on-error);
+    --md-sys-color-primary: var(--md-sys-color-error);
+    --md-sys-color-on-primary: var(--md-sys-color-on-error);
 }
 ```
 
@@ -128,7 +128,51 @@ the "md-" prefix.
 
 ```css
 md-checkbox::part(focus-ring) {
-  width: 32px;
-  height: 32px;
+    width: 32px;
+    height: 32px;
 }
 ```
+
+### How do I use components in React?
+
+Currently, we don't support React out of the box. However, you can write your own custom element wrapper to use MWC components in React.
+
+1. **Install the necessary packages**:
+
+   You need to install the `@webcomponents/webcomponentsjs` polyfill.
+
+    ```sh
+    npm install @lit-labs/react @material/web
+    ```
+
+2. **Create a custom element wrapper**:
+
+   For the component you want to use, create a custom element wrapper. We will use the `md-elevated-button` [component](https://github.com/material-components/material-web/blob/main/button/elevated-button.ts) as an example.
+
+    ```tsx
+    import React from "react";
+    import {createComponent} from "@lit-labs/react";
+    import {MdElevatedButton} from "@material/web/button/elevated-button";
+        
+    export const ElevatedButton = createComponent({
+        react: React,
+        tagName: "md-elevated-button",
+        elementClass: MdElevatedButton, // Element class from MWC
+    });
+    ```
+
+3. **Use the custom element wrapper in your React app**:
+
+    ```tsx
+    import React from "react";
+    import {ElevatedButton} from "./ElevatedButton";
+      
+    export const App = () => {
+        return (
+            <ElevatedButton>Click me!</ElevatedButton>
+        );
+    };
+    ```
+
+For more information, see the [Lit Labs React documentation](https://lit.dev/docs/frameworks/react/).
+
