@@ -139,7 +139,7 @@ Currently, we don't support React out of the box. However, you can write your ow
 
 1. **Install the necessary packages**:
 
-   You need to install the `@webcomponents/webcomponentsjs` polyfill.
+   You need to install the `@lit-labs/react` and `@material/web` packages.
 
     ```sh
     npm install @lit-labs/react @material/web
