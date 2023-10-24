@@ -51,13 +51,13 @@ Use `--md-sys-color-*` tokens to change the key color that the component uses.
 ```css
 /* Buttons use the `primary` key color */
 md-filled-button.spooky {
-    --md-sys-color-primary: black;
-    --md-sys-color-on-primary: yellow;
+  --md-sys-color-primary: black;
+  --md-sys-color-on-primary: yellow;
 }
 
 md-filled-button.error {
-    --md-sys-color-primary: var(--md-sys-color-error);
-    --md-sys-color-on-primary: var(--md-sys-color-on-error);
+  --md-sys-color-primary: var(--md-sys-color-error);
+  --md-sys-color-on-primary: var(--md-sys-color-on-error);
 }
 ```
 
