@@ -107,6 +107,11 @@ export abstract class TextField extends LitElement {
    * Defaults to 2.
    */
   @property({type: Number}) rows = 2;
+  /**
+   * The number of cols to display for a `type="textarea"` text field.
+   * Defaults to 20.
+   */
+  @property({type: Number}) cols = 20;
 
   /**
    * The associated form element with which this element's value will submit.
@@ -628,6 +633,7 @@ export abstract class TextField extends LitElement {
           ?readonly=${this.readOnly}
           ?required=${this.required}
           rows=${this.rows}
+          cols=${this.cols}
           .value=${live(this.value)}
           @change=${this.handleChange}
           @focusin=${this.handleFocusin}
