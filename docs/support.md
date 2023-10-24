@@ -128,8 +128,8 @@ the "md-" prefix.
 
 ```css
 md-checkbox::part(focus-ring) {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 ```
 
