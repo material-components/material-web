@@ -388,7 +388,7 @@ Token                                          | Default value
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`buffer` | `buffer` | `number` | `1` | Buffer amount to display, a fraction between 0 and 1.
+`buffer` | `buffer` | `number` | `1` | Buffer amount to display, a fraction between 0 and `max`.
 `value` | `value` | `number` | `0` | Progress to display, a fraction between 0 and `max`.
 `max` | `max` | `number` | `1` | Maximum progress to display, defaults to 1.
 `indeterminate` | `indeterminate` | `boolean` | `false` | Whether or not to display indeterminate progress, which gives no indication to how long an activity will take.
