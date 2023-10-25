@@ -4,8 +4,25 @@
 //
 
 // go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../../tokens';
 // go/keep-sorted end
+
+@mixin theme($tokens) {
+  $supported-tokens: tokens.$md-comp-filled-card-supported-tokens;
+
+  @each $token, $value in $tokens {
+    @if list.index($supported-tokens, $token) == null {
+      @error 'Filled card `#{$token}` is not a supported token.';
+    }
+
+    @if $value {
+      --md-filled-card-#{$token}: #{$value};
+    }
+  }
+}
 
 @mixin styles() {
   $tokens: tokens.md-comp-filled-card-values();
