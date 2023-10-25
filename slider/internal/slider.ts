@@ -244,8 +244,8 @@ export class Slider extends LitElement {
   // used in synthetic events generated to control ripple hover state.
   private ripplePointerId = 1;
 
-  // flag to prvent processing of re-dispatched input event.
-  private isRedisptchingEvent = false;
+  // flag to prevent processing of re-dispatched input event.
+  private isRedispatchingEvent = false;
 
   private action?: Action;
 
@@ -659,7 +659,7 @@ export class Slider extends LitElement {
 
   private handleInput(event: InputEvent) {
     // avoid processing a re-dispatched event
-    if (this.isRedisptchingEvent) {
+    if (this.isRedispatchingEvent) {
       return;
     }
     let stopPropagation = false;
@@ -689,9 +689,9 @@ export class Slider extends LitElement {
     }
     // ensure event path is correct when flipped.
     if (redispatch) {
-      this.isRedisptchingEvent = true;
+      this.isRedispatchingEvent = true;
       redispatchEvent(target, event);
-      this.isRedisptchingEvent = false;
+      this.isRedispatchingEvent = false;
     }
   }
 
