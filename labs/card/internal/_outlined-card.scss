@@ -27,5 +27,13 @@
 @mixin styles() {
   $tokens: tokens.md-comp-outlined-card-values();
 
-  // TODO(b/261201808): add styles
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: var(--md-outlined-card-#{$token}, #{$value});
+    }
+  }
+
+  .container {
+    outline: var(--_outline-width) solid var(--_outline-color);
+  }
 }

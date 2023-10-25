@@ -3,8 +3,38 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// go/keep-sorted start
+@use '../../../elevation/elevation';
+// go/keep-sorted end
+
 @mixin styles() {
   :host {
+    border-radius: var(--_container-shape);
     display: flex;
+    padding: 16px;
+    position: relative;
+  }
+
+  // Separate element will be needed for disabled opacities (b/307361748)
+  .container {
+    background: var(--_container-color);
+    border-radius: inherit;
+    inset: 0;
+    position: absolute;
+  }
+
+  md-elevation {
+    border-radius: inherit;
+
+    @include elevation.theme(
+      (
+        'level': var(--_container-elevation),
+        'shadow-color': var(--_container-shadow-color),
+      )
+    );
+  }
+
+  slot {
+    z-index: 0; // Place content above background elements
   }
 }

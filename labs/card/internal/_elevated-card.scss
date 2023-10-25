@@ -27,5 +27,9 @@
 @mixin styles() {
   $tokens: tokens.md-comp-elevated-card-values();
 
-  // TODO(b/261201808): add styles
+  :host {
+    @each $token, $value in $tokens {
+      --_#{$token}: var(--md-elevated-card-#{$token}, #{$value});
+    }
+  }
 }

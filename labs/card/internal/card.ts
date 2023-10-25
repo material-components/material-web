@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '../../../elevation/elevation.js';
+
 import {html, LitElement} from 'lit';
 
 /**
@@ -11,6 +13,10 @@ import {html, LitElement} from 'lit';
  */
 export class Card extends LitElement {
   protected override render() {
-    return html`<slot></slot>`;
+    return html`
+      <md-elevation part="elevation"></md-elevation>
+      <div class="container"></div>
+      <slot></slot>
+    `;
   }
 }
