@@ -501,6 +501,7 @@ Property | Attribute | Type | Default | Description
 `supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the text field, such as how it should be used.
 `textDirection` | `text-direction` | `string` | `''` | Override the input text CSS `direction`. Useful for RTL languages that use LTR notation for fractions.
 `rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field. Defaults to 2.
+`cols` | `cols` | `number` | `20` | The number of cols to display for a `type="textarea"` text field. Defaults to 20.
 `inputMode` | `inputmode` | `string` | `''` | 
 `max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
 `maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
@@ -566,6 +567,7 @@ Property | Attribute | Type | Default | Description
 `supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the text field, such as how it should be used.
 `textDirection` | `text-direction` | `string` | `''` | Override the input text CSS `direction`. Useful for RTL languages that use LTR notation for fractions.
 `rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field. Defaults to 2.
+`cols` | `cols` | `number` | `20` | The number of cols to display for a `type="textarea"` text field. Defaults to 20.
 `inputMode` | `inputmode` | `string` | `''` | 
 `max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
 `maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
