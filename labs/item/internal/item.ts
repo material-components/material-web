@@ -27,14 +27,14 @@ export class Item extends LitElement {
       <slot name="container"></slot>
       <slot class="non-text" name="start"></slot>
       <div class="text">
-        <slot name="overline"
-            @slotchange=${this.handleTextSlotChange}></slot>
-        <slot class="default-slot"
-            @slotchange=${this.handleTextSlotChange}></slot>
-        <slot name="headline"
-            @slotchange=${this.handleTextSlotChange}></slot>
-        <slot name="supporting-text"
-            @slotchange=${this.handleTextSlotChange}></slot>
+        <slot name="overline" @slotchange=${this.handleTextSlotChange}></slot>
+        <slot
+          class="default-slot"
+          @slotchange=${this.handleTextSlotChange}></slot>
+        <slot name="headline" @slotchange=${this.handleTextSlotChange}></slot>
+        <slot
+          name="supporting-text"
+          @slotchange=${this.handleTextSlotChange}></slot>
       </div>
       <slot class="non-text" name="trailing-supporting-text"></slot>
       <slot class="non-text" name="end"></slot>
@@ -68,7 +68,7 @@ function slotHasContent(slot: HTMLSlotElement) {
     // If there's only text nodes for the default slot, check if there's
     // non-whitespace.
     const isTextWithContent =
-        node.nodeType === Node.TEXT_NODE && node.textContent?.match(/\S/);
+      node.nodeType === Node.TEXT_NODE && node.textContent?.match(/\S/);
     if (isElement || isTextWithContent) {
       return true;
     }

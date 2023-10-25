@@ -16,11 +16,19 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 import {getActiveItem} from '../../list/internal/list-navigation-helpers.js';
-import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/controllers/shared.js';
+import {
+  CloseMenuEvent,
+  isElementInSubtree,
+  isSelectableKey,
+} from '../../menu/internal/controllers/shared.js';
 import {TYPEAHEAD_RECORD} from '../../menu/internal/controllers/typeaheadController.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
 
-import {createRequestDeselectionEvent, createRequestSelectionEvent, SelectOption} from './selectoption/selectOptionController.js';
+import {
+  createRequestDeselectionEvent,
+  createRequestSelectionEvent,
+  SelectOption,
+} from './selectoption/selectOptionController.js';
 import {getSelectedItems, SelectOptionRecord} from './shared.js';
 
 const VALUE = Symbol('value');
@@ -90,7 +98,7 @@ export abstract class Select extends LitElement {
    * element with stacking context and hidden overflows such as `md-dialog`.
    */
   @property({attribute: 'menu-positioning'})
-  menuPositioning: 'absolute'|'fixed' = 'absolute';
+  menuPositioning: 'absolute' | 'fixed' = 'absolute';
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
    * before it clears the typeahead buffer.
@@ -221,18 +229,18 @@ export abstract class Select extends LitElement {
   /**
    * Used for initializing select when the user sets the `value` directly.
    */
-  private lastUserSetValue: string|null = null;
+  private lastUserSetValue: string | null = null;
 
   /**
    * Used for initializing select when the user sets the `selectedIndex`
    * directly.
    */
-  private lastUserSetSelectedIndex: number|null = null;
+  private lastUserSetSelectedIndex: number | null = null;
 
   /**
    * Used for `input` and `change` event change detection.
    */
-  private lastSelectedOption: SelectOption|null = null;
+  private lastSelectedOption: SelectOption | null = null;
 
   // tslint:disable-next-line:enforce-name-casing
   private lastSelectedOptionRecords: SelectOptionRecord[] = [];
@@ -253,21 +261,23 @@ export abstract class Select extends LitElement {
 
   @state() private focused = false;
   @state() private open = false;
-  @query('.field') private readonly field!: Field|null;
-  @query('md-menu') private readonly menu!: Menu|null;
+  @query('.field') private readonly field!: Field | null;
+  @query('md-menu') private readonly menu!: Menu | null;
   @query('#label') private readonly labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
   private customValidationMessage = '';
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  // Cast needed for closure
+  private readonly internals = (this as HTMLElement).attachInternals();
 
   /**
    * Selects an option given the value of the option, and updates MdSelect's
    * value.
    */
   select(value: string) {
-    const optionToSelect = this.options.find(option => option.value === value);
+    const optionToSelect = this.options.find(
+      (option) => option.value === value,
+    );
     if (optionToSelect) {
       this.selectItem(optionToSelect);
     }
@@ -329,10 +339,14 @@ export abstract class Select extends LitElement {
    * @return true if the select is valid, or false if not.
    */
   reportValidity() {
-    let invalidEvent: Event|undefined;
-    this.addEventListener('invalid', event => {
-      invalidEvent = event;
-    }, {once: true});
+    let invalidEvent: Event | undefined;
+    this.addEventListener(
+      'invalid',
+      (event) => {
+        invalidEvent = event;
+      },
+      {once: true},
+    );
 
     const valid = this.checkValidity();
     if (invalidEvent?.defaultPrevented) {
@@ -379,10 +393,9 @@ export abstract class Select extends LitElement {
   protected override render() {
     return html`
       <span
-          class="select ${classMap(this.getRenderClasses())}"
-          @focusout=${this.handleFocusout}>
-        ${this.renderField()}
-        ${this.renderMenu()}
+        class="select ${classMap(this.getRenderClasses())}"
+        @focusout=${this.handleFocusout}>
+        ${this.renderField()} ${this.renderMenu()}
       </span>
     `;
   }
@@ -402,8 +415,11 @@ export abstract class Select extends LitElement {
 
     // Case for when the DOM is streaming, there are no children, and a child
     // has [selected] set on it, we need to wait for DOM to render something.
-    if (!this.lastSelectedOptionRecords.length && !isServer &&
-        !this.options.length) {
+    if (
+      !this.lastSelectedOptionRecords.length &&
+      !isServer &&
+      !this.options.length
+    ) {
       setTimeout(() => {
         this.updateValueAndDisplayText();
       });
@@ -464,9 +480,9 @@ export abstract class Select extends LitElement {
   private renderLeadingIcon() {
     return html`
       <span class="icon leading" slot="start">
-         <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
+        <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
       </span>
-     `;
+    `;
   }
 
   private renderTrailingIcon() {
@@ -474,12 +490,20 @@ export abstract class Select extends LitElement {
       <span class="icon trailing" slot="end">
         <slot name="trailing-icon" @slotchange=${this.handleIconChange}>
           <svg height="5" viewBox="7 10 10 5" focusable="false">
-            <polygon class="down" stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
-            <polygon class="up" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15"></polygon>
+            <polygon
+              class="down"
+              stroke="none"
+              fill-rule="evenodd"
+              points="7 10 12 15 17 10"></polygon>
+            <polygon
+              class="up"
+              stroke="none"
+              fill-rule="evenodd"
+              points="7 15 12 10 17 15"></polygon>
           </svg>
         </slot>
       </span>
-     `;
+    `;
   }
 
   private renderLabel() {
@@ -490,30 +514,29 @@ export abstract class Select extends LitElement {
 
   private renderMenu() {
     const ariaLabel = this.label || (this as ARIAMixinStrict).ariaLabel;
-    return html`
-      <md-menu
-          id="listbox"
-          default-focus="none"
-          role="listbox"
-          tabindex="-1"
-          aria-label=${ariaLabel || nothing}
-          stay-open-on-focusout
-          part="menu"
-          exportparts="focus-ring: menu-focus-ring"
-          anchor="field"
-          .open=${this.open}
-          .quick=${this.quick}
-          .positioning=${this.menuPositioning}
-          .typeaheadDelay=${this.typeaheadDelay}
-          @opening=${this.handleOpening}
-          @opened=${this.redispatchEvent}
-          @closing=${this.redispatchEvent}
-          @closed=${this.handleClosed}
-          @close-menu=${this.handleCloseMenu}
-          @request-selection=${this.handleRequestSelection}
-          @request-deselection=${this.handleRequestDeselection}>
-        ${this.renderMenuContent()}
-      </md-menu>`;
+    return html` <md-menu
+      id="listbox"
+      default-focus="none"
+      role="listbox"
+      tabindex="-1"
+      aria-label=${ariaLabel || nothing}
+      stay-open-on-focusout
+      part="menu"
+      exportparts="focus-ring: menu-focus-ring"
+      anchor="field"
+      .open=${this.open}
+      .quick=${this.quick}
+      .positioning=${this.menuPositioning}
+      .typeaheadDelay=${this.typeaheadDelay}
+      @opening=${this.handleOpening}
+      @opened=${this.redispatchEvent}
+      @closing=${this.redispatchEvent}
+      @closed=${this.handleClosed}
+      @close-menu=${this.handleCloseMenu}
+      @request-selection=${this.handleRequestSelection}
+      @request-deselection=${this.handleRequestDeselection}>
+      ${this.renderMenuContent()}
+    </md-menu>`;
   }
 
   private renderMenuContent() {
@@ -530,8 +553,10 @@ export abstract class Select extends LitElement {
     }
 
     const typeaheadController = this.menu.typeaheadController;
-    const isOpenKey = event.code === 'Space' || event.code === 'ArrowDown' ||
-        event.code === 'Enter';
+    const isOpenKey =
+      event.code === 'Space' ||
+      event.code === 'ArrowDown' ||
+      event.code === 'Enter';
 
     // Do not open if currently typing ahead because the user may be typing the
     // spacebar to match a word with a space
@@ -557,7 +582,8 @@ export abstract class Select extends LitElement {
 
       this.labelEl?.setAttribute?.('aria-live', 'polite');
       const hasChanged = this.selectItem(
-          lastActiveRecord[TYPEAHEAD_RECORD.ITEM] as SelectOption);
+        lastActiveRecord[TYPEAHEAD_RECORD.ITEM] as SelectOption,
+      );
 
       if (hasChanged) {
         this.dispatchInteractionEvents();
@@ -627,11 +653,10 @@ export abstract class Select extends LitElement {
     if (selectedOptions.length) {
       const [firstSelectedOption] = selectedOptions[0];
       hasSelectedOptionChanged =
-          this.lastSelectedOption !== firstSelectedOption;
+        this.lastSelectedOption !== firstSelectedOption;
       this.lastSelectedOption = firstSelectedOption;
       this[VALUE] = firstSelectedOption.value;
       this.displayText = firstSelectedOption.displayText;
-
     } else {
       hasSelectedOptionChanged = this.lastSelectedOption !== null;
       this.lastSelectedOption = null;
@@ -728,12 +753,16 @@ export abstract class Select extends LitElement {
    * property / attribute change.
    */
   private handleRequestSelection(
-      event: ReturnType<typeof createRequestSelectionEvent>) {
+    event: ReturnType<typeof createRequestSelectionEvent>,
+  ) {
     const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is already selected.
-    if (this.lastSelectedOptionRecords.some(
-            ([option]) => option === requestingOptionEl)) {
+    if (
+      this.lastSelectedOptionRecords.some(
+        ([option]) => option === requestingOptionEl,
+      )
+    ) {
       return;
     }
 
@@ -745,12 +774,16 @@ export abstract class Select extends LitElement {
    * property / attribute change.
    */
   private handleRequestDeselection(
-      event: ReturnType<typeof createRequestDeselectionEvent>) {
+    event: ReturnType<typeof createRequestDeselectionEvent>,
+  ) {
     const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is not even in the list of tracked selected items.
-    if (!this.lastSelectedOptionRecords.some(
-            ([option]) => option === requestingOptionEl)) {
+    if (
+      !this.lastSelectedOptionRecords.some(
+        ([option]) => option === requestingOptionEl,
+      )
+    ) {
       return;
     }
 
@@ -769,8 +802,9 @@ export abstract class Select extends LitElement {
       // User has set `.selectedIndex` directly, but internals have not yet
       // booted up.
     } else if (
-        this.lastUserSetSelectedIndex !== null &&
-        !this.lastSelectedOptionRecords.length) {
+      this.lastUserSetSelectedIndex !== null &&
+      !this.lastSelectedOptionRecords.length
+    ) {
       this.selectIndex(this.lastUserSetSelectedIndex);
 
       // Regular boot up!
@@ -798,12 +832,16 @@ export abstract class Select extends LitElement {
   private syncValidity() {
     const valueMissing = this.required && !this.value;
     const customError = !!this.customValidationMessage;
-    const validationMessage = this.customValidationMessage ||
-        valueMissing && this.getRequiredValidationMessage() || '';
+    const validationMessage =
+      this.customValidationMessage ||
+      (valueMissing && this.getRequiredValidationMessage()) ||
+      '';
 
     this.internals.setValidity(
-        {valueMissing, customError}, validationMessage,
-        this.field ?? undefined);
+      {valueMissing, customError},
+      validationMessage,
+      this.field ?? undefined,
+    );
   }
 
   // Returns the platform `<select>` validation message for i18n.

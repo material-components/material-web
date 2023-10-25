@@ -18,7 +18,7 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 /**
  * Sizes variants available to non-extended FABs.
  */
-export type FabSize = 'medium'|'small'|'large';
+export type FabSize = 'medium' | 'small' | 'large';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export abstract class SharedFab extends LitElement {
@@ -45,7 +45,6 @@ export abstract class SharedFab extends LitElement {
    */
   @property() label = '';
 
-
   /**
    * Lowers the FAB's elevation.
    */
@@ -57,14 +56,11 @@ export abstract class SharedFab extends LitElement {
     return html`
       <button
         class="fab ${classMap(this.getRenderClasses())}"
-        aria-label=${ariaLabel || nothing}
-      >
+        aria-label=${ariaLabel || nothing}>
         <md-elevation></md-elevation>
         <md-focus-ring part="focus-ring"></md-focus-ring>
         <md-ripple class="ripple"></md-ripple>
-        ${this.renderTouchTarget()}
-        ${this.renderIcon()}
-        ${this.renderLabel()}
+        ${this.renderTouchTarget()} ${this.renderIcon()} ${this.renderLabel()}
       </button>
     `;
   }
@@ -90,12 +86,13 @@ export abstract class SharedFab extends LitElement {
   private renderIcon() {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`<span class="icon">
-        <slot
-            name="icon"
-            aria-hidden=${
-        ariaLabel || this.label ? 'true' : nothing as unknown as 'false'}>
-          <span></span>
-        </slot>
-      </span>`;
+      <slot
+        name="icon"
+        aria-hidden=${ariaLabel || this.label
+          ? 'true'
+          : (nothing as unknown as 'false')}>
+        <span></span>
+      </slot>
+    </span>`;
   }
 }

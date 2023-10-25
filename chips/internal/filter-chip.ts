@@ -27,9 +27,10 @@ export class FilterChip extends MultiActionChip {
     return 'button';
   }
 
-  @query('.primary.action') protected readonly primaryAction!: HTMLElement|null;
+  @query('.primary.action')
+  protected readonly primaryAction!: HTMLElement | null;
   @query('.trailing.action')
-  protected readonly trailingAction!: HTMLElement|null;
+  protected readonly trailingAction!: HTMLElement | null;
 
   protected override getContainerClasses() {
     return {
@@ -43,13 +44,15 @@ export class FilterChip extends MultiActionChip {
   protected override renderPrimaryAction(content: unknown) {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      <button class="primary action"
+      <button
+        class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
         aria-pressed=${this.selected}
         ?disabled=${this.disabled && !this.alwaysFocusable}
         @click=${this.handleClick}
-      >${content}</button>
+        >${content}</button
+      >
     `;
   }
 
@@ -60,7 +63,8 @@ export class FilterChip extends MultiActionChip {
 
     return html`
       <svg class="checkmark" viewBox="0 0 18 18" aria-hidden="true">
-        <path d="M6.75012 12.1274L3.62262 8.99988L2.55762 10.0574L6.75012 14.2499L15.7501 5.24988L14.6926 4.19238L6.75012 12.1274Z" />
+        <path
+          d="M6.75012 12.1274L3.62262 8.99988L2.55762 10.0574L6.75012 14.2499L15.7501 5.24988L14.6926 4.19238L6.75012 12.1274Z" />
       </svg>
     `;
   }
@@ -70,7 +74,7 @@ export class FilterChip extends MultiActionChip {
       return renderRemoveButton({
         focusListener,
         ariaLabel: this.ariaLabelRemove,
-        disabled: this.disabled
+        disabled: this.disabled,
       });
     }
 

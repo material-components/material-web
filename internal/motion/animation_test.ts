@@ -5,7 +5,12 @@
  */
 
 // import 'jasmine'; (google3-only)
-import {AnimationSignal, createAnimationSignal, createThrottle, msFromTimeCSSValue} from './animation.js';
+import {
+  AnimationSignal,
+  createAnimationSignal,
+  createThrottle,
+  msFromTimeCSSValue,
+} from './animation.js';
 
 describe('createAnimationSignal()', () => {
   let task: AnimationSignal;
@@ -23,15 +28,15 @@ describe('createAnimationSignal()', () => {
     it('should abort previous signal on subsequent calls', () => {
       const firstSignal = task.start();
       expect(firstSignal.aborted)
-          .withContext('first signal should not be aborted by default')
-          .toBeFalse();
+        .withContext('first signal should not be aborted by default')
+        .toBeFalse();
       const secondSignal = task.start();
       expect(firstSignal.aborted)
-          .withContext('first signal should abort after start is called again')
-          .toBeTrue();
+        .withContext('first signal should abort after start is called again')
+        .toBeTrue();
       expect(secondSignal.aborted)
-          .withContext('second signal should not be aborted by default')
-          .toBeFalse();
+        .withContext('second signal should not be aborted by default')
+        .toBeFalse();
     });
   });
 
@@ -40,8 +45,8 @@ describe('createAnimationSignal()', () => {
       const signal = task.start();
       task.finish();
       expect(signal.aborted)
-          .withContext('finishing a task should not signal an abort')
-          .toBeFalse();
+        .withContext('finishing a task should not signal an abort')
+        .toBeFalse();
     });
 
     it('should not abort previous tasks when starting after finishing', () => {
@@ -49,20 +54,19 @@ describe('createAnimationSignal()', () => {
       task.finish();
       task.start();
       expect(firstSignal.aborted)
-          .withContext('starting a new task should not finished tasks')
-          .toBeFalse();
+        .withContext('starting a new task should not finished tasks')
+        .toBeFalse();
     });
   });
 });
-
 
 describe('createThrottle()', () => {
   it('throttles calls', async () => {
     const throttle = createThrottle();
     const key = 'foo';
     const fn = jasmine.createSpy();
-    let timeoutResolver: Function|null = null;
-    const timeout = new Promise(r => {
+    let timeoutResolver: Function | null = null;
+    const timeout = new Promise((r) => {
       timeoutResolver = r;
     });
     const timeoutFn = async () => {

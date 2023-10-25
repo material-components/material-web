@@ -31,8 +31,8 @@ describe('Input chip', () => {
       await chip.updateComplete;
 
       expect(chip.renderRoot.querySelector('a'))
-          .withContext('should have a rendered <a> link')
-          .toBeTruthy();
+        .withContext('should have a rendered <a> link')
+        .toBeTruthy();
     });
 
     it('should not allow link chips to be disabled', async () => {
@@ -42,8 +42,8 @@ describe('Input chip', () => {
       await chip.updateComplete;
 
       expect(chip.renderRoot.querySelector('.disabled,:disabled'))
-          .withContext('should not have any disabled styling or behavior')
-          .toBeNull();
+        .withContext('should not have any disabled styling or behavior')
+        .toBeNull();
     });
   });
 });

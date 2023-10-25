@@ -17,7 +17,7 @@ import {internals, WithInternals} from './element-internals.js';
  * - reset: The element resets the form.
  * - button: The element does nothing.
  */
-export type FormSubmitterType = 'button'|'submit'|'reset';
+export type FormSubmitterType = 'button' | 'submit' | 'reset';
 
 /**
  * An element that can submit or reset a `<form>`, similar to
@@ -51,7 +51,8 @@ export interface FormSubmitter extends ReactiveElement, WithInternals {
 }
 
 type FormSubmitterConstructor =
-    (new () => FormSubmitter)|(abstract new () => FormSubmitter);
+  | (new () => FormSubmitter)
+  | (abstract new () => FormSubmitter);
 
 /**
  * Sets up an element's constructor to enable form submission. The element
@@ -82,9 +83,9 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
     return;
   }
 
-  (ctor as unknown as typeof ReactiveElement).addInitializer(instance => {
+  (ctor as unknown as typeof ReactiveElement).addInitializer((instance) => {
     const submitter = instance as FormSubmitter;
-    submitter.addEventListener('click', async event => {
+    submitter.addEventListener('click', async (event) => {
       const {type, [internals]: elementInternals} = submitter;
       const {form} = elementInternals;
       if (!form || type === 'button') {
@@ -92,7 +93,7 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
       }
 
       // Wait a microtask for event bubbling to complete.
-      await new Promise<void>(resolve => {
+      await new Promise<void>((resolve) => {
         resolve();
       });
 
@@ -109,13 +110,17 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
       // elements. This patches the dispatched submit event to add the correct
       // `submitter`.
       // See https://github.com/WICG/webcomponents/issues/814
-      form.addEventListener('submit', submitEvent => {
-        Object.defineProperty(submitEvent, 'submitter', {
-          configurable: true,
-          enumerable: true,
-          get: () => submitter,
-        });
-      }, {capture: true, once: true});
+      form.addEventListener(
+        'submit',
+        (submitEvent) => {
+          Object.defineProperty(submitEvent, 'submitter', {
+            configurable: true,
+            enumerable: true,
+            get: () => submitter,
+          });
+        },
+        {capture: true, once: true},
+      );
 
       elementInternals.setFormValue(submitter.value);
       form.requestSubmit();

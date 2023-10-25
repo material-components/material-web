@@ -18,8 +18,9 @@ type ReactiveElementConstructor = new (...args: any[]) => ReactiveElement;
  *
  * @param Base The class to mix-in and listen to Preact signal changes.
  */
-export function SignalElement<T extends ReactiveElementConstructor>(Base: T):
-    T {
+export function SignalElement<T extends ReactiveElementConstructor>(
+  Base: T,
+): T {
   return class SignalElement extends Base {
     private _disposeEffect?: () => void;
 

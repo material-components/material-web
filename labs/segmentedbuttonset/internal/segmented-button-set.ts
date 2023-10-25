@@ -79,29 +79,31 @@ export class SegmentedButtonSet extends LitElement {
   }
 
   private emitSelectionEvent(index: number) {
-    this.dispatchEvent(new CustomEvent('segmented-button-set-selection', {
-      detail: {
-        button: this.buttons[index],
-        selected: this.buttons[index].selected,
-        index,
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('segmented-button-set-selection', {
+        detail: {
+          button: this.buttons[index],
+          selected: this.buttons[index].selected,
+          index,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-     <span
-       role="group"
-       @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
-       aria-label=${ariaLabel || nothing}
-       class="md3-segmented-button-set">
-       <slot></slot>
-     </span>
-     `;
+      <span
+        role="group"
+        @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
+        aria-label=${ariaLabel || nothing}
+        class="md3-segmented-button-set">
+        <slot></slot>
+      </span>
+    `;
   }
 
   protected getRenderClasses() {

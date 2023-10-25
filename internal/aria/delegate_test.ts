@@ -25,7 +25,7 @@ class AriaDelegateElement extends LitElement {
     requestUpdateOnAriaChange(AriaDelegateElement);
   }
 
-  @queryAsync('button') readonly button!: Promise<HTMLButtonElement|null>;
+  @queryAsync('button') readonly button!: Promise<HTMLButtonElement | null>;
 
   protected override render() {
     return html`<button aria-label=${this.ariaLabel || nothing}>Label</button>`;
@@ -37,8 +37,8 @@ describe('aria', () => {
 
   async function setupTest({ariaLabel}: {ariaLabel?: string} = {}) {
     const root = env.render(html`
-      <test-aria-delegate aria-label=${
-        ariaLabel || nothing}></test-aria-delegate>
+      <test-aria-delegate
+        aria-label=${ariaLabel || nothing}></test-aria-delegate>
     `);
 
     const host = root.querySelector('test-aria-delegate');
@@ -60,8 +60,8 @@ describe('aria', () => {
       const {host} = await setupTest();
 
       expect(host.getAttribute('role'))
-          .withContext('host role')
-          .toEqual('presentation');
+        .withContext('host role')
+        .toEqual('presentation');
     });
 
     it('should not change or remove host aria attributes', async () => {
@@ -69,8 +69,8 @@ describe('aria', () => {
       const {host} = await setupTest({ariaLabel});
 
       expect(host.getAttribute('aria-label'))
-          .withContext('host aria-label')
-          .toEqual(ariaLabel);
+        .withContext('host aria-label')
+        .toEqual(ariaLabel);
     });
 
     it('should delegate aria attributes to child element', async () => {
@@ -78,30 +78,28 @@ describe('aria', () => {
       const {child} = await setupTest({ariaLabel});
 
       expect(child.getAttribute('aria-label'))
-          .withContext('child aria-label')
-          .toEqual(ariaLabel);
+        .withContext('child aria-label')
+        .toEqual(ariaLabel);
     });
 
-    it('should update delegated aria attributes when host attribute changes',
-       async () => {
-         const {host, child} = await setupTest({ariaLabel: 'First aria label'});
+    it('should update delegated aria attributes when host attribute changes', async () => {
+      const {host, child} = await setupTest({ariaLabel: 'First aria label'});
 
-         host.setAttribute('aria-label', 'Second aria label');
-         await env.waitForStability();
-         expect(child.getAttribute('aria-label'))
-             .withContext('child aria-label')
-             .toEqual('Second aria label');
-       });
+      host.setAttribute('aria-label', 'Second aria label');
+      await env.waitForStability();
+      expect(child.getAttribute('aria-label'))
+        .withContext('child aria-label')
+        .toEqual('Second aria label');
+    });
 
-    it('should remove delegated aria attributes when host attribute is removed',
-       async () => {
-         const {host, child} = await setupTest({ariaLabel: 'First aria label'});
+    it('should remove delegated aria attributes when host attribute is removed', async () => {
+      const {host, child} = await setupTest({ariaLabel: 'First aria label'});
 
-         host.removeAttribute('aria-label');
-         await env.waitForStability();
-         expect(child.hasAttribute('aria-label'))
-             .withContext('child has aria-label')
-             .toBeFalse();
-       });
+      host.removeAttribute('aria-label');
+      await env.waitForStability();
+      expect(child.hasAttribute('aria-label'))
+        .withContext('child has aria-label')
+        .toBeFalse();
+    });
   });
 });

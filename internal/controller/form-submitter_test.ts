@@ -36,13 +36,15 @@ class FormSubmitterButton extends LitElement {
   [internals] = this.attachInternals();
 }
 
-
 describe('setupFormSubmitter()', () => {
   const env = new Environment();
 
   async function setupTest() {
     const root = env.render(
-        html`<form><test-form-submitter-button></test-form-submitter-button></form>`);
+      html`<form
+        ><test-form-submitter-button></test-form-submitter-button
+      ></form>`,
+    );
     const submitter = root.querySelector('test-form-submitter-button');
     if (!submitter) {
       throw new Error(`Could not query rendered <test-form-submitter-button>`);
@@ -92,9 +94,13 @@ describe('setupFormSubmitter()', () => {
 
     spyOn(form, 'requestSubmit');
 
-    harness.element.addEventListener('click', (event: Event) => {
-      event.preventDefault();
-    }, {once: true});
+    harness.element.addEventListener(
+      'click',
+      (event: Event) => {
+        event.preventDefault();
+      },
+      {once: true},
+    );
 
     await harness.clickWithMouse();
 
@@ -103,10 +109,11 @@ describe('setupFormSubmitter()', () => {
 
   it('should set the button as the SubmitEvent submitter', async () => {
     const {harness, form} = await setupTest();
-    const submitListener =
-        jasmine.createSpy('submitListener').and.callFake((event: Event) => {
-          event.preventDefault();
-        });
+    const submitListener = jasmine
+      .createSpy('submitListener')
+      .and.callFake((event: Event) => {
+        event.preventDefault();
+      });
 
     form.addEventListener('submit', submitListener);
 
@@ -115,13 +122,13 @@ describe('setupFormSubmitter()', () => {
     expect(submitListener).toHaveBeenCalled();
     const event = submitListener.calls.argsFor(0)[0] as SubmitEvent;
     expect(event.submitter)
-        .withContext('event.submitter')
-        .toBe(harness.element);
+      .withContext('event.submitter')
+      .toBe(harness.element);
   });
 
   it('should add name/value to form data when present', async () => {
     const {harness, form} = await setupTest();
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
     });
 

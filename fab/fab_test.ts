@@ -156,8 +156,9 @@ describe('<md-branded-fab>', () => {
   const env = new Environment();
 
   async function setupTest() {
-    const element = env.render(html`<md-branded-fab></md-branded-fab>`)
-                        .querySelector('md-branded-fab');
+    const element = env
+      .render(html`<md-branded-fab></md-branded-fab>`)
+      .querySelector('md-branded-fab');
     if (!element) {
       throw new Error('Could not query rendered <md-branded-fab>.');
     }

@@ -44,7 +44,6 @@ const postdoc = new PostDoc({
   onMessage,
 });
 
-
 await postdoc.handshake;
 
 // Request the initial theme.

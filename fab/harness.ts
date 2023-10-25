@@ -14,7 +14,6 @@ import {Fab} from './internal/fab.js';
 export class FabHarness extends Harness<Fab> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.fab') as
-        HTMLButtonElement;
+    return this.element.renderRoot.querySelector('.fab') as HTMLButtonElement;
   }
 }

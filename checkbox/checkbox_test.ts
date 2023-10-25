@@ -20,63 +20,68 @@ describe('<md-checkbox>', () => {
 
   describe('forms', () => {
     createFormTests({
-      queryControl: root => root.querySelector('md-checkbox'),
+      queryControl: (root) => root.querySelector('md-checkbox'),
       valueTests: [
         {
           name: 'unnamed',
           render: () => html`<md-checkbox checked></md-checkbox>`,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form without a name')
-                .toHaveSize(0);
-          }
+              .withContext('should not add anything to form without a name')
+              .toHaveSize(0);
+          },
         },
         {
           name: 'unchecked',
           render: () => html`<md-checkbox name="checkbox"></md-checkbox>`,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form when unchecked')
-                .toHaveSize(0);
-          }
+              .withContext('should not add anything to form when unchecked')
+              .toHaveSize(0);
+          },
         },
         {
           name: 'checked default value',
           render: () =>
-              html`<md-checkbox name="checkbox" checked></md-checkbox>`,
+            html`<md-checkbox name="checkbox" checked></md-checkbox>`,
           assertValue(formData) {
             expect(formData.get('checkbox')).toBe('on');
-          }
+          },
         },
         {
           name: 'checked custom value',
           render: () =>
-              html`<md-checkbox name="checkbox" checked value="Custom value"></md-checkbox>`,
+            html`<md-checkbox
+              name="checkbox"
+              checked
+              value="Custom value"></md-checkbox>`,
           assertValue(formData) {
             expect(formData.get('checkbox')).toBe('Custom value');
-          }
+          },
         },
         {
           name: 'indeterminate',
           render: () =>
-              html`<md-checkbox name="checkbox" checked indeterminate></md-checkbox>`,
+            html`<md-checkbox
+              name="checkbox"
+              checked
+              indeterminate></md-checkbox>`,
           assertValue(formData) {
             expect(formData)
-                .withContext(
-                    'should not add anything to form when indeterminate')
-                .toHaveSize(0);
-          }
+              .withContext('should not add anything to form when indeterminate')
+              .toHaveSize(0);
+          },
         },
         {
           name: 'disabled',
           render: () =>
-              html`<md-checkbox name="checkbox" checked disabled></md-checkbox>`,
+            html`<md-checkbox name="checkbox" checked disabled></md-checkbox>`,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form when disabled')
-                .toHaveSize(0);
-          }
-        }
+              .withContext('should not add anything to form when disabled')
+              .toHaveSize(0);
+          },
+        },
       ],
       resetTests: [
         {
@@ -87,36 +92,36 @@ describe('<md-checkbox>', () => {
           },
           assertReset(checkbox) {
             expect(checkbox.checked)
-                .withContext('checkbox.checked after reset')
-                .toBeFalse();
-          }
+              .withContext('checkbox.checked after reset')
+              .toBeFalse();
+          },
         },
         {
           name: 'reset to checked',
           render: () =>
-              html`<md-checkbox name="checkbox" checked></md-checkbox>`,
+            html`<md-checkbox name="checkbox" checked></md-checkbox>`,
           change(checkbox) {
             checkbox.checked = false;
           },
           assertReset(checkbox) {
             expect(checkbox.checked)
-                .withContext('checkbox.checked after reset')
-                .toBeTrue();
-          }
+              .withContext('checkbox.checked after reset')
+              .toBeTrue();
+          },
         },
         {
           name: 'reset to indeterminate',
           render: () =>
-              html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
+            html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
           change(checkbox) {
             checkbox.indeterminate = false;
           },
           assertReset(checkbox) {
             expect(checkbox.indeterminate)
-                .withContext('checkbox.indeterminate should not be reset')
-                .toBeFalse();
-          }
-        }
+              .withContext('checkbox.indeterminate should not be reset')
+              .toBeFalse();
+          },
+        },
       ],
       restoreTests: [
         {
@@ -124,31 +129,31 @@ describe('<md-checkbox>', () => {
           render: () => html`<md-checkbox name="checkbox"></md-checkbox>`,
           assertRestored(checkbox) {
             expect(checkbox.checked)
-                .withContext('checkbox.checked after restore')
-                .toBeFalse();
-          }
+              .withContext('checkbox.checked after restore')
+              .toBeFalse();
+          },
         },
         {
           name: 'restore checked',
           render: () =>
-              html`<md-checkbox name="checkbox" checked></md-checkbox>`,
+            html`<md-checkbox name="checkbox" checked></md-checkbox>`,
           assertRestored(checkbox) {
             expect(checkbox.checked)
-                .withContext('checkbox.checked after restore')
-                .toBeTrue();
-          }
+              .withContext('checkbox.checked after restore')
+              .toBeTrue();
+          },
         },
         {
           name: 'restore indeterminate',
           render: () =>
-              html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
+            html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
           assertRestored(checkbox) {
             expect(checkbox.indeterminate)
-                .withContext('checkbox.indeterminate should not be restored')
-                .toBeFalse();
-          }
-        }
-      ]
+              .withContext('checkbox.indeterminate should not be restored')
+              .toBeFalse();
+          },
+        },
+      ],
     });
   });
 });

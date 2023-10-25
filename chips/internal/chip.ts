@@ -24,7 +24,7 @@ export abstract class Chip extends LitElement {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true
+    delegatesFocus: true,
   };
 
   /**
@@ -93,10 +93,10 @@ export abstract class Chip extends LitElement {
   protected renderContainerContent() {
     return html`
       ${this.renderOutline()}
-      <md-focus-ring part="focus-ring"
-          for=${this.primaryId}></md-focus-ring>
-      <md-ripple for=${this.primaryId}
-          ?disabled=${this.rippleDisabled}></md-ripple>
+      <md-focus-ring part="focus-ring" for=${this.primaryId}></md-focus-ring>
+      <md-ripple
+        for=${this.primaryId}
+        ?disabled=${this.rippleDisabled}></md-ripple>
       ${this.renderPrimaryAction(this.renderPrimaryContent())}
     `;
   }

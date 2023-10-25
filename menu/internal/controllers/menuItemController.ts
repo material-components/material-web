@@ -6,7 +6,11 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {CloseReason, createDefaultCloseMenuEvent, isClosableKey} from './shared.js';
+import {
+  CloseReason,
+  createDefaultCloseMenuEvent,
+  isClosableKey,
+} from './shared.js';
 
 /**
  * Interface specific to menu item and not HTMLElement.
@@ -52,12 +56,12 @@ interface MenuItemAdditions {
  *
  * NOTE, the required properties are recommended to be reactive properties.
  */
-export type MenuItem = MenuItemAdditions&HTMLElement;
+export type MenuItem = MenuItemAdditions & HTMLElement;
 
 /**
  * Supported behaviors for a menu item.
  */
-export type MenuItemType = 'menuitem'|'option'|'button'|'link';
+export type MenuItemType = 'menuitem' | 'option' | 'button' | 'link';
 
 /**
  * The options used to inialize MenuItemController.
@@ -81,23 +85,19 @@ export interface MenuItemControllerConfig {
  * the MenuItem interface.
  */
 export class MenuItemController implements ReactiveController {
-  private internalTypeaheadText: string|null = null;
-  private readonly getHeadlineElements:
-      MenuItemControllerConfig['getHeadlineElements'];
-  private readonly getInteractiveElement:
-      MenuItemControllerConfig['getInteractiveElement'];
+  private internalTypeaheadText: string | null = null;
+  private readonly getHeadlineElements: MenuItemControllerConfig['getHeadlineElements'];
+  private readonly getInteractiveElement: MenuItemControllerConfig['getInteractiveElement'];
 
   /**
    * @param host The MenuItem in which to attach this controller to.
    * @param config The object that configures this controller's behavior.
    */
   constructor(
-      private readonly host: ReactiveControllerHost&MenuItem,
-      config: MenuItemControllerConfig) {
-    const {
-      getHeadlineElements,
-      getInteractiveElement,
-    } = config;
+    private readonly host: ReactiveControllerHost & MenuItem,
+    config: MenuItemControllerConfig,
+  ) {
+    const {getHeadlineElements, getInteractiveElement} = config;
     this.getHeadlineElements = getHeadlineElements;
     this.getInteractiveElement = getInteractiveElement;
     this.host.addController(this);
@@ -166,8 +166,11 @@ export class MenuItemController implements ReactiveController {
   onClick = () => {
     if (this.host.keepOpen) return;
 
-    this.host.dispatchEvent(createDefaultCloseMenuEvent(
-        this.host, {kind: CloseReason.CLICK_SELECTION}));
+    this.host.dispatchEvent(
+      createDefaultCloseMenuEvent(this.host, {
+        kind: CloseReason.CLICK_SELECTION,
+      }),
+    );
   };
 
   /**
@@ -188,8 +191,12 @@ export class MenuItemController implements ReactiveController {
 
     if (!event.defaultPrevented && isClosableKey(keyCode)) {
       event.preventDefault();
-      this.host.dispatchEvent(createDefaultCloseMenuEvent(
-          this.host, {kind: CloseReason.KEYDOWN, key: keyCode}));
+      this.host.dispatchEvent(
+        createDefaultCloseMenuEvent(this.host, {
+          kind: CloseReason.KEYDOWN,
+          key: keyCode,
+        }),
+      );
     }
   };
 

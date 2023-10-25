@@ -32,7 +32,7 @@ export class ChangeDarkModeEvent extends Event {
   /**
    * @param mode The new color mode to apply.
    */
-  constructor(public mode: 'light'|'dark'|'auto') {
+  constructor(public mode: 'light' | 'dark' | 'auto') {
     super('change-mode', {bubbles: true, composed: true});
   }
 }

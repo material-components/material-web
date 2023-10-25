@@ -4,7 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {AbsolutePath, Analyzer, LitElementDeclaration, LitElementExport, Module,} from '@lit-labs/analyzer/package-analyzer.js';
+import {
+  AbsolutePath,
+  Analyzer,
+  LitElementDeclaration,
+  LitElementExport,
+  Module,
+} from '@lit-labs/analyzer/package-analyzer.js';
 import * as path from 'path';
 import type ts from 'typescript';
 
@@ -84,15 +90,21 @@ export interface MdMethodParameterInfo {
  * and its superclass chain with data useful for API documentation.
  */
 export function analyzeElementApi(
-    analyzer: Analyzer, elementEntrypoint: string, superClassName = '') {
+  analyzer: Analyzer,
+  elementEntrypoint: string,
+  superClassName = '',
+) {
   // The description of the module
   const elementModule = analyzer.getModule(elementEntrypoint as AbsolutePath);
   // The description of the custom element / superclass
-  const customElementModule = elementModule.getCustomElementExports()[0] ||
-      (elementModule.getDeclaration(superClassName) as LitElementDeclaration);
+  const customElementModule =
+    elementModule.getCustomElementExports()[0] ||
+    (elementModule.getDeclaration(superClassName) as LitElementDeclaration);
 
-  const {properties, reactiveProperties} =
-      analyzeFields(customElementModule, elementModule);
+  const {properties, reactiveProperties} = analyzeFields(
+    customElementModule,
+    elementModule,
+  );
   const methods = analyzeMethods(customElementModule);
   const events = analyzeEvents(customElementModule);
   const superclass = customElementModule.heritage.superClass;
@@ -115,10 +127,14 @@ export function analyzeElementApi(
     // Get the typescript source path of the superclass since we use js imports
     const superClassLocation = superclass.module.replace(/\.js$/, '.ts');
     const absolutePath = path.resolve(
-        elementEntrypoint,
-        path.relative(elementEntrypoint, superClassLocation));
-    const superClassModule =
-        analyzeElementApi(analyzer, absolutePath, superclass.name);
+      elementEntrypoint,
+      path.relative(elementEntrypoint, superClassLocation),
+    );
+    const superClassModule = analyzeElementApi(
+      analyzer,
+      absolutePath,
+      superclass.name,
+    );
     elementDocModule.superClass = superClassModule;
   }
 
@@ -143,8 +159,9 @@ const FIELDS_TO_IGNORE = new Set(['isListItem', 'isMenuItem']);
  * LitElement class.
  */
 export function analyzeFields(
-    classDeclaration: LitElementExport|LitElementDeclaration, module: Module):
-    {properties: MdPropertyInfo[]; reactiveProperties: MdPropertyInfo[];} {
+  classDeclaration: LitElementExport | LitElementDeclaration,
+  module: Module,
+): {properties: MdPropertyInfo[]; reactiveProperties: MdPropertyInfo[]} {
   const properties: MdPropertyInfo[] = [];
   const reactiveProperties: MdPropertyInfo[] = [];
 
@@ -165,7 +182,7 @@ export function analyzeFields(
 
       if (variableDeclaration.isVariableDeclaration()) {
         const node =
-            variableDeclaration.node as unknown as ts.VariableDeclaration;
+          variableDeclaration.node as unknown as ts.VariableDeclaration;
 
         // attempt to get the default value. If it's not a string, just use the
         // variable name.
@@ -173,7 +190,7 @@ export function analyzeFields(
       }
     }
 
-    let attribute: string|undefined = undefined;
+    let attribute: string | undefined = undefined;
     let propertyArray = properties;
 
     // If it is a reactive property, put it in the reactive properties array
@@ -248,8 +265,9 @@ const METHODS_TO_IGNORE = new Set([
  *     analyze and format the method data.
  * @returns The information about the methods of the LitElement class.
  */
-export function analyzeMethods(classDeclaration: LitElementExport|
-                               LitElementDeclaration) {
+export function analyzeMethods(
+  classDeclaration: LitElementExport | LitElementDeclaration,
+) {
   const methods: MdMethodInfo[] = [];
   for (const method of classDeclaration.methods) {
     // Skip methods we decided to skip and symbols
@@ -261,14 +279,13 @@ export function analyzeMethods(classDeclaration: LitElementExport|
       name: method.name,
       description: makeMarkdownFriendly(method.description),
       privacy: method.privacy,
-      parameters: method.parameters.map(
-          (parameter) => ({
-            name: parameter.name,
-            summary: makeMarkdownFriendly(parameter.summary),
-            description: makeMarkdownFriendly(parameter.description),
-            type: makeMarkdownFriendly(parameter.type.text),
-            default: parameter.default,
-          })),
+      parameters: method.parameters.map((parameter) => ({
+        name: parameter.name,
+        summary: makeMarkdownFriendly(parameter.summary),
+        description: makeMarkdownFriendly(parameter.description),
+        type: makeMarkdownFriendly(parameter.type.text),
+        default: parameter.default,
+      })),
       returns: makeMarkdownFriendly(method.return?.type.text),
     });
   }
@@ -287,8 +304,9 @@ export function analyzeMethods(classDeclaration: LitElementExport|
  *     analyze and format the event data.
  * @returns The information about the events dispatched by the LitElement class.
  */
-export function analyzeEvents(classDeclaration: LitElementExport|
-                              LitElementDeclaration): MdEventInfo[] {
+export function analyzeEvents(
+  classDeclaration: LitElementExport | LitElementDeclaration,
+): MdEventInfo[] {
   const events: MdEventInfo[] = [];
   const eventsKeys = classDeclaration.events.keys();
 

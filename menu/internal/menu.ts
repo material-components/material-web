@@ -4,22 +4,42 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../focus/md-focus-ring.js';
 import '../../elevation/elevation.js';
+import '../../focus/md-focus-ring.js';
 
 import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
+import {
+  polyfillElementInternalsAria,
+  setupHostAria,
+} from '../../internal/aria/aria.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
-import {ListController, NavigableKeys} from '../../list/internal/list-controller.js';
-import {getActiveItem, getFirstActivatableItem, getLastActivatableItem} from '../../list/internal/list-navigation-helpers.js';
+import {
+  ListController,
+  NavigableKeys,
+} from '../../list/internal/list-controller.js';
+import {
+  getActiveItem,
+  getFirstActivatableItem,
+  getLastActivatableItem,
+} from '../../list/internal/list-navigation-helpers.js';
 
 import {MenuItem} from './controllers/menuItemController.js';
-import {ActivateTypeaheadEvent, DeactivateTypeaheadEvent, FocusState, isClosableKey, isElementInSubtree} from './controllers/shared.js';
-import {Corner, SurfacePositionController, SurfacePositionTarget} from './controllers/surfacePositionController.js';
+import {
+  ActivateTypeaheadEvent,
+  DeactivateTypeaheadEvent,
+  FocusState,
+  isClosableKey,
+  isElementInSubtree,
+} from './controllers/shared.js';
+import {
+  Corner,
+  SurfacePositionController,
+  SurfacePositionTarget,
+} from './controllers/surfacePositionController.js';
 import {TypeaheadController} from './controllers/typeaheadController.js';
 
 export {Corner} from './controllers/surfacePositionController.js';
@@ -49,8 +69,9 @@ const menuNavKeys = new Set<string>([
  *    Defaults to `window.document`
  * @return Returns the currently deeply focused element or `null` if none.
  */
-function getFocusedElement(activeDoc: Document|ShadowRoot = document):
-    HTMLElement|null {
+function getFocusedElement(
+  activeDoc: Document | ShadowRoot = document,
+): HTMLElement | null {
   let activeEl = activeDoc.activeElement as HTMLElement | null;
 
   // Check for activeElement in the case that an element with a shadow root host
@@ -74,8 +95,8 @@ export abstract class Menu extends LitElement {
     setupHostAria(Menu, {focusable: false});
   }
 
-  @query('.menu') private readonly surfaceEl!: HTMLElement|null;
-  @query('slot') private readonly slotEl!: HTMLSlotElement|null;
+  @query('.menu') private readonly surfaceEl!: HTMLElement | null;
+  @query('slot') private readonly slotEl!: HTMLSlotElement | null;
 
   /**
    * The ID of the element in the same root node in which the menu should align
@@ -105,7 +126,7 @@ export abstract class Menu extends LitElement {
    * __NOTE__: Fixed menus will not scroll with the page and will be fixed to
    * the window instead.
    */
-  @property() positioning: 'absolute'|'fixed' = 'absolute';
+  @property() positioning: 'absolute' | 'fixed' = 'absolute';
   /**
    * Skips the opening and closing animations.
    */
@@ -216,44 +237,42 @@ export abstract class Menu extends LitElement {
       return maybeItem.hasAttribute('md-menu-item');
     },
     getPossibleItems: () => this.slotItems,
-    isRtl: () => (getComputedStyle(this).direction === 'rtl'),
-    deactivateItem:
-        (item: MenuItem) => {
-          item.selected = false;
-          item.tabIndex = -1;
-        },
-    activateItem:
-        (item: MenuItem) => {
-          item.selected = true;
-          item.tabIndex = 0;
-        },
-    isNavigableKey:
-        (key: string) => {
-          if (!this.isSubmenu) {
-            return menuNavKeys.has(key);
-          }
+    isRtl: () => getComputedStyle(this).direction === 'rtl',
+    deactivateItem: (item: MenuItem) => {
+      item.selected = false;
+      item.tabIndex = -1;
+    },
+    activateItem: (item: MenuItem) => {
+      item.selected = true;
+      item.tabIndex = 0;
+    },
+    isNavigableKey: (key: string) => {
+      if (!this.isSubmenu) {
+        return menuNavKeys.has(key);
+      }
 
-          const isRtl = getComputedStyle(this).direction === 'rtl';
-          // we want md-submenu to handle the submenu's left/right arrow exit
-          // key so it can close the menu instead of navigate the list.
-          // Therefore we need to include all keys but left/right arrow close
-          // key
-          const arrowOpen =
-              isRtl ? NavigableKeys.ArrowLeft : NavigableKeys.ArrowRight;
+      const isRtl = getComputedStyle(this).direction === 'rtl';
+      // we want md-submenu to handle the submenu's left/right arrow exit
+      // key so it can close the menu instead of navigate the list.
+      // Therefore we need to include all keys but left/right arrow close
+      // key
+      const arrowOpen = isRtl
+        ? NavigableKeys.ArrowLeft
+        : NavigableKeys.ArrowRight;
 
-          if (key === arrowOpen) {
-            return true;
-          }
+      if (key === arrowOpen) {
+        return true;
+      }
 
-          return submenuNavKeys.has(key);
-        },
+      return submenuNavKeys.has(key);
+    },
   });
 
   /**
    * Whether the menu is animating upwards or downwards when opening. This is
    * helpful for calculating some animation calculations.
    */
-  private get openDirection(): 'UP'|'DOWN' {
+  private get openDirection(): 'UP' | 'DOWN' {
     const menuCornerBlock = this.menuCorner.split('-')[0];
     return menuCornerBlock === 'start' ? 'DOWN' : 'UP';
   }
@@ -261,7 +280,7 @@ export abstract class Menu extends LitElement {
   /**
    * The element that was focused before the menu opened.
    */
-  private lastFocusedElement: HTMLElement|null = null;
+  private lastFocusedElement: HTMLElement | null = null;
 
   /**
    * Handles typeahead navigation through the menu.
@@ -270,33 +289,39 @@ export abstract class Menu extends LitElement {
     return {
       getItems: () => this.items,
       typeaheadBufferTime: this.typeaheadDelay,
-      active: this.typeaheadActive
+      active: this.typeaheadActive,
     };
   });
 
-  private currentAnchorElement: HTMLElement|null = null;
+  private currentAnchorElement: HTMLElement | null = null;
 
   /**
    * The element which the menu should align to. If `anchor` is set to a
    * non-empty idref string, then `anchorEl` will resolve to the element with
    * the given id in the same root node. Otherwise, `null`.
    */
-  get anchorElement(): HTMLElement&Partial<SurfacePositionTarget>|null {
+  get anchorElement(): (HTMLElement & Partial<SurfacePositionTarget>) | null {
     if (this.anchor) {
-      return (this.getRootNode() as Document | ShadowRoot)
-          .querySelector(`#${this.anchor}`);
+      return (this.getRootNode() as Document | ShadowRoot).querySelector(
+        `#${this.anchor}`,
+      );
     }
 
     return this.currentAnchorElement;
   }
 
-  set anchorElement(element: HTMLElement&Partial<SurfacePositionTarget>|null) {
+  set anchorElement(
+    element: (HTMLElement & Partial<SurfacePositionTarget>) | null,
+  ) {
     this.currentAnchorElement = element;
     this.requestUpdate('anchorElement');
   }
 
   private readonly internals = polyfillElementInternalsAria(
-      this, (this as HTMLElement /* needed for closure */).attachInternals());
+    this,
+    // Cast needed for closure
+    (this as HTMLElement).attachInternals(),
+  );
 
   constructor() {
     super();
@@ -315,26 +340,28 @@ export abstract class Menu extends LitElement {
    * Handles positioning the surface and aligning it to the anchor as well as
    * keeping it in the viewport.
    */
-  private readonly menuPositionController =
-      new SurfacePositionController(this, () => {
-        return {
-          anchorCorner: this.anchorCorner,
-          surfaceCorner: this.menuCorner,
-          surfaceEl: this.surfaceEl,
-          anchorEl: this.anchorElement,
-          positioning: this.positioning,
-          isOpen: this.open,
-          xOffset: this.xOffset,
-          yOffset: this.yOffset,
-          onOpen: this.onOpened,
-          beforeClose: this.beforeClose,
-          onClose: this.onClosed,
-          // We can't resize components that have overflow like menus with
-          // submenus because the overflow-y will show menu items / content
-          // outside the bounds of the menu. (to be fixed w/ popover API)
-          repositionStrategy: this.hasOverflow ? 'move' : 'resize',
-        };
-      });
+  private readonly menuPositionController = new SurfacePositionController(
+    this,
+    () => {
+      return {
+        anchorCorner: this.anchorCorner,
+        surfaceCorner: this.menuCorner,
+        surfaceEl: this.surfaceEl,
+        anchorEl: this.anchorElement,
+        positioning: this.positioning,
+        isOpen: this.open,
+        xOffset: this.xOffset,
+        yOffset: this.yOffset,
+        onOpen: this.onOpened,
+        beforeClose: this.beforeClose,
+        onClose: this.onClosed,
+        // We can't resize components that have overflow like menus with
+        // submenus because the overflow-y will show menu items / content
+        // outside the bounds of the menu. (to be fixed w/ popover API)
+        repositionStrategy: this.hasOverflow ? 'move' : 'resize',
+      };
+    },
+  );
 
   /**
    * The menu items associated with this menu. The items must be `MenuItem`s and
@@ -390,17 +417,15 @@ export abstract class Menu extends LitElement {
    */
   private renderSurface() {
     return html`
-       <div
-          class="menu ${classMap(this.getSurfaceClasses())}"
-          style=${styleMap(this.menuPositionController.surfaceStyles)}>
+      <div
+        class="menu ${classMap(this.getSurfaceClasses())}"
+        style=${styleMap(this.menuPositionController.surfaceStyles)}>
         ${this.renderElevation()}
         <div class="items">
-          <div class="item-padding">
-            ${this.renderMenuItems()}
-          </div>
+          <div class="item-padding"> ${this.renderMenuItems()} </div>
         </div>
-       </div>
-     `;
+      </div>
+    `;
   }
 
   /**
@@ -408,14 +433,14 @@ export abstract class Menu extends LitElement {
    */
   private renderMenuItems() {
     return html`<slot
-        @close-menu=${this.onCloseMenu}
-        @deactivate-items=${this.onDeactivateItems}
-        @request-activation=${this.onRequestActivation}
-        @deactivate-typeahead=${this.handleDeactivateTypeahead}
-        @activate-typeahead=${this.handleActivateTypeahead}
-        @stay-open-on-focusout=${this.handleStayOpenOnFocusout}
-        @close-on-focusout=${this.handleCloseOnFocusout}
-        @slotchange=${this.listController.onSlotchange}></slot>`;
+      @close-menu=${this.onCloseMenu}
+      @deactivate-items=${this.onDeactivateItems}
+      @request-activation=${this.onRequestActivation}
+      @deactivate-typeahead=${this.handleDeactivateTypeahead}
+      @activate-typeahead=${this.handleActivateTypeahead}
+      @stay-open-on-focusout=${this.handleStayOpenOnFocusout}
+      @close-on-focusout=${this.handleCloseOnFocusout}
+      @slotchange=${this.listController.onSlotchange}></slot>`;
   }
 
   /**
@@ -438,16 +463,21 @@ export abstract class Menu extends LitElement {
     // Do not close if we focused out by clicking on the anchor element. We
     // can't assume anchor buttons can be the related target because of iOS does
     // not focus buttons.
-    if (this.stayOpenOnFocusout || !this.open ||
-        this.pointerPath.includes(anchorEl)) {
+    if (
+      this.stayOpenOnFocusout ||
+      !this.open ||
+      this.pointerPath.includes(anchorEl)
+    ) {
       return;
     }
 
     if (event.relatedTarget) {
       // Don't close the menu if we are switching focus between menu,
       // md-menu-item, and md-list or if the anchor was click focused.
-      if (isElementInSubtree(event.relatedTarget, this) ||
-          isElementInSubtree(event.relatedTarget, anchorEl)) {
+      if (
+        isElementInSubtree(event.relatedTarget, this) ||
+        isElementInSubtree(event.relatedTarget, anchorEl)
+      ) {
         return;
       }
     } else if (this.pointerPath.includes(this)) {
@@ -467,8 +497,11 @@ export abstract class Menu extends LitElement {
   };
 
   private captureKeydown(event: KeyboardEvent) {
-    if (event.target === this && !event.defaultPrevented &&
-        isClosableKey(event.code)) {
+    if (
+      event.target === this &&
+      !event.defaultPrevented &&
+      isClosableKey(event.code)
+    ) {
       event.preventDefault();
       this.close();
     }
@@ -495,7 +528,7 @@ export abstract class Menu extends LitElement {
     if (this.quick) {
       this.dispatchEvent(new Event('opening'));
     } else {
-      animationAborted = !!await this.animateOpen();
+      animationAborted = !!(await this.animateOpen());
     }
 
     // This must come after the opening animation or else it may focus one of
@@ -587,25 +620,30 @@ export abstract class Menu extends LitElement {
     // We want to fit every child fade-in animation within the full duration of
     // the animation.
     const DELAY_BETWEEN_ITEMS =
-        (FULL_DURATION - ITEM_OPACITY_DURATION) / children.length;
+      (FULL_DURATION - ITEM_OPACITY_DURATION) / children.length;
 
-    const surfaceHeightAnimation =
-        surfaceEl.animate([{height: '0px'}, {height: `${height}px`}], {
-          duration: FULL_DURATION,
-          easing: EASING.EMPHASIZED,
-        });
+    const surfaceHeightAnimation = surfaceEl.animate(
+      [{height: '0px'}, {height: `${height}px`}],
+      {
+        duration: FULL_DURATION,
+        easing: EASING.EMPHASIZED,
+      },
+    );
     // When we are opening upwards, we want to make sure the last item is always
     // in view, so we need to translate it upwards the opposite direction of the
     // height animation
     const upPositionCorrectionAnimation = slotEl.animate(
-        [
-          {transform: openingUpwards ? `translateY(-${height}px)` : ''},
-          {transform: ''}
-        ],
-        {duration: FULL_DURATION, easing: EASING.EMPHASIZED});
+      [
+        {transform: openingUpwards ? `translateY(-${height}px)` : ''},
+        {transform: ''},
+      ],
+      {duration: FULL_DURATION, easing: EASING.EMPHASIZED},
+    );
 
     const surfaceOpacityAnimation = surfaceEl.animate(
-        [{opacity: 0}, {opacity: 1}], SURFACE_OPACITY_DURATION);
+      [{opacity: 0}, {opacity: 1}],
+      SURFACE_OPACITY_DURATION,
+    );
 
     const childrenAnimations: Array<[HTMLElement, Animation]> = [];
 
@@ -693,41 +731,45 @@ export abstract class Menu extends LitElement {
     const SURFACE_OPACITY_DELAY = FULL_DURATION - SURFACE_OPACITY_DURATION;
     const ITEM_OPACITY_DURATION = 50;
     const ITEM_OPACITY_INITIAL_DELAY = 50;
-    const END_HEIGHT_PERCENTAGE = .35;
+    const END_HEIGHT_PERCENTAGE = 0.35;
 
     // We want to fit every child fade-out animation within the full duration of
     // the animation.
     const DELAY_BETWEEN_ITEMS =
-        (FULL_DURATION - ITEM_OPACITY_INITIAL_DELAY - ITEM_OPACITY_DURATION) /
-        children.length;
+      (FULL_DURATION - ITEM_OPACITY_INITIAL_DELAY - ITEM_OPACITY_DURATION) /
+      children.length;
 
     // The mock has the animation shrink to 35%
     const surfaceHeightAnimation = surfaceEl.animate(
-        [
-          {height: `${height}px`},
-          {height: `${height * END_HEIGHT_PERCENTAGE}px`}
-        ],
-        {
-          duration: FULL_DURATION,
-          easing: EASING.EMPHASIZED_ACCELERATE,
-        });
+      [
+        {height: `${height}px`},
+        {height: `${height * END_HEIGHT_PERCENTAGE}px`},
+      ],
+      {
+        duration: FULL_DURATION,
+        easing: EASING.EMPHASIZED_ACCELERATE,
+      },
+    );
 
     // When we are closing downwards, we want to make sure the last item is
     // always in view, so we need to translate it upwards the opposite direction
     // of the height animation
     const downPositionCorrectionAnimation = slotEl.animate(
-        [
-          {transform: ''}, {
-            transform: closingDownwards ?
-                `translateY(-${height * (1 - END_HEIGHT_PERCENTAGE)}px)` :
-                ''
-          }
-        ],
-        {duration: FULL_DURATION, easing: EASING.EMPHASIZED_ACCELERATE});
+      [
+        {transform: ''},
+        {
+          transform: closingDownwards
+            ? `translateY(-${height * (1 - END_HEIGHT_PERCENTAGE)}px)`
+            : '',
+        },
+      ],
+      {duration: FULL_DURATION, easing: EASING.EMPHASIZED_ACCELERATE},
+    );
 
     const surfaceOpacityAnimation = surfaceEl.animate(
-        [{opacity: 1}, {opacity: 0}],
-        {duration: SURFACE_OPACITY_DURATION, delay: SURFACE_OPACITY_DELAY});
+      [{opacity: 1}, {opacity: 0}],
+      {duration: SURFACE_OPACITY_DURATION, delay: SURFACE_OPACITY_DELAY},
+    );
 
     const childrenAnimations: Array<[HTMLElement, Animation]> = [];
 
@@ -787,8 +829,9 @@ export abstract class Menu extends LitElement {
   }
 
   private cleanUpGlobalEventListeners() {
-    document.removeEventListener(
-        'click', this.onDocumentClick, {capture: true});
+    document.removeEventListener('click', this.onDocumentClick, {
+      capture: true,
+    });
     window.removeEventListener('pointerdown', this.onWindowPointerdown);
   }
 
@@ -808,8 +851,11 @@ export abstract class Menu extends LitElement {
 
     const path = event.composedPath();
 
-    if (!this.stayOpenOnOutsideClick && !path.includes(this) &&
-        !path.includes(this.anchorElement!)) {
+    if (
+      !this.stayOpenOnOutsideClick &&
+      !path.includes(this) &&
+      !path.includes(this.anchorElement!)
+    ) {
       this.open = false;
     }
   };
@@ -854,9 +900,10 @@ export abstract class Menu extends LitElement {
 
   close() {
     this.open = false;
-    const maybeSubmenu =
-        this.slotItems as Array<HTMLElement&{close?: () => void}>;
-    maybeSubmenu.forEach(item => {
+    const maybeSubmenu = this.slotItems as Array<
+      HTMLElement & {close?: () => void}
+    >;
+    maybeSubmenu.forEach((item) => {
       item.close?.();
     });
   }

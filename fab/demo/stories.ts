@@ -4,12 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '@material/web/fab/branded-fab.js';
 import '@material/web/fab/fab.js';
 import '@material/web/icon/icon.js';
-import '@material/web/fab/branded-fab.js';
 
 import {FabSize} from '@material/web/fab/fab.js';
-import {labelStyles, MaterialStoryInit} from './material-collection.js';
+import {
+  labelStyles,
+  MaterialStoryInit,
+} from './material-collection.js';
 import {css, html, nothing} from 'lit';
 
 /** Knob types for fab stories. */
@@ -17,7 +20,7 @@ export interface StoryKnobs {
   icon: string;
   label: string;
   lowered: boolean;
-  size: FabSize|undefined;
+  size: FabSize | undefined;
 }
 
 const styles = css`
@@ -46,8 +49,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             variant="surface"
             .lowered=${lowered}
             .label=${label}
-            .size=${size!}
-          >
+            .size=${size!}>
             <md-icon slot="icon">${icon}</md-icon>
           </md-fab>
         </label>
@@ -59,8 +61,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             variant="primary"
             .lowered=${lowered}
             .label=${label}
-            .size=${size!}
-          >
+            .size=${size!}>
             <md-icon slot="icon">${icon}</md-icon>
           </md-fab>
         </label>
@@ -72,8 +73,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             variant="secondary"
             .lowered=${lowered}
             .label=${label}
-            .size=${size!}
-          >
+            .size=${size!}>
             <md-icon slot="icon">${icon}</md-icon>
           </md-fab>
         </label>
@@ -85,8 +85,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             variant="tertiary"
             .lowered=${lowered}
             .label=${label}
-            .size=${size!}
-          >
+            .size=${size!}>
             <md-icon slot="icon">${icon}</md-icon>
           </md-fab>
         </label>
@@ -97,8 +96,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             aria-label=${label ? nothing : 'An example branded FAB'}
             .lowered=${lowered}
             .label=${label}
-            .size=${size!}
-          >
+            .size=${size!}>
             <svg slot="icon" width="36" height="36" viewBox="0 0 36 36">
               <path fill="#34A853" d="M16 16v14h4V20z"></path>
               <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -110,7 +108,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
         </label>
       </div>
     `;
-  }
+  },
 };
 
 /** Checkbox stories. */

@@ -38,15 +38,19 @@ export const docsToElementMapping: {[key: string]: string[]} = {
   'icon.md': ['icon/icon.ts'],
   'list.md': ['list/list.ts', 'list/list-item.ts'],
   'menu.md': ['menu/menu.ts', 'menu/menu-item.ts', 'menu/sub-menu.ts'],
-  'progress.md':
-      ['progress/linear-progress.ts', 'progress/circular-progress.ts'],
+  'progress.md': [
+    'progress/linear-progress.ts',
+    'progress/circular-progress.ts',
+  ],
   'radio.md': ['radio/radio.ts'],
   'ripple.md': ['ripple/ripple.ts'],
   'slider.md': ['slider/slider.ts'],
   'switch.md': ['switch/switch.ts'],
   'tabs.md': ['tabs/tabs.ts', 'tabs/primary-tab.ts', 'tabs/secondary-tab.ts'],
-  'text-field.md':
-      ['textfield/filled-text-field.ts', 'textfield/outlined-text-field.ts'],
+  'text-field.md': [
+    'textfield/filled-text-field.ts',
+    'textfield/outlined-text-field.ts',
+  ],
   'select.md': [
     'select/filled-select.ts',
     'select/outlined-select.ts',

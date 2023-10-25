@@ -6,7 +6,10 @@
 
 import '@material/web/checkbox/checkbox.js';
 
-import {labelStyles, MaterialStoryInit} from './material-collection.js';
+import {
+  labelStyles,
+  MaterialStoryInit,
+} from './material-collection.js';
 import {css, html} from 'lit';
 
 /** Knob types for checkbox stories. */
@@ -25,8 +28,7 @@ const checkbox: MaterialStoryInit<StoryKnobs> = {
         ?checked=${checked}
         ?disabled=${disabled}
         ?indeterminate=${indeterminate}
-        touch-target="wrapper"
-      ></md-checkbox>
+        touch-target="wrapper"></md-checkbox>
     `;
   },
 };
@@ -53,8 +55,7 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
           <md-checkbox
             ?disabled=${disabled}
             aria-label="Cats"
-            touch-target="wrapper"
-          ></md-checkbox>
+            touch-target="wrapper"></md-checkbox>
           Cats
         </label>
         <label>
@@ -62,8 +63,7 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
             checked
             ?disabled=${disabled}
             aria-label="dogs"
-            touch-target="wrapper"
-          ></md-checkbox>
+            touch-target="wrapper"></md-checkbox>
           Dogs
         </label>
         <label>
@@ -71,8 +71,7 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
             indeterminate
             ?disabled=${disabled}
             aria-label="Birds"
-            touch-target="wrapper"
-          ></md-checkbox>
+            touch-target="wrapper"></md-checkbox>
           Birds
         </label>
       </div>

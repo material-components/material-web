@@ -6,7 +6,7 @@
 
 // import 'jasmine'; (google3-only)
 
-import {ReactiveElement, render as litRender, TemplateResult} from 'lit';
+import {ReactiveElement, TemplateResult, render as litRender} from 'lit';
 
 import {installSkipWebAnimations} from './skip-animations.js';
 
@@ -132,7 +132,7 @@ export class Environment {
    * @return The current root container or undefined is nothing as been rendered
    *     yet.
    */
-  protected getCurrentRoot(): HTMLElement|undefined {
+  protected getCurrentRoot(): HTMLElement | undefined {
     return this.roots[this.roots.length - 1];
   }
 }

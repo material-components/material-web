@@ -41,6 +41,9 @@ declare global {
  */
 @customElement('md-elevated-button')
 export class MdElevatedButton extends ElevatedButton {
-  static override styles =
-      [sharedStyles, sharedElevationStyles, elevatedStyles];
+  static override styles = [
+    sharedStyles,
+    sharedElevationStyles,
+    elevatedStyles,
+  ];
 }

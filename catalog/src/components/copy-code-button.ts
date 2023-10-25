@@ -4,12 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/iconbutton/icon-button.js';
 import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
 
 import {MdIconButton} from '@material/web/iconbutton/icon-button.js';
 import {css, html, LitElement} from 'lit';
-import {customElement, property, query, queryAssignedElements, state,} from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  query,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 
 /**
  * A custom element that places a copy button at the top right corner of a
@@ -37,7 +43,7 @@ export class CopyCodeButton extends LitElement {
     }
   `;
 
-  private timeoutId: number|undefined;
+  private timeoutId: number | undefined;
 
   @state() private showCheckmark = false;
 
@@ -72,8 +78,7 @@ export class CopyCodeButton extends LitElement {
         title=${this.buttonTitle}
         .selected=${this.showCheckmark}
         aria-label=${this.label}
-        aria-label-selected=${this.successLabel}
-      >
+        aria-label-selected=${this.successLabel}>
         <md-icon>content_copy</md-icon>
         <md-icon slot="selected">checkmark</md-icon>
       </md-icon-button>

@@ -18,4 +18,4 @@ export interface MDCNavigationTabInteractionEventDetail {
  * NavigationTabInteractionEvent is the custom event for the interaction event.
  */
 export type NavigationTabInteractionEvent =
-    CustomEvent<MDCNavigationTabInteractionEventDetail>;
+  CustomEvent<MDCNavigationTabInteractionEventDetail>;

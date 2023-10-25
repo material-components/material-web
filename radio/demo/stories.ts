@@ -6,7 +6,10 @@
 
 import '@material/web/radio/radio.js';
 
-import {labelStyles, MaterialStoryInit} from './material-collection.js';
+import {
+  labelStyles,
+  MaterialStoryInit,
+} from './material-collection.js';
 import {css, html} from 'lit';
 
 /** Knob types for radio stories. */
@@ -45,7 +48,8 @@ const radio: MaterialStoryInit<StoryKnobs> = {
 const withLabels: MaterialStoryInit<StoryKnobs> = {
   name: 'With labels',
   styles: [
-    labelStyles, css`
+    labelStyles,
+    css`
       .column {
         display: flex;
         flex-direction: column;
@@ -55,7 +59,7 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
         display: flex;
         align-items: center;
       }
-    `
+    `,
   ],
   render({disabled}) {
     return html`

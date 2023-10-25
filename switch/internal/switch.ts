@@ -7,12 +7,23 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {
+  html,
+  isServer,
+  LitElement,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
+import {
+  dispatchActivationClick,
+  isActivationClick,
+  redispatchEvent,
+} from '../../internal/controller/events.js';
 
 /**
  * @fires input {InputEvent} Fired whenever `selected` changes due to user
@@ -26,8 +37,10 @@ export class Switch extends LitElement {
   }
 
   /** @nocollapse */
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+  static override shadowRootOptions: ShadowRootInit = {
+    mode: 'open',
+    delegatesFocus: true,
+  };
 
   /** @nocollapse */
   static readonly formAssociated = true;
@@ -128,12 +141,12 @@ export class Switch extends LitElement {
     return this.internals.willValidate;
   }
 
-  @query('input') private readonly input!: HTMLInputElement|null;
+  @query('input') private readonly input!: HTMLInputElement | null;
   // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
   // Replace with this.internals.validity.customError when resolved.
   private hasCustomValidityError = false;
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  // Cast needed for closure
+  private readonly internals = (this as HTMLElement).attachInternals();
 
   constructor() {
     super();
@@ -218,13 +231,10 @@ export class Switch extends LitElement {
           ?checked=${this.selected}
           ?disabled=${this.disabled}
           ?required=${this.required}
-          @change=${this.handleChange}
-        >
+          @change=${this.handleChange} />
 
         <md-focus-ring part="focus-ring" for="switch"></md-focus-ring>
-        <span class="track">
-          ${this.renderHandle()}
-        </span>
+        <span class="track"> ${this.renderHandle()} </span>
       </div>
     `;
   }
@@ -273,7 +283,8 @@ export class Switch extends LitElement {
   private renderOnIcon() {
     return html`
       <svg class="icon icon--on" viewBox="0 0 24 24">
-        <path d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z"/>
+        <path
+          d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z" />
       </svg>
     `;
   }
@@ -284,7 +295,8 @@ export class Switch extends LitElement {
   private renderOffIcon() {
     return html`
       <svg class="icon icon--off" viewBox="0 0 24 24">
-        <path d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z"/>
+        <path
+          d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z" />
       </svg>
     `;
   }
@@ -314,7 +326,10 @@ export class Switch extends LitElement {
     }
 
     this.internals.setValidity(
-        input.validity, input.validationMessage, this.getInput());
+      input.validity,
+      input.validationMessage,
+      this.getInput(),
+    );
   }
 
   private getInput() {

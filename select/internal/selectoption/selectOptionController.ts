@@ -6,7 +6,11 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {MenuItem, MenuItemController, MenuItemControllerConfig} from '../../../menu/internal/controllers/menuItemController.js';
+import {
+  MenuItem,
+  MenuItemController,
+  MenuItemControllerConfig,
+} from '../../../menu/internal/controllers/menuItemController.js';
 
 /**
  * The interface specific to a Select Option
@@ -32,7 +36,7 @@ interface SelectOptionSelf {
  * The interface to implement for a select option. Additionally, the element
  * must have `md-list-item` and `md-menu-item` attributes on the host.
  */
-export type SelectOption = SelectOptionSelf&MenuItem;
+export type SelectOption = SelectOptionSelf & MenuItem;
 
 /**
  * Creates an event fired by a SelectOption to request selection from md-select.
@@ -67,9 +71,8 @@ export type SelectOptionConfig = MenuItemControllerConfig;
  */
 export class SelectOptionController implements ReactiveController {
   private readonly menuItemController: MenuItemController;
-  private readonly getHeadlineElements:
-      SelectOptionConfig['getHeadlineElements'];
-  private internalDisplayText: string|null = null;
+  private readonly getHeadlineElements: SelectOptionConfig['getHeadlineElements'];
+  private internalDisplayText: string | null = null;
   private lastSelected = this.host.selected;
   private firstUpdate = true;
 
@@ -122,8 +125,9 @@ export class SelectOptionController implements ReactiveController {
    * @param config The object that configures this controller's behavior.
    */
   constructor(
-      private readonly host: ReactiveControllerHost&SelectOption,
-      config: SelectOptionConfig) {
+    private readonly host: ReactiveControllerHost & SelectOption,
+    config: SelectOptionConfig,
+  ) {
     this.menuItemController = new MenuItemController(host, config);
     this.getHeadlineElements = config.getHeadlineElements;
     host.addController(this);

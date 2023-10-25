@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/textfield/filled-text-field.js';
-import '@material/web/radio/radio.js';
-import '@material/web/icon/icon.js';
-import '@material/web/button/filled-tonal-button.js';
 import '@material/web/button/filled-button.js';
+import '@material/web/button/filled-tonal-button.js';
 import '@material/web/button/text-button.js';
 import '@material/web/dialog/dialog.js';
+import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
+import '@material/web/radio/radio.js';
+import '@material/web/textfield/filled-text-field.js';
 
 import {MdDialog} from '@material/web/dialog/dialog.js';
 import {MaterialStoryInit} from './material-collection.js';
@@ -32,8 +32,9 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Dialog',
   render({icon, headline, supportingText}) {
     return html`
-      <md-filled-button @click=${showDialog}
-          aria-label="Open a dialog">Open</md-filled-button>
+      <md-filled-button @click=${showDialog} aria-label="Open a dialog"
+        >Open</md-filled-button
+      >
 
       <md-dialog aria-label=${headline ? nothing : 'A simple dialog'}>
         ${icon ? html`<md-icon slot="icon">${icon}</md-icon>` : nothing}
@@ -47,15 +48,16 @@ const standard: MaterialStoryInit<StoryKnobs> = {
         </div>
       </md-dialog>
     `;
-  }
+  },
 };
 
 const alert: MaterialStoryInit<StoryKnobs> = {
   name: 'Alert',
   render() {
     return html`
-      <md-filled-button @click=${showDialog}
-          aria-label="Open an alert dialog">Alert</md-filled-button>
+      <md-filled-button @click=${showDialog} aria-label="Open an alert dialog"
+        >Alert</md-filled-button
+      >
 
       <md-dialog type="alert">
         <div slot="headline">Alert dialog</div>
@@ -68,15 +70,18 @@ const alert: MaterialStoryInit<StoryKnobs> = {
         </div>
       </md-dialog>
     `;
-  }
+  },
 };
 
 const confirm: MaterialStoryInit<StoryKnobs> = {
   name: 'Confirm',
   render() {
     return html`
-      <md-filled-button @click=${showDialog}
-          aria-label="Open a confirmation dialog">Confirm</md-filled-button>
+      <md-filled-button
+        @click=${showDialog}
+        aria-label="Open a confirmation dialog"
+        >Confirm</md-filled-button
+      >
 
       <md-dialog style="max-width: 320px;">
         <div slot="headline">Permanently delete?</div>
@@ -87,12 +92,13 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
         </form>
         <div slot="actions">
           <md-text-button form="form" value="delete">Delete</md-text-button>
-          <md-filled-tonal-button form="form" value="cancel"
-              autofocus>Cancel</md-filled-tonal-button>
+          <md-filled-tonal-button form="form" value="cancel" autofocus
+            >Cancel</md-filled-tonal-button
+          >
         </div>
       </md-dialog>
     `;
-  }
+  },
 };
 
 const choose: MaterialStoryInit<StoryKnobs> = {
@@ -105,22 +111,36 @@ const choose: MaterialStoryInit<StoryKnobs> = {
   `,
   render() {
     return html`
-      <md-filled-button @click=${showDialog}
-          aria-label="Open a choice dialog">Choice</md-filled-button>
+      <md-filled-button @click=${showDialog} aria-label="Open a choice dialog"
+        >Choice</md-filled-button
+      >
 
       <md-dialog>
         <div slot="headline">Choose your favorite pet</div>
         <form id="form" slot="content" method="dialog">
           <label>
-            <md-radio name="pet" value="cats" aria-label="Cats" touch-target="wrapper" checked></md-radio>
+            <md-radio
+              name="pet"
+              value="cats"
+              aria-label="Cats"
+              touch-target="wrapper"
+              checked></md-radio>
             <span aria-hidden="true">Cats</span>
           </label>
           <label>
-            <md-radio name="pet" value="dogs" aria-label="Dogs" touch-target="wrapper"></md-radio>
+            <md-radio
+              name="pet"
+              value="dogs"
+              aria-label="Dogs"
+              touch-target="wrapper"></md-radio>
             <span aria-hidden="true">Dogs</span>
           </label>
           <label>
-            <md-radio name="pet" value="birds" aria-label="Birds" touch-target="wrapper"></md-radio>
+            <md-radio
+              name="pet"
+              value="birds"
+              aria-label="Birds"
+              touch-target="wrapper"></md-radio>
             <span aria-hidden="true">Birds</span>
           </label>
         </form>
@@ -130,7 +150,7 @@ const choose: MaterialStoryInit<StoryKnobs> = {
         </div>
       </md-dialog>
     `;
-  }
+  },
 };
 
 const contacts: MaterialStoryInit<StoryKnobs> = {
@@ -140,7 +160,7 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
       min-width: calc(100vw - 212px);
     }
 
-    .contacts [slot="header"] {
+    .contacts [slot='header'] {
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
@@ -150,7 +170,8 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
       flex: 1;
     }
 
-    .contact-content, .contact-row {
+    .contact-content,
+    .contact-row {
       display: flex;
       gap: 8px;
     }
@@ -165,8 +186,9 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
   `,
   render() {
     return html`
-      <md-filled-button @click=${showDialog}
-          aria-label="Open a form dialog">Form</md-filled-button>
+      <md-filled-button @click=${showDialog} aria-label="Open a form dialog"
+        >Form</md-filled-button
+      >
 
       <md-dialog class="contacts">
         <span slot="headline">
@@ -177,7 +199,9 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
         </span>
         <form id="form" slot="content" method="dialog" class="contact-content">
           <div class="contact-row">
-            <md-filled-text-field autofocus label="First Name"></md-filled-text-field>
+            <md-filled-text-field
+              autofocus
+              label="First Name"></md-filled-text-field>
             <md-filled-text-field label="Last Name"></md-filled-text-field>
           </div>
           <div class="contact-row">
@@ -188,24 +212,23 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
           <md-filled-text-field label="Phone"></md-filled-text-field>
         </form>
         <div slot="actions">
-          <md-text-button form="form" value="reset" type="reset">Reset</md-text-button>
+          <md-text-button form="form" value="reset" type="reset"
+            >Reset</md-text-button
+          >
           <div style="flex: 1"></div>
           <md-text-button form="form" value="cancel">Cancel</md-text-button>
           <md-text-button form="form" value="save">Save</md-text-button>
         </div>
       </md-dialog>
     `;
-  }
+  },
 };
 
 const floatingSheet: MaterialStoryInit<StoryKnobs> = {
   name: 'Floating sheet',
   render() {
     return html`
-      <md-filled-button
-        @click=${showDialog}
-        aria-label="Open a floating sheet"
-      >
+      <md-filled-button @click=${showDialog} aria-label="Open a floating sheet">
         Floating sheet
       </md-filled-button>
 
@@ -217,16 +240,21 @@ const floatingSheet: MaterialStoryInit<StoryKnobs> = {
           </md-icon-button>
         </span>
         <form id="form" slot="content" method="dialog">
-          This is a floating sheet with title.
-          Floating sheets offer no action buttons at the bottom,
-          but there's a close icon button at the top right.
-          They accept any HTML content.
+          This is a floating sheet with title. Floating sheets offer no action
+          buttons at the bottom, but there's a close icon button at the top
+          right. They accept any HTML content.
         </form>
       </md-dialog>
     `;
-  }
+  },
 };
 
 /** Dialog stories. */
-export const stories =
-    [standard, alert, confirm, choose, contacts, floatingSheet];
+export const stories = [
+  standard,
+  alert,
+  confirm,
+  choose,
+  contacts,
+  floatingSheet,
+];

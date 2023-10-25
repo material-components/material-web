@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/list/list-item.js';
 import '@material/web/divider/divider.js';
-import '@material/web/list/list.js';
 import '@material/web/icon/icon.js';
+import '@material/web/list/list.js';
+import '@material/web/list/list-item.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';
@@ -39,8 +39,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-list aria-label="Static example">
         <md-list-item ?disabled=${knobs.disabled}>
-          Single line item
-          ${getKnobContent(knobs)}
+          Single line item ${getKnobContent(knobs)}
         </md-list-item>
 
         <md-list-item ?disabled=${knobs.disabled}>
@@ -58,7 +57,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           ${getKnobContent(knobs, /* threeLines */ true)}
         </md-list-item>
       </md-list>
-  `;
+    `;
   },
 };
 
@@ -69,24 +68,22 @@ const interactive: MaterialStoryInit<StoryKnobs> = {
     const knobsNoTrailing = {...knobs, trailingIcon: false};
     return html`
       <md-list aria-label="Interactive example">
-        <md-list-item ?disabled=${knobs.disabled}
+        <md-list-item
+          ?disabled=${knobs.disabled}
           type="link"
           href="https://google.com"
-          target="_blank"
-        >
+          target="_blank">
           Link item
           <md-icon slot="end">link</md-icon>
           ${getKnobContent(knobsNoTrailing)}
         </md-list-item>
 
         <md-list-item type="button" ?disabled=${knobs.disabled}>
-          Button item
-          ${getKnobContent(knobs)}
+          Button item ${getKnobContent(knobs)}
         </md-list-item>
 
         <md-list-item ?disabled=${knobs.disabled}>
-          Non-interactive item
-          ${getKnobContent(knobs)}
+          Non-interactive item ${getKnobContent(knobs)}
         </md-list-item>
       </md-list>
     `;
@@ -94,26 +91,27 @@ const interactive: MaterialStoryInit<StoryKnobs> = {
 };
 
 function getKnobContent(knobs: StoryKnobs, threeLines = false) {
-  const overline = knobs.overline ?
-      html`<div slot="overline">${knobs.overline}</div>` :
-      nothing;
+  const overline = knobs.overline
+    ? html`<div slot="overline">${knobs.overline}</div>`
+    : nothing;
 
   const classes = {
     'align-start': threeLines,
   };
 
-  const trailingText = knobs.trailingSupportingText ?
-      html`<div class=${classMap(classes)} slot="trailing-supporting-text">${
-          knobs.trailingSupportingText}</div>` :
-      nothing;
+  const trailingText = knobs.trailingSupportingText
+    ? html`<div class=${classMap(classes)} slot="trailing-supporting-text"
+        >${knobs.trailingSupportingText}</div
+      >`
+    : nothing;
 
-  const leadingIcon = knobs.leadingIcon ?
-      html`<md-icon class=${classMap(classes)} slot="start">event</md-icon>` :
-      nothing;
+  const leadingIcon = knobs.leadingIcon
+    ? html`<md-icon class=${classMap(classes)} slot="start">event</md-icon>`
+    : nothing;
 
-  const trailingIcon = knobs.trailingIcon ?
-      html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>` :
-      nothing;
+  const trailingIcon = knobs.trailingIcon
+    ? html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>`
+    : nothing;
 
   return [overline, trailingText, leadingIcon, trailingIcon];
 }

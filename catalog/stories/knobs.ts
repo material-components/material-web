@@ -53,8 +53,9 @@ export class Knob<T, Name extends string = string> extends EventTarget {
   private readonly onReset = () => {
     this.reset();
   };
-  private readonly renderedStoryContainers =
-      new Set<HTMLElement|DocumentFragment>();
+  private readonly renderedStoryContainers = new Set<
+    HTMLElement | DocumentFragment
+  >();
 
   constructor(readonly name: Name, init: KnobInit<T>) {
     super();
@@ -80,25 +81,28 @@ export class Knob<T, Name extends string = string> extends EventTarget {
    * Connect the knob's wiring, if any, up to a container of a rendered story.
    * This is fast and idempotent, so it's fine to call frequently.
    */
-  connectWiring(containerOfRenderedStory: HTMLElement|DocumentFragment) {
+  connectWiring(containerOfRenderedStory: HTMLElement | DocumentFragment) {
     // Fast path the common case where we have no wiring.
     if (!this.wiring) {
       return;
     }
-    const alreadyWired =
-        this.renderedStoryContainers.has(containerOfRenderedStory);
+    const alreadyWired = this.renderedStoryContainers.has(
+      containerOfRenderedStory,
+    );
     if (!alreadyWired) {
       this.renderedStoryContainers.add(containerOfRenderedStory);
       // Ensure default values are wired correctly.
-      if (this.dirty ||
-          (this.latestValue !== undefined &&
-           this.latestValue === this.defaultValue)) {
+      if (
+        this.dirty ||
+        (this.latestValue !== undefined &&
+          this.latestValue === this.defaultValue)
+      ) {
         this.wiring?.(this, this.latestValue!, containerOfRenderedStory);
       }
     }
   }
 
-  disconnectWiring(containerOfRenderedStory: HTMLElement|DocumentFragment) {
+  disconnectWiring(containerOfRenderedStory: HTMLElement | DocumentFragment) {
     return this.renderedStoryContainers.delete(containerOfRenderedStory);
   }
 
@@ -139,15 +143,17 @@ type KnobKeys<Knobs extends PolymorphicArrayOfKnobs> = Knobs[number]['name'];
  *
  * This type operator would return `number`.
  */
-type TypeOfKnobWithName<Knobs extends PolymorphicArrayOfKnobs,
-                                      SearchName extends string> =
-    Extract<Knobs[number], {name: SearchName}> extends Knob<infer U>?
-    U|undefined :
-    never;
+type TypeOfKnobWithName<
+  Knobs extends PolymorphicArrayOfKnobs,
+  SearchName extends string,
+> = Extract<Knobs[number], {name: SearchName}> extends Knob<infer U>
+  ? U | undefined
+  : never;
 
 /** A helper class for getting the latest value for a knob by name. */
-export class KnobValues<Knobs extends PolymorphicArrayOfKnobs> extends
-    EventTarget {
+export class KnobValues<
+  Knobs extends PolymorphicArrayOfKnobs,
+> extends EventTarget {
   private readonly byName: ReadonlyMap<string, Knob<unknown>>;
 
   constructor(knobsArray: PolymorphicArrayOfKnobs) {
@@ -156,25 +162,32 @@ export class KnobValues<Knobs extends PolymorphicArrayOfKnobs> extends
     for (const knob of knobsArray) {
       if (byName.has(knob.name)) {
         throw new Error(
-            `More than one knob with name '${knob.name}' given to a story.`);
+          `More than one knob with name '${knob.name}' given to a story.`,
+        );
       }
       byName.set(knob.name, knob);
       knob.addEventListener('changed', (e) => {
         this.dispatchEvent(
-            new CustomEvent('changed', {detail: {knobName: knob.name}}));
+          new CustomEvent('changed', {detail: {knobName: knob.name}}),
+        );
       });
     }
     this.byName = byName;
   }
 
-  get<SearchName extends KnobKeys<Knobs>>(knobName: SearchName):
-      TypeOfKnobWithName<Knobs, SearchName> {
-    return this.byName.get(knobName)?.latestValue as
-        TypeOfKnobWithName<Knobs, SearchName>;
+  get<SearchName extends KnobKeys<Knobs>>(
+    knobName: SearchName,
+  ): TypeOfKnobWithName<Knobs, SearchName> {
+    return this.byName.get(knobName)?.latestValue as TypeOfKnobWithName<
+      Knobs,
+      SearchName
+    >;
   }
 
   set<SearchName extends KnobKeys<Knobs>>(
-      knobName: SearchName, newValue: TypeOfKnobWithName<Knobs, SearchName>) {
+    knobName: SearchName,
+    newValue: TypeOfKnobWithName<Knobs, SearchName>,
+  ) {
     const knob = this.byName.get(knobName);
     if (knob === undefined) {
       throw new Error(`No knob with name ${knobName}`);
@@ -210,7 +223,7 @@ export class KnobValues<Knobs extends PolymorphicArrayOfKnobs> extends
    * Unlikely that any code outside of the stories system internals would
    * call this.
    */
-  connectWiring(container: HTMLElement|DocumentFragment) {
+  connectWiring(container: HTMLElement | DocumentFragment) {
     for (const knob of this.byName.values()) {
       if (container instanceof DocumentFragment) {
         container = container.firstElementChild as HTMLElement;
@@ -225,7 +238,7 @@ export class KnobValues<Knobs extends PolymorphicArrayOfKnobs> extends
    *
    * Returns false if the container wasn't actually connected.
    */
-  disconnectWiring(container: HTMLElement|DocumentFragment) {
+  disconnectWiring(container: HTMLElement | DocumentFragment) {
     let disconnected = false;
     for (const knob of this.byName.values()) {
       disconnected = knob.disconnectWiring(container) || disconnected;
@@ -261,8 +274,11 @@ export interface KnobUi<T> {
    *     and wiring may treat this case differently (e.g. restoring a value
    *     to the value it had before the wiring set it the first time).
    */
-  render(knob: Knob<T>, onChange: (val: T) => void, onReset: () => void):
-      TemplateResult;
+  render(
+    knob: Knob<T>,
+    onChange: (val: T) => void,
+    onReset: () => void,
+  ): TemplateResult;
 }
 
 /**
@@ -276,6 +292,9 @@ export interface KnobUi<T> {
  * wired up by just applying styles to the containerOfRenderedStory.
  */
 export interface KnobWiring<T> {
-  (knob: Knob<T>, val: T,
-   containerOfRenderedStory: HTMLElement|DocumentFragment): void;
+  (
+    knob: Knob<T>,
+    val: T,
+    containerOfRenderedStory: HTMLElement | DocumentFragment,
+  ): void;
 }

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/icon/icon.js';
 import '@material/web/field/filled-field.js';
 import '@material/web/field/outlined-field.js';
+import '@material/web/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';
@@ -52,16 +52,16 @@ const filled: MaterialStoryInit<StoryKnobs> = {
       required,
       resizable,
       count,
-      max
+      max,
     } = knobs;
     const supportingText = knobs['Supporting text'];
     const errorText = knobs['Error text'];
     const hasStart = knobs['Leading icon'];
     const hasEnd = knobs['Trailing icon'];
 
-    const content = resizable ?
-        html`<textarea rows="1" ?disabled=${disabled}></textarea>` :
-        html`<input ?disabled=${disabled}>`;
+    const content = resizable
+      ? html`<textarea rows="1" ?disabled=${disabled}></textarea>`
+      : html`<input ?disabled=${disabled} />`;
 
     const styles = {resize: resizable ? 'both' : null};
     return html`
@@ -78,14 +78,12 @@ const filled: MaterialStoryInit<StoryKnobs> = {
         supporting-text=${supportingText}
         error-text=${errorText}
         count=${count}
-        max=${max}
-      >
-        ${hasStart ? START_CONTENT : nothing}
-        ${content}
+        max=${max}>
+        ${hasStart ? START_CONTENT : nothing} ${content}
         ${hasEnd ? END_CONTENT : nothing}
       </md-filled-field>
     `;
-  }
+  },
 };
 
 const outlined: MaterialStoryInit<StoryKnobs> = {
@@ -101,16 +99,18 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
       required,
       resizable,
       count,
-      max
+      max,
     } = knobs;
     const supportingText = knobs['Supporting text'];
     const errorText = knobs['Error text'];
     const hasStart = knobs['Leading icon'];
     const hasEnd = knobs['Trailing icon'];
-    const content = resizable ?
-        html`<textarea rows="1" ?disabled=${
-            disabled} aria-describedby="description"></textarea>` :
-        html`<input ?disabled=${disabled} aria-describedby="description">`;
+    const content = resizable
+      ? html`<textarea
+          rows="1"
+          ?disabled=${disabled}
+          aria-describedby="description"></textarea>`
+      : html`<input ?disabled=${disabled} aria-describedby="description" />`;
 
     const styles = {resize: resizable ? 'both' : null};
     return html`
@@ -127,15 +127,13 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
         supporting-text=${supportingText}
         error-text=${errorText}
         count=${count}
-        max=${max}
-      >
+        max=${max}>
         <div id="description" slot="aria-describedby" hidden></div>
-        ${hasStart ? START_CONTENT : nothing}
-        ${content}
+        ${hasStart ? START_CONTENT : nothing} ${content}
         ${hasEnd ? END_CONTENT : nothing}
       </md-outlined-field>
     `;
-  }
+  },
 };
 
 /** Field stories. */

@@ -26,6 +26,10 @@ declare global {
  */
 @customElement('md-input-chip')
 export class MdInputChip extends InputChip {
-  static override styles =
-      [sharedStyles, trailingIconStyles, selectableStyles, styles];
+  static override styles = [
+    sharedStyles,
+    trailingIconStyles,
+    selectableStyles,
+    styles,
+  ];
 }

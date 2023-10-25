@@ -24,7 +24,7 @@ export abstract class MultiActionChip extends Chip {
     const {ariaLabel} = this as ARIAMixinStrict;
     return `Remove ${ariaLabel || this.label}`;
   }
-  set ariaLabelRemove(ariaLabel: string|null) {
+  set ariaLabelRemove(ariaLabel: string | null) {
     const prev = this.ariaLabelRemove;
     if (ariaLabel === prev) {
       return;
@@ -39,8 +39,8 @@ export abstract class MultiActionChip extends Chip {
     this.requestUpdate();
   }
 
-  protected abstract readonly primaryAction: HTMLElement|null;
-  protected abstract readonly trailingAction: HTMLElement|null;
+  protected abstract readonly primaryAction: HTMLElement | null;
+  protected abstract readonly trailingAction: HTMLElement | null;
 
   constructor() {
     super();
@@ -50,7 +50,7 @@ export abstract class MultiActionChip extends Chip {
     }
   }
 
-  override focus(options?: FocusOptions&{trailing?: boolean}) {
+  override focus(options?: FocusOptions & {trailing?: boolean}) {
     const isFocusable = this.alwaysFocusable || !this.disabled;
     if (isFocusable && options?.trailing && this.trailingAction) {
       this.trailingAction.focus(options);
@@ -67,8 +67,9 @@ export abstract class MultiActionChip extends Chip {
     `;
   }
 
-  protected abstract renderTrailingAction(focusListener: EventListener):
-      unknown;
+  protected abstract renderTrailingAction(
+    focusListener: EventListener,
+  ): unknown;
 
   private handleKeyDown(event: KeyboardEvent) {
     const isLeft = event.key === 'ArrowLeft';
@@ -112,8 +113,12 @@ export abstract class MultiActionChip extends Chip {
     // shift+tab from the trailing action to move to the previous chip rather
     // than the primary action in the same chip.
     primaryAction.tabIndex = -1;
-    trailingAction.addEventListener('focusout', () => {
-      primaryAction.tabIndex = 0;
-    }, {once: true});
+    trailingAction.addEventListener(
+      'focusout',
+      () => {
+        primaryAction.tabIndex = 0;
+      },
+      {once: true},
+    );
   }
 }

@@ -46,11 +46,11 @@ export function requestUpdateOnAriaChange(ctor: typeof ReactiveElement) {
     });
   }
 
-  ctor.addInitializer(element => {
+  ctor.addInitializer((element) => {
     const controller = {
       hostConnected() {
         element.setAttribute('role', 'presentation');
-      }
+      },
     };
 
     element.addController(controller);

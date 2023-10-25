@@ -21,19 +21,39 @@ import {stringConverter} from '../../internal/controller/string-converter.js';
  * Input types that are compatible with the text field.
  */
 export type TextFieldType =
-    'email'|'number'|'password'|'search'|'tel'|'text'|'url'|'textarea';
+  | 'email'
+  | 'number'
+  | 'password'
+  | 'search'
+  | 'tel'
+  | 'text'
+  | 'url'
+  | 'textarea';
 
 /**
  * Input types that are not fully supported for the text field.
  */
 export type UnsupportedTextFieldType =
-    'color'|'date'|'datetime-local'|'file'|'month'|'time'|'week';
+  | 'color'
+  | 'date'
+  | 'datetime-local'
+  | 'file'
+  | 'month'
+  | 'time'
+  | 'week';
 
 /**
  * Input types that are incompatible with the text field.
  */
 export type InvalidTextFieldType =
-    'button'|'checkbox'|'hidden'|'image'|'radio'|'range'|'reset'|'submit';
+  | 'button'
+  | 'checkbox'
+  | 'hidden'
+  | 'image'
+  | 'radio'
+  | 'range'
+  | 'reset'
+  | 'submit';
 
 /**
  * A text field component.
@@ -44,8 +64,10 @@ export abstract class TextField extends LitElement {
   }
 
   /** @nocollapse */
-  static override shadowRootOptions:
-      ShadowRootInit = {...LitElement.shadowRootOptions, delegatesFocus: true};
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** @nocollapse  */
   static readonly formAssociated = true;
@@ -195,7 +217,7 @@ export abstract class TextField extends LitElement {
   get selectionDirection() {
     return this.getInputOrTextarea().selectionDirection;
   }
-  set selectionDirection(value: 'forward'|'backward'|'none'|null) {
+  set selectionDirection(value: 'forward' | 'backward' | 'none' | null) {
     this.getInputOrTextarea().selectionDirection = value;
   }
 
@@ -205,7 +227,7 @@ export abstract class TextField extends LitElement {
   get selectionEnd() {
     return this.getInputOrTextarea().selectionEnd;
   }
-  set selectionEnd(value: number|null) {
+  set selectionEnd(value: number | null) {
     this.getInputOrTextarea().selectionEnd = value;
   }
 
@@ -215,7 +237,7 @@ export abstract class TextField extends LitElement {
   get selectionStart() {
     return this.getInputOrTextarea().selectionStart;
   }
-  set selectionStart(value: number|null) {
+  set selectionStart(value: number | null) {
     this.getInputOrTextarea().selectionStart = value;
   }
 
@@ -247,7 +269,7 @@ export abstract class TextField extends LitElement {
    * for more details on each input type.
    */
   @property({reflect: true})
-  type: TextFieldType|UnsupportedTextFieldType = 'text';
+  type: TextFieldType | UnsupportedTextFieldType = 'text';
 
   /**
    * Describes what, if any, type of autocomplete functionality the input
@@ -310,7 +332,7 @@ export abstract class TextField extends LitElement {
 
     return input.valueAsDate;
   }
-  set valueAsDate(value: Date|null) {
+  set valueAsDate(value: Date | null) {
     const input = this.getInput();
     if (!input) {
       return;
@@ -354,8 +376,11 @@ export abstract class TextField extends LitElement {
   }
 
   @query('.input')
-  private readonly inputOrTextarea?: HTMLInputElement|HTMLTextAreaElement|null;
-  @query('.field') private readonly field?: Field|null;
+  private readonly inputOrTextarea?:
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | null;
+  @query('.field') private readonly field?: Field | null;
   @queryAssignedElements({slot: 'leading-icon'})
   private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailing-icon'})
@@ -363,8 +388,8 @@ export abstract class TextField extends LitElement {
   // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
   // Replace with this.internals.validity.customError when resolved.
   private hasCustomValidityError = false;
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  // Cast needed for closure
+  private readonly internals = (this as HTMLElement).attachInternals();
 
   /**
    * Checks the text field's native validation and returns whether or not the
@@ -400,10 +425,14 @@ export abstract class TextField extends LitElement {
    * @return true if the text field is valid, or false if not.
    */
   reportValidity() {
-    let invalidEvent: Event|undefined;
-    this.addEventListener('invalid', event => {
-      invalidEvent = event;
-    }, {once: true});
+    let invalidEvent: Event | undefined;
+    this.addEventListener(
+      'invalid',
+      (event) => {
+        invalidEvent = event;
+      },
+      {once: true},
+    );
 
     const valid = this.checkValidity();
     if (invalidEvent?.defaultPrevented) {
@@ -444,7 +473,10 @@ export abstract class TextField extends LitElement {
   setCustomValidity(error: string) {
     this.hasCustomValidityError = !!error;
     this.internals.setValidity(
-        {customError: !!error}, error, this.getInputOrTextarea());
+      {customError: !!error},
+      error,
+      this.getInputOrTextarea(),
+    );
   }
 
   /**
@@ -454,13 +486,17 @@ export abstract class TextField extends LitElement {
    */
   setRangeText(replacement: string): void;
   setRangeText(
-      replacement: string, start: number, end: number,
-      selectionMode?: SelectionMode): void;
+    replacement: string,
+    start: number,
+    end: number,
+    selectionMode?: SelectionMode,
+  ): void;
   setRangeText(...args: unknown[]) {
     // Calling setRangeText with 1 vs 3-4 arguments has different behavior.
     // Use spread syntax and type casting to ensure correct usage.
     this.getInputOrTextarea().setRangeText(
-        ...args as Parameters<HTMLInputElement['setRangeText']>);
+      ...(args as Parameters<HTMLInputElement['setRangeText']>),
+    );
     this.value = this.getInputOrTextarea().value;
   }
 
@@ -474,8 +510,10 @@ export abstract class TextField extends LitElement {
    * @param direction The direction in which the selection is performed.
    */
   setSelectionRange(
-      start: number|null, end: number|null,
-      direction?: 'forward'|'backward'|'none') {
+    start: number | null,
+    end: number | null,
+    direction?: 'forward' | 'backward' | 'none',
+  ) {
     this.getInputOrTextarea().setSelectionRange(start, end, direction);
   }
 
@@ -526,7 +564,10 @@ export abstract class TextField extends LitElement {
   }
 
   override attributeChangedCallback(
-      attribute: string, newValue: string|null, oldValue: string|null) {
+    attribute: string,
+    newValue: string | null,
+    oldValue: string | null,
+  ) {
     if (attribute === 'value' && this.dirty) {
       // After user input, changing the value attribute no longer updates the
       // text field's value (until reset). This matches native <input> behavior.
@@ -544,10 +585,10 @@ export abstract class TextField extends LitElement {
     };
 
     return html`
-       <span class="text-field ${classMap(classes)}">
-         ${this.renderField()}
-       </span>
-     `;
+      <span class="text-field ${classMap(classes)}">
+        ${this.renderField()}
+      </span>
+    `;
   }
 
   protected override updated(changedProperties: PropertyValues) {
@@ -595,24 +636,24 @@ export abstract class TextField extends LitElement {
 
   private renderLeadingIcon() {
     return html`
-       <span class="icon leading" slot="start">
-         <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
-       </span>
-     `;
+      <span class="icon leading" slot="start">
+        <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
+      </span>
+    `;
   }
 
   private renderTrailingIcon() {
     return html`
-       <span class="icon trailing" slot="end">
-         <slot name="trailing-icon" @slotchange=${this.handleIconChange}></slot>
-       </span>
-     `;
+      <span class="icon trailing" slot="end">
+        <slot name="trailing-icon" @slotchange=${this.handleIconChange}></slot>
+      </span>
+    `;
   }
 
   private renderInputOrTextarea() {
     const style = {direction: this.textDirection};
     const ariaLabel =
-        (this as ARIAMixinStrict).ariaLabel || this.label || nothing;
+      (this as ARIAMixinStrict).ariaLabel || this.label || nothing;
     // lit-anaylzer `autocomplete` types are too strict
     // tslint:disable-next-line:no-any
     const autocomplete = this.autocomplete as any;
@@ -639,8 +680,7 @@ export abstract class TextField extends LitElement {
           @focusin=${this.handleFocusin}
           @focusout=${this.handleFocusout}
           @input=${this.handleInput}
-          @select=${this.redispatchEvent}
-        ></textarea>
+          @select=${this.redispatchEvent}></textarea>
       `;
     }
 
@@ -679,8 +719,7 @@ export abstract class TextField extends LitElement {
           @focusin=${this.handleFocusin}
           @focusout=${this.handleFocusout}
           @input=${this.handleInput}
-          @select=${this.redispatchEvent}
-        >
+          @select=${this.redispatchEvent} />
         ${suffix}
       </div>
     `;
@@ -776,7 +815,10 @@ export abstract class TextField extends LitElement {
     }
 
     this.internals.setValidity(
-        input.validity, input.validationMessage, this.getInputOrTextarea());
+      input.validity,
+      input.validationMessage,
+      this.getInputOrTextarea(),
+    );
   }
 
   private handleIconChange() {

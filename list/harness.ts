@@ -24,7 +24,7 @@ const NAVIGABLE_KEYS = {
  * MdList and should be dispatched by yourself.
  */
 export type HandledListKeys =
-    typeof NAVIGABLE_KEYS[keyof typeof NAVIGABLE_KEYS];
+  (typeof NAVIGABLE_KEYS)[keyof typeof NAVIGABLE_KEYS];
 
 /**
  * Test harness for list.
@@ -41,7 +41,8 @@ export class ListHarness extends Harness<List> {
   /** @return List item harnesses. */
   getItems() {
     return this.element.items.map(
-        (item) => new ListItemHarness(item as ListItemEl));
+      (item) => new ListItemHarness(item as ListItemEl),
+    );
   }
 
   /**

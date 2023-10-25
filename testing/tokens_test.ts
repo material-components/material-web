@@ -41,9 +41,9 @@ describe('testing', () => {
         `;
 
         const unusedTokens = getUnusedTokens([styles]);
-        expect(unusedTokens).withContext('unused tokens').toEqual([
-          '--_unused'
-        ]);
+        expect(unusedTokens)
+          .withContext('unused tokens')
+          .toEqual(['--_unused']);
       });
     });
 
@@ -76,9 +76,9 @@ describe('testing', () => {
         `;
 
         const undefinedTokens = getUndefinedTokens([styles]);
-        expect(undefinedTokens).withContext('undefined tokens').toEqual([
-          '--_undefined'
-        ]);
+        expect(undefinedTokens)
+          .withContext('undefined tokens')
+          .toEqual(['--_undefined']);
       });
     });
   });

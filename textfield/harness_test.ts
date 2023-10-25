@@ -18,8 +18,9 @@ describe('TextFieldHarness', () => {
   const env = new Environment();
 
   async function setupTest() {
-    const root =
-        env.render(html`<md-filled-text-field></md-filled-text-field>`);
+    const root = env.render(
+      html`<md-filled-text-field></md-filled-text-field>`,
+    );
     const instance = root.querySelector('md-filled-text-field');
     if (!instance) {
       throw new Error('Failed to query md-filled-text-field.');
@@ -72,9 +73,11 @@ describe('TextFieldHarness', () => {
       // Assertion.
       expect(keydownHandler).toHaveBeenCalledTimes(1);
       expect(keydownHandler).toHaveBeenCalledWith(jasmine.any(KeyboardEvent));
-      expect(keydownHandler).toHaveBeenCalledWith(jasmine.objectContaining({
-        key: 'Backspace'
-      }));
+      expect(keydownHandler).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          key: 'Backspace',
+        }),
+      );
     });
 
     it('should delete the entire value by default', async () => {
@@ -121,19 +124,18 @@ describe('TextFieldHarness', () => {
   });
 
   describe('simulating change events', () => {
-    it('should dispatch change if value changes after focus and blur',
-       async () => {
-         // Setup.
-         const harness = await setupTest();
-         const changeHandler = jasmine.createSpy('changeHandler');
-         harness.element.addEventListener('change', changeHandler);
-         // Test case.
-         await harness.focusWithKeyboard();
-         await harness.inputValue('value');
-         await harness.blur();
-         // Assertion.
-         expect(changeHandler).toHaveBeenCalledTimes(1);
-       });
+    it('should dispatch change if value changes after focus and blur', async () => {
+      // Setup.
+      const harness = await setupTest();
+      const changeHandler = jasmine.createSpy('changeHandler');
+      harness.element.addEventListener('change', changeHandler);
+      // Test case.
+      await harness.focusWithKeyboard();
+      await harness.inputValue('value');
+      await harness.blur();
+      // Assertion.
+      expect(changeHandler).toHaveBeenCalledTimes(1);
+    });
 
     it('should not dispatch change if value does not change', async () => {
       // Setup.

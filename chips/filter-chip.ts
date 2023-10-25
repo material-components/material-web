@@ -28,6 +28,10 @@ declare global {
 @customElement('md-filter-chip')
 export class MdFilterChip extends FilterChip {
   static override styles = [
-    sharedStyles, elevatedStyles, trailingIconStyles, selectableStyles, styles
+    sharedStyles,
+    elevatedStyles,
+    trailingIconStyles,
+    selectableStyles,
+    styles,
   ];
 }

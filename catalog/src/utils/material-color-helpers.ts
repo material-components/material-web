@@ -4,7 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {argbFromHex, Hct, hexFromArgb, MaterialDynamicColors, SchemeContent} from '@material/material-color-utilities';
+import {
+  argbFromHex,
+  Hct,
+  hexFromArgb,
+  MaterialDynamicColors,
+  SchemeContent,
+} from '@material/material-color-utilities';
 
 import type {Theme} from '../types/color-events.js';
 
@@ -110,7 +116,10 @@ export function themeFromSourceColor(color: string, isDark: boolean): Theme {
  *     used to generate the localstorage name.
  */
 export function applyMaterialTheme(
-    doc: DocumentOrShadowRoot, theme: Theme, ssName = 'material-theme') {
+  doc: DocumentOrShadowRoot,
+  theme: Theme,
+  ssName = 'material-theme',
+) {
   let styleString = ':root,:host{';
   for (const [key, value] of Object.entries(theme)) {
     styleString += `--md-sys-color-${key}:${value};`;

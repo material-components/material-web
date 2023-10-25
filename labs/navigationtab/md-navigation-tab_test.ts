@@ -13,8 +13,7 @@ import {NavigationTabHarness} from './harness.js';
 import {MdNavigationTab} from './navigation-tab.js';
 
 @customElement('md-test-navigation-tab')
-class TestNavigationTab extends MdNavigationTab {
-}
+class TestNavigationTab extends MdNavigationTab {}
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -27,9 +26,9 @@ describe('mwc-navigation-tab', () => {
 
   async function setupTest() {
     // Variant type does not matter for shared tests
-    const element =
-        env.render(html`<md-test-navigation-tab></md-test-navigation-tab>`)
-            .querySelector('md-test-navigation-tab');
+    const element = env
+      .render(html`<md-test-navigation-tab></md-test-navigation-tab>`)
+      .querySelector('md-test-navigation-tab');
     if (!element) {
       throw new Error('Could not query rendered <md-test-navigation-tab>.');
     }
@@ -67,7 +66,9 @@ describe('mwc-navigation-tab', () => {
       const {harness} = await setupTest();
       const interactionHandler = jasmine.createSpy();
       harness.element.addEventListener(
-          'navigation-tab-interaction', interactionHandler);
+        'navigation-tab-interaction',
+        interactionHandler,
+      );
       await harness.clickWithMouse();
       expect(interactionHandler).toHaveBeenCalled();
     });
@@ -118,8 +119,9 @@ describe('mwc-navigation-tab', () => {
       harness.element.active = true;
       await env.waitForStability();
 
-      expect(navTab.classList.contains('md3-navigation-tab--active'))
-          .toBeTrue();
+      expect(
+        navTab.classList.contains('md3-navigation-tab--active'),
+      ).toBeTrue();
     });
   });
 
@@ -130,8 +132,8 @@ describe('mwc-navigation-tab', () => {
       await env.waitForStability();
 
       expect(
-          navTab.classList.contains('md3-navigation-tab--hide-inactive-label'))
-          .toBeTrue();
+        navTab.classList.contains('md3-navigation-tab--hide-inactive-label'),
+      ).toBeTrue();
     });
   });
 
@@ -142,7 +144,8 @@ describe('mwc-navigation-tab', () => {
       await env.waitForStability();
 
       const content = harness.element.shadowRoot!.querySelector(
-          '.md3-navigation-tab__label-text')!;
+        '.md3-navigation-tab__label-text',
+      )!;
       expect(content.textContent!.trim()).toEqual('foo');
     });
   });
@@ -191,32 +194,32 @@ describe('mwc-navigation-tab', () => {
   });
 
   describe('icons', () => {
-    it('nodes with `slot=active-icon` will serve as the active icon',
-       async () => {
-         const {harness} = await setupTest();
-         const icons = html`
-           <i slot="active-icon" class="material-icons">star</i>
-           <i slot="inactive-icon" class="material-icons">star_border</i>
-         `;
-         render(icons, harness.element);
+    it('nodes with `slot=active-icon` will serve as the active icon', async () => {
+      const {harness} = await setupTest();
+      const icons = html`
+        <i slot="active-icon" class="material-icons">star</i>
+        <i slot="inactive-icon" class="material-icons">star_border</i>
+      `;
+      render(icons, harness.element);
 
-         const icon = harness.element.querySelector<HTMLElement>(
-             '[slot="active-icon"]')!;
-         expect(icon.textContent!.trim()).toEqual('star');
-       });
+      const icon = harness.element.querySelector<HTMLElement>(
+        '[slot="active-icon"]',
+      )!;
+      expect(icon.textContent!.trim()).toEqual('star');
+    });
 
-    it('nodes with `slot=inactive-icon` will serve as the inactive icon',
-       async () => {
-         const {harness} = await setupTest();
-         const icons = html`
-           <i slot="active-icon" class="material-icons">star</i>
-           <i slot="inactive-icon" class="material-icons">star_border</i>
-         `;
-         render(icons, harness.element);
+    it('nodes with `slot=inactive-icon` will serve as the inactive icon', async () => {
+      const {harness} = await setupTest();
+      const icons = html`
+        <i slot="active-icon" class="material-icons">star</i>
+        <i slot="inactive-icon" class="material-icons">star_border</i>
+      `;
+      render(icons, harness.element);
 
-         const icon = harness.element.querySelector<HTMLElement>(
-             '[slot="inactive-icon"]')!;
-         expect(icon.textContent!.trim()).toEqual('star_border');
-       });
+      const icon = harness.element.querySelector<HTMLElement>(
+        '[slot="inactive-icon"]',
+      )!;
+      expect(icon.textContent!.trim()).toEqual('star_border');
+    });
   });
 });

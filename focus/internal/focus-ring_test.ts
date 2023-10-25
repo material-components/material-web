@@ -64,27 +64,26 @@ describe('focus ring', () => {
       expect(focusRing.control).withContext('focusRing.control').toBe(button);
     });
 
-    it('should update a referenced element when for attribute changes',
-       async () => {
-         const {root, focusRing} = setupTest(html`
-          <button id="first"></button>
-          <button id="second"></button>
-          <test-focus-ring for="first"></test-focus-ring>
-        `);
+    it('should update a referenced element when for attribute changes', async () => {
+      const {root, focusRing} = setupTest(html`
+        <button id="first"></button>
+        <button id="second"></button>
+        <test-focus-ring for="first"></test-focus-ring>
+      `);
 
-         const secondButton = root.querySelector<HTMLElement>('#second');
-         if (!secondButton) {
-           throw new Error('Could not query rendered <button id="second">');
-         }
+      const secondButton = root.querySelector<HTMLElement>('#second');
+      if (!secondButton) {
+        throw new Error('Could not query rendered <button id="second">');
+      }
 
-         focusRing.setAttribute('for', 'second');
-         expect(focusRing.control)
-             .withContext('focusRing.control')
-             .toBe(secondButton);
-         await new Harness(secondButton).focusWithKeyboard();
+      focusRing.setAttribute('for', 'second');
+      expect(focusRing.control)
+        .withContext('focusRing.control')
+        .toBe(secondButton);
+      await new Harness(secondButton).focusWithKeyboard();
 
-         expect(focusRing.visible).withContext('focusRing.visible').toBeTrue();
-       });
+      expect(focusRing.visible).withContext('focusRing.visible').toBeTrue();
+    });
 
     it('should be able to be imperatively attached', () => {
       const {button, focusRing} = setupTest(html`
@@ -104,12 +103,12 @@ describe('focus ring', () => {
       `);
 
       expect(focusRing.control)
-          .withContext('focusRing.control before attach')
-          .toBe(button);
+        .withContext('focusRing.control before attach')
+        .toBe(button);
       focusRing.attach(button);
       expect(focusRing.control)
-          .withContext('focusRing.control after attach')
-          .toBe(button);
+        .withContext('focusRing.control after attach')
+        .toBe(button);
     });
 
     it('should detach previous control when attaching a new one', async () => {
@@ -170,8 +169,8 @@ describe('focus ring', () => {
 
     await harness.clickWithMouse();
     expect(focusRing.visible)
-        .withContext('focusRing.visible after clickWithMouse')
-        .toBeFalse();
+      .withContext('focusRing.visible after clickWithMouse')
+      .toBeFalse();
   });
 
   it('should be visible on keyboard focus', async () => {
@@ -183,8 +182,8 @@ describe('focus ring', () => {
 
     await harness.focusWithKeyboard();
     expect(focusRing.visible)
-        .withContext('focusRing.visible after focusWithKeyboard')
-        .toBeTrue();
+      .withContext('focusRing.visible after focusWithKeyboard')
+      .toBeTrue();
   });
 
   it('should hide on blur', async () => {
@@ -197,7 +196,7 @@ describe('focus ring', () => {
     focusRing.visible = true;
     await harness.blur();
     expect(focusRing.visible)
-        .withContext('focusRing.visible after blur')
-        .toBeFalse();
+      .withContext('focusRing.visible after blur')
+      .toBeFalse();
   });
 });

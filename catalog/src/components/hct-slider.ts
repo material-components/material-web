@@ -48,7 +48,7 @@ export class HCTSlider extends LitElement {
   /**
    * The type of HCT slider to display
    */
-  @property({type: String}) type: 'hue'|'chroma'|'tone' = 'hue';
+  @property({type: String}) type: 'hue' | 'chroma' | 'tone' = 'hue';
 
   override render() {
     let range = HUE_RANGE;
@@ -62,21 +62,19 @@ export class HCTSlider extends LitElement {
     return html`<section>
       <span id="label" class="color-on-surface-text">${this.label}</span>
       <md-slider
-          id="source"
-          labeled
-          aria-label=${this.label}
-          .min=${range[0]}
-          .max=${range[1]}
-          .value=${this.value}
-          @input=${this.onInput}
-      ></md-slider>
+        id="source"
+        labeled
+        aria-label=${this.label}
+        .min=${range[0]}
+        .max=${range[1]}
+        .value=${this.value}
+        @input=${this.onInput}></md-slider>
       <div
         id="gradient"
         class=${this.type}
         style=${styleMap({
-      background: this.buildGradient(),
-    })}
-      ></div>
+          background: this.buildGradient(),
+        })}></div>
     </section>`;
   }
 
@@ -100,7 +98,7 @@ export class HCTSlider extends LitElement {
 
     if (this.type === 'hue') {
       for (let i = 0; i < numStops; i++) {
-        const hue = HUE_RANGE[1] / numStops * i;
+        const hue = (HUE_RANGE[1] / numStops) * i;
         // Set chroma to something fairly saturated + tone in the middle of
         // black and white so it's not too dark or too bright and vary the hue
         const hex = hexFromHct(hue, 100, 50);
@@ -111,7 +109,7 @@ export class HCTSlider extends LitElement {
       const hue = hct.hue;
 
       for (let i = 0; i < numStops; i++) {
-        const chroma = CHROMA_RANGE[1] / numStops * i;
+        const chroma = (CHROMA_RANGE[1] / numStops) * i;
         // Change the color of the bar to the current hue and set the tone to
         // mid so we it's not too dark or too bright and vary the chroma
         const hex = hexFromHct(hue, chroma, 50);
@@ -119,7 +117,7 @@ export class HCTSlider extends LitElement {
       }
     } else if (this.type === 'tone') {
       for (let i = 0; i < numStops; i++) {
-        const tone = TONE_RANGE[1] / numStops * i;
+        const tone = (TONE_RANGE[1] / numStops) * i;
         // Set tone color to black (0 chroma means that hue doesn't matter) and
         // vary the tone
         const hex = hexFromHct(0, 0, tone);

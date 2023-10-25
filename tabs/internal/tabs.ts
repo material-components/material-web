@@ -9,7 +9,10 @@ import '../../divider/divider.js';
 import {html, isServer, LitElement} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
-import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
+import {
+  polyfillElementInternalsAria,
+  setupHostAria,
+} from '../../internal/aria/aria.js';
 
 import {ANIMATE_INDICATOR, Tab} from './tab.js';
 
@@ -54,9 +57,9 @@ export class Tabs extends LitElement {
    * @export
    */
   get activeTab() {
-    return this.tabs.find(tab => tab.active) ?? null;
+    return this.tabs.find((tab) => tab.active) ?? null;
   }
-  set activeTab(tab: Tab|null) {
+  set activeTab(tab: Tab | null) {
     // Ignore setting activeTab to null. As long as there are children, one tab
     // must be selected.
     if (tab) {
@@ -70,7 +73,7 @@ export class Tabs extends LitElement {
    * @export
    */
   get activeTabIndex() {
-    return this.tabs.findIndex(tab => tab.active);
+    return this.tabs.findIndex((tab) => tab.active);
   }
   set activeTabIndex(index: number) {
     const activateTabAtIndex = () => {
@@ -108,14 +111,17 @@ export class Tabs extends LitElement {
    */
   @property({type: Boolean, attribute: 'auto-activate'}) autoActivate = false;
 
-  @query('slot') private readonly slotElement!: HTMLSlotElement|null;
+  @query('slot') private readonly slotElement!: HTMLSlotElement | null;
 
   private get focusedTab() {
-    return this.tabs.find(tab => tab.matches(':focus-within'));
+    return this.tabs.find((tab) => tab.matches(':focus-within'));
   }
 
   private readonly internals = polyfillElementInternalsAria(
-      this, (this as HTMLElement /* needed for closure */).attachInternals());
+    this,
+    // Cast needed for closure
+    (this as HTMLElement).attachInternals(),
+  );
 
   constructor() {
     super();
@@ -135,7 +141,7 @@ export class Tabs extends LitElement {
    *     active tab.
    * @return A Promise that resolves after the tab has been scrolled to.
    */
-  async scrollToTab(tabToScrollTo?: Tab|null) {
+  async scrollToTab(tabToScrollTo?: Tab | null) {
     await this.updateComplete;
     const {tabs} = this;
     tabToScrollTo ??= this.activeTab;
@@ -157,15 +163,16 @@ export class Tabs extends LitElement {
     const max = offset + extent - hostExtent + scrollMargin;
     const to = Math.min(min, Math.max(max, scroll));
     // TODO(b/299934312): improve focus smoothness
-    const behavior = !this.focusedTab ? 'smooth' : 'instant' as ScrollBehavior;
+    const behavior: ScrollBehavior = !this.focusedTab ? 'smooth' : 'instant';
     this.scrollTo({behavior, top: 0, left: to});
   }
 
   protected override render() {
     return html`
       <div class="tabs">
-        <slot @slotchange=${this.handleSlotChange}
-            @click=${this.handleTabClick}></slot>
+        <slot
+          @slotchange=${this.handleSlotChange}
+          @click=${this.handleTabClick}></slot>
       </div>
       <md-divider part="divider"></md-divider>
     `;
@@ -198,7 +205,8 @@ export class Tabs extends LitElement {
       // Don't dispatch a change event if activating a tab when no previous tabs
       // were selected, such as when md-tabs auto-selects the first tab.
       const defaultPrevented = !this.dispatchEvent(
-          new Event('change', {bubbles: true, cancelable: true}));
+        new Event('change', {bubbles: true, cancelable: true}),
+      );
       if (defaultPrevented) {
         for (const tab of tabs) {
           tab.active = tab === previousTab;
@@ -228,7 +236,7 @@ export class Tabs extends LitElement {
     const isHome = event.key === 'Home';
     const isEnd = event.key === 'End';
     // Ignore non-navigation keys
-    if (event.defaultPrevented || !isLeft && !isRight && !isHome && !isEnd) {
+    if (event.defaultPrevented || (!isLeft && !isRight && !isHome && !isEnd)) {
       return;
     }
 

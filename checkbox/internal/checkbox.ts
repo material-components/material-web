@@ -13,7 +13,11 @@ import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
+import {
+  dispatchActivationClick,
+  isActivationClick,
+  redispatchEvent,
+} from '../../internal/controller/events.js';
 
 /**
  * A checkbox component.
@@ -26,7 +30,7 @@ export class Checkbox extends LitElement {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true
+    delegatesFocus: true,
   };
 
   /** @nocollapse */
@@ -126,12 +130,12 @@ export class Checkbox extends LitElement {
   @state() private prevChecked = false;
   @state() private prevDisabled = false;
   @state() private prevIndeterminate = false;
-  @query('input') private readonly input!: HTMLInputElement|null;
+  @query('input') private readonly input!: HTMLInputElement | null;
   // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
   // Replace with this.internals.validity.customError when resolved.
   private hasCustomValidityError = false;
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  // Cast needed for closure
+  private readonly internals = (this as HTMLElement).attachInternals();
 
   constructor() {
     super();
@@ -196,12 +200,15 @@ export class Checkbox extends LitElement {
   }
 
   protected override update(changed: PropertyValues<Checkbox>) {
-    if (changed.has('checked') || changed.has('disabled') ||
-        changed.has('indeterminate')) {
+    if (
+      changed.has('checked') ||
+      changed.has('disabled') ||
+      changed.has('indeterminate')
+    ) {
       this.prevChecked = changed.get('checked') ?? this.checked;
       this.prevDisabled = changed.get('disabled') ?? this.disabled;
       this.prevIndeterminate =
-          changed.get('indeterminate') ?? this.indeterminate;
+        changed.get('indeterminate') ?? this.indeterminate;
     }
 
     const shouldAddFormValue = this.checked && !this.indeterminate;
@@ -235,7 +242,8 @@ export class Checkbox extends LitElement {
     // form.reportValidity() to work in Chrome.
     return html`
       <div class="container ${containerClasses}">
-        <input type="checkbox"
+        <input
+          type="checkbox"
           id="input"
           aria-checked=${isIndeterminate ? 'mixed' : nothing}
           aria-label=${ariaLabel || nothing}
@@ -244,8 +252,7 @@ export class Checkbox extends LitElement {
           ?required=${this.required}
           .indeterminate=${this.indeterminate}
           .checked=${this.checked}
-          @change=${this.handleChange}
-        >
+          @change=${this.handleChange} />
 
         <div class="outline"></div>
         <div class="background"></div>
@@ -284,7 +291,10 @@ export class Checkbox extends LitElement {
     }
 
     this.internals.setValidity(
-        input.validity, input.validationMessage, this.getInput());
+      input.validity,
+      input.validationMessage,
+      this.getInput(),
+    );
   }
 
   private getInput() {

@@ -23,7 +23,8 @@ describe('checkbox', () => {
   const env = new Environment();
 
   async function setupTest(
-      template = html`<md-test-checkbox></md-test-checkbox>`) {
+    template = html`<md-test-checkbox></md-test-checkbox>`,
+  ) {
     const element = env.render(template).querySelector('md-test-checkbox');
     if (!element) {
       throw new Error('Could not query rendered <md-test-checkbox>.');
@@ -84,84 +85,78 @@ describe('checkbox', () => {
   });
 
   describe('checked', () => {
-    it('get/set updates the checked property on the native checkbox element',
-       async () => {
-         const {harness, input} = await setupTest();
-         harness.element.checked = true;
-         await env.waitForStability();
-         expect(input.checked).toEqual(true);
-         harness.element.checked = false;
-         await env.waitForStability();
-         expect(input.checked).toEqual(false);
-       });
+    it('get/set updates the checked property on the native checkbox element', async () => {
+      const {harness, input} = await setupTest();
+      harness.element.checked = true;
+      await env.waitForStability();
+      expect(input.checked).toEqual(true);
+      harness.element.checked = false;
+      await env.waitForStability();
+      expect(input.checked).toEqual(false);
+    });
 
-    it('get/set updates the checked property after user updates checked state',
-       async () => {
-         const {harness, input} = await setupTest();
+    it('get/set updates the checked property after user updates checked state', async () => {
+      const {harness, input} = await setupTest();
 
-         // Simulate user interaction setting checked to true.
-         await harness.clickWithMouse();
-         await env.waitForStability();
-         expect(input.checked).toEqual(true);
-         expect(harness.element.checked).toEqual(true);
+      // Simulate user interaction setting checked to true.
+      await harness.clickWithMouse();
+      await env.waitForStability();
+      expect(input.checked).toEqual(true);
+      expect(harness.element.checked).toEqual(true);
 
-         // Set custom element checked to false.
-         harness.element.checked = false;
-         await env.waitForStability();
-         expect(input.checked).toEqual(false);
-         expect(harness.element.checked).toEqual(false);
+      // Set custom element checked to false.
+      harness.element.checked = false;
+      await env.waitForStability();
+      expect(input.checked).toEqual(false);
+      expect(harness.element.checked).toEqual(false);
 
-         // Set custom element checked to true.
-         harness.element.checked = true;
-         await env.waitForStability();
-         expect(input.checked).toEqual(true);
-         expect(harness.element.checked).toEqual(true);
-       });
+      // Set custom element checked to true.
+      harness.element.checked = true;
+      await env.waitForStability();
+      expect(input.checked).toEqual(true);
+      expect(harness.element.checked).toEqual(true);
+    });
   });
 
   describe('indeterminate', () => {
-    it('get/set updates the indeterminate property on the native checkbox element',
-       async () => {
-         const {harness, input} = await setupTest();
-         harness.element.indeterminate = true;
-         await env.waitForStability();
+    it('get/set updates the indeterminate property on the native checkbox element', async () => {
+      const {harness, input} = await setupTest();
+      harness.element.indeterminate = true;
+      await env.waitForStability();
 
-         expect(input.indeterminate).toEqual(true);
-         expect(input.getAttribute('aria-checked')).toEqual('mixed');
+      expect(input.indeterminate).toEqual(true);
+      expect(input.getAttribute('aria-checked')).toEqual('mixed');
 
-         harness.element.indeterminate = false;
-         await env.waitForStability();
+      harness.element.indeterminate = false;
+      await env.waitForStability();
 
-         expect(input.indeterminate).toEqual(false);
-         expect(input.getAttribute('aria-checked')).not.toEqual('mixed');
-       });
+      expect(input.indeterminate).toEqual(false);
+      expect(input.getAttribute('aria-checked')).not.toEqual('mixed');
+    });
   });
 
   describe('disabled', () => {
-    it('get/set updates the disabled property on the native checkbox element',
-       async () => {
-         const {harness, input} = await setupTest();
-         harness.element.disabled = true;
-         await env.waitForStability();
+    it('get/set updates the disabled property on the native checkbox element', async () => {
+      const {harness, input} = await setupTest();
+      harness.element.disabled = true;
+      await env.waitForStability();
 
-         expect(input.disabled).toEqual(true);
-         harness.element.disabled = false;
-         await env.waitForStability();
-         expect(input.disabled).toEqual(false);
-       });
+      expect(input.disabled).toEqual(true);
+      harness.element.disabled = false;
+      await env.waitForStability();
+      expect(input.disabled).toEqual(false);
+    });
   });
 
   describe('form submission', () => {
     async function setupFormTest(propsInit: Partial<Checkbox> = {}) {
-      return await setupTest(html`
-        <form>
-          <md-test-checkbox
-           .checked=${propsInit.checked === true}
-           .disabled=${propsInit.disabled === true}
-           .name=${propsInit.name ?? ''}
-           .value=${propsInit.value ?? ''}
-          ></md-test-checkbox>
-        </form>`);
+      return await setupTest(html` <form>
+        <md-test-checkbox
+          .checked=${propsInit.checked === true}
+          .disabled=${propsInit.disabled === true}
+          .name=${propsInit.name ?? ''}
+          .value=${propsInit.value ?? ''}></md-test-checkbox>
+      </form>`);
     }
 
     it('does not submit if not checked', async () => {
@@ -171,8 +166,11 @@ describe('checkbox', () => {
     });
 
     it('does not submit if disabled', async () => {
-      const {harness} =
-          await setupFormTest({name: 'foo', checked: true, disabled: true});
+      const {harness} = await setupFormTest({
+        name: 'foo',
+        checked: true,
+        disabled: true,
+      });
       const formData = await harness.submitForm();
       expect(formData.get('foo')).toBeNull();
     });
@@ -185,8 +183,11 @@ describe('checkbox', () => {
     });
 
     it('submits under correct conditions', async () => {
-      const {harness} =
-          await setupFormTest({name: 'foo', checked: true, value: 'bar'});
+      const {harness} = await setupFormTest({
+        name: 'foo',
+        checked: true,
+        value: 'bar',
+      });
       const formData = await harness.submitForm();
       expect(formData.get('foo')).toEqual('bar');
     });
@@ -195,17 +196,21 @@ describe('checkbox', () => {
   describe('label activation', () => {
     async function setupLabelTest() {
       const test = await setupTest(html`
-          <label>
-            <md-test-checkbox></md-test-checkbox>
-          </label>
-        `);
-      const label = (test.harness.element.getRootNode() as HTMLElement)
-                        .querySelector<HTMLLabelElement>('label')!;
+        <label>
+          <md-test-checkbox></md-test-checkbox>
+        </label>
+      `);
+      const label = (
+        test.harness.element.getRootNode() as HTMLElement
+      ).querySelector<HTMLLabelElement>('label')!;
       return {...test, label};
     }
 
     it('toggles when label is clicked', async () => {
-      const {harness: {element}, label} = await setupLabelTest();
+      const {
+        harness: {element},
+        label,
+      } = await setupLabelTest();
       label.click();
       await env.waitForStability();
       expect(element.checked).toBeTrue();
@@ -221,8 +226,8 @@ describe('checkbox', () => {
       harness.element.required = true;
 
       expect(harness.element.validity.valueMissing)
-          .withContext('checkbox.validity.valueMissing')
-          .toBeTrue();
+        .withContext('checkbox.validity.valueMissing')
+        .toBeTrue();
     });
 
     it('should not set valueMissing when required and checked', async () => {
@@ -231,8 +236,8 @@ describe('checkbox', () => {
       harness.element.checked = true;
 
       expect(harness.element.validity.valueMissing)
-          .withContext('checkbox.validity.valueMissing')
-          .toBeFalse();
+        .withContext('checkbox.validity.valueMissing')
+        .toBeFalse();
     });
 
     it('should set valueMissing when required and indeterminate', async () => {
@@ -241,8 +246,8 @@ describe('checkbox', () => {
       harness.element.indeterminate = true;
 
       expect(harness.element.validity.valueMissing)
-          .withContext('checkbox.validity.valueMissing')
-          .toBeTrue();
+        .withContext('checkbox.validity.valueMissing')
+        .toBeTrue();
     });
   });
 });

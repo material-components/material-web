@@ -14,8 +14,7 @@ import {Harness} from '../../testing/harness.js';
 import {Switch} from './switch.js';
 
 @customElement('md-test-switch')
-class TestSwitch extends Switch {
-}
+class TestSwitch extends Switch {}
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -34,22 +33,20 @@ function renderSwitch(propsInit: Partial<TestSwitch> = {}) {
 }
 
 function renderSwitchInForm(propsInit: Partial<TestSwitch> = {}) {
-  return html`
-    <form>${renderSwitch(propsInit)}</form>
-  `;
+  return html` <form>${renderSwitch(propsInit)}</form> `;
 }
 
 function renderSwitchInLabel(propsInit: Partial<TestSwitch> = {}) {
-  return html`
-    <label>${renderSwitch(propsInit)}</label>
-  `;
+  return html` <label>${renderSwitch(propsInit)}</label> `;
 }
 
 describe('md-switch', () => {
   const env = new Environment();
 
   async function switchElement(
-      propsInit: Partial<TestSwitch> = {}, template = renderSwitch) {
+    propsInit: Partial<TestSwitch> = {},
+    template = renderSwitch,
+  ) {
     const root = env.render(html`<div>${template(propsInit)}</div>`);
     await env.waitForStability();
     const element = root.querySelector('md-test-switch');
@@ -168,7 +165,9 @@ describe('md-switch', () => {
 
   describe('form submission', () => {
     async function switchInForm(
-        propsInit: Partial<TestSwitch> = {}, template = renderSwitchInForm) {
+      propsInit: Partial<TestSwitch> = {},
+      template = renderSwitchInForm,
+    ) {
       const element = await switchElement(propsInit, template);
       return new Harness(element);
     }
@@ -180,8 +179,11 @@ describe('md-switch', () => {
     });
 
     it('does not submit if disabled', async () => {
-      const harness =
-          await switchInForm({name: 'foo', selected: true, disabled: true});
+      const harness = await switchInForm({
+        name: 'foo',
+        selected: true,
+        disabled: true,
+      });
       const formData = await harness.submitForm();
       expect(formData.get('foo')).toBeNull();
     });
@@ -194,8 +196,11 @@ describe('md-switch', () => {
     });
 
     it('submits under correct conditions', async () => {
-      const harness =
-          await switchInForm({name: 'foo', selected: true, value: 'bar'});
+      const harness = await switchInForm({
+        name: 'foo',
+        selected: true,
+        value: 'bar',
+      });
       const formData = await harness.submitForm();
       expect(formData.get('foo')).toEqual('bar');
     });
@@ -221,8 +226,8 @@ describe('md-switch', () => {
       toggle.required = true;
 
       expect(toggle.validity.valueMissing)
-          .withContext('toggle.validity.valueMissing')
-          .toBeTrue();
+        .withContext('toggle.validity.valueMissing')
+        .toBeTrue();
     });
 
     it('should not set valueMissing when required and selected', async () => {
@@ -230,8 +235,8 @@ describe('md-switch', () => {
       toggle.selected = true;
 
       expect(toggle.validity.valueMissing)
-          .withContext('toggle.validity.valueMissing')
-          .toBeFalse();
+        .withContext('toggle.validity.valueMissing')
+        .toBeFalse();
     });
   });
 });

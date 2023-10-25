@@ -4,23 +4,26 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../../ripple/ripple.js';
 import '../../../focus/md-focus-ring.js';
 import '../../../labs/item/item.js';
+import '../../../ripple/ripple.js';
 
 import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {html as staticHtml, literal, StaticValue} from 'lit/static-html.js';
+import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
-import {createRequestActivationEvent, ListItem} from '../list-navigation-helpers.js';
+import {
+  createRequestActivationEvent,
+  ListItem,
+} from '../list-navigation-helpers.js';
 
 /**
  * Supported behaviors for a list item.
  */
-export type ListItemType = 'text'|'button'|'link';
+export type ListItemType = 'text' | 'button' | 'link';
 
 /**
  * @fires request-activation
@@ -33,7 +36,7 @@ export class ListItemEl extends LitElement implements ListItem {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true
+    delegatesFocus: true,
   };
 
   /**
@@ -62,9 +65,9 @@ export class ListItemEl extends LitElement implements ListItem {
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is
    * set.
    */
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
-  @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
+  @query('.list-item') protected readonly listItemRoot!: HTMLElement | null;
 
   private get isDisabled() {
     return this.disabled && this.type !== 'link';
@@ -82,8 +85,7 @@ export class ListItemEl extends LitElement implements ListItem {
     return this.renderListItem(html`
       <md-item>
         <div slot="container">
-          ${this.renderRipple()}
-          ${this.renderFocusRing()}
+          ${this.renderRipple()} ${this.renderFocusRing()}
         </div>
         <slot name="start" slot="start"></slot>
         <slot name="end" slot="end"></slot>
@@ -138,32 +140,30 @@ export class ListItemEl extends LitElement implements ListItem {
   /**
    * Handles rendering of the ripple element.
    */
-  protected renderRipple(): TemplateResult|typeof nothing {
+  protected renderRipple(): TemplateResult | typeof nothing {
     if (this.type === 'text') {
       return nothing;
     }
 
-    return html`
-      <md-ripple
-          part="ripple"
-          for="item"
-          ?disabled=${this.isDisabled}></md-ripple>`;
+    return html` <md-ripple
+      part="ripple"
+      for="item"
+      ?disabled=${this.isDisabled}></md-ripple>`;
   }
 
   /**
    * Handles rendering of the focus ring.
    */
-  protected renderFocusRing(): TemplateResult|typeof nothing {
+  protected renderFocusRing(): TemplateResult | typeof nothing {
     if (this.type === 'text') {
       return nothing;
     }
 
-    return html`
-      <md-focus-ring
-          @visibility-changed=${this.onFocusRingVisibilityChanged}
-          part="focus-ring"
-          for="item"
-          inward></md-focus-ring>`;
+    return html` <md-focus-ring
+      @visibility-changed=${this.onFocusRingVisibilityChanged}
+      part="focus-ring"
+      for="item"
+      inward></md-focus-ring>`;
   }
 
   protected onFocusRingVisibilityChanged(e: Event) {}
@@ -184,8 +184,9 @@ export class ListItemEl extends LitElement implements ListItem {
       <slot name="overline" slot="overline"></slot>
       <slot name="headline" slot="headline"></slot>
       <slot name="supporting-text" slot="supporting-text"></slot>
-      <slot name="trailing-supporting-text"
-          slot="trailing-supporting-text"></slot>
+      <slot
+        name="trailing-supporting-text"
+        slot="trailing-supporting-text"></slot>
     `;
   }
 

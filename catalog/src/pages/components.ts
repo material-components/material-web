@@ -20,7 +20,9 @@ import {getCurrentThemeString} from '../utils/theme.js';
  * @param previewEl An element reference to the playground preview element.
  */
 async function updateMessageTargetOnIframeLoad(
-    postdoc: PostDoc, previewEl: PlaygroundPreview) {
+  postdoc: PostDoc,
+  previewEl: PlaygroundPreview,
+) {
   await previewEl.updateComplete;
   const iframe = previewEl.iframe!;
 
@@ -76,9 +78,9 @@ function demoDropdown() {
 
   // tslint:disable:no-unnecessary-type-assertion TSC externally seems to differ
   // from internal here and needs these type assertions
-  const expandButton =
-      detailsEl?.querySelector('summary md-outlined-icon-button') as
-      MdOutlinedIconButton;
+  const expandButton = detailsEl?.querySelector(
+    'summary md-outlined-icon-button',
+  ) as MdOutlinedIconButton;
   // tslint:enable:no-unnecessary-type-assertion
 
   // Synchronize details open state with toggle button

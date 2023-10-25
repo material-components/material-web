@@ -47,16 +47,17 @@ const updateTabIndex = Symbol('updateTabIndex');
  * @param base The class to mix functionality into.
  * @return The provided class with `Focusable` mixed in.
  */
-export function mixinFocusable<T extends MixinBase<LitElement>>(base: T):
-    MixinReturn<T, Focusable> {
+export function mixinFocusable<T extends MixinBase<LitElement>>(
+  base: T,
+): MixinReturn<T, Focusable> {
   abstract class FocusableElement extends base implements Focusable {
     @property({reflect: true}) declare tabIndex: number;
 
-    get[isFocusable]() {
+    get [isFocusable]() {
       return this[privateIsFocusable];
     }
 
-    set[isFocusable](value: boolean) {
+    set [isFocusable](value: boolean) {
       if (this[isFocusable] === value) {
         return;
       }
@@ -66,7 +67,7 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(base: T):
     }
 
     [privateIsFocusable] = false;
-    [externalTabIndex]: number|null = null;
+    [externalTabIndex]: number | null = null;
     [isUpdatingTabIndex] = false;
 
     // tslint:disable-next-line:no-any
@@ -76,7 +77,10 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(base: T):
     }
 
     override attributeChangedCallback(
-        name: string, old: string|null, value: string|null) {
+      name: string,
+      old: string | null,
+      value: string | null,
+    ) {
       super.attributeChangedCallback(name, old, value);
       if (name !== 'tabindex' || this[isUpdatingTabIndex]) {
         return;
@@ -92,7 +96,7 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(base: T):
       this[externalTabIndex] = this.tabIndex;
     }
 
-    async[updateTabIndex]() {
+    async [updateTabIndex]() {
       const internalTabIndex = this[isFocusable] ? 0 : -1;
       const computedTabIndex = this[externalTabIndex] ?? internalTabIndex;
 

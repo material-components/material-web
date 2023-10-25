@@ -17,8 +17,7 @@ describe('mixinFocusable()', () => {
   // tslint:disable-next-line:enforce-name-casing MixinClassCase
   const FocusableLitElement = mixinFocusable(LitElement);
   @customElement('test-focusable')
-  class TestFocusable extends FocusableLitElement {
-  }
+  class TestFocusable extends FocusableLitElement {}
 
   const env = new Environment();
 
@@ -53,28 +52,25 @@ describe('mixinFocusable()', () => {
     expect(element.requestUpdate).toHaveBeenCalled();
   });
 
-  it('should not override user-set tabindex="0" when isFocusable is false',
-     async () => {
-       const element = await setupTest();
-       element[isFocusable] = false;
-       element.tabIndex = 0;
-       expect(element[isFocusable]).withContext('isFocusable').toBeFalse();
-       expect(element.tabIndex).withContext('tabIndex').toBe(0);
-     });
+  it('should not override user-set tabindex="0" when isFocusable is false', async () => {
+    const element = await setupTest();
+    element[isFocusable] = false;
+    element.tabIndex = 0;
+    expect(element[isFocusable]).withContext('isFocusable').toBeFalse();
+    expect(element.tabIndex).withContext('tabIndex').toBe(0);
+  });
 
-  it('should not override user-set tabindex="-1" when isFocusable is true',
-     async () => {
-       const element = await setupTest();
-       element.tabIndex = -1;
-       expect(element[isFocusable]).withContext('isFocusable').toBeTrue();
-       expect(element.tabIndex).withContext('tabIndex').toBe(-1);
-     });
+  it('should not override user-set tabindex="-1" when isFocusable is true', async () => {
+    const element = await setupTest();
+    element.tabIndex = -1;
+    expect(element[isFocusable]).withContext('isFocusable').toBeTrue();
+    expect(element.tabIndex).withContext('tabIndex').toBe(-1);
+  });
 
-  it('should restore default tabindex when user-set tabindex attribute is removed',
-     async () => {
-       const element = await setupTest();
-       element.tabIndex = -1;
-       element.removeAttribute('tabindex');
-       expect(element.tabIndex).withContext('tabIndex').toBe(0);
-     });
+  it('should restore default tabindex when user-set tabindex attribute is removed', async () => {
+    const element = await setupTest();
+    element.tabIndex = -1;
+    element.removeAttribute('tabindex');
+    expect(element.tabIndex).withContext('tabIndex').toBe(0);
+  });
 });

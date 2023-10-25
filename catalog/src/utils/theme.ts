@@ -4,9 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {applyMaterialTheme, themeFromSourceColor} from './material-color-helpers.js';
+import {
+  applyMaterialTheme,
+  themeFromSourceColor,
+} from './material-color-helpers.js';
 
-export type ColorMode = 'light'|'dark'|'auto';
+/** Color mode, either overriding light/dark or the user's preference. */
+export type ColorMode = 'light' | 'dark' | 'auto';
 
 /**
  * Generates a Material Theme from a given color and dark mode boolean, and
@@ -56,7 +60,7 @@ export function isModeDark(mode: ColorMode, saveAutoMode = true) {
  *
  * @return The current stringified material theme css string.
  */
-export function getCurrentThemeString(): string|null {
+export function getCurrentThemeString(): string | null {
   return localStorage.getItem('material-theme');
 }
 
@@ -65,7 +69,7 @@ export function getCurrentThemeString(): string|null {
  *
  * @return The current color mode.
  */
-export function getCurrentMode(): ColorMode|null {
+export function getCurrentMode(): ColorMode | null {
   return localStorage.getItem('color-mode') as ColorMode | null;
 }
 
@@ -83,7 +87,7 @@ export function saveColorMode(mode: ColorMode) {
  *
  * @return The current seed color.
  */
-export function getCurrentSeedColor(): string|null {
+export function getCurrentSeedColor(): string | null {
   return localStorage.getItem('seed-color');
 }
 
@@ -102,8 +106,10 @@ export function saveSeedColor(color: string) {
  * @return The last applied color mode while in "auto".
  */
 export function getLastSavedAutoColorMode() {
-  return localStorage.getItem('last-auto-color-mode') as | 'light' | 'dark' |
-      null;
+  return localStorage.getItem('last-auto-color-mode') as
+    | 'light'
+    | 'dark'
+    | null;
 }
 
 /**
@@ -112,7 +118,7 @@ export function getLastSavedAutoColorMode() {
  * @param mode The last applied color mode while in "auto" to be saved to local
  *     storage.
  */
-export function saveLastSavedAutoColorMode(mode: 'light'|'dark') {
+export function saveLastSavedAutoColorMode(mode: 'light' | 'dark') {
   localStorage.setItem('last-auto-color-mode', mode);
 }
 

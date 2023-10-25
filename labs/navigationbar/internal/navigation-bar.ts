@@ -38,26 +38,31 @@ export class NavigationBar extends LitElement implements NavigationBarState {
   protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
-    return html`<div class="md3-navigation-bar"
-            role="tablist"
-            aria-label=${ariaLabel || nothing}
-            @keydown="${this.handleKeydown}"
-            @navigation-tab-interaction="${this.handleNavigationTabInteraction}"
-            @navigation-tab-rendered=${this.handleNavigationTabConnected}
-          ><md-elevation></md-elevation
-          ><div class="md3-navigation-bar__tabs-slot-container"
-        ><slot></slot></div></div>`;
+    return html`<div
+      class="md3-navigation-bar"
+      role="tablist"
+      aria-label=${ariaLabel || nothing}
+      @keydown="${this.handleKeydown}"
+      @navigation-tab-interaction="${this.handleNavigationTabInteraction}"
+      @navigation-tab-rendered=${this.handleNavigationTabConnected}
+      ><md-elevation></md-elevation
+      ><div class="md3-navigation-bar__tabs-slot-container"><slot></slot></div
+    ></div>`;
   }
 
   protected override updated(changedProperties: PropertyValues<NavigationBar>) {
     if (changedProperties.has('activeIndex')) {
       this.onActiveIndexChange(this.activeIndex);
-      this.dispatchEvent(new CustomEvent('navigation-bar-activated', {
-        detail:
-            {tab: this.tabs[this.activeIndex], activeIndex: this.activeIndex},
-        bubbles: true,
-        composed: true
-      }));
+      this.dispatchEvent(
+        new CustomEvent('navigation-bar-activated', {
+          detail: {
+            tab: this.tabs[this.activeIndex],
+            activeIndex: this.activeIndex,
+          },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
 
     if (changedProperties.has('hideInactiveLabels')) {
@@ -119,7 +124,7 @@ export class NavigationBar extends LitElement implements NavigationBarState {
     }
 
     const toNextTab =
-        (key === 'ArrowRight' && !isRTL) || (key === 'ArrowLeft' && isRTL);
+      (key === 'ArrowRight' && !isRTL) || (key === 'ArrowLeft' && isRTL);
     if (toNextTab && focusedTabIndex === maxIndex) {
       this.tabs[0].focus();
       return;
@@ -130,7 +135,7 @@ export class NavigationBar extends LitElement implements NavigationBarState {
     }
 
     const toPreviousTab =
-        (key === 'ArrowLeft' && !isRTL) || (key === 'ArrowRight' && isRTL);
+      (key === 'ArrowLeft' && !isRTL) || (key === 'ArrowRight' && isRTL);
     if (toPreviousTab && focusedTabIndex === 0) {
       this.tabs[maxIndex].focus();
       return;

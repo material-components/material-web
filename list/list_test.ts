@@ -26,17 +26,17 @@ describe('<md-list>', () => {
 
   describe('keyboard navigation', () => {
     it('non-nagivable key does nothing', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -53,17 +53,17 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown activates the next item', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -80,17 +80,17 @@ describe('<md-list>', () => {
     });
 
     it('ArrowRight in LTR activates the next item', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -107,17 +107,17 @@ describe('<md-list>', () => {
     });
 
     it('ArrowLeft in RTL activates the next item', async () => {
-      const root = env.render(html`
-        <md-list dir="rtl">
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list dir="rtl">
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
 
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -134,16 +134,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown will loop around', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -160,11 +160,10 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown will do nothing if nothing is selectable', async () => {
-      const root = env.render(html`
-          <md-list>
-            <md-list-item type="button" disabled></md-list-item>
-            <md-list-item type="button" disabled></md-list-item>
-          </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button" disabled></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second] = Array.from(root.querySelectorAll('md-list-item'));
@@ -182,16 +181,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown does not activate disabled items', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button" disabled></md-list-item>
-          <md-list-item type="button"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -209,10 +208,9 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown will select itself if its the only activatable', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
       const first = root.querySelector('md-list-item')!;
@@ -229,16 +227,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp activates the previous item', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -256,16 +254,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowLeft in LTR activates the previous item', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -282,16 +280,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowRight in RTL activates the previous item', async () => {
-      const root = env.render(html`
-        <md-list dir="rtl">
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list dir="rtl">
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -308,16 +306,16 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem will loop around', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -335,11 +333,10 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp will return null if nothing is selectable', async () => {
-      const root = env.render(html`
-          <md-list>
-            <md-list-item type="button" disabled></md-list-item>
-            <md-list-item type="button" disabled></md-list-item>
-          </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button" disabled></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second] = Array.from(root.querySelectorAll('md-list-item'));
@@ -357,16 +354,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp does not activate disabled items', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" disabled></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -384,10 +381,9 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp will select itself if its the only activatable', async () => {
-      const root = env.render(html`
-          <md-list>
-            <md-list-item type="button"></md-list-item>
-          </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
       const first = root.querySelector('md-list-item')!;
@@ -403,157 +399,152 @@ describe('<md-list>', () => {
       expect(document.activeElement).toEqual(first);
     });
 
-    it('Home will select the first item if something is already selected',
-       async () => {
-         const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-        </md-list>`);
-         const listEl = root.querySelector('md-list')!;
-         const listHarness = new ListHarness(listEl);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
-
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(0);
-         expect(third.tabIndex).toEqual(-1);
-
-         await listHarness.pressHandledKey('Home');
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(0);
-         expect(second.tabIndex).toEqual(-1);
-         expect(third.tabIndex).toEqual(-1);
-         expect(document.activeElement).toEqual(first);
-       });
-
-    it('Home will select the first activatable item if first is non-activatable',
-       async () => {
-         const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" disabled></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-        </md-list>`);
-         const listEl = root.querySelector('md-list')!;
-         const listHarness = new ListHarness(listEl);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
-
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(-1);
-         expect(third.tabIndex).toEqual(0);
-
-         await listHarness.pressHandledKey('Home');
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(0);
-         expect(third.tabIndex).toEqual(-1);
-         expect(document.activeElement).toEqual(second);
-       });
-
-    it('Home will select the first item if it is already selected',
-       async () => {
-         const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
-         const listEl = root.querySelector('md-list')!;
-         const listHarness = new ListHarness(listEl);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
-
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(0);
-         expect(second.tabIndex).toEqual(-1);
-         expect(third.tabIndex).toEqual(-1);
-
-         await listHarness.pressHandledKey('Home');
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(0);
-         expect(second.tabIndex).toEqual(-1);
-         expect(third.tabIndex).toEqual(-1);
-         expect(document.activeElement).toEqual(first);
-       });
-
-    it('End will select the last item if something is already selected',
-       async () => {
-         const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
-         const listEl = root.querySelector('md-list')!;
-         const listHarness = new ListHarness(listEl);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
-
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(0);
-         expect(third.tabIndex).toEqual(-1);
-
-         await listHarness.pressHandledKey('End');
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(-1);
-         expect(third.tabIndex).toEqual(0);
-         expect(document.activeElement).toEqual(third);
-       });
-
-    it('End will select the last activatable item if last is non-activatable',
-       async () => {
-         const root = env.render(html`
-        <md-list>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button" disabled></md-list-item>
-        </md-list>`);
-         const listEl = root.querySelector('md-list')!;
-         const listHarness = new ListHarness(listEl);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
-
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(0);
-         expect(second.tabIndex).toEqual(-1);
-         expect(third.tabIndex).toEqual(-1);
-
-         await listHarness.pressHandledKey('End');
-         await env.waitForStability();
-
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(0);
-         expect(third.tabIndex).toEqual(-1);
-         expect(document.activeElement).toEqual(second);
-       });
-
-    it('End will select the last item if it is already selected', async () => {
-      const root = env.render(html`
-          <md-list>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-            <md-list-item type="button" tabindex="0"></md-list-item>
-          </md-list>`);
+    it('Home will select the first item if something is already selected', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
+
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(0);
+      expect(third.tabIndex).toEqual(-1);
+
+      await listHarness.pressHandledKey('Home');
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(0);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(-1);
+      expect(document.activeElement).toEqual(first);
+    });
+
+    it('Home will select the first activatable item if first is non-activatable', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
+
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(0);
+
+      await listHarness.pressHandledKey('Home');
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(0);
+      expect(third.tabIndex).toEqual(-1);
+      expect(document.activeElement).toEqual(second);
+    });
+
+    it('Home will select the first item if it is already selected', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
+
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(0);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(-1);
+
+      await listHarness.pressHandledKey('Home');
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(0);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(-1);
+      expect(document.activeElement).toEqual(first);
+    });
+
+    it('End will select the last item if something is already selected', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
+
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(0);
+      expect(third.tabIndex).toEqual(-1);
+
+      await listHarness.pressHandledKey('End');
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(0);
+      expect(document.activeElement).toEqual(third);
+    });
+
+    it('End will select the last activatable item if last is non-activatable', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button" disabled></md-list-item>
+      </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
+
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(0);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(-1);
+
+      await listHarness.pressHandledKey('End');
+      await env.waitForStability();
+
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(0);
+      expect(third.tabIndex).toEqual(-1);
+      expect(document.activeElement).toEqual(second);
+    });
+
+    it('End will select the last item if it is already selected', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const listHarness = new ListHarness(listEl);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -571,14 +562,14 @@ describe('<md-list>', () => {
     });
 
     it('Clicking on an item will activate it', async () => {
-      const root = env.render(html`
-          <md-list>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-            <md-list-item type="button" tabindex="0"></md-list-item>
-          </md-list>`);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -599,14 +590,14 @@ describe('<md-list>', () => {
 
   describe('activate items methods', () => {
     it('List will activate only first item by default', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-        </md-list>`);
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -616,73 +607,70 @@ describe('<md-list>', () => {
       expect(document.activeElement).toEqual(document.body);
     });
 
-    it('List will activate only first activatable item by default',
-       async () => {
-         const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" disabled></md-list-item>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-        </md-list>`);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
+    it('List will activate only first activatable item by default', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
-         await env.waitForStability();
+      await env.waitForStability();
 
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(0);
-         expect(third.tabIndex).toEqual(-1);
-         expect(document.activeElement).toEqual(document.body);
-       });
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(0);
+      expect(third.tabIndex).toEqual(-1);
+      expect(document.activeElement).toEqual(document.body);
+    });
 
-    it('List will activate first activatable item if all are tabindex -1',
-       async () => {
-         const root = env.render(html`
-          <md-list>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-          </md-list>`);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
+    it('List will activate first activatable item if all are tabindex -1', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
-         await env.waitForStability();
+      await env.waitForStability();
 
-         expect(first.tabIndex).toEqual(0);
-         expect(second.tabIndex).toEqual(-1);
-         expect(third.tabIndex).toEqual(-1);
-         expect(document.activeElement).toEqual(document.body);
-       });
+      expect(first.tabIndex).toEqual(0);
+      expect(second.tabIndex).toEqual(-1);
+      expect(third.tabIndex).toEqual(-1);
+      expect(document.activeElement).toEqual(document.body);
+    });
 
-    it('List will activate first activatable item if defined by user',
-       async () => {
-         const root = env.render(html`
-          <md-list>
-            <md-list-item type="button" tabindex="-1"></md-list-item>
-            <md-list-item type="button" tabindex="2"></md-list-item>
-            <md-list-item type="button" tabindex="1"></md-list-item>
-          </md-list>`);
-         const [first, second, third] =
-             Array.from(root.querySelectorAll('md-list-item'));
+    it('List will activate first activatable item if defined by user', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="2"></md-list-item>
+        <md-list-item type="button" tabindex="1"></md-list-item>
+      </md-list>`);
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
-         await env.waitForStability();
+      await env.waitForStability();
 
-         expect(first.tabIndex).toEqual(-1);
-         expect(second.tabIndex).toEqual(0);
-         expect(third.tabIndex).toEqual(-1);
-         expect(document.activeElement).toEqual(document.body);
-       });
+      expect(first.tabIndex).toEqual(-1);
+      expect(second.tabIndex).toEqual(0);
+      expect(third.tabIndex).toEqual(-1);
+      expect(document.activeElement).toEqual(document.body);
+    });
 
     it('activateNextItem activates the next item', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -701,15 +689,15 @@ describe('<md-list>', () => {
     });
 
     it('activateNextItem will loop around', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -727,31 +715,28 @@ describe('<md-list>', () => {
       expect(document.activeElement).toEqual(first);
     });
 
-    it('activateNextItem will return null if nothing is selectable',
-       async () => {
-         const root = env.render(html`
-          <md-list>
-          </md-list>`);
-         const listEl = root.querySelector('md-list')!;
+    it('activateNextItem will return null if nothing is selectable', async () => {
+      const root = env.render(html` <md-list> </md-list>`);
+      const listEl = root.querySelector('md-list')!;
 
-         await env.waitForStability();
+      await env.waitForStability();
 
-         const nextItem = listEl.activateNextItem();
-         await env.waitForStability();
+      const nextItem = listEl.activateNextItem();
+      await env.waitForStability();
 
-         expect(nextItem).toBeNull();
-       });
+      expect(nextItem).toBeNull();
+    });
 
     it('activateNextItem does not activate disabled items', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button" disabled></md-list-item>
-          <md-list-item type="button"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -769,37 +754,35 @@ describe('<md-list>', () => {
       expect(document.activeElement).toEqual(third);
     });
 
-    it('activateNextItem will return itself if it is the only activatable item',
-       async () => {
-         const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-        </md-list>`);
-         const listEl = root.querySelector('md-list')!;
-         const first = root.querySelector('md-list-item')!;
+    it('activateNextItem will return itself if it is the only activatable item', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const first = root.querySelector('md-list-item')!;
 
-         await env.waitForStability();
+      await env.waitForStability();
 
-         expect(first.tabIndex).toEqual(0);
+      expect(first.tabIndex).toEqual(0);
 
-         const nextItem = listEl.activateNextItem();
-         await env.waitForStability();
+      const nextItem = listEl.activateNextItem();
+      await env.waitForStability();
 
-         expect(first.tabIndex).toEqual(0);
-         expect(nextItem).toEqual(first);
-         expect(document.activeElement).toEqual(first);
-       });
+      expect(first.tabIndex).toEqual(0);
+      expect(nextItem).toEqual(first);
+      expect(document.activeElement).toEqual(first);
+    });
 
     it('activatePreviousItem activates the previous item', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -818,15 +801,15 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem will loop around', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-          <md-list-item type="button"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -844,32 +827,29 @@ describe('<md-list>', () => {
       expect(document.activeElement).toEqual(third);
     });
 
-    it('activatePreviousItem will return null if nothing is selectable',
-       async () => {
-         const root = env.render(html`
-          <md-list>
-          </md-list>`);
-         const listEl = root.querySelector('md-list')!;
+    it('activatePreviousItem will return null if nothing is selectable', async () => {
+      const root = env.render(html` <md-list> </md-list>`);
+      const listEl = root.querySelector('md-list')!;
 
-         await env.waitForStability();
+      await env.waitForStability();
 
-         const nextItem = listEl.activatePreviousItem();
-         await env.waitForStability();
+      const nextItem = listEl.activatePreviousItem();
+      await env.waitForStability();
 
-         expect(nextItem).toBeNull();
-         expect(document.activeElement).toEqual(document.body);
-       });
+      expect(nextItem).toBeNull();
+      expect(document.activeElement).toEqual(document.body);
+    });
 
     it('activatePreviousItem does not activate disabled items', async () => {
-      const root = env.render(html`
-        <md-list>
-          <md-list-item type="button" tabindex="-1"></md-list-item>
-          <md-list-item type="button" disabled></md-list-item>
-          <md-list-item type="button" tabindex="0"></md-list-item>
-        </md-list>`);
+      const root = env.render(html` <md-list>
+        <md-list-item type="button" tabindex="-1"></md-list-item>
+        <md-list-item type="button" disabled></md-list-item>
+        <md-list-item type="button" tabindex="0"></md-list-item>
+      </md-list>`);
       const listEl = root.querySelector('md-list')!;
-      const [first, second, third] =
-          Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second, third] = Array.from(
+        root.querySelectorAll('md-list-item'),
+      );
 
       await env.waitForStability();
 
@@ -887,26 +867,24 @@ describe('<md-list>', () => {
       expect(document.activeElement).toEqual(first);
     });
 
-    it('activatePreviousItem will return itself if its activatable',
-       async () => {
-         const root = env.render(html`
-          <md-list>
-            <md-list-item type="button"></md-list-item>
-          </md-list>`);
-         const listEl = root.querySelector('md-list')!;
-         const first = root.querySelector('md-list-item')!;
+    it('activatePreviousItem will return itself if its activatable', async () => {
+      const root = env.render(html` <md-list>
+        <md-list-item type="button"></md-list-item>
+      </md-list>`);
+      const listEl = root.querySelector('md-list')!;
+      const first = root.querySelector('md-list-item')!;
 
-         await env.waitForStability();
+      await env.waitForStability();
 
-         expect(first.tabIndex).toEqual(0);
+      expect(first.tabIndex).toEqual(0);
 
-         const nextItem = listEl.activatePreviousItem();
-         await env.waitForStability();
+      const nextItem = listEl.activatePreviousItem();
+      await env.waitForStability();
 
-         expect(first.tabIndex).toEqual(0);
-         expect(nextItem).toEqual(first);
-         expect(document.activeElement).toEqual(first);
-       });
+      expect(first.tabIndex).toEqual(0);
+      expect(nextItem).toEqual(first);
+      expect(document.activeElement).toEqual(first);
+    });
   });
 
   describe('aria', () => {
@@ -914,8 +892,9 @@ describe('<md-list>', () => {
       const root = env.render(html`<md-list></md-list>`);
       const listEl = root.querySelector('md-list')!;
       await env.waitForStability();
-      const internals =
-          (listEl as unknown as {internals: {role: string | null}}).internals;
+      const internals = (
+        listEl as unknown as {internals: {role: string | null}}
+      ).internals;
 
       expect(internals.role).toEqual('list');
     });
@@ -947,9 +926,7 @@ describe('<md-list-item>', () => {
 
   describe('rendering', () => {
     it('self-describes as a list-item', async () => {
-      const root = env.render(html`
-          <md-list-item>
-          </md-list-item>`);
+      const root = env.render(html` <md-list-item> </md-list-item>`);
 
       const listItemEl = root.querySelector('md-list-item')!;
 
@@ -966,8 +943,9 @@ describe('<md-list-item>', () => {
 
     await env.waitForStability();
 
-    const internalRoot =
-        listItem.renderRoot.querySelector('#item') as HTMLElement;
+    const internalRoot = listItem.renderRoot.querySelector(
+      '#item',
+    ) as HTMLElement;
 
     expect(internalRoot.tabIndex).toBe(0);
 
@@ -1013,28 +991,32 @@ describe('<md-list-item> link', () => {
 
   it('setting href renders an anchor tag', async () => {
     const root = env.render(
-        html`<md-list-item href="https://google.com"></md-list-item>`);
+      html`<md-list-item href="https://google.com"></md-list-item>`,
+    );
 
     const listItem = root.querySelector('md-list-item')!;
 
     await env.waitForStability();
 
-    const internalRoot =
-        listItem.renderRoot.querySelector('#item') as HTMLElement;
+    const internalRoot = listItem.renderRoot.querySelector(
+      '#item',
+    ) as HTMLElement;
 
     expect(internalRoot.tagName).toBe('A');
   });
 
   it('setting target without href renders nothing', async () => {
-    const root =
-        env.render(html`<md-list-item target="_blank"></md-list-item>`);
+    const root = env.render(
+      html`<md-list-item target="_blank"></md-list-item>`,
+    );
 
     const listItem = root.querySelector('md-list-item')!;
 
     await env.waitForStability();
 
-    const internalRoot =
-        listItem.renderRoot.querySelector('#item') as HTMLElement;
+    const internalRoot = listItem.renderRoot.querySelector(
+      '#item',
+    ) as HTMLElement;
 
     expect(internalRoot.hasAttribute('target')).toBe(false);
   });

@@ -20,8 +20,7 @@ declare global {
 }
 
 @customElement('test-test-table')
-class TestTestTable<S extends string = string> extends TestTable<S> {
-}
+class TestTestTable<S extends string = string> extends TestTable<S> {}
 
 describe('<test-test-table>', () => {
   const env = new Environment();

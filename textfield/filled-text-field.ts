@@ -29,8 +29,11 @@ declare global {
  */
 @customElement('md-filled-text-field')
 export class MdFilledTextField extends FilledTextField {
-  static override styles =
-      [sharedStyles, filledStyles, filledForcedColorsStyles];
+  static override styles = [
+    sharedStyles,
+    filledStyles,
+    filledForcedColorsStyles,
+  ];
 
   protected override readonly fieldTag = literal`md-filled-field`;
 }

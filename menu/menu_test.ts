@@ -32,11 +32,12 @@ describe('<md-menu>', () => {
 
   it('escape on list root closes menu', async () => {
     render(
-        html`
-      <button>OpenMenu</button>
-      <md-menu quick></md-menu>
-    `,
-        root);
+      html`
+        <button>OpenMenu</button>
+        <md-menu quick></md-menu>
+      `,
+      root,
+    );
 
     const button = root.querySelector('button')!;
     const menu = root.querySelector('md-menu')!;
@@ -50,7 +51,7 @@ describe('<md-menu>', () => {
       code: 'Escape',
       bubbles: true,
       composed: true,
-      cancelable: true
+      cancelable: true,
     });
     menu.dispatchEvent(escapeKeydownEvent);
 

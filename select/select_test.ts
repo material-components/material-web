@@ -35,14 +35,15 @@ describe('<md-outlined-select>', () => {
   it('clicking on option triggers change', async () => {
     let changed = false;
     render(
-        html`
-          <md-outlined-select @change=${() => {
+      html` <md-outlined-select
+        @change=${() => {
           changed = true;
         }}>
-            <md-select-option selected></md-select-option>
-            <md-select-option></md-select-option>
-          </md-outlined-select>`,
-        root);
+        <md-select-option selected></md-select-option>
+        <md-select-option></md-select-option>
+      </md-outlined-select>`,
+      root,
+    );
     const selectEl = root.querySelector('md-outlined-select')!;
     await selectEl.updateComplete;
 
@@ -53,7 +54,7 @@ describe('<md-outlined-select>', () => {
 
   describe('forms', () => {
     createFormTests({
-      queryControl: root => root.querySelector('md-outlined-select'),
+      queryControl: (root) => root.querySelector('md-outlined-select'),
       valueTests: [
         {
           name: 'unnamed',
@@ -65,9 +66,9 @@ describe('<md-outlined-select>', () => {
           `,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form without a name')
-                .toHaveSize(0);
-          }
+              .withContext('should not add anything to form without a name')
+              .toHaveSize(0);
+          },
         },
         {
           name: 'unselected',
@@ -79,7 +80,7 @@ describe('<md-outlined-select>', () => {
           `,
           assertValue(formData) {
             expect(formData.get('select')).toBe('');
-          }
+          },
         },
         {
           name: 'selected',
@@ -91,7 +92,7 @@ describe('<md-outlined-select>', () => {
           `,
           assertValue(formData) {
             expect(formData.get('select')).toBe('two');
-          }
+          },
         },
         {
           name: 'disabled',
@@ -103,10 +104,10 @@ describe('<md-outlined-select>', () => {
           `,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form when disabled')
-                .toHaveSize(0);
-          }
-        }
+              .withContext('should not add anything to form when disabled')
+              .toHaveSize(0);
+          },
+        },
       ],
       resetTests: [
         {
@@ -122,9 +123,9 @@ describe('<md-outlined-select>', () => {
           },
           assertReset(select) {
             expect(select.value)
-                .withContext('select.value after reset')
-                .toBe('');
-          }
+              .withContext('select.value after reset')
+              .toBe('');
+          },
         },
         {
           name: 'reset to selected',
@@ -139,9 +140,9 @@ describe('<md-outlined-select>', () => {
           },
           assertReset(select) {
             expect(select.value)
-                .withContext('select.value after reset')
-                .toBe('two');
-          }
+              .withContext('select.value after reset')
+              .toBe('two');
+          },
         },
       ],
       restoreTests: [
@@ -155,9 +156,9 @@ describe('<md-outlined-select>', () => {
           `,
           assertRestored(select) {
             expect(select.value)
-                .withContext('select.value after restore')
-                .toBe('');
-          }
+              .withContext('select.value after restore')
+              .toBe('');
+          },
         },
         {
           name: 'restore selected',
@@ -169,11 +170,11 @@ describe('<md-outlined-select>', () => {
           `,
           assertRestored(select) {
             expect(select.value)
-                .withContext('select.value after restore')
-                .toBe('two');
-          }
+              .withContext('select.value after restore')
+              .toBe('two');
+          },
         },
-      ]
+      ],
     });
   });
 });

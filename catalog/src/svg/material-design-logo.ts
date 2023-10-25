@@ -11,8 +11,7 @@ import {html} from 'lit';
  *
  * Source: Internal google symbols search.
  */
-export const materialDesign = html`
-<svg
+export const materialDesign = html` <svg
   viewBox="0 96 960 960"
   fill="currentColor">
   <path

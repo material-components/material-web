@@ -6,15 +6,20 @@
 
 // import 'jasmine'; (google3-only)
 
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from './events.js';
+import {
+  dispatchActivationClick,
+  isActivationClick,
+  redispatchEvent,
+} from './events.js';
 
 describe('events', () => {
   let instance: HTMLDivElement;
 
   beforeEach(() => {
     instance = document.createElement('div');
-    instance.attachShadow({mode: 'open'})
-        .append(document.createElement('slot'));
+    instance
+      .attachShadow({mode: 'open'})
+      .append(document.createElement('slot'));
     // To have event.target set correctly, the EventTarget instance must be
     // attached to the DOM.
     document.body.appendChild(instance);
@@ -34,21 +39,22 @@ describe('events', () => {
       expect(fooHandler).toHaveBeenCalled();
       const redispatchedEvent = fooHandler.calls.first().args[0] as Event;
       expect(redispatchedEvent)
-          .withContext('redispatched event should be a new instance')
-          .not.toBe(event);
+        .withContext('redispatched event should be a new instance')
+        .not.toBe(event);
       expect(redispatchedEvent.target)
-          .withContext(
-              'target should be the instance that redispatched the event')
-          .toBe(instance);
+        .withContext(
+          'target should be the instance that redispatched the event',
+        )
+        .toBe(instance);
       expect(redispatchedEvent.type)
-          .withContext('should be the same event type')
-          .toBe(event.type);
+        .withContext('should be the same event type')
+        .toBe(event.type);
       expect(redispatchedEvent.composed)
-          .withContext('should not be composed')
-          .toBeFalse();
+        .withContext('should not be composed')
+        .toBeFalse();
       expect(redispatchedEvent.bubbles)
-          .withContext('should keep other flags set to true')
-          .toBeTrue();
+        .withContext('should keep other flags set to true')
+        .toBeTrue();
     });
 
     it('should not dispatch multiple events if bubbling and composed', () => {
@@ -77,23 +83,24 @@ describe('events', () => {
 
     it('should preventDefault() on the original event if canceled', () => {
       const event = new Event('foo', {cancelable: true});
-      const fooHandler =
-          jasmine.createSpy('fooHandler').and.callFake((event: Event) => {
-            event.preventDefault();
-          });
+      const fooHandler = jasmine
+        .createSpy('fooHandler')
+        .and.callFake((event: Event) => {
+          event.preventDefault();
+        });
       instance.addEventListener('foo', fooHandler);
       const result = redispatchEvent(instance, event);
       expect(result)
-          .withContext('should return false since event was canceled')
-          .toBeFalse();
+        .withContext('should return false since event was canceled')
+        .toBeFalse();
       expect(fooHandler).toHaveBeenCalled();
       const redispatchedEvent = fooHandler.calls.first().args[0] as Event;
       expect(redispatchedEvent.defaultPrevented)
-          .withContext('redispatched event should be canceled by handler')
-          .toBeTrue();
+        .withContext('redispatched event should be canceled by handler')
+        .toBeTrue();
       expect(event.defaultPrevented)
-          .withContext('original event should be canceled')
-          .toBeTrue();
+        .withContext('original event should be canceled')
+        .toBeTrue();
     });
 
     it('should preserve event instance types', () => {
@@ -105,11 +112,11 @@ describe('events', () => {
       expect(fooHandler).toHaveBeenCalled();
       const redispatchedEvent = fooHandler.calls.first().args[0] as CustomEvent;
       expect(redispatchedEvent)
-          .withContext('should create the same instance type')
-          .toBeInstanceOf(CustomEvent);
+        .withContext('should create the same instance type')
+        .toBeInstanceOf(CustomEvent);
       expect(redispatchedEvent.detail)
-          .withContext('should copy event type-specific properties')
-          .toBe('bar');
+        .withContext('should copy event type-specific properties')
+        .toBe('bar');
     });
   });
 
@@ -119,7 +126,8 @@ describe('events', () => {
       listener.and.callThrough();
       instance.addEventListener('click', listener);
       instance.dispatchEvent(
-          new MouseEvent('click', {bubbles: true, composed: true}));
+        new MouseEvent('click', {bubbles: true, composed: true}),
+      );
       expect(listener).toHaveBeenCalledTimes(1);
       expect(listener.calls.mostRecent().returnValue).toBe(true);
     });
@@ -131,7 +139,8 @@ describe('events', () => {
       const innerEl = document.createElement('div');
       instance.shadowRoot!.append(innerEl);
       innerEl.dispatchEvent(
-          new MouseEvent('click', {bubbles: true, composed: true}));
+        new MouseEvent('click', {bubbles: true, composed: true}),
+      );
       expect(listener).toHaveBeenCalledTimes(1);
       expect(listener.calls.mostRecent().returnValue).toBe(false);
     });
@@ -144,7 +153,8 @@ describe('events', () => {
       instance.append(slottedEl);
 
       slottedEl.dispatchEvent(
-          new MouseEvent('click', {bubbles: true, composed: true}));
+        new MouseEvent('click', {bubbles: true, composed: true}),
+      );
       expect(listener).toHaveBeenCalledTimes(1);
       expect(listener.calls.mostRecent().returnValue).toBe(false);
     });
@@ -162,14 +172,13 @@ describe('events', () => {
       expect(listener).toHaveBeenCalledTimes(2);
     });
 
-    it('dispatches an event that cannot be heard outside dispatching scope',
-       () => {
-         const innerEl = document.createElement('div');
-         instance.shadowRoot!.append(innerEl);
-         const listener = jasmine.createSpy('listener');
-         instance.addEventListener('click', listener);
-         dispatchActivationClick(innerEl);
-         expect(listener).toHaveBeenCalledTimes(0);
-       });
+    it('dispatches an event that cannot be heard outside dispatching scope', () => {
+      const innerEl = document.createElement('div');
+      instance.shadowRoot!.append(innerEl);
+      const listener = jasmine.createSpy('listener');
+      instance.addEventListener('click', listener);
+      dispatchActivationClick(innerEl);
+      expect(listener).toHaveBeenCalledTimes(0);
+    });
   });
 });

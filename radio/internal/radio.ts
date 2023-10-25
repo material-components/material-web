@@ -11,7 +11,10 @@ import {html, isServer, LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
+import {
+  polyfillElementInternalsAria,
+  setupHostAria,
+} from '../../internal/aria/aria.js';
 import {isActivationClick} from '../../internal/controller/events.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
@@ -97,7 +100,10 @@ export class Radio extends LitElement {
 
   private readonly selectionController = new SingleSelectionController(this);
   private readonly internals = polyfillElementInternalsAria(
-      this, (this as HTMLElement /* needed for closure */).attachInternals());
+    this,
+    // Cast needed for closure
+    (this as HTMLElement).attachInternals(),
+  );
 
   constructor() {
     super();
@@ -113,16 +119,22 @@ export class Radio extends LitElement {
     const classes = {checked: this.checked};
     return html`
       <div class="container ${classMap(classes)}" aria-hidden="true">
-        <md-ripple part="ripple" .control=${this}
-            ?disabled=${this.disabled}></md-ripple>
+        <md-ripple
+          part="ripple"
+          .control=${this}
+          ?disabled=${this.disabled}></md-ripple>
         <md-focus-ring part="focus-ring" .control=${this}></md-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
           <mask id="${this.maskId}">
             <rect width="100%" height="100%" fill="white" />
             <circle cx="10" cy="10" r="8" fill="black" />
           </mask>
-          <circle class="outer circle" cx="10" cy="10" r="10"
-              mask="url(#${this.maskId})" />
+          <circle
+            class="outer circle"
+            cx="10"
+            cy="10"
+            r="10"
+            mask="url(#${this.maskId})" />
           <circle class="inner circle" cx="10" cy="10" r="5" />
         </svg>
 
@@ -132,8 +144,7 @@ export class Radio extends LitElement {
           tabindex="-1"
           .checked=${this.checked}
           .value=${this.value}
-          ?disabled=${this.disabled}
-        >
+          ?disabled=${this.disabled} />
       </div>
     `;
   }
@@ -161,7 +172,8 @@ export class Radio extends LitElement {
     this.checked = true;
     this.dispatchEvent(new Event('change', {bubbles: true}));
     this.dispatchEvent(
-        new InputEvent('input', {bubbles: true, composed: true}));
+      new InputEvent('input', {bubbles: true, composed: true}),
+    );
   }
 
   private async handleKeydown(event: KeyboardEvent) {

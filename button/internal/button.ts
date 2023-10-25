@@ -10,13 +10,20 @@ import '../../ripple/ripple.js';
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {html as staticHtml, literal} from 'lit/static-html.js';
+import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {internals} from '../../internal/controller/element-internals.js';
-import {dispatchActivationClick, isActivationClick} from '../../internal/controller/events.js';
-import {FormSubmitter, FormSubmitterType, setupFormSubmitter} from '../../internal/controller/form-submitter.js';
+import {
+  dispatchActivationClick,
+  isActivationClick,
+} from '../../internal/controller/events.js';
+import {
+  FormSubmitter,
+  FormSubmitterType,
+  setupFormSubmitter,
+} from '../../internal/controller/form-submitter.js';
 
 /**
  * A button component.
@@ -31,8 +38,10 @@ export abstract class Button extends LitElement implements FormSubmitter {
   static readonly formAssociated = true;
 
   /** @nocollapse */
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
+  static override shadowRootOptions: ShadowRootInit = {
+    mode: 'open',
+    delegatesFocus: true,
+  };
 
   /**
    * Whether or not the button is disabled.
@@ -48,7 +57,7 @@ export abstract class Button extends LitElement implements FormSubmitter {
    * Where to display the linked `href` URL for a link button. Common options
    * include `_blank` to open in a new tab.
    */
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
   /**
    * Whether to render the icon at the inline end of the label rather than the
@@ -81,14 +90,14 @@ export abstract class Button extends LitElement implements FormSubmitter {
     return this[internals].form;
   }
 
-  @query('.button') private readonly buttonElement!: HTMLElement|null;
+  @query('.button') private readonly buttonElement!: HTMLElement | null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
 
   /** @private */
-  [internals] =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  [internals] = (this as HTMLElement) /* needed for closure */
+    .attachInternals();
 
   constructor() {
     super();
@@ -138,12 +147,12 @@ export abstract class Button extends LitElement implements FormSubmitter {
   private renderContent() {
     // Link buttons may not be disabled
     const isDisabled = this.disabled && !this.href;
-    const icon =
-        html`<slot name="icon" @slotchange="${this.handleSlotChange}"></slot>`;
+    const icon = html`<slot
+      name="icon"
+      @slotchange="${this.handleSlotChange}"></slot>`;
 
     return html`
-      ${this.renderElevation?.()}
-      ${this.renderOutline?.()}
+      ${this.renderElevation?.()} ${this.renderOutline?.()}
       <md-focus-ring part="focus-ring"></md-focus-ring>
       <md-ripple class="button__ripple" ?disabled="${isDisabled}"></md-ripple>
       <span class="touch"></span>
@@ -154,7 +163,7 @@ export abstract class Button extends LitElement implements FormSubmitter {
   }
 
   private readonly handleActivationClick = (event: MouseEvent) => {
-    if (!isActivationClick((event)) || !this.buttonElement) {
+    if (!isActivationClick(event) || !this.buttonElement) {
       return;
     }
     this.focus();

@@ -20,7 +20,7 @@ export class NavigationDrawerModal extends LitElement {
   }
 
   @property({type: Boolean}) opened = false;
-  @property() pivot: 'start'|'end' = 'end';
+  @property() pivot: 'start' | 'end' = 'end';
 
   protected override render() {
     const ariaExpanded = this.opened ? 'true' : 'false';
@@ -39,8 +39,8 @@ export class NavigationDrawerModal extends LitElement {
         aria-modal=${ariaModal || nothing}
         class="md3-navigation-drawer-modal ${this.getRenderClasses()}"
         @keydown="${this.handleKeyDown}"
-        role="dialog"><div class="md3-elevation-overlay"
-        ></div>
+        role="dialog"
+        ><div class="md3-elevation-overlay"></div>
         <div class="md3-navigation-drawer-modal__slot-content">
           <slot></slot>
         </div>
@@ -61,13 +61,18 @@ export class NavigationDrawerModal extends LitElement {
     });
   }
 
-  protected override updated(changedProperties:
-                                 PropertyValues<NavigationDrawerModal>) {
+  protected override updated(
+    changedProperties: PropertyValues<NavigationDrawerModal>,
+  ) {
     if (changedProperties.has('opened')) {
       setTimeout(() => {
-        this.dispatchEvent(new CustomEvent(
-            'navigation-drawer-changed',
-            {detail: {opened: this.opened}, bubbles: true, composed: true}));
+        this.dispatchEvent(
+          new CustomEvent('navigation-drawer-changed', {
+            detail: {opened: this.opened},
+            bubbles: true,
+            composed: true,
+          }),
+        );
       }, 250);
     }
   }

@@ -4,18 +4,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../../ripple/ripple.js';
 import '../../../focus/md-focus-ring.js';
 import '../../../labs/item/item.js';
+import '../../../ripple/ripple.js';
 
 import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
-import {html as staticHtml, literal, StaticValue} from 'lit/static-html.js';
+import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
-import {MenuItem, MenuItemController, MenuItemType} from '../controllers/menuItemController.js';
+import {
+  MenuItem,
+  MenuItemController,
+  MenuItemType,
+} from '../controllers/menuItemController.js';
 
 /**
  * @fires close-menu {CloseMenuEvent}
@@ -28,7 +32,7 @@ export class MenuItemEl extends LitElement implements MenuItem {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true
+    delegatesFocus: true,
   };
 
   /**
@@ -50,7 +54,7 @@ export class MenuItemEl extends LitElement implements MenuItem {
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is
    * set.
    */
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
   /**
    * Keeps the menu open if clicked or keyboard selected.
@@ -62,7 +66,7 @@ export class MenuItemEl extends LitElement implements MenuItem {
    */
   @property({type: Boolean}) selected = false;
 
-  @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
+  @query('.list-item') protected readonly listItemRoot!: HTMLElement | null;
 
   @queryAssignedElements({slot: 'headline'})
   protected readonly headlineElements!: HTMLElement[];
@@ -91,8 +95,7 @@ export class MenuItemEl extends LitElement implements MenuItem {
     return this.renderListItem(html`
       <md-item>
         <div slot="container">
-          ${this.renderRipple()}
-          ${this.renderFocusRing()}
+          ${this.renderRipple()} ${this.renderFocusRing()}
         </div>
         <slot name="start" slot="start"></slot>
         <slot name="end" slot="end"></slot>
@@ -147,23 +150,21 @@ export class MenuItemEl extends LitElement implements MenuItem {
   /**
    * Handles rendering of the ripple element.
    */
-  protected renderRipple(): TemplateResult|typeof nothing {
-    return html`
-      <md-ripple
-          part="ripple"
-          for="item"
-          ?disabled=${this.disabled}></md-ripple>`;
+  protected renderRipple(): TemplateResult | typeof nothing {
+    return html` <md-ripple
+      part="ripple"
+      for="item"
+      ?disabled=${this.disabled}></md-ripple>`;
   }
 
   /**
    * Handles rendering of the focus ring.
    */
-  protected renderFocusRing(): TemplateResult|typeof nothing {
-    return html`
-      <md-focus-ring
-          part="focus-ring"
-          for="item"
-          inward></md-focus-ring>`;
+  protected renderFocusRing(): TemplateResult | typeof nothing {
+    return html` <md-focus-ring
+      part="focus-ring"
+      for="item"
+      inward></md-focus-ring>`;
   }
 
   /**
@@ -185,8 +186,9 @@ export class MenuItemEl extends LitElement implements MenuItem {
       <slot name="overline" slot="overline"></slot>
       <slot name="headline" slot="headline"></slot>
       <slot name="supporting-text" slot="supporting-text"></slot>
-      <slot name="trailing-supporting-text"
-          slot="trailing-supporting-text"></slot>
+      <slot
+        name="trailing-supporting-text"
+        slot="trailing-supporting-text"></slot>
     `;
   }
 

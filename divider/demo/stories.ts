@@ -35,25 +35,24 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   `,
   render(knobs) {
     return html`
-      <ul aria-label="A list of items with decorative and non-decorative separators">
+      <ul
+        aria-label="A list of items with decorative and non-decorative separators">
         <li>List item one</li>
         <md-divider
           ?inset=${knobs.inset}
           ?inset-start=${knobs['inset (start)']}
-          ?inset-end=${knobs['inset (end)']}
-        ></md-divider>
+          ?inset-end=${knobs['inset (end)']}></md-divider>
         <li>List item two</li>
         <md-divider role="separator"></md-divider>
         <li>List item three</li>
         <md-divider
           ?inset=${knobs.inset}
           ?inset-start=${knobs['inset (start)']}
-          ?inset-end=${knobs['inset (end)']}
-        ></md-divider>
+          ?inset-end=${knobs['inset (end)']}></md-divider>
         <li>List item four</li>
       </ul>
     `;
-  }
+  },
 };
 
 /** Divider stories. */

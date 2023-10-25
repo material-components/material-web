@@ -14,7 +14,12 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 
-import {DIALOG_DEFAULT_CLOSE_ANIMATION, DIALOG_DEFAULT_OPEN_ANIMATION, DialogAnimation, DialogAnimationArgs} from './animations.js';
+import {
+  DIALOG_DEFAULT_CLOSE_ANIMATION,
+  DIALOG_DEFAULT_OPEN_ANIMATION,
+  DialogAnimation,
+  DialogAnimationArgs,
+} from './animations.js';
 
 /**
  * A dialog component.
@@ -34,7 +39,7 @@ export class Dialog extends LitElement {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true
+    delegatesFocus: true,
   };
 
   /**
@@ -91,17 +96,17 @@ export class Dialog extends LitElement {
   // getIsConnectedPromise() immediately sets the resolve property.
   private isConnectedPromiseResolve!: () => void;
   private isConnectedPromise = this.getIsConnectedPromise();
-  @query('dialog') private readonly dialog!: HTMLDialogElement|null;
-  @query('.scrim') private readonly scrim!: HTMLDialogElement|null;
-  @query('.container') private readonly container!: HTMLDialogElement|null;
-  @query('.headline') private readonly headline!: HTMLDialogElement|null;
-  @query('.content') private readonly content!: HTMLDialogElement|null;
-  @query('.actions') private readonly actions!: HTMLDialogElement|null;
+  @query('dialog') private readonly dialog!: HTMLDialogElement | null;
+  @query('.scrim') private readonly scrim!: HTMLDialogElement | null;
+  @query('.container') private readonly container!: HTMLDialogElement | null;
+  @query('.headline') private readonly headline!: HTMLDialogElement | null;
+  @query('.content') private readonly content!: HTMLDialogElement | null;
+  @query('.actions') private readonly actions!: HTMLDialogElement | null;
   @state() private isAtScrollTop = false;
   @state() private isAtScrollBottom = false;
-  @query('.scroller') private readonly scroller!: HTMLElement|null;
-  @query('.top.anchor') private readonly topAnchor!: HTMLElement|null;
-  @query('.bottom.anchor') private readonly bottomAnchor!: HTMLElement|null;
+  @query('.scroller') private readonly scroller!: HTMLElement | null;
+  @query('.top.anchor') private readonly topAnchor!: HTMLElement | null;
+  @query('.bottom.anchor') private readonly bottomAnchor!: HTMLElement | null;
   private nextClickIsFromContent = false;
   private intersectionObserver?: IntersectionObserver;
   // Dialogs should not be SSR'd while open, so we can just use runtime checks.
@@ -139,8 +144,9 @@ export class Dialog extends LitElement {
       return;
     }
 
-    const preventOpen =
-        !this.dispatchEvent(new Event('open', {cancelable: true}));
+    const preventOpen = !this.dispatchEvent(
+      new Event('open', {cancelable: true}),
+    );
     if (preventOpen) {
       this.open = false;
       return;
@@ -191,8 +197,9 @@ export class Dialog extends LitElement {
 
     const prevReturnValue = this.returnValue;
     this.returnValue = returnValue;
-    const preventClose =
-        !this.dispatchEvent(new Event('close', {cancelable: true}));
+    const preventClose = !this.dispatchEvent(
+      new Event('close', {cancelable: true}),
+    );
     if (preventClose) {
       this.returnValue = prevReturnValue;
       return;
@@ -216,7 +223,7 @@ export class Dialog extends LitElement {
 
   protected override render() {
     const scrollable =
-        this.open && !(this.isAtScrollTop && this.isAtScrollBottom);
+      this.open && !(this.isAtScrollTop && this.isAtScrollBottom);
     const classes = {
       'has-headline': this.hasHeadline,
       'has-actions': this.hasActions,
@@ -236,18 +243,16 @@ export class Dialog extends LitElement {
         role=${this.type === 'alert' ? 'alertdialog' : nothing}
         @cancel=${this.handleCancel}
         @click=${this.handleDialogClick}
-        .returnValue=${this.returnValue || nothing}
-      >
-        <div class="container"
-          @click=${this.handleContentClick}
-        >
+        .returnValue=${this.returnValue || nothing}>
+        <div class="container" @click=${this.handleContentClick}>
           <div class="headline">
             <div class="icon" aria-hidden="true">
               <slot name="icon" @slotchange=${this.handleIconChange}></slot>
             </div>
             <h2 id="headline" aria-hidden=${!this.hasHeadline || nothing}>
-              <slot name="headline"
-                  @slotchange=${this.handleHeadlineChange}></slot>
+              <slot
+                name="headline"
+                @slotchange=${this.handleHeadlineChange}></slot>
             </h2>
             <md-divider></md-divider>
           </div>
@@ -260,8 +265,7 @@ export class Dialog extends LitElement {
           </div>
           <div class="actions">
             <md-divider></md-divider>
-            <slot name="actions"
-              @slotchange=${this.handleActionsChange}></slot>
+            <slot name="actions" @slotchange=${this.handleActionsChange}></slot>
           </div>
         </div>
       </dialog>
@@ -269,11 +273,14 @@ export class Dialog extends LitElement {
   }
 
   protected override firstUpdated() {
-    this.intersectionObserver = new IntersectionObserver(entries => {
-      for (const entry of entries) {
-        this.handleAnchorIntersection(entry);
-      }
-    }, {root: this.scroller!});
+    this.intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          this.handleAnchorIntersection(entry);
+        }
+      },
+      {root: this.scroller!},
+    );
 
     this.intersectionObserver.observe(this.topAnchor!);
     this.intersectionObserver.observe(this.bottomAnchor!);
@@ -289,8 +296,9 @@ export class Dialog extends LitElement {
 
     // Click originated on the backdrop. Native `<dialog>`s will not cancel,
     // but Material dialogs do.
-    const preventDefault =
-        !this.dispatchEvent(new Event('cancel', {cancelable: true}));
+    const preventDefault = !this.dispatchEvent(
+      new Event('cancel', {cancelable: true}),
+    );
     if (preventDefault) {
       return;
     }
@@ -343,13 +351,16 @@ export class Dialog extends LitElement {
       scrim: scrimAnimate,
       headline: headlineAnimate,
       content: contentAnimate,
-      actions: actionsAnimate
+      actions: actionsAnimate,
     } = animation;
 
     const elementAndAnimation: Array<[Element, DialogAnimationArgs[]]> = [
-      [dialog, dialogAnimate ?? []], [scrim, scrimAnimate ?? []],
-      [container, containerAnimate ?? []], [headline, headlineAnimate ?? []],
-      [content, contentAnimate ?? []], [actions, actionsAnimate ?? []]
+      [dialog, dialogAnimate ?? []],
+      [scrim, scrimAnimate ?? []],
+      [container, containerAnimate ?? []],
+      [headline, headlineAnimate ?? []],
+      [content, contentAnimate ?? []],
+      [actions, actionsAnimate ?? []],
     ];
 
     const animations: Animation[] = [];
@@ -359,7 +370,7 @@ export class Dialog extends LitElement {
       }
     }
 
-    await Promise.all(animations.map(animation => animation.finished));
+    await Promise.all(animations.map((animation) => animation.finished));
   }
 
   private handleHeadlineChange(event: Event) {
@@ -389,7 +400,7 @@ export class Dialog extends LitElement {
   }
 
   private getIsConnectedPromise() {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve) => {
       this.isConnectedPromiseResolve = resolve;
     });
   }

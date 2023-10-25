@@ -103,8 +103,9 @@ export function getUnusedTokens(styles: CSSResult[]) {
   return unusedTokens;
 }
 
-function getDefinedTokensFromRule(rule: CSSRule|CSSStyleSheet|
-                                  CSSStyleRule): Set<string> {
+function getDefinedTokensFromRule(
+  rule: CSSRule | CSSStyleSheet | CSSStyleRule,
+): Set<string> {
   let defined = new Set<string>();
   if ('cssRules' in rule) {
     // Rule is either a CSSStyleSheet, CSSKeyframesRule, or one of the
@@ -125,8 +126,9 @@ function getDefinedTokensFromRule(rule: CSSRule|CSSStyleSheet|
   return defined;
 }
 
-function getUsedTokensFromRule(rule: CSSRule|CSSStyleSheet|
-                               CSSStyleRule): Set<string> {
+function getUsedTokensFromRule(
+  rule: CSSRule | CSSStyleSheet | CSSStyleRule,
+): Set<string> {
   let used = new Set<string>();
   if ('cssRules' in rule) {
     // Rule is either a CSSStyleSheet, CSSKeyframesRule, or one of the

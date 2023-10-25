@@ -7,7 +7,10 @@
 import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
-import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
+import {
+  polyfillElementInternalsAria,
+  setupHostAria,
+} from '../../internal/aria/aria.js';
 
 import {ListController, NavigableKeys} from './list-controller.js';
 import {ListItem as SharedListItem} from './list-navigation-helpers.js';
@@ -15,7 +18,7 @@ import {ListItem as SharedListItem} from './list-navigation-helpers.js';
 const NAVIGABLE_KEY_SET = new Set<string>(Object.values(NavigableKeys));
 
 interface ListItem extends SharedListItem {
-  type: 'text'|'button'|'link';
+  type: 'text' | 'button' | 'link';
 }
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
@@ -33,7 +36,7 @@ export class List extends LitElement {
    * children / directly slotted elements.
    */
   @queryAssignedElements({flatten: true})
-  protected slotItems!: Array<ListItem|HTMLElement&{item?: ListItem}>;
+  protected slotItems!: Array<ListItem | (HTMLElement & {item?: ListItem})>;
 
   /** @export */
   get items() {
@@ -42,23 +45,24 @@ export class List extends LitElement {
 
   private readonly listController = new ListController<ListItem>({
     isItem: (item: HTMLElement): item is ListItem =>
-        item.hasAttribute('md-list-item'),
+      item.hasAttribute('md-list-item'),
     getPossibleItems: () => this.slotItems,
     isRtl: () => getComputedStyle(this).direction === 'rtl',
-    deactivateItem:
-        (item) => {
-          item.tabIndex = -1;
-        },
-    activateItem:
-        (item) => {
-          item.tabIndex = 0;
-        },
+    deactivateItem: (item) => {
+      item.tabIndex = -1;
+    },
+    activateItem: (item) => {
+      item.tabIndex = 0;
+    },
     isNavigableKey: (key) => NAVIGABLE_KEY_SET.has(key),
     isActivatable: (item) => !item.disabled && item.type !== 'text',
   });
 
   private readonly internals = polyfillElementInternalsAria(
-      this, (this as HTMLElement /* needed for closure */).attachInternals());
+    this,
+    // Cast needed for closure
+    (this as HTMLElement).attachInternals(),
+  );
 
   constructor() {
     super();
@@ -71,9 +75,9 @@ export class List extends LitElement {
   protected override render() {
     return html`
       <slot
-          @deactivate-items=${this.listController.onDeactivateItems}
-          @request-activation=${this.listController.onRequestActivation}
-          @slotchange=${this.listController.onSlotchange}>
+        @deactivate-items=${this.listController.onDeactivateItems}
+        @request-activation=${this.listController.onRequestActivation}
+        @slotchange=${this.listController.onSlotchange}>
       </slot>
     `;
   }
@@ -84,7 +88,7 @@ export class List extends LitElement {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activateNextItem(): ListItem|null {
+  activateNextItem(): ListItem | null {
     return this.listController.activateNextItem();
   }
 
@@ -94,7 +98,7 @@ export class List extends LitElement {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activatePreviousItem(): ListItem|null {
+  activatePreviousItem(): ListItem | null {
     return this.listController.activatePreviousItem();
   }
 }

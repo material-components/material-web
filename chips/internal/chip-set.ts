@@ -7,7 +7,10 @@
 import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
-import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
+import {
+  polyfillElementInternalsAria,
+  setupHostAria,
+} from '../../internal/aria/aria.js';
 
 import {Chip} from './chip.js';
 
@@ -21,12 +24,16 @@ export class ChipSet extends LitElement {
 
   get chips() {
     return this.childElements.filter(
-        (child): child is Chip => child instanceof Chip);
+      (child): child is Chip => child instanceof Chip,
+    );
   }
 
   @queryAssignedElements() private readonly childElements!: HTMLElement[];
   private readonly internals = polyfillElementInternalsAria(
-      this, (this as HTMLElement /* needed for closure */).attachInternals());
+    this,
+    // Cast needed for closure
+    (this as HTMLElement).attachInternals(),
+  );
 
   constructor() {
     super();
@@ -71,7 +78,7 @@ export class ChipSet extends LitElement {
     // Check if moving forwards or backwards
     const isRtl = getComputedStyle(this).direction === 'rtl';
     const forwards = isRtl ? isLeft : isRight;
-    const focusedChip = chips.find(chip => chip.matches(':focus-within'));
+    const focusedChip = chips.find((chip) => chip.matches(':focus-within'));
     if (!focusedChip) {
       // If there is not already a chip focused, select the first or last chip
       // based on the direction we're traveling.
@@ -120,7 +127,7 @@ export class ChipSet extends LitElement {
     // The chip that should be focusable is either the chip that currently has
     // focus or the first chip that can be focused.
     const {chips} = this;
-    let chipToFocus: Chip|undefined;
+    let chipToFocus: Chip | undefined;
     for (const chip of chips) {
       const isChipFocusable = chip.alwaysFocusable || !chip.disabled;
       const chipIsFocused = chip.matches(':focus-within');
@@ -147,5 +154,5 @@ export class ChipSet extends LitElement {
 }
 
 interface MaybeMultiActionChip extends Chip {
-  focus(options?: FocusOptions&{trailing?: boolean}): void;
+  focus(options?: FocusOptions & {trailing?: boolean}): void;
 }

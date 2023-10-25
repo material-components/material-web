@@ -14,7 +14,8 @@ import {Dialog} from './internal/dialog.js';
 export class DialogHarness extends Harness<Dialog> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.querySelector<HTMLElement>('[autocomplete]') ??
-        this.element;
+    return (
+      this.element.querySelector<HTMLElement>('[autocomplete]') ?? this.element
+    );
   }
 }

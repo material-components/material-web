@@ -9,20 +9,26 @@
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {ARIAProperty, ariaPropertyToAttribute, isAriaAttribute, polyfillElementInternalsAria, setupHostAria} from './aria.js';
+import {
+  ARIAProperty,
+  ariaPropertyToAttribute,
+  isAriaAttribute,
+  polyfillElementInternalsAria,
+  setupHostAria,
+} from './aria.js';
 
 describe('aria', () => {
   describe('isAriaAttribute()', () => {
     it('should return true for aria value attributes', () => {
       expect(isAriaAttribute('aria-label'))
-          .withContext('aria-label input')
-          .toBeTrue();
+        .withContext('aria-label input')
+        .toBeTrue();
     });
 
     it('should return true for aria idref attributes', () => {
       expect(isAriaAttribute('aria-labelledby'))
-          .withContext('aria-labelledby input')
-          .toBeTrue();
+        .withContext('aria-labelledby input')
+        .toBeTrue();
     });
 
     it('should return false for role', () => {
@@ -40,8 +46,9 @@ describe('aria', () => {
     });
 
     it('should convert aria idref properties', () => {
-      expect(ariaPropertyToAttribute('ariaLabelledByElements' as ARIAProperty))
-          .toBe('aria-labelledby');
+      expect(
+        ariaPropertyToAttribute('ariaLabelledByElements' as ARIAProperty),
+      ).toBe('aria-labelledby');
     });
   });
 
@@ -60,16 +67,16 @@ describe('aria', () => {
     it('should not hydrate tabindex attribute on creation', () => {
       const element = new TestElement();
       expect(element.hasAttribute('tabindex'))
-          .withContext('has tabindex attribute')
-          .toBeFalse();
+        .withContext('has tabindex attribute')
+        .toBeFalse();
     });
 
     it('should set tabindex="0" on element once connected', () => {
       const element = new TestElement();
       document.body.appendChild(element);
       expect(element.getAttribute('tabindex'))
-          .withContext('tabindex attribute value')
-          .toEqual('0');
+        .withContext('tabindex attribute value')
+        .toEqual('0');
 
       element.remove();
     });
@@ -79,8 +86,8 @@ describe('aria', () => {
       element.tabIndex = -1;
       document.body.appendChild(element);
       expect(element.getAttribute('tabindex'))
-          .withContext('tabindex attribute value')
-          .toEqual('-1');
+        .withContext('tabindex attribute value')
+        .toEqual('-1');
 
       element.remove();
     });
@@ -92,24 +99,23 @@ describe('aria', () => {
       element.remove();
       document.body.appendChild(element);
       expect(element.getAttribute('tabindex'))
-          .withContext('tabindex attribute value')
-          .toEqual('-1');
+        .withContext('tabindex attribute value')
+        .toEqual('-1');
     });
 
     if (!('role' in Element.prototype)) {
       describe('polyfill', () => {
-        it('should hydrate aria attributes when ARIAMixin is not supported',
-           async () => {
-             const element = new TestElement();
-             document.body.appendChild(element);
-             element.role = 'button';
-             await element.updateComplete;
-             expect(element.getAttribute('role'))
-                 .withContext('role attribute value')
-                 .toEqual('button');
+        it('should hydrate aria attributes when ARIAMixin is not supported', async () => {
+          const element = new TestElement();
+          document.body.appendChild(element);
+          element.role = 'button';
+          await element.updateComplete;
+          expect(element.getAttribute('role'))
+            .withContext('role attribute value')
+            .toEqual('button');
 
-             element.remove();
-           });
+          element.remove();
+        });
       });
     }
   });
@@ -138,8 +144,8 @@ describe('aria', () => {
         const element = new TestElement();
         document.body.appendChild(element);
         expect(element.hasAttribute('role'))
-            .withContext('has role attribute')
-            .toBeFalse();
+          .withContext('has role attribute')
+          .toBeFalse();
 
         element.remove();
       });
@@ -148,43 +154,41 @@ describe('aria', () => {
         const element = new TestElement();
         // TestElement() sets role in constructor
         expect(element.internals.role)
-            .withContext('ElementInternals.role')
-            .toEqual('button');
+          .withContext('ElementInternals.role')
+          .toEqual('button');
       });
 
       it('should preserve aria values when set before connected', () => {
         const element = new TestElement();
         element.internals.ariaLabel = 'Foo';
         expect(element.internals.ariaLabel)
-            .withContext('ElementInternals.ariaLabel')
-            .toEqual('Foo');
+          .withContext('ElementInternals.ariaLabel')
+          .toEqual('Foo');
       });
 
-      it('should hydrate role attributes when set before connection',
-         async () => {
-           const element = new TestElement();
-           // TestElement() sets role in constructor
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.getAttribute('role'))
-               .withContext('role attribute value')
-               .toEqual('button');
+      it('should hydrate role attributes when set before connection', async () => {
+        const element = new TestElement();
+        // TestElement() sets role in constructor
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.getAttribute('role'))
+          .withContext('role attribute value')
+          .toEqual('button');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should hydrate aria attributes when set before connection',
-         async () => {
-           const element = new TestElement();
-           element.internals.ariaLabel = 'Foo';
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.getAttribute('aria-label'))
-               .withContext('aria-label attribute value')
-               .toEqual('Foo');
+      it('should hydrate aria attributes when set before connection', async () => {
+        const element = new TestElement();
+        element.internals.ariaLabel = 'Foo';
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.getAttribute('aria-label'))
+          .withContext('aria-label attribute value')
+          .toEqual('Foo');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
       it('should set aria attributes when set after connection', async () => {
         const element = new TestElement();
@@ -192,180 +196,171 @@ describe('aria', () => {
         element.internals.ariaLabel = 'Value after construction';
         await element.updateComplete;
         expect(element.getAttribute('aria-label'))
-            .withContext('aria-label attribute value')
-            .toEqual('Value after construction');
+          .withContext('aria-label attribute value')
+          .toEqual('Value after construction');
 
         element.remove();
       });
 
-      it('should not override aria attributes on host when set before connection',
-         async () => {
-           const element = new TestElement();
-           element.setAttribute('aria-label', 'Value set by user');
-           element.internals.ariaLabel = 'Value set on internals';
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.getAttribute('aria-label'))
-               .withContext('aria-label attribute value on host')
-               .toEqual('Value set by user');
-           expect(element.internals.ariaLabel)
-               .withContext('ariaLabel internals property still the same')
-               .toEqual('Value set on internals');
+      it('should not override aria attributes on host when set before connection', async () => {
+        const element = new TestElement();
+        element.setAttribute('aria-label', 'Value set by user');
+        element.internals.ariaLabel = 'Value set on internals';
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.getAttribute('aria-label'))
+          .withContext('aria-label attribute value on host')
+          .toEqual('Value set by user');
+        expect(element.internals.ariaLabel)
+          .withContext('ariaLabel internals property still the same')
+          .toEqual('Value set on internals');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should not override aria properties on host when set before connection',
-         async () => {
-           const element = new TestElement();
-           element.ariaLabel = 'Value set by user';
-           element.internals.ariaLabel = 'Value set on internals';
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.getAttribute('aria-label'))
-               .withContext('aria-label attribute value on host')
-               .toEqual('Value set by user');
-           expect(element.ariaLabel)
-               .withContext('ariaLabel property value on host')
-               .toEqual('Value set by user');
-           expect(element.internals.ariaLabel)
-               .withContext('ariaLabel internals property still the same')
-               .toEqual('Value set on internals');
+      it('should not override aria properties on host when set before connection', async () => {
+        const element = new TestElement();
+        element.ariaLabel = 'Value set by user';
+        element.internals.ariaLabel = 'Value set on internals';
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.getAttribute('aria-label'))
+          .withContext('aria-label attribute value on host')
+          .toEqual('Value set by user');
+        expect(element.ariaLabel)
+          .withContext('ariaLabel property value on host')
+          .toEqual('Value set by user');
+        expect(element.internals.ariaLabel)
+          .withContext('ariaLabel internals property still the same')
+          .toEqual('Value set on internals');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should not override role attribute on host when set before connection',
-         async () => {
-           const element = new TestElement();
-           element.setAttribute('role', 'Value set by user');
-           element.internals.role = 'Value set on internals';
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.getAttribute('role'))
-               .withContext('role attribute value on host')
-               .toEqual('Value set by user');
-           expect(element.internals.role)
-               .withContext('role internals property still the same')
-               .toEqual('Value set on internals');
+      it('should not override role attribute on host when set before connection', async () => {
+        const element = new TestElement();
+        element.setAttribute('role', 'Value set by user');
+        element.internals.role = 'Value set on internals';
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.getAttribute('role'))
+          .withContext('role attribute value on host')
+          .toEqual('Value set by user');
+        expect(element.internals.role)
+          .withContext('role internals property still the same')
+          .toEqual('Value set on internals');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should not override role property on host when set before connection',
-         async () => {
-           const element = new TestElement();
-           element.role = 'Value set by user';
-           element.internals.role = 'Value set on internals';
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.getAttribute('role'))
-               .withContext('role attribute value on host')
-               .toEqual('Value set by user');
-           expect(element.role)
-               .withContext('role property value on host')
-               .toEqual('Value set by user');
-           expect(element.internals.role)
-               .withContext('role internals property still the same')
-               .toEqual('Value set on internals');
+      it('should not override role property on host when set before connection', async () => {
+        const element = new TestElement();
+        element.role = 'Value set by user';
+        element.internals.role = 'Value set on internals';
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.getAttribute('role'))
+          .withContext('role attribute value on host')
+          .toEqual('Value set by user');
+        expect(element.role)
+          .withContext('role property value on host')
+          .toEqual('Value set by user');
+        expect(element.internals.role)
+          .withContext('role internals property still the same')
+          .toEqual('Value set on internals');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should handle setting role multiple times before connection',
-         async () => {
-           const element = new TestElement();
-           element.internals.role = 'button';
-           element.internals.role = 'checkbox';
+      it('should handle setting role multiple times before connection', async () => {
+        const element = new TestElement();
+        element.internals.role = 'button';
+        element.internals.role = 'checkbox';
 
-           expect(element.internals.role)
-               .withContext('internals.role before connection')
-               .toEqual('checkbox');
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.internals.role)
-               .withContext('internals.role after connection')
-               .toEqual('checkbox');
+        expect(element.internals.role)
+          .withContext('internals.role before connection')
+          .toEqual('checkbox');
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.internals.role)
+          .withContext('internals.role after connection')
+          .toEqual('checkbox');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should handle setting role multiple times before connection when property is set on host',
-         async () => {
-           const element = new TestElement();
-           element.role = 'radio';
-           element.internals.role = 'button';
-           element.internals.role = 'checkbox';
+      it('should handle setting role multiple times before connection when property is set on host', async () => {
+        const element = new TestElement();
+        element.role = 'radio';
+        element.internals.role = 'button';
+        element.internals.role = 'checkbox';
 
-           expect(element.internals.role)
-               .withContext('internals.role before connection')
-               .toEqual('checkbox');
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.internals.role)
-               .withContext('internals.role after connection')
-               .toEqual('checkbox');
+        expect(element.internals.role)
+          .withContext('internals.role before connection')
+          .toEqual('checkbox');
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.internals.role)
+          .withContext('internals.role after connection')
+          .toEqual('checkbox');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should handle setting aria properties multiple times before connection',
-         async () => {
-           const element = new TestElement();
-           element.internals.ariaLabel = 'First';
-           element.internals.ariaLabel = 'Second';
+      it('should handle setting aria properties multiple times before connection', async () => {
+        const element = new TestElement();
+        element.internals.ariaLabel = 'First';
+        element.internals.ariaLabel = 'Second';
 
-           expect(element.internals.ariaLabel)
-               .withContext('internals.ariaLabel before connection')
-               .toEqual('Second');
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.internals.ariaLabel)
-               .withContext('internals.ariaLabel after connection')
-               .toEqual('Second');
+        expect(element.internals.ariaLabel)
+          .withContext('internals.ariaLabel before connection')
+          .toEqual('Second');
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.internals.ariaLabel)
+          .withContext('internals.ariaLabel after connection')
+          .toEqual('Second');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should handle setting aria properties multiple times before connection when property is set on host',
-         async () => {
-           const element = new TestElement();
-           element.ariaLabel = 'First';
-           element.internals.ariaLabel = 'First';
-           element.internals.ariaLabel = 'Second';
+      it('should handle setting aria properties multiple times before connection when property is set on host', async () => {
+        const element = new TestElement();
+        element.ariaLabel = 'First';
+        element.internals.ariaLabel = 'First';
+        element.internals.ariaLabel = 'Second';
 
-           expect(element.internals.ariaLabel)
-               .withContext('internals.ariaLabel before connection')
-               .toEqual('Second');
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.internals.ariaLabel)
-               .withContext('internals.ariaLabel after connection')
-               .toEqual('Second');
+        expect(element.internals.ariaLabel)
+          .withContext('internals.ariaLabel before connection')
+          .toEqual('Second');
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.internals.ariaLabel)
+          .withContext('internals.ariaLabel after connection')
+          .toEqual('Second');
 
-           element.remove();
-         });
+        element.remove();
+      });
 
-      it('should handle setting role after first connection while disconnected',
-         async () => {
-           const element = new TestElement();
-           element.internals.role = 'button';
-           document.body.appendChild(element);
-           await element.updateComplete;
+      it('should handle setting role after first connection while disconnected', async () => {
+        const element = new TestElement();
+        element.internals.role = 'button';
+        document.body.appendChild(element);
+        await element.updateComplete;
 
-           element.remove();
-           element.internals.role = 'checkbox';
-           expect(element.internals.role)
-               .withContext('internals.role after connected and disconnected')
-               .toEqual('checkbox');
-           document.body.appendChild(element);
-           await element.updateComplete;
-           expect(element.internals.role)
-               .withContext('internals.role after reconnected')
-               .toEqual('checkbox');
+        element.remove();
+        element.internals.role = 'checkbox';
+        expect(element.internals.role)
+          .withContext('internals.role after connected and disconnected')
+          .toEqual('checkbox');
+        document.body.appendChild(element);
+        await element.updateComplete;
+        expect(element.internals.role)
+          .withContext('internals.role after reconnected')
+          .toEqual('checkbox');
 
-           element.remove();
-         });
+        element.remove();
+      });
     }
   });
 });

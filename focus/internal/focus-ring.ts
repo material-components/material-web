@@ -7,7 +7,10 @@
 import {isServer, LitElement, PropertyValues} from 'lit';
 import {property} from 'lit/decorators.js';
 
-import {Attachable, AttachableController} from '../../internal/controller/attachable-controller.js';
+import {
+  Attachable,
+  AttachableController,
+} from '../../internal/controller/attachable-controller.js';
 
 /**
  * Events that the focus ring listens to.
@@ -34,19 +37,21 @@ export class FocusRing extends LitElement implements Attachable {
     return this.attachableController.htmlFor;
   }
 
-  set htmlFor(htmlFor: string|null) {
+  set htmlFor(htmlFor: string | null) {
     this.attachableController.htmlFor = htmlFor;
   }
 
   get control() {
     return this.attachableController.control;
   }
-  set control(control: HTMLElement|null) {
+  set control(control: HTMLElement | null) {
     this.attachableController.control = control;
   }
 
-  private readonly attachableController =
-      new AttachableController(this, this.onControlChange.bind(this));
+  private readonly attachableController = new AttachableController(
+    this,
+    this.onControlChange.bind(this),
+  );
 
   attach(control: HTMLElement) {
     this.attachableController.attach(control);
@@ -86,7 +91,7 @@ export class FocusRing extends LitElement implements Attachable {
     event[HANDLED_BY_FOCUS_RING] = true;
   }
 
-  private onControlChange(prev: HTMLElement|null, next: HTMLElement|null) {
+  private onControlChange(prev: HTMLElement | null, next: HTMLElement | null) {
     if (isServer) return;
 
     for (const event of EVENTS) {

@@ -29,8 +29,11 @@ declare global {
  */
 @customElement('md-outlined-text-field')
 export class MdOutlinedTextField extends OutlinedTextField {
-  static override styles =
-      [sharedStyles, outlinedStyles, outlinedForcedColorsStyles];
+  static override styles = [
+    sharedStyles,
+    outlinedStyles,
+    outlinedForcedColorsStyles,
+  ];
 
   protected override readonly fieldTag = literal`md-outlined-field`;
 }

@@ -12,4 +12,4 @@ import {MenuItem} from '../controllers/menuItemController.js';
 /**
  * Test harness for menu item.
  */
-export class MenuItemHarness extends ListItemHarness<MenuItem&LitElement> {}
+export class MenuItemHarness extends ListItemHarness<MenuItem & LitElement> {}

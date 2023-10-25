@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../../ripple/ripple.js';
 import '../../../focus/md-focus-ring.js';
 import '../../../labs/item/item.js';
+import '../../../ripple/ripple.js';
 
 import {html, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
@@ -32,7 +32,7 @@ export class SelectOptionEl extends LitElement implements SelectOption {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true
+    delegatesFocus: true,
   };
 
   /**
@@ -55,7 +55,7 @@ export class SelectOptionEl extends LitElement implements SelectOption {
    */
   @property() value = '';
 
-  @query('.list-item') protected readonly listItemRoot!: HTMLElement|null;
+  @query('.list-item') protected readonly listItemRoot!: HTMLElement | null;
 
   @queryAssignedElements({slot: 'headline'})
   protected readonly headlineElements!: HTMLElement[];
@@ -99,8 +99,7 @@ export class SelectOptionEl extends LitElement implements SelectOption {
     return this.renderListItem(html`
       <md-item>
         <div slot="container">
-          ${this.renderRipple()}
-          ${this.renderFocusRing()}
+          ${this.renderRipple()} ${this.renderFocusRing()}
         </div>
         <slot name="start" slot="start"></slot>
         <slot name="end" slot="end"></slot>
@@ -128,7 +127,8 @@ export class SelectOptionEl extends LitElement implements SelectOption {
         class="list-item ${classMap(this.getRenderClasses())}"
         @click=${this.selectOptionController.onClick}
         @keydown=${this.selectOptionController.onKeydown}
-      >${content}</li>
+        >${content}</li
+      >
     `;
   }
 
@@ -136,22 +136,20 @@ export class SelectOptionEl extends LitElement implements SelectOption {
    * Handles rendering of the ripple element.
    */
   protected renderRipple() {
-    return html`
-      <md-ripple
-          part="ripple"
-          for="item"
-          ?disabled=${this.disabled}></md-ripple>`;
+    return html` <md-ripple
+      part="ripple"
+      for="item"
+      ?disabled=${this.disabled}></md-ripple>`;
   }
 
   /**
    * Handles rendering of the focus ring.
    */
   protected renderFocusRing() {
-    return html`
-      <md-focus-ring
-          part="focus-ring"
-          for="item"
-          inward></md-focus-ring>`;
+    return html` <md-focus-ring
+      part="focus-ring"
+      for="item"
+      inward></md-focus-ring>`;
   }
 
   /**
@@ -173,8 +171,9 @@ export class SelectOptionEl extends LitElement implements SelectOption {
       <slot name="overline" slot="overline"></slot>
       <slot name="headline" slot="headline"></slot>
       <slot name="supporting-text" slot="supporting-text"></slot>
-      <slot name="trailing-supporting-text"
-          slot="trailing-supporting-text"></slot>
+      <slot
+        name="trailing-supporting-text"
+        slot="trailing-supporting-text"></slot>
     `;
   }
 

@@ -56,7 +56,7 @@ const styles = css`
 `;
 
 const LOREM_IPSUM =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus condimentum rhoncus est volutpat venenatis.';
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus condimentum rhoncus est volutpat venenatis.';
 
 const items: MaterialStoryInit<StoryKnobs> = {
   name: 'Items',
@@ -64,10 +64,7 @@ const items: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="container">
-        <md-item>
-          Single line item
-          ${getKnobContent(knobs)}
-        </md-item>
+        <md-item> Single line item ${getKnobContent(knobs)} </md-item>
 
         <md-item>
           Two line item
@@ -85,7 +82,7 @@ const items: MaterialStoryInit<StoryKnobs> = {
         </md-item>
       </div>
     `;
-  }
+  },
 };
 
 const longText: MaterialStoryInit<StoryKnobs> = {
@@ -96,9 +93,7 @@ const longText: MaterialStoryInit<StoryKnobs> = {
       <div class="container">
         <md-item class="nowrap">
           Item with a truncated headline and supporting text.
-          <div slot="supporting-text">
-            Supporting text. ${LOREM_IPSUM}
-          </div>
+          <div slot="supporting-text"> Supporting text. ${LOREM_IPSUM} </div>
           ${getKnobContent(knobs)}
         </md-item>
 
@@ -112,37 +107,36 @@ const longText: MaterialStoryInit<StoryKnobs> = {
 
         <md-item>
           Item that always shows long wrapping text.
-          <div slot="supporting-text">
-            Supporting text. ${LOREM_IPSUM}
-          </div>
+          <div slot="supporting-text"> Supporting text. ${LOREM_IPSUM} </div>
           ${getKnobContent(knobs, /* threeLines */ true)}
         </md-item>
       </div>
     `;
-  }
+  },
 };
 
 function getKnobContent(knobs: StoryKnobs, threeLines = false) {
-  const overline = knobs.overline ?
-      html`<div slot="overline">${knobs.overline}</div>` :
-      nothing;
+  const overline = knobs.overline
+    ? html`<div slot="overline">${knobs.overline}</div>`
+    : nothing;
 
   const classes = {
     'align-start': threeLines,
   };
 
-  const trailingText = knobs.trailingSupportingText ?
-      html`<div class=${classMap(classes)} slot="trailing-supporting-text">${
-          knobs.trailingSupportingText}</div>` :
-      nothing;
+  const trailingText = knobs.trailingSupportingText
+    ? html`<div class=${classMap(classes)} slot="trailing-supporting-text"
+        >${knobs.trailingSupportingText}</div
+      >`
+    : nothing;
 
-  const leadingIcon = knobs.leadingIcon ?
-      html`<md-icon class=${classMap(classes)} slot="start">event</md-icon>` :
-      nothing;
+  const leadingIcon = knobs.leadingIcon
+    ? html`<md-icon class=${classMap(classes)} slot="start">event</md-icon>`
+    : nothing;
 
-  const trailingIcon = knobs.trailingIcon ?
-      html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>` :
-      nothing;
+  const trailingIcon = knobs.trailingIcon
+    ? html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>`
+    : nothing;
 
   return [overline, trailingText, leadingIcon, trailingIcon];
 }

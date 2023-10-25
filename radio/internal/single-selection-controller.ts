@@ -52,7 +52,7 @@ export interface SingleSelectionElement extends HTMLElement {
  */
 export class SingleSelectionController implements ReactiveController {
   private focused = false;
-  private root: ParentNode|null = null;
+  private root: ParentNode | null = null;
 
   constructor(private readonly host: SingleSelectionElement) {}
 
@@ -118,7 +118,7 @@ export class SingleSelectionController implements ReactiveController {
     // There are three tabindex states for a group of elements:
     // 1. If any are checked, that element is focusable.
     const siblings = this.getNamedSiblings();
-    const checkedSibling = siblings.find(sibling => sibling.checked);
+    const checkedSibling = siblings.find((sibling) => sibling.checked);
     // 2. If an element is focused, the others are no longer focusable.
     if (checkedSibling || this.focused) {
       const focusable = checkedSibling || this.host;
@@ -149,7 +149,8 @@ export class SingleSelectionController implements ReactiveController {
     }
 
     return Array.from(
-        this.root.querySelectorAll<SingleSelectionElement>(`[name="${name}"]`));
+      this.root.querySelectorAll<SingleSelectionElement>(`[name="${name}"]`),
+    );
   }
 
   /**

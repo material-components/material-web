@@ -4,7 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {activateFirstItem, activateLastItem, activateNextItem, activatePreviousItem, getActiveItem, getFirstActivatableItem, ListItem} from './list-navigation-helpers.js';
+import {
+  activateFirstItem,
+  activateLastItem,
+  activateNextItem,
+  activatePreviousItem,
+  getActiveItem,
+  getFirstActivatableItem,
+  ListItem,
+} from './list-navigation-helpers.js';
 
 // TODO: move this file to List and make List use this
 
@@ -25,7 +33,7 @@ export const NavigableKeys = {
 /**
  * Default set of navigable keys.
  */
-export type NavigableKeys = typeof NavigableKeys[keyof typeof NavigableKeys];
+export type NavigableKeys = (typeof NavigableKeys)[keyof typeof NavigableKeys];
 
 /**
  * The configuration object to customize the behavior of the List Controller
@@ -148,10 +156,12 @@ export class ListController<Item extends ListItem> {
     event.preventDefault();
 
     const isRtl = this.isRtl();
-    const inlinePrevious =
-        isRtl ? NavigableKeys.ArrowRight : NavigableKeys.ArrowLeft;
-    const inlineNext =
-        isRtl ? NavigableKeys.ArrowLeft : NavigableKeys.ArrowRight;
+    const inlinePrevious = isRtl
+      ? NavigableKeys.ArrowRight
+      : NavigableKeys.ArrowLeft;
+    const inlineNext = isRtl
+      ? NavigableKeys.ArrowLeft
+      : NavigableKeys.ArrowRight;
 
     switch (key) {
       // Activate the next item
@@ -187,7 +197,7 @@ export class ListController<Item extends ListItem> {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activateNextItem(): Item|null {
+  activateNextItem(): Item | null {
     const items = this.items;
     const activeItemRecord = getActiveItem(items, this.isActivatable);
     if (activeItemRecord) {
@@ -202,7 +212,7 @@ export class ListController<Item extends ListItem> {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activatePreviousItem(): Item|null {
+  activatePreviousItem(): Item | null {
     const items = this.items;
     const activeItemRecord = getActiveItem(items, this.isActivatable);
     if (activeItemRecord) {
@@ -258,8 +268,10 @@ export class ListController<Item extends ListItem> {
       return;
     }
 
-    const firstActivatableItem =
-        getFirstActivatableItem(items, this.isActivatable);
+    const firstActivatableItem = getFirstActivatableItem(
+      items,
+      this.isActivatable,
+    );
 
     if (!firstActivatableItem) {
       return;

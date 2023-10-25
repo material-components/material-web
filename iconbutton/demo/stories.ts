@@ -7,8 +7,8 @@
 import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/filled-icon-button.js';
 import '@material/web/iconbutton/filled-tonal-icon-button.js';
-import '@material/web/iconbutton/outlined-icon-button.js';
 import '@material/web/iconbutton/icon-button.js';
+import '@material/web/iconbutton/outlined-icon-button.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';
@@ -40,10 +40,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="column">
         <div class="row">
-          <md-icon-button
-            aria-label="Standard icon"
-            ?disabled=${disabled}
-          >
+          <md-icon-button aria-label="Standard icon" ?disabled=${disabled}>
             <md-icon>${icon}</md-icon>
           </md-icon-button>
 
@@ -53,10 +50,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
             <md-icon>${icon}</md-icon>
           </md-outlined-icon-button>
 
-          <md-filled-icon-button
-            aria-label="Filled icon"
-            ?disabled=${disabled}
-          >
+          <md-filled-icon-button aria-label="Filled icon" ?disabled=${disabled}>
             <md-icon>${icon}</md-icon>
           </md-filled-icon-button>
 
@@ -68,7 +62,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
         </div>
       </div>
     `;
-  }
+  },
 };
 
 const toggles: MaterialStoryInit<StoryKnobs> = {
@@ -81,8 +75,7 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
           <md-icon-button
             aria-label="Standard icon"
             toggle
-            ?disabled=${disabled}
-          >
+            ?disabled=${disabled}>
             <md-icon>${icon}</md-icon>
             <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-icon-button>
@@ -90,8 +83,7 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
           <md-outlined-icon-button
             aria-label="Outlined icon"
             toggle
-            ?disabled=${disabled}
-          >
+            ?disabled=${disabled}>
             <md-icon>${icon}</md-icon>
             <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-outlined-icon-button>
@@ -99,8 +91,7 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
           <md-filled-icon-button
             aria-label="Filled icon"
             toggle
-            ?disabled=${disabled}
-          >
+            ?disabled=${disabled}>
             <md-icon>${icon}</md-icon>
             <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-filled-icon-button>
@@ -108,15 +99,14 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
           <md-filled-tonal-icon-button
             aria-label="Filled tonal icon"
             toggle
-            ?disabled=${disabled}
-          >
+            ?disabled=${disabled}>
             <md-icon>${icon}</md-icon>
             <md-icon slot="selected">${selectedIcon}</md-icon>
           </md-filled-tonal-icon-button>
         </div>
       </div>
     `;
-  }
+  },
 };
 
 const links: MaterialStoryInit<StoryKnobs> = {
@@ -129,38 +119,34 @@ const links: MaterialStoryInit<StoryKnobs> = {
           <md-icon-button
             aria-label="Standard icon"
             href="https://google.com"
-            target="_blank"
-          >
+            target="_blank">
             <md-icon>${icon}</md-icon>
           </md-icon-button>
 
           <md-outlined-icon-button
             aria-label="Outlined icon"
             href="https://google.com"
-            target="_blank"
-          >
+            target="_blank">
             <md-icon>${icon}</md-icon>
           </md-outlined-icon-button>
 
           <md-filled-icon-button
             aria-label="Filled icon"
             href="https://google.com"
-            target="_blank"
-          >
+            target="_blank">
             <md-icon>${icon}</md-icon>
           </md-filled-icon-button>
 
           <md-filled-tonal-icon-button
             aria-label="Filled tonal icon"
             href="https://google.com"
-            target="_blank"
-          >
+            target="_blank">
             <md-icon>${icon}</md-icon>
           </md-filled-tonal-icon-button>
         </div>
       </div>
     `;
-  }
+  },
 };
 
 /** Icon button stories. */

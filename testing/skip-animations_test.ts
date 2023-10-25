@@ -24,12 +24,9 @@ describe('skip-animations test', () => {
 
   it('does not skip animations before installing', () => {
     // Act
-    element.animate(
-        [
-          {color: 'rgb(255, 255, 255'},
-          {color: 'rgb(0, 0, 0)'},
-        ],
-        {duration: 1000});
+    element.animate([{color: 'rgb(255, 255, 255'}, {color: 'rgb(0, 0, 0)'}], {
+      duration: 1000,
+    });
 
     // Assert
     expect(getComputedStyle(element).color).toEqual('rgb(255, 255, 255)');
@@ -40,12 +37,9 @@ describe('skip-animations test', () => {
     uninstallFunction = installSkipWebAnimations();
 
     // Act
-    element.animate(
-        [
-          {color: 'rgb(255, 255, 255'},
-          {color: 'rgb(0, 0, 0)'},
-        ],
-        {duration: 1000});
+    element.animate([{color: 'rgb(255, 255, 255'}, {color: 'rgb(0, 0, 0)'}], {
+      duration: 1000,
+    });
 
     // Assert
     expect(getComputedStyle(element).color).toEqual('rgb(0, 0, 0)');
