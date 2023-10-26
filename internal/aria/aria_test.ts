@@ -13,8 +13,8 @@ import {
   ARIAProperty,
   ariaPropertyToAttribute,
   isAriaAttribute,
+  polyfillARIAMixin,
   polyfillElementInternalsAria,
-  setupHostAria,
 } from './aria.js';
 
 describe('aria', () => {
@@ -52,11 +52,11 @@ describe('aria', () => {
     });
   });
 
-  describe('setupHostAria()', () => {
+  describe('polyfillARIAMixin()', () => {
     @customElement('test-setup-aria-host')
     class TestElement extends LitElement {
       static {
-        setupHostAria(TestElement);
+        polyfillARIAMixin(TestElement);
       }
 
       override render() {
@@ -64,67 +64,28 @@ describe('aria', () => {
       }
     }
 
-    it('should not hydrate tabindex attribute on creation', () => {
-      const element = new TestElement();
-      expect(element.hasAttribute('tabindex'))
-        .withContext('has tabindex attribute')
-        .toBeFalse();
-    });
-
-    it('should set tabindex="0" on element once connected', () => {
+    it('should reflect ARIAMixin properties to attributes', async () => {
       const element = new TestElement();
       document.body.appendChild(element);
-      expect(element.getAttribute('tabindex'))
-        .withContext('tabindex attribute value')
-        .toEqual('0');
+      element.role = 'button';
+      element.ariaLabel = 'Foo';
+      await element.updateComplete;
+      expect(element.getAttribute('role'))
+        .withContext('role attribute value')
+        .toEqual('button');
 
+      expect(element.getAttribute('aria-label'))
+        .withContext('aria-label attribute value')
+        .toEqual('Foo');
       element.remove();
     });
-
-    it('should not set tabindex on connected if one already exists', () => {
-      const element = new TestElement();
-      element.tabIndex = -1;
-      document.body.appendChild(element);
-      expect(element.getAttribute('tabindex'))
-        .withContext('tabindex attribute value')
-        .toEqual('-1');
-
-      element.remove();
-    });
-
-    it('should not change tabindex if disconnected and reconnected', () => {
-      const element = new TestElement();
-      document.body.appendChild(element);
-      element.tabIndex = -1;
-      element.remove();
-      document.body.appendChild(element);
-      expect(element.getAttribute('tabindex'))
-        .withContext('tabindex attribute value')
-        .toEqual('-1');
-    });
-
-    if (!('role' in Element.prototype)) {
-      describe('polyfill', () => {
-        it('should hydrate aria attributes when ARIAMixin is not supported', async () => {
-          const element = new TestElement();
-          document.body.appendChild(element);
-          element.role = 'button';
-          await element.updateComplete;
-          expect(element.getAttribute('role'))
-            .withContext('role attribute value')
-            .toEqual('button');
-
-          element.remove();
-        });
-      });
-    }
   });
 
   describe('polyfillElementInternalsAria()', () => {
     @customElement('test-polyfill-element-internals-aria')
     class TestElement extends LitElement {
       static {
-        setupHostAria(TestElement);
+        polyfillARIAMixin(TestElement);
       }
 
       internals = polyfillElementInternalsAria(this, this.attachInternals());

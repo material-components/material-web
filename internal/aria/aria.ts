@@ -295,6 +295,27 @@ export type ARIARole =
   | 'doc-toc';
 
 /**
+ * This function will polyfill `ARIAMixin` properties for Firefox.
+ *
+ * @param ctor The `ReactiveElement` constructor to set up.
+ */
+export function polyfillARIAMixin(ctor: typeof ReactiveElement) {
+  if (isServer || 'role' in Element.prototype) {
+    return;
+  }
+
+  // Polyfill reflective aria properties for Firefox
+  for (const ariaProperty of ARIA_PROPERTIES) {
+    ctor.createProperty(ariaProperty, {
+      attribute: ariaPropertyToAttribute(ariaProperty),
+      reflect: true,
+    });
+  }
+
+  ctor.createProperty('role', {reflect: true});
+}
+
+/**
  * Enables a host custom element to be the target for aria roles and attributes.
  * Components should set the `elementInternals.role` property.
  *
@@ -307,6 +328,8 @@ export type ARIARole =
  *
  * @param ctor The `ReactiveElement` constructor to set up.
  * @param options Options to configure the element's host aria.
+ * @deprecated use `mixinFocusable()` and `polyfillARIAMixin()`
+ * TODO(b/307785469): remove after updating components to use mixinFocusable
  */
 export function setupHostAria(
   ctor: typeof ReactiveElement,
@@ -326,23 +349,13 @@ export function setupHostAria(
     });
   }
 
-  if (isServer || 'role' in Element.prototype) {
-    return;
-  }
-
-  // Polyfill reflective aria properties for Firefox
-  for (const ariaProperty of ARIA_PROPERTIES) {
-    ctor.createProperty(ariaProperty, {
-      attribute: ariaPropertyToAttribute(ariaProperty),
-      reflect: true,
-    });
-  }
-
-  ctor.createProperty('role', {reflect: true});
+  polyfillARIAMixin(ctor);
 }
 
 /**
  * Options for setting up a host element as an aria target.
+ * @deprecated use `mixinFocusable()` and `polyfillARIAMixin()`
+ * TODO(b/307785469): remove after updating components to use mixinFocusable
  */
 export interface SetupHostAriaOptions {
   /**
