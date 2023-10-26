@@ -19,10 +19,11 @@ import {
 import {classMap} from 'lit/directives/class-map.js';
 
 import {
+  polyfillARIAMixin,
   polyfillElementInternalsAria,
-  setupHostAria,
 } from '../../internal/aria/aria.js';
 import {EASING} from '../../internal/motion/animation.js';
+import {mixinFocusable} from '../../labs/behaviors/focusable.js';
 
 /**
  * Symbol for tabs to use to animate their indicators based off another tab's
@@ -36,12 +37,15 @@ const INDICATOR = Symbol('indicator');
  */
 export const ANIMATE_INDICATOR = Symbol('animateIndicator');
 
+// Separate variable needed for closure.
+const tabBaseClass = mixinFocusable(LitElement);
+
 /**
  * Tab component.
  */
-export class Tab extends LitElement {
+export class Tab extends tabBaseClass {
   static {
-    setupHostAria(Tab);
+    polyfillARIAMixin(Tab);
   }
 
   /**

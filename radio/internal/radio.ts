@@ -12,15 +12,19 @@ import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {
+  polyfillARIAMixin,
   polyfillElementInternalsAria,
-  setupHostAria,
 } from '../../internal/aria/aria.js';
 import {isActivationClick} from '../../internal/controller/events.js';
+import {mixinFocusable} from '../../labs/behaviors/focusable.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 
 const CHECKED = Symbol('checked');
 let maskId = 0;
+
+// Separate variable needed for closure.
+const radioBaseClass = mixinFocusable(LitElement);
 
 /**
  * A radio component.
@@ -30,9 +34,9 @@ let maskId = 0;
  * @fires change Dispatched when the value changes from user interaction.
  * --bubbles --composed
  */
-export class Radio extends LitElement {
+export class Radio extends radioBaseClass {
   static {
-    setupHostAria(Radio);
+    polyfillARIAMixin(Radio);
   }
 
   /** @nocollapse */
@@ -116,7 +120,7 @@ export class Radio extends LitElement {
   }
 
   protected override render() {
-    const classes = {checked: this.checked};
+    const classes = {'checked': this.checked};
     return html`
       <div class="container ${classMap(classes)}" aria-hidden="true">
         <md-ripple

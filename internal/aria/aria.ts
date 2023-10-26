@@ -316,59 +316,6 @@ export function polyfillARIAMixin(ctor: typeof ReactiveElement) {
 }
 
 /**
- * Enables a host custom element to be the target for aria roles and attributes.
- * Components should set the `elementInternals.role` property.
- *
- * By default, aria components are tab focusable. Provide a `focusable: false`
- * option for components that should not be tab focusable, such as
- * `role="listbox"`.
- *
- * This function will also polyfill aria `ElementInternals` properties for
- * Firefox.
- *
- * @param ctor The `ReactiveElement` constructor to set up.
- * @param options Options to configure the element's host aria.
- * @deprecated use `mixinFocusable()` and `polyfillARIAMixin()`
- * TODO(b/307785469): remove after updating components to use mixinFocusable
- */
-export function setupHostAria(
-  ctor: typeof ReactiveElement,
-  {focusable}: SetupHostAriaOptions = {},
-) {
-  if (focusable !== false) {
-    ctor.addInitializer((host) => {
-      host.addController({
-        hostConnected() {
-          if (host.hasAttribute('tabindex')) {
-            return;
-          }
-
-          host.tabIndex = 0;
-        },
-      });
-    });
-  }
-
-  polyfillARIAMixin(ctor);
-}
-
-/**
- * Options for setting up a host element as an aria target.
- * @deprecated use `mixinFocusable()` and `polyfillARIAMixin()`
- * TODO(b/307785469): remove after updating components to use mixinFocusable
- */
-export interface SetupHostAriaOptions {
-  /**
-   * Whether or not the element can be focused with the tab key. Defaults to
-   * true.
-   *
-   * Set this to false for aria roles that should not be tab focusable, such as
-   * `role="listbox"`.
-   */
-  focusable?: boolean;
-}
-
-/**
  * Polyfills an element and its `ElementInternals` to support `ARIAMixin`
  * properties on internals. This is needed for Firefox.
  *

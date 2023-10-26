@@ -8,8 +8,8 @@ import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
 import {
+  polyfillARIAMixin,
   polyfillElementInternalsAria,
-  setupHostAria,
 } from '../../internal/aria/aria.js';
 
 import {Chip} from './chip.js';
@@ -19,7 +19,7 @@ import {Chip} from './chip.js';
  */
 export class ChipSet extends LitElement {
   static {
-    setupHostAria(ChipSet, {focusable: false});
+    polyfillARIAMixin(ChipSet);
   }
 
   get chips() {

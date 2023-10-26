@@ -13,8 +13,8 @@ import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
 import {
+  polyfillARIAMixin,
   polyfillElementInternalsAria,
-  setupHostAria,
 } from '../../internal/aria/aria.js';
 import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
 import {
@@ -91,8 +91,7 @@ function getFocusedElement(
  */
 export abstract class Menu extends LitElement {
   static {
-    // We want to manage tabindex ourselves.
-    setupHostAria(Menu, {focusable: false});
+    polyfillARIAMixin(Menu);
   }
 
   @query('.menu') private readonly surfaceEl!: HTMLElement | null;

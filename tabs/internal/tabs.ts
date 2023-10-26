@@ -10,8 +10,8 @@ import {html, isServer, LitElement} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
 import {
+  polyfillARIAMixin,
   polyfillElementInternalsAria,
-  setupHostAria,
 } from '../../internal/aria/aria.js';
 
 import {ANIMATE_INDICATOR, Tab} from './tab.js';
@@ -42,7 +42,7 @@ import {ANIMATE_INDICATOR, Tab} from './tab.js';
  */
 export class Tabs extends LitElement {
   static {
-    setupHostAria(Tabs, {focusable: false});
+    polyfillARIAMixin(Tabs);
   }
 
   /**

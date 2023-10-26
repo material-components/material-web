@@ -8,8 +8,8 @@ import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
 import {
+  polyfillARIAMixin,
   polyfillElementInternalsAria,
-  setupHostAria,
 } from '../../internal/aria/aria.js';
 
 import {ListController, NavigableKeys} from './list-controller.js';
@@ -24,7 +24,7 @@ interface ListItem extends SharedListItem {
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
   static {
-    setupHostAria(List, {focusable: false});
+    polyfillARIAMixin(List);
   }
 
   /**
