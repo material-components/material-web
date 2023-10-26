@@ -14,7 +14,6 @@ import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {internals} from '../../internal/controller/element-internals.js';
 import {
   dispatchActivationClick,
   isActivationClick,
@@ -24,11 +23,18 @@ import {
   FormSubmitterType,
   setupFormSubmitter,
 } from '../../internal/controller/form-submitter.js';
+import {
+  internals,
+  mixinElementInternals,
+} from '../../labs/behaviors/element-internals.js';
+
+// Separate variable needed for closure.
+const buttonBaseClass = mixinElementInternals(LitElement);
 
 /**
  * A button component.
  */
-export abstract class Button extends LitElement implements FormSubmitter {
+export abstract class Button extends buttonBaseClass implements FormSubmitter {
   static {
     requestUpdateOnAriaChange(Button);
     setupFormSubmitter(Button);
@@ -94,10 +100,6 @@ export abstract class Button extends LitElement implements FormSubmitter {
 
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
-
-  /** @private */
-  [internals] = (this as HTMLElement) /* needed for closure */
-    .attachInternals();
 
   constructor() {
     super();

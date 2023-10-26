@@ -9,10 +9,9 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {Environment} from '../../testing/environment.js';
 import {Harness} from '../../testing/harness.js';
-
-import {internals} from './element-internals.js';
 import {FormSubmitterType, setupFormSubmitter} from './form-submitter.js';
 
 declare global {
@@ -22,7 +21,7 @@ declare global {
 }
 
 @customElement('test-form-submitter-button')
-class FormSubmitterButton extends LitElement {
+class FormSubmitterButton extends mixinElementInternals(LitElement) {
   static {
     setupFormSubmitter(FormSubmitterButton);
   }
@@ -32,8 +31,6 @@ class FormSubmitterButton extends LitElement {
   type: FormSubmitterType = 'submit';
   @property({reflect: true}) name = '';
   value = '';
-
-  [internals] = this.attachInternals();
 }
 
 describe('setupFormSubmitter()', () => {

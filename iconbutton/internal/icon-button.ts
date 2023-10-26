@@ -14,18 +14,24 @@ import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {internals} from '../../internal/controller/element-internals.js';
 import {
   FormSubmitter,
   FormSubmitterType,
   setupFormSubmitter,
 } from '../../internal/controller/form-submitter.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';
+import {
+  internals,
+  mixinElementInternals,
+} from '../../labs/behaviors/element-internals.js';
 
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
+// Separate variable needed for closure.
+const iconButtonBaseClass = mixinElementInternals(LitElement);
+
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
-export class IconButton extends LitElement implements FormSubmitter {
+export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   static {
     requestUpdateOnAriaChange(IconButton);
     setupFormSubmitter(IconButton);
@@ -105,10 +111,6 @@ export class IconButton extends LitElement implements FormSubmitter {
   }
 
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
-
-  /** @private */
-  [internals] = (this as HTMLElement) /* needed for closure */
-    .attachInternals();
 
   /**
    * Link buttons cannot be disabled.

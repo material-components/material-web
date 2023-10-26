@@ -6,7 +6,10 @@
 
 import {isServer, ReactiveElement} from 'lit';
 
-import {internals, WithInternals} from './element-internals.js';
+import {
+  internals,
+  WithElementInternals,
+} from '../../labs/behaviors/element-internals.js';
 
 /**
  * A string indicating the form submission behavior of the element.
@@ -23,7 +26,7 @@ export type FormSubmitterType = 'button' | 'submit' | 'reset';
  * An element that can submit or reset a `<form>`, similar to
  * `<button type="submit">`.
  */
-export interface FormSubmitter extends ReactiveElement, WithInternals {
+export interface FormSubmitter extends ReactiveElement, WithElementInternals {
   /**
    * A string indicating the form submission behavior of the element.
    *
