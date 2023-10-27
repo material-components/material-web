@@ -16,7 +16,7 @@ import {
   queryAssignedNodes,
   state,
 } from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {
   polyfillARIAMixin,
@@ -105,7 +105,7 @@ export class Tab extends tabBaseClass {
 
   protected override render() {
     const indicator = html`<div class="indicator"></div>`;
-    return html` <div
+    return html`<div
       class="button"
       role="presentation"
       @click=${this.handleContentClick}>
@@ -123,7 +123,7 @@ export class Tab extends tabBaseClass {
     </div>`;
   }
 
-  protected getContentClasses() {
+  protected getContentClasses(): ClassInfo {
     return {
       'has-icon': this.hasIcon,
       'has-label': !this.iconOnly,
