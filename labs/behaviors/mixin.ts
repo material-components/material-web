@@ -56,7 +56,6 @@ export type MixinBase<ExpectedBase = object> = abstract new (
  *   return FooImpl;
  * }
  * ```
- *
  */
 export type MixinReturn<MixinBase, MixinClass = object> =
   // Mixins must have a constructor with `...args: any[]`

@@ -6,6 +6,10 @@
 
 import {LitElement} from 'lit';
 
+import {
+  polyfillARIAMixin,
+  polyfillElementInternalsAria,
+} from '../../internal/aria/aria.js';
 import {MixinBase, MixinReturn} from './mixin.js';
 
 /**
@@ -38,6 +42,9 @@ export interface WithElementInternals {
   [internals]: ElementInternals;
 }
 
+// Private symbols
+const privateInternals = Symbol('privateInternals');
+
 /**
  * Mixes in an attached `ElementInternals` instance.
  *
@@ -54,8 +61,27 @@ export function mixinElementInternals<T extends MixinBase<LitElement>>(
     extends base
     implements WithElementInternals
   {
-    // Cast needed for closure
-    [internals] = (this as HTMLElement).attachInternals();
+    static {
+      polyfillARIAMixin(
+        WithElementInternalsElement as unknown as typeof LitElement,
+      );
+    }
+
+    get [internals]() {
+      // Create internals in getter so that it can be used in methods called on
+      // construction in `ReactiveElement`, such as `requestUpdate()`.
+      if (!this[privateInternals]) {
+        // Cast needed for closure
+        this[privateInternals] = polyfillElementInternalsAria(
+          this,
+          (this as HTMLElement).attachInternals(),
+        );
+      }
+
+      return this[privateInternals];
+    }
+
+    [privateInternals]?: ElementInternals;
   }
 
   return WithElementInternalsElement;

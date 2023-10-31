@@ -11,12 +11,17 @@ import {html, isServer, LitElement} from 'lit';
 import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {
-  polyfillARIAMixin,
-  polyfillElementInternalsAria,
-} from '../../internal/aria/aria.js';
 import {isActivationClick} from '../../internal/controller/events.js';
+import {
+  internals,
+  mixinElementInternals,
+} from '../../labs/behaviors/element-internals.js';
 import {mixinFocusable} from '../../labs/behaviors/focusable.js';
+import {
+  getFormState,
+  getFormValue,
+  mixinFormAssociated,
+} from '../../labs/behaviors/form-associated.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 
@@ -24,7 +29,9 @@ const CHECKED = Symbol('checked');
 let maskId = 0;
 
 // Separate variable needed for closure.
-const radioBaseClass = mixinFocusable(LitElement);
+const radioBaseClass = mixinFormAssociated(
+  mixinElementInternals(mixinFocusable(LitElement)),
+);
 
 /**
  * A radio component.
@@ -35,13 +42,6 @@ const radioBaseClass = mixinFocusable(LitElement);
  * --bubbles --composed
  */
 export class Radio extends radioBaseClass {
-  static {
-    polyfillARIAMixin(Radio);
-  }
-
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
   // Unique maskId is required because of a Safari bug that fail to persist
   // reference to the mask. This should be removed once the bug is fixed.
   private readonly maskId = `cutout${++maskId}`;
@@ -60,8 +60,6 @@ export class Radio extends radioBaseClass {
     }
 
     this[CHECKED] = checked;
-    const state = String(checked);
-    this.internals.setFormValue(this.checked ? this.value : null, state);
     this.requestUpdate('checked', wasChecked);
     this.selectionController.handleCheckedChange();
   }
@@ -69,51 +67,17 @@ export class Radio extends radioBaseClass {
   [CHECKED] = false;
 
   /**
-   * Whether or not the radio is disabled.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
-
-  /**
    * The element value to use in form submission when checked.
    */
   @property() value = 'on';
 
-  /**
-   * The HTML name to use in form submission.
-   */
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.internals.form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this.internals.labels;
-  }
-
   private readonly selectionController = new SingleSelectionController(this);
-  private readonly internals = polyfillElementInternalsAria(
-    this,
-    // Cast needed for closure
-    (this as HTMLElement).attachInternals(),
-  );
 
   constructor() {
     super();
     this.addController(this.selectionController);
     if (!isServer) {
-      this.internals.role = 'radio';
+      this[internals].role = 'radio';
       this.addEventListener('click', this.handleClick.bind(this));
       this.addEventListener('keydown', this.handleKeydown.bind(this));
     }
@@ -154,7 +118,7 @@ export class Radio extends radioBaseClass {
   }
 
   protected override updated() {
-    this.internals.ariaChecked = String(this.checked);
+    this[internals].ariaChecked = String(this.checked);
   }
 
   private async handleClick(event: Event) {
@@ -190,15 +154,25 @@ export class Radio extends radioBaseClass {
     this.click();
   }
 
-  /** @private */
-  formResetCallback() {
+  // Writable mixin properties for lit-html binding, needed for lit-analyzer
+  declare disabled: boolean;
+  declare name: string;
+
+  override [getFormValue]() {
+    return this.checked ? this.value : null;
+  }
+
+  override [getFormState]() {
+    return String(this.checked);
+  }
+
+  override formResetCallback() {
     // The checked property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.checked = this.hasAttribute('checked');
   }
 
-  /** @private */
-  formStateRestoreCallback(state: string) {
+  override formStateRestoreCallback(state: string) {
     this.checked = state === 'true';
   }
 }

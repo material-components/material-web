@@ -16,6 +16,14 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
+import {
+  internals,
+  mixinElementInternals,
+} from '../../labs/behaviors/element-internals.js';
+import {
+  getFormValue,
+  mixinFormAssociated,
+} from '../../labs/behaviors/form-associated.js';
 
 /**
  * Input types that are compatible with the text field.
@@ -55,10 +63,15 @@ export type InvalidTextFieldType =
   | 'reset'
   | 'submit';
 
+// Separate variable needed for closure.
+const textFieldBaseClass = mixinFormAssociated(
+  mixinElementInternals(LitElement),
+);
+
 /**
  * A text field component.
  */
-export abstract class TextField extends LitElement {
+export abstract class TextField extends textFieldBaseClass {
   static {
     requestUpdateOnAriaChange(TextField);
   }
@@ -69,10 +82,6 @@ export abstract class TextField extends LitElement {
     delegatesFocus: true,
   };
 
-  /** @nocollapse  */
-  static readonly formAssociated = true;
-
-  @property({type: Boolean, reflect: true}) disabled = false;
   /**
    * Gets or sets whether or not the text field is in a visually invalid state.
    *
@@ -80,6 +89,7 @@ export abstract class TextField extends LitElement {
    * `reportValidity()`.
    */
   @property({type: Boolean, reflect: true}) error = false;
+
   /**
    * The error message that replaces supporting text when `error` is true. If
    * `errorText` is an empty string, then the supporting text will continue to
@@ -89,35 +99,44 @@ export abstract class TextField extends LitElement {
    * `reportValidity()`.
    */
   @property({attribute: 'error-text'}) errorText = '';
+
   @property() label = '';
+
   @property({type: Boolean, reflect: true}) required = false;
+
   /**
    * The current value of the text field. It is always a string.
    */
   @property() value = '';
+
   /**
    * An optional prefix to display before the input value.
    */
   @property({attribute: 'prefix-text'}) prefixText = '';
+
   /**
    * An optional suffix to display after the input value.
    */
   @property({attribute: 'suffix-text'}) suffixText = '';
+
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
   @property({type: Boolean, attribute: 'has-leading-icon'})
   hasLeadingIcon = false;
+
   /**
    * Whether or not the text field has a trailing icon. Used for SSR.
    */
   @property({type: Boolean, attribute: 'has-trailing-icon'})
   hasTrailingIcon = false;
+
   /**
    * Conveys additional information below the text field, such as how it should
    * be used.
    */
   @property({attribute: 'supporting-text'}) supportingText = '';
+
   /**
    * Override the input text CSS `direction`. Useful for RTL languages that use
    * LTR notation for fractions.
@@ -129,44 +148,23 @@ export abstract class TextField extends LitElement {
    * Defaults to 2.
    */
   @property({type: Number}) rows = 2;
+
   /**
    * The number of cols to display for a `type="textarea"` text field.
    * Defaults to 20.
    */
   @property({type: Number}) cols = 20;
 
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.internals.form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this.internals.labels;
-  }
-
-  /**
-   * The HTML name to use in form submission.
-   */
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
   // <input> properties
   @property({reflect: true}) override inputMode = '';
+
   /**
    * Defines the greatest value in the range of permitted values.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    */
   @property() max = '';
+
   /**
    * The maximum number of characters a user can enter into the text field. Set
    * to -1 for none.
@@ -174,12 +172,14 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
    */
   @property({type: Number}) maxLength = -1;
+
   /**
    * Defines the most negative value in the range of permitted values.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
    */
   @property() min = '';
+
   /**
    * The minimum number of characters a user can enter into the text field. Set
    * to -1 for none.
@@ -187,6 +187,7 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
    */
   @property({type: Number}) minLength = -1;
+
   /**
    * A regular expression that the text field's value must match to pass
    * constraint validation.
@@ -194,6 +195,7 @@ export abstract class TextField extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
    */
   @property() pattern = '';
+
   @property({reflect: true, converter: stringConverter}) placeholder = '';
 
   /**
@@ -286,7 +288,7 @@ export abstract class TextField extends LitElement {
    */
   get validationMessage() {
     this.syncValidity();
-    return this.internals.validationMessage;
+    return this[internals].validationMessage;
   }
 
   /**
@@ -297,7 +299,7 @@ export abstract class TextField extends LitElement {
    */
   get validity() {
     this.syncValidity();
-    return this.internals.validity;
+    return this[internals].validity;
   }
 
   /**
@@ -350,7 +352,7 @@ export abstract class TextField extends LitElement {
    */
   get willValidate() {
     this.syncValidity();
-    return this.internals.willValidate;
+    return this[internals].willValidate;
   }
 
   protected abstract readonly fieldTag: StaticValue;
@@ -386,10 +388,8 @@ export abstract class TextField extends LitElement {
   @queryAssignedElements({slot: 'trailing-icon'})
   private readonly trailingIcons!: Element[];
   // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
-  // Replace with this.internals.validity.customError when resolved.
+  // Replace with this[internals].validity.customError when resolved.
   private hasCustomValidityError = false;
-  // Cast needed for closure
-  private readonly internals = (this as HTMLElement).attachInternals();
 
   /**
    * Checks the text field's native validation and returns whether or not the
@@ -403,7 +403,7 @@ export abstract class TextField extends LitElement {
    */
   checkValidity() {
     this.syncValidity();
-    return this.internals.checkValidity();
+    return this[internals].checkValidity();
   }
 
   /**
@@ -472,7 +472,7 @@ export abstract class TextField extends LitElement {
    */
   setCustomValidity(error: string) {
     this.hasCustomValidityError = !!error;
-    this.internals.setValidity(
+    this[internals].setValidity(
       {customError: !!error},
       error,
       this.getInputOrTextarea(),
@@ -604,7 +604,6 @@ export abstract class TextField extends LitElement {
       this.value = value;
     }
 
-    this.internals.setFormValue(value);
     // Sync validity when properties change, since validation properties may
     // have changed.
     this.syncValidity();
@@ -809,12 +808,12 @@ export abstract class TextField extends LitElement {
     // validity. We do this to re-use native `<input>` validation messages.
     const input = this.getInputOrTextarea();
     if (this.hasCustomValidityError) {
-      input.setCustomValidity(this.internals.validationMessage);
+      input.setCustomValidity(this[internals].validationMessage);
     } else {
       input.setCustomValidity('');
     }
 
-    this.internals.setValidity(
+    this[internals].setValidity(
       input.validity,
       input.validationMessage,
       this.getInputOrTextarea(),
@@ -826,13 +825,19 @@ export abstract class TextField extends LitElement {
     this.hasTrailingIcon = this.trailingIcons.length > 0;
   }
 
-  /** @private */
-  formResetCallback() {
+  // Writable mixin properties for lit-html binding, needed for lit-analyzer
+  declare disabled: boolean;
+  declare name: string;
+
+  override [getFormValue]() {
+    return this.value;
+  }
+
+  override formResetCallback() {
     this.reset();
   }
 
-  /** @private */
-  formStateRestoreCallback(state: string) {
+  override formStateRestoreCallback(state: string) {
     this.value = state;
   }
 

@@ -21,15 +21,23 @@ import {
   isActivationClick,
   redispatchEvent,
 } from '../../internal/controller/events.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {
+  getFormValue,
+  mixinFormAssociated,
+} from '../../labs/behaviors/form-associated.js';
 import {MdRipple} from '../../ripple/ripple.js';
 
 // Disable warning for classMap with destructuring
 // tslint:disable:no-implicit-dictionary-conversion
 
+// Separate variable needed for closure.
+const sliderBaseClass = mixinFormAssociated(mixinElementInternals(LitElement));
+
 /**
  * Slider component.
  */
-export class Slider extends LitElement {
+export class Slider extends sliderBaseClass {
   static {
     requestUpdateOnAriaChange(Slider);
   }
@@ -39,14 +47,6 @@ export class Slider extends LitElement {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
-
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
-  /**
-   * Whether or not the slider is disabled.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * The slider minimum value
@@ -138,16 +138,6 @@ export class Slider extends LitElement {
   @property({type: Boolean}) range = false;
 
   /**
-   * The HTML name to use in form submission.
-   */
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
    * The HTML name to use in form submission for a range slider's starting
    * value. Use `name` instead if both the start and end values should use the
    * same name.
@@ -169,20 +159,6 @@ export class Slider extends LitElement {
   }
   set nameEnd(name: string) {
     this.setAttribute('name-end', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.internals.form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this.internals.labels;
   }
 
   @query('input.start') private readonly inputStart!: HTMLInputElement | null;
@@ -264,9 +240,6 @@ export class Slider extends LitElement {
 
   private action?: Action;
 
-  private readonly internals = (this as HTMLElement) /* needed for closure */
-    .attachInternals();
-
   constructor() {
     super();
     if (!isServer) {
@@ -302,26 +275,6 @@ export class Slider extends LitElement {
     } else if (changed.get('handleEndHover') !== undefined) {
       this.toggleRippleHover(this.rippleEnd, this.handleEndHover);
     }
-  }
-
-  protected override update(changed: PropertyValues<Slider>) {
-    if (
-      changed.has('value') ||
-      changed.has('range') ||
-      changed.has('valueStart') ||
-      changed.has('valueEnd')
-    ) {
-      if (this.range) {
-        const data = new FormData();
-        data.append(this.nameStart, String(this.valueStart));
-        data.append(this.nameEnd, String(this.valueEnd));
-        this.internals.setFormValue(data);
-      } else {
-        this.internals.setFormValue(String(this.value));
-      }
-    }
-
-    super.update(changed);
   }
 
   protected override updated(changed: PropertyValues) {
@@ -764,8 +717,22 @@ export class Slider extends LitElement {
     this.finishAction(event);
   }
 
-  /** @private */
-  formResetCallback() {
+  // Writable mixin properties for lit-html binding, needed for lit-analyzer
+  declare disabled: boolean;
+  declare name: string;
+
+  override [getFormValue]() {
+    if (this.range) {
+      const data = new FormData();
+      data.append(this.nameStart, String(this.valueStart));
+      data.append(this.nameEnd, String(this.valueEnd));
+      return data;
+    }
+
+    return String(this.value);
+  }
+
+  override formResetCallback() {
     if (this.range) {
       const valueStart = this.getAttribute('value-start');
       this.valueStart = valueStart !== null ? Number(valueStart) : undefined;
@@ -777,8 +744,9 @@ export class Slider extends LitElement {
     this.value = value !== null ? Number(value) : undefined;
   }
 
-  /** @private */
-  formStateRestoreCallback(state: string | Array<[string, string]> | null) {
+  override formStateRestoreCallback(
+    state: string | Array<[string, string]> | null,
+  ) {
     if (Array.isArray(state)) {
       const [[, valueStart], [, valueEnd]] = state;
       this.valueStart = Number(valueStart);

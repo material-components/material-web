@@ -319,12 +319,12 @@ export function polyfillARIAMixin(ctor: typeof ReactiveElement) {
  * Polyfills an element and its `ElementInternals` to support `ARIAMixin`
  * properties on internals. This is needed for Firefox.
  *
- * `setupHostAria()` must be called for the element class.
+ * `polyfillARIAMixin()` must be called for the element class.
  *
  * @example
  * class XButton extends LitElement {
  *   static {
- *     setupHostAria(XButton);
+ *     polyfillARIAMixin(XButton);
  *   }
  *
  *   private internals =
@@ -345,7 +345,7 @@ export function polyfillElementInternalsAria(
   }
 
   if (!('role' in host)) {
-    throw new Error('Missing setupHostAria()');
+    throw new Error('Missing polyfillARIAMixin()');
   }
 
   let firstConnectedCallbacks: Array<{

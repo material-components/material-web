@@ -18,11 +18,25 @@ import {
   isActivationClick,
   redispatchEvent,
 } from '../../internal/controller/events.js';
+import {
+  internals,
+  mixinElementInternals,
+} from '../../labs/behaviors/element-internals.js';
+import {
+  getFormState,
+  getFormValue,
+  mixinFormAssociated,
+} from '../../labs/behaviors/form-associated.js';
+
+// Separate variable needed for closure.
+const checkboxBaseClass = mixinFormAssociated(
+  mixinElementInternals(LitElement),
+);
 
 /**
  * A checkbox component.
  */
-export class Checkbox extends LitElement {
+export class Checkbox extends checkboxBaseClass {
   static {
     requestUpdateOnAriaChange(Checkbox);
   }
@@ -33,18 +47,10 @@ export class Checkbox extends LitElement {
     delegatesFocus: true,
   };
 
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
   /**
    * Whether or not the checkbox is selected.
    */
   @property({type: Boolean}) checked = false;
-
-  /**
-   * Whether or not the checkbox is disabled.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * Whether or not the checkbox is indeterminate.
@@ -69,30 +75,6 @@ export class Checkbox extends LitElement {
   @property() value = 'on';
 
   /**
-   * The HTML name to use in form submission.
-   */
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.internals.form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this.internals.labels;
-  }
-
-  /**
    * Returns a ValidityState object that represents the validity states of the
    * checkbox.
    *
@@ -103,7 +85,7 @@ export class Checkbox extends LitElement {
    */
   get validity() {
     this.syncValidity();
-    return this.internals.validity;
+    return this[internals].validity;
   }
 
   /**
@@ -113,7 +95,7 @@ export class Checkbox extends LitElement {
    */
   get validationMessage() {
     this.syncValidity();
-    return this.internals.validationMessage;
+    return this[internals].validationMessage;
   }
 
   /**
@@ -124,7 +106,7 @@ export class Checkbox extends LitElement {
    */
   get willValidate() {
     this.syncValidity();
-    return this.internals.willValidate;
+    return this[internals].willValidate;
   }
 
   @state() private prevChecked = false;
@@ -132,10 +114,8 @@ export class Checkbox extends LitElement {
   @state() private prevIndeterminate = false;
   @query('input') private readonly input!: HTMLInputElement | null;
   // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
-  // Replace with this.internals.validity.customError when resolved.
+  // Replace with this[internals].validity.customError when resolved.
   private hasCustomValidityError = false;
-  // Cast needed for closure
-  private readonly internals = (this as HTMLElement).attachInternals();
 
   constructor() {
     super();
@@ -162,7 +142,7 @@ export class Checkbox extends LitElement {
    */
   checkValidity() {
     this.syncValidity();
-    return this.internals.checkValidity();
+    return this[internals].checkValidity();
   }
 
   /**
@@ -180,7 +160,7 @@ export class Checkbox extends LitElement {
    */
   reportValidity() {
     this.syncValidity();
-    return this.internals.reportValidity();
+    return this[internals].reportValidity();
   }
 
   /**
@@ -196,7 +176,7 @@ export class Checkbox extends LitElement {
    */
   setCustomValidity(error: string) {
     this.hasCustomValidityError = !!error;
-    this.internals.setValidity({customError: !!error}, error, this.getInput());
+    this[internals].setValidity({customError: !!error}, error, this.getInput());
   }
 
   protected override update(changed: PropertyValues<Checkbox>) {
@@ -211,9 +191,6 @@ export class Checkbox extends LitElement {
         changed.get('indeterminate') ?? this.indeterminate;
     }
 
-    const shouldAddFormValue = this.checked && !this.indeterminate;
-    const state = String(this.checked);
-    this.internals.setFormValue(shouldAddFormValue ? this.value : null, state);
     super.update(changed);
   }
 
@@ -285,12 +262,12 @@ export class Checkbox extends LitElement {
     // validity. We do this to re-use native `<input>` validation messages.
     const input = this.getInput();
     if (this.hasCustomValidityError) {
-      input.setCustomValidity(this.internals.validationMessage);
+      input.setCustomValidity(this[internals].validationMessage);
     } else {
       input.setCustomValidity('');
     }
 
-    this.internals.setValidity(
+    this[internals].setValidity(
       input.validity,
       input.validationMessage,
       this.getInput(),
@@ -314,15 +291,29 @@ export class Checkbox extends LitElement {
     return this.input!;
   }
 
-  /** @private */
-  formResetCallback() {
+  // Writable mixin properties for lit-html binding, needed for lit-analyzer
+  declare disabled: boolean;
+  declare name: string;
+
+  override [getFormValue]() {
+    if (!this.checked || this.indeterminate) {
+      return null;
+    }
+
+    return this.value;
+  }
+
+  override [getFormState]() {
+    return String(this.checked);
+  }
+
+  override formResetCallback() {
     // The checked property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.checked = this.hasAttribute('checked');
   }
 
-  /** @private */
-  formStateRestoreCallback(state: string) {
+  override formStateRestoreCallback(state: string) {
     this.checked = state === 'true';
   }
 }

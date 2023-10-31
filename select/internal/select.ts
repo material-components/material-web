@@ -8,13 +8,21 @@ import '../../menu/menu.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
+import {
+  internals,
+  mixinElementInternals,
+} from '../../labs/behaviors/element-internals.js';
+import {
+  getFormValue,
+  mixinFormAssociated,
+} from '../../labs/behaviors/form-associated.js';
 import {getActiveItem} from '../../list/internal/list-navigation-helpers.js';
 import {
   CloseMenuEvent,
@@ -23,7 +31,6 @@ import {
 } from '../../menu/internal/controllers/shared.js';
 import {TYPEAHEAD_RECORD} from '../../menu/internal/controllers/typeaheadController.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
-
 import {
   createRequestDeselectionEvent,
   createRequestSelectionEvent,
@@ -32,6 +39,9 @@ import {
 import {getSelectedItems, SelectOptionRecord} from './shared.js';
 
 const VALUE = Symbol('value');
+
+// Separate variable needed for closure.
+const selectBaseClass = mixinFormAssociated(mixinElementInternals(LitElement));
 
 /**
  * @fires input Fired when a selection is made by the user via mouse or keyboard
@@ -45,26 +55,21 @@ const VALUE = Symbol('value');
  * @fires closed Fired when the select's menu has finished animations and
  * closed.
  */
-export abstract class Select extends LitElement {
+export abstract class Select extends selectBaseClass {
   static {
     requestUpdateOnAriaChange(Select);
   }
-
-  /** @nocollapse  */
-  static readonly formAssociated = true;
 
   /**
    * Opens the menu synchronously with no animation.
    */
   @property({type: Boolean}) quick = false;
+
   /**
    * Whether or not the select is required.
    */
   @property({type: Boolean}) required = false;
-  /**
-   * Disables the select.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
+
   /**
    * The error message that replaces supporting text when `error` is true. If
    * `errorText` is an empty string, then the supporting text will continue to
@@ -74,15 +79,18 @@ export abstract class Select extends LitElement {
    * `reportValidity()`.
    */
   @property({type: String, attribute: 'error-text'}) errorText = '';
+
   /**
    * The floating label for the field.
    */
   @property() label = '';
+
   /**
    * Conveys additional information below the select, such as how it should
    * be used.
    */
   @property({type: String, attribute: 'supporting-text'}) supportingText = '';
+
   /**
    * Gets or sets whether or not the select is in a visually invalid state.
    *
@@ -90,6 +98,7 @@ export abstract class Select extends LitElement {
    * `reportValidity()`.
    */
   @property({type: Boolean, reflect: true}) error = false;
+
   /**
    * Whether or not the underlying md-menu should be position: fixed to display
    * in a top-level manner, or position: absolute.
@@ -99,17 +108,20 @@ export abstract class Select extends LitElement {
    */
   @property({attribute: 'menu-positioning'})
   menuPositioning: 'absolute' | 'fixed' = 'absolute';
+
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
    * before it clears the typeahead buffer.
    */
   @property({type: Number, attribute: 'typeahead-delay'})
   typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
+
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
   @property({type: Boolean, attribute: 'has-leading-icon'})
   hasLeadingIcon = false;
+
   /**
    * Text to display in the field. Only set for SSR.
    */
@@ -168,30 +180,6 @@ export abstract class Select extends LitElement {
   }
 
   /**
-   * The HTML name to use in form submission.
-   */
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.internals.form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this.internals.labels;
-  }
-
-  /**
    * Returns a ValidityState object that represents the validity states of the
    * checkbox.
    *
@@ -200,7 +188,7 @@ export abstract class Select extends LitElement {
    */
   get validity() {
     this.syncValidity();
-    return this.internals.validity;
+    return this[internals].validity;
   }
 
   /**
@@ -210,7 +198,7 @@ export abstract class Select extends LitElement {
    */
   get validationMessage() {
     this.syncValidity();
-    return this.internals.validationMessage;
+    return this[internals].validationMessage;
   }
 
   /**
@@ -221,7 +209,7 @@ export abstract class Select extends LitElement {
    */
   get willValidate() {
     this.syncValidity();
-    return this.internals.willValidate;
+    return this[internals].willValidate;
   }
 
   protected abstract readonly fieldTag: StaticValue;
@@ -267,8 +255,6 @@ export abstract class Select extends LitElement {
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
   private customValidationMessage = '';
-  // Cast needed for closure
-  private readonly internals = (this as HTMLElement).attachInternals();
 
   /**
    * Selects an option given the value of the option, and updates MdSelect's
@@ -319,7 +305,7 @@ export abstract class Select extends LitElement {
    */
   checkValidity() {
     this.syncValidity();
-    return this.internals.checkValidity();
+    return this[internals].checkValidity();
   }
 
   /**
@@ -428,7 +414,7 @@ export abstract class Select extends LitElement {
     super.firstUpdated(changed);
   }
 
-  private getRenderClasses() {
+  private getRenderClasses(): ClassInfo {
     return {
       'disabled': this.disabled,
       'error': this.error,
@@ -664,7 +650,6 @@ export abstract class Select extends LitElement {
       this.displayText = '';
     }
 
-    this.internals.setFormValue(this.value);
     this.syncValidity();
     return hasSelectedOptionChanged;
   }
@@ -837,7 +822,7 @@ export abstract class Select extends LitElement {
       (valueMissing && this.getRequiredValidationMessage()) ||
       '';
 
-    this.internals.setValidity(
+    this[internals].setValidity(
       {valueMissing, customError},
       validationMessage,
       this.field ?? undefined,
@@ -851,13 +836,19 @@ export abstract class Select extends LitElement {
     return select.validationMessage;
   }
 
-  /** @private */
-  formResetCallback() {
+  // Writable mixin properties for lit-html binding, needed for lit-analyzer
+  declare disabled: boolean;
+  declare name: string;
+
+  override [getFormValue]() {
+    return this.value;
+  }
+
+  override formResetCallback() {
     this.reset();
   }
 
-  /** @private */
-  formStateRestoreCallback(state: string) {
+  override formStateRestoreCallback(state: string) {
     this.value = state;
   }
 }

@@ -66,7 +66,7 @@ type FormSubmitterConstructor =
  *
  * @example
  * ```ts
- * class MyElement extends LitElement {
+ * class MyElement extends mixinElementInternals(LitElement) {
  *   static {
  *     setupFormSubmitter(MyElement);
  *   }
@@ -74,8 +74,6 @@ type FormSubmitterConstructor =
  *   static formAssociated = true;
  *
  *   type: FormSubmitterType = 'submit';
- *
- *   [internals] = this.attachInternals();
  * }
  * ```
  *
