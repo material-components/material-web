@@ -33,9 +33,9 @@ _What that the team is currently working on._
 *   Features
     *   💤 Support more screen readers
     *   💤 Prevent event default behavior
-    *   💤 Size tracking
+    *   🟡 Size tracking
     *   💤 Performance improvements
-    *   💤 Docs and examples
+    *   🟡 Docs and examples
 
 ## Planned
 
