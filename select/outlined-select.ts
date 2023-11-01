@@ -6,7 +6,6 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as outlinedForcedColorsStyles} from './internal/outlined-forced-colors-styles.css.js';
 import {OutlinedSelect} from './internal/outlined-select.js';
 import {styles} from './internal/outlined-select-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
@@ -46,5 +45,5 @@ declare global {
  */
 @customElement('md-outlined-select')
 export class MdOutlinedSelect extends OutlinedSelect {
-  static override styles = [sharedStyles, styles, outlinedForcedColorsStyles];
+  static override styles = [sharedStyles, styles];
 }

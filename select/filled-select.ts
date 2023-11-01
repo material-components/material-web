@@ -6,7 +6,6 @@
 
 import {customElement} from 'lit/decorators.js';
 
-import {styles as filledForcedColorsStyles} from './internal/filled-forced-colors-styles.css.js';
 import {FilledSelect} from './internal/filled-select.js';
 import {styles} from './internal/filled-select-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
@@ -46,5 +45,5 @@ declare global {
  */
 @customElement('md-filled-select')
 export class MdFilledSelect extends FilledSelect {
-  static override styles = [sharedStyles, styles, filledForcedColorsStyles];
+  static override styles = [sharedStyles, styles];
 }

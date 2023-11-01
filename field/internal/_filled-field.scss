@@ -43,174 +43,185 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 @mixin styles() {
   $tokens: tokens.md-comp-filled-field-values();
 
-  :host {
-    @each $token, $value in $tokens {
-      @if $token == 'container-shape' {
-        // Support logical shape properties. Filled field has a default oblong
-        // shape, which is why the fallback value is unique per corner.
-        --_container-shape-start-start: var(
-          --md-filled-field-container-shape-start-start,
-          var(--md-filled-field-container-shape, #{list.nth($value, 1)})
-        );
-        --_container-shape-start-end: var(
-          --md-filled-field-container-shape-start-end,
-          var(--md-filled-field-container-shape, #{list.nth($value, 2)})
-        );
-        --_container-shape-end-end: var(
-          --md-filled-field-container-shape-end-end,
-          var(--md-filled-field-container-shape, #{list.nth($value, 3)})
-        );
-        --_container-shape-end-start: var(
-          --md-filled-field-container-shape-end-start,
-          var(--md-filled-field-container-shape, #{list.nth($value, 4)})
-        );
-      } @else {
-        --_#{$token}: var(--md-filled-field-#{$token}, #{$value});
+  @layer styles {
+    :host {
+      @each $token, $value in $tokens {
+        @if $token == 'container-shape' {
+          // Support logical shape properties. Filled field has a default oblong
+          // shape, which is why the fallback value is unique per corner.
+          --_container-shape-start-start: var(
+            --md-filled-field-container-shape-start-start,
+            var(--md-filled-field-container-shape, #{list.nth($value, 1)})
+          );
+          --_container-shape-start-end: var(
+            --md-filled-field-container-shape-start-end,
+            var(--md-filled-field-container-shape, #{list.nth($value, 2)})
+          );
+          --_container-shape-end-end: var(
+            --md-filled-field-container-shape-end-end,
+            var(--md-filled-field-container-shape, #{list.nth($value, 3)})
+          );
+          --_container-shape-end-start: var(
+            --md-filled-field-container-shape-end-start,
+            var(--md-filled-field-container-shape, #{list.nth($value, 4)})
+          );
+        } @else {
+          --_#{$token}: var(--md-filled-field-#{$token}, #{$value});
+        }
       }
     }
-  }
 
-  .background,
-  .state-layer {
-    border-radius: inherit;
-    inset: 0;
-    pointer-events: none;
-    position: absolute;
-  }
+    .background,
+    .state-layer {
+      border-radius: inherit;
+      inset: 0;
+      pointer-events: none;
+      position: absolute;
+    }
 
-  .background {
-    background: var(--_container-color);
-  }
+    .background {
+      background: var(--_container-color);
+    }
 
-  .state-layer {
-    visibility: hidden;
-  }
+    .state-layer {
+      visibility: hidden;
+    }
 
-  .field:not(.disabled):hover .state-layer {
-    visibility: visible;
-  }
+    .field:not(.disabled):hover .state-layer {
+      visibility: visible;
+    }
 
-  .label.floating {
-    position: absolute;
-    top: var(--_with-label-top-space);
-  }
+    .label.floating {
+      position: absolute;
+      top: var(--_with-label-top-space);
+    }
 
-  .field:not(.with-start) .label-wrapper {
-    margin-inline-start: var(--_leading-space);
-  }
+    .field:not(.with-start) .label-wrapper {
+      margin-inline-start: var(--_leading-space);
+    }
 
-  .field:not(.with-end) .label-wrapper {
-    margin-inline-end: var(--_trailing-space);
-  }
+    .field:not(.with-end) .label-wrapper {
+      margin-inline-end: var(--_trailing-space);
+    }
 
-  .active-indicator {
-    inset: auto 0 0 0;
-    // Prevent click events on the indicator element since it has no width and
-    // causes bugs when handled by the foundation for updating transform-origin.
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-
-    &::before,
-    &::after {
-      border-bottom: var(--_active-indicator-height) solid
-        var(--_active-indicator-color);
+    .active-indicator {
       inset: auto 0 0 0;
-      content: '';
+      // Prevent click events on the indicator element since it has no width and
+      // causes bugs when handled by the foundation for updating transform-origin.
+      pointer-events: none;
       position: absolute;
       width: 100%;
+      z-index: 1;
+
+      &::before,
+      &::after {
+        border-bottom: var(--_active-indicator-height) solid
+          var(--_active-indicator-color);
+        inset: auto 0 0 0;
+        content: '';
+        position: absolute;
+        width: 100%;
+      }
+
+      // focused indicator
+      &::after {
+        opacity: 0;
+        transition: opacity map.get($_md-sys-motion, 'duration-short3')
+          map.get($_md-sys-motion, 'easing-emphasized');
+      }
     }
 
-    // focused indicator
-    &::after {
-      opacity: 0;
-      transition: opacity map.get($_md-sys-motion, 'duration-short3')
-        map.get($_md-sys-motion, 'easing-emphasized');
+    .focused .active-indicator::after {
+      opacity: 1;
+    }
+
+    .field:not(.with-start) .content ::slotted(*) {
+      padding-inline-start: var(--_leading-space);
+    }
+
+    .field:not(.with-end) .content ::slotted(*) {
+      padding-inline-end: var(--_trailing-space);
+    }
+
+    .field:not(.no-label) .content ::slotted(:not(textarea)) {
+      padding-bottom: var(--_with-label-bottom-space);
+      padding-top: calc(
+        var(--_with-label-top-space) + var(--_label-text-populated-line-height)
+      );
+    }
+
+    .field:not(.no-label) .content ::slotted(textarea) {
+      // Use margin for textareas since they will scroll over the label if not.
+      margin-bottom: var(--_with-label-bottom-space);
+      margin-top: calc(
+        var(--_with-label-top-space) + var(--_label-text-populated-line-height)
+      );
+    }
+
+    :hover .active-indicator::before {
+      border-bottom-color: var(--_hover-active-indicator-color);
+      border-bottom-width: var(--_hover-active-indicator-height);
+    }
+
+    // Focus is on a separate element and does not need a focus selector
+    .active-indicator::after {
+      border-bottom-color: var(--_focus-active-indicator-color);
+      border-bottom-width: var(--_focus-active-indicator-height);
+    }
+
+    :hover .state-layer {
+      background: var(--_hover-state-layer-color);
+      opacity: var(--_hover-state-layer-opacity);
+    }
+
+    .disabled .active-indicator::before {
+      border-bottom-color: var(--_disabled-active-indicator-color);
+      border-bottom-width: var(--_disabled-active-indicator-height);
+      opacity: var(--_disabled-active-indicator-opacity);
+    }
+
+    .disabled .background {
+      background: var(--_disabled-container-color);
+      opacity: var(--_disabled-container-opacity);
+    }
+
+    .error .active-indicator::before {
+      border-bottom-color: var(--_error-active-indicator-color);
+    }
+
+    .error:hover .active-indicator::before {
+      border-bottom-color: var(--_error-hover-active-indicator-color);
+    }
+
+    .error:hover .state-layer {
+      background: var(--_error-hover-state-layer-color);
+      opacity: var(--_error-hover-state-layer-opacity);
+    }
+
+    // Focus is on a separate element and does not need a focus selector
+    .error .active-indicator::after {
+      border-bottom-color: var(--_error-focus-active-indicator-color);
+    }
+
+    // Move the container up so that the resize handle doesn't overlap the focus
+    // indicator. Content is moved back the opposite direction.
+    .resizable .container {
+      bottom: var(--_focus-active-indicator-height);
+      // Ensures the container doesn't create an overhang that can be clicked on.
+      clip-path: inset(var(--_focus-active-indicator-height) 0 0 0);
+    }
+
+    .resizable .container > * {
+      top: var(--_focus-active-indicator-height);
     }
   }
 
-  .focused .active-indicator::after {
-    opacity: 1;
-  }
-
-  .field:not(.with-start) .content ::slotted(*) {
-    padding-inline-start: var(--_leading-space);
-  }
-
-  .field:not(.with-end) .content ::slotted(*) {
-    padding-inline-end: var(--_trailing-space);
-  }
-
-  .field:not(.no-label) .content ::slotted(:not(textarea)) {
-    padding-bottom: var(--_with-label-bottom-space);
-    padding-top: calc(
-      var(--_with-label-top-space) + var(--_label-text-populated-line-height)
-    );
-  }
-
-  .field:not(.no-label) .content ::slotted(textarea) {
-    // Use margin for textareas since they will scroll over the label if not.
-    margin-bottom: var(--_with-label-bottom-space);
-    margin-top: calc(
-      var(--_with-label-top-space) + var(--_label-text-populated-line-height)
-    );
-  }
-
-  :hover .active-indicator::before {
-    border-bottom-color: var(--_hover-active-indicator-color);
-    border-bottom-width: var(--_hover-active-indicator-height);
-  }
-
-  // Focus is on a separate element and does not need a focus selector
-  .active-indicator::after {
-    border-bottom-color: var(--_focus-active-indicator-color);
-    border-bottom-width: var(--_focus-active-indicator-height);
-  }
-
-  :hover .state-layer {
-    background: var(--_hover-state-layer-color);
-    opacity: var(--_hover-state-layer-opacity);
-  }
-
-  .disabled .active-indicator::before {
-    border-bottom-color: var(--_disabled-active-indicator-color);
-    border-bottom-width: var(--_disabled-active-indicator-height);
-    opacity: var(--_disabled-active-indicator-opacity);
-  }
-
-  .disabled .background {
-    background: var(--_disabled-container-color);
-    opacity: var(--_disabled-container-opacity);
-  }
-
-  .error .active-indicator::before {
-    border-bottom-color: var(--_error-active-indicator-color);
-  }
-
-  .error:hover .active-indicator::before {
-    border-bottom-color: var(--_error-hover-active-indicator-color);
-  }
-
-  .error:hover .state-layer {
-    background: var(--_error-hover-state-layer-color);
-    opacity: var(--_error-hover-state-layer-opacity);
-  }
-
-  // Focus is on a separate element and does not need a focus selector
-  .error .active-indicator::after {
-    border-bottom-color: var(--_error-focus-active-indicator-color);
-  }
-
-  // Move the container up so that the resize handle doesn't overlap the focus
-  // indicator. Content is moved back the opposite direction.
-  .resizable .container {
-    bottom: var(--_focus-active-indicator-height);
-    // Ensures the container doesn't create an overhang that can be clicked on.
-    clip-path: inset(var(--_focus-active-indicator-height) 0 0 0);
-  }
-
-  .resizable .container > * {
-    top: var(--_focus-active-indicator-height);
+  @layer hcm {
+    @media (forced-colors: active) {
+      .disabled .active-indicator::before {
+        border-color: GrayText;
+        opacity: 1;
+      }
+    }
   }
 }
