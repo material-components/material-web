@@ -387,6 +387,8 @@ export abstract class TextField extends textFieldBaseClass {
   private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailing-icon'})
   private readonly trailingIcons!: Element[];
+  private isCheckingValidity = false;
+  private isReportingValidity = false;
   // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
   // Replace with this[internals].validity.customError when resolved.
   private hasCustomValidityError = false;
@@ -402,8 +404,11 @@ export abstract class TextField extends textFieldBaseClass {
    * @return true if the text field is valid, or false if not.
    */
   checkValidity() {
+    this.isCheckingValidity = true;
     this.syncValidity();
-    return this[internals].checkValidity();
+    const isValid = this[internals].checkValidity();
+    this.isCheckingValidity = false;
+    return isValid;
   }
 
   /**
@@ -425,6 +430,7 @@ export abstract class TextField extends textFieldBaseClass {
    * @return true if the text field is valid, or false if not.
    */
   reportValidity() {
+    this.isReportingValidity = true;
     let invalidEvent: Event | undefined;
     this.addEventListener(
       'invalid',
@@ -435,6 +441,14 @@ export abstract class TextField extends textFieldBaseClass {
     );
 
     const valid = this.checkValidity();
+    this.showErrorMessage(valid, invalidEvent);
+
+    this.isReportingValidity = false;
+
+    return valid;
+  }
+
+  private showErrorMessage(valid: boolean, invalidEvent: Event | undefined) {
     if (invalidEvent?.defaultPrevented) {
       return valid;
     }
@@ -825,6 +839,26 @@ export abstract class TextField extends textFieldBaseClass {
     this.hasTrailingIcon = this.trailingIcons.length > 0;
   }
 
+  private readonly onInvalid = (invalidEvent: Event) => {
+    if (this.isCheckingValidity || this.isReportingValidity) {
+      return;
+    }
+
+    this.showErrorMessage(false, invalidEvent);
+  };
+
+  override connectedCallback() {
+    super.connectedCallback();
+
+    // Handles the case where the user submits the form and native validation
+    // error pops up. We want the error styles to show.
+    this.addEventListener('invalid', this.onInvalid);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('invalid', this.onInvalid);
+  }
   // Writable mixin properties for lit-html binding, needed for lit-analyzer
   declare disabled: boolean;
   declare name: string;

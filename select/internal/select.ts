@@ -254,6 +254,8 @@ export abstract class Select extends selectBaseClass {
   @query('#label') private readonly labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
+  private isCheckingValidity = false;
+  private isReportingValidity = false;
   private customValidationMessage = '';
 
   /**
@@ -304,8 +306,11 @@ export abstract class Select extends selectBaseClass {
    * @return true if the select is valid, or false if not.
    */
   checkValidity() {
+    this.isCheckingValidity = true;
     this.syncValidity();
-    return this[internals].checkValidity();
+    const isValid = this[internals].checkValidity();
+    this.isCheckingValidity = false;
+    return isValid;
   }
 
   /**
@@ -325,6 +330,7 @@ export abstract class Select extends selectBaseClass {
    * @return true if the select is valid, or false if not.
    */
   reportValidity() {
+    this.isReportingValidity = true;
     let invalidEvent: Event | undefined;
     this.addEventListener(
       'invalid',
@@ -335,6 +341,14 @@ export abstract class Select extends selectBaseClass {
     );
 
     const valid = this.checkValidity();
+    this.showErrorMessage(valid, invalidEvent);
+
+    this.isReportingValidity = false;
+
+    return valid;
+  }
+
+  private showErrorMessage(valid: boolean, invalidEvent: Event | undefined) {
     if (invalidEvent?.defaultPrevented) {
       return valid;
     }
@@ -834,6 +848,27 @@ export abstract class Select extends selectBaseClass {
     const select = document.createElement('select');
     select.required = true;
     return select.validationMessage;
+  }
+
+  private readonly onInvalid = (invalidEvent: Event) => {
+    if (this.isCheckingValidity || this.isReportingValidity) {
+      return;
+    }
+
+    this.showErrorMessage(false, invalidEvent);
+  };
+
+  override connectedCallback() {
+    super.connectedCallback();
+
+    // Handles the case where the user submits the form and native validation
+    // error pops up. We want the error styles to show.
+    this.addEventListener('invalid', this.onInvalid);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('invalid', this.onInvalid);
   }
 
   // Writable mixin properties for lit-html binding, needed for lit-analyzer
