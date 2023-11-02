@@ -60,6 +60,12 @@
   .menu {
     border-radius: map.get($tokens, 'container-shape');
     display: none;
+    inset: auto;
+    border: none;
+    padding: 0px;
+    overflow: visible;
+    // [popover] adds a canvas background
+    background-color: transparent;
     opacity: 0;
     z-index: 20;
     position: absolute;
@@ -68,6 +74,10 @@
     height: inherit;
     min-width: inherit;
     max-width: inherit;
+  }
+
+  .menu::backdrop {
+    display: none;
   }
 
   .fixed {
@@ -93,10 +103,11 @@
     padding-block: 8px;
   }
 
-  .has-overflow .items {
+  .has-overflow:not([popover]) .items {
     overflow: visible;
   }
 
+  .has-overflow.animating .items,
   .animating .items {
     overflow: hidden;
   }

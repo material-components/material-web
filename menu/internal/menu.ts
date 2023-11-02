@@ -7,7 +7,7 @@
 import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
 
-import {html, isServer, LitElement, PropertyValues} from 'lit';
+import {LitElement, PropertyValues, html, isServer, nothing} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -16,7 +16,7 @@ import {
   polyfillARIAMixin,
   polyfillElementInternalsAria,
 } from '../../internal/aria/aria.js';
-import {createAnimationSignal, EASING} from '../../internal/motion/animation.js';
+import {EASING, createAnimationSignal} from '../../internal/motion/animation.js';
 import {
   ListController,
   NavigableKeys,
@@ -107,9 +107,12 @@ export abstract class Menu extends LitElement {
   @property() anchor = '';
   /**
    * Whether the positioning algorithim should calculate relative to the parent
-   * of the anchor element (absolute) or relative to the window (fixed).
+   * of the anchor element (`absolute`), relative to the window (`fixed`), or
+   * relative to the document (`document`). `popover` will use the popover API
+   * to render the menu in the top-layer. If your browser does not support the
+   * popover API, it will revert to `fixed`.
    *
-   * Examples for `position = 'fixed'`:
+   * __Examples for `position = 'fixed'`:__
    *
    * - If there is no `position:relative` in the given parent tree and the
    *   surface is `position:absolute`
@@ -118,7 +121,7 @@ export abstract class Menu extends LitElement {
    * - The anchor and the surface do not share a common `position:relative`
    *   ancestor
    *
-   * When using positioning = fixed, in most cases, the menu should position
+   * When using `positioning=fixed`, in most cases, the menu should position
    * itself above most other `position:absolute` or `position:fixed` elements
    * when placed inside of them. e.g. using a menu inside of an `md-dialog`.
    *
@@ -134,8 +137,14 @@ export abstract class Menu extends LitElement {
    *   end of the `<body>` to render over everything or in a top-layer.
    * - You are reusing a single `md-menu` element that dynamically renders
    *   content.
+   *
+   * __Examples for `position = 'popover'`:__
+   *
+   * - Your browser supports `popover`.
+   * - Most cases. Once popover is in browsers, this will become the default.
    */
-  @property() positioning: 'absolute' | 'fixed' | 'document' = 'absolute';
+  @property() positioning: 'absolute' | 'fixed' | 'document' | 'popover' =
+    'absolute';
   /**
    * Skips the opening and closing animations.
    */
@@ -362,7 +371,8 @@ export abstract class Menu extends LitElement {
         surfaceCorner: this.menuCorner,
         surfaceEl: this.surfaceEl,
         anchorEl: this.anchorElement,
-        positioning: this.positioning,
+        positioning:
+          this.positioning === 'popover' ? 'document' : this.positioning,
         isOpen: this.open,
         xOffset: this.xOffset,
         yOffset: this.yOffset,
@@ -372,7 +382,10 @@ export abstract class Menu extends LitElement {
         // We can't resize components that have overflow like menus with
         // submenus because the overflow-y will show menu items / content
         // outside the bounds of the menu. (to be fixed w/ popover API)
-        repositionStrategy: this.hasOverflow ? 'move' : 'resize',
+        repositionStrategy:
+          this.hasOverflow && this.positioning !== 'popover'
+            ? 'move'
+            : 'resize',
       };
     },
   );
@@ -407,13 +420,25 @@ export abstract class Menu extends LitElement {
       }
     }
 
+    // Firefox does not support popover. Fall-back to using fixed.
+    if (
+      changed.has('positioning') &&
+      this.positioning === 'popover' &&
+      // type required for Google JS conformance
+      !(this as unknown as {showPopover?: () => void}).showPopover
+    ) {
+      this.positioning = 'fixed';
+    }
+
     super.update(changed);
   }
 
   private readonly onWindowResize = () => {
     if (
       this.isRepositioning ||
-      (this.positioning !== 'document' && this.positioning !== 'fixed')
+      (this.positioning !== 'document' &&
+        this.positioning !== 'fixed' &&
+        this.positioning !== 'popover')
     ) {
       return;
     }
@@ -445,7 +470,8 @@ export abstract class Menu extends LitElement {
     return html`
       <div
         class="menu ${classMap(this.getSurfaceClasses())}"
-        style=${styleMap(this.menuPositionController.surfaceStyles)}>
+        style=${styleMap(this.menuPositionController.surfaceStyles)}
+        popover=${this.positioning === 'popover' ? 'manual' : nothing}>
         ${this.renderElevation()}
         <div class="items">
           <div class="item-padding"> ${this.renderMenuItems()} </div>
