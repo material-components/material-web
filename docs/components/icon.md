@@ -141,8 +141,9 @@ If using SVG icons, add an `aria-label` attribute to the SVG element.
 Token            | Default value
 ---------------- | -----------------------------
 `--md-icon-font` | `'Material Symbols Outlined'`
+`--md-icon-size` | `24px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/icon/internal/_md-comp-icon.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-icon.scss)
     <!-- {.external} -->
 
 ### Example
@@ -157,13 +158,7 @@ Token            | Default value
 <style>
 md-icon {
   color: #006A6A;
-  font-size: 48px;
-}
-md-icon,
-md-icon > * {
-  /* Resizes any slotted images or SVGs */
-  width: 48px;
-  height: 48px;
+  --md-icon-size: 48px;
 }
 .rounded {
   --md-icon-font: 'Material Symbols Rounded';
