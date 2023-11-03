@@ -32,13 +32,13 @@
   }
 
   :host {
-    font-size: var(--md-icon-size, #{map.get($tokens, size)});
+    font-size: map.get($tokens, size);
     width: 24px;
     height: 24px;
     color: inherit;
     font-variation-settings: inherit;
     font-weight: 400;
-    font-family: var(--md-icon-font, #{map.get($tokens, font)});
+    font-family: map.get($tokens, font);
     display: inline-flex;
     font-style: normal;
     line-height: 1;
