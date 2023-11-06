@@ -64,7 +64,7 @@
     );
   }
 
-  .button__outline {
+  .outline {
     inset: 0;
     border-style: solid;
     position: absolute;
@@ -76,35 +76,30 @@
     border-end-end-radius: var(--_container-shape-end-end);
   }
 
-  :host(:active) .button__outline {
+  :host(:active) .outline {
     border-color: var(--_pressed-outline-color);
   }
 
-  :host([disabled]) .button__outline {
+  :host([disabled]) .outline {
     border-color: var(--_disabled-outline-color);
     opacity: var(--_disabled-outline-opacity);
   }
 
   @media (forced-colors: active) {
-    :host([disabled]) .button__outline {
+    :host([disabled]) .outline {
       opacity: 1;
     }
   }
 
-  .button__outline,
-  .button__ripple {
+  .outline,
+  md-ripple {
     border-width: var(--_outline-width);
   }
 
-  .button__ripple {
+  md-ripple {
     inline-size: calc(100% - 2 * var(--_outline-width));
     block-size: calc(100% - 2 * var(--_outline-width));
     border-style: solid;
     border-color: transparent;
   }
-}
-
-@function _resolve-tokens($tokens) {
-  $tokens: shared.remove-unsupported-tokens($tokens);
-  @return $tokens;
 }

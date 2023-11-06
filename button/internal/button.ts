@@ -137,8 +137,8 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
 
   protected getRenderClasses() {
     return {
-      'button--icon-leading': !this.trailingIcon && this.hasIcon,
-      'button--icon-trailing': this.trailingIcon && this.hasIcon,
+      'icon-leading': !this.trailingIcon && this.hasIcon,
+      'icon-trailing': this.trailingIcon && this.hasIcon,
     };
   }
 
@@ -154,12 +154,12 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       @slotchange="${this.handleSlotChange}"></slot>`;
 
     return html`
-      ${this.renderElevation?.()} ${this.renderOutline?.()}
+      ${this.renderElevation?.()}${this.renderOutline?.()}
       <md-focus-ring part="focus-ring"></md-focus-ring>
-      <md-ripple class="button__ripple" ?disabled="${isDisabled}"></md-ripple>
+      <md-ripple ?disabled="${isDisabled}"></md-ripple>
       <span class="touch"></span>
       ${this.trailingIcon ? nothing : icon}
-      <span class="button__label"><slot></slot></span>
+      <span class="label"><slot></slot></span>
       ${this.trailingIcon ? icon : nothing}
     `;
   }

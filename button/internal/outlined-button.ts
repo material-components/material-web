@@ -13,6 +13,6 @@ import {Button} from './button.js';
  */
 export class OutlinedButton extends Button {
   protected override renderOutline() {
-    return html`<span class="button__outline"></span>`;
+    return html`<span class="outline"></span>`;
   }
 }

@@ -13,6 +13,10 @@
     transform: translateY(-50%);
   }
 
+  :host([touch-target='wrapper']) {
+    margin: max(0px, (48px - var(--_container-height)) / 2) 0;
+  }
+
   :host([touch-target='none']) .touch {
     display: none;
   }

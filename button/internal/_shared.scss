@@ -37,10 +37,6 @@
     );
   }
 
-  :host([touch-target='wrapper']) {
-    margin: max(0px, (48px - var(--_container-height)) / 2) 0;
-  }
-
   md-focus-ring {
     @include focus-ring.theme(
       (
@@ -109,7 +105,7 @@
     position: absolute;
   }
 
-  :host([disabled]) .button__label {
+  :host([disabled]) .label {
     color: var(--_disabled-label-text-color);
     opacity: var(--_disabled-label-text-opacity);
   }
@@ -138,7 +134,7 @@
   }
 
   .button,
-  .button__ripple {
+  md-ripple {
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);
@@ -148,17 +144,17 @@
   .button::after,
   .button::before,
   md-elevation,
-  .button__ripple {
+  md-ripple {
     z-index: -1; // Place behind content
   }
 
   // TODO(b/181413732): Verify token below are named correctly
-  .button--icon-leading {
+  .icon-leading {
     padding-inline-start: var(--_with-leading-icon-leading-space);
     padding-inline-end: var(--_with-leading-icon-trailing-space);
   }
 
-  .button--icon-trailing {
+  .icon-trailing {
     padding-inline-start: var(--_with-trailing-icon-leading-space);
     padding-inline-end: var(--_with-trailing-icon-trailing-space);
   }
