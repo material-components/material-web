@@ -74,20 +74,20 @@
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);
     border-end-end-radius: var(--_container-shape-end-end);
+  }
 
-    .button:active & {
-      border-color: var(--_pressed-outline-color);
-    }
+  :host(:active) .button__outline {
+    border-color: var(--_pressed-outline-color);
+  }
 
-    .button:disabled & {
-      border-color: var(--_disabled-outline-color);
-      opacity: var(--_disabled-outline-opacity);
-    }
+  :host([disabled]) .button__outline {
+    border-color: var(--_disabled-outline-color);
+    opacity: var(--_disabled-outline-opacity);
+  }
 
-    @media (forced-colors: active) {
-      .button:disabled & {
-        opacity: 1;
-      }
+  @media (forced-colors: active) {
+    :host([disabled]) .button__outline {
+      opacity: 1;
     }
   }
 

@@ -13,6 +13,7 @@
 
 @mixin styles() {
   :host {
+    cursor: pointer;
     display: inline-flex;
     height: var(--_container-height);
     outline: none;
@@ -57,6 +58,7 @@
   }
 
   .button {
+    cursor: inherit;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -80,60 +82,58 @@
     padding-inline-end: var(--_trailing-space);
     gap: 8px;
 
-    &::before {
-      // Background color. Separate node for disabled opacity styles.
-      background-color: var(--_container-color);
-      border-radius: inherit;
-      content: '';
-      inset: 0;
-      position: absolute;
-    }
-
     &::-moz-focus-inner {
       padding: 0;
       border: 0;
     }
+  }
 
-    &:hover {
-      color: var(--_hover-label-text-color);
-      cursor: pointer;
+  :host(:hover) .button {
+    color: var(--_hover-label-text-color);
+  }
+
+  :host(:focus-within) .button {
+    color: var(--_focus-label-text-color);
+  }
+
+  :host(:active) .button {
+    color: var(--_pressed-label-text-color);
+  }
+
+  .button::before {
+    // Background color. Separate node for disabled opacity styles.
+    background-color: var(--_container-color);
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    position: absolute;
+  }
+
+  :host([disabled]) .button__label {
+    color: var(--_disabled-label-text-color);
+    opacity: var(--_disabled-label-text-opacity);
+  }
+
+  :host([disabled]) .button::before {
+    background-color: var(--_disabled-container-color);
+    opacity: var(--_disabled-container-opacity);
+  }
+
+  @media (forced-colors: active) {
+    .button::before {
+      content: '';
+      box-sizing: border-box;
+      border: 1px solid CanvasText;
+      border-radius: inherit;
+      inset: 0;
+      pointer-events: none;
+      position: absolute;
     }
 
-    &:focus {
-      color: var(--_focus-label-text-color);
-    }
-
-    &:active {
-      color: var(--_pressed-label-text-color);
-      outline: none;
-    }
-
-    &:disabled .button__label {
-      color: var(--_disabled-label-text-color);
-      opacity: var(--_disabled-label-text-opacity);
-    }
-
-    &:disabled::before {
-      background-color: var(--_disabled-container-color);
-      opacity: var(--_disabled-container-opacity);
-    }
-
-    @media (forced-colors: active) {
-      &::before {
-        content: '';
-        box-sizing: border-box;
-        border: 1px solid CanvasText;
-        border-radius: inherit;
-        inset: 0;
-        pointer-events: none;
-        position: absolute;
-      }
-
-      &:disabled {
-        --_disabled-icon-opacity: 1;
-        --_disabled-container-opacity: 1;
-        --_disabled-label-text-opacity: 1;
-      }
+    :host([disabled]) .button {
+      --_disabled-icon-opacity: 1;
+      --_disabled-container-opacity: 1;
+      --_disabled-label-text-opacity: 1;
     }
   }
 
