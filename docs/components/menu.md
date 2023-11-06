@@ -291,7 +291,7 @@ cases should be set to `role="none"`, and `md-divider` should have
     aria-expanded="true"
     aria-activedescendant="1"
     value="Ala">
-</md-filled-textfield>
+</md-filled-text-field>
 <md-menu
     id="menu"
     anchor="textfield"
