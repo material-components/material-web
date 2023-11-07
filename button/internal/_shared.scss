@@ -54,6 +54,10 @@
   }
 
   .button {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
     cursor: inherit;
     display: inline-flex;
     align-items: center;
@@ -117,31 +121,18 @@
 
   @media (forced-colors: active) {
     .button::before {
-      content: '';
-      box-sizing: border-box;
       border: 1px solid CanvasText;
-      border-radius: inherit;
-      inset: 0;
-      pointer-events: none;
-      position: absolute;
     }
 
     :host([disabled]) .button {
+      --_disabled-icon-color: GrayText;
       --_disabled-icon-opacity: 1;
       --_disabled-container-opacity: 1;
+      --_disabled-label-text-color: GrayText;
       --_disabled-label-text-opacity: 1;
     }
   }
 
-  .button,
-  md-ripple {
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-start-radius: var(--_container-shape-end-start);
-    border-end-end-radius: var(--_container-shape-end-end);
-  }
-
-  .button::after,
   .button::before,
   md-elevation,
   md-ripple {
@@ -157,9 +148,5 @@
   .icon-trailing {
     padding-inline-start: var(--_with-trailing-icon-leading-space);
     padding-inline-end: var(--_with-trailing-icon-trailing-space);
-  }
-
-  .link-button-wrapper {
-    inline-size: 100%;
   }
 }
