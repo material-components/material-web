@@ -55,8 +55,8 @@
 
     display: inline-flex;
     vertical-align: middle;
-    min-block-size: var(--_size);
-    min-inline-size: var(--_size);
+    width: var(--_size);
+    height: var(--_size);
     position: relative;
     align-items: center;
     justify-content: center;
