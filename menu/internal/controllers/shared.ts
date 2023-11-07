@@ -60,6 +60,14 @@ export interface MenuSelf {
    */
   items: MenuItem[];
   /**
+   * The positioning strategy of the menu.
+   *
+   * - `absolute` is relative to the anchor element.
+   * - `fixed` is relative to the window
+   * - `document` is relative to the document
+   */
+  positioning?: 'absolute' | 'fixed' | 'document';
+  /**
    * Opens the menu.
    */
   show: () => void;

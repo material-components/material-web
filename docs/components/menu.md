@@ -61,7 +61,7 @@ choices on a temporary surface.
 When opened, menus position themselves to an anchor. Thus, either `anchor` or
 `anchorElement` must be supplied to `md-menu` before opening. Additionally, a
 shared parent of `position:relative` should be present around the menu and it's
-anchor.
+anchor, because the default menu is positioned relative to the anchor element.
 
 Menus also render menu items such as `md-menu-item` and handle keyboard
 navigation between `md-menu-item`s as well as typeahead functionality.
@@ -215,14 +215,14 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
 </script>
 ```
 
-### Fixed menus
+### Fixed-positioned menus
 
 Internally menu uses `position: absolute` by default. Though there are cases
 when the anchor and the node cannot share a common ancestor that is `position:
 relative`, or sometimes, menu will render below another item due to limitations
 with `position: absolute`. In most of these cases, you would want to use the
 `positioning="fixed"` attribute to position the menu relative to the window
-instead of relative to the parent.
+instead of relative to the element.
 
 > Note: Fixed menu positions are positioned relative to the window and not the
 > document. This means that the menu will not scroll with the anchor as the page
@@ -259,6 +259,64 @@ Cucumber."](images/menu/usage-fixed.webp)
 <script type="module">
   const anchorEl = document.body.querySelector('#usage-fixed-anchor');
   const menuEl = document.body.querySelector('#usage-fixed');
+
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
+</script>
+```
+
+### Document-positioned menus
+
+When set to `positioning="document"`, `md-menu` will position itself relative to
+the document as opposed to the element or the window from `"absolute"` and
+`"fixed"` values respectively.
+
+Document level positioning is useful for the following cases:
+
+-   There are no ancestor elements that produce a `relative` positioning
+    context.
+    -   `position: relative`
+    -   `position: absolute`
+    -   `position: fixed`
+    -   `transform: translate(x, y)`
+    -   etc.
+-   The menu is hoisted to the top of the DOM
+    -   The last child of `<body>`
+    -   [Top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer)
+        <!-- {.external} -->
+-   The same `md-menu` is being reused and the contents and anchors are being
+    dynamically changed
+
+<!-- no-catalog-start -->
+
+!["A filled button that says open document menu. There is an open menu anchored
+to the bottom of the button with three items, Apple, Banana, and
+Cucumber."](images/menu/usage-document.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/menu/usage-document.html" -->
+
+```html
+<!-- Note the lack of position: relative parent. -->
+<div style="margin: 16px;">
+  <md-filled-button id="usage-document-anchor">Open document menu</md-filled-button>
+</div>
+
+<!-- document menus do not require a common ancestor with the anchor. -->
+<md-menu positioning="document" id="usage-document" anchor="usage-document-anchor">
+  <md-menu-item>
+    <div slot="headline">Apple</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Banana</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Cucumber</div>
+  </md-menu-item>
+</md-menu>
+
+<script type="module">
+  const anchorEl = document.body.querySelector('#usage-document-anchor');
+  const menuEl = document.body.querySelector('#usage-document');
 
   anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
 </script>
@@ -394,7 +452,6 @@ a sharp 0px border radius.](images/menu/theming.webp)
 <!-- auto-generated API docs start -->
 
 ## API
-
 
 ### MdMenu <code>&lt;md-menu&gt;</code>
 

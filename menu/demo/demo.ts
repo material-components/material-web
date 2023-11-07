@@ -64,10 +64,11 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     }),
     new Knob('positioning', {
       defaultValue: 'absolute' as const,
-      ui: selectDropdown<'absolute' | 'fixed'>({
+      ui: selectDropdown<'absolute' | 'fixed' | 'document'>({
         options: [
           {label: 'absolute', value: 'absolute'},
           {label: 'fixed', value: 'fixed'},
+          {label: 'document', value: 'document'},
         ],
       }),
     }),

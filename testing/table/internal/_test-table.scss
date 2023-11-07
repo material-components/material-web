@@ -54,7 +54,7 @@ $dark-theme: tokens.md-comp-test-table-values(
   .md3-test-table__cell {
     border: 1px solid;
     padding: 16px;
-    position: relative;
+    position: var(--_cell-position);
 
     &::before {
       background-color: var(--_cell-color);

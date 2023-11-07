@@ -19,6 +19,7 @@ $_default: (
 @function values($deps: $_default) {
   @return (
     'cell-color': map.get($deps, 'md-sys-color', 'surface-container-lowest'),
+    'cell-position': 'relative',
     'cell-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'cell-text-font': map.get($deps, 'md-sys-typescale', 'body-medium-font'),
     'cell-text-size': map.get($deps, 'md-sys-typescale', 'body-medium-size'),

@@ -22,7 +22,7 @@ export interface StoryKnobs {
   anchorCorner: Corner | undefined;
   menuCorner: Corner | undefined;
   defaultFocus: FocusState | undefined;
-  positioning: 'absolute' | 'fixed' | undefined;
+  positioning: 'absolute' | 'fixed' | 'document' | undefined;
   open: boolean;
   quick: boolean;
   hasOverflow: boolean;
@@ -98,7 +98,10 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="root">
-        <div style="position:relative;">
+        <div
+          style="${knobs.positioning === 'document'
+            ? ''
+            : 'position:relative;'}">
           <md-filled-button
             @click=${toggleMenu}
             @keydown=${toggleMenu}
@@ -169,7 +172,10 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="root">
-        <div style="position:relative;">
+        <div
+          style="${knobs.positioning === 'document'
+            ? ''
+            : 'position:relative;'}">
           <md-filled-button
             @click=${toggleMenu}
             @keydown=${toggleMenu}
@@ -301,7 +307,10 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="root">
-        <div style="position:relative;">
+        <div
+          style="${knobs.positioning === 'document'
+            ? ''
+            : 'position:relative;'}">
           <md-filled-button
             @click=${toggleMenu}
             @keydown=${toggleMenu}
@@ -361,7 +370,9 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
   ],
   render(knobs) {
     return html`
-      <div class="root" style="position:relative;">
+      <div
+        class="root"
+        style="${knobs.positioning === 'document' ? '' : 'position:relative;'}">
         <div id="anchor"> This is the anchor (use the "open" knob) </div>
         <md-menu
           slot="menu"

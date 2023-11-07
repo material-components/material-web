@@ -9,7 +9,7 @@ import '../../focus/md-focus-ring.js';
 
 import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
 import {
@@ -124,8 +124,18 @@ export abstract class Menu extends LitElement {
    *
    * __NOTE__: Fixed menus will not scroll with the page and will be fixed to
    * the window instead.
+   *
+   * __Examples for `position = 'document'`:__
+   *
+   * - There is no parent that creates a relative positioning context e.g.
+   *   `position: relative`, `position: absolute`, `transform: translate(x, y)`,
+   *   etc.
+   * - You put the effort into hoisting the menu to the top of the DOM like the
+   *   end of the `<body>` to render over everything or in a top-layer.
+   * - You are reusing a single `md-menu` element that dynamically renders
+   *   content.
    */
-  @property() positioning: 'absolute' | 'fixed' = 'absolute';
+  @property() positioning: 'absolute' | 'fixed' | 'document' = 'absolute';
   /**
    * Skips the opening and closing animations.
    */
@@ -229,6 +239,11 @@ export abstract class Menu extends LitElement {
    * The event path of the last window pointerdown event.
    */
   private pointerPath: EventTarget[] = [];
+
+  /**
+   * Whether or not the menu is repositoining due to window / document resize
+   */
+  private isRepositioning = false;
   private readonly openCloseAnimationSignal = createAnimationSignal();
 
   private readonly listController = new ListController<MenuItem>({
@@ -395,6 +410,18 @@ export abstract class Menu extends LitElement {
     super.update(changed);
   }
 
+  private readonly onWindowResize = () => {
+    if (
+      this.isRepositioning ||
+      (this.positioning !== 'document' && this.positioning !== 'fixed')
+    ) {
+      return;
+    }
+    this.isRepositioning = true;
+    this.reposition();
+    this.isRepositioning = false;
+  };
+
   override connectedCallback() {
     super.connectedCallback();
     if (this.open) {
@@ -449,7 +476,7 @@ export abstract class Menu extends LitElement {
     return html`<md-elevation part="elevation"></md-elevation>`;
   }
 
-  private getSurfaceClasses() {
+  private getSurfaceClasses(): ClassInfo {
     return {
       open: this.open,
       fixed: this.positioning === 'fixed',
@@ -825,6 +852,8 @@ export abstract class Menu extends LitElement {
   private setUpGlobalEventListeners() {
     document.addEventListener('click', this.onDocumentClick, {capture: true});
     window.addEventListener('pointerdown', this.onWindowPointerdown);
+    document.addEventListener('resize', this.onWindowResize, {passive: true});
+    window.addEventListener('resize', this.onWindowResize, {passive: true});
   }
 
   private cleanUpGlobalEventListeners() {
@@ -832,6 +861,8 @@ export abstract class Menu extends LitElement {
       capture: true,
     });
     window.removeEventListener('pointerdown', this.onWindowPointerdown);
+    document.removeEventListener('resize', this.onWindowResize);
+    window.removeEventListener('resize', this.onWindowResize);
   }
 
   private readonly onWindowPointerdown = (event: PointerEvent) => {
@@ -929,5 +960,17 @@ export abstract class Menu extends LitElement {
    */
   activatePreviousItem() {
     return this.listController.activatePreviousItem() ?? null;
+  }
+
+  /**
+   * Repositions the menu if it is open.
+   *
+   * Useful for the case where document or window-positioned menus have their
+   * anchors moved while open.
+   */
+  reposition() {
+    if (this.open) {
+      this.menuPositionController.position();
+    }
   }
 }

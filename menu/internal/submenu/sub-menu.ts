@@ -136,6 +136,16 @@ export class SubMenu extends LitElement {
       },
       {once: true},
     );
+
+    // Parent menu is `position: absolute` – this creates a new CSS relative
+    // positioning context (similar to doing `position: relative`), so the
+    // submenu's `<md-menu slot="submenu" positioning="document">` would be
+    // wrong even if we change `md-sub-menu` from `position: relative` to
+    // `position: static` because the submenu it would still be positioning
+    // itself relative to the parent menu.
+    if (menu.positioning === 'document') {
+      menu.positioning = 'absolute';
+    }
     menu.quick = true;
     // Submenus are in overflow when not fixed. Can remove once we have native
     // popup support

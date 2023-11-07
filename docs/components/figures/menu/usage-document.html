@@ -1,0 +1,30 @@
+<div class="figure-wrapper">
+  <figure
+    style="justify-content: center"
+    aria-label="A filled button that says open document menu. Interact with the button to open a document menu."
+  >
+    <div>
+      <div style="margin: 16px">
+        <md-filled-button id="usage-document-anchor">Open document menu</md-filled-button>
+      </div>
+      <md-menu positioning="document" id="usage-document" anchor="usage-document-anchor">
+        <md-menu-item>
+          <div slot="headline">Apple</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Banana</div>
+        </md-menu-item>
+        <md-menu-item>
+          <div slot="headline">Cucumber</div>
+        </md-menu-item>
+      </md-menu>
+    </div>
+    <script type="module">
+      const anchorEl = document.body.querySelector("#usage-document-anchor");
+      const menuEl = document.body.querySelector("#usage-document");
+      anchorEl.addEventListener("click", () => {
+        menuEl.open = !menuEl.open;
+      });
+    </script>
+  </figure>
+</div>
