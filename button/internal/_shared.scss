@@ -110,6 +110,10 @@
     position: absolute;
   }
 
+  .label {
+    overflow: hidden;
+  }
+
   :host([disabled]) .label {
     color: var(--_disabled-label-text-color);
     opacity: var(--_disabled-label-text-opacity);
