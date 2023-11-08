@@ -13,11 +13,16 @@
 
 @mixin styles() {
   :host {
+    box-sizing: border-box;
     cursor: pointer;
     display: inline-flex;
+    gap: 8px;
     height: var(--_container-height);
     min-width: 64px;
     outline: none;
+    padding-inline-start: var(--_leading-space);
+    padding-inline-end: var(--_trailing-space);
+    position: relative;
     font-family: var(--_label-text-font);
     font-size: var(--_label-text-size);
     line-height: var(--_label-text-line-height);
@@ -64,7 +69,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
     border: none;
     outline: none;
     -webkit-appearance: none;
@@ -72,15 +76,12 @@
     background: transparent;
     text-decoration: none;
     width: 100%;
-    position: relative;
     z-index: 0; // Place content on top of elevation and ripple
     height: 100%;
     font: inherit;
     color: var(--_label-text-color);
-    // TODO(b/181413732): Verify token below are named correctly
-    padding-inline-start: var(--_leading-space);
-    padding-inline-end: var(--_trailing-space);
-    gap: 8px;
+    padding: 0;
+    gap: inherit;
 
     &::-moz-focus-inner {
       padding: 0;
@@ -139,13 +140,12 @@
     z-index: -1; // Place behind content
   }
 
-  // TODO(b/181413732): Verify token below are named correctly
-  .icon-leading {
+  :host([has-icon]:not([trailing-icon])) {
     padding-inline-start: var(--_with-leading-icon-leading-space);
     padding-inline-end: var(--_with-leading-icon-trailing-space);
   }
 
-  .icon-trailing {
+  :host([has-icon][trailing-icon]) {
     padding-inline-start: var(--_with-trailing-icon-leading-space);
     padding-inline-end: var(--_with-trailing-icon-trailing-space);
   }

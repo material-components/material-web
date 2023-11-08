@@ -9,7 +9,6 @@ import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
@@ -71,12 +70,14 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
    *
    * _Note:_ Link buttons cannot have trailing icons.
    */
-  @property({type: Boolean, attribute: 'trailing-icon'}) trailingIcon = false;
+  @property({type: Boolean, attribute: 'trailing-icon', reflect: true})
+  trailingIcon = false;
 
   /**
    * Whether to display the icon or not.
    */
-  @property({type: Boolean, attribute: 'has-icon'}) hasIcon = false;
+  @property({type: Boolean, attribute: 'has-icon', reflect: true}) hasIcon =
+    false;
 
   @property() type: FormSubmitterType = 'submit';
 
@@ -125,7 +126,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
     return staticHtml`
       <${button}
-        class="button ${classMap(this.getRenderClasses())}"
+        class="button"
         ?disabled=${isDisabled}
         aria-label="${ariaLabel || nothing}"
         aria-haspopup="${ariaHasPopup || nothing}"
@@ -133,13 +134,6 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
         href=${this.href || nothing}
         target=${this.target || nothing}
       >${this.renderContent()}</${button}>`;
-  }
-
-  protected getRenderClasses() {
-    return {
-      'icon-leading': !this.trailingIcon && this.hasIcon,
-      'icon-trailing': this.trailingIcon && this.hasIcon,
-    };
   }
 
   protected renderElevation?(): unknown;
