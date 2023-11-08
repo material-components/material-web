@@ -215,14 +215,69 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
 </script>
 ```
 
-### Fixed-positioned menus
+### Popover-positioned menus
 
 Internally menu uses `position: absolute` by default. Though there are cases
 when the anchor and the node cannot share a common ancestor that is `position:
 relative`, or sometimes, menu will render below another item due to limitations
-with `position: absolute`. In most of these cases, you would want to use the
-`positioning="fixed"` attribute to position the menu relative to the window
-instead of relative to the element.
+with `position: absolute`.
+
+Popover-positioned menus use the native
+[Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)<!-- {.external} -->
+to render above all other content. This may fix most issues where the default
+menu positioning (`positioning="absolute"`) is not positioning as expected by
+rendering into the
+[top layer](google3/third_party/javascript/material/web/g3doc/docs/components/figures/menu/usage-fixed.html)<!-- {.external} -->.
+
+> Warning: Popover API support was added in Chrome 114 and Safari 17. At the
+> time of writing, Firefox does not support the Popover API
+> ([see latest browser compatiblity](#fixed-positioned-menus)<!-- {.external} -->).
+>
+> For browsers that do not support the Popover API, `md-menu` will fall back to
+> using [fixed-positioned menus](#fixed-positioned-menus).
+
+<!-- no-catalog-start -->
+
+!["A filled button that says open popover menu. There is an open menu anchored
+to the bottom of the button with three items, Apple, Banana, and
+Cucumber."](images/menu/usage-popover.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/menu/usage-fixed.html" -->
+
+```html
+<!-- Note the lack of position: relative parent. -->
+<div style="margin: 16px;">
+  <md-filled-button id="usage-popover-anchor">Open popover menu</md-filled-button>
+</div>
+
+<!-- popover menus do not require a common ancestor with the anchor. -->
+<md-menu positioning="popover" id="usage-popover" anchor="usage-popover-anchor">
+  <md-menu-item>
+    <div slot="headline">Apple</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Banana</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Cucumber</div>
+  </md-menu-item>
+</md-menu>
+
+<script type="module">
+  const anchorEl = document.body.querySelector('#usage-popover-anchor');
+  const menuEl = document.body.querySelector('#usage-popover');
+
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
+</script>
+```
+
+### Fixed-positioned menus
+
+This is the fallback implementation of
+[popover-positioned menus](#popover-positioned-menus) and uses `position: fixed`
+rather than the default `position: absolute` which calculates its position
+relative to the window rather than the element.
 
 > Note: Fixed menu positions are positioned relative to the window and not the
 > document. This means that the menu will not scroll with the anchor as the page

@@ -22,7 +22,7 @@ export interface StoryKnobs {
   anchorCorner: Corner | undefined;
   menuCorner: Corner | undefined;
   defaultFocus: FocusState | undefined;
-  positioning: 'absolute' | 'fixed' | 'document' | undefined;
+  positioning: 'absolute' | 'fixed' | 'document' | 'popover' | undefined;
   open: boolean;
   quick: boolean;
   hasOverflow: boolean;
