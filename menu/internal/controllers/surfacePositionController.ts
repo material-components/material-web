@@ -196,6 +196,17 @@ export class SurfacePositionController implements ReactiveController {
     this.host.requestUpdate();
     await this.host.updateComplete;
 
+    // Safari has a bug that makes popovers render incorrectly if the node is
+    // made visible + Animation Frame before calling showPopover().
+    // https://bugs.webkit.org/show_bug.cgi?id=264069
+    // also the cast is required due to differing TS types in Google and OSS.
+    if (
+      (surfaceEl as unknown as {popover: string}).popover &&
+      surfaceEl.isConnected
+    ) {
+      (surfaceEl as unknown as {showPopover: () => void}).showPopover();
+    }
+
     const surfaceRect = surfaceEl.getSurfacePositionClientRect
       ? surfaceEl.getSurfacePositionClientRect()
       : surfaceEl.getBoundingClientRect();
@@ -600,5 +611,15 @@ export class SurfacePositionController implements ReactiveController {
       'display': 'none',
     };
     this.host.requestUpdate();
+    const surfaceEl = this.getProperties().surfaceEl;
+
+    // The following type casts are required due to differing TS types in Google
+    // and open source.
+    if (
+      (surfaceEl as unknown as {popover?: string})?.popover &&
+      surfaceEl?.isConnected
+    ) {
+      (surfaceEl as unknown as {hidePopover: () => void}).hidePopover();
+    }
   }
 }
