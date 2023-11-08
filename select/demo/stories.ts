@@ -23,7 +23,7 @@ export interface StoryKnobs {
   errorText: string;
   supportingText: string;
   error: boolean;
-  menuPositioning: 'absolute' | 'fixed' | undefined;
+  menuPositioning: 'absolute' | 'fixed' | 'popover' | undefined;
 
   'md-select Slots': void;
   'slot=leading-icon': string;

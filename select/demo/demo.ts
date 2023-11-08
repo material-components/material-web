@@ -36,9 +36,10 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     new Knob('errorText', {ui: textInput(), defaultValue: ''}),
     new Knob('supportingText', {ui: textInput(), defaultValue: ''}),
     new Knob('menuPositioning', {
-      defaultValue: 'absolute' as const,
-      ui: selectDropdown<'absolute' | 'fixed'>({
+      defaultValue: 'popover' as const,
+      ui: selectDropdown<'absolute' | 'fixed' | 'popover'>({
         options: [
+          {label: 'popover', value: 'popover'},
           {label: 'absolute', value: 'absolute'},
           {label: 'fixed', value: 'fixed'},
         ],

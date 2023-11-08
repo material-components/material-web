@@ -107,7 +107,7 @@ export abstract class Select extends selectBaseClass {
    * element with stacking context and hidden overflows such as `md-dialog`.
    */
   @property({attribute: 'menu-positioning'})
-  menuPositioning: 'absolute' | 'fixed' = 'absolute';
+  menuPositioning: 'absolute' | 'fixed' | 'popover' = 'popover';
 
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
