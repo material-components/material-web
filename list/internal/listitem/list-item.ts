@@ -26,7 +26,8 @@ import {
 export type ListItemType = 'text' | 'button' | 'link';
 
 /**
- * @fires request-activation
+ * @fires request-activation {Event} Requests the list to set `tabindex=0` on
+ * the item and focus it. --bubbles --composed
  */
 export class ListItemEl extends LitElement implements ListItem {
   static {

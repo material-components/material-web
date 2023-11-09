@@ -15,6 +15,8 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 
 /**
  * A chip component.
+ *
+ * @fires update-focus {Event} Dispatched when `disabled` is toggled. --bubbles
  */
 export abstract class Chip extends LitElement {
   static {

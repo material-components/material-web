@@ -14,13 +14,13 @@ import {
 
 /**
  * Events that the focus ring listens to.
- *
- * @fires visibility-changed Fired whenever `visible` changes.
  */
 const EVENTS = ['focusin', 'focusout', 'pointerdown'];
 
 /**
  * A focus ring component.
+ *
+ * @fires visibility-changed {Event} Fired whenever `visible` changes.
  */
 export class FocusRing extends LitElement implements Attachable {
   /**

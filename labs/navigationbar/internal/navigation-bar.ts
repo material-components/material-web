@@ -19,6 +19,9 @@ import {NavigationBarState} from './state.js';
 
 /**
  * TODO(b/265346501): add docs
+ *
+ * @fires navigation-bar-activated {CustomEvent<tab: NavigationTab, activeIndex: number>}
+ * Dispatched whenever the `activeIndex` changes. --bubbles --composed
  */
 export class NavigationBar extends LitElement implements NavigationBarState {
   static {

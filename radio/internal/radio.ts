@@ -36,10 +36,10 @@ const radioBaseClass = mixinFormAssociated(
 /**
  * A radio component.
  *
- * @fires input Dispatched when the value changes from user interaction.
- * --bubbles
- * @fires change Dispatched when the value changes from user interaction.
- * --bubbles --composed
+ * @fires input {InputEvent} Dispatched when the value changes from user
+ * interaction. --bubbles
+ * @fires change {Event} Dispatched when the value changes from user
+ * interaction. --bubbles --composed
  */
 export class Radio extends radioBaseClass {
   // Unique maskId is required because of a Safari bug that fail to persist

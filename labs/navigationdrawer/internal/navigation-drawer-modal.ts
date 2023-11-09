@@ -13,6 +13,9 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 
 /**
  * TODO(b/265346501): add docs
+ *
+ * @fires navigation-drawer-changed {CustomEvent<{opened: boolean}>}
+ * Dispatched whenever the drawer opens or closes --bubbles --composed
  */
 export class NavigationDrawerModal extends LitElement {
   static {

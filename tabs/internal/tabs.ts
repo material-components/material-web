@@ -17,12 +17,12 @@ import {
 import {ANIMATE_INDICATOR, Tab} from './tab.js';
 
 /**
- * @fires change Fired when the selected tab changes. The target's selected or
+ * @fires change {Event} Fired when the selected tab changes. The target's selected or
  * selectedItem and previousSelected or previousSelectedItem provide information
  * about the selection change. The change event is fired when a user interaction
  * like a space/enter key or click cause a selection change. The tab selection
  * based on these actions can be cancelled by calling preventDefault on the
- * triggering `keydown` or `click` event.
+ * triggering `keydown` or `click` event. --bubbles
  *
  * @example
  * // perform an action if a tab is clicked

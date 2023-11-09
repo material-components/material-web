@@ -18,11 +18,13 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 import {SelectOption, SelectOptionController} from './selectOptionController.js';
 
 /**
- * @fires close-menu Closes the encapsulating menu on
- * @fires request-selection Requests the parent md-select to select this element
- * (and deselect others if single-selection) when `selected` changed to `true`.
- * @fires request-deselection Requests the parent md-select to deselect this
- * element when `selected` changed to `false`.
+ * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
+ * Closes the encapsulating menu on closable interaction. --bubbles --composed
+ * @fires request-selection {Event} Requests the parent md-select to select this
+ * element (and deselect others if single-selection) when `selected` changed to
+ * `true`. --bubbles --composed
+ * @fires request-deselection {Event} Requests the parent md-select to deselect
+ * this element when `selected` changed to `false`. --bubbles --composed
  */
 export class SelectOptionEl extends LitElement implements SelectOption {
   static {

@@ -44,16 +44,18 @@ const VALUE = Symbol('value');
 const selectBaseClass = mixinFormAssociated(mixinElementInternals(LitElement));
 
 /**
- * @fires input Fired when a selection is made by the user via mouse or keyboard
- * interaction.
- * @fires change Fired when a selection is made by the user via mouse or
- * keyboard interaction.
- * @fires opening Fired when the select's menu is about to open.
- * @fires opened Fired when the select's menu has finished animations and
- * opened.
- * @fires closing Fired when the select's menu is about to close.
- * @fires closed Fired when the select's menu has finished animations and
- * closed.
+ * @fires change {Event} The native `change` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event)
+ * --bubbles
+ * @fires input {InputEvent} The native `input` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)
+ * --bubbles --composed
+ * @fires opening {Event} Fired when the select's menu is about to open.
+ * @fires opened {Event} Fired when the select's menu has finished animations
+ * and opened.
+ * @fires closing {Event} Fired when the select's menu is about to close.
+ * @fires closed {Event} Fired when the select's menu has finished animations
+ * and closed.
  */
 export abstract class Select extends selectBaseClass {
   static {

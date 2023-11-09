@@ -70,6 +70,16 @@ const textFieldBaseClass = mixinFormAssociated(
 
 /**
  * A text field component.
+ *
+ * @fires select {Event} The native `select` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select_event)
+ * --bubbles
+ * @fires change {Event} The native `change` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event)
+ * --bubbles
+ * @fires input {InputEvent} The native `input` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)
+ * --bubbles --composed
  */
 export abstract class TextField extends textFieldBaseClass {
   static {

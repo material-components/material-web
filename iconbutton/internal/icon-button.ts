@@ -30,7 +30,13 @@ type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 // Separate variable needed for closure.
 const iconButtonBaseClass = mixinElementInternals(LitElement);
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * A button for rendering icons.
+ *
+ * @fires input {InputEvent} Dispatched when a toggle button toggles --bubbles
+ * --composed
+ * @fires change {Event} Dispatched when a toggle button toggles --bubbles
+ */
 export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   static {
     requestUpdateOnAriaChange(IconButton);

@@ -36,6 +36,14 @@ const sliderBaseClass = mixinFormAssociated(mixinElementInternals(LitElement));
 
 /**
  * Slider component.
+ *
+ *
+ * @fires change {Event} The native `change` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event)
+ * --bubbles
+ * @fires input {InputEvent} The native `input` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)
+ * --bubbles --composed
  */
 export class Slider extends sliderBaseClass {
   static {

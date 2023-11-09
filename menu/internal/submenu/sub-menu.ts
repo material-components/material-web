@@ -27,14 +27,14 @@ import {
 import {Corner} from '../menu.js';
 
 /**
- * @fires deactivate-items Requests the parent menu to deselect other items when
- * a submenu opens
- * @fires request-activation Requests the parent make the slotted item focusable
- * and focuses the item.
- * @fires deactivate-typeahead Requests the parent menu to deactivate the
- * typeahead functionality when a submenu opens
- * @fires activate-typeahead Requests the parent menu to activate the typeahead
- * functionality when a submenu closes
+ * @fires deactivate-items {Event} Requests the parent menu to deselect other
+ * items when a submenu opens. --bubbles --composed
+ * @fires request-activation {Event} Requests the parent make the slotted item
+ * focusable and focuses the item. --bubbles --composed
+ * @fires deactivate-typeahead {Event} Requests the parent menu to deactivate
+ * the typeahead functionality when a submenu opens. --bubbles --composed
+ * @fires activate-typeahead {Event} Requests the parent menu to activate the
+ * typeahead functionality when a submenu closes. --bubbles --composed
  */
 export class SubMenu extends LitElement {
   /**

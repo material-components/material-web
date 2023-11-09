@@ -357,10 +357,9 @@ function generateMethodMarkdownTable(element: MdModuleInfo): MarkdownTable {
 function generateEventsMarkdownTable(element: MdModuleInfo): MarkdownTable {
   const eventsTable = new MarkdownTable([
     'Event',
-    // TODO reenable these once we update our docs to support them
-    // 'Type',
-    // 'Bubbles',
-    // 'Composed',
+    'Type',
+    '[Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles)',
+    '[Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed)',
     'Description',
   ]);
   const eventNameOrder: string[] = [];
@@ -368,10 +367,9 @@ function generateEventsMarkdownTable(element: MdModuleInfo): MarkdownTable {
     string,
     {
       name: string;
-      // TODO reenable these once we update our docs to support them
-      // type?: string;
-      // bubbles: boolean;
-      // composed: boolean;
+      type?: string;
+      bubbles: boolean;
+      composed: boolean;
       description?: string;
     }
   >();
@@ -382,10 +380,9 @@ function generateEventsMarkdownTable(element: MdModuleInfo): MarkdownTable {
     for (const event of currentClass.events) {
       const row = {
         name: event.name,
-        // TODO reenable these once we update our docs to support them
-        // type: event.type,
-        // bubbles: event.bubbles,
-        // composed: event.composed,
+        type: event.type,
+        bubbles: event.bubbles,
+        composed: event.composed,
         description: event.description,
       };
 
@@ -408,10 +405,9 @@ function generateEventsMarkdownTable(element: MdModuleInfo): MarkdownTable {
     const rowObj = eventToRow.get(eventName);
     eventsTable.addRow([
       `\`${rowObj.name}\``,
-      // TODO reenable these once we update our docs to support them
-      // `\`${rowObj.type}\`` ?? '',
-      // rowObj.bubbles ? 'Yes' : 'No',
-      // rowObj.composed ? 'Yes' : 'No',
+      rowObj.type ? `\`${rowObj.type}\`` : '`Event`',
+      rowObj.bubbles ? 'Yes' : 'No',
+      rowObj.composed ? 'Yes' : 'No',
       rowObj.description ?? '',
     ]);
   }

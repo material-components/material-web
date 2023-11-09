@@ -14,6 +14,8 @@ import {renderRemoveButton} from './trailing-icons.js';
 
 /**
  * An input chip component.
+ *
+ * @fires remove {Event} Dispatched when the remove button is clicked.
  */
 export class InputChip extends MultiActionChip {
   @property({type: Boolean}) avatar = false;

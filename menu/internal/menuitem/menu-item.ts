@@ -22,7 +22,8 @@ import {
 } from '../controllers/menuItemController.js';
 
 /**
- * @fires close-menu {CloseMenuEvent}
+ * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
+ * Closes the encapsulating menu on closable interaction. --bubbles --composed
  */
 export class MenuItemEl extends LitElement implements MenuItem {
   static {

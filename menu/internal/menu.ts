@@ -84,10 +84,10 @@ function getFocusedElement(
 }
 
 /**
- * @fires opening Fired before the opening animation begins
- * @fires opened Fired once the menu is open, after any animations
- * @fires closing Fired before the closing animation begins
- * @fires closed Fired once the menu is closed, after any animations
+ * @fires opening {Event} Fired before the opening animation begins
+ * @fires opened {Event} Fired once the menu is open, after any animations
+ * @fires closing {Event} Fired before the closing animation begins
+ * @fires closed {Event} Fired once the menu is closed, after any animations
  */
 export abstract class Menu extends LitElement {
   static {

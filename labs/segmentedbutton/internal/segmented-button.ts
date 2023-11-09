@@ -19,6 +19,9 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
  * segmented button component. It is intended **only** for use as a child of a
  * `SementedButtonSet` component. It is **not** intended for use in any other
  * context.
+ *
+ * @fires segmented-button-interaction {Event} Dispatched whenever a button is
+ * clicked. --bubbles --composed
  */
 export class SegmentedButton extends LitElement {
   static {
