@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import type {ReactiveProperty} from '@lit-labs/analyzer/lib/model.js';
 import {
   AbsolutePath,
   Analyzer,
+  ClassDeclaration,
   LitElementDeclaration,
   LitElementExport,
   Module,
@@ -96,21 +98,43 @@ export function analyzeElementApi(
 ) {
   // The description of the module
   const elementModule = analyzer.getModule(elementEntrypoint as AbsolutePath);
-  // The description of the custom element / superclass
-  const customElementModule =
-    elementModule.getCustomElementExports()[0] ||
-    (elementModule.getDeclaration(superClassName) as LitElementDeclaration);
+  let customElementModule: LitElementDeclaration | ClassDeclaration =
+    elementModule.getCustomElementExports()[0];
+
+  if (!customElementModule) {
+    const unknownSuperClassDeclaration =
+      elementModule.getDeclaration(superClassName);
+
+    // Type-cast declaration
+    if (
+      unknownSuperClassDeclaration.isLitElementDeclaration() ||
+      unknownSuperClassDeclaration.isClassDeclaration()
+    ) {
+      customElementModule = unknownSuperClassDeclaration;
+    } else {
+      throw new Error(
+        `Unknown superclass declaration type for superclass or entrypoint: '${
+          superClassName || elementEntrypoint
+        }'`,
+      );
+    }
+  }
 
   const {properties, reactiveProperties} = analyzeFields(
     customElementModule,
     elementModule,
   );
   const methods = analyzeMethods(customElementModule);
-  const events = analyzeEvents(customElementModule);
+  let events: MdEventInfo[] = [];
+  if (customElementModule.isLitElementDeclaration()) {
+    events = analyzeEvents(customElementModule);
+  }
+
   const superclass = customElementModule.heritage.superClass;
 
   const elementDocModule: MdModuleInfo = {
-    customElementName: customElementModule.tagname,
+    customElementName: (customElementModule as unknown as {tagname?: string})
+      .tagname,
     className: customElementModule.name,
     classPath: elementEntrypoint,
     summary: makeMarkdownFriendly(customElementModule.summary),
@@ -159,7 +183,7 @@ const FIELDS_TO_IGNORE = new Set(['isListItem', 'isMenuItem']);
  * LitElement class.
  */
 export function analyzeFields(
-  classDeclaration: LitElementExport | LitElementDeclaration,
+  classDeclaration: LitElementExport | LitElementDeclaration | ClassDeclaration,
   module: Module,
 ): {properties: MdPropertyInfo[]; reactiveProperties: MdPropertyInfo[]} {
   const properties: MdPropertyInfo[] = [];
@@ -171,8 +195,11 @@ export function analyzeFields(
       continue;
     }
 
-    const reactiveProp = classDeclaration.reactiveProperties.get(field.name);
     let defaultVal = field.default;
+    let reactiveProp: ReactiveProperty | null = null;
+    if (classDeclaration.isLitElementDeclaration()) {
+      reactiveProp = classDeclaration.reactiveProperties.get(field.name);
+    }
 
     // Check the module and see if the default value is a variable declared in
     // the same file.
@@ -266,7 +293,7 @@ const METHODS_TO_IGNORE = new Set([
  * @returns The information about the methods of the LitElement class.
  */
 export function analyzeMethods(
-  classDeclaration: LitElementExport | LitElementDeclaration,
+  classDeclaration: LitElementExport | LitElementDeclaration | ClassDeclaration,
 ) {
   const methods: MdMethodInfo[] = [];
   for (const method of classDeclaration.methods) {
