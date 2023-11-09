@@ -9,7 +9,6 @@ import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
-import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
@@ -118,27 +117,39 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   }
 
   protected override render() {
-    // Link buttons may not be disabled
-    const isDisabled = this.disabled && !this.href;
-
-    const button = this.href ? literal`a` : literal`button`;
-    // Needed for closure conformance
-    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
-    return staticHtml`
-      <${button}
-        class="button"
-        ?disabled=${isDisabled}
-        aria-label="${ariaLabel || nothing}"
-        aria-haspopup="${ariaHasPopup || nothing}"
-        aria-expanded="${ariaExpanded || nothing}"
-        href=${this.href || nothing}
-        target=${this.target || nothing}
-      >${this.renderContent()}</${button}>`;
+    return this.href ? this.renderLink() : this.renderButton();
   }
 
   protected renderElevation?(): unknown;
 
   protected renderOutline?(): unknown;
+
+  private renderButton() {
+    // Needed for closure conformance
+    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
+    return html`<button
+      class="button"
+      ?disabled=${this.disabled}
+      aria-label="${ariaLabel || nothing}"
+      aria-haspopup="${ariaHasPopup || nothing}"
+      aria-expanded="${ariaExpanded || nothing}">
+      ${this.renderContent()}
+    </button>`;
+  }
+
+  private renderLink() {
+    // Needed for closure conformance
+    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
+    return html`<a
+      class="button"
+      aria-label="${ariaLabel || nothing}"
+      aria-haspopup="${ariaHasPopup || nothing}"
+      aria-expanded="${ariaExpanded || nothing}"
+      href=${this.href}
+      target=${this.target || nothing}
+      >${this.renderContent()}
+    </a>`;
+  }
 
   private renderContent() {
     // Link buttons may not be disabled
