@@ -22,15 +22,20 @@
     display: inline-flex;
     gap: 8px;
     height: var(--_container-height);
-    min-width: 64px;
     outline: none;
     padding-inline-start: var(--_leading-space);
     padding-inline-end: var(--_trailing-space);
+    place-content: center;
+    place-items: center;
     position: relative;
     font-family: var(--_label-text-font);
     font-size: var(--_label-text-size);
     line-height: var(--_label-text-line-height);
     font-weight: var(--_label-text-weight);
+    // Long labels are cut off with ellipsis by default. `text-overflow` and
+    // `text-wrap` can customize this.
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     // Override vertical-align with shortest value "top". Vertical-align's
@@ -76,6 +81,10 @@
     vertical-align: middle;
     background: transparent;
     text-decoration: none;
+    // Buttons have a default min-width of 64px. This can be overridden by
+    // setting a smaller min-width on the host. The 64px button will be centered
+    // within the bounds of the smaller host element.
+    min-width: calc(64px - var(--_leading-space) - var(--_trailing-space));
     width: 100%;
     z-index: 0; // Place content on top of elevation and ripple
     height: 100%;
@@ -112,6 +121,13 @@
 
   .label {
     overflow: hidden;
+  }
+
+  // Inherit text-overflow down through label and slotted content so that it
+  // can be customized on the host.
+  :is(.button, .label, .label slot),
+  .label ::slotted(*) {
+    text-overflow: inherit;
   }
 
   :host([disabled]) .label {

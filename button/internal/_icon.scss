@@ -12,6 +12,7 @@
     position: relative;
     writing-mode: horizontal-tb;
     fill: currentColor;
+    flex-shrink: 0;
     color: var(--_icon-color);
     font-size: var(--_icon-size);
     inline-size: var(--_icon-size);

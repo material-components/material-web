@@ -25,10 +25,12 @@ const styles = css`
     display: flex;
     flex-direction: column;
     gap: 16px;
+    max-width: 600px;
   }
 
   .row {
     display: flex;
+    flex-wrap: wrap;
     gap: 16px;
   }
 `;
