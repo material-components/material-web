@@ -14,7 +14,7 @@ import {Button} from './button.js';
  * A filled button component.
  */
 export class FilledButton extends Button {
-  protected override renderElevation() {
+  protected override renderElevationOrOutline() {
     return html`<md-elevation></md-elevation>`;
   }
 }

@@ -53,6 +53,7 @@ export abstract class Chip extends LitElement {
 
   /**
    * The `id` of the action the primary focus ring and ripple are for.
+   * TODO(b/310046938): use the same id for both elements
    */
   protected abstract readonly primaryId: string;
 

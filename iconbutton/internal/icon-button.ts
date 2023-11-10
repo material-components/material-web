@@ -194,12 +194,14 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   }
 
   private renderFocusRing() {
+    // TODO(b/310046938): use the same id for both elements
     return html`<md-focus-ring
       part="focus-ring"
       for=${this.href ? 'link' : 'button'}></md-focus-ring>`;
   }
 
   private renderRipple() {
+    // TODO(b/310046938): use the same id for both elements
     return html`<md-ripple
       for=${this.href ? 'link' : nothing}
       ?disabled="${!this.href && this.disabled}"></md-ripple>`;

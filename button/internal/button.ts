@@ -117,17 +117,32 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   }
 
   protected override render() {
-    return this.href ? this.renderLink() : this.renderButton();
+    // Link buttons may not be disabled
+    const isDisabled = this.disabled && !this.href;
+    const buttonOrLink = this.href ? this.renderLink() : this.renderButton();
+    // TODO(b/310046938): due to a limitation in focus ring/ripple, we can't use
+    // the same ID for different elements, so we change the ID instead.
+    const buttonId = this.href ? 'link' : 'button';
+    return html`
+      ${this.renderElevationOrOutline?.()}
+      <div class="background"></div>
+      <md-focus-ring part="focus-ring" for=${buttonId}></md-focus-ring>
+      <md-ripple for=${buttonId} ?disabled="${isDisabled}"></md-ripple>
+      ${buttonOrLink}
+    `;
   }
 
-  protected renderElevation?(): unknown;
-
-  protected renderOutline?(): unknown;
+  // Buttons can override this to add elevation or an outline. Use this and
+  // return `<md-elevation>` (for elevated, filled, and tonal buttons)
+  // or `<div class="outline">` (for outlined buttons).
+  // Text buttons that have neither do not need to implement this.
+  protected renderElevationOrOutline?(): unknown;
 
   private renderButton() {
     // Needed for closure conformance
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
     return html`<button
+      id="button"
       class="button"
       ?disabled=${this.disabled}
       aria-label="${ariaLabel || nothing}"
@@ -141,6 +156,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     // Needed for closure conformance
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
     return html`<a
+      id="link"
       class="button"
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
@@ -152,16 +168,11 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   }
 
   private renderContent() {
-    // Link buttons may not be disabled
-    const isDisabled = this.disabled && !this.href;
     const icon = html`<slot
       name="icon"
       @slotchange="${this.handleSlotChange}"></slot>`;
 
     return html`
-      ${this.renderElevation?.()}${this.renderOutline?.()}
-      <md-focus-ring part="focus-ring"></md-focus-ring>
-      <md-ripple ?disabled="${isDisabled}"></md-ripple>
       <span class="touch"></span>
       ${this.trailingIcon ? nothing : icon}
       <span class="label"><slot></slot></span>

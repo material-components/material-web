@@ -86,6 +86,13 @@
   }
 
   @media (forced-colors: active) {
+    :host([disabled]) .background {
+      // Only outlined buttons change their border when disabled to distinguish
+      // them from other buttons that add a border for increased visibility in
+      // HCM.
+      border-color: GrayText;
+    }
+
     :host([disabled]) .outline {
       opacity: 1;
     }

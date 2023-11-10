@@ -13,6 +13,10 @@
 
 @mixin styles() {
   :host {
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+    border-end-end-radius: var(--_container-shape-end-end);
     box-sizing: border-box;
     cursor: pointer;
     display: inline-flex;
@@ -61,10 +65,7 @@
   }
 
   .button {
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-start-radius: var(--_container-shape-end-start);
-    border-end-end-radius: var(--_container-shape-end-end);
+    border-radius: inherit;
     cursor: inherit;
     display: inline-flex;
     align-items: center;
@@ -101,11 +102,10 @@
     color: var(--_pressed-label-text-color);
   }
 
-  .button::before {
+  .background {
     // Background color. Separate node for disabled opacity styles.
     background-color: var(--_container-color);
     border-radius: inherit;
-    content: '';
     inset: 0;
     position: absolute;
   }
@@ -119,29 +119,26 @@
     opacity: var(--_disabled-label-text-opacity);
   }
 
-  :host([disabled]) .button::before {
+  :host([disabled]) .background {
     background-color: var(--_disabled-container-color);
     opacity: var(--_disabled-container-opacity);
   }
 
   @media (forced-colors: active) {
-    .button::before {
+    .background {
+      // Use CanvasText to increase visibility of buttons when the background
+      // is not rendered. Buttons that use outlines by default should change The
+      // outline color to GrayText when disabled.
       border: 1px solid CanvasText;
     }
 
-    :host([disabled]) .button {
+    :host([disabled]) {
       --_disabled-icon-color: GrayText;
       --_disabled-icon-opacity: 1;
       --_disabled-container-opacity: 1;
       --_disabled-label-text-color: GrayText;
       --_disabled-label-text-opacity: 1;
     }
-  }
-
-  .button::before,
-  md-elevation,
-  md-ripple {
-    z-index: -1; // Place behind content
   }
 
   :host([has-icon]:not([trailing-icon])) {
