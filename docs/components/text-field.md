@@ -22,7 +22,7 @@ tag: 'docType:reference'
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/textfield/)**
+[Material Web catalog](https://material-web.dev/components/text-field/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
