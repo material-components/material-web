@@ -27,15 +27,18 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-icon-values();
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-icon-#{$token}, #{$value}));
+  }
 
   :host {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
+    font-size: map.get($tokens, 'size');
+    width: map.get($tokens, 'size');
+    height: map.get($tokens, 'size');
     color: inherit;
     font-variation-settings: inherit;
     font-weight: 400;
-    font-family: var(--md-icon-font, #{map.get($tokens, font)});
+    font-family: map.get($tokens, 'font');
     display: inline-flex;
     font-style: normal;
     line-height: 1;
