@@ -98,7 +98,7 @@ export class Environment {
    * @return The root container the template was rendered to.
    */
   render(template: TemplateResult) {
-    const root = this.createNewRoot();
+    const root = this.createRoot();
     litRender(template, root);
     return root;
   }
@@ -112,7 +112,7 @@ export class Environment {
    *
    * @return A new root container.
    */
-  private createNewRoot() {
+  private createRoot() {
     const currentRoot = this.getCurrentRoot();
     if (currentRoot) {
       currentRoot.remove();
