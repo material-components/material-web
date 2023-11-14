@@ -18,7 +18,7 @@ $supported-tokens: (
   @return (
     // go/keep-sorted start
     font: if($exclude-hardcoded-values, null, 'Material Symbols Outlined'),
-    size: if($exclude-hardcoded-values, null, '24px'),
+    size: if($exclude-hardcoded-values, null, 24px),
     // go/keep-sorted end
   );
 }

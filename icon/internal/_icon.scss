@@ -32,11 +32,13 @@
   }
 
   :host {
-    font-size: map.get($tokens, size);
+    font-size: map.get($tokens, 'size');
+    width: map.get($tokens, 'size');
+    height: map.get($tokens, 'size');
     color: inherit;
     font-variation-settings: inherit;
     font-weight: 400;
-    font-family: map.get($tokens, font);
+    font-family: map.get($tokens, 'font');
     display: inline-flex;
     font-style: normal;
     line-height: 1;
