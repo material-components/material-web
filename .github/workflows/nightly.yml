@@ -36,6 +36,12 @@ jobs:
         env:
           WIREIT_FAILURES: continue
 
+      - name: Create nightly release commit
+        run: |
+          npm version --no-git-tag-version --preid nightly.$(git rev-parse --short HEAD) prepatch
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "chore: nightly publish"
       - uses: actions/setup-node@v3
         with:
           node-version: 18
