@@ -2,7 +2,7 @@
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-04-10' }
+freshness: { owner: 'lizmitchell' reviewed: '2023-11-10' }
 tag: 'docType:reference'
 *-->
 
@@ -27,8 +27,8 @@ UI’s elevation story.
 ## Usage
 
 Elevation can be set from 0 to 5 using the `--md-elevation-level` CSS custom
-property. The elevation's container needs width, height, and a relative
-position.
+property. The elevation will automatically fill the nearest `position: relative`
+element's size and shape.
 
 ![A rounded square with a drop shadow beneath it.](images/elevation/usage.png "A surface with an elevation shadow.")
 
