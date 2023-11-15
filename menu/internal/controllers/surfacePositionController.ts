@@ -8,6 +8,20 @@ import {ReactiveController, ReactiveControllerHost} from 'lit';
 import {StyleInfo} from 'lit/directives/style-map.js';
 
 /**
+ * Declare popoverAPI functions. See
+ * https://developer.mozilla.org/en-US/docs/Web/API/Popover_API
+ * Without this, closure will rename these functions. Can remove once these
+ * functions make it into the typescript lib.
+ */
+declare global {
+  interface HTMLElement {
+    showPopover(): void;
+    hidePopover(): void;
+    togglePopover(force: boolean): void;
+  }
+}
+
+/**
  * An enum of supported Menu corners
  */
 // tslint:disable-next-line:enforce-name-casing We are mimicking enum style
