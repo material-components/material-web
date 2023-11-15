@@ -21,8 +21,15 @@
     cursor: pointer;
     display: inline-flex;
     gap: 8px;
-    height: var(--_container-height);
+    // min-height instead of height so that label can wrap and expand height
+    min-height: var(--_container-height);
     outline: none;
+    // Add extra space between label and the edge for if the label text wraps.
+    // The padding added should be relative to the height of the container and
+    // the height of its content on a single line (label or icon, whichever is
+    // bigger).
+    $single-line-height: max(var(--_label-text-line-height), var(--_icon-size));
+    padding-block: calc((var(--_container-height) - $single-line-height) / 2);
     padding-inline-start: var(--_leading-space);
     padding-inline-end: var(--_trailing-space);
     place-content: center;
