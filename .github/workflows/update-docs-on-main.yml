@@ -4,7 +4,7 @@ on:
   push:
     branches: main
   workflow_dispatch:
-    # allows triggering from the gihub UI
+    # allows triggering from the github UI
 jobs:
   check-for-doc-changes:
     runs-on: ubuntu-latest
