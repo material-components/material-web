@@ -27,6 +27,7 @@ import {
   getFormValue,
   mixinFormAssociated,
 } from '../../labs/behaviors/form-associated.js';
+import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
 
 // Separate variable needed for closure.
 const checkboxBaseClass = mixinFormAssociated(
@@ -123,7 +124,7 @@ export class Checkbox extends checkboxBaseClass {
   @query('input') private readonly input!: HTMLInputElement | null;
   // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
   // Replace with this[internals].validity.customError when resolved.
-  private hasCustomValidityError = false;
+  private customValidityError = '';
 
   constructor() {
     super();
@@ -183,8 +184,8 @@ export class Checkbox extends checkboxBaseClass {
    * @param error The error message to display.
    */
   setCustomValidity(error: string) {
-    this.hasCustomValidityError = !!error;
-    this[internals].setValidity({customError: !!error}, error, this.getInput());
+    this.customValidityError = error;
+    this.syncValidity();
   }
 
   protected override update(changed: PropertyValues<Checkbox>) {
@@ -266,37 +267,15 @@ export class Checkbox extends checkboxBaseClass {
   }
 
   private syncValidity() {
-    // Sync the internal <input>'s validity and the host's ElementInternals
-    // validity. We do this to re-use native `<input>` validation messages.
-    const input = this.getInput();
-    if (this.hasCustomValidityError) {
-      input.setCustomValidity(this[internals].validationMessage);
-    } else {
-      input.setCustomValidity('');
-    }
-
+    const {validity, validationMessage} = this.validator.getValidity();
     this[internals].setValidity(
-      input.validity,
-      input.validationMessage,
-      this.getInput(),
+      {
+        ...validity,
+        customError: !!this.customValidityError,
+      },
+      this.customValidityError || validationMessage,
+      this.input ?? undefined,
     );
-  }
-
-  private getInput() {
-    if (!this.input) {
-      // If the input is not yet defined, synchronously render.
-      this.connectedCallback();
-      this.performUpdate();
-    }
-
-    if (this.isUpdatePending) {
-      // If there are pending updates, synchronously perform them. This ensures
-      // that constraint validation properties (like `required`) are synced
-      // before interacting with input APIs that depend on them.
-      this.scheduleUpdate();
-    }
-
-    return this.input!;
   }
 
   // Writable mixin properties for lit-html binding, needed for lit-analyzer
@@ -324,4 +303,6 @@ export class Checkbox extends checkboxBaseClass {
   override formStateRestoreCallback(state: string) {
     this.checked = state === 'true';
   }
+
+  private readonly validator = new CheckboxValidator(() => this);
 }
