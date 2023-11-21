@@ -19,9 +19,11 @@ import {
   redispatchEvent,
 } from '../../internal/controller/events.js';
 import {
-  internals,
-  mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+  createValidator,
+  getValidityAnchor,
+  mixinConstraintValidation,
+} from '../../labs/behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {
   getFormState,
   getFormValue,
@@ -30,8 +32,8 @@ import {
 import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
 
 // Separate variable needed for closure.
-const checkboxBaseClass = mixinFormAssociated(
-  mixinElementInternals(LitElement),
+const checkboxBaseClass = mixinConstraintValidation(
+  mixinFormAssociated(mixinElementInternals(LitElement)),
 );
 
 /**
@@ -83,109 +85,22 @@ export class Checkbox extends checkboxBaseClass {
    */
   @property() value = 'on';
 
-  /**
-   * Returns a ValidityState object that represents the validity states of the
-   * checkbox.
-   *
-   * Note that checkboxes will only set `valueMissing` if `required` and not
-   * checked.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#validation
-   */
-  get validity() {
-    this.syncValidity();
-    return this[internals].validity;
-  }
-
-  /**
-   * Returns the native validation error message.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
-   */
-  get validationMessage() {
-    this.syncValidity();
-    return this[internals].validationMessage;
-  }
-
-  /**
-   * Returns whether an element will successfully validate based on forms
-   * validation rules and constraints.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
-   */
-  get willValidate() {
-    this.syncValidity();
-    return this[internals].willValidate;
-  }
-
   @state() private prevChecked = false;
   @state() private prevDisabled = false;
   @state() private prevIndeterminate = false;
   @query('input') private readonly input!: HTMLInputElement | null;
-  // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
-  // Replace with this[internals].validity.customError when resolved.
-  private customValidityError = '';
 
   constructor() {
     super();
     if (!isServer) {
       this.addEventListener('click', (event: MouseEvent) => {
-        if (!isActivationClick(event)) {
+        if (!isActivationClick(event) || !this.input) {
           return;
         }
         this.focus();
-        dispatchActivationClick(this.input!);
+        dispatchActivationClick(this.input);
       });
     }
-  }
-
-  /**
-   * Checks the checkbox's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
-   *
-   * @return true if the checkbox is valid, or false if not.
-   */
-  checkValidity() {
-    this.syncValidity();
-    return this[internals].checkValidity();
-  }
-
-  /**
-   * Checks the checkbox's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * The `validationMessage` is reported to the user by the browser. Use
-   * `setCustomValidity()` to customize the `validationMessage`.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
-   *
-   * @return true if the checkbox is valid, or false if not.
-   */
-  reportValidity() {
-    this.syncValidity();
-    return this[internals].reportValidity();
-  }
-
-  /**
-   * Sets the checkbox's native validation error message. This is used to
-   * customize `validationMessage`.
-   *
-   * When the error is not an empty string, the checkbox is considered invalid
-   * and `validity.customError` will be true.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
-   *
-   * @param error The error message to display.
-   */
-  setCustomValidity(error: string) {
-    this.customValidityError = error;
-    this.syncValidity();
   }
 
   protected override update(changed: PropertyValues<Checkbox>) {
@@ -252,30 +167,12 @@ export class Checkbox extends checkboxBaseClass {
     `;
   }
 
-  protected override updated() {
-    // Sync validity when properties change, since validation properties may
-    // have changed.
-    this.syncValidity();
-  }
-
   private handleChange(event: Event) {
     const target = event.target as HTMLInputElement;
     this.checked = target.checked;
     this.indeterminate = target.indeterminate;
 
     redispatchEvent(this, event);
-  }
-
-  private syncValidity() {
-    const {validity, validationMessage} = this.validator.getValidity();
-    this[internals].setValidity(
-      {
-        ...validity,
-        customError: !!this.customValidityError,
-      },
-      this.customValidityError || validationMessage,
-      this.input ?? undefined,
-    );
   }
 
   // Writable mixin properties for lit-html binding, needed for lit-analyzer
@@ -304,5 +201,11 @@ export class Checkbox extends checkboxBaseClass {
     this.checked = state === 'true';
   }
 
-  private readonly validator = new CheckboxValidator(() => this);
+  [createValidator]() {
+    return new CheckboxValidator(() => this);
+  }
+
+  [getValidityAnchor]() {
+    return this.input;
+  }
 }
