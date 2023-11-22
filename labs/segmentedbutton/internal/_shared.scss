@@ -45,6 +45,7 @@
   :host {
     display: inline-flex;
     outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .md3-segmented-button {
