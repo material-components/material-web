@@ -21,6 +21,7 @@
     display: inline-flex;
     height: var(--_container-height);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 
     @include ripple.theme(
       (
