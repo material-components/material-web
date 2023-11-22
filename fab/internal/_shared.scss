@@ -26,6 +26,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     );
 
     display: inline-flex;
+    -webkit-tap-highlight-color: transparent;
   }
 
   :host([size='medium'][touch-target='wrapper']) {
