@@ -13,12 +13,12 @@ export interface CheckboxState {
   /**
    * Whether the checkbox is checked.
    */
-  checked: boolean;
+  readonly checked: boolean;
 
   /**
    * Whether the checkbox is required.
    */
-  required: boolean;
+  readonly required: boolean;
 }
 
 /**
@@ -45,9 +45,5 @@ export class CheckboxValidator extends Validator<CheckboxState> {
 
   protected override equals(prev: CheckboxState, next: CheckboxState) {
     return prev.checked === next.checked && prev.required === next.required;
-  }
-
-  protected override copy({checked, required}: CheckboxState): CheckboxState {
-    return {checked, required};
   }
 }

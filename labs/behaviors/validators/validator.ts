@@ -111,7 +111,9 @@ export abstract class Validator<State> {
    * @param state The state to copy.
    * @return A copy of the state.
    */
-  protected abstract copy(state: State): State;
+  protected copy(state: State): State {
+    return {...state};
+  }
 }
 
 /**
