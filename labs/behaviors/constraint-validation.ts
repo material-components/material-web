@@ -16,7 +16,7 @@ import {Validator} from './validators/validator.js';
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
  */
-export interface ConstraintValidation {
+export interface ConstraintValidation extends FormAssociated {
   /**
    * Returns a ValidityState object that represents the validity states of the
    * element.
@@ -117,7 +117,7 @@ const privateSyncValidity = Symbol('privateSyncValidity');
 const privateCustomValidationMessage = Symbol('privateCustomValidationMessage');
 
 /**
- * Mixins in constraint validation APIs for an element.
+ * Mixes in constraint validation APIs for an element.
  *
  * See https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
  * for more details.
