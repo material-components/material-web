@@ -37,6 +37,7 @@
   :host {
     border-radius: map.get($tokens, 'container-shape');
     display: flex;
+    -webkit-tap-highlight-color: transparent;
 
     @include ripple.theme(
       (
