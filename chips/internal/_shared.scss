@@ -37,6 +37,10 @@
     margin: max(0px, (48px - var(--_container-height)) / 2) 0;
   }
 
+  :host([disabled]) {
+     pointer-events: none;
+  }
+
   md-focus-ring {
     @include focus-ring.theme(
       (
