@@ -8,10 +8,15 @@ import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement} from 'lit';
-import {property} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {isActivationClick} from '../../internal/controller/events.js';
+import {
+  createValidator,
+  getValidityAnchor,
+  mixinConstraintValidation,
+} from '../../labs/behaviors/constraint-validation.js';
 import {
   internals,
   mixinElementInternals,
@@ -22,6 +27,7 @@ import {
   getFormValue,
   mixinFormAssociated,
 } from '../../labs/behaviors/form-associated.js';
+import {RadioValidator} from '../../labs/behaviors/validators/radio-validator.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 
@@ -29,8 +35,8 @@ const CHECKED = Symbol('checked');
 let maskId = 0;
 
 // Separate variable needed for closure.
-const radioBaseClass = mixinFormAssociated(
-  mixinElementInternals(mixinFocusable(LitElement)),
+const radioBaseClass = mixinConstraintValidation(
+  mixinFormAssociated(mixinElementInternals(mixinFocusable(LitElement))),
 );
 
 /**
@@ -67,10 +73,17 @@ export class Radio extends radioBaseClass {
   [CHECKED] = false;
 
   /**
+   * Whether or not the radio is required. If any radio is required in a group,
+   * all radios are implicitly required.
+   */
+  @property({type: Boolean}) required = false;
+
+  /**
    * The element value to use in form submission when checked.
    */
   @property() value = 'on';
 
+  @query('.container') private readonly container!: HTMLElement;
   private readonly selectionController = new SingleSelectionController(this);
 
   constructor() {
@@ -174,5 +187,21 @@ export class Radio extends radioBaseClass {
 
   override formStateRestoreCallback(state: string) {
     this.checked = state === 'true';
+  }
+
+  [createValidator]() {
+    return new RadioValidator(() => {
+      if (!this.selectionController) {
+        // Validation runs on superclass construction, so selection controller
+        // might not actually be ready until this class constructs.
+        return [this];
+      }
+
+      return this.selectionController.controls as [Radio, ...Radio[]];
+    });
+  }
+
+  [getValidityAnchor]() {
+    return this.container;
   }
 }
