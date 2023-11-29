@@ -34,7 +34,7 @@ export abstract class Chip extends LitElement {
    *
    * Disabled chips are not focusable, unless `always-focusable` is set.
    */
-  @property({type: Boolean}) disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * When true, allow disabled chips to be focused with arrow keys.

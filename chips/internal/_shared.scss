@@ -33,6 +33,10 @@
     );
   }
 
+  :host([disabled]) {
+    pointer-events: none;
+  }
+
   :host([touch-target='wrapper']) {
     margin: max(0px, (48px - var(--_container-height)) / 2) 0;
   }
