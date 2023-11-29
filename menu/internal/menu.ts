@@ -12,10 +12,6 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-import {
-  polyfillARIAMixin,
-  polyfillElementInternalsAria,
-} from '../../internal/aria/aria.js';
 import {EASING, createAnimationSignal} from '../../internal/motion/animation.js';
 import {
   ListController,
@@ -90,10 +86,6 @@ function getFocusedElement(
  * @fires closed {Event} Fired once the menu is closed, after any animations
  */
 export abstract class Menu extends LitElement {
-  static {
-    polyfillARIAMixin(Menu);
-  }
-
   @query('.menu') private readonly surfaceEl!: HTMLElement | null;
   @query('slot') private readonly slotEl!: HTMLSlotElement | null;
 
@@ -341,11 +333,9 @@ export abstract class Menu extends LitElement {
     this.requestUpdate('anchorElement');
   }
 
-  private readonly internals = polyfillElementInternalsAria(
-    this,
+  private readonly internals =
     // Cast needed for closure
-    (this as HTMLElement).attachInternals(),
-  );
+    (this as HTMLElement).attachInternals();
 
   constructor() {
     super();

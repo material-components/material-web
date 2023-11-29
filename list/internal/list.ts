@@ -7,11 +7,6 @@
 import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
-import {
-  polyfillARIAMixin,
-  polyfillElementInternalsAria,
-} from '../../internal/aria/aria.js';
-
 import {ListController, NavigableKeys} from './list-controller.js';
 import {ListItem as SharedListItem} from './list-navigation-helpers.js';
 
@@ -23,10 +18,6 @@ interface ListItem extends SharedListItem {
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
-  static {
-    polyfillARIAMixin(List);
-  }
-
   /**
    * An array of activatable and disableable list items. Queries every assigned
    * element that has the `md-list-item` attribute.
@@ -58,11 +49,9 @@ export class List extends LitElement {
     isActivatable: (item) => !item.disabled && item.type !== 'text',
   });
 
-  private readonly internals = polyfillElementInternalsAria(
-    this,
+  private readonly internals =
     // Cast needed for closure
-    (this as HTMLElement).attachInternals(),
-  );
+    (this as HTMLElement).attachInternals();
 
   constructor() {
     super();

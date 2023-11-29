@@ -9,11 +9,6 @@ import '../../divider/divider.js';
 import {html, isServer, LitElement} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
-import {
-  polyfillARIAMixin,
-  polyfillElementInternalsAria,
-} from '../../internal/aria/aria.js';
-
 import {ANIMATE_INDICATOR, Tab} from './tab.js';
 
 /**
@@ -41,10 +36,6 @@ import {ANIMATE_INDICATOR, Tab} from './tab.js';
  *
  */
 export class Tabs extends LitElement {
-  static {
-    polyfillARIAMixin(Tabs);
-  }
-
   /**
    * The tabs of this tab bar.
    */
@@ -117,11 +108,9 @@ export class Tabs extends LitElement {
     return this.tabs.find((tab) => tab.matches(':focus-within'));
   }
 
-  private readonly internals = polyfillElementInternalsAria(
-    this,
+  private readonly internals =
     // Cast needed for closure
-    (this as HTMLElement).attachInternals(),
-  );
+    (this as HTMLElement).attachInternals();
 
   constructor() {
     super();

@@ -28,7 +28,7 @@ Browser | Version
 ------- | -------
 Chrome  | 112 +
 Edge    | 112 +
-Firefox | 113 +
+Firefox | 119 +
 Safari* | 16.4 +
 
 *\* previous versions of Safari may be supported with an

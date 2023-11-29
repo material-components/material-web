@@ -7,21 +7,12 @@
 import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
-import {
-  polyfillARIAMixin,
-  polyfillElementInternalsAria,
-} from '../../internal/aria/aria.js';
-
 import {Chip} from './chip.js';
 
 /**
  * A chip set component.
  */
 export class ChipSet extends LitElement {
-  static {
-    polyfillARIAMixin(ChipSet);
-  }
-
   get chips() {
     return this.childElements.filter(
       (child): child is Chip => child instanceof Chip,
@@ -29,11 +20,9 @@ export class ChipSet extends LitElement {
   }
 
   @queryAssignedElements() private readonly childElements!: HTMLElement[];
-  private readonly internals = polyfillElementInternalsAria(
-    this,
+  private readonly internals =
     // Cast needed for closure
-    (this as HTMLElement).attachInternals(),
-  );
+    (this as HTMLElement).attachInternals();
 
   constructor() {
     super();

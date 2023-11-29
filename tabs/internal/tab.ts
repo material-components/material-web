@@ -18,10 +18,6 @@ import {
 } from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {
-  polyfillARIAMixin,
-  polyfillElementInternalsAria,
-} from '../../internal/aria/aria.js';
 import {EASING} from '../../internal/motion/animation.js';
 import {mixinFocusable} from '../../labs/behaviors/focusable.js';
 
@@ -44,10 +40,6 @@ const tabBaseClass = mixinFocusable(LitElement);
  * Tab component.
  */
 export class Tab extends tabBaseClass {
-  static {
-    polyfillARIAMixin(Tab);
-  }
-
   /**
    * The attribute `md-tab` indicates that the element is a tab for the parent
    * element, `<md-tabs>`. Make sure if you're implementing your own `md-tab`
@@ -89,11 +81,9 @@ export class Tab extends tabBaseClass {
   private readonly assignedDefaultNodes!: Node[];
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
-  private readonly internals = polyfillElementInternalsAria(
-    this,
+  private readonly internals =
     // Cast needed for closure
-    (this as HTMLElement).attachInternals(),
-  );
+    (this as HTMLElement).attachInternals();
 
   constructor() {
     super();
