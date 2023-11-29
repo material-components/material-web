@@ -104,7 +104,9 @@ $_enter-delay: $_label-duration - $_visible-duration;
       line-height: var(--_content-line-height);
       font-weight: var(--_content-weight);
       width: 100%;
-      white-space: pre-wrap; // Needed for Firefox textarea with "all: unset"
+      // Reverting values before "all: unset"
+      overflow-wrap: revert; // Needed to break words in textarea
+      white-space: revert; // Needed for Firefox textarea
     }
 
     .content ::slotted(:not(textarea)) {
