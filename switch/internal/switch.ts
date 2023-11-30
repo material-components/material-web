@@ -159,10 +159,12 @@ export class Switch extends switchBaseClass {
    */
   private renderOnIcon() {
     return html`
-      <svg class="icon icon--on" viewBox="0 0 24 24">
-        <path
-          d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z" />
-      </svg>
+      <slot class="icon icon--on" name="on-icon">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z" />
+        </svg>
+      </slot>
     `;
   }
 
@@ -171,10 +173,12 @@ export class Switch extends switchBaseClass {
    */
   private renderOffIcon() {
     return html`
-      <svg class="icon icon--off" viewBox="0 0 24 24">
-        <path
-          d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z" />
-      </svg>
+      <slot class="icon icon--off" name="off-icon">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z" />
+        </svg>
+      </slot>
     `;
   }
 
