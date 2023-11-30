@@ -48,7 +48,7 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       transform: rotate(-45deg);
     }
 
-    .icon--off  {
+    .icon--off {
       width: var(--_icon-size);
       height: var(--_icon-size);
       fill: var(--_icon-color);
@@ -59,12 +59,12 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       fill: var(--_hover-icon-color);
       color: var(--_hover-icon-color);
     }
-    
+
     .unselected:focus-within .icon--off {
       fill: var(--_focus-icon-color);
       color: var(--_focus-icon-color);
     }
-    
+ 
     .unselected:active .icon--off {
       fill: var(--_pressed-icon-color);
       color: var(--_pressed-icon-color);
