@@ -46,4 +46,8 @@ export class CheckboxValidator extends Validator<CheckboxState> {
   protected override equals(prev: CheckboxState, next: CheckboxState) {
     return prev.checked === next.checked && prev.required === next.required;
   }
+
+  protected override copy({checked, required}: CheckboxState) {
+    return {checked, required};
+  }
 }

@@ -108,12 +108,14 @@ export abstract class Validator<State> {
    * Creates a copy of a state. This is used to cache state and check if it
    * changes.
    *
+   * Note: do NOT spread the {...state} to copy it. The actual state object is
+   * a web component, and trying to spread its getter/setter properties won't
+   * work.
+   *
    * @param state The state to copy.
    * @return A copy of the state.
    */
-  protected copy(state: State): State {
-    return {...state};
-  }
+  protected abstract copy(state: State): State;
 }
 
 /**

@@ -26,6 +26,10 @@ describe('Validator', () => {
     equals(prev: CustomState, next: CustomState) {
       return prev.value === next.value && prev.required === next.required;
     }
+
+    copy({value, required}: CustomState) {
+      return {value, required};
+    }
   }
 
   describe('getValidity()', () => {

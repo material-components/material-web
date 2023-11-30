@@ -49,4 +49,8 @@ export class SelectValidator extends Validator<SelectState> {
   protected override equals(prev: SelectState, next: SelectState) {
     return prev.value === next.value && prev.required === next.required;
   }
+
+  protected override copy({value, required}: SelectState) {
+    return {value, required};
+  }
 }
