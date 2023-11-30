@@ -30,6 +30,7 @@ const privateIsFocusable = Symbol('privateIsFocusable');
 const externalTabIndex = Symbol('externalTabIndex');
 const isUpdatingTabIndex = Symbol('isUpdatingTabIndex');
 const updateTabIndex = Symbol('updateTabIndex');
+const hasConstructed = Symbol('hasConstructed');
 
 /**
  * Mixes in focusable functionality for a class.
@@ -51,7 +52,8 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
   base: T,
 ): MixinReturn<T, Focusable> {
   abstract class FocusableElement extends base implements Focusable {
-    @property({reflect: true}) declare tabIndex: number;
+    @property({noAccessor: true})
+    declare tabIndex: number;
 
     get [isFocusable]() {
       return this[privateIsFocusable];
@@ -69,11 +71,16 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
     [privateIsFocusable] = false;
     [externalTabIndex]: number | null = null;
     [isUpdatingTabIndex] = false;
+    [hasConstructed] = false;
 
     // tslint:disable-next-line:no-any
     constructor(...args: any[]) {
       super(...args);
       this[isFocusable] = true;
+      queueMicrotask(() => {
+        this[hasConstructed] = true;
+        this[updateTabIndex]();
+      });
     }
 
     override attributeChangedCallback(
@@ -81,8 +88,14 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
       old: string | null,
       value: string | null,
     ) {
-      super.attributeChangedCallback(name, old, value);
-      if (name !== 'tabindex' || this[isUpdatingTabIndex]) {
+      if (name !== 'tabindex') {
+        super.attributeChangedCallback(name, old, value);
+        return;
+      }
+
+      this.requestUpdate('tabIndex', Number(old ?? -1));
+      if (this[isUpdatingTabIndex]) {
+        // Not an externally-initiated update.
         return;
       }
 
@@ -96,14 +109,17 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
       this[externalTabIndex] = this.tabIndex;
     }
 
-    async [updateTabIndex]() {
+    [updateTabIndex]() {
+      if (!this[hasConstructed]) {
+        // Custom elements may not hydrate attributes during construction.
+        return;
+      }
+
       const internalTabIndex = this[isFocusable] ? 0 : -1;
       const computedTabIndex = this[externalTabIndex] ?? internalTabIndex;
 
       this[isUpdatingTabIndex] = true;
       this.tabIndex = computedTabIndex;
-      this.requestUpdate();
-      await this.updateComplete;
       this[isUpdatingTabIndex] = false;
     }
   }
