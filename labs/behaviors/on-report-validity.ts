@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LitElement} from 'lit';
+import {LitElement, isServer} from 'lit';
 
 import {ConstraintValidation} from './constraint-validation.js';
 import {MixinBase, MixinReturn} from './mixin.js';
@@ -46,6 +46,7 @@ export const onReportValidity = Symbol('onReportValidity');
 
 // Private symbol members, used to avoid name clashing.
 const privateCleanupFormListeners = Symbol('privateCleanupFormListeners');
+const privateDoNotReportInvalid = Symbol('privateDoNotReportInvalid');
 
 /**
  * Mixes in a callback for constraint validation when validity should be
@@ -91,23 +92,67 @@ export function mixinOnReportValidity<
      */
     [privateCleanupFormListeners] = new AbortController();
 
-    override reportValidity() {
-      let invalidEvent = null as Event | null;
-      const cleanupInvalidListener = new AbortController();
+    /**
+     * Used to determine if an invalid event should report validity. Invalid
+     * events from `checkValidity()` do not trigger reporting.
+     */
+    [privateDoNotReportInvalid] = false;
+
+    // Mixins must have a constructor with `...args: any[]`
+    // tslint:disable-next-line:no-any
+    constructor(...args: any[]) {
+      super(...args);
+      if (isServer) {
+        return;
+      }
+
       this.addEventListener(
         'invalid',
-        (event) => {
-          invalidEvent = event;
-        },
-        {signal: cleanupInvalidListener.signal},
-      );
+        (invalidEvent) => {
+          // Listen for invalid events dispatched by a `<form>` when it tries to
+          // submit and the element is invalid. We ignore events dispatched when
+          // calling `checkValidity()` as well as untrusted events, since the
+          // `reportValidity()` and `<form>`-dispatched events are always
+          // trusted.
+          if (this[privateDoNotReportInvalid] || !invalidEvent.isTrusted) {
+            return;
+          }
 
+          this.addEventListener(
+            'invalid',
+            () => {
+              // A normal bubbling phase event listener. By adding it here, we
+              // ensure it's the last event listener that is called during the
+              // bubbling phase.
+              if (!invalidEvent.defaultPrevented) {
+                this[onReportValidity](invalidEvent);
+              }
+            },
+            {once: true},
+          );
+        },
+        {
+          // Listen during the capture phase, which will happen before the
+          // bubbling phase. That way, we can add a final event listener that
+          // will run after other event listeners, and we can check if it was
+          // default prevented. This works because invalid does not bubble.
+          capture: true,
+        },
+      );
+    }
+
+    override checkValidity() {
+      this[privateDoNotReportInvalid] = true;
+      const valid = super.checkValidity();
+      this[privateDoNotReportInvalid] = false;
+      return valid;
+    }
+
+    override reportValidity() {
       const valid = super.reportValidity();
-      cleanupInvalidListener.abort();
-      // event may be null, so check for strict `true`. If null it should still
-      // be reported.
-      if (invalidEvent?.defaultPrevented !== true) {
-        this[onReportValidity](invalidEvent);
+      // Constructor's invalid listener will handle reporting invalid events.
+      if (valid) {
+        this[onReportValidity](null);
       }
 
       return valid;

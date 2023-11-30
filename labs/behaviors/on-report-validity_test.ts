@@ -15,14 +15,17 @@ import {
   mixinConstraintValidation,
 } from './constraint-validation.js';
 import {mixinElementInternals} from './element-internals.js';
+import {mixinFocusable} from './focusable.js';
 import {getFormValue, mixinFormAssociated} from './form-associated.js';
 import {mixinOnReportValidity, onReportValidity} from './on-report-validity.js';
 import {CheckboxValidator} from './validators/checkbox-validator.js';
 
 describe('mixinOnReportValidity()', () => {
-  const baseClass = mixinOnReportValidity(
-    mixinConstraintValidation(
-      mixinFormAssociated(mixinElementInternals(LitElement)),
+  const baseClass = mixinFocusable(
+    mixinOnReportValidity(
+      mixinConstraintValidation(
+        mixinFormAssociated(mixinElementInternals(LitElement)),
+      ),
     ),
   );
 
@@ -137,6 +140,31 @@ describe('mixinOnReportValidity()', () => {
       form.requestSubmit();
       form.remove();
       expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+    });
+
+    it('should be called with invalid event when invalid form tries to submit', () => {
+      const control = new TestOnReportValidity();
+      control[onReportValidity] = jasmine.createSpy('onReportValidity');
+      const form = document.createElement('form');
+      form.appendChild(control);
+      form.addEventListener(
+        'submit',
+        (event) => {
+          // Prevent the test page from actually reloading. This shouldn't
+          // happen, but we add it just in case the control fails and reports
+          // as valid and the form tries to submit.
+          event.preventDefault();
+        },
+        {capture: true},
+      );
+
+      document.body.appendChild(form);
+      control.required = true;
+      form.requestSubmit();
+      form.remove();
+      expect(control[onReportValidity]).toHaveBeenCalledWith(
+        jasmine.any(Event),
+      );
     });
 
     it('should clean up when form is unassociated and not call when non-parent form.reportValidity() is called', () => {
