@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {isServer, LitElement, PropertyDeclaration} from 'lit';
+import {isServer, LitElement, PropertyDeclaration, PropertyValues} from 'lit';
 
 import {internals, WithElementInternals} from './element-internals.js';
 import {FormAssociated} from './form-associated.js';
@@ -202,6 +202,24 @@ export function mixinConstraintValidation<
       options?: PropertyDeclaration,
     ) {
       super.requestUpdate(name, oldValue, options);
+      this[privateSyncValidity]();
+    }
+
+    override firstUpdated(changed: PropertyValues) {
+      super.firstUpdated(changed);
+      // Sync the validity again when the element first renders, since the
+      // validity anchor is now available.
+      //
+      // Elements that `delegatesFocus: true` to an `<input>` will throw an
+      // error in Chrome and Safari when a form tries to submit or call
+      // `form.reportValidity()`:
+      // "An invalid form control with name='' is not focusable"
+      //
+      // The validity anchor MUST be provided in `internals.setValidity()` and
+      // MUST be the `<input>` element rendered.
+      //
+      // See https://lit.dev/playground/#gist=6c26e418e0010f7a5aac15005cde8bde
+      // for a reproduction.
       this[privateSyncValidity]();
     }
 
