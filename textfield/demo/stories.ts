@@ -210,6 +210,7 @@ const forms: MaterialStoryInit<StoryKnobs> = {
             ?disabled=${knobs.disabled}
             label="First name"
             name="first-name"
+            required
             autocomplete="given-name"></md-filled-text-field>
           <md-filled-text-field
             ?disabled=${knobs.disabled}
@@ -226,8 +227,14 @@ const forms: MaterialStoryInit<StoryKnobs> = {
   },
 };
 
-function reportValidity(event: Event) {
-  (event.target as MdFilledTextField).reportValidity();
+async function reportValidity(event: Event) {
+  const textField = event.target as MdFilledTextField;
+  // Calling reportValidity() will focus the text field. Since we do this on
+  // "change" (blur), wait for other focus changes to finish, like tabbing.
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve);
+  });
+  textField.reportValidity();
 }
 
 function clearInput(event: Event) {

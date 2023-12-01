@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {LitElement, PropertyValues, html, nothing} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {live} from 'lit/directives/live.js';
-import {styleMap} from 'lit/directives/style-map.js';
-import {html as staticHtml, StaticValue} from 'lit/static-html.js';
+import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
+import {StaticValue, html as staticHtml} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
@@ -17,13 +17,21 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/controller/events.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
 import {
-  internals,
-  mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+  createValidator,
+  getValidityAnchor,
+  mixinConstraintValidation,
+} from '../../labs/behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {
   getFormValue,
   mixinFormAssociated,
 } from '../../labs/behaviors/form-associated.js';
+import {
+  mixinOnReportValidity,
+  onReportValidity,
+} from '../../labs/behaviors/on-report-validity.js';
+import {TextFieldValidator} from '../../labs/behaviors/validators/text-field-validator.js';
+import {Validator} from '../../labs/behaviors/validators/validator.js';
 
 /**
  * Input types that are compatible with the text field.
@@ -64,8 +72,10 @@ export type InvalidTextFieldType =
   | 'submit';
 
 // Separate variable needed for closure.
-const textFieldBaseClass = mixinFormAssociated(
-  mixinElementInternals(LitElement),
+const textFieldBaseClass = mixinOnReportValidity(
+  mixinConstraintValidation(
+    mixinFormAssociated(mixinElementInternals(LitElement)),
+  ),
 );
 
 /**
@@ -292,27 +302,6 @@ export abstract class TextField extends textFieldBaseClass {
   @property({reflect: true}) autocomplete = '';
 
   /**
-   * Returns the text field's validation error message.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
-   */
-  get validationMessage() {
-    this.syncValidity();
-    return this[internals].validationMessage;
-  }
-
-  /**
-   * Returns a `ValidityState` object that represents the validity states of the
-   * text field.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
-   */
-  get validity() {
-    this.syncValidity();
-    return this[internals].validity;
-  }
-
-  /**
    * The text field's value as a number.
    */
   get valueAsNumber() {
@@ -354,17 +343,6 @@ export abstract class TextField extends textFieldBaseClass {
     this.value = input.value;
   }
 
-  /**
-   * Returns whether an element will successfully validate based on forms
-   * validation rules and constraints.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/willValidate
-   */
-  get willValidate() {
-    this.syncValidity();
-    return this[internals].willValidate;
-  }
-
   protected abstract readonly fieldTag: StaticValue;
 
   /**
@@ -388,91 +366,15 @@ export abstract class TextField extends textFieldBaseClass {
   }
 
   @query('.input')
-  private readonly inputOrTextarea?:
+  private readonly inputOrTextarea!:
     | HTMLInputElement
     | HTMLTextAreaElement
     | null;
-  @query('.field') private readonly field?: Field | null;
+  @query('.field') private readonly field!: Field | null;
   @queryAssignedElements({slot: 'leading-icon'})
   private readonly leadingIcons!: Element[];
   @queryAssignedElements({slot: 'trailing-icon'})
   private readonly trailingIcons!: Element[];
-  private isCheckingValidity = false;
-  private isReportingValidity = false;
-  // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
-  // Replace with this[internals].validity.customError when resolved.
-  private hasCustomValidityError = false;
-
-  /**
-   * Checks the text field's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
-   *
-   * @return true if the text field is valid, or false if not.
-   */
-  checkValidity() {
-    this.isCheckingValidity = true;
-    this.syncValidity();
-    const isValid = this[internals].checkValidity();
-    this.isCheckingValidity = false;
-    return isValid;
-  }
-
-  /**
-   * Checks the text field's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * This method will display or clear an error text message equal to the text
-   * field's `validationMessage`, unless the invalid event is canceled.
-   *
-   * Use `setCustomValidity()` to customize the `validationMessage`.
-   *
-   * This method can also be used to re-announce error messages to screen
-   * readers.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
-   *
-   * @return true if the text field is valid, or false if not.
-   */
-  reportValidity() {
-    this.isReportingValidity = true;
-    let invalidEvent: Event | undefined;
-    this.addEventListener(
-      'invalid',
-      (event) => {
-        invalidEvent = event;
-      },
-      {once: true},
-    );
-
-    const valid = this.checkValidity();
-    this.showErrorMessage(valid, invalidEvent);
-
-    this.isReportingValidity = false;
-
-    return valid;
-  }
-
-  private showErrorMessage(valid: boolean, invalidEvent: Event | undefined) {
-    if (invalidEvent?.defaultPrevented) {
-      return valid;
-    }
-
-    const prevMessage = this.getErrorText();
-    this.nativeError = !valid;
-    this.nativeErrorText = this.validationMessage;
-
-    if (prevMessage === this.getErrorText()) {
-      this.field?.reannounceError();
-    }
-
-    return valid;
-  }
 
   /**
    * Selects all the text in the text field.
@@ -481,26 +383,6 @@ export abstract class TextField extends textFieldBaseClass {
    */
   select() {
     this.getInputOrTextarea().select();
-  }
-
-  /**
-   * Sets a custom validation error message for the text field. Use this for
-   * custom error message.
-   *
-   * When the error is not an empty string, the text field is considered invalid
-   * and `validity.customError` will be true.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
-   *
-   * @param error The error message to display.
-   */
-  setCustomValidity(error: string) {
-    this.hasCustomValidityError = !!error;
-    this[internals].setValidity(
-      {customError: !!error},
-      error,
-      this.getInputOrTextarea(),
-    );
   }
 
   /**
@@ -627,10 +509,6 @@ export abstract class TextField extends textFieldBaseClass {
       // before checking its value.
       this.value = value;
     }
-
-    // Sync validity when properties change, since validation properties may
-    // have changed.
-    this.syncValidity();
   }
 
   private renderField() {
@@ -674,7 +552,7 @@ export abstract class TextField extends textFieldBaseClass {
   }
 
   private renderInputOrTextarea() {
-    const style = {direction: this.textDirection};
+    const style: StyleInfo = {'direction': this.textDirection};
     const ariaLabel =
       (this as ARIAMixinStrict).ariaLabel || this.label || nothing;
     // lit-anaylzer `autocomplete` types are too strict
@@ -699,7 +577,7 @@ export abstract class TextField extends textFieldBaseClass {
           rows=${this.rows}
           cols=${this.cols}
           .value=${live(this.value)}
-          @change=${this.handleChange}
+          @change=${this.redispatchEvent}
           @focusin=${this.handleFocusin}
           @focusout=${this.handleFocusout}
           @input=${this.handleInput}
@@ -784,14 +662,6 @@ export abstract class TextField extends textFieldBaseClass {
   private handleInput(event: InputEvent) {
     this.dirty = true;
     this.value = (event.target as HTMLInputElement).value;
-    // Sync validity so that clients can check validity on input.
-    this.syncValidity();
-  }
-
-  private handleChange(event: Event) {
-    // Sync validity so that clients can check validity on change.
-    this.syncValidity();
-    this.redispatchEvent(event);
   }
 
   private redispatchEvent(event: Event) {
@@ -827,48 +697,11 @@ export abstract class TextField extends textFieldBaseClass {
     return this.getInputOrTextarea() as HTMLInputElement;
   }
 
-  private syncValidity() {
-    // Sync the internal <input>'s validity and the host's ElementInternals
-    // validity. We do this to re-use native `<input>` validation messages.
-    const input = this.getInputOrTextarea();
-    if (this.hasCustomValidityError) {
-      input.setCustomValidity(this[internals].validationMessage);
-    } else {
-      input.setCustomValidity('');
-    }
-
-    this[internals].setValidity(
-      input.validity,
-      input.validationMessage,
-      this.getInputOrTextarea(),
-    );
-  }
-
   private handleIconChange() {
     this.hasLeadingIcon = this.leadingIcons.length > 0;
     this.hasTrailingIcon = this.trailingIcons.length > 0;
   }
 
-  private readonly onInvalid = (invalidEvent: Event) => {
-    if (this.isCheckingValidity || this.isReportingValidity) {
-      return;
-    }
-
-    this.showErrorMessage(false, invalidEvent);
-  };
-
-  override connectedCallback() {
-    super.connectedCallback();
-
-    // Handles the case where the user submits the form and native validation
-    // error pops up. We want the error styles to show.
-    this.addEventListener('invalid', this.onInvalid);
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener('invalid', this.onInvalid);
-  }
   // Writable mixin properties for lit-html binding, needed for lit-analyzer
   declare disabled: boolean;
   declare name: string;
@@ -889,5 +722,37 @@ export abstract class TextField extends textFieldBaseClass {
     // Required for the case that the user slots a focusable element into the
     // leading icon slot such as an iconbutton due to how delegatesFocus works.
     this.getInputOrTextarea().focus();
+  }
+
+  [createValidator](): Validator<unknown> {
+    return new TextFieldValidator(() => ({
+      state: this,
+      renderedControl: this.inputOrTextarea,
+    }));
+  }
+
+  [getValidityAnchor](): HTMLElement | null {
+    return this.inputOrTextarea;
+  }
+
+  [onReportValidity](invalidEvent: Event | null) {
+    if (invalidEvent?.defaultPrevented) {
+      return;
+    }
+
+    if (invalidEvent) {
+      // Prevent default pop-up behavior. This also prevents focusing, so we
+      // manually focus.
+      invalidEvent.preventDefault();
+      this.focus();
+    }
+
+    const prevMessage = this.getErrorText();
+    this.nativeError = !!invalidEvent;
+    this.nativeErrorText = this.validationMessage;
+
+    if (prevMessage === this.getErrorText()) {
+      this.field?.reannounceError();
+    }
   }
 }
