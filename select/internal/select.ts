@@ -73,6 +73,12 @@ export abstract class Select extends selectBaseClass {
     requestUpdateOnAriaChange(Select);
   }
 
+  /** @nocollapse */
+  static override shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
   /**
    * Opens the menu synchronously with no animation.
    */
@@ -235,6 +241,16 @@ export abstract class Select extends selectBaseClass {
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
 
+  constructor() {
+    super();
+    if (isServer) {
+      return;
+    }
+
+    this.addEventListener('focus', this.handleFocus.bind(this));
+    this.addEventListener('blur', this.handleBlur.bind(this));
+  }
+
   /**
    * Selects an option given the value of the option, and updates MdSelect's
    * value.
@@ -277,7 +293,13 @@ export abstract class Select extends selectBaseClass {
       return;
     }
 
-    invalidEvent?.preventDefault();
+    if (invalidEvent) {
+      // Prevent default pop-up behavior. This also prevents focusing, so we
+      // manually focus.
+      invalidEvent.preventDefault();
+      this.focus();
+    }
+
     const prevMessage = this.getErrorText();
     this.nativeError = !!invalidEvent;
     this.nativeErrorText = this.validationMessage;
@@ -362,9 +384,7 @@ export abstract class Select extends selectBaseClass {
           supporting-text=${this.supportingText}
           error-text=${this.getErrorText()}
           @keydown=${this.handleKeydown}
-          @click=${this.handleClick}
-          @focus=${this.handleFocus}
-          @blur=${this.handleBlur}>
+          @click=${this.handleClick}>
          ${this.renderFieldContent()}
          <div id="description" slot="aria-describedby"></div>
       </${this.fieldTag}>`;
