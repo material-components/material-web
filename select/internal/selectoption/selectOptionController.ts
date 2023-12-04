@@ -71,7 +71,6 @@ export type SelectOptionConfig = MenuItemControllerConfig;
  */
 export class SelectOptionController implements ReactiveController {
   private readonly menuItemController: MenuItemController;
-  private readonly getHeadlineElements: SelectOptionConfig['getHeadlineElements'];
   private internalDisplayText: string | null = null;
   private lastSelected = this.host.selected;
   private firstUpdate = true;
@@ -85,7 +84,9 @@ export class SelectOptionController implements ReactiveController {
 
   /**
    * The text that is selectable via typeahead. If not set, defaults to the
-   * innerText of the item slotted into the `"headline"` slot.
+   * innerText of the item slotted into the `"headline"` slot, and if there are
+   * no slotted elements into headline, then it checks the _default_ slot, and
+   * then the `"supporting-text"` slot if nothing is in _default_.
    */
   get typeaheadText() {
     return this.menuItemController.typeaheadText;
@@ -97,23 +98,17 @@ export class SelectOptionController implements ReactiveController {
 
   /**
    * The text that is displayed in the select field when selected. If not set,
-   * defaults to the textContent of the item slotted into the `"headline"` slot.
+   * defaults to the textContent of the item slotted into the `"headline"` slot,
+   * and if there are no slotted elements into headline, then it checks the
+   * _default_ slot, and then the `"supporting-text"` slot if nothing is in
+   * _default_.
    */
   get displayText() {
     if (this.internalDisplayText !== null) {
       return this.internalDisplayText;
     }
 
-    const headlineElements = this.getHeadlineElements();
-
-    const textParts: string[] = [];
-    headlineElements.forEach((headlineElement) => {
-      if (headlineElement.textContent && headlineElement.textContent.trim()) {
-        textParts.push(headlineElement.textContent.trim());
-      }
-    });
-
-    return textParts.join(' ');
+    return this.menuItemController.typeaheadText;
   }
 
   setDisplayText(text: string) {
@@ -129,7 +124,6 @@ export class SelectOptionController implements ReactiveController {
     config: SelectOptionConfig,
   ) {
     this.menuItemController = new MenuItemController(host, config);
-    this.getHeadlineElements = config.getHeadlineElements;
     host.addController(this);
   }
 

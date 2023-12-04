@@ -73,6 +73,16 @@ export interface MenuItemControllerConfig {
   getHeadlineElements: () => HTMLElement[];
 
   /**
+   * A function that returns the supporting-text element of the menu item.
+   */
+  getSupportingTextElements: () => HTMLElement[];
+
+  /**
+   * A function that returns the default slot / misc content.
+   */
+  getDefaultElements: () => Node[];
+
+  /**
    * The HTML Element that accepts user interactions like click. Used for
    * occasions like programmatically clicking anchor tags when `Enter` is
    * pressed.
@@ -87,6 +97,8 @@ export interface MenuItemControllerConfig {
 export class MenuItemController implements ReactiveController {
   private internalTypeaheadText: string | null = null;
   private readonly getHeadlineElements: MenuItemControllerConfig['getHeadlineElements'];
+  private readonly getSupportingTextElements: MenuItemControllerConfig['getSupportingTextElements'];
+  private readonly getDefaultElements: MenuItemControllerConfig['getDefaultElements'];
   private readonly getInteractiveElement: MenuItemControllerConfig['getInteractiveElement'];
 
   /**
@@ -97,15 +109,18 @@ export class MenuItemController implements ReactiveController {
     private readonly host: ReactiveControllerHost & MenuItem,
     config: MenuItemControllerConfig,
   ) {
-    const {getHeadlineElements, getInteractiveElement} = config;
-    this.getHeadlineElements = getHeadlineElements;
-    this.getInteractiveElement = getInteractiveElement;
+    this.getHeadlineElements = config.getHeadlineElements;
+    this.getSupportingTextElements = config.getSupportingTextElements;
+    this.getDefaultElements = config.getDefaultElements;
+    this.getInteractiveElement = config.getInteractiveElement;
     this.host.addController(this);
   }
 
   /**
    * The text that is selectable via typeahead. If not set, defaults to the
-   * innerText of the item slotted into the `"headline"` slot.
+   * innerText of the item slotted into the `"headline"` slot, and if there are
+   * no slotted elements into headline, then it checks the _default_ slot, and
+   * then the `"supporting-text"` slot if nothing is in _default_.
    */
   get typeaheadText() {
     if (this.internalTypeaheadText !== null) {
@@ -120,6 +135,28 @@ export class MenuItemController implements ReactiveController {
         textParts.push(headlineElement.textContent.trim());
       }
     });
+
+    // If there are no headline elements, check the default slot's text content
+    if (textParts.length === 0) {
+      this.getDefaultElements().forEach((defaultElement) => {
+        if (defaultElement.textContent && defaultElement.textContent.trim()) {
+          textParts.push(defaultElement.textContent.trim());
+        }
+      });
+    }
+
+    // If there are no headline nor default slot elements, check the
+    //supporting-text slot's text content
+    if (textParts.length === 0) {
+      this.getSupportingTextElements().forEach((supportingTextElement) => {
+        if (
+          supportingTextElement.textContent &&
+          supportingTextElement.textContent.trim()
+        ) {
+          textParts.push(supportingTextElement.textContent.trim());
+        }
+      });
+    }
 
     return textParts.join(' ');
   }

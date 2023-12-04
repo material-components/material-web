@@ -9,7 +9,12 @@ import '../../../labs/item/item.js';
 import '../../../ripple/ripple.js';
 
 import {html, LitElement, nothing} from 'lit';
-import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {
+  property,
+  query,
+  queryAssignedElements,
+  queryAssignedNodes,
+} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
@@ -61,6 +66,10 @@ export class SelectOptionEl extends LitElement implements SelectOption {
 
   @queryAssignedElements({slot: 'headline'})
   protected readonly headlineElements!: HTMLElement[];
+  @queryAssignedElements({slot: 'supporting-text'})
+  protected readonly supportingTextElements!: HTMLElement[];
+  @queryAssignedNodes({slot: ''})
+  protected readonly defaultElements!: Element[];
 
   type = 'option' as const;
 
@@ -93,6 +102,12 @@ export class SelectOptionEl extends LitElement implements SelectOption {
   private readonly selectOptionController = new SelectOptionController(this, {
     getHeadlineElements: () => {
       return this.headlineElements;
+    },
+    getSupportingTextElements: () => {
+      return this.supportingTextElements;
+    },
+    getDefaultElements: () => {
+      return this.defaultElements;
     },
     getInteractiveElement: () => this.listItemRoot,
   });
