@@ -128,10 +128,6 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       defaultValue: 'https://google.com',
       ui: textInput(),
     }),
-    new Knob('target', {
-      defaultValue: '',
-      ui: textInput(),
-    }),
     new Knob('link icon', {
       defaultValue: 'open_in_new',
       ui: textInput(),

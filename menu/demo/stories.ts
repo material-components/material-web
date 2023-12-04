@@ -38,7 +38,6 @@ export interface StoryKnobs {
   keepOpen: boolean;
   disabled: boolean;
   href: string;
-  target: string;
   'link icon': string;
 
   'sub-menu': void;
@@ -154,13 +153,8 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
     const items = fruitNames.map((name, index) => {
       return html` <md-menu-item
           id=${index}
+          target="_blank"
           .disabled=${knobs.disabled}
-          .target=${knobs.target as
-            | ''
-            | '_blank'
-            | '_parent'
-            | '_self'
-            | '_top'}
           .href=${knobs.href}>
           <div slot="headline">${name}</div>
           <md-icon slot="end"> ${knobs['link icon']} </md-icon>
