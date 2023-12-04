@@ -9,6 +9,7 @@ import '../../menu/menu.js';
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
@@ -129,6 +130,12 @@ export abstract class Select extends selectBaseClass {
   menuPositioning: 'absolute' | 'fixed' | 'popover' = 'popover';
 
   /**
+   * Clamps the menu-width to the width of the select.
+   */
+  @property({type: Boolean, attribute: 'clamp-menu-width'})
+  clampMenuWidth = false;
+
+  /**
    * The max time between the keystrokes of the typeahead select / menu behavior
    * before it clears the typeahead buffer.
    */
@@ -240,6 +247,10 @@ export abstract class Select extends selectBaseClass {
   @query('#label') private readonly labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
+  // Have to keep track of previous open because it's state and private and thus
+  // cannot be tracked in PropertyValues<this> map.
+  private prevOpen = this.open;
+  private selectWidth = 0;
 
   constructor() {
     super();
@@ -316,6 +327,17 @@ export abstract class Select extends selectBaseClass {
       this.initUserSelection();
     }
 
+    // We have just opened the menu.
+    // We are only able to check for the select's rect in `update()` instead of
+    // having to wait for `updated()` because the menu can never be open on
+    // first render since it is not settable and Lit SSR does not support click
+    // events which would open the menu.
+    if (this.prevOpen !== this.open && this.open) {
+      const selectRect = this.getBoundingClientRect();
+      this.selectWidth = selectRect.width;
+    }
+
+    this.prevOpen = this.open;
     super.update(changed);
   }
 
@@ -445,6 +467,12 @@ export abstract class Select extends selectBaseClass {
       part="menu"
       exportparts="focus-ring: menu-focus-ring"
       anchor="field"
+      style=${styleMap({
+        '--__menu-min-width': `${this.selectWidth}px`,
+        '--__menu-max-width': this.clampMenuWidth
+          ? `${this.selectWidth}px`
+          : undefined,
+      })}
       .open=${this.open}
       .quick=${this.quick}
       .positioning=${this.menuPositioning}

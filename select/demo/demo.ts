@@ -45,6 +45,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
         ],
       }),
     }),
+    new Knob('clampMenuWidth', {ui: boolInput(), defaultValue: false}),
     new Knob('error', {ui: boolInput(), defaultValue: false}),
 
     new Knob('md-select Slots', {ui: title()}),

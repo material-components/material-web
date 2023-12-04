@@ -69,6 +69,11 @@
     display: flex;
   }
 
+  md-menu {
+    min-width: var(--__menu-min-width, inherit);
+    max-width: var(--__menu-max-width, inherit);
+  }
+
   md-menu ::slotted(:not[disabled]) {
     cursor: pointer;
   }

@@ -143,7 +143,10 @@ function getUsedTokensFromRule(
     // Check them explicitly as well for properties like border-radius.
     for (const property of [...rule.style, ...CSS_SHORTHAND_PROPERTIES]) {
       const value = rule.style.getPropertyValue(property);
-      for (const match of value.matchAll(/--_[\w-]+/g)) {
+      // match css custom properties of --_ but not --__ as --_ are tokens and
+      // --__ are private custom properties used for our convenience not to be
+      // exposed to users.
+      for (const match of value.matchAll(/--_(?!_)[\w-]+/g)) {
         used.add(match[0]);
       }
     }
