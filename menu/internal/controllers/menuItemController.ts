@@ -223,10 +223,15 @@ export class MenuItemController implements ReactiveController {
       }
     }
 
-    if (this.host.keepOpen || event.defaultPrevented) return;
-    const keyCode = event.code;
+    if (event.defaultPrevented) return;
 
-    if (!event.defaultPrevented && isClosableKey(keyCode)) {
+    // If the host has keepOpen = true we should ignore clicks & Space/Enter,
+    // however we always maintain the ability to close a menu with a explicit
+    // `escape` keypress.
+    const keyCode = event.code;
+    if (this.host.keepOpen && keyCode !== 'Escape') return;
+
+    if (isClosableKey(keyCode)) {
       event.preventDefault();
       this.host.dispatchEvent(
         createDefaultCloseMenuEvent(this.host, {
