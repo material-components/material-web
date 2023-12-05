@@ -19,6 +19,8 @@ freshness: { owner: 'lizmitchell' reviewed: '2023-09-15' }
 
 ## Browsers
 
+<!-- go/mwc-browsers -->
+
 MWC aims to support the latest two major versions of browsers at the time of
 each release.
 
