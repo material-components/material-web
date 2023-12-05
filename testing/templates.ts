@@ -6,6 +6,7 @@
 
 import {TemplateResult} from 'lit';
 import {DirectiveResult} from 'lit/directive.js';
+import {ClassInfo} from 'lit/directives/class-map.js';
 import {ref} from 'lit/directives/ref.js';
 import {literal, StaticValue} from 'lit/static-html.js';
 
@@ -69,7 +70,7 @@ export enum State {
  * @template V Variant name types.
  */
 export class TemplateBuilder<
-  H extends Harness = never,
+  H extends Harness = Harness,
   V extends string = never,
 > {
   /**
@@ -359,7 +360,7 @@ export type TemplateStateCallback<H extends Harness> = (
  *
  * @template H The harness type.
  */
-export type TemplateProps<H extends Harness> = Partial<
+export type TemplateProps<H extends Harness = Harness> = Partial<
   Pick<HarnessElement<H>, Exclude<keyof HarnessElement<H>, keyof HTMLElement>>
 > &
   SharedTemplateProps;
@@ -372,4 +373,8 @@ export interface SharedTemplateProps {
    * The light DOM content of the element.
    */
   content?: TemplateResult;
+  /**
+   * Classes to add to the element.
+   */
+  classes?: ClassInfo;
 }
