@@ -10,9 +10,12 @@
 @mixin styles() {
   :host {
     border-radius: var(--_container-shape);
+    box-sizing: border-box;
     display: flex;
-    padding: 16px;
+    flex-direction: column;
     position: relative;
+    // Reset z-index for background elements.
+    z-index: 0;
   }
 
   // Separate element will be needed for disabled opacities (b/307361748)
@@ -21,10 +24,14 @@
     border-radius: inherit;
     inset: 0;
     position: absolute;
+    // Place behind content.
+    z-index: -1;
   }
 
   md-elevation {
     border-radius: inherit;
+    // Place behind content.
+    z-index: -1;
 
     @include elevation.theme(
       (
@@ -35,6 +42,7 @@
   }
 
   slot {
-    z-index: 0; // Place content above background elements
+    // Allow content to inherit card's border radius
+    border-radius: inherit;
   }
 }
