@@ -7,8 +7,10 @@
 // import 'jasmine'; (google3-only)
 
 import {
+  afterPropagation,
   dispatchActivationClick,
   isActivationClick,
+  listenForPropagation,
   redispatchEvent,
 } from './events.js';
 
@@ -179,6 +181,219 @@ describe('events', () => {
       instance.addEventListener('click', listener);
       dispatchActivationClick(innerEl);
       expect(listener).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('afterPropagation()', () => {
+    it('resolves synchronously after immediate propagation', () => {
+      listenForPropagation(instance, 'type');
+      const order: string[] = [];
+      instance.addEventListener('type', async (event) => {
+        order.push('first listener');
+        afterPropagation(event, () => {
+          order.push('first listener afterPropagation');
+        });
+      });
+
+      instance.addEventListener('type', () => {
+        order.push('second listener');
+      });
+
+      instance.dispatchEvent(new Event('type'));
+      expect(order)
+        .withContext('order')
+        .toEqual([
+          'first listener',
+          'second listener',
+          'first listener afterPropagation',
+        ]);
+    });
+
+    it('resolves synchronously on stopImmediatePropagation()', () => {
+      listenForPropagation(instance, 'type');
+      const order: string[] = [];
+
+      instance.addEventListener('type', async (event) => {
+        order.push('first listener');
+        afterPropagation(event, () => {
+          order.push('first listener afterPropagation');
+        });
+      });
+
+      instance.addEventListener('type', (event) => {
+        order.push('second listener');
+        event.stopImmediatePropagation();
+      });
+
+      // This listener should not fire when stopping immediate propagation.
+      const unexpectedThirdListener = jasmine.createSpy(
+        'unexpectedThirdListener',
+      );
+      instance.addEventListener('type', unexpectedThirdListener);
+
+      instance.dispatchEvent(new Event('type'));
+      expect(order)
+        .withContext('order')
+        .toEqual([
+          'first listener',
+          'second listener',
+          'first listener afterPropagation',
+        ]);
+
+      expect(unexpectedThirdListener)
+        .withContext(
+          'third listener that should not be called after stopPropagation',
+        )
+        .not.toHaveBeenCalled();
+    });
+
+    it('ensures event.defaultPrevented can be updated during immediate propagation', () => {
+      listenForPropagation(instance, 'type');
+
+      let notifiedThatEventDefaultPrevented = false;
+      instance.addEventListener('type', async (event) => {
+        afterPropagation(event, () => {
+          notifiedThatEventDefaultPrevented = event.defaultPrevented;
+        });
+      });
+
+      instance.addEventListener('type', (event) => {
+        event.preventDefault();
+      });
+
+      instance.dispatchEvent(new Event('type', {cancelable: true}));
+      expect(notifiedThatEventDefaultPrevented)
+        .withContext('notifiedThatEventDefaultPrevented')
+        .toBeTrue();
+    });
+
+    it('resolves synchronously after bubbling propagation', () => {
+      const parent = instance;
+      const child = document.createElement('div');
+      parent.append(child);
+
+      listenForPropagation(child, 'type');
+      const order: string[] = [];
+      child.addEventListener('type', async (event) => {
+        order.push('child first listener');
+        afterPropagation(event, () => {
+          order.push('child first listener afterPropagation');
+        });
+      });
+
+      child.addEventListener('type', (event) => {
+        order.push('child second listener');
+        event.stopPropagation();
+      });
+
+      // This listener should not fire when stopping immediate propagation.
+      const unexpectedParentListener = jasmine.createSpy(
+        'unexpectedParentListener',
+      );
+      instance.addEventListener('type', unexpectedParentListener);
+
+      child.dispatchEvent(new Event('type', {bubbles: true}));
+      expect(order)
+        .withContext('order')
+        .toEqual([
+          'child first listener',
+          'child second listener',
+          'child first listener afterPropagation',
+        ]);
+
+      expect(unexpectedParentListener)
+        .withContext(
+          'parent listener that should not be called after stopPropagation',
+        )
+        .not.toHaveBeenCalled();
+    });
+
+    it('resolves synchronously on stopPropagation()', () => {
+      const parent = instance;
+      const child = document.createElement('div');
+      parent.append(child);
+
+      listenForPropagation(child, 'type');
+      const order: string[] = [];
+      child.addEventListener('type', async (event) => {
+        order.push('child');
+        afterPropagation(event, () => {
+          order.push('child afterPropagation');
+        });
+      });
+
+      parent.addEventListener('type', () => {
+        order.push('parent');
+      });
+
+      child.dispatchEvent(new Event('type', {bubbles: true}));
+      expect(order)
+        .withContext('order')
+        .toEqual(['child', 'parent', 'child afterPropagation']);
+    });
+
+    it('ensures event.defaultPrevented can be updated during bubbling propagation', () => {
+      const parent = instance;
+      const child = document.createElement('div');
+      parent.append(child);
+
+      listenForPropagation(child, 'type');
+
+      let notifiedThatEventDefaultPrevented = false;
+      child.addEventListener('type', async (event) => {
+        afterPropagation(event, () => {
+          notifiedThatEventDefaultPrevented = event.defaultPrevented;
+        });
+      });
+
+      parent.addEventListener('type', (event) => {
+        event.preventDefault();
+      });
+
+      child.dispatchEvent(new Event('type', {bubbles: true, cancelable: true}));
+      expect(notifiedThatEventDefaultPrevented)
+        .withContext('notifiedThatEventDefaultPrevented')
+        .toBeTrue();
+    });
+
+    it('throws an error if listenForPropagation() was not called', () => {
+      // Do not set up with listenForPropagation()
+      instance.addEventListener('type', async (event) => {
+        expect(() => {
+          afterPropagation(event, () => {});
+        })
+          .withContext(
+            'calling afterPropagation() without listenForPropagation()',
+          )
+          .toThrow();
+      });
+
+      instance.dispatchEvent(new Event('type'));
+    });
+
+    it('supports setting up multiple types with listenForPropagation()', () => {
+      listenForPropagation(instance, 'type-one', 'type-two');
+      const typeOneAfterPropagationCallback = jasmine.createSpy(
+        'typeOneAfterPropagationCallback',
+      );
+      const typeTwoAfterPropagationCallback = jasmine.createSpy(
+        'typeTwoAfterPropagationCallback',
+      );
+      instance.addEventListener('type-one', async (event) => {
+        afterPropagation(event, typeOneAfterPropagationCallback);
+      });
+      instance.addEventListener('type-two', async (event) => {
+        afterPropagation(event, typeTwoAfterPropagationCallback);
+      });
+
+      instance.dispatchEvent(new Event('type-one'));
+      instance.dispatchEvent(new Event('type-two'));
+      expect(typeOneAfterPropagationCallback)
+        .withContext('afterPropagation() with type-one event')
+        .toHaveBeenCalled();
+      expect(typeTwoAfterPropagationCallback)
+        .withContext('afterPropagation() with type-two event')
+        .toHaveBeenCalled();
     });
   });
 });
