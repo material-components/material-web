@@ -82,6 +82,42 @@ describe('checkbox', () => {
       expect(inputHandler).toHaveBeenCalledTimes(1);
       expect(inputHandler).toHaveBeenCalledWith(jasmine.any(Event));
     });
+
+    it('checkbox state is updated during input event listeners', async () => {
+      const {harness} = await setupTest();
+      let state = false;
+      const inputHandler = jasmine
+        .createSpy('inputHandler')
+        .and.callFake(() => {
+          state = harness.element.checked;
+        });
+
+      harness.element.addEventListener('input', inputHandler);
+
+      await harness.clickWithMouse();
+      expect(inputHandler).withContext('input listener').toHaveBeenCalled();
+      expect(state)
+        .withContext('checkbox.checked during input listener')
+        .toBeTrue();
+    });
+
+    it('checkbox state is updated during change event listeners', async () => {
+      const {harness} = await setupTest();
+      let state = false;
+      const changeHandler = jasmine
+        .createSpy('changeHandler')
+        .and.callFake(() => {
+          state = harness.element.checked;
+        });
+
+      harness.element.addEventListener('change', changeHandler);
+
+      await harness.clickWithMouse();
+      expect(changeHandler).withContext('change listener').toHaveBeenCalled();
+      expect(state)
+        .withContext('checkbox.checked during change listener')
+        .toBeTrue();
+    });
   });
 
   describe('checked', () => {

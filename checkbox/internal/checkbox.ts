@@ -153,6 +153,7 @@ export class Checkbox extends checkboxBaseClass {
           ?required=${this.required}
           .indeterminate=${this.indeterminate}
           .checked=${this.checked}
+          @input=${this.handleInput}
           @change=${this.handleChange} />
 
         <div class="outline"></div>
@@ -167,11 +168,15 @@ export class Checkbox extends checkboxBaseClass {
     `;
   }
 
-  private handleChange(event: Event) {
+  private handleInput(event: Event) {
     const target = event.target as HTMLInputElement;
     this.checked = target.checked;
     this.indeterminate = target.indeterminate;
+    // <input> 'input' event bubbles and is composed, don't re-dispatch it.
+  }
 
+  private handleChange(event: Event) {
+    // <input> 'change' event is not composed, re-dispatch it.
     redispatchEvent(this, event);
   }
 
