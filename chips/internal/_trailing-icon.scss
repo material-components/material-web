@@ -28,10 +28,14 @@
     padding-inline-end: 0;
   }
 
-  .trailing.icon {
+  .trailing.icon, [name="trailing-icon"]::slotted(*) {
     color: var(--_trailing-icon-color);
     height: var(--_icon-size);
     width: var(--_icon-size);
+  }
+
+  [name="trailing-icon"]::slotted(md-icon) {
+     --md-icon-size: var(--_icon-size);
   }
 
   :where(:hover) .trailing.icon {
