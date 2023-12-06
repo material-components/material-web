@@ -34,8 +34,8 @@ export function renderRemoveButton({
       @focus=${focusListener}>
       <md-focus-ring part="trailing-focus-ring"></md-focus-ring>
       <md-ripple ?disabled=${disabled}></md-ripple>
-      <slot name="trailing-icon">
-        <svg class="trailing icon" viewBox="0 96 960 960" aria-hidden="true">
+      <slot name="trailing-icon" class="trailing icon">
+        <svg viewBox="0 96 960 960" aria-hidden="true">
           <path
             d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
         </svg>
