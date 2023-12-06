@@ -9,7 +9,7 @@ import '../../ripple/ripple.js';
 
 import {html, nothing} from 'lit';
 
-import {Chip} from './chip.js';
+import {MultiActionChip} from './multi-action-chip.js';
 
 interface RemoveButtonProperties {
   ariaLabel: string;
@@ -45,8 +45,8 @@ export function renderRemoveButton({
   `;
 }
 
-function handleRemoveClick(this: Chip, event: Event) {
-  if (this.disabled) {
+function handleRemoveClick(this: MultiActionChip, event: Event) {
+  if (this.disabled || this.hasSlottedTrailingIcon) {
     return;
   }
 

@@ -22,7 +22,7 @@ import {renderRemoveButton} from './trailing-icons.js';
  */
 export class FilterChip extends MultiActionChip {
   @property({type: Boolean}) elevated = false;
-  @property({type: Boolean}) removable = false;
+  @property({type: Boolean, attribute: 'has-trailing'}) hasTrailing = false;
   @property({type: Boolean, reflect: true}) selected = false;
 
   protected get primaryId() {
@@ -39,7 +39,7 @@ export class FilterChip extends MultiActionChip {
       ...super.getContainerClasses(),
       elevated: this.elevated,
       selected: this.selected,
-      'has-trailing': this.removable,
+      'has-trailing': this.hasTrailing,
     };
   }
 
@@ -72,7 +72,7 @@ export class FilterChip extends MultiActionChip {
   }
 
   protected override renderTrailingAction(focusListener: EventListener) {
-    if (this.removable) {
+    if (this.hasTrailing) {
       return renderRemoveButton({
         focusListener,
         ariaLabel: this.ariaLabelRemove,
