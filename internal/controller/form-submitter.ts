@@ -93,9 +93,9 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
         return;
       }
 
-      // Wait a microtask for event bubbling to complete.
+      // Wait a full task for event bubbling to complete.
       await new Promise<void>((resolve) => {
-        resolve();
+        setTimeout(resolve);
       });
 
       if (event.defaultPrevented) {
