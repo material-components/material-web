@@ -52,6 +52,15 @@ export abstract class Chip extends LitElement {
   @property() label = '';
 
   /**
+   * Only needed for SSR.
+   *
+   * Add this attribute when a chip has a `slot="icon"` to avoid a Flash Of
+   * Unstyled Content.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'has-icon'}) hasIcon =
+    false;
+
+  /**
    * The `id` of the action the primary focus ring and ripple are for.
    * TODO(b/310046938): use the same id for both elements
    */
@@ -90,6 +99,7 @@ export abstract class Chip extends LitElement {
   protected getContainerClasses(): ClassInfo {
     return {
       'disabled': this.disabled,
+      'has-icon': this.hasIcon,
     };
   }
 
@@ -109,7 +119,7 @@ export abstract class Chip extends LitElement {
   }
 
   protected renderLeadingIcon(): TemplateResult {
-    return html`<slot name="icon"></slot>`;
+    return html`<slot name="icon" @slotchange=${this.handleIconChange}></slot>`;
   }
 
   protected abstract renderPrimaryAction(content: unknown): unknown;
@@ -122,5 +132,10 @@ export abstract class Chip extends LitElement {
       <span class="label">${this.label}</span>
       <span class="touch"></span>
     `;
+  }
+
+  private handleIconChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    this.hasIcon = slot.assignedElements({flatten: true}).length > 0;
   }
 }

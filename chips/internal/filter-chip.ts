@@ -40,6 +40,7 @@ export class FilterChip extends MultiActionChip {
       elevated: this.elevated,
       selected: this.selected,
       'has-trailing': this.removable,
+      'has-icon': this.hasIcon || this.selected,
     };
   }
 
