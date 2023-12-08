@@ -64,5 +64,9 @@ export class MdBrandedFab extends Fab {
       'small': false,
     };
   }
-  static override styles: CSSResultOrNative[] = [sharedStyles, styles, forcedColors];
+  static override styles: CSSResultOrNative[] = [
+    sharedStyles,
+    styles,
+    forcedColors,
+  ];
 }

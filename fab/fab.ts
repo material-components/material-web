@@ -50,5 +50,9 @@ declare global {
  */
 @customElement('md-fab')
 export class MdFab extends Fab {
-  static override styles: CSSResultOrNative[] = [sharedStyles, styles, forcedColors];
+  static override styles: CSSResultOrNative[] = [
+    sharedStyles,
+    styles,
+    forcedColors,
+  ];
 }

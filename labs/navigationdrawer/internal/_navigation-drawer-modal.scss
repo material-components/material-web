@@ -70,12 +70,14 @@ $_reference: (
     top: 0;
     inline-size: 0;
 
-    transition: inline-size $_transition-duration $_curve $_delay,
+    transition:
+      inline-size $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_transition-duration;
   }
 
   .md3-navigation-drawer-modal--opened {
-    transition: inline-size $_transition-duration $_curve $_delay,
+    transition:
+      inline-size $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_delay;
   }
 
@@ -96,7 +98,8 @@ $_reference: (
     visibility: hidden;
     background-color: var(--_scrim-color);
 
-    transition: opacity $_transition-duration $_curve $_delay,
+    transition:
+      opacity $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_transition-duration;
   }
 
@@ -104,7 +107,8 @@ $_reference: (
     visibility: visible;
     opacity: var(--_scrim-opacity);
 
-    transition: opacity $_transition-duration $_curve $_delay,
+    transition:
+      opacity $_transition-duration $_curve $_delay,
       visibility $_delay $_curve $_delay;
   }
 }

@@ -70,7 +70,8 @@ $_reference: (
     overflow-y: auto;
     visibility: hidden;
 
-    transition: inline-size $transition-duration $curve $delay,
+    transition:
+      inline-size $transition-duration $curve $delay,
       visibility $default $curve $transition-duration;
   }
 
@@ -81,7 +82,8 @@ $_reference: (
   .md3-navigation-drawer--opened {
     visibility: visible;
 
-    transition: inline-size $transition-duration $curve $delay,
+    transition:
+      inline-size $transition-duration $curve $delay,
       visibility $default $curve $default;
   }
 

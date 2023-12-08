@@ -26,5 +26,9 @@ declare global {
  */
 @customElement('md-assist-chip')
 export class MdAssistChip extends AssistChip {
-  static override styles: CSSResultOrNative[] = [sharedStyles, elevatedStyles, styles];
+  static override styles: CSSResultOrNative[] = [
+    sharedStyles,
+    elevatedStyles,
+    styles,
+  ];
 }

@@ -186,13 +186,15 @@ describe('checkbox', () => {
 
   describe('form submission', () => {
     async function setupFormTest(propsInit: Partial<Checkbox> = {}) {
-      return await setupTest(html` <form>
-        <md-test-checkbox
-          .checked=${propsInit.checked === true}
-          .disabled=${propsInit.disabled === true}
-          .name=${propsInit.name ?? ''}
-          .value=${propsInit.value ?? ''}></md-test-checkbox>
-      </form>`);
+      return await setupTest(
+        html` <form>
+          <md-test-checkbox
+            .checked=${propsInit.checked === true}
+            .disabled=${propsInit.disabled === true}
+            .name=${propsInit.name ?? ''}
+            .value=${propsInit.value ?? ''}></md-test-checkbox>
+        </form>`,
+      );
     }
 
     it('does not submit if not checked', async () => {

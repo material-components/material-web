@@ -12,7 +12,10 @@ import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-import {EASING, createAnimationSignal} from '../../internal/motion/animation.js';
+import {
+  EASING,
+  createAnimationSignal,
+} from '../../internal/motion/animation.js';
 import {
   ListController,
   NavigableKeys,
@@ -467,7 +470,7 @@ export abstract class Menu extends LitElement {
         popover=${this.positioning === 'popover' ? 'manual' : nothing}>
         ${this.renderElevation()}
         <div class="items">
-          <div class="item-padding"> ${this.renderMenuItems()} </div>
+          <div class="item-padding">${this.renderMenuItems()}</div>
         </div>
       </div>
     `;

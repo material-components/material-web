@@ -196,8 +196,9 @@ export class NavDrawer extends SignalElement(LitElement) {
       width: 100%;
       /* Explicit height to make overflow work */
       height: calc(
-        100dvh - var(--catalog-top-app-bar-height) -
-          var(--_pane-margin-block-end)
+        100dvh - var(--catalog-top-app-bar-height) - var(
+            --_pane-margin-block-end
+          )
       );
       background-color: var(--md-sys-color-surface);
       border-radius: var(--catalog-shape-xl);
@@ -219,8 +220,9 @@ export class NavDrawer extends SignalElement(LitElement) {
         var(--_pane-margin-inline-end);
       width: 100%;
       max-width: calc(
-        100% - var(--_drawer-width) - var(--_pane-margin-inline-start) -
-          var(--_pane-margin-inline-end)
+        100% - var(--_drawer-width) - var(--_pane-margin-inline-start) - var(
+            --_pane-margin-inline-end
+          )
       );
     }
 
@@ -305,8 +307,9 @@ export class NavDrawer extends SignalElement(LitElement) {
 
       .panes {
         max-width: calc(
-          100% - var(--_pane-margin-inline-start) -
-            var(--_pane-margin-inline-end)
+          100% - var(--_pane-margin-inline-start) - var(
+              --_pane-margin-inline-end
+            )
         );
       }
 

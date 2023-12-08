@@ -93,7 +93,7 @@ const longText: MaterialStoryInit<StoryKnobs> = {
       <div class="container">
         <md-item class="nowrap">
           Item with a truncated headline and supporting text.
-          <div slot="supporting-text"> Supporting text. ${LOREM_IPSUM} </div>
+          <div slot="supporting-text">Supporting text. ${LOREM_IPSUM}</div>
           ${getKnobContent(knobs)}
         </md-item>
 
@@ -107,7 +107,7 @@ const longText: MaterialStoryInit<StoryKnobs> = {
 
         <md-item>
           Item that always shows long wrapping text.
-          <div slot="supporting-text"> Supporting text. ${LOREM_IPSUM} </div>
+          <div slot="supporting-text">Supporting text. ${LOREM_IPSUM}</div>
           ${getKnobContent(knobs, /* threeLines */ true)}
         </md-item>
       </div>
@@ -125,9 +125,9 @@ function getKnobContent(knobs: StoryKnobs, threeLines = false) {
   };
 
   const trailingText = knobs.trailingSupportingText
-    ? html`<div class=${classMap(classes)} slot="trailing-supporting-text"
-        >${knobs.trailingSupportingText}</div
-      >`
+    ? html`<div class=${classMap(classes)} slot="trailing-supporting-text">
+        ${knobs.trailingSupportingText}
+      </div>`
     : nothing;
 
   const leadingIcon = knobs.leadingIcon

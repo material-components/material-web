@@ -19,10 +19,14 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 $_mark-stroke: 2px;
 // The coordinates in an 18px viewBox of the bottom left corner of the
 // indeterminate icon. Y is negative to fix an issue in Safari (see below).
-$_indeterminate-bottom-left: 4px, -10px;
+$_indeterminate-bottom-left:
+  4px,
+  -10px;
 // The coordinates in an 18px viewBox of the bottom left corner of the
 // checkmark icon. Y is negative to fix an issue in Safari (see below).
-$_checkmark-bottom-left: 7px, -14px;
+$_checkmark-bottom-left:
+  7px,
+  -14px;
 
 @mixin theme($tokens) {
   $supported-tokens: $md-comp-checkbox-supported-tokens;

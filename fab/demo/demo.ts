@@ -14,12 +14,7 @@ import {
   materialInitsToStoryInits,
   setUpDemo,
 } from './material-collection.js';
-import {
-  boolInput,
-  Knob,
-  selectDropdown,
-  textInput,
-} from './index.js';
+import {boolInput, Knob, selectDropdown, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 

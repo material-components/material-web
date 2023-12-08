@@ -13,11 +13,11 @@ import '@material/web/select/filled-select.js';
 import '@material/web/select/select-option.js';
 import '@material/web/textfield/filled-text-field.js';
 
-import { css, html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { StyleInfo, styleMap } from 'lit/directives/style-map.js';
+import {css, html, LitElement} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
+import {StyleInfo, styleMap} from 'lit/directives/style-map.js';
 
-import { Knob, KnobUi } from '../knobs.js';
+import {Knob, KnobUi} from '../knobs.js';
 
 /**
  * A boolean Knob UI.
@@ -36,8 +36,7 @@ export function boolInput(): KnobUi<boolean> {
               touch-target="none"
               style="margin-inline-end: 16px;"
               .checked=${!!knob.latestValue}
-              @change="${valueChanged}"
-            >
+              @change="${valueChanged}">
             </md-checkbox>
             ${knob.name}
           </label>
@@ -72,8 +71,9 @@ export class KnobColorSelector extends LitElement {
       height: var(--_color-picker-size);
       margin: calc(
         (
-            var(--_component-size) - var(--_color-picker-size) -
-              var(--_color-picker-border-width) * 2
+            var(--_component-size) - var(--_color-picker-size) - var(
+                --_color-picker-border-width
+              ) * 2
           ) / 2
       );
       padding: 0;
@@ -112,7 +112,7 @@ export class KnobColorSelector extends LitElement {
 
   private internalValue = '';
 
-  @property({ type: Boolean }) hasAlpha = false;
+  @property({type: Boolean}) hasAlpha = false;
 
   set value(val: string) {
     const oldVal = this.internalValue;
@@ -120,7 +120,7 @@ export class KnobColorSelector extends LitElement {
     this.requestUpdate('value', oldVal);
   }
 
-  @property({ type: String, reflect: true })
+  @property({type: String, reflect: true})
   get value() {
     return this.internalValue;
   }
@@ -133,8 +133,7 @@ export class KnobColorSelector extends LitElement {
       <md-outlined-button
         @click=${() => {
           this.hasAlpha = !this.hasAlpha;
-        }}
-      >
+        }}>
         ${this.hasAlpha ? 'rgba' : 'rgb'}
       </md-outlined-button>
     </span>`;
@@ -145,8 +144,7 @@ export class KnobColorSelector extends LitElement {
       style=${styleMap(sharedTextFieldStyles)}
       .value=${this.value}
       @change=${this.propagateEvt}
-      @input=${this.onInput}
-    ></md-filled-text-field>`;
+      @input=${this.onInput}></md-filled-text-field>`;
   }
 
   private renderColorInput() {
@@ -161,8 +159,7 @@ export class KnobColorSelector extends LitElement {
         id="color-picker"
         .value=${this.value}
         @change=${this.propagateEvt}
-        @input=${this.onInput}
-      />
+        @input=${this.onInput} />
     `;
   }
 
@@ -182,7 +179,7 @@ export class KnobColorSelector extends LitElement {
 
   click() {
     const input = this.renderRoot!.querySelector(
-      'input,md-filled-text-field'
+      'input,md-filled-text-field',
     ) as HTMLElement;
     input.click();
     input.focus();
@@ -190,7 +187,7 @@ export class KnobColorSelector extends LitElement {
 
   focus() {
     const input = this.renderRoot!.querySelector(
-      'input,md-filled-text-field'
+      'input,md-filled-text-field',
     ) as HTMLElement;
     input.focus();
   }
@@ -230,8 +227,7 @@ export function colorPicker(opts?: ColorPickerOpts): KnobUi<string> {
             <knob-color-selector
               .value="${knob.latestValue ?? ''}"
               .hasAlpha="${config.hasAlpha}"
-              @input=${valueChanged}
-            ></knob-color-selector>
+              @input=${valueChanged}></knob-color-selector>
             ${knob.name}
           </label>
         </div>
@@ -277,8 +273,7 @@ export function textInput<T>(options?: TextInputOptions<T>): KnobUi<T> {
             <md-filled-text-field
               style=${styleMap(sharedTextFieldStyles)}
               .value="${(knob.latestValue ?? '') as unknown as string}"
-              @input="${valueChanged}"
-            ></md-filled-text-field>
+              @input="${valueChanged}"></md-filled-text-field>
             ${knob.name}
           </label>
         </div>
@@ -319,8 +314,7 @@ export function numberInput(opts?: NumberInputOpts): KnobUi<number> {
               type="number"
               step="${config.step}"
               .value="${knob.latestValue ? knob.latestValue.toString() : '0'}"
-              @input="${valueChanged}"
-            ></md-filled-text-field>
+              @input="${valueChanged}"></md-filled-text-field>
             ${knob.name}
           </label>
         </div>
@@ -340,7 +334,7 @@ export function button(): KnobUi<number> {
         const count = knob.latestValue ?? 0;
         onChange(count + 1);
       };
-      const styles = styleMap({ display: 'inline-block' });
+      const styles = styleMap({display: 'inline-block'});
       return html`
         <md-outlined-button outlined @click=${onClick} style=${styles}>
           ${knob.name}
@@ -375,8 +369,7 @@ export function radioSelector<T extends string>({
             name="${name}"
             value="${value}"
             @change="${valueChanged}"
-            ?checked="${knob.latestValue === option.value}"
-          ></md-radio>
+            ?checked="${knob.latestValue === option.value}"></md-radio>
           ${option.label}
         </label>`;
       });
@@ -404,8 +397,7 @@ export function selectDropdown<T extends string>({
       const listItems = options.map((option, index) => {
         return html`<md-select-option
           ?selected="${knob.latestValue === option.value}"
-          .value="${option.value}"
-        >
+          .value="${option.value}">
           <div slot="headline">${option.label}</div>
         </md-select-option>`;
       });
@@ -414,8 +406,7 @@ export function selectDropdown<T extends string>({
           <md-filled-select
             @change="${valueChanged}"
             menu-positioning="fixed"
-            style=${styleMap(sharedTextFieldStyles)}
-          >
+            style=${styleMap(sharedTextFieldStyles)}>
             ${listItems}
           </md-filled-select>
           ${knob.name}
@@ -432,7 +423,7 @@ export function selectDropdown<T extends string>({
 export function cssCustomProperty(
   knob: Knob<string>,
   val: string,
-  containerOfRenderedStory: HTMLElement
+  containerOfRenderedStory: HTMLElement,
 ) {
   const value = knob.isUnset ? knob.defaultValue : val;
   if (value) {

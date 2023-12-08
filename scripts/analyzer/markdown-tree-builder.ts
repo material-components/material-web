@@ -40,7 +40,7 @@ export class MarkdownTable {
   addRow(row: string[]) {
     if (row.length !== this.columnsInternal.length) {
       throw new Error(
-        `Row length (${row.length}) must match column length (${this.columnsInternal.length})`
+        `Row length (${row.length}) must match column length (${this.columnsInternal.length})`,
       );
     }
 

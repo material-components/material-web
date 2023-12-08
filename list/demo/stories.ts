@@ -100,9 +100,9 @@ function getKnobContent(knobs: StoryKnobs, threeLines = false) {
   };
 
   const trailingText = knobs.trailingSupportingText
-    ? html`<div class=${classMap(classes)} slot="trailing-supporting-text"
-        >${knobs.trailingSupportingText}</div
-      >`
+    ? html`<div class=${classMap(classes)} slot="trailing-supporting-text">
+        ${knobs.trailingSupportingText}
+      </div>`
     : nothing;
 
   const leadingIcon = knobs.leadingIcon

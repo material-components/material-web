@@ -50,7 +50,10 @@ class StoryImpl<
     return styles;
   }
 
-  constructor(init: StoryInit, private readonly collection: Collection) {
+  constructor(
+    init: StoryInit,
+    private readonly collection: Collection,
+  ) {
     this.name = init.name;
     this.description = init.description;
     this.id = init.id || this.name.replace(/ /g, '_').replace(/,/g, '');
@@ -119,7 +122,10 @@ export class Collection<
   private static readonly collectionsByName = new Map<string, Collection>();
   readonly knobs: KnobValues<T>;
 
-  constructor(readonly name: string, knobs: T = [] as unknown as T) {
+  constructor(
+    readonly name: string,
+    knobs: T = [] as unknown as T,
+  ) {
     Collection.collectionsByName.set(name, this);
     this.knobs = new KnobValues(knobs);
   }
@@ -175,7 +181,8 @@ export class Collection<
  * Describes a single configuration of a specific web UI component.
  */
 export interface LitStoryInit<
-  KV extends KnobValues<PolymorphicArrayOfKnobs> = KnobValues<PolymorphicArrayOfKnobs>,
+  KV extends
+    KnobValues<PolymorphicArrayOfKnobs> = KnobValues<PolymorphicArrayOfKnobs>,
 > extends BaseStoryInit {
   renderLit(knobs: KV): TemplateResult | Promise<TemplateResult>;
   litStyles?: CSSResult | CSSResult[];

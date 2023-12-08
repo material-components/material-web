@@ -33,8 +33,7 @@ export class NavigationDrawerModal extends LitElement {
     return html`
       <div
         class="md3-navigation-drawer-modal__scrim ${this.getScrimClasses()}"
-        @click="${this.handleScrimClick}">
-      </div>
+        @click="${this.handleScrimClick}"></div>
       <div
         aria-expanded=${ariaExpanded}
         aria-hidden=${ariaHidden}
@@ -42,8 +41,8 @@ export class NavigationDrawerModal extends LitElement {
         aria-modal=${ariaModal || nothing}
         class="md3-navigation-drawer-modal ${this.getRenderClasses()}"
         @keydown="${this.handleKeyDown}"
-        role="dialog"
-        ><div class="md3-elevation-overlay"></div>
+        role="dialog">
+        <div class="md3-elevation-overlay"></div>
         <div class="md3-navigation-drawer-modal__slot-content">
           <slot></slot>
         </div>

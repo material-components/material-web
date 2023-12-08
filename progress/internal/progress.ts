@@ -50,9 +50,9 @@ export abstract class Progress extends LitElement {
         aria-label="${ariaLabel || nothing}"
         aria-valuemin="0"
         aria-valuemax=${this.max}
-        aria-valuenow=${this.indeterminate ? nothing : this.value}
-        >${this.renderIndicator()}</div
-      >
+        aria-valuenow=${this.indeterminate ? nothing : this.value}>
+        ${this.renderIndicator()}
+      </div>
     `;
   }
 

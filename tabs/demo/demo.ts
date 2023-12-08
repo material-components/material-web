@@ -14,12 +14,7 @@ import {
   setUpDemo,
 } from './material-collection.js';
 import {MdTabs} from '@material/web/tabs/tabs.js';
-import {
-  boolInput,
-  Knob,
-  numberInput,
-  radioSelector,
-} from './index.js';
+import {boolInput, Knob, numberInput, radioSelector} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 

@@ -9,10 +9,7 @@ import '@material/web/fab/fab.js';
 import '@material/web/icon/icon.js';
 
 import {FabSize} from '@material/web/fab/fab.js';
-import {
-  labelStyles,
-  MaterialStoryInit,
-} from './material-collection.js';
+import {labelStyles, MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';
 
 /** Knob types for fab stories. */

@@ -94,21 +94,21 @@ const primary: MaterialStoryInit<StoryKnobs> = {
         </md-primary-tab>
       </md-tabs>
 
-      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one"
-        >Keyboard</div
-      >
-      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden
-        >Guitar</div
-      >
-      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden
-        >Drums</div
-      >
-      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden
-        >Bass</div
-      >
-      <div role="tabpanel" id="panel-five" aria-labelledby="tab-five" hidden
-        >Saxophone</div
-      >
+      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">
+        Keyboard
+      </div>
+      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden>
+        Guitar
+      </div>
+      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden>
+        Drums
+      </div>
+      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden>
+        Bass
+      </div>
+      <div role="tabpanel" id="panel-five" aria-labelledby="tab-five" hidden>
+        Saxophone
+      </div>
     `;
   },
 };
@@ -140,15 +140,15 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
       </md-tabs>
 
       <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">Travel</div>
-      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden
-        >Hotel</div
-      >
-      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden
-        >Activities</div
-      >
-      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden
-        >Food</div
-      >
+      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden>
+        Hotel
+      </div>
+      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden>
+        Activities
+      </div>
+      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden>
+        Food
+      </div>
     `;
   },
 };
@@ -232,15 +232,15 @@ const custom: MaterialStoryInit<StoryKnobs> = {
       </md-tabs>
 
       <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">Travel</div>
-      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden
-        >Hotel</div
-      >
-      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden
-        >Activities</div
-      >
-      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden
-        >Food</div
-      >
+      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden>
+        Hotel
+      </div>
+      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden>
+        Activities
+      </div>
+      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden>
+        Food
+      </div>
     `;
   },
 };
@@ -283,12 +283,12 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
           <md-secondary-tab aria-controls="forzen">Frozen</md-secondary-tab>
         </md-tabs>
 
-        <div role="tabpanel" id="star-wars" aria-label="Star Wars"
-          >Star Wars</div
-        >
-        <div role="tabpanel" id="avengers" aria-label="Avengers" hidden
-          >Avengers</div
-        >
+        <div role="tabpanel" id="star-wars" aria-label="Star Wars">
+          Star Wars
+        </div>
+        <div role="tabpanel" id="avengers" aria-label="Avengers" hidden>
+          Avengers
+        </div>
         <div role="tabpanel" id="jaws" aria-label="Jaws" hidden>Jaws</div>
         <div role="tabpanel" id="frozen" aria-label="Frozen" hidden>Frozen</div>
       </div>
@@ -316,15 +316,15 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         </md-tabs>
 
         <div role="tabpanel" id="yosemite" aria-label="Yosemite">Yosemite</div>
-        <div role="tabpanel" id="mona-lisa" aria-label="Mona Lisa" hidden
-          >Mona Lisa</div
-        >
-        <div role="tabpanel" id="swiss-alps" aria-label="Swiss Alps" hidden
-          >Swiss Alps</div
-        >
-        <div role="tabpanel" id="niagra-falls" aria-label="Niagra Falls" hidden
-          >Niagra Falls</div
-        >
+        <div role="tabpanel" id="mona-lisa" aria-label="Mona Lisa" hidden>
+          Mona Lisa
+        </div>
+        <div role="tabpanel" id="swiss-alps" aria-label="Swiss Alps" hidden>
+          Swiss Alps
+        </div>
+        <div role="tabpanel" id="niagra-falls" aria-label="Niagra Falls" hidden>
+          Niagra Falls
+        </div>
       </div>
 
       <div role="tabpanel" id="music" class="subtabs" aria-label="Music" hidden>
@@ -342,15 +342,15 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         </md-tabs>
 
         <div role="tabpanel" id="rock" aria-label="Rock">Rock</div>
-        <div role="tabpanel" id="ambient" aria-label="Ambient" hidden
-          >Ambient</div
-        >
-        <div role="tabpanel" id="sounds" aria-label="Soundscapes" hidden
-          >Soundscapes</div
-        >
-        <div role="tabpanel" id="noise" aria-label="White noise" hidden
-          >White Noise</div
-        >
+        <div role="tabpanel" id="ambient" aria-label="Ambient" hidden>
+          Ambient
+        </div>
+        <div role="tabpanel" id="sounds" aria-label="Soundscapes" hidden>
+          Soundscapes
+        </div>
+        <div role="tabpanel" id="noise" aria-label="White noise" hidden>
+          White Noise
+        </div>
       </div>
     `;
   },
