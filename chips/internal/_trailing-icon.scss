@@ -35,7 +35,7 @@
     width: var(--_icon-size);
   }
 
-  [name="trailing-icon"]::slotted(md-icon) {
+  [name="remove-trailing-icon"]::slotted(md-icon) {
      --md-icon-size: var(--_icon-size);
      color: inherit;
   }

@@ -42,15 +42,6 @@ export abstract class MultiActionChip extends Chip {
   protected abstract readonly primaryAction: HTMLElement | null;
   protected abstract readonly trailingAction: HTMLElement | null;
 
-  /**
-   * Getter used to determine if the user provided a trailing icon or not.
-   */
-  get hasSlottedTrailingIcon() {
-     const slot = this.shadowRoot.querySelector('slot[name="trailing-icon"]') as HTMLSlotElement;
-     // Default slot is not counted as one element.
-     return slot.assignedElements().length > 0;
-  }
-
   constructor() {
     super();
     this.handleTrailingActionFocus = this.handleTrailingActionFocus.bind(this);
