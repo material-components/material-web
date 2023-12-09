@@ -518,10 +518,13 @@ export abstract class Menu extends LitElement {
 
     if (event.relatedTarget) {
       // Don't close the menu if we are switching focus between menu,
-      // md-menu-item, and md-list or if the anchor was click focused.
+      // md-menu-item, and md-list or if the anchor was click focused, but check
+      // if length of pointerPath is 0 because that means something was at least
+      // clicked (shift+tab case).
       if (
         isElementInSubtree(event.relatedTarget, this) ||
-        isElementInSubtree(event.relatedTarget, anchorEl)
+        (this.pointerPath.length !== 0 &&
+          isElementInSubtree(event.relatedTarget, anchorEl))
       ) {
         return;
       }

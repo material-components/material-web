@@ -11,7 +11,8 @@
   .trailing.action {
     align-items: center;
     justify-content: center;
-    padding: 0 8px;
+    padding-inline-start: var(--_icon-label-space);
+    padding-inline-end: var(--_with-trailing-icon-trailing-space);
   }
 
   .trailing.action :is(md-ripple, md-focus-ring) {

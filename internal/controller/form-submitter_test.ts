@@ -68,6 +68,8 @@ describe('setupFormSubmitter()', () => {
     spyOn(form, 'requestSubmit');
     spyOn(form, 'reset');
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(form.requestSubmit).toHaveBeenCalled();
     expect(form.reset).not.toHaveBeenCalled();
@@ -80,6 +82,8 @@ describe('setupFormSubmitter()', () => {
     spyOn(form, 'requestSubmit');
     spyOn(form, 'reset');
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(form.requestSubmit).not.toHaveBeenCalled();
     expect(form.reset).toHaveBeenCalled();
@@ -100,6 +104,8 @@ describe('setupFormSubmitter()', () => {
     );
 
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(form.requestSubmit).not.toHaveBeenCalled();
   });
@@ -115,6 +121,8 @@ describe('setupFormSubmitter()', () => {
     form.addEventListener('submit', submitListener);
 
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(submitListener).toHaveBeenCalled();
     const event = submitListener.calls.argsFor(0)[0] as SubmitEvent;
@@ -133,6 +141,8 @@ describe('setupFormSubmitter()', () => {
     harness.element.value = 'bar';
 
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     const formData = Array.from(new FormData(form));
     expect(formData.length).withContext('formData.length').toBe(1);

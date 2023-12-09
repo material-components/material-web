@@ -49,6 +49,7 @@ $supported-tokens: (
   'hover-state-layer-color',
   'hover-state-layer-opacity',
   'hover-trailing-icon-color',
+  'icon-label-space',
   'icon-size',
   'label-text-color',
   'label-text-font',
@@ -56,6 +57,7 @@ $supported-tokens: (
   'label-text-size',
   'label-text-weight',
   'leading-icon-color',
+  'leading-space',
   'outline-color',
   'outline-width',
   'pressed-label-text-color',
@@ -82,6 +84,9 @@ $supported-tokens: (
   'selected-pressed-trailing-icon-color',
   'selected-trailing-icon-color',
   'trailing-icon-color',
+  'trailing-space',
+  'with-leading-icon-leading-space',
+  'with-trailing-icon-trailing-space',
   // go/keep-sorted end
 );
 
@@ -127,6 +132,15 @@ $_default: (
     md-comp-filter-chip.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: (
+      'leading-space': if($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if($exclude-hardcoded-values, null, 16px),
+      'icon-label-space': if($exclude-hardcoded-values, null, 8px),
+      'with-leading-icon-leading-space':
+        if($exclude-hardcoded-values, null, 8px),
+      'with-trailing-icon-trailing-space':
+        if($exclude-hardcoded-values, null, 8px),
+    ),
     $renamed-tokens: (
       // Remove "unselected-*" and "flat-*" prefix (b/275577569)
       'elevated-unselected-container-color': 'elevated-container-color',

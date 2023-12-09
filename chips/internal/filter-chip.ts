@@ -25,6 +25,15 @@ export class FilterChip extends MultiActionChip {
   @property({type: Boolean, attribute: 'has-trailing'}) hasTrailing = false;
   @property({type: Boolean, reflect: true}) selected = false;
 
+  /**
+   * Only needed for SSR.
+   *
+   * Add this attribute when a filter chip has a `slot="selected-icon"` to avoid
+   * a Flash Of Unstyled Content.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'has-selected-icon'})
+  hasSelectedIcon = false;
+
   protected get primaryId() {
     return 'button';
   }
@@ -39,7 +48,8 @@ export class FilterChip extends MultiActionChip {
       ...super.getContainerClasses(),
       elevated: this.elevated,
       selected: this.selected,
-      'has-trailing': this.hasTrailing,
+      'has-trailing': this.removable,
+      'has-icon': this.hasIcon || this.selected,
     };
   }
 
@@ -64,10 +74,12 @@ export class FilterChip extends MultiActionChip {
     }
 
     return html`
-      <svg class="checkmark" viewBox="0 0 18 18" aria-hidden="true">
-        <path
-          d="M6.75012 12.1274L3.62262 8.99988L2.55762 10.0574L6.75012 14.2499L15.7501 5.24988L14.6926 4.19238L6.75012 12.1274Z" />
-      </svg>
+      <slot name="selected-icon">
+        <svg class="checkmark" viewBox="0 0 18 18" aria-hidden="true">
+          <path
+            d="M6.75012 12.1274L3.62262 8.99988L2.55762 10.0574L6.75012 14.2499L15.7501 5.24988L14.6926 4.19238L6.75012 12.1274Z" />
+        </svg>
+      </slot>
     `;
   }
 

@@ -42,6 +42,7 @@ $supported-tokens: (
   'hover-leading-icon-color',
   'hover-state-layer-color',
   'hover-state-layer-opacity',
+  'icon-label-space',
   'icon-size',
   'label-text-color',
   'label-text-font',
@@ -49,12 +50,15 @@ $supported-tokens: (
   'label-text-size',
   'label-text-weight',
   'leading-icon-color',
+  'leading-space',
   'outline-color',
   'outline-width',
   'pressed-label-text-color',
   'pressed-leading-icon-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
+  'trailing-space',
+  'with-leading-icon-leading-space',
   // go/keep-sorted end
 );
 
@@ -86,6 +90,13 @@ $_default: (
     md-comp-suggestion-chip.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: (
+      'leading-space': if($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if($exclude-hardcoded-values, null, 16px),
+      'icon-label-space': if($exclude-hardcoded-values, null, 8px),
+      'with-leading-icon-leading-space':
+        if($exclude-hardcoded-values, null, 8px),
+    ),
     $renamed-tokens: (
       // Remove "flat-*" prefix (b/275577569)
       'flat-container-elevation': 'container-elevation',
