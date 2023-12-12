@@ -1,0 +1,97 @@
+---js
+{
+  pagination: {
+    data: "collections.component",
+    size: 1,
+    alias: "component",
+    before: components => {
+      // remove any components that don't have a dirname
+      return components.filter(component => component.data.dirname)
+    }
+  },
+  permalink: "components/{{component.data.page.fileSlug}}/stories/index.html",
+  fullHeightContent: "true",
+  collections: ["stories"],
+  eleventyComputed: {
+    dirname: ({component}) => component.data.dirname,
+  }
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Material Web - Stories {{component.data.name}}</title>
+    <!-- Set the color of the url bar on mobile to match theme -->
+    <meta name="theme-color" content="#251f16" />
+    <link
+      href="/images/favicon.svg"
+      rel="icon"
+      sizes="any"
+      type="image/svg+xml"
+    />
+    <!-- Inlines the global css in site/css/global.css -->
+    {% inlinecss "global.css" %}
+    <!-- MUST be loaded before any lit bundle. allows hydration of SSRd components -->
+    <script type="module" src="/js/ssr-utils/lit-hydrate-support.js"></script>
+    <!-- Inlines the material theming logic since we want to prevent FOUC -->
+    {% inlinejs "inline/apply-saved-theme.js" %}
+    <!-- Needed for intializing theme if this is the first page they ever visit -->
+    <script type="module" src="/js/pages/global.js"></script>
+    <noscript>
+      <link rel="stylesheet" href="/css/no-js.css" />
+    </noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
+    />
+    <!-- If JS is disabled just show the contents without the polyfill -->
+    <noscript
+      ><style>
+        body[dsd-pending] {
+          display: block !important;
+        }
+      </style>
+    </noscript>
+    <!-- Syncs theme with playground -->
+    <script type="module" src="/js/pages/components.js"></script>
+    <script type="module" src="/js/pages/stories.js"></script>
+    <script
+      type="module"
+      src="/js/hydration-entrypoints/playground-elements.js"
+    ></script>
+    <link rel="stylesheet" href="/css/syntax-highlight.css" />
+    <link rel="stylesheet" href="/css/stories.css" />
+  </head>
+  <!-- dsd-pending hides body until the polyfill has run on browsers that do not support DSD -->
+  <body dsd-pending>
+    <!-- Inlines the declarative shadow dom polyfill for FF since it's performance sensitive -->
+    {% inlinejs "ssr-utils/dsd-polyfill.js" %}
+    <playground-project
+      id="project"
+      project-src="/assets/stories/{{dirname}}/project.json"
+    >
+    </playground-project>
+    <drag-playground id="dragbar">
+      <playground-preview id="preview" project="project" slot="preview">
+        <md-circular-progress indeterminate></md-circular-progress>
+      </playground-preview>
+      <div slot="editor" id="editor-wrapper">
+        <playground-file-editor
+          id="editor"
+          project="project"
+          filename="stories.ts"
+          line-numbers
+          aria-hidden="true"
+        >
+          <md-circular-progress indeterminate></md-circular-progress>
+        </playground-file-editor>
+      </div>
+    </drag-playground>
+  </body>
+</html>

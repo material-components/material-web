@@ -1,0 +1,28 @@
+#dragbar {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#editor {
+  margin-block: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#editor-wrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100dvh;
+}
+
+#preview {
+  position: relative;
+}
+
+#preview md-circular-progress {
+  inset: 50%;
+  transform: translate(-50%, -50%);
+}

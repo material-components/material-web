@@ -50,6 +50,7 @@
 
 /* Formats the code boxes themselves */
 .example playground-file-editor,
+playground-file-editor,
 pre[class*='language-'] {
   padding: var(--__code-block-font-size);
   /* Remove the extra hard coded 3px from line number padding. */
