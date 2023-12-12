@@ -87,6 +87,7 @@ export abstract class Chip extends LitElement {
       <div class="container ${classMap(this.getContainerClasses())}">
         ${this.renderContainerContent()}
       </div>
+      <slot></slot>
     `;
   }
 

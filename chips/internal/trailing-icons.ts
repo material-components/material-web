@@ -9,7 +9,7 @@ import '../../ripple/ripple.js';
 
 import {html, nothing} from 'lit';
 
-import {MultiActionChip} from './multi-action-chip.js';
+import {Chip} from './chip.js';
 
 interface RemoveButtonProperties {
   ariaLabel: string;
@@ -34,18 +34,20 @@ export function renderRemoveButton({
       @focus=${focusListener}>
       <md-focus-ring part="trailing-focus-ring"></md-focus-ring>
       <md-ripple ?disabled=${disabled}></md-ripple>
-      <slot name="remove-trailing-icon" class="trailing icon">
-        <svg viewBox="0 96 960 960" aria-hidden="true">
-          <path
-            d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-        </svg>
-      </slot>
+      <span class="trailing icon">
+        <slot name="remove-trailing-icon">
+          <svg viewBox="0 96 960 960" aria-hidden="true">
+            <path
+              d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
+          </svg>
+        </slot>
+      </span>
       <span class="touch"></span>
     </button>
   `;
 }
 
-function handleRemoveClick(this: MultiActionChip, event: Event) {
+function handleRemoveClick(this: Chip, event: Event) {
   if (this.disabled) {
     return;
   }
