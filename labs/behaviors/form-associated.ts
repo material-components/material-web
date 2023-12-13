@@ -216,29 +216,55 @@ export function mixinFormAssociated<
       return this[internals].labels;
     }
 
-    // name attribute must be set synchronously
-    @property({reflect: true})
+    // Use @property for the `name` and `disabled` properties to add them to the
+    // `observedAttributes` array and trigger `attributeChangedCallback()`.
+    //
+    // We don't use Lit's default getter/setter (`noAccessor: true`) because
+    // the attributes need to be updated synchronously to work with synchronous
+    // form APIs, and Lit updates attributes async by default.
+    @property({noAccessor: true})
     get name() {
       return this.getAttribute('name') ?? '';
     }
     set name(name: string) {
-      const prev = this.name;
-      // Setting name to null or empty string does not remove the attribute.
+      // Note: setting name to null or empty does not remove the attribute.
       this.setAttribute('name', name);
-      // Explicit requestUpdate needed for Lit 2.0
-      this.requestUpdate('name', prev);
+      // We don't need to call `requestUpdate()` since it's called synchronously
+      // in `attributeChangedCallback()`.
     }
 
-    // disabled attribute must be set synchronously
-    @property({type: Boolean, reflect: true})
+    @property({type: Boolean, noAccessor: true})
     get disabled() {
       return this.hasAttribute('disabled');
     }
     set disabled(disabled: boolean) {
-      const prev = this.disabled;
       this.toggleAttribute('disabled', disabled);
-      // Explicit requestUpdate needed for Lit 2.0
-      this.requestUpdate('disabled', prev);
+      // We don't need to call `requestUpdate()` since it's called synchronously
+      // in `attributeChangedCallback()`.
+    }
+
+    override attributeChangedCallback(
+      name: string,
+      old: string | null,
+      value: string | null,
+    ) {
+      // Manually `requestUpdate()` for `name` and `disabled` when their
+      // attribute or property changes.
+      // The properties update their attributes, so this callback is invoked
+      // immediately when the properties are set. We call `requestUpdate()` here
+      // instead of letting Lit set the properties from the attribute change.
+      // That would cause the properties to re-set the attribute and invoke this
+      // callback again in a loop. This leads to stale state when Lit tries to
+      // determine if a property changed or not.
+      if (name === 'name' || name === 'disabled') {
+        // Disabled's value is only false if the attribute is missing and null.
+        const oldValue = name === 'disabled' ? old !== null : old;
+        // Trigger a lit update when the attribute changes.
+        this.requestUpdate(name, oldValue);
+        return;
+      }
+
+      super.attributeChangedCallback(name, old, value);
     }
 
     override requestUpdate(
