@@ -34,8 +34,8 @@ dependencies. We track three metrics:
 
 Component | gzip | minified | *% CSS* | Import
 --- | --- | --- | --- | ---
-**All** | **70.0kb** | 451.6kb | *66% CSS* | `@material/web/all.js`
-**Common** | **51.4kb** | 281.9kb | *54% CSS* | `@material/web/common.js`
+**All** | **70.1kb** | 451.9kb | *66% CSS* | `@material/web/all.js`
+**Common** | **51.5kb** | 282.2kb | *54% CSS* | `@material/web/common.js`
 **Button** | **8.0kb** | 46.3kb | *66% CSS* | 
  | 6.7kb | 27.4kb | *49% CSS* | `@material/web/button/elevated-button.js`
  | 6.6kb | 27.3kb | *49% CSS* | `@material/web/button/filled-button.js`
@@ -43,11 +43,11 @@ Component | gzip | minified | *% CSS* | Import
  | 6.4kb | 25.7kb | *48% CSS* | `@material/web/button/outlined-button.js`
  | 6.2kb | 24.2kb | *45% CSS* | `@material/web/button/text-button.js`
 **Checkbox** | **7.0kb** | 28.5kb | *43% CSS* | `@material/web/checkbox/checkbox.js`
-**Chips** | **9.9kb** | 60.1kb | *64% CSS* | 
+**Chips** | **10.0kb** | 60.4kb | *64% CSS* | 
  | 4.8kb | 16.4kb | *22% CSS* | `@material/web/chips/chip-set.js`
  | 6.3kb | 26.8kb | *51% CSS* | `@material/web/chips/assist-chip.js`
- | 7.8kb | 36.7kb | *56% CSS* | `@material/web/chips/filter-chip.js`
- | 7.3kb | 33.6kb | *54% CSS* | `@material/web/chips/input-chip.js`
+ | 7.9kb | 37.0kb | *55% CSS* | `@material/web/chips/filter-chip.js`
+ | 7.3kb | 33.7kb | *54% CSS* | `@material/web/chips/input-chip.js`
  | 6.4kb | 27.2kb | *51% CSS* | `@material/web/chips/suggestion-chip.js`
 **Dialog** | **4.2kb** | 15.2kb | *36% CSS* | `@material/web/dialog/dialog.js`
 **Divider** | **0.7kb** | 1.4kb | *39% CSS* | `@material/web/divider/divider.js`

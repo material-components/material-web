@@ -186,7 +186,8 @@
     "update-size": {
       "command": "node scripts/size/update-size.js",
       "dependencies": [
-        "build:scripts"
+        "build:scripts",
+        "build"
       ]
     }
   }
