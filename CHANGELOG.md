@@ -1,5 +1,60 @@
 # Changelog
 
+## [1.1.0](https://github.com/material-components/material-web/compare/v1.0.1...v1.1.0) (2023-12-12)
+
+
+### Features
+
+* **chips:** add filter chip `selected-icon` slot to customize checkmark ([89b4c2e](https://github.com/material-components/material-web/commit/89b4c2e752fd7055f35f8b743cad6861376f3d95))
+* **chips:** add tokens to customize padding ([c9e8de0](https://github.com/material-components/material-web/commit/c9e8de0207f158791d79629599682edf21d26498))
+* **chip:** trailing remove icon can now be customized ([b44b90c](https://github.com/material-components/material-web/commit/b44b90c82643be1d0ae9c24d2450081db13dc04d))
+* **chip:** trailing remove icon can now be customized ([49a6be1](https://github.com/material-components/material-web/commit/49a6be141b1f4a28c27b0982e0123ede7825a19d))
+* **chip:** trailing remove icon can now be customized ([76883cd](https://github.com/material-components/material-web/commit/76883cd420a058dfa9c71c887605e890233ff53b))
+* **menu,select:** allow menu and select typeahead to read default slot text content ([af49b64](https://github.com/material-components/material-web/commit/af49b64ab4e66872ff25d6ad767f9d37fce231b6))
+* **menu:** add document-level positioning ([2b591ca](https://github.com/material-components/material-web/commit/2b591ca759ec8180659476a072db1a8b83c1ae20)), closes [#5120](https://github.com/material-components/material-web/issues/5120)
+* **menu:** add popover functionality ([7859b39](https://github.com/material-components/material-web/commit/7859b39afef3de779225dfdb87470daf1f91fc27)), closes [#2023](https://github.com/material-components/material-web/issues/2023) [#5120](https://github.com/material-components/material-web/issues/5120)
+* **radio:** add required constraint validation ([b5686ea](https://github.com/material-components/material-web/commit/b5686ea4e0ad17717ef086bcdf7dfdeb565acc9b)), closes [#4316](https://github.com/material-components/material-web/issues/4316)
+* **select:** match menu width to select and introduce clamp-menu-width ([a5a40b6](https://github.com/material-components/material-web/commit/a5a40b6dd35a36e1d3f9a512d68369f3d639922d))
+* **switch:** add slot icons ([9255be1](https://github.com/material-components/material-web/commit/9255be1be587cdbb29d6cd99efefc512de4882db))
+
+
+### Bug Fixes
+
+* 5182: dialog icon padding error ([257e9c6](https://github.com/material-components/material-web/commit/257e9c6f6f47bb61155fd21729bbd8326a7156e2))
+* add `@material/web@nightly` publishes ([91c1221](https://github.com/material-components/material-web/commit/91c1221cef63b82e134949c7ff14b99653897602))
+* **behaviors:** add focusable behavior to labs ([d1ef1fe](https://github.com/material-components/material-web/commit/d1ef1febb648b7afd521e05123024f9e4c71bca0))
+* **behaviors:** validation not reporting when form tries to submit ([c53a419](https://github.com/material-components/material-web/commit/c53a4194e9796b5bd862ac166e66f0c16d4d8bcd))
+* **button:** allow overriding `cursor` using CSS ([798f5ae](https://github.com/material-components/material-web/commit/798f5ae179c63d22a83ad4a7bcf8bb085541f6a1))
+* **button:** allow overriding `min-width` and `user-select` ([1852238](https://github.com/material-components/material-web/commit/18522381d8038beeb28948bf993a679cc8feb02a))
+* **button:** allow overriding `padding` and `gap` ([5bb4a42](https://github.com/material-components/material-web/commit/5bb4a422de35e953a35c032a66949cacea1e0496))
+* **button:** don't show overflowing labels ([8dcb3f6](https://github.com/material-components/material-web/commit/8dcb3f62c7ccce09290211350e418c0089265305))
+* **button:** height increases when label wraps ([7cd657b](https://github.com/material-components/material-web/commit/7cd657b83dcb80107d8d4e3601491b259476742b))
+* **button:** labels not truncating, add support for multiline with `text-wrap: wrap` ([5d964ad](https://github.com/material-components/material-web/commit/5d964adcf9df7cfc4cc0b6108e378e6bc6b330fd))
+* **button:** sometimes submits form even when click listener prevents default ([9e3f080](https://github.com/material-components/material-web/commit/9e3f0801aab349504f88e9aa221d0fcb5baa248b)), closes [#5032](https://github.com/material-components/material-web/issues/5032)
+* **checkbox:** `checked` and `indeterminate` not updated during input event ([e78a52f](https://github.com/material-components/material-web/commit/e78a52f1e4f427cf328ab1e2373a7ba9ed1d4d8f))
+* **chip:** disabled attribute prevents click event. ([2dba006](https://github.com/material-components/material-web/commit/2dba006ddd49f71f362bfb7b3c1547a4f9ced8c2))
+* **chip:** disabled attribute prevents click event. ([d501ddd](https://github.com/material-components/material-web/commit/d501dddfd541a72ef50aff667cd06644801b1e90))
+* **chip:** make tap highlight transparent ([c3bfbaa](https://github.com/material-components/material-web/commit/c3bfbaaf4c055fc3bc68f6f28b229ac2aa8fe5bc))
+* Circular progress isn't circular in flex column display ([075119c](https://github.com/material-components/material-web/commit/075119c98fd71d3f4ec1b8c3e513e2c750e4550f))
+* **docs:** prepare docs generator for mixin version of lit analyzer ([5e0000a](https://github.com/material-components/material-web/commit/5e0000a495ae6dc836a2e7cedf9778830e326ad0))
+* **fab:** make tap highlight transparent ([4e8053d](https://github.com/material-components/material-web/commit/4e8053d15d8d06ed152844a1517a3f2313e37651))
+* **filter-chip:** reflect correct value on click event ([0b4d4c2](https://github.com/material-components/material-web/commit/0b4d4c2e07b4f6be2289733500fbba36de29a2d3))
+* **list-item:** hide headline overflow and fix width. ([4697407](https://github.com/material-components/material-web/commit/4697407cff0c8032c3a292aad24338df0927f865))
+* **list-item:** make tap highlight transparent ([cca0789](https://github.com/material-components/material-web/commit/cca0789826af0dae789f143d243c359aa23dd1ad))
+* **menu:** declare popover API types ([bf8d3f6](https://github.com/material-components/material-web/commit/bf8d3f6289c76bc708e5b487231939d02bfab3c4))
+* **menu:** declare popover property type on HTMLElement ([3d8c7ac](https://github.com/material-components/material-web/commit/3d8c7ac7f3780158f885f7ca647b658071c81556))
+* **menu:** escape not closing menus with submenus ([bd88880](https://github.com/material-components/material-web/commit/bd88880f78e54e88cb5083a74134ac4e130f3228))
+* **menu:** shift tab into anchor closes menu ([c4cbd36](https://github.com/material-components/material-web/commit/c4cbd3612c08a6143eb104db07eb90a1171fb23c))
+* **progress:** allow linear progress to fill flex containers ([a450e42](https://github.com/material-components/material-web/commit/a450e4288cdac6f61a13790f8820d57a7fb141a7)), closes [#5042](https://github.com/material-components/material-web/issues/5042)
+* **segmented-button:** make tap highlight transparent ([e4728bd](https://github.com/material-components/material-web/commit/e4728bd018e5640fb03fc49169805a51aabf0a5c))
+* **select,textfield:** native form validation shows error state ([6b5ab21](https://github.com/material-components/material-web/commit/6b5ab21332438dc971eb94b7da2271511bb99719))
+* **select:** focus() delegates properly, focus on reporting validity ([897d977](https://github.com/material-components/material-web/commit/897d9775c2143dd3b8d07deab35dfe90decd1336))
+* **select:** form failure no longer throws non-focusable error ([a5a6974](https://github.com/material-components/material-web/commit/a5a6974decb19b5ce42020c3c7c5386a8b203d76)), closes [#5078](https://github.com/material-components/material-web/issues/5078)
+* **select:** select menu render is over most stacking contexts with popover ([a2b3204](https://github.com/material-components/material-web/commit/a2b32042bd51c34853a9ca7b1c7901fb69270a44))
+* **tabs:** allow changing tab padding ([dd005df](https://github.com/material-components/material-web/commit/dd005df7806002a60fe9af136387ad4623b4ae8e))
+* **tabs:** fields intended to be accessed from templates must be exported ([b7be1cb](https://github.com/material-components/material-web/commit/b7be1cbbb4e7b08421d293ba89f364632822d113))
+* **text-field:** wrap text in textarea ([4fce487](https://github.com/material-components/material-web/commit/4fce487c812954da816c0bdb4ba5165902c2f3e9))
+
 ## [1.0.1](https://github.com/material-components/material-web/compare/v1.0.0...v1.0.1) (2023-10-18)
 
 
