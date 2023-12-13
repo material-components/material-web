@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/material-components/material-web/compare/v1.1.0...v1.1.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* formAssociated disabled attribute not working ([ab04299](https://github.com/material-components/material-web/commit/ab042992acd6702f11fd8f1d64bb1597cb701815))
+
 ## [1.1.0](https://github.com/material-components/material-web/compare/v1.0.1...v1.1.0) (2023-12-12)
 
 
