@@ -492,7 +492,6 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   @return (
     // TODO(b/279152429) remove selectors other than `:dir` when browser
     // support improves.
-    ':host-context([dir="rtl"]) #{$selector}#{$suffix}',
     ':host([dir="rtl"]) #{$selector}#{$suffix}',
     '#{$selector}:dir(rtl)#{$suffix}'
   );
