@@ -39,7 +39,7 @@
     }
 
     @media (forced-colors: active) {
-      background-color: Field; // Remove white background in Firefox HCM
+      background: none; // Remove background in Firefox HCM
     }
   }
 
