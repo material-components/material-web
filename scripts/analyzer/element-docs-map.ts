@@ -4,56 +4,31 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {COMPONENT_CUSTOM_ELEMENTS} from '../component-custom-elements.js';
+
 /**
  * A map of Markdown documentation file name to element entrypoints associated
  * with that documentation.
  */
-export const docsToElementMapping: {[key: string]: string[]} = {
-  'button.md': [
-    'button/elevated-button.ts',
-    'button/filled-button.ts',
-    'button/filled-tonal-button.ts',
-    'button/outlined-button.ts',
-    'button/text-button.ts',
-  ],
-  'checkbox.md': ['checkbox/checkbox.ts'],
-  'chip.md': [
-    'chips/chip-set.ts',
-    'chips/assist-chip.ts',
-    'chips/filter-chip.ts',
-    'chips/input-chip.ts',
-    'chips/suggestion-chip.ts',
-  ],
-  'dialog.md': ['dialog/dialog.ts'],
-  'divider.md': ['divider/divider.ts'],
-  'elevation.md': ['elevation/elevation.ts'],
-  'fab.md': ['fab/fab.ts', 'fab/branded-fab.ts'],
-  'focus-ring.md': ['focus/md-focus-ring.ts'],
-  'icon-button.md': [
-    'iconbutton/icon-button.ts',
-    'iconbutton/filled-icon-button.ts',
-    'iconbutton/filled-tonal-icon-button.ts',
-    'iconbutton/outlined-icon-button.ts',
-  ],
-  'icon.md': ['icon/icon.ts'],
-  'list.md': ['list/list.ts', 'list/list-item.ts'],
-  'menu.md': ['menu/menu.ts', 'menu/menu-item.ts', 'menu/sub-menu.ts'],
-  'progress.md': [
-    'progress/linear-progress.ts',
-    'progress/circular-progress.ts',
-  ],
-  'radio.md': ['radio/radio.ts'],
-  'ripple.md': ['ripple/ripple.ts'],
-  'slider.md': ['slider/slider.ts'],
-  'switch.md': ['switch/switch.ts'],
-  'tabs.md': ['tabs/tabs.ts', 'tabs/primary-tab.ts', 'tabs/secondary-tab.ts'],
-  'text-field.md': [
-    'textfield/filled-text-field.ts',
-    'textfield/outlined-text-field.ts',
-  ],
-  'select.md': [
-    'select/filled-select.ts',
-    'select/outlined-select.ts',
-    'select/select-option.ts',
-  ],
+export const docsToElementMapping: {[key: string]: readonly string[]} = {
+  'button.md': COMPONENT_CUSTOM_ELEMENTS.button,
+  'checkbox.md': COMPONENT_CUSTOM_ELEMENTS.checkbox,
+  'chip.md': COMPONENT_CUSTOM_ELEMENTS.chips,
+  'dialog.md': COMPONENT_CUSTOM_ELEMENTS.dialog,
+  'divider.md': COMPONENT_CUSTOM_ELEMENTS.divider,
+  'elevation.md': COMPONENT_CUSTOM_ELEMENTS.elevation,
+  'fab.md': COMPONENT_CUSTOM_ELEMENTS.fab,
+  'focus-ring.md': COMPONENT_CUSTOM_ELEMENTS.focus,
+  'icon-button.md': COMPONENT_CUSTOM_ELEMENTS.iconButton,
+  'icon.md': COMPONENT_CUSTOM_ELEMENTS.icon,
+  'list.md': COMPONENT_CUSTOM_ELEMENTS.list,
+  'menu.md': COMPONENT_CUSTOM_ELEMENTS.menu,
+  'progress.md': COMPONENT_CUSTOM_ELEMENTS.progress,
+  'radio.md': COMPONENT_CUSTOM_ELEMENTS.radio,
+  'ripple.md': COMPONENT_CUSTOM_ELEMENTS.ripple,
+  'slider.md': COMPONENT_CUSTOM_ELEMENTS.slider,
+  'switch.md': COMPONENT_CUSTOM_ELEMENTS.switch,
+  'tabs.md': COMPONENT_CUSTOM_ELEMENTS.tabs,
+  'text-field.md': COMPONENT_CUSTOM_ELEMENTS.textField,
+  'select.md': COMPONENT_CUSTOM_ELEMENTS.select,
 };
