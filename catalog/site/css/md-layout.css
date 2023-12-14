@@ -237,6 +237,15 @@ blockquote.important {
 }
 
 blockquote.important,
-  blockquote.important a {
+blockquote.important a {
   color: var(--md-sys-color-on-primary-container);
+}
+
+blockquote.warning {
+  background-color: var(--md-sys-color-error-container);
+}
+
+blockquote.warning,
+blockquote.warning a {
+  color: var(--md-sys-color-on-error-container);
 }

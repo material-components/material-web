@@ -243,7 +243,7 @@ to the bottom of the button with three items, Apple, Banana, and
 Cucumber."](images/menu/usage-popover.webp)
 
 <!-- no-catalog-end -->
-<!-- catalog-include "figures/menu/usage-fixed.html" -->
+<!-- catalog-include "figures/menu/usage-popover.html" -->
 
 ```html
 <!-- Note the lack of position: relative parent. -->
