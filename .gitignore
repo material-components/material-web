@@ -2,6 +2,7 @@ node_modules
 *.js
 !web-test-runner.config.js
 !css-to-ts.js
+!commitlint.config.js
 *.css
 *.css.ts
 *.map
