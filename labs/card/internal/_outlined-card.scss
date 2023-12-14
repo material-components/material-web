@@ -33,7 +33,8 @@
     }
   }
 
-  .container {
-    border: var(--_outline-width) solid var(--_outline-color);
+  .outline {
+    border-color: var(--_outline-color);
+    border-width: var(--_outline-width);
   }
 }

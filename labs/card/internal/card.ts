@@ -15,8 +15,9 @@ export class Card extends LitElement {
   protected override render() {
     return html`
       <md-elevation part="elevation"></md-elevation>
-      <div class="container"></div>
+      <div class="background"></div>
       <slot></slot>
+      <div class="outline"></div>
     `;
   }
 }
