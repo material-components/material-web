@@ -88,6 +88,14 @@ const EVENTS = [
 const TOUCH_DELAY_MS = 150;
 
 /**
+ * Used to detect if HCM is active. Events do not process during HCM when the
+ * ripple is not displayed.
+ */
+const FORCED_COLORS = isServer
+  ? null
+  : window.matchMedia('(forced-colors: active)');
+
+/**
  * A ripple component.
  */
 export class Ripple extends LitElement implements Attachable {
@@ -438,6 +446,11 @@ export class Ripple extends LitElement implements Attachable {
 
   /** @private */
   async handleEvent(event: Event) {
+    if (FORCED_COLORS?.matches) {
+      // Skip event logic since the ripple is `display: none`.
+      return;
+    }
+
     switch (event.type) {
       case 'click':
         this.handleClick();
