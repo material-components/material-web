@@ -41,6 +41,13 @@
         pressed-opacity: var(--_pressed-state-layer-opacity),
       )
     );
+
+    // b/316459034 - elevation should be removed
+    @include elevation.theme(
+      (
+        level: var(--_container-elevation),
+      )
+    );
   }
 
   md-focus-ring {
@@ -139,11 +146,6 @@
   }
   :host([active]) {
     color: var(--_active-label-text-color);
-    @include elevation.theme(
-      (
-        level: var(--_container-elevation),
-      )
-    );
 
     @include ripple.theme(
       (
