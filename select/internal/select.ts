@@ -39,10 +39,10 @@ import {
 } from '../../menu/internal/controllers/shared.js';
 import {TYPEAHEAD_RECORD} from '../../menu/internal/controllers/typeaheadController.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
+import {SelectOption} from './selectoption/select-option.js';
 import {
   createRequestDeselectionEvent,
   createRequestSelectionEvent,
-  SelectOption,
 } from './selectoption/selectOptionController.js';
 import {getSelectedItems, SelectOptionRecord} from './shared.js';
 

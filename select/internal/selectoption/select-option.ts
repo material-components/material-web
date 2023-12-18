@@ -19,8 +19,35 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {MenuItem} from '../../../menu/internal/controllers/menuItemController.js';
 
-import {SelectOption, SelectOptionController} from './selectOptionController.js';
+import {SelectOptionController} from './selectOptionController.js';
+
+/**
+ * The interface specific to a Select Option
+ */
+interface SelectOptionSelf {
+  /**
+   * The form value associated with the Select Option. (Note: the visual portion
+   * of the SelectOption is the headline defined in ListItem)
+   */
+  value: string;
+  /**
+   * Whether or not the SelectOption is selected.
+   */
+  selected: boolean;
+  /**
+   * The text to display in the select when selected. Defaults to the
+   * textContent of the Element slotted into the headline.
+   */
+  displayText: string;
+}
+
+/**
+ * The interface to implement for a select option. Additionally, the element
+ * must have `md-list-item` and `md-menu-item` attributes on the host.
+ */
+export type SelectOption = SelectOptionSelf & MenuItem;
 
 /**
  * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
