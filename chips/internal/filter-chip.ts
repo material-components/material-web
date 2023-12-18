@@ -10,7 +10,7 @@ import {html, nothing} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {redispatchEvent} from '../../internal/controller/events.js';
+import {redispatchEvent} from '../../internal/events/events.js';
 
 import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-icons.js';

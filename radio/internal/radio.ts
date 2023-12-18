@@ -11,7 +11,7 @@ import {html, isServer, LitElement} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {isActivationClick} from '../../internal/controller/events.js';
+import {isActivationClick} from '../../internal/events/events.js';
 import {
   createValidator,
   getValidityAnchor,

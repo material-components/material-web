@@ -20,7 +20,7 @@ import {
   dispatchActivationClick,
   isActivationClick,
   redispatchEvent,
-} from '../../internal/controller/events.js';
+} from '../../internal/events/events.js';
 import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {
   getFormValue,

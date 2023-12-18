@@ -16,7 +16,7 @@ import {
   dispatchActivationClick,
   isActivationClick,
   redispatchEvent,
-} from '../../internal/controller/events.js';
+} from '../../internal/events/events.js';
 import {
   createValidator,
   getValidityAnchor,

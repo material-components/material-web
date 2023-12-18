@@ -13,14 +13,14 @@ import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {
-  dispatchActivationClick,
-  isActivationClick,
-} from '../../internal/controller/events.js';
-import {
   FormSubmitter,
   FormSubmitterType,
   setupFormSubmitter,
 } from '../../internal/controller/form-submitter.js';
+import {
+  dispatchActivationClick,
+  isActivationClick,
+} from '../../internal/events/events.js';
 import {
   internals,
   mixinElementInternals,

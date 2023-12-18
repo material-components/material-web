@@ -12,7 +12,7 @@ import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {redispatchEvent} from '../../internal/controller/events.js';
+import {redispatchEvent} from '../../internal/events/events.js';
 
 import {
   DIALOG_DEFAULT_CLOSE_ANIMATION,
