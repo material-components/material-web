@@ -7,6 +7,7 @@
 import {html} from 'lit';
 import {property} from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
+import {when} from 'lit/directives/when.js';
 
 import {Progress} from './progress.js';
 
@@ -33,9 +34,10 @@ export class LinearProgress extends Progress {
         (this.indeterminate ? 1 : this.buffer / this.max) * 100
       }%)`,
     };
-
+    // only display dots when visible - this prevents invisible infinite animation
+    const showDots = !this.indeterminate && (this.buffer >= this.max || this.value >= this.max) ;
     return html`
-      <div class="dots"></div>
+      ${when(showDots, () => html`<div class="dots"></div>`)}
       <div class="inactive-track" style=${styleMap(dotStyles)}></div>
       <div class="bar primary-bar" style=${styleMap(progressStyles)}>
         <div class="bar-inner"></div>
