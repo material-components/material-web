@@ -13,7 +13,7 @@ ssrOnly: true
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-08-23' }
+freshness: { owner: 'lizmitchell' reviewed: '2023-12-18' }
 tag: 'docType:reference'
 *-->
 
@@ -261,7 +261,7 @@ Token                                           | Default value
 > Note: the active indicator width must be specified as a unit-less percentage
 > of the size.
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-circular-progress-indicator.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-circular-progress.scss)
     <!-- {.external} -->
 
 ### Circular progress example
@@ -320,7 +320,7 @@ Token                                          | Default value
 `--md-linear-progress-active-indicator-color`  | `--md-sys-color-primary`
 `--md-linear-progress-active-indicator-height` | `4px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-linear-progress-indicator.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-linear-progress.scss)
     <!-- {.external} -->
 
 ### Linear progress example
