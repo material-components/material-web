@@ -4,10 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html} from 'lit';
+import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
-import {when} from 'lit/directives/when.js';
 
 import {Progress} from './progress.js';
 
@@ -37,7 +36,7 @@ export class LinearProgress extends Progress {
     // only display dots when visible - this prevents invisible infinite animation
     const showDots = !this.indeterminate && (this.buffer >= this.max || this.value >= this.max) ;
     return html`
-      ${when(showDots, () => html`<div class="dots"></div>`)}
+      ${showDots ? html`<div class="dots"></div>` : nothing}
       <div class="inactive-track" style=${styleMap(dotStyles)}></div>
       <div class="bar primary-bar" style=${styleMap(progressStyles)}>
         <div class="bar-inner"></div>
