@@ -199,16 +199,12 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // rtl for active track clipping
-  @each $_rtl-selectors in _get-rtl-selectors('.track', '::after') {
-    #{$_rtl-selectors} {
-      clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
-    }
+  @include _get-rtl-selectors('.track', '::after') {
+    clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
   }
 
-  @each $_rtl-selectors in _get-rtl-selectors('.tickmarks', '::after') {
-    #{$_rtl-selectors} {
-      clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
-    }
+  @include _get-rtl-selectors('.tickmarks', '::after') {
+    clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
   }
 
   :host([disabled]) .track::after {
@@ -442,10 +438,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // in 'rtl', clip right side of "lesser" input
-  @each $_rtl-selector in _get-rtl-selectors('.ranged input.start') {
-    #{$_rtl-selector} {
-      clip-path: inset(0 0 0 $_clip-to-end);
-    }
+  @include _get-rtl-selectors('.ranged input.start') {
+    clip-path: inset(0 0 0 $_clip-to-end);
   }
 
   // clip right side of "end" input
@@ -454,10 +448,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // in 'rtl', clip left side of "greater" input
-  @each $_rtl-selector in _get-rtl-selectors('.ranged input.end') {
-    #{$_rtl-selector} {
-      clip-path: inset(0 $_clip-to-start 0 0);
-    }
+  @include _get-rtl-selectors('.ranged input.end') {
+    clip-path: inset(0 $_clip-to-start 0 0);
   }
 
   .onTop {
@@ -483,19 +475,26 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 }
 
-// Returns a list of rtl selectors to construct distinct rulesets. Seprating
-// rulesets ensure they are not dropped on browsers where one is not supported;
-// note, `:where` cannot be used to create compound selectors that contain
+// Creates a mixin of rtl selectors to construct distinct rulesets. If `:dir` is
+// supported, then it will take precedence over `:host-context` via a `@supports
+// not selector(:dir(rtl))` at-rule. Seprating rulesets ensure they are not
+// dropped on browsers where one is not supported;
+// Note, `:where` cannot be used to create compound selectors that contain
 // pseudo elements
 // (e.g. this does not work: `:where(:host([dir="rtl"]) .foo::after)`),
-@function _get-rtl-selectors($selector: '', $suffix: '') {
-  @return (
-    // TODO(b/279152429) remove selectors other than `:dir` when browser
-    // support improves.
-    ':host-context([dir="rtl"]) #{$selector}#{$suffix}',
-    ':host([dir="rtl"]) #{$selector}#{$suffix}',
-    '#{$selector}:dir(rtl)#{$suffix}'
-  );
+@mixin _get-rtl-selectors($selector: '', $suffix: '') {
+  $host-context-selectors: ':host-context([dir="rtl"]) #{$selector}#{$suffix}, :host([dir="rtl"]) #{$selector}#{$suffix}';
+  $dir-selector: '#{$selector}:dir(rtl)#{$suffix}';
+
+  @supports not selector(:dir(rtl)) {
+    #{$host-context-selectors} {
+      @content;
+    }
+  }
+
+  #{$dir-selector} {
+    @content;
+  }
 }
 
 // Returns a background-image with sized circular ticks of the given color.
@@ -536,11 +535,10 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     transform: translateX(var(--_x-translate));
   }
 
-  @each $_rtl-selectors
-    in _get-rtl-selectors('input.#{$start-or-end}', '::-webkit-slider-thumb')
-  {
-    #{$_rtl-selectors} {
-      transform: translateX(calc(-1 * var(--_x-translate)));
-    }
+  @include _get-rtl-selectors(
+    'input.#{$start-or-end}',
+    '::-webkit-slider-thumb'
+  ) {
+    transform: translateX(calc(-1 * var(--_x-translate)));
   }
 }
