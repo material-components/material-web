@@ -20,7 +20,7 @@ import {
 import {
   dispatchActivationClick,
   isActivationClick,
-} from '../../internal/events/events.js';
+} from '../../internal/events/form-label-activation.js';
 import {
   internals,
   mixinElementInternals,

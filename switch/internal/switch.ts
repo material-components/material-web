@@ -15,8 +15,8 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {
   dispatchActivationClick,
   isActivationClick,
-  redispatchEvent,
-} from '../../internal/events/events.js';
+} from '../../internal/events/form-label-activation.js';
+import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
   createValidator,
   getValidityAnchor,

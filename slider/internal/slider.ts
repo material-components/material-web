@@ -19,8 +19,8 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {
   dispatchActivationClick,
   isActivationClick,
-  redispatchEvent,
-} from '../../internal/events/events.js';
+} from '../../internal/events/form-label-activation.js';
+import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {
   getFormValue,

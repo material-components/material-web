@@ -15,7 +15,7 @@ import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
-import {redispatchEvent} from '../../internal/events/events.js';
+import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
   createValidator,
   getValidityAnchor,

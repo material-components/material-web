@@ -15,7 +15,7 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {redispatchEvent} from '../../internal/events/events.js';
+import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
   createValidator,
   getValidityAnchor,

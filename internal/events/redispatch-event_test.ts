@@ -6,11 +6,7 @@
 
 // import 'jasmine'; (google3-only)
 
-import {
-  dispatchActivationClick,
-  isActivationClick,
-  redispatchEvent,
-} from './events.js';
+import {redispatchEvent} from './redispatch-event.js';
 
 describe('events', () => {
   let instance: HTMLDivElement;
@@ -117,68 +113,6 @@ describe('events', () => {
       expect(redispatchedEvent.detail)
         .withContext('should copy event type-specific properties')
         .toBe('bar');
-    });
-  });
-
-  describe('isActivationClick()', () => {
-    it('returns true for click on listener', () => {
-      const listener = jasmine.createSpy('listener', isActivationClick);
-      listener.and.callThrough();
-      instance.addEventListener('click', listener);
-      instance.dispatchEvent(
-        new MouseEvent('click', {bubbles: true, composed: true}),
-      );
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(listener.calls.mostRecent().returnValue).toBe(true);
-    });
-
-    it('returns false for click on element listener shadowRoot', () => {
-      const listener = jasmine.createSpy('listener', isActivationClick);
-      listener.and.callThrough();
-      instance.addEventListener('click', listener);
-      const innerEl = document.createElement('div');
-      instance.shadowRoot!.append(innerEl);
-      innerEl.dispatchEvent(
-        new MouseEvent('click', {bubbles: true, composed: true}),
-      );
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(listener.calls.mostRecent().returnValue).toBe(false);
-    });
-
-    it('returns false for click on element listener child', () => {
-      const listener = jasmine.createSpy('listener', isActivationClick);
-      listener.and.callThrough();
-      instance.addEventListener('click', listener);
-      const slottedEl = document.createElement('div');
-      instance.append(slottedEl);
-
-      slottedEl.dispatchEvent(
-        new MouseEvent('click', {bubbles: true, composed: true}),
-      );
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(listener.calls.mostRecent().returnValue).toBe(false);
-    });
-  });
-
-  describe('dispatchActivationClick()', () => {
-    it('dispatches an event', () => {
-      const innerEl = document.createElement('div');
-      instance.shadowRoot!.append(innerEl);
-      const listener = jasmine.createSpy('listener');
-      innerEl.addEventListener('click', listener);
-      dispatchActivationClick(innerEl);
-      expect(listener).toHaveBeenCalledTimes(1);
-      dispatchActivationClick(innerEl);
-      expect(listener).toHaveBeenCalledTimes(2);
-    });
-
-    it('dispatches an event that cannot be heard outside dispatching scope', () => {
-      const innerEl = document.createElement('div');
-      instance.shadowRoot!.append(innerEl);
-      const listener = jasmine.createSpy('listener');
-      instance.addEventListener('click', listener);
-      dispatchActivationClick(innerEl);
-      expect(listener).toHaveBeenCalledTimes(0);
     });
   });
 });
