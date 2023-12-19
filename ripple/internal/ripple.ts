@@ -14,7 +14,7 @@ import {
 } from '../../internal/controller/attachable-controller.js';
 import {EASING} from '../../internal/motion/animation.js';
 
-const PRESS_GROW_MS = 450;
+const PRESS_GROW_MS = 200;
 const MINIMUM_PRESS_MS = 225;
 const INITIAL_ORIGIN_SCALE = 0.2;
 const PADDING = 10;
@@ -367,7 +367,7 @@ export class Ripple extends LitElement implements Attachable {
       {
         pseudoElement: PRESS_PSEUDO,
         duration: PRESS_GROW_MS,
-        easing: EASING.STANDARD,
+        easing: EASING.EMPHASIZED,
         fill: ANIMATION_FILL,
       },
     );

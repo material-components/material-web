@@ -91,6 +91,6 @@
   .pressed::after {
     // press ripple fade-in
     opacity: var(--_pressed-opacity);
-    transition-duration: 105ms;
+    transition-duration: 0ms;
   }
 }

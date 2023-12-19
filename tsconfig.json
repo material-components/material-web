@@ -29,6 +29,6 @@
   "exclude": [
     "catalog",
     "**/demo",
-    "scripts/"
+    "scripts/",
   ]
 }

@@ -9,6 +9,7 @@ import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {EASING} from "../../internal/motion/animation"
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
@@ -144,6 +145,29 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     return html`<button
       id="button"
       class="button"
+      style="height: 50px !important;"
+      @mousedown="${() => {
+        this.buttonElement.animate(
+            {
+              transform: ["scale(1)", "scale(0.9)"]
+            },
+            {
+              easing: EASING.EMPHASIZED_DECELERATE,
+              duration: 350
+            }
+        )
+      }}"
+      @mouseup="${() => {
+        this.buttonElement.animate(
+            {
+              transform: ["scale(0.9)", "scale(1)"]
+            },
+            {
+              easing: EASING.EMPHASIZED_DECELERATE,
+              duration: 350
+            }
+        )
+      }}"
       ?disabled=${this.disabled}
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
@@ -158,6 +182,29 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     return html`<a
       id="link"
       class="button"
+      style="height: 50px !important;"
+      @mousedown="${() => {
+        this.buttonElement.animate(
+            {
+              transform: ["scale(1)", "scale(0.9)"]
+            },
+            {
+              easing: EASING.EMPHASIZED_DECELERATE,
+              duration: 350
+            }
+        )
+      }}"
+      @mouseup="${() => {
+        this.buttonElement.animate(
+            {
+              transform: ["scale(0.9)", "scale(1)"]
+            },
+            {
+              easing: EASING.EMPHASIZED_DECELERATE,
+              duration: 350
+            }
+        )
+      }}"
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}"
