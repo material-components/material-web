@@ -120,8 +120,26 @@ export abstract class TextField extends textFieldBaseClass {
    */
   @property({attribute: 'error-text'}) errorText = '';
 
+  /**
+   * The floating Material label of the textfield component. It informs the user
+   * about what information is requested for a text field. It is aligned with
+   * the input text, is always visible, and it floats when focused or when text
+   * is entered into the textfield. This label also sets accessibilty labels,
+   * but the accessible label is overriden by `aria-label`.
+   *
+   * Learn more about floating labels from the Material Design guidelines:
+   * https://m3.material.io/components/text-fields/guidelines
+   */
   @property() label = '';
 
+  /**
+   * Indicates that the user must specify a value for the input before the
+   * owning form can be submitted and will render an error state when
+   * `reportValidity()` is invoked when value is empty. Additionally the
+   * floating label will render an asterisk `"*"` when true.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+   */
   @property({type: Boolean, reflect: true}) required = false;
 
   /**
@@ -216,6 +234,14 @@ export abstract class TextField extends textFieldBaseClass {
    */
   @property() pattern = '';
 
+  /**
+   * Defines the text displayed in the textfield when it has no value. Provides
+   * a brief hint to the user as to the expected type of data that should be
+   * entered into the control. Unlike `label`, the placeholder is not visible
+   * and does not float when the textfield has a value.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder
+   */
   @property({reflect: true, converter: stringConverter}) placeholder = '';
 
   /**
