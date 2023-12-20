@@ -457,35 +457,37 @@ export abstract class Select extends selectBaseClass {
 
   private renderMenu() {
     const ariaLabel = this.label || (this as ARIAMixinStrict).ariaLabel;
-    return html` <md-menu
-      id="listbox"
-      default-focus="none"
-      role="listbox"
-      tabindex="-1"
-      aria-label=${ariaLabel || nothing}
-      stay-open-on-focusout
-      part="menu"
-      exportparts="focus-ring: menu-focus-ring"
-      anchor="field"
-      style=${styleMap({
-        '--__menu-min-width': `${this.selectWidth}px`,
-        '--__menu-max-width': this.clampMenuWidth
-          ? `${this.selectWidth}px`
-          : undefined,
-      })}
-      .open=${this.open}
-      .quick=${this.quick}
-      .positioning=${this.menuPositioning}
-      .typeaheadDelay=${this.typeaheadDelay}
-      @opening=${this.handleOpening}
-      @opened=${this.redispatchEvent}
-      @closing=${this.redispatchEvent}
-      @closed=${this.handleClosed}
-      @close-menu=${this.handleCloseMenu}
-      @request-selection=${this.handleRequestSelection}
-      @request-deselection=${this.handleRequestDeselection}>
-      ${this.renderMenuContent()}
-    </md-menu>`;
+    return html`<div class="menu-wrapper">
+      <md-menu
+        id="listbox"
+        default-focus="none"
+        role="listbox"
+        tabindex="-1"
+        aria-label=${ariaLabel || nothing}
+        stay-open-on-focusout
+        part="menu"
+        exportparts="focus-ring: menu-focus-ring"
+        anchor="field"
+        style=${styleMap({
+          '--__menu-min-width': `${this.selectWidth}px`,
+          '--__menu-max-width': this.clampMenuWidth
+            ? `${this.selectWidth}px`
+            : undefined,
+        })}
+        .open=${this.open}
+        .quick=${this.quick}
+        .positioning=${this.menuPositioning}
+        .typeaheadDelay=${this.typeaheadDelay}
+        @opening=${this.handleOpening}
+        @opened=${this.redispatchEvent}
+        @closing=${this.redispatchEvent}
+        @closed=${this.handleClosed}
+        @close-menu=${this.handleCloseMenu}
+        @request-selection=${this.handleRequestSelection}
+        @request-deselection=${this.handleRequestDeselection}>
+        ${this.renderMenuContent()}
+      </md-menu>
+    </div>`;
   }
 
   private renderMenuContent() {
