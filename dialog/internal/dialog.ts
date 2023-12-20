@@ -114,6 +114,21 @@ export class Dialog extends LitElement {
   @state() private hasActions = false;
   @state() private hasIcon = false;
 
+  // See https://bugs.chromium.org/p/chromium/issues/detail?id=1512224
+  // Chrome v120 has a bug where escape keys do not trigger cancels. If we get
+  // a dialog "close" event that is triggered without a "cancel" after an escape
+  // keydown, then we need to manually trigger our closing logic.
+  //
+  // This bug occurs when pressing escape to close a dialog without first
+  // interacting with the dialog's content.
+  //
+  // Cleanup tracking:
+  // https://github.com/material-components/material-web/issues/5330
+  // This can be removed when full CloseWatcher support added and the above bug
+  // in Chromium is fixed to fire 'cancel' with one escape press and close with
+  // multiple.
+  private escapePressedWithoutCancel = false;
+
   constructor() {
     super();
     if (!isServer) {
@@ -243,6 +258,8 @@ export class Dialog extends LitElement {
         role=${this.type === 'alert' ? 'alertdialog' : nothing}
         @cancel=${this.handleCancel}
         @click=${this.handleDialogClick}
+        @close=${this.handleClose}
+        @keydown=${this.handleKeydown}
         .returnValue=${this.returnValue || nothing}>
         <div class="container" @click=${this.handleContentClick}>
           <div class="headline">
@@ -328,6 +345,7 @@ export class Dialog extends LitElement {
       return;
     }
 
+    this.escapePressedWithoutCancel = false;
     const preventDefault = !redispatchEvent(this, event);
     // We always prevent default on the original dialog event since we'll
     // animate closing it before it actually closes.
@@ -337,6 +355,30 @@ export class Dialog extends LitElement {
     }
 
     this.close();
+  }
+
+  private handleClose() {
+    if (!this.escapePressedWithoutCancel) {
+      return;
+    }
+
+    this.escapePressedWithoutCancel = false;
+    this.dialog?.dispatchEvent(new Event('cancel', {cancelable: true}));
+  }
+
+  private handleKeydown(event: KeyboardEvent) {
+    if (event.key !== 'Escape') {
+      return;
+    }
+
+    // An escape key was pressed. If a "close" event fires next without a
+    // "cancel" event first, then we know we're in the Chrome v120 bug.
+    this.escapePressedWithoutCancel = true;
+    // Wait a full task for the cancel/close event listeners to fire, then
+    // reset the flag.
+    setTimeout(() => {
+      this.escapePressedWithoutCancel = false;
+    });
   }
 
   private async animateDialog(animation: DialogAnimation) {
