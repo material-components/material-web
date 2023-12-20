@@ -154,6 +154,12 @@ export abstract class Select extends selectBaseClass {
   @property({attribute: 'display-text'}) displayText = '';
 
   /**
+   * Whether the menu should be aligned to the start or the end of the select's
+   * textbox.
+   */
+  @property({attribute: 'menu-align'}) menuAlign: 'start'|'end' = 'start';
+
+  /**
    * The value of the currently selected option.
    *
    * Note: For SSR, set `[selected]` on the requested option and `displayText`
@@ -478,6 +484,8 @@ export abstract class Select extends selectBaseClass {
         .quick=${this.quick}
         .positioning=${this.menuPositioning}
         .typeaheadDelay=${this.typeaheadDelay}
+        .anchorCorner=${this.menuAlign === 'start'? 'end-start' : 'end-end'}
+        .menuCorner=${this.menuAlign === 'start'? 'start-start' : 'start-end'}
         @opening=${this.handleOpening}
         @opened=${this.redispatchEvent}
         @closing=${this.redispatchEvent}

@@ -24,6 +24,7 @@ export interface StoryKnobs {
   supportingText: string;
   error: boolean;
   clampMenuWidth: boolean;
+  menuAlign: 'start' | 'end' | undefined;
   menuPositioning: 'absolute' | 'fixed' | 'popover' | undefined;
 
   'md-select Slots': void;
@@ -35,8 +36,10 @@ const selects: MaterialStoryInit<StoryKnobs> = {
   name: 'Selects',
   render(knobs) {
     return html`
-      <div style="display: flex; gap: 16px">
+      <div
+        style="display: flex; gap: 16px;flex-direction: column;align-items:end;border: 1px solid black;">
         <md-filled-select
+          style="min-width: 100px;width: fit-content;"
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}
@@ -44,6 +47,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
           .clampMenuWidth=${knobs.clampMenuWidth}
+          .menuAlign=${knobs.menuAlign!}
           .menuPositioning=${knobs.menuPositioning!}
           .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>
@@ -60,6 +64,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
           .clampMenuWidth=${knobs.clampMenuWidth}
+          .menuAlign=${knobs.menuAlign!}
           .menuPositioning=${knobs.menuPositioning!}
           .typeaheadDelay=${knobs.typeaheadDelay}
           .error=${knobs.error}>

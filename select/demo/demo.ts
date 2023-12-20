@@ -35,6 +35,15 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     new Knob('disabled', {ui: boolInput(), defaultValue: false}),
     new Knob('errorText', {ui: textInput(), defaultValue: ''}),
     new Knob('supportingText', {ui: textInput(), defaultValue: ''}),
+    new Knob('menuAlign', {
+      defaultValue: 'start' as const,
+      ui: selectDropdown<'start' | 'end'>({
+        options: [
+          {label: 'start', value: 'start'},
+          {label: 'end', value: 'end'},
+        ],
+      }),
+    }),
     new Knob('menuPositioning', {
       defaultValue: 'popover' as const,
       ui: selectDropdown<'absolute' | 'fixed' | 'popover'>({
