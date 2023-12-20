@@ -36,10 +36,8 @@ const selects: MaterialStoryInit<StoryKnobs> = {
   name: 'Selects',
   render(knobs) {
     return html`
-      <div
-        style="display: flex; gap: 16px;flex-direction: column;align-items:end;border: 1px solid black;">
+      <div style="display: flex; gap: 16px;">
         <md-filled-select
-          style="min-width: 100px;width: fit-content;"
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}

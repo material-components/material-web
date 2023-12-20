@@ -34,6 +34,7 @@ import {SelectValidator} from '../../labs/behaviors/validators/select-validator.
 import {getActiveItem} from '../../list/internal/list-navigation-helpers.js';
 import {
   CloseMenuEvent,
+  FocusState,
   isElementInSubtree,
   isSelectableKey,
 } from '../../menu/internal/controllers/shared.js';
@@ -157,7 +158,7 @@ export abstract class Select extends selectBaseClass {
    * Whether the menu should be aligned to the start or the end of the select's
    * textbox.
    */
-  @property({attribute: 'menu-align'}) menuAlign: 'start'|'end' = 'start';
+  @property({attribute: 'menu-align'}) menuAlign: 'start' | 'end' = 'start';
 
   /**
    * The value of the currently selected option.
@@ -248,6 +249,7 @@ export abstract class Select extends selectBaseClass {
 
   @state() private focused = false;
   @state() private open = false;
+  @state() private defaultFocus: FocusState = FocusState.NONE;
   @query('.field') private readonly field!: Field | null;
   @query('md-menu') private readonly menu!: Menu | null;
   @query('#label') private readonly labelEl!: HTMLElement;
@@ -466,7 +468,7 @@ export abstract class Select extends selectBaseClass {
     return html`<div class="menu-wrapper">
       <md-menu
         id="listbox"
-        default-focus="none"
+        .defaultFocus=${this.defaultFocus}
         role="listbox"
         tabindex="-1"
         aria-label=${ariaLabel || nothing}
@@ -484,8 +486,8 @@ export abstract class Select extends selectBaseClass {
         .quick=${this.quick}
         .positioning=${this.menuPositioning}
         .typeaheadDelay=${this.typeaheadDelay}
-        .anchorCorner=${this.menuAlign === 'start'? 'end-start' : 'end-end'}
-        .menuCorner=${this.menuAlign === 'start'? 'start-start' : 'start-end'}
+        .anchorCorner=${this.menuAlign === 'start' ? 'end-start' : 'end-end'}
+        .menuCorner=${this.menuAlign === 'start' ? 'start-start' : 'start-end'}
         @opening=${this.handleOpening}
         @opened=${this.redispatchEvent}
         @closing=${this.redispatchEvent}
@@ -515,6 +517,9 @@ export abstract class Select extends selectBaseClass {
     const isOpenKey =
       event.code === 'Space' ||
       event.code === 'ArrowDown' ||
+      event.code === 'ArrowUp' ||
+      event.code === 'End' ||
+      event.code === 'Home' ||
       event.code === 'Enter';
 
     // Do not open if currently typing ahead because the user may be typing the
@@ -522,6 +527,25 @@ export abstract class Select extends selectBaseClass {
     if (!typeaheadController.isTypingAhead && isOpenKey) {
       event.preventDefault();
       this.open = true;
+
+      // https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/#kbd_label
+      switch (event.code) {
+        case 'Space':
+        case 'ArrowDown':
+        case 'Enter':
+          // We will handle focusing last selected item in this.handleOpening()
+          this.defaultFocus = FocusState.NONE;
+          break;
+        case 'End':
+          this.defaultFocus = FocusState.LAST_ITEM;
+          break;
+        case 'ArrowUp':
+        case 'Home':
+          this.defaultFocus = FocusState.FIRST_ITEM;
+          break;
+        default:
+          break;
+      }
       return;
     }
 
@@ -633,6 +657,12 @@ export abstract class Select extends selectBaseClass {
   private async handleOpening(e: Event) {
     this.labelEl?.removeAttribute?.('aria-live');
     this.redispatchEvent(e);
+
+    // FocusState.NONE means we want to handle focus ourselves and focus the
+    // last selected item.
+    if (this.defaultFocus !== FocusState.NONE) {
+      return;
+    }
 
     const items = this.menu!.items as SelectOption[];
     const activeItem = getActiveItem(items)?.item;
