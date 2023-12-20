@@ -41,6 +41,7 @@
     "**/*.scss",
     "!css-to-ts.js",
     "!web-test-runner.config.js",
+    "!commitlint.config.js",
     "!**/test/**",
     "!**/testing/**",
     "!**/*_test.*",
@@ -95,6 +96,7 @@
         "**/*.d.ts",
         "!css-to-ts.js",
         "!web-test-runner.config.js",
+        "!commitlint.config.js",
         "!types/",
         "!catalog",
         "!scripts/"
