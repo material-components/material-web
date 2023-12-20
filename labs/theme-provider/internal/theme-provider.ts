@@ -52,13 +52,13 @@ const materialColors = {
     'on-error-container': MaterialDynamicColors.onErrorContainer,
 };
 
-export class MDMaterialThemeProvider extends LitElement {
+export class MaterialThemeProvider extends LitElement {
 
     @property({ attribute: 'source-color', type: String }) public sourceColor = '#E8DEF8';
 
     @property({ attribute: 'dark', type: Boolean }) public isDark = false;
 
-    private createStyleText(theme: Theme): string {
+    private createStyleTextFromTheme(theme: Theme): string {
         let styleString = '';
         for (const [k, v] of Object.entries(theme)) {
             styleString += `--md-sys-color-${k}: ${v};`;
@@ -68,12 +68,12 @@ export class MDMaterialThemeProvider extends LitElement {
     private createThemeFromSourceColor(color: string, isDark: boolean): Theme {
         const scheme = new SchemeContent(Hct.fromInt(argbFromHex(color)), isDark, 0);
         const theme: Record<string, any> = {};
-      
+
         for (const [key, value] of Object.entries(materialColors)) {
-          theme[key] = hexFromArgb(value.getArgb(scheme));
+            theme[key] = hexFromArgb(value.getArgb(scheme));
         }
         return theme as Theme;
-      }
+    }
 
     /**
      * Generate material tokens
@@ -83,7 +83,7 @@ export class MDMaterialThemeProvider extends LitElement {
         const theme = this.createThemeFromSourceColor(this.sourceColor, this.isDark);
 
         // Generate StyleText
-        const styleText = this.createStyleText(theme);
+        const styleText = this.createStyleTextFromTheme(theme);
 
         // Set styles to DOM's style
         this.setAttribute('style', styleText);
