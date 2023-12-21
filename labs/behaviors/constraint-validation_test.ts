@@ -6,19 +6,19 @@
 
 // import 'jasmine'; (google3-only)
 
-import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import {LitElement, html} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 
 import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
 } from './constraint-validation.js';
-import { mixinElementInternals } from './element-internals.js';
-import { getFormValue, mixinFormAssociated } from './form-associated.js';
-import { CheckboxValidator } from './validators/checkbox-validator.js';
-import { Validator } from './validators/validator.js';
-import { SelectState } from './validators/select-validator.js';
+import {mixinElementInternals} from './element-internals.js';
+import {getFormValue, mixinFormAssociated} from './form-associated.js';
+import {CheckboxValidator} from './validators/checkbox-validator.js';
+import {Validator} from './validators/validator.js';
+import {SelectState} from './validators/select-validator.js';
 
 describe('mixinConstraintValidation()', () => {
   const baseClass = mixinConstraintValidation(
@@ -27,8 +27,8 @@ describe('mixinConstraintValidation()', () => {
 
   @customElement('test-constraint-validation')
   class TestConstraintValidation extends baseClass {
-    @property({ type: Boolean }) checked = false;
-    @property({ type: Boolean }) required = false;
+    @property({type: Boolean}) checked = false;
+    @property({type: Boolean}) required = false;
 
     override render() {
       return html`<div id="root"></div>`;
