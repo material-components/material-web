@@ -18,7 +18,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 import {NavigationTabState} from './state.js';
 
 /**
- * TODO(b/265346501): add docs
+ * b/265346501 - add docs
  *
  * @fires navigation-tab-rendered {Event} Dispatched when the navigation tab's
  * DOM has rendered and custom element definition has loaded. --bubbles
@@ -117,7 +117,7 @@ export class NavigationTab extends LitElement implements NavigationTabState {
   }
 
   handleClick() {
-    // TODO(b/269772145): connect to ripple
+    // b/269772145 - connect to ripple
     this.dispatchEvent(
       new CustomEvent('navigation-tab-interaction', {
         detail: {state: this},

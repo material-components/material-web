@@ -15,7 +15,7 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-outlined-segmented-button-values();
-  // TODO(b/198759625): Remove spacing tokens once provided.
+  // b/198759625 - Remove spacing tokens once provided.
   $tokens: map.merge(
     $tokens,
     (
@@ -33,7 +33,7 @@
   .md3-segmented-button__outline {
     border-radius: inherit;
     border-style: solid;
-    // TODO(b/233762888): Move border-width and inset into theme after generating latest version of tokens.
+    // Move border-width and inset into theme.
     border-width: 1px;
     inset: 0px -0.5px;
     pointer-events: none;
