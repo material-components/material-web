@@ -36,12 +36,6 @@ export class Dialog extends LitElement {
     requestUpdateOnAriaChange(Dialog);
   }
 
-  /** @nocollapse */
-  static override shadowRootOptions = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
-
   /**
    * Opens the dialog when set to `true` and closes it when set to `false`.
    */
@@ -133,6 +127,26 @@ export class Dialog extends LitElement {
     super();
     if (!isServer) {
       this.addEventListener('submit', this.handleSubmit);
+
+      // We do not use `delegatesFocus: true` due to a Chromium bug with
+      // selecting text.
+      // See https://bugs.chromium.org/p/chromium/issues/detail?id=950357
+      //
+      // Material requires using focus trapping within the dialog (see
+      // b/314840853 for the bug to add it). This would normally mean we don't
+      // care about delegating focus since the `<dialog>` never receives it.
+      // However, we still need to handle situations when a user has not
+      // provided an focusable child in the content. When that happens, the
+      // `<dialog>` itself is focused.
+      //
+      // Listen to focus/blur instead of focusin/focusout since those can bubble
+      // from content.
+      this.addEventListener('focus', () => {
+        this.dialog?.focus();
+      });
+      this.addEventListener('blur', () => {
+        this.dialog?.blur();
+      });
     }
   }
 
