@@ -34,8 +34,12 @@ export class LinearProgress extends Progress {
       }%)`,
     };
 
+    // Only display dots when visible - this prevents invisible infinite
+    // animation.
+    const hideDots =
+      this.indeterminate || this.buffer >= this.max || this.value >= this.max;
     return html`
-      <div class="dots"></div>
+      <div class="dots" ?hidden=${hideDots}></div>
       <div class="inactive-track" style=${styleMap(dotStyles)}></div>
       <div class="bar primary-bar" style=${styleMap(progressStyles)}>
         <div class="bar-inner"></div>

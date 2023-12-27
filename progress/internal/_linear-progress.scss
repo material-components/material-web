@@ -114,6 +114,12 @@ $_indeterminate-duration: 2s;
     z-index: -1; // Place behind tracks for Safari
   }
 
+  // dots are hidden when indeterminate or when there is no visible buffer to
+  // prevent infinite invisible animation.
+  .dots[hidden] {
+    display: none;
+  }
+
   // indeterminate
   .indeterminate .bar {
     transition: none;
@@ -129,10 +135,6 @@ $_indeterminate-duration: 2s;
     inset-inline-start: -54.8889%;
     // this is display none by default.
     display: block;
-  }
-
-  .indeterminate .dots {
-    display: none;
   }
 
   .indeterminate .primary-bar {
