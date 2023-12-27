@@ -585,6 +585,10 @@ export abstract class TextField extends textFieldBaseClass {
     // tslint:disable-next-line:no-any
     const autocomplete = this.autocomplete as any;
 
+    // These properties may be set to null if the attribute is removed, and
+    // `null > -1` is incorrectly `true`.
+    const hasMaxLength = (this.maxLength ?? -1) > -1;
+    const hasMinLength = (this.minLength ?? -1) > -1;
     if (this.type === 'textarea') {
       return html`
         <textarea
@@ -595,8 +599,8 @@ export abstract class TextField extends textFieldBaseClass {
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
           ?disabled=${this.disabled}
-          maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
-          minlength=${this.minLength > -1 ? this.minLength : nothing}
+          maxlength=${hasMaxLength ? this.maxLength : nothing}
+          minlength=${hasMinLength ? this.minLength : nothing}
           placeholder=${this.placeholder || nothing}
           ?readonly=${this.readOnly}
           ?required=${this.required}
@@ -631,9 +635,9 @@ export abstract class TextField extends textFieldBaseClass {
           ?disabled=${this.disabled}
           inputmode=${inputMode || nothing}
           max=${(this.max || nothing) as unknown as number}
-          maxlength=${this.maxLength > -1 ? this.maxLength : nothing}
+          maxlength=${hasMaxLength ? this.maxLength : nothing}
           min=${(this.min || nothing) as unknown as number}
-          minlength=${this.minLength > -1 ? this.minLength : nothing}
+          minlength=${hasMinLength ? this.minLength : nothing}
           pattern=${this.pattern || nothing}
           placeholder=${this.placeholder || nothing}
           ?readonly=${this.readOnly}

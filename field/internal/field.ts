@@ -47,11 +47,16 @@ export class Field extends LitElement {
   private readonly slottedAriaDescribedBy!: HTMLElement[];
 
   private get counterText() {
-    if (this.count < 0 || this.max < 0) {
+    // Count and max are typed as number, but can be set to null when Lit removes
+    // their attributes. These getters coerce back to a number for calculations.
+    const countAsNumber = this.count ?? -1;
+    const maxAsNumber = this.max ?? -1;
+    // Counter does not show if count is negative, or max is negative or 0.
+    if (countAsNumber < 0 || maxAsNumber <= 0) {
       return '';
     }
 
-    return `${this.count} / ${this.max}`;
+    return `${countAsNumber} / ${maxAsNumber}`;
   }
 
   private get supportingOrErrorText() {

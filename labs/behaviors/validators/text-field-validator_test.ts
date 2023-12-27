@@ -89,6 +89,38 @@ describe('TextFieldValidator', () => {
       expect(validity.valueMissing).withContext('valueMissing').toBeFalse();
       expect(validationMessage).withContext('validationMessage').toBe('');
     });
+
+    it('does not throw an error when setting minlength and maxlength out of bounds', () => {
+      type WritableInputState = {
+        -readonly [K in keyof InputState]: InputState[K];
+      };
+
+      const state: WritableInputState = {
+        type: 'text',
+        value: '',
+        required: true,
+        pattern: '',
+        min: '',
+        max: '',
+        minLength: 5,
+        maxLength: 10,
+        step: '',
+      };
+
+      const validator = new TextFieldValidator(() => ({
+        state,
+        renderedControl: null,
+      }));
+
+      // Compute initial validity with valid minlength of 5 and maxlength of 10
+      validator.getValidity();
+      // set to something that is out of bounds of current maxlength="10"
+      state.minLength = 20;
+
+      expect(() => {
+        validator.getValidity();
+      }).not.toThrow();
+    });
   });
 
   describe('type="email"', () => {
