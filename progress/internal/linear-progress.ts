@@ -31,14 +31,15 @@ export class LinearProgress extends Progress {
     };
     const dotStyles = {
       transform: `scaleX(${
-        (this.indeterminate || this.buffer < 0 ? 1 : this.buffer / this.max) * 100
+        // == null is used to check for both null and undefined when buffer attribute is removed
+        (this.indeterminate || this.buffer == null || this.buffer < 0 ? 1 : this.buffer / this.max) * 100
       }%)`,
     };
 
     // Only display dots when visible - this prevents invisible infinite
     // animation.
     const hideDots =
-      this.indeterminate || this.buffer < 0 || this.buffer >= this.max || this.value >= this.max;
+      this.indeterminate || this.buffer == null || this.buffer < 0 || this.buffer >= this.max || this.value >= this.max;
     return html`
       <div class="dots" ?hidden=${hideDots}></div>
       <div class="inactive-track" style=${styleMap(dotStyles)}></div>
