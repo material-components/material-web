@@ -98,7 +98,7 @@
     &.md3-segmented-button--selected.md3-segmented-button--with-label.md3-segmented-button--with-checkmark,
     &.md3-segmented-button--selected.md3-segmented-button--without-label.md3-segmented-button--with-checkmark {
       .md3-segmented-button__graphic {
-        // TODO(b/198759625): Use padding token instead of hardcoded 8px value.
+        // b/198759625 - Use padding token instead of hardcoded 8px value.
         width: calc(var(--_icon-size) + 8px);
       }
     }

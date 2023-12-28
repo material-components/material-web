@@ -7,7 +7,7 @@
 import {SegmentedButtonSet} from './segmented-button-set.js';
 
 /**
- * TODO(b/265346443): add docs
+ * b/265346443 - add docs
  */
 export class OutlinedSegmentedButtonSet extends SegmentedButtonSet {
   protected override getRenderClasses() {

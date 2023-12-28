@@ -18,7 +18,7 @@ import {NavigationTabInteractionEvent} from './constants.js';
 import {NavigationBarState} from './state.js';
 
 /**
- * TODO(b/265346501): add docs
+ * b/265346501 - add docs
  *
  * @fires navigation-bar-activated {CustomEvent<tab: NavigationTab, activeIndex: number>}
  * Dispatched whenever the `activeIndex` changes. --bubbles --composed
