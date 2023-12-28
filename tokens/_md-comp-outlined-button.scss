@@ -78,7 +78,7 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: (
-      // TODO(b/198759625): Remove once spacing tokens are formally added
+      // b/198759625 - Remove once spacing tokens are formally added
       // go/keep-sorted start
       'leading-space': if($exclude-hardcoded-values, null, 24px),
       'trailing-space': if($exclude-hardcoded-values, null, 24px),
