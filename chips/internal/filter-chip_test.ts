@@ -66,5 +66,38 @@ describe('Filter chip', () => {
       await harness.clickWithMouse();
       expect(handler).toHaveBeenCalledTimes(0);
     });
+
+    it('always reverts value on preventDefault() even if selected is changed in listener', async () => {
+      const {chip, harness} = await setupTest();
+
+      chip.addEventListener(
+        'click',
+        (event) => {
+          event.preventDefault();
+          chip.selected = false;
+        },
+        {once: true},
+      );
+
+      await harness.clickWithMouse();
+      expect(chip.selected)
+        .withContext('chip.selected reverts to false')
+        .toBeFalse();
+
+      chip.selected = true;
+      chip.addEventListener(
+        'click',
+        (event) => {
+          event.preventDefault();
+          chip.selected = false;
+        },
+        {once: true},
+      );
+
+      await harness.clickWithMouse();
+      expect(chip.selected)
+        .withContext('chip.selected reverts to true')
+        .toBeTrue();
+    });
   });
 });

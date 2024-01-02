@@ -108,11 +108,17 @@ export class FilterChip extends MultiActionChip {
       return;
     }
 
+    // Store prevValue to revert in case `chip.selected` is changed during an
+    // event listener.
+    const prevValue = this.selected;
     this.selected = !this.selected;
 
     const preventDefault = !redispatchEvent(this, event);
     if (preventDefault) {
-      this.selected = !this.selected;
+      // We should not do `this.selected = !this.selected`, since a client
+      // click listener could change its value. Instead, always revert to the
+      // original value.
+      this.selected = prevValue;
       return;
     }
   }
