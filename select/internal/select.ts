@@ -725,7 +725,8 @@ export abstract class Select extends selectBaseClass {
    * @return Whether the last selected option has changed.
    */
   private selectItem(item: SelectOption) {
-    this.lastSelectedOptionRecords.forEach(([option]) => {
+    const selectedOptions = this.getSelectedOptions() ?? [];
+    selectedOptions.forEach(([option]) => {
       if (item !== option) {
         option.selected = false;
       }
