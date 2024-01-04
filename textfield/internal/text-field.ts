@@ -227,6 +227,11 @@ export abstract class TextField extends textFieldBaseClass {
   @property({type: Number}) minLength = -1;
 
   /**
+   * When true, hide the spinner for `type="number"` text fields.
+   */
+  @property({type: Boolean, attribute: 'no-spinner'}) noSpinner = false;
+
+  /**
    * A regular expression that the text field's value must match to pass
    * constraint validation.
    *
@@ -514,6 +519,7 @@ export abstract class TextField extends textFieldBaseClass {
       'disabled': this.disabled,
       'error': !this.disabled && this.hasError,
       'textarea': this.type === 'textarea',
+      'no-spinner': this.noSpinner,
     };
 
     return html`

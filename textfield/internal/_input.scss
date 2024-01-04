@@ -43,6 +43,18 @@
     }
   }
 
+  // Optionally remove number input's spinner
+  .no-spinner .input {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      display: none;
+    }
+
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+
   :focus-within .input {
     caret-color: var(--_focus-caret-color);
   }
