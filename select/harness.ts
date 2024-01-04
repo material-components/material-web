@@ -57,6 +57,16 @@ export class SelectHarness extends Harness<Select> {
     }
     (await this.getItems()[index].getInteractiveElement()).click();
   }
+
+  get isOpen() {
+    const menu = this.element.renderRoot.querySelector('md-menu')!;
+    if (!menu) {
+      throw new Error(
+        'Internal md-menu is not found. md-select may not have finished rendering when isOpen has been checked',
+      );
+    }
+    return menu.open;
+  }
 }
 
 // Private class (not exported)

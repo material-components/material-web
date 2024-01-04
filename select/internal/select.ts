@@ -575,7 +575,7 @@ export abstract class Select extends selectBaseClass {
   }
 
   private handleClick() {
-    this.open = true;
+    this.open = !this.open;
   }
 
   private handleFocus() {
