@@ -72,7 +72,7 @@ Progress indicators may be determinate to show progress, or indeterminate for an
 unspecified amount of progress.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -112,7 +112,7 @@ Indeterminate progress indicators may cycle between four colors (primary,
 primary container, tertiary, and tertiary container by default).
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -157,7 +157,7 @@ Circular progress indicators display progress by animating along an invisible
 circular track in a clockwise direction.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -190,7 +190,7 @@ Linear progress indicators display progress by animating along the length of a
 fixed, visible track.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -222,7 +222,7 @@ indeterminate progress. The progress bar and track represent known progress
 while the buffer dots represent unknown progress.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 

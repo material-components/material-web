@@ -78,9 +78,9 @@ Choose the type of chip based on its purpose and author.
     text message replies.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-chip-set>
@@ -100,9 +100,9 @@ Chips should always appear in a set. Chip sets are
 that can display any type of chip or other toolbar items.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <h3>New event</h3>
@@ -119,9 +119,9 @@ All chips may display an optional icon. Input chips can specify if an avatar
 picture is displayed.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -142,9 +142,9 @@ Assist, filter, and suggestion chips can be elevated if the placement requires
 protection, such as on top of an image.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -208,9 +208,9 @@ Assist chips function as though the user asked an assistant to complete the
 action. They should appear dynamically and contextually in a UI.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -234,9 +234,9 @@ use tags or descriptive words to filter content. They can be a good alternative
 to toggle buttons or checkboxes.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -255,9 +255,9 @@ Filter chips can optionally be removable from the chip set. Removable chips have
 a trailing remove icon.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -282,9 +282,9 @@ Input chips whose icons are user images may add the `avatar` attribute to
 display the image in a larger circle.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -306,9 +306,9 @@ All input chips are removable. If an input chip does not have an action
 associated with clicking on it, it may be marked as `remove-only`.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -328,9 +328,9 @@ help narrow a user’s intent by presenting dynamically generated suggestions,
 such as possible responses or search filters.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -363,9 +363,9 @@ Token                               | Default value
 ### Assist chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>
@@ -397,9 +397,9 @@ Token                                       | Default value
 ### Filter chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>
@@ -431,9 +431,9 @@ Token                              | Default value
 ### Input chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>
@@ -464,9 +464,9 @@ Token                                   | Default value
 ### Suggestion chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>

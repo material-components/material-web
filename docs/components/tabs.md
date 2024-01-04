@@ -71,9 +71,9 @@ Tabs contain multiple primary or secondary tab children. Use the same type of
 tab in a tab bar.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
@@ -120,9 +120,9 @@ Icons communicate the type of content within a tab. Icons should be simple and
 recognizable.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
@@ -140,9 +140,9 @@ recognizable.
 Tabs may optionally show icons without a label.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
@@ -163,9 +163,9 @@ Primary tabs are placed at the top of the content pane under a top app bar. They
 display the main content destinations.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
@@ -185,9 +185,9 @@ display the main content destinations.
 Primary tabs can show their icons inline, like secondary tabs.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
@@ -210,9 +210,9 @@ Secondary tabs are used within a content area to further separate related
 content and establish hierarchy.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-tabs>
@@ -347,7 +347,7 @@ Token                                       | Default value
 ### Secondary tab example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 
 ```html

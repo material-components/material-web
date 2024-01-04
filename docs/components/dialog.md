@@ -78,23 +78,9 @@ action buttons.
 ```
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- catalog-only-start -->
-
-<!--
-
-<div class="figure-wrapper">
-  <figure
-      style="justify-content:center;"
-      aria-label="">
-    TODO: update figure
-  </figure>
-</div>
-
--->
-
-<!-- catalog-only-end -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 > Tip: use `margin`, `height`, and `width` CSS properties to control the
 > dialog's size and position.
@@ -200,23 +186,9 @@ Token                               | Default value
 ### Example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- catalog-only-start -->
-
-<!--
-
-<div class="figure-wrapper">
-  <figure
-      style="justify-content:center;"
-      aria-label="">
-    TODO: update figure
-  </figure>
-</div>
-
--->
-
-<!-- catalog-only-end -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <style>
@@ -254,7 +226,7 @@ Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `returnValue` |  | `string` | `''` | Gets or sets the dialog's return value, usually to indicate which button a user pressed to close it.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue
 `type` | `type` | `string` | `undefined` | The type of dialog for accessibility. Set this to `alert` to announce a dialog as an alert dialog.
-`open` | `open` | `boolean` | `undefined` | 
+`open` | `open` | `boolean` | `undefined` |
 `getOpenAnimation` |  | `() => DialogAnimation` | `function { ... }` | Gets the opening animation for a dialog. Set to a new function to customize the animation.
 `getCloseAnimation` |  | `() => DialogAnimation` | `function { ... }` | Gets the closing animation for a dialog. Set to a new function to customize the animation.
 
