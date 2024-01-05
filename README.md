@@ -1,5 +1,12 @@
 # Material Web
 
+<video
+    muted
+    autoplay
+    loop
+    src="./docs/images/material-web-reel.mp4"
+    style="max-width: 100%;border-radius: 32px;">
+
 Material
 [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)<!-- {.external} -->
 is a UI toolkit to build customizable and accessible web applications.
