@@ -374,6 +374,7 @@ export class Ripple extends LitElement implements Attachable {
   }
 
   private async endPressAnimation() {
+    this.rippleStartEvent = undefined;
     this.state = State.INACTIVE;
     const animation = this.growAnimation;
     let pressAnimationPlayState = Infinity;
