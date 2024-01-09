@@ -614,8 +614,8 @@ export abstract class TextField extends textFieldBaseClass {
           cols=${this.cols}
           .value=${live(this.value)}
           @change=${this.redispatchEvent}
-          @focusin=${this.handleFocusin}
-          @focusout=${this.handleFocusout}
+          @focus=${this.handleFocusChange}
+          @blur=${this.handleFocusChange}
           @input=${this.handleInput}
           @select=${this.redispatchEvent}></textarea>
       `;
@@ -653,8 +653,8 @@ export abstract class TextField extends textFieldBaseClass {
           type=${this.type}
           .value=${live(this.value)}
           @change=${this.redispatchEvent}
-          @focusin=${this.handleFocusin}
-          @focusout=${this.handleFocusout}
+          @focus=${this.handleFocusChange}
+          @blur=${this.handleFocusChange}
           @input=${this.handleInput}
           @select=${this.redispatchEvent} />
         ${suffix}
@@ -687,12 +687,12 @@ export abstract class TextField extends textFieldBaseClass {
     return this.error ? this.errorText : this.nativeErrorText;
   }
 
-  private handleFocusin() {
-    this.focused = true;
-  }
-
-  private handleFocusout() {
-    this.focused = false;
+  private handleFocusChange() {
+    // When calling focus() or reportValidity() during change, it's possible
+    // for blur to be called after the new focus event. Rather than set
+    // `this.focused` to true/false on focus/blur, we always set it to whether
+    // or not the input itself is focused.
+    this.focused = this.inputOrTextarea?.matches(':focus') ?? false;
   }
 
   private handleInput(event: InputEvent) {

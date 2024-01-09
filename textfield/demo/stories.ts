@@ -229,11 +229,6 @@ const forms: MaterialStoryInit<StoryKnobs> = {
 
 async function reportValidity(event: Event) {
   const textField = event.target as MdFilledTextField;
-  // Calling reportValidity() will focus the text field. Since we do this on
-  // "change" (blur), wait for other focus changes to finish, like tabbing.
-  await new Promise<void>((resolve) => {
-    setTimeout(resolve);
-  });
   textField.reportValidity();
 }
 
