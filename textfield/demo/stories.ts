@@ -216,6 +216,7 @@ const forms: MaterialStoryInit<StoryKnobs> = {
             ?disabled=${knobs.disabled}
             label="Last name"
             name="last-name"
+            required
             autocomplete="family-name"></md-filled-text-field>
         </div>
         <div class="row buttons">

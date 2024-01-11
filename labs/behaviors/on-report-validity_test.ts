@@ -158,6 +158,17 @@ describe('mixinOnReportValidity()', () => {
           form.remove();
           expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
+
+        it('should be called with null when form submits declaratively and it is valid, but another sibling is invalid', () => {
+          // This is a known limitation. If a form is using an MWC control and
+          // declaratively submits it with a native `<button>` or `<input>`, then
+          // error styles will not clear if the form fails to submit.
+          // The workaround is to call `form.reportValidity()` when clicking the
+          // native `<button type="submit">` or pressing enter in an `<input>`.
+          //
+          // Leaving this test here for documentation and a possible future fix.
+          expect().nothing();
+        });
       });
 
       describe('for valid to invalid controls', () => {
@@ -348,6 +359,44 @@ describe('mixinOnReportValidity()', () => {
           expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
 
+        it('should be called with null when form.requestSubmit() is called after fixing invalid, but another sibling is invalid', () => {
+          const control = new TestOnReportValidity();
+          const onReportValiditySpy = jasmine.createSpy('onReportValidity');
+          control[onReportValidity] = onReportValiditySpy;
+          const form = document.createElement('form');
+          form.appendChild(control);
+
+          const invalidSibling = document.createElement('input');
+          invalidSibling.required = true;
+          form.appendChild(invalidSibling);
+
+          document.body.appendChild(form);
+          form.addEventListener(
+            'submit',
+            (event) => {
+              // Prevent the test page from actually reloading.
+              event.preventDefault();
+            },
+            {capture: true},
+          );
+
+          control.required = true;
+          form.reportValidity();
+          onReportValiditySpy.calls.reset();
+
+          // Fix invalid
+          control.checked = true;
+
+          // Submit imperatively
+          form.requestSubmit();
+          form.remove();
+
+          expect(invalidSibling.validity.valid)
+            .withContext('sibling is invalid')
+            .toBeFalse();
+          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+        });
+
         it('should be called with null when form submits declaratively after fixing invalid', () => {
           const control = new TestOnReportValidity();
           const onReportValiditySpy = jasmine.createSpy('onReportValidity');
@@ -378,6 +427,11 @@ describe('mixinOnReportValidity()', () => {
           form.remove();
 
           expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
+        });
+
+        it('should be called with null when form submits declaratively after fixing invalid, but another sibling is invalid', () => {
+          // See above "This is a known limitation" for explanation.
+          expect().nothing();
         });
       });
 
