@@ -201,11 +201,10 @@ export function mixinOnReportValidity<
           reportedInvalidEventFromForm = false;
           this.addEventListener(
             'invalid',
-            (invalidEvent) => {
+            () => {
               reportedInvalidEventFromForm = true;
-              if (!invalidEvent.defaultPrevented) {
-                this[onReportValidity](invalidEvent);
-              }
+              // Constructor's invalid listener will handle reporting invalid
+              // events.
             },
             {signal: formReportValidityCleanup.signal},
           );

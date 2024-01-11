@@ -58,7 +58,7 @@ describe('mixinOnReportValidity()', () => {
         control[onReportValidity] = jasmine.createSpy('onReportValidity');
 
         control.reportValidity();
-        expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+        expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
       });
     });
 
@@ -69,7 +69,7 @@ describe('mixinOnReportValidity()', () => {
 
         control.required = true;
         control.reportValidity();
-        expect(control[onReportValidity]).toHaveBeenCalledWith(
+        expect(control[onReportValidity]).toHaveBeenCalledOnceWith(
           jasmine.any(Event),
         );
       });
@@ -101,7 +101,7 @@ describe('mixinOnReportValidity()', () => {
         control.checked = true;
         control.reportValidity();
 
-        expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+        expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
       });
     });
 
@@ -114,7 +114,7 @@ describe('mixinOnReportValidity()', () => {
           form.appendChild(control);
 
           form.reportValidity();
-          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
 
         it('should be called with null when form.requestSubmit() is called and it is valid', () => {
@@ -134,7 +134,7 @@ describe('mixinOnReportValidity()', () => {
           document.body.appendChild(form);
           form.requestSubmit();
           form.remove();
-          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
 
         it('should be called with null when form submits declaratively and it is valid', () => {
@@ -156,7 +156,7 @@ describe('mixinOnReportValidity()', () => {
           document.body.appendChild(form);
           submitButton.click();
           form.remove();
-          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
       });
 
@@ -169,7 +169,7 @@ describe('mixinOnReportValidity()', () => {
 
           control.required = true;
           form.reportValidity();
-          expect(control[onReportValidity]).toHaveBeenCalledWith(
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(
             jasmine.any(Event),
           );
         });
@@ -209,7 +209,7 @@ describe('mixinOnReportValidity()', () => {
           control.required = true;
           form.requestSubmit();
           form.remove();
-          expect(control[onReportValidity]).toHaveBeenCalledWith(
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(
             jasmine.any(Event),
           );
         });
@@ -263,7 +263,7 @@ describe('mixinOnReportValidity()', () => {
           document.body.appendChild(form);
           submitButton.click();
           form.remove();
-          expect(control[onReportValidity]).toHaveBeenCalledWith(
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(
             jasmine.any(Event),
           );
         });
@@ -315,7 +315,7 @@ describe('mixinOnReportValidity()', () => {
           form.reportValidity();
           form.remove();
 
-          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
 
         it('should be called with null when form.requestSubmit() is called after fixing invalid', () => {
@@ -345,7 +345,7 @@ describe('mixinOnReportValidity()', () => {
           form.requestSubmit();
           form.remove();
 
-          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
 
         it('should be called with null when form submits declaratively after fixing invalid', () => {
@@ -377,7 +377,7 @@ describe('mixinOnReportValidity()', () => {
           submitButton.click();
           form.remove();
 
-          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+          expect(control[onReportValidity]).toHaveBeenCalledOnceWith(null);
         });
       });
 
