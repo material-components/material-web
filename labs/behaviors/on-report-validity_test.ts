@@ -52,137 +52,147 @@ describe('mixinOnReportValidity()', () => {
   }
 
   describe('[onReportValidity]', () => {
-    it('should be called with event when reportValidity() is called and it is invalid', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
+    describe('for valid controls', () => {
+      it('should be called with null when reportValidity() is called and it is valid', () => {
+        const control = new TestOnReportValidity();
+        control[onReportValidity] = jasmine.createSpy('onReportValidity');
 
-      control.required = true;
-      control.reportValidity();
-      expect(control[onReportValidity]).toHaveBeenCalledWith(
-        jasmine.any(Event),
-      );
+        control.reportValidity();
+        expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+      });
     });
 
-    it('should NOT be called when reportValidity() is called and invalid but default prevented', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
+    describe('for invalid controls', () => {
+      it('should be called with event when reportValidity() is called and it is invalid', () => {
+        const control = new TestOnReportValidity();
+        control[onReportValidity] = jasmine.createSpy('onReportValidity');
 
-      control.required = true;
-      control.addEventListener('invalid', (event) => {
-        event.preventDefault();
+        control.required = true;
+        control.reportValidity();
+        expect(control[onReportValidity]).toHaveBeenCalledWith(
+          jasmine.any(Event),
+        );
       });
 
-      control.reportValidity();
-      expect(control[onReportValidity]).not.toHaveBeenCalled();
+      it('should NOT be called when reportValidity() is called and invalid but default prevented', () => {
+        const control = new TestOnReportValidity();
+        control[onReportValidity] = jasmine.createSpy('onReportValidity');
+
+        control.required = true;
+        control.addEventListener('invalid', (event) => {
+          event.preventDefault();
+        });
+
+        control.reportValidity();
+        expect(control[onReportValidity]).not.toHaveBeenCalled();
+      });
     });
 
-    it('should be called with null when reportValidity() is called and it is valid', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
+    describe('with forms', () => {
+      describe('for valid controls', () => {
+        it('should be called with null when form.reportValidity() is called and it is valid', () => {
+          const control = new TestOnReportValidity();
+          control[onReportValidity] = jasmine.createSpy('onReportValidity');
+          const form = document.createElement('form');
+          form.appendChild(control);
 
-      control.reportValidity();
-      expect(control[onReportValidity]).toHaveBeenCalledWith(null);
-    });
+          form.reportValidity();
+          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+        });
 
-    it('should be called with event when form.reportValidity() is called and it is invalid', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
-      const form = document.createElement('form');
-      form.appendChild(control);
+        it('should be called with null when form.requestSubmit() is called and it is valid', () => {
+          const control = new TestOnReportValidity();
+          control[onReportValidity] = jasmine.createSpy('onReportValidity');
+          const form = document.createElement('form');
+          form.appendChild(control);
+          form.addEventListener(
+            'submit',
+            (event) => {
+              // Prevent the test page from actually reloading
+              event.preventDefault();
+            },
+            {capture: true},
+          );
 
-      control.required = true;
-      form.reportValidity();
-      expect(control[onReportValidity]).toHaveBeenCalledWith(
-        jasmine.any(Event),
-      );
-    });
-
-    it('should NOT be called when form.reportValidity() is called and invalid but default prevented', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
-      const form = document.createElement('form');
-      form.appendChild(control);
-
-      control.required = true;
-      control.addEventListener('invalid', (event) => {
-        event.preventDefault();
+          document.body.appendChild(form);
+          form.requestSubmit();
+          form.remove();
+          expect(control[onReportValidity]).toHaveBeenCalledWith(null);
+        });
       });
 
-      form.reportValidity();
-      expect(control[onReportValidity]).not.toHaveBeenCalled();
-    });
+      describe('for valid to invalid controls', () => {
+        it('should be called with event when form.reportValidity() is called and it is invalid', () => {
+          const control = new TestOnReportValidity();
+          control[onReportValidity] = jasmine.createSpy('onReportValidity');
+          const form = document.createElement('form');
+          form.appendChild(control);
 
-    it('should be called with null when form.reportValidity() is called and it is valid', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
-      const form = document.createElement('form');
-      form.appendChild(control);
+          control.required = true;
+          form.reportValidity();
+          expect(control[onReportValidity]).toHaveBeenCalledWith(
+            jasmine.any(Event),
+          );
+        });
 
-      form.reportValidity();
-      expect(control[onReportValidity]).toHaveBeenCalledWith(null);
-    });
+        it('should NOT be called when form.reportValidity() is called and invalid but default prevented', () => {
+          const control = new TestOnReportValidity();
+          control[onReportValidity] = jasmine.createSpy('onReportValidity');
+          const form = document.createElement('form');
+          form.appendChild(control);
 
-    it('should be called with null when form submits', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
-      const form = document.createElement('form');
-      form.appendChild(control);
-      form.addEventListener(
-        'submit',
-        (event) => {
-          // Prevent the test page from actually reloading
-          event.preventDefault();
-        },
-        {capture: true},
-      );
+          control.required = true;
+          control.addEventListener('invalid', (event) => {
+            event.preventDefault();
+          });
 
-      document.body.appendChild(form);
-      form.requestSubmit();
-      form.remove();
-      expect(control[onReportValidity]).toHaveBeenCalledWith(null);
-    });
+          form.reportValidity();
+          expect(control[onReportValidity]).not.toHaveBeenCalled();
+        });
 
-    it('should be called with invalid event when invalid form tries to submit', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
-      const form = document.createElement('form');
-      form.appendChild(control);
-      form.addEventListener(
-        'submit',
-        (event) => {
-          // Prevent the test page from actually reloading. This shouldn't
-          // happen, but we add it just in case the control fails and reports
-          // as valid and the form tries to submit.
-          event.preventDefault();
-        },
-        {capture: true},
-      );
+        it('should be called with event when form.requestSubmit() is called and it is invalid', () => {
+          const control = new TestOnReportValidity();
+          control[onReportValidity] = jasmine.createSpy('onReportValidity');
+          const form = document.createElement('form');
+          form.appendChild(control);
+          form.addEventListener(
+            'submit',
+            (event) => {
+              // Prevent the test page from actually reloading. This shouldn't
+              // happen, but we add it just in case the control fails and reports
+              // as valid and the form tries to submit.
+              event.preventDefault();
+            },
+            {capture: true},
+          );
 
-      document.body.appendChild(form);
-      control.required = true;
-      form.requestSubmit();
-      form.remove();
-      expect(control[onReportValidity]).toHaveBeenCalledWith(
-        jasmine.any(Event),
-      );
-    });
+          document.body.appendChild(form);
+          control.required = true;
+          form.requestSubmit();
+          form.remove();
+          expect(control[onReportValidity]).toHaveBeenCalledWith(
+            jasmine.any(Event),
+          );
+        });
+      });
 
-    it('should clean up when form is unassociated and not call when non-parent form.reportValidity() is called', () => {
-      const control = new TestOnReportValidity();
-      control[onReportValidity] = jasmine.createSpy('onReportValidity');
-      const form = document.createElement('form');
-      form.appendChild(control);
+      it('should clean up when form is unassociated and not call when non-parent form.reportValidity() is called', () => {
+        const control = new TestOnReportValidity();
+        control[onReportValidity] = jasmine.createSpy('onReportValidity');
+        const form = document.createElement('form');
+        form.appendChild(control);
 
-      form.reportValidity();
-      expect(control[onReportValidity])
-        .withContext('onReportValidity is called once while attached to form')
-        .toHaveBeenCalledTimes(1);
+        form.reportValidity();
+        expect(control[onReportValidity])
+          .withContext('onReportValidity is called once while attached to form')
+          .toHaveBeenCalledTimes(1);
 
-      form.removeChild(control);
-      form.reportValidity();
-      expect(control[onReportValidity])
-        .withContext('onReportValidity is not called a second time')
-        .toHaveBeenCalledTimes(1);
+        form.removeChild(control);
+        form.reportValidity();
+        expect(control[onReportValidity])
+          .withContext('onReportValidity is not called a second time')
+          .toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
