@@ -400,7 +400,7 @@ export abstract class Select extends selectBaseClass {
           tabindex=${this.disabled ? '-1' : '0'}
           aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
           aria-describedby="description"
-          aria-expanded=${this.open ? 'true' : nothing}
+          aria-expanded=${this.open ? 'true' : 'false'}
           aria-controls="listbox"
           class="field"
           label=${this.label}
