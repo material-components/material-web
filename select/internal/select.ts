@@ -308,16 +308,8 @@ export abstract class Select extends selectBaseClass {
   }
 
   [onReportValidity](invalidEvent: Event | null) {
-    if (invalidEvent?.defaultPrevented) {
-      return;
-    }
-
-    if (invalidEvent) {
-      // Prevent default pop-up behavior. This also prevents focusing, so we
-      // manually focus.
-      invalidEvent.preventDefault();
-      this.focus();
-    }
+    // Prevent default pop-up behavior.
+    invalidEvent?.preventDefault();
 
     const prevMessage = this.getErrorText();
     this.nativeError = !!invalidEvent;

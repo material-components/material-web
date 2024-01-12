@@ -7,6 +7,7 @@
 import {LitElement, isServer} from 'lit';
 
 import {ConstraintValidation} from './constraint-validation.js';
+import {WithElementInternals, internals} from './element-internals.js';
 import {MixinBase, MixinReturn} from './mixin.js';
 
 /**
@@ -47,6 +48,8 @@ export const onReportValidity = Symbol('onReportValidity');
 // Private symbol members, used to avoid name clashing.
 const privateCleanupFormListeners = Symbol('privateCleanupFormListeners');
 const privateDoNotReportInvalid = Symbol('privateDoNotReportInvalid');
+const privateIsSelfReportingValidity = Symbol('privateIsSelfReportingValidity');
+const privateCallOnReportValidity = Symbol('privateCallOnReportValidity');
 
 /**
  * Mixes in a callback for constraint validation when validity should be
@@ -81,7 +84,7 @@ const privateDoNotReportInvalid = Symbol('privateDoNotReportInvalid');
  * @return The provided class with `OnReportValidity` mixed in.
  */
 export function mixinOnReportValidity<
-  T extends MixinBase<LitElement & ConstraintValidation>,
+  T extends MixinBase<LitElement & ConstraintValidation & WithElementInternals>,
 >(base: T): MixinReturn<T, OnReportValidity> {
   abstract class OnReportValidityElement
     extends base
@@ -97,6 +100,13 @@ export function mixinOnReportValidity<
      * events from `checkValidity()` do not trigger reporting.
      */
     [privateDoNotReportInvalid] = false;
+
+    /**
+     * Used to determine if the control is reporting validity from itself, or
+     * if a `<form>` is causing the validity report. Forms have different
+     * control focusing behavior.
+     */
+    [privateIsSelfReportingValidity] = false;
 
     // Mixins must have a constructor with `...args: any[]`
     // tslint:disable-next-line:no-any
@@ -124,9 +134,7 @@ export function mixinOnReportValidity<
               // A normal bubbling phase event listener. By adding it here, we
               // ensure it's the last event listener that is called during the
               // bubbling phase.
-              if (!invalidEvent.defaultPrevented) {
-                this[onReportValidity](invalidEvent);
-              }
+              this[privateCallOnReportValidity](invalidEvent);
             },
             {once: true},
           );
@@ -149,13 +157,48 @@ export function mixinOnReportValidity<
     }
 
     override reportValidity() {
+      this[privateIsSelfReportingValidity] = true;
       const valid = super.reportValidity();
       // Constructor's invalid listener will handle reporting invalid events.
       if (valid) {
-        this[onReportValidity](null);
+        this[privateCallOnReportValidity](null);
       }
 
+      this[privateIsSelfReportingValidity] = false;
       return valid;
+    }
+
+    [privateCallOnReportValidity](invalidEvent: Event | null) {
+      // Since invalid events do not bubble to parent listeners, and because
+      // our invalid listeners are added lazily after other listeners, we can
+      // reliably read `defaultPrevented` synchronously without worrying
+      // about waiting for another listener that could cancel it.
+      const wasCanceled = invalidEvent?.defaultPrevented;
+      if (wasCanceled) {
+        return;
+      }
+
+      this[onReportValidity](invalidEvent);
+
+      // If an implementation calls invalidEvent.preventDefault() to stop the
+      // platform popup from displaying, focusing is also prevented, so we need
+      // to manually focus.
+      const implementationCanceledFocus =
+        !wasCanceled && invalidEvent?.defaultPrevented;
+      if (!implementationCanceledFocus) {
+        return;
+      }
+
+      // The control should be focused when:
+      // - `control.reportValidity()` is called (self-reporting).
+      // - a form is reporting validity for its controls and this is the first
+      //   invalid control.
+      if (
+        this[privateIsSelfReportingValidity] ||
+        isFirstInvalidControlInForm(this[internals].form, this)
+      ) {
+        this.focus();
+      }
     }
 
     [onReportValidity](invalidEvent: Event | null) {
@@ -185,7 +228,7 @@ export function mixinOnReportValidity<
         this,
         form,
         () => {
-          this[onReportValidity](null);
+          this[privateCallOnReportValidity](null);
         },
         this[privateCleanupFormListeners].signal,
       );
@@ -327,4 +370,32 @@ function getFormValidateHooks(form: HTMLFormElement) {
   }
 
   return FORM_VALIDATE_HOOKS.get(form)!;
+}
+
+/**
+ * Checks if a control is the first invalid control in a form.
+ *
+ * @param form The control's form. When `null`, the control doesn't have a form
+ *     and the method returns true.
+ * @param control The control to check.
+ * @return True if there is no form or if the control is the form's first
+ *     invalid control.
+ */
+function isFirstInvalidControlInForm(
+  form: HTMLFormElement | null,
+  control: HTMLElement,
+) {
+  if (!form) {
+    return true;
+  }
+
+  let firstInvalidControl: Element | undefined;
+  for (const element of form.elements) {
+    if (element.matches(':invalid')) {
+      firstInvalidControl = element;
+      break;
+    }
+  }
+
+  return firstInvalidControl === control;
 }

@@ -453,5 +453,87 @@ describe('mixinOnReportValidity()', () => {
           .toHaveBeenCalledTimes(1);
       });
     });
+
+    describe('focusing after preventing platform popup', () => {
+      it('should focus the control when calling reportValidity()', () => {
+        const control = new TestOnReportValidity();
+        control[onReportValidity] = (invalidEvent: Event | null) => {
+          invalidEvent?.preventDefault();
+        };
+
+        spyOn(control, 'focus');
+
+        control.required = true;
+        control.reportValidity();
+        expect(control.focus)
+          .withContext('is focused')
+          .toHaveBeenCalledTimes(1);
+      });
+
+      it('should only focus the first invalid control of a form', () => {
+        const firstControl = new TestOnReportValidity();
+        firstControl[onReportValidity] = (invalidEvent: Event | null) => {
+          invalidEvent?.preventDefault();
+        };
+
+        const secondControl = new TestOnReportValidity();
+        secondControl[onReportValidity] = (invalidEvent: Event | null) => {
+          invalidEvent?.preventDefault();
+        };
+
+        spyOn(firstControl, 'focus');
+        spyOn(secondControl, 'focus');
+
+        const form = document.createElement('form');
+        form.appendChild(firstControl);
+        form.appendChild(secondControl);
+        document.body.appendChild(form);
+
+        firstControl.required = true;
+        secondControl.required = true;
+        form.reportValidity();
+        form.remove();
+
+        expect(firstControl.focus)
+          .withContext('first control (invalid) is focused')
+          .toHaveBeenCalledTimes(1);
+        expect(secondControl.focus)
+          .withContext('second control (invalid) is not focused')
+          .not.toHaveBeenCalled();
+      });
+
+      it('should focus the control when calling control.reportValidity(), even if not the first invalid control of a form', () => {
+        const firstControl = new TestOnReportValidity();
+        firstControl[onReportValidity] = (invalidEvent: Event | null) => {
+          invalidEvent?.preventDefault();
+        };
+
+        const secondControl = new TestOnReportValidity();
+        secondControl[onReportValidity] = (invalidEvent: Event | null) => {
+          invalidEvent?.preventDefault();
+        };
+
+        spyOn(firstControl, 'focus');
+        spyOn(secondControl, 'focus');
+
+        const form = document.createElement('form');
+        form.appendChild(firstControl);
+        form.appendChild(secondControl);
+        document.body.appendChild(form);
+
+        firstControl.required = true;
+        secondControl.required = true;
+        secondControl.reportValidity();
+
+        expect(firstControl.focus)
+          .withContext('first control (invalid) is not focused')
+          .not.toHaveBeenCalled();
+        expect(secondControl.focus)
+          .withContext(
+            'second control (invalid, called reportValidity()) is focused',
+          )
+          .toHaveBeenCalledTimes(1);
+      });
+    });
   });
 });
