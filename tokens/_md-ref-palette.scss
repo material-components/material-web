@@ -4,8 +4,8 @@
 //
 
 // go/keep-sorted start
+@use './internal/values';
 @use './v0_192/md-ref-palette';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (

@@ -11,11 +11,11 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/values';
 @use './md-sys-color';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-list';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (

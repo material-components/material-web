@@ -4,9 +4,9 @@
 //
 
 // go/keep-sorted start
+@use './internal/values';
 @use './md-sys-color';
 @use './v0_192/md-comp-divider';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (

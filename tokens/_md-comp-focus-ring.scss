@@ -8,10 +8,10 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/values';
 @use './md-sys-color';
 @use './md-sys-motion';
 @use './md-sys-shape';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (

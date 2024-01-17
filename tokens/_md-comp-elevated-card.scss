@@ -4,12 +4,12 @@
 //
 
 // go/keep-sorted start
+@use './internal/values';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './v0_192/md-comp-elevated-card';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (

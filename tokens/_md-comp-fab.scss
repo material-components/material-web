@@ -7,6 +7,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/values';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -22,7 +23,6 @@
 @use './v0_192/md-comp-fab-surface-large';
 @use './v0_192/md-comp-fab-surface-small';
 @use './v0_192/md-comp-fab-tertiary';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (

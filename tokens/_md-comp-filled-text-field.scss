@@ -7,12 +7,12 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/values';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-filled-text-field';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (

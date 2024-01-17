@@ -4,11 +4,11 @@
 //
 
 // go/keep-sorted start
+@use './internal/values';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './v0_192/md-comp-outlined-icon-button';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
