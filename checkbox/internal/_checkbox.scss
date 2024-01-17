@@ -49,38 +49,43 @@ $_checkmark-bottom-left: 7px, -14px;
 @mixin styles() {
   $tokens: tokens.md-comp-checkbox-values();
 
+  // Support logical shape properties
+  $container-shape: map.get($tokens, 'container-shape');
+  $tokens: map.set(
+    $tokens,
+    'container-shape-start-start',
+    var(--md-checkbox-container-shape, #{$container-shape})
+  );
+  $tokens: map.set(
+    $tokens,
+    'container-shape-start-end',
+    var(--md-checkbox-container-shape, #{$container-shape})
+  );
+  $tokens: map.set(
+    $tokens,
+    'container-shape-end-end',
+    var(--md-checkbox-container-shape, #{$container-shape})
+  );
+  $tokens: map.set(
+    $tokens,
+    'container-shape-end-start',
+    var(--md-checkbox-container-shape, #{$container-shape})
+  );
+
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-checkbox-#{$token}, #{$value}));
+  }
+
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-checkbox-#{$token}, #{$value});
-    }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-checkbox-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-checkbox-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-checkbox-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-checkbox-container-shape-end-start,
-      var(--_container-shape)
-    );
-
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-end-radius: var(--_container-shape-end-end);
-    border-end-start-radius: var(--_container-shape-end-start);
+    border-start-start-radius: map.get($tokens, 'container-shape-start-start');
+    border-start-end-radius: map.get($tokens, 'container-shape-start-end');
+    border-end-end-radius: map.get($tokens, 'container-shape-end-end');
+    border-end-start-radius: map.get($tokens, 'container-shape-end-start');
     display: inline-flex;
-    height: var(--_container-size);
+    height: map.get($tokens, 'container-size');
     position: relative;
     vertical-align: top; // Fix extra space when placed inside display: block
-    width: var(--_container-size);
+    width: map.get($tokens, 'container-size');
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
   }
@@ -90,7 +95,7 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :host([touch-target='wrapper']) {
-    margin: max(0px, ((48px - var(--_container-size)) / 2));
+    margin: max(0px, ((48px - map.get($tokens, 'container-size')) / 2));
   }
 
   md-focus-ring {
@@ -140,14 +145,14 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   .outline {
-    border-color: var(--_outline-color);
+    border-color: map.get($tokens, 'outline-color');
     border-style: solid;
-    border-width: var(--_outline-width);
+    border-width: map.get($tokens, 'outline-width');
     box-sizing: border-box;
   }
 
   .background {
-    background-color: var(--_selected-container-color);
+    background-color: map.get($tokens, 'selected-container-color');
   }
 
   // Background and icon transitions.
@@ -181,17 +186,17 @@ $_checkmark-bottom-left: 7px, -14px;
   // Ripple
 
   md-ripple {
-    border-radius: var(--_state-layer-shape);
-    height: var(--_state-layer-size);
+    border-radius: map.get($tokens, 'state-layer-shape');
+    height: map.get($tokens, 'state-layer-size');
     inset: unset;
-    width: var(--_state-layer-size);
+    width: map.get($tokens, 'state-layer-size');
 
     @include ripple.theme(
       (
-        hover-color: var(--_hover-state-layer-color),
-        hover-opacity: var(--_hover-state-layer-opacity),
-        pressed-color: var(--_pressed-state-layer-color),
-        pressed-opacity: var(--_pressed-state-layer-opacity),
+        hover-color: map.get($tokens, 'hover-state-layer-color'),
+        hover-opacity: map.get($tokens, 'hover-state-layer-opacity'),
+        pressed-color: map.get($tokens, 'pressed-state-layer-color'),
+        pressed-opacity: map.get($tokens, 'pressed-state-layer-opacity'),
       )
     );
   }
@@ -199,10 +204,11 @@ $_checkmark-bottom-left: 7px, -14px;
   .selected md-ripple {
     @include ripple.theme(
       (
-        hover-color: var(--_selected-hover-state-layer-color),
-        hover-opacity: var(--_selected-hover-state-layer-opacity),
-        pressed-color: var(--_selected-pressed-state-layer-color),
-        pressed-opacity: var(--_selected-pressed-state-layer-opacity),
+        hover-color: map.get($tokens, 'selected-hover-state-layer-color'),
+        hover-opacity: map.get($tokens, 'selected-hover-state-layer-opacity'),
+        pressed-color: map.get($tokens, 'selected-pressed-state-layer-color'),
+        pressed-opacity:
+          map.get($tokens, 'selected-pressed-state-layer-opacity'),
       )
     );
   }
@@ -217,9 +223,9 @@ $_checkmark-bottom-left: 7px, -14px;
     // 2. Long end
     //   - the larger trailing part of the checkmark
     //   - the entirety of the indeterminate mark
-    fill: var(--_selected-icon-color);
-    height: var(--_icon-size);
-    width: var(--_icon-size);
+    fill: map.get($tokens, 'selected-icon-color');
+    height: map.get($tokens, 'icon-size');
+    width: map.get($tokens, 'icon-size');
   }
 
   // The short end of the checkmark. Initially hidden underneath the
@@ -327,42 +333,42 @@ $_checkmark-bottom-left: 7px, -14px;
   // States
 
   :where(:hover) .outline {
-    border-color: var(--_hover-outline-color);
-    border-width: var(--_hover-outline-width);
+    border-color: map.get($tokens, 'hover-outline-color');
+    border-width: map.get($tokens, 'hover-outline-width');
   }
 
   :where(:hover) .background {
-    background: var(--_selected-hover-container-color);
+    background: map.get($tokens, 'selected-hover-container-color');
   }
 
   :where(:hover) .icon {
-    fill: var(--_selected-hover-icon-color);
+    fill: map.get($tokens, 'selected-hover-icon-color');
   }
 
   :where(:focus-within) .outline {
-    border-color: var(--_focus-outline-color);
-    border-width: var(--_focus-outline-width);
+    border-color: map.get($tokens, 'focus-outline-color');
+    border-width: map.get($tokens, 'focus-outline-width');
   }
 
   :where(:focus-within) .background {
-    background: var(--_selected-focus-container-color);
+    background: map.get($tokens, 'selected-focus-container-color');
   }
 
   :where(:focus-within) .icon {
-    fill: var(--_selected-focus-icon-color);
+    fill: map.get($tokens, 'selected-focus-icon-color');
   }
 
   :where(:active) .outline {
-    border-color: var(--_pressed-outline-color);
-    border-width: var(--_pressed-outline-width);
+    border-color: map.get($tokens, 'pressed-outline-color');
+    border-width: map.get($tokens, 'pressed-outline-width');
   }
 
   :where(:active) .background {
-    background: var(--_selected-pressed-container-color);
+    background: map.get($tokens, 'selected-pressed-container-color');
   }
 
   :where(:active) .icon {
-    fill: var(--_selected-pressed-icon-color);
+    fill: map.get($tokens, 'selected-pressed-icon-color');
   }
 
   // Don't animate to/from disabled states because the outline is hidden when
@@ -374,9 +380,9 @@ $_checkmark-bottom-left: 7px, -14px;
   }
 
   :where(.disabled) .outline {
-    border-color: var(--_disabled-outline-color);
-    border-width: var(--_disabled-outline-width);
-    opacity: var(--_disabled-container-opacity);
+    border-color: map.get($tokens, 'disabled-outline-color');
+    border-width: map.get($tokens, 'disabled-outline-width');
+    opacity: map.get($tokens, 'disabled-container-opacity');
   }
 
   :where(.selected.disabled) .outline {
@@ -388,12 +394,12 @@ $_checkmark-bottom-left: 7px, -14px;
   :where(.selected.disabled) .background {
     // Set disabled opacity only when selected since opacity is used to show
     // or hide the container background.
-    background: var(--_selected-disabled-container-color);
-    opacity: var(--_selected-disabled-container-opacity);
+    background: map.get($tokens, 'selected-disabled-container-color');
+    opacity: map.get($tokens, 'selected-disabled-container-opacity');
   }
 
   :where(.disabled) .icon {
-    fill: var(--_selected-disabled-icon-color);
+    fill: map.get($tokens, 'selected-disabled-icon-color');
   }
 
   @media (forced-colors: active) {
