@@ -102,6 +102,7 @@ export class Tabs extends LitElement {
    */
   @property({type: Boolean, attribute: 'auto-activate'}) autoActivate = false;
 
+  @query('.tabs') private readonly tabsScrollerElement!: HTMLElement | null;
   @query('slot') private readonly slotElement!: HTMLSlotElement | null;
 
   private get focusedTab() {
@@ -134,7 +135,11 @@ export class Tabs extends LitElement {
     await this.updateComplete;
     const {tabs} = this;
     tabToScrollTo ??= this.activeTab;
-    if (!tabToScrollTo || !tabs.includes(tabToScrollTo)) {
+    if (
+      !tabToScrollTo ||
+      !tabs.includes(tabToScrollTo) ||
+      !this.tabsScrollerElement
+    ) {
       return;
     }
 
@@ -153,7 +158,7 @@ export class Tabs extends LitElement {
     const to = Math.min(min, Math.max(max, scroll));
     // TODO(b/299934312): improve focus smoothness
     const behavior: ScrollBehavior = !this.focusedTab ? 'smooth' : 'instant';
-    this.scrollTo({behavior, top: 0, left: to});
+    this.tabsScrollerElement.scrollTo({behavior, top: 0, left: to});
   }
 
   protected override render() {
