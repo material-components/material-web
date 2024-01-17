@@ -14,7 +14,7 @@
 /// Validation requires a `$values` Map and at least the `$supported-tokens`
 /// keyword argument.
 /// @example - scss
-///   $tokens: values.validate(
+///   $tokens: validate.values(
 ///     md-comp-foo.values($deps, $exclude-hardcoded-values),
 ///     $supported-tokens: (),
 ///       'foo-color',
@@ -39,18 +39,18 @@
 ///     `$supported-tokens` list.
 /// @return {Map} The `tokens.md-comp-*-values()` Map with any unsupported
 ///     tokens removed, renamed tokens updated, and new tokens added.
-@function validate($values, $tokens...) {
+@function values($values, $tokens...) {
   $tokens: meta.keywords($tokens);
 
   $renamed-tokens: map.get($tokens, 'renamed-tokens');
   @if $renamed-tokens {
     @if meta.type-of($renamed-tokens) != 'map' {
-      @error 'values.validate($renamed-tokens) must be a map.';
+      @error 'validate.values($renamed-tokens) must be a map.';
     }
 
     @each $old-token, $new-token in $renamed-tokens {
       @if not map.has-key($values, $old-token) {
-        @error 'values.validate($renamed-tokens: (\'#{$old-token}\': \'#{$new-token}\')) old-token in not the provided values.';
+        @error 'validate.values($renamed-tokens: (\'#{$old-token}\': \'#{$new-token}\')) old-token in not the provided values.';
       }
 
       $values: map.set($values, $new-token, map.get($values, $old-token));
@@ -61,12 +61,12 @@
   $unsupported-tokens: map.get($tokens, 'unsupported-tokens');
   @if $unsupported-tokens {
     @if meta.type-of($unsupported-tokens) != 'list' {
-      @error 'values.validate($unsupported-tokens) must be a list.';
+      @error 'validate.values($unsupported-tokens) must be a list.';
     }
 
     @each $unsupported-token in $unsupported-tokens {
       @if not map.has-key($values, $unsupported-token) {
-        @error 'values.validate($unsupported-tokens: (\'#{$unsupported-token}\')) token is not in the provided values.';
+        @error 'validate.values($unsupported-tokens: (\'#{$unsupported-token}\')) token is not in the provided values.';
       }
 
       $values: map.remove($values, $unsupported-token);
@@ -76,12 +76,12 @@
   $new-tokens: map.get($tokens, 'new-tokens');
   @if $new-tokens {
     @if meta.type-of($new-tokens) != 'map' {
-      @error 'values.validate($new-tokens) must be a map.';
+      @error 'validate.values($new-tokens) must be a map.';
     }
 
     @each $new-token, $new-value in $new-tokens {
       @if map.has-key($values, $new-token) {
-        @warn 'values.validate($new-tokens: (\'#{$new-token}\': \'#{$new-value}\')) already exists. Has it been added to tokens? If so, remove this new token.';
+        @warn 'validate.values($new-tokens: (\'#{$new-token}\': \'#{$new-value}\')) already exists. Has it been added to tokens? If so, remove this new token.';
       }
 
       $values: map.set($values, $new-token, $new-value);
@@ -90,12 +90,12 @@
 
   $supported-tokens: map.get($tokens, 'supported-tokens');
   @if not $supported-tokens or meta.type-of($supported-tokens) != 'list' {
-    @error 'values.validate() must include a $supported-tokens list.';
+    @error 'validate.values() must include a $supported-tokens list.';
   }
 
   @each $token in map.keys($values) {
     @if list.index($supported-tokens, $token) == null {
-      @error 'values.validate($supported-tokens)) is missing the \'#{$token}\' token. Does it need adding to $unsupported-tokens?';
+      @error 'validate.values($supported-tokens)) is missing the \'#{$token}\' token. Does it need adding to $unsupported-tokens?';
     }
   }
 

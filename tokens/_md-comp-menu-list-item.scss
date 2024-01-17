@@ -11,7 +11,7 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/values';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-state';
 @use './md-sys-typescale';
@@ -130,7 +130,7 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   $original-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
 
-  $tokens: values.validate(
+  $tokens: validate.values(
     $original-tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,

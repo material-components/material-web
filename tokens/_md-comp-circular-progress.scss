@@ -8,7 +8,7 @@
 @use 'sass:math';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/values';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './v0_192/md-comp-circular-progress-indicator';
@@ -39,7 +39,7 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
+  $tokens: validate.values(
     md-comp-circular-progress-indicator.values(
       $deps,
       $exclude-hardcoded-values

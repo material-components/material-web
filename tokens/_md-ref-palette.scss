@@ -4,7 +4,7 @@
 //
 
 // go/keep-sorted start
-@use './internal/values';
+@use './internal/validate';
 @use './v0_192/md-ref-palette';
 // go/keep-sorted end
 
@@ -105,7 +105,7 @@ $supported-tokens: (
 );
 
 @function values($exclude-hardcoded-values: false) {
-  @return values.validate(
+  @return validate.values(
     md-ref-palette.values($exclude-hardcoded-values),
     $supported-tokens: $supported-tokens
   );
