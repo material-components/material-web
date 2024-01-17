@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
-name: Intoduction
-title: Intoduction
+name: Introduction
+title: Introduction
 order: 1
 -----><!-- catalog-only-end -->
 
