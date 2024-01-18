@@ -9,7 +9,7 @@ import {customElement} from 'lit/decorators.js';
 import {ListItemEl as ListItem} from './internal/listitem/list-item.js';
 import {styles} from './internal/listitem/list-item-styles.css.js';
 
-export {ListItemType} from './internal/listitem/list-item.js';
+export {type ListItemType} from './internal/listitem/list-item.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -9,7 +9,7 @@ import {customElement} from 'lit/decorators.js';
 import {TestTable} from './internal/test-table.js';
 import {styles as testTableStyles} from './internal/test-table-styles.css.js';
 
-export {TestTableTemplate} from './internal/test-table.js';
+export {type TestTableTemplate} from './internal/test-table.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -11,7 +11,7 @@ import {styles} from './internal/fab-branded-styles.css.js';
 import {styles as forcedColors} from './internal/forced-colors-styles.css.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
-export {FabSize} from './internal/shared.js';
+export {type FabSize} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

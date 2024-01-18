@@ -13,7 +13,7 @@ import {styles as outlinedStyles} from './internal/outlined-styles.css.js';
 import {OutlinedTextField} from './internal/outlined-text-field.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
-export {TextFieldType} from './internal/text-field.js';
+export {type TextFieldType} from './internal/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {

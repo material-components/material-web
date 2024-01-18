@@ -13,7 +13,7 @@ import {styles as filledStyles} from './internal/filled-styles.css.js';
 import {FilledTextField} from './internal/filled-text-field.js';
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
 
-export {TextFieldType} from './internal/text-field.js';
+export {type TextFieldType} from './internal/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {

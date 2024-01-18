@@ -16,7 +16,7 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {
   FormSubmitter,
-  FormSubmitterType,
+  type FormSubmitterType,
   setupFormSubmitter,
 } from '../../internal/controller/form-submitter.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';

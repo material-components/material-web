@@ -9,8 +9,8 @@ import {customElement} from 'lit/decorators.js';
 import {MenuItemEl} from './internal/menuitem/menu-item.js';
 import {styles} from './internal/menuitem/menu-item-styles.css.js';
 
-export {MenuItem} from './internal/controllers/menuItemController.js';
-export {CloseMenuEvent} from './internal/controllers/shared.js';
+export {type MenuItem} from './internal/controllers/menuItemController.js';
+export {type CloseMenuEvent} from './internal/controllers/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {

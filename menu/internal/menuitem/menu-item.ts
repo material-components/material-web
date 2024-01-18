@@ -23,7 +23,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
 import {
   MenuItem,
   MenuItemController,
-  MenuItemType,
+  type MenuItemType,
 } from '../controllers/menuItemController.js';
 
 /**
