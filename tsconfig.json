@@ -29,6 +29,7 @@
   "exclude": [
     "catalog",
     "**/demo",
+    "**/tsx",
     "scripts/"
   ]
 }
