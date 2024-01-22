@@ -14,8 +14,8 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {
   FormSubmitter,
-  type FormSubmitterType,
   setupFormSubmitter,
+  type FormSubmitterType,
 } from '../../internal/controller/form-submitter.js';
 import {
   dispatchActivationClick,
@@ -78,9 +78,17 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   @property({type: Boolean, attribute: 'has-icon', reflect: true}) hasIcon =
     false;
 
+  /**
+   * The default behavior of the button. May be "text", "reset", or "submit"
+   * (default).
+   */
   @property() type: FormSubmitterType = 'submit';
 
-  @property() value = '';
+  /**
+   * The value added to a form with the button's name when the button submits a
+   * form.
+   */
+  @property({reflect: true}) value = '';
 
   get name() {
     return this.getAttribute('name') ?? '';
