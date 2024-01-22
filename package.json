@@ -43,11 +43,13 @@
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
-    "!**/testing/**",
     "!**/*_test.*",
     "!.wireit/**",
     "!catalog",
-    "!scripts/"
+    "!scripts/",
+    "!**/testing/**",
+    "testing/harness.{js,js.map,d.ts}",
+    "testing/transform-pseudo-classes.{js,js.map,d.ts}"
   ],
   "workspaces": [
     "catalog"
