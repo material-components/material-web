@@ -36,6 +36,7 @@ export default {
         'slider',
         'switch',
         'tabs',
+        'testing',
         'textfield',
         'tokens',
         'typography',
