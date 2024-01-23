@@ -5,6 +5,7 @@
 
 // go/keep-sorted start
 @use 'sass:list';
+@use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
@@ -26,16 +27,15 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-divider-values();
+  @each $token, $value in $tokens {
+    $tokens: map.set($tokens, $token, var(--md-divider-#{$token}, #{$value}));
+  }
 
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-divider-#{$token}, #{$value});
-    }
-
     box-sizing: border-box;
-    color: var(--_color);
+    color: map.get($tokens, 'color');
     display: flex;
-    height: var(--_thickness);
+    height: map.get($tokens, 'thickness');
     width: 100%;
   }
 
