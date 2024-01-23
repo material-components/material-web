@@ -14,7 +14,7 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
-@mixin styles() {
+@mixin styles($tokens) {
   @layer styles {
     .handle-container {
       display: flex;
@@ -25,7 +25,9 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    $margin: calc(var(--_track-width) - var(--_track-height));
+    $margin: calc(
+      map.get($tokens, 'track-width') - map.get($tokens, 'track-height')
+    );
 
     .selected .handle-container {
       margin-inline-start: $margin;
@@ -41,12 +43,12 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
     .handle {
       // Handle shape
-      border-start-start-radius: var(--_handle-shape-start-start);
-      border-start-end-radius: var(--_handle-shape-start-end);
-      border-end-end-radius: var(--_handle-shape-end-end);
-      border-end-start-radius: var(--_handle-shape-end-start);
-      height: var(--_handle-height);
-      width: var(--_handle-width);
+      border-start-start-radius: map.get($tokens, 'handle-shape-start-start');
+      border-start-end-radius: map.get($tokens, 'handle-shape-start-end');
+      border-end-end-radius: map.get($tokens, 'handle-shape-end-end');
+      border-end-start-radius: map.get($tokens, 'handle-shape-end-start');
+      height: map.get($tokens, 'handle-height');
+      width: map.get($tokens, 'handle-width');
 
       transform-origin: center;
       transition-property: height, width;
@@ -71,79 +73,82 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     }
 
     .selected .handle {
-      height: var(--_selected-handle-height);
-      width: var(--_selected-handle-width);
+      height: map.get($tokens, 'selected-handle-height');
+      width: map.get($tokens, 'selected-handle-width');
     }
 
     .handle.with-icon {
-      height: var(--_with-icon-handle-height);
-      width: var(--_with-icon-handle-width);
+      height: map.get($tokens, 'with-icon-handle-height');
+      width: map.get($tokens, 'with-icon-handle-width');
     }
 
     .selected:not(.disabled):active .handle,
     .unselected:not(.disabled):active .handle {
-      height: var(--_pressed-handle-height);
-      width: var(--_pressed-handle-width);
+      height: map.get($tokens, 'pressed-handle-height');
+      width: map.get($tokens, 'pressed-handle-width');
       transition-timing-function: linear;
       transition-duration: 100ms;
     }
 
     .selected .handle::before {
-      background-color: var(--_selected-handle-color);
+      background-color: map.get($tokens, 'selected-handle-color');
     }
 
     .selected:hover .handle::before {
-      background-color: var(--_selected-hover-handle-color);
+      background-color: map.get($tokens, 'selected-hover-handle-color');
     }
 
     .selected:focus-within .handle::before {
-      background-color: var(--_selected-focus-handle-color);
+      background-color: map.get($tokens, 'selected-focus-handle-color');
     }
 
     .selected:active .handle::before {
-      background-color: var(--_selected-pressed-handle-color);
+      background-color: map.get($tokens, 'selected-pressed-handle-color');
     }
 
     .selected.disabled .handle::before {
-      background-color: var(--_disabled-selected-handle-color);
-      opacity: var(--_disabled-selected-handle-opacity);
+      background-color: map.get($tokens, 'disabled-selected-handle-color');
+      opacity: map.get($tokens, 'disabled-selected-handle-opacity');
     }
 
     .unselected .handle::before {
-      background-color: var(--_handle-color);
+      background-color: map.get($tokens, 'handle-color');
     }
 
     .unselected:hover .handle::before {
-      background-color: var(--_hover-handle-color);
+      background-color: map.get($tokens, 'hover-handle-color');
     }
 
     .unselected:focus-within .handle::before {
-      background-color: var(--_focus-handle-color);
+      background-color: map.get($tokens, 'focus-handle-color');
     }
 
     .unselected:active .handle::before {
-      background-color: var(--_pressed-handle-color);
+      background-color: map.get($tokens, 'pressed-handle-color');
     }
 
     .unselected.disabled .handle::before {
-      background-color: var(--_disabled-handle-color);
-      opacity: var(--_disabled-handle-opacity);
+      background-color: map.get($tokens, 'disabled-handle-color');
+      opacity: map.get($tokens, 'disabled-handle-opacity');
     }
 
     md-ripple {
-      border-radius: var(--_state-layer-shape);
-      height: var(--_state-layer-size);
+      border-radius: map.get($tokens, 'state-layer-shape');
+      height: map.get($tokens, 'state-layer-size');
       inset: unset;
-      width: var(--_state-layer-size);
+      width: map.get($tokens, 'state-layer-size');
     }
 
     .selected md-ripple {
       @include ripple.theme(
         (
-          'hover-color': var(--_selected-hover-state-layer-color),
-          'pressed-color': var(--_selected-pressed-state-layer-color),
-          'hover-opacity': var(--_selected-hover-state-layer-opacity),
-          'pressed-opacity': var(--_selected-pressed-state-layer-opacity),
+          'hover-color': map.get($tokens, 'selected-hover-state-layer-color'),
+          'pressed-color':
+            map.get($tokens, 'selected-pressed-state-layer-color'),
+          'hover-opacity':
+            map.get($tokens, 'selected-hover-state-layer-opacity'),
+          'pressed-opacity':
+            map.get($tokens, 'selected-pressed-state-layer-opacity'),
         )
       );
     }
@@ -151,10 +156,10 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     .unselected md-ripple {
       @include ripple.theme(
         (
-          'hover-color': var(--_hover-state-layer-color),
-          'pressed-color': var(--_pressed-state-layer-color),
-          'hover-opacity': var(--_hover-state-layer-opacity),
-          'pressed-opacity': var(--_pressed-state-layer-opacity),
+          'hover-color': map.get($tokens, 'hover-state-layer-color'),
+          'pressed-color': map.get($tokens, 'pressed-state-layer-color'),
+          'hover-opacity': map.get($tokens, 'hover-state-layer-opacity'),
+          'pressed-opacity': map.get($tokens, 'pressed-state-layer-opacity'),
         )
       );
     }
