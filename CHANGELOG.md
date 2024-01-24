@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.2.0](https://github.com/material-components/material-web/compare/v1.1.1...v1.2.0) (2024-01-24)
+
+
+### Features
+
+* **select:** add keyboard support for arrow end and home ([8912019](https://github.com/material-components/material-web/commit/8912019b902803a018a1d92fb7caaa39369f6cf6))
+* **select:** add menuAlign to allow end-aligning the select menu ([50a9ffa](https://github.com/material-components/material-web/commit/50a9ffae46499ec575a38887b5dcce8f5506e576))
+* **select:** support width fit-content ([4bb9418](https://github.com/material-components/material-web/commit/4bb9418a52564984e32666c9383d8eb262e876cf))
+* **textfield:** add `no-spinner` to remove number spin buttons ([3c6e550](https://github.com/material-components/material-web/commit/3c6e55006b3a7bad0d7fa782fab3141e1961e686))
+
+
+### Bug Fixes
+
+* **button:** add missing sass imports ([37fad06](https://github.com/material-components/material-web/commit/37fad0660dd96cf565062075e056a6288fea5290))
+* **chips:** filter's `click.preventDefault()` not working when also updating `selected` ([5dc870b](https://github.com/material-components/material-web/commit/5dc870bfe1609a50702ef078a3da1b01620f7ef8))
+* **dialog:** buttons not reflecting value attribute when setting property ([35913a6](https://github.com/material-components/material-web/commit/35913a6ea42776f2c402d879067ae772833e52b5)), closes [#5409](https://github.com/material-components/material-web/issues/5409)
+* **dialog:** immediate escape key not firing cancel event in Chrome 120 ([be3dc6f](https://github.com/material-components/material-web/commit/be3dc6f6776f86a95619de0d708e2815e744ac6d)), closes [#5313](https://github.com/material-components/material-web/issues/5313)
+* **dialog:** text is now selectable ([4ae9db6](https://github.com/material-components/material-web/commit/4ae9db6c67e3704a7be8bd83dfa18dbd50b7fc94))
+* forms correctly focus the first invalid control instead of last ([7dd7a68](https://github.com/material-components/material-web/commit/7dd7a68ae9229d5685fe4ab85a6d8514624245d8))
+* **labs:** add card support for high contrast mode ([53ec44b](https://github.com/material-components/material-web/commit/53ec44b4b81cbf691a0455efb6d9907957ef1205))
+* **labs:** card content not clickable with outline fix ([9c5cff8](https://github.com/material-components/material-web/commit/9c5cff8f90198860149e6237798e73f2c846a36b)), closes [#5312](https://github.com/material-components/material-web/issues/5312)
+* **menu:** `--md-menu-item-container-color` not working ([86bd6f8](https://github.com/material-components/material-web/commit/86bd6f830913330e41033c5eceab938fa4f42bc2))
+* **progress:** prevent unnecessary animation to run when not visible ([4de5e74](https://github.com/material-components/material-web/commit/4de5e74b5caec5cff0fdb4696cb64790d471170c))
+* rename and move `internal/controller/events` ([eca1357](https://github.com/material-components/material-web/commit/eca1357f1a7d185d4ec8a368f6467f481f9b2798))
+* **ripple:** multiple touches causing ripples to start from center ([cef1b74](https://github.com/material-components/material-web/commit/cef1b740ee0a72488a9a9c4f197e2398d4027f1e)), closes [#5349](https://github.com/material-components/material-web/issues/5349)
+* **select:** allow aria-expanded to be set to false ([73725be](https://github.com/material-components/material-web/commit/73725be67053f3a5ba4aa25f8b12a82afc4cad71)), closes [#5360](https://github.com/material-components/material-web/issues/5360)
+* **select:** clicking select toggles the menu rather than just open ([043bbad](https://github.com/material-components/material-web/commit/043bbad6f30293c053c1fc1689cbf0d1e90c0d75))
+* **select:** ensure md-select selection logic uses fresh DOM references ([8942715](https://github.com/material-components/material-web/commit/89427158b7a15265556db2f86423a9905760c696))
+* **select:** expose SelectOption interface ([edb3559](https://github.com/material-components/material-web/commit/edb3559a1ce12d13921d93761bedbfde4c1c7898))
+* **slider:** move ripple and focus ring beneath handle ([68b078b](https://github.com/material-components/material-web/commit/68b078b4e1f7357a15098bb59ae22ae8a4d02cbf))
+* **slider:** nested dir attributes do not break on chrome 120+ ([57168f6](https://github.com/material-components/material-web/commit/57168f6a95403cd5a29e2774e42525efeb1e3eae))
+* **tabs:** `--md-elevation-level` no longer leaks into tabs ([ddf1fb0](https://github.com/material-components/material-web/commit/ddf1fb0c613e43d26735832b9fdb1efcf2969949)), closes [#5137](https://github.com/material-components/material-web/issues/5137)
+* **tabs:** `tabs.scrollToTab()` not working ([eb7c17e](https://github.com/material-components/material-web/commit/eb7c17e3dc6b14d900f4ce9d13d93ce0c09b9806))
+* **textfield:** counter showing when max length is 0 or removed ([9973b90](https://github.com/material-components/material-web/commit/9973b90981b2414cc18dfb91279f204b7f50c080))
+* **textfield:** error styles not removing when an unrelated control is invalid ([3151fd8](https://github.com/material-components/material-web/commit/3151fd8d904f0ac529f3a4f872a9dac537a65dc0))
+* **textfield:** focus style lost after `reportValidity()` during change ([6efc904](https://github.com/material-components/material-web/commit/6efc90403b17684f77d1da577453fa66cfcb1c30))
+* **textfield:** remove Firefox high contrast mode background on linux ([926edfb](https://github.com/material-components/material-web/commit/926edfb367de71eed77deaba45a4a7eaa79342fc))
+* **tokens:** moved '_values.scss' to 'internal/_values.scss' ([b986b1e](https://github.com/material-components/material-web/commit/b986b1eb7cac5a5feef90478406247cebe7e690e))
+
+
+### Performance Improvements
+
+* **ripple:** don't process events in high contrast mode ([839667d](https://github.com/material-components/material-web/commit/839667dcf6becda087015edcb5468b8b2107d8c7))
+
 ## [1.1.1](https://github.com/material-components/material-web/compare/v1.1.0...v1.1.1) (2023-12-13)
 
 
