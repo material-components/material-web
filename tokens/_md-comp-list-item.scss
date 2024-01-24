@@ -20,8 +20,6 @@ $supported-tokens: (
   // go/keep-sorted start
   'bottom-space',
   'disabled-opacity',
-  'focus-state-layer-color',
-  'focus-state-layer-opacity',
   'hover-state-layer-color',
   'hover-state-layer-opacity',
   'label-text-color',
@@ -74,6 +72,8 @@ $unsupported-tokens: (
   'dragged-trailing-icon-icon-color',
   'focus-label-text-color',
   'focus-leading-icon-icon-color',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
   'focus-trailing-icon-icon-color',
   'hover-label-text-color',
   'hover-leading-icon-icon-color',

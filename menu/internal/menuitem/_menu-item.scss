@@ -17,59 +17,41 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $list-item-supported-tokens: tokens.$md-comp-menu-list-item-supported-tokens;
   $supported-tokens: tokens.$md-comp-menu-item-supported-tokens;
 
   @each $token, $value in $tokens {
-    @if list.index($supported-tokens, $token) ==
-      null and
-      list.index($list-item-supported-tokens, $token) ==
-      null
-    {
+    @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
     }
 
     @if $value and list.index($supported-tokens, $token) == null {
       --md-menu-item-#{$token}: #{$value};
     }
-
-    @if $value and list.index($list-item-supported-tokens, $token) == null {
-      --md-list-item-#{$token}: #{$value};
-    }
   }
 }
 
 @mixin styles() {
-  $list-item-tokens: tokens.md-comp-menu-list-item-values();
-  @each $token, $value in $list-item-tokens {
-    $list-item-tokens: map.set(
-      $list-item-tokens,
-      $token,
-      var(--md-menu-item-#{$token}, #{$value})
-    );
-  }
   $tokens: tokens.md-comp-menu-item-values();
   @each $token, $value in $tokens {
     $tokens: map.set($tokens, $token, var(--md-menu-item-#{$token}, #{$value}));
   }
 
   :host {
-    border-radius: map.get($list-item-tokens, 'container-shape');
+    border-radius: map.get($tokens, 'container-shape');
     display: flex;
 
     @include ripple.theme(
       (
-        hover-color: map.get($list-item-tokens, 'hover-state-layer-color'),
-        hover-opacity: map.get($list-item-tokens, 'hover-state-layer-opacity'),
-        pressed-color: map.get($list-item-tokens, 'pressed-state-layer-color'),
-        pressed-opacity:
-          map.get($list-item-tokens, 'pressed-state-layer-opacity'),
+        hover-color: map.get($tokens, 'hover-state-layer-color'),
+        hover-opacity: map.get($tokens, 'hover-state-layer-opacity'),
+        pressed-color: map.get($tokens, 'pressed-state-layer-color'),
+        pressed-opacity: map.get($tokens, 'pressed-state-layer-opacity'),
       )
     );
   }
 
   :host([disabled]) {
-    opacity: map.get($list-item-tokens, 'disabled-opacity');
+    opacity: map.get($tokens, 'disabled-opacity');
     pointer-events: none;
   }
 
@@ -121,39 +103,36 @@
   md-item {
     border-radius: inherit;
     flex: 1;
-    color: map.get($list-item-tokens, 'label-text-color');
-    font-family: map.get($list-item-tokens, 'label-text-font');
-    font-size: map.get($list-item-tokens, 'label-text-size');
-    line-height: map.get($list-item-tokens, 'label-text-line-height');
-    font-weight: map.get($list-item-tokens, 'label-text-weight');
-    min-height: map.get($list-item-tokens, 'one-line-container-height');
-    padding-top: map.get($list-item-tokens, 'top-space');
-    padding-bottom: map.get($list-item-tokens, 'bottom-space');
-    padding-inline-start: map.get($list-item-tokens, 'leading-space');
-    padding-inline-end: map.get($list-item-tokens, 'trailing-space');
+    color: map.get($tokens, 'label-text-color');
+    font-family: map.get($tokens, 'label-text-font');
+    font-size: map.get($tokens, 'label-text-size');
+    line-height: map.get($tokens, 'label-text-line-height');
+    font-weight: map.get($tokens, 'label-text-weight');
+    min-height: map.get($tokens, 'one-line-container-height');
+    padding-top: map.get($tokens, 'top-space');
+    padding-bottom: map.get($tokens, 'bottom-space');
+    padding-inline-start: map.get($tokens, 'leading-space');
+    padding-inline-end: map.get($tokens, 'trailing-space');
   }
 
   md-item[multiline] {
-    min-height: map.get($list-item-tokens, 'two-line-container-height');
+    min-height: map.get($tokens, 'two-line-container-height');
   }
 
   [slot='supporting-text'] {
-    color: map.get($list-item-tokens, 'supporting-text-color');
-    font-family: map.get($list-item-tokens, 'supporting-text-font');
-    font-size: map.get($list-item-tokens, 'supporting-text-size');
-    line-height: map.get($list-item-tokens, 'supporting-text-line-height');
-    font-weight: map.get($list-item-tokens, 'supporting-text-weight');
+    color: map.get($tokens, 'supporting-text-color');
+    font-family: map.get($tokens, 'supporting-text-font');
+    font-size: map.get($tokens, 'supporting-text-size');
+    line-height: map.get($tokens, 'supporting-text-line-height');
+    font-weight: map.get($tokens, 'supporting-text-weight');
   }
 
   [slot='trailing-supporting-text'] {
-    color: map.get($list-item-tokens, 'trailing-supporting-text-color');
-    font-family: map.get($list-item-tokens, 'trailing-supporting-text-font');
-    font-size: map.get($list-item-tokens, 'trailing-supporting-text-size');
-    line-height: map.get(
-      $list-item-tokens,
-      'trailing-supporting-text-line-height'
-    );
-    font-weight: map.get($list-item-tokens, 'trailing-supporting-text-weight');
+    color: map.get($tokens, 'trailing-supporting-text-color');
+    font-family: map.get($tokens, 'trailing-supporting-text-font');
+    font-size: map.get($tokens, 'trailing-supporting-text-size');
+    line-height: map.get($tokens, 'trailing-supporting-text-line-height');
+    font-weight: map.get($tokens, 'trailing-supporting-text-weight');
   }
 
   :is([slot='start'], [slot='end'])::slotted(*) {
@@ -161,15 +140,15 @@
   }
 
   [slot='start'] {
-    color: map.get($list-item-tokens, 'leading-icon-color');
+    color: map.get($tokens, 'leading-icon-color');
   }
 
   [slot='end'] {
-    color: map.get($list-item-tokens, 'trailing-icon-color');
+    color: map.get($tokens, 'trailing-icon-color');
   }
 
   .list-item {
-    background-color: map.get($list-item-tokens, 'container-color');
+    background-color: map.get($tokens, 'container-color');
   }
 
   .list-item.selected {
