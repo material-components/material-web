@@ -19,6 +19,7 @@ $supported-tokens: (
   // go/keep-sorted start
   'active-indicator-color',
   'active-indicator-height',
+  'bottom-space',
   'caret-color',
   'container-color',
   'container-shape',
@@ -60,6 +61,7 @@ $supported-tokens: (
   'error-trailing-icon-color',
   'focus-active-indicator-color',
   'focus-active-indicator-height',
+  'focus-caret-color',
   'focus-input-text-color',
   'focus-label-text-color',
   'focus-leading-icon-color',
@@ -79,8 +81,10 @@ $supported-tokens: (
   'input-text-line-height',
   'input-text-placeholder-color',
   'input-text-prefix-color',
+  'input-text-prefix-trailing-space',
   'input-text-size',
   'input-text-suffix-color',
+  'input-text-suffix-leading-space',
   'input-text-weight',
   'label-text-color',
   'label-text-font',
@@ -91,13 +95,18 @@ $supported-tokens: (
   'label-text-weight',
   'leading-icon-color',
   'leading-icon-size',
+  'leading-space',
   'supporting-text-color',
   'supporting-text-font',
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-weight',
+  'top-space',
   'trailing-icon-color',
   'trailing-icon-size',
+  'trailing-space',
+  'with-label-bottom-space',
+  'with-label-top-space',
   // go/keep-sorted end
 );
 
@@ -123,7 +132,21 @@ $_default: (
   $tokens: validate.values(
     md-comp-filled-text-field.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: (
+      'leading-space': if($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if($exclude-hardcoded-values, null, 16px),
+      'top-space': if($exclude-hardcoded-values, null, 16px),
+      'bottom-space': if($exclude-hardcoded-values, null, 16px),
+      'input-text-prefix-trailing-space':
+        if($exclude-hardcoded-values, null, 2px),
+      'input-text-suffix-leading-space':
+        if($exclude-hardcoded-values, null, 2px),
+      'with-label-top-space': if($exclude-hardcoded-values, null, 8px),
+      'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
+      // TODO(b/270705687): remove when focus-caret-color token added
+      'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
+    )
   );
 
   $tokens: map.merge(

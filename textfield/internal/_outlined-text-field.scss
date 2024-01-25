@@ -19,14 +19,7 @@
       'container-shape-start-start',
       'container-shape-start-end',
       'container-shape-end-end',
-      'container-shape-end-start',
-      'leading-space',
-      'trailing-space',
-      'top-space',
-      'bottom-space',
-      'input-text-prefix-trailing-space',
-      'input-text-suffix-leading-space',
-      'focus-caret-color'
+      'container-shape-end-start'
     )
   );
 
@@ -43,21 +36,6 @@
 
 @mixin styles() {
   $tokens: tokens.md-comp-outlined-text-field-values();
-  // Add missing tokens
-  $tokens: map.merge(
-    (
-      'leading-space': 16px,
-      'trailing-space': 16px,
-      'top-space': 16px,
-      'bottom-space': 16px,
-      'input-text-prefix-trailing-space': 2px,
-      'input-text-suffix-leading-space': 2px,
-      // TODO(b/270705687): remove when focus-caret-color token added
-      'focus-caret-color':
-        map.get(tokens.md-sys-color-values-light(), 'primary'),
-    ),
-    $tokens
-  );
 
   :host {
     @each $token, $value in $tokens {

@@ -16,6 +16,7 @@
 
 $supported-tokens: (
   // go/keep-sorted start
+  'bottom-space',
   'caret-color',
   'container-shape',
   'disabled-input-text-color',
@@ -50,6 +51,7 @@ $supported-tokens: (
   'error-outline-color',
   'error-supporting-text-color',
   'error-trailing-icon-color',
+  'focus-caret-color',
   'focus-input-text-color',
   'focus-label-text-color',
   'focus-leading-icon-color',
@@ -69,8 +71,10 @@ $supported-tokens: (
   'input-text-line-height',
   'input-text-placeholder-color',
   'input-text-prefix-color',
+  'input-text-prefix-trailing-space',
   'input-text-size',
   'input-text-suffix-color',
+  'input-text-suffix-leading-space',
   'input-text-weight',
   'label-text-color',
   'label-text-font',
@@ -81,6 +85,7 @@ $supported-tokens: (
   'label-text-weight',
   'leading-icon-color',
   'leading-icon-size',
+  'leading-space',
   'outline-color',
   'outline-width',
   'supporting-text-color',
@@ -88,8 +93,10 @@ $supported-tokens: (
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-weight',
+  'top-space',
   'trailing-icon-color',
   'trailing-icon-size',
+  'trailing-space',
   // go/keep-sorted end
 );
 
@@ -114,7 +121,19 @@ $_default: (
   $tokens: validate.values(
     md-comp-outlined-text-field.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: (
+      'leading-space': if($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if($exclude-hardcoded-values, null, 16px),
+      'top-space': if($exclude-hardcoded-values, null, 16px),
+      'bottom-space': if($exclude-hardcoded-values, null, 16px),
+      'input-text-prefix-trailing-space':
+        if($exclude-hardcoded-values, null, 2px),
+      'input-text-suffix-leading-space':
+        if($exclude-hardcoded-values, null, 2px),
+      // TODO(b/270705687): remove when focus-caret-color token added
+      'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
+    )
   );
 
   $tokens: map.merge(
