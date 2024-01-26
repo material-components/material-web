@@ -189,27 +189,18 @@ const custom: MaterialStoryInit<StoryKnobs> = {
     styles,
     css`
       .custom {
+        /* colors */
+        --md-sys-color-primary: var(--md-sys-color-tertiary);
         /* text */
         --md-primary-tab-label-text-font: cursive, system-ui;
         --md-primary-tab-label-text-size: 0.8em;
         /* indicator */
-        --md-primary-tab-active-indicator-color: firebrick;
         --md-primary-tab-active-indicator-height: 8px;
         --md-primary-tab-active-indicator-shape: 9999px 0;
-        /* active/selected tab */
-        --active-color: darkorange;
-        --md-primary-tab-active-icon-color: var(--active-color);
-        --md-primary-tab-active-label-text-color: var(--active-color);
-        --md-primary-tab-active-focus-icon-color: var(--active-color);
-        --md-primary-tab-active-focus-label-text-color: var(--active-color);
-        --md-primary-tab-active-hover-icon-color: var(--active-color);
-        --md-primary-tab-active-hover-label-text-color: var(--active-color);
-        --md-primary-tab-active-pressed-icon-color: var(--active-color);
-        --md-primary-tab-active-pressed-label-text-color: var(--active-color);
       }
 
       .custom::part(divider) {
-        --md-divider-color: var(--active-color);
+        --md-divider-color: var(--md-sys-color-tertiary);
         --md-divider-thickness: 4px;
       }
     `,
