@@ -119,6 +119,7 @@ const icons: MaterialStoryInit<StoryKnobs> = {
           <md-icon slot="leading-icon">search</md-icon>
           <md-icon-button
             aria-label="Clear input"
+            ?disabled=${knobs.disabled}
             slot="trailing-icon"
             @click=${clearInput}>
             <md-icon>clear</md-icon>
@@ -136,6 +137,7 @@ const icons: MaterialStoryInit<StoryKnobs> = {
           <md-icon slot="leading-icon">search</md-icon>
           <md-icon-button
             aria-label="Clear input"
+            ?disabled=${knobs.disabled}
             slot="trailing-icon"
             @click=${clearInput}>
             <md-icon>clear</md-icon>
