@@ -31,10 +31,9 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-radio-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-radio-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-radio-values(
+    $exclude-custom-properties: false,
+  );
 
   @layer {
     :host {

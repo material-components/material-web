@@ -42,10 +42,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-switch-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-switch-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-switch-values(
+    $exclude-custom-properties: false,
+  );
 
   // Support logical shape properties
   $tokens: map.merge(

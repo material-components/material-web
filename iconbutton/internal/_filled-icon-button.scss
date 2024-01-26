@@ -35,11 +35,13 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-icon-button-values();
+  $tokens: tokens.md-comp-filled-icon-button-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-filled-icon-button-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     // Support logical shape properties

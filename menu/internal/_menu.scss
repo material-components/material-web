@@ -31,10 +31,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-menu-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-menu-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-menu-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @include elevation.theme(

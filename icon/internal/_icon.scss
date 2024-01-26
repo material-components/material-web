@@ -26,10 +26,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-icon-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-icon-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-icon-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     font-size: map.get($tokens, 'size');

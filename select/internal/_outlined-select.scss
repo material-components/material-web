@@ -36,11 +36,13 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-select-values();
+  $tokens: tokens.md-comp-outlined-select-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-outlined-select-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     // Support logical shape properties

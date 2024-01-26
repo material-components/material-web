@@ -47,34 +47,25 @@ $_checkmark-bottom-left: 7px, -14px;
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-checkbox-values();
+  $tokens: tokens.md-comp-checkbox-values(
+    $exclude-custom-properties: false,
+  );
 
   // Support logical shape properties
   $container-shape: map.get($tokens, 'container-shape');
-  $tokens: map.set(
+  $tokens: map.merge(
     $tokens,
-    'container-shape-start-start',
-    var(--md-checkbox-container-shape, #{$container-shape})
+    (
+      'container-shape-start-start':
+        var(--md-checkbox-container-shape-start-start, #{$container-shape}),
+      'container-shape-start-end':
+        var(--md-checkbox-container-shape-start-end, #{$container-shape}),
+      'container-shape-end-end':
+        var(--md-checkbox-container-shape-end-end, #{$container-shape}),
+      'container-shape-end-start':
+        var(--md-checkbox-container-shape-end-start, #{$container-shape}),
+    )
   );
-  $tokens: map.set(
-    $tokens,
-    'container-shape-start-end',
-    var(--md-checkbox-container-shape, #{$container-shape})
-  );
-  $tokens: map.set(
-    $tokens,
-    'container-shape-end-end',
-    var(--md-checkbox-container-shape, #{$container-shape})
-  );
-  $tokens: map.set(
-    $tokens,
-    'container-shape-end-start',
-    var(--md-checkbox-container-shape, #{$container-shape})
-  );
-
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-checkbox-#{$token}, #{$value}));
-  }
 
   :host {
     border-start-start-radius: map.get($tokens, 'container-shape-start-start');

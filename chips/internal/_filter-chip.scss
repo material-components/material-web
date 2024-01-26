@@ -33,11 +33,13 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filter-chip-values();
+  $tokens: tokens.md-comp-filter-chip-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-filter-chip-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     // Support logical shape properties

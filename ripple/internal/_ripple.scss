@@ -25,10 +25,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-ripple-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-ripple-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-ripple-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     display: flex;

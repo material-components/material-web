@@ -25,11 +25,13 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-card-values();
+  $tokens: tokens.md-comp-filled-card-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-filled-card-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
   }
 }

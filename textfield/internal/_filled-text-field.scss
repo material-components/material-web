@@ -40,13 +40,24 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-text-field-values();
+  $tokens: tokens.md-comp-filled-text-field-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
       @if $token == 'container-shape' {
         // Support logical shape properties. Filled text field has a default
         // oblong shape, which is why the fallback value is unique per corner.
+
+        // Get the raw value without the container-shape custom property.
+        $value: map.get(
+          tokens.md-comp-filled-text-field-values(
+            $exclude-custom-properties: true,
+          ),
+          'container-shape'
+        );
+
         --_container-shape-start-start: var(
           --md-filled-text-field-container-shape-start-start,
           var(--md-filled-text-field-container-shape, #{list.nth($value, 1)})
@@ -64,7 +75,7 @@
           var(--md-filled-text-field-container-shape, #{list.nth($value, 4)})
         );
       } @else {
-        --_#{$token}: var(--md-filled-text-field-#{$token}, #{$value});
+        --_#{$token}: #{$value};
       }
     }
 

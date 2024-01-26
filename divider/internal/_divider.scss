@@ -26,10 +26,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-divider-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-divider-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-divider-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     box-sizing: border-box;

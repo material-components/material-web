@@ -36,10 +36,9 @@
 @mixin styles() {
   $md-sys-color: tokens.md-sys-color-values-light();
   $md-sys-motion: tokens.md-sys-motion-values();
-  $tokens: tokens.md-comp-dialog-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-dialog-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-dialog-values(
+    $exclude-custom-properties: false,
+  );
 
   // Support logical shape properties
   $tokens: map.merge(

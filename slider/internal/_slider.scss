@@ -31,7 +31,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-slider-values();
+  $tokens: tokens.md-comp-slider-values(
+    $exclude-custom-properties: false,
+  );
 
   // The max clip is reduced by 1 full tick display which is 2x the container
   // size to account for always showing the active track on the outside
@@ -61,7 +63,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-slider-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     // Set these to avoid token test failures

@@ -26,10 +26,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-elevation-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-elevation-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-elevation-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     display: flex;

@@ -31,10 +31,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-menu-item-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-menu-item-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-menu-item-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     border-radius: map.get($tokens, 'container-shape');

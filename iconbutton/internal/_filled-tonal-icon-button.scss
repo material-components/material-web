@@ -37,11 +37,13 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-tonal-icon-button-values();
+  $tokens: tokens.md-comp-filled-tonal-icon-button-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-filled-tonal-icon-button-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     // Support logical shape properties
