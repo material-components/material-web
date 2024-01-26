@@ -103,7 +103,11 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $text-field: md-comp-outlined-text-field.values(
     $deps,
     $exclude-hardcoded-values
@@ -224,5 +228,19 @@ $_default: (
     // go/keep-sorted end
   );
 
-  @return validate.values($tokens, $supported-tokens: $supported-tokens);
+  $tokens: validate.values($tokens, $supported-tokens: $supported-tokens);
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-outlined-field-#{$token}, #{$value})
+      );
+    }
+  }
+
+  @return $tokens;
 }

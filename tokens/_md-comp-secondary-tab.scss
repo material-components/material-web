@@ -75,7 +75,11 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: md-comp-secondary-navigation-tab.values(
     $deps,
     $exclude-hardcoded-values: $exclude-hardcoded-values
@@ -97,6 +101,18 @@ $_default: (
       'with-icon-pressed-icon-color': 'pressed-icon-color',
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-secondary-tab-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

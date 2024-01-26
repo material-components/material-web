@@ -22,11 +22,25 @@ $_default: (
   'md-sys-color': md-sys-color.values-light(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $list-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
   $tokens: (
     'container-color': map.get($list-tokens, 'list-item-container-color'),
   );
 
-  @return validate.values($tokens, $supported-tokens: $supported-tokens);
+  $tokens: validate.values($tokens, $supported-tokens: $supported-tokens);
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set($tokens, $token, var(--md-list-#{$token}, #{$value}));
+    }
+  }
+
+  @return $tokens;
 }

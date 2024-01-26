@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
@@ -64,7 +67,11 @@ $_default: (
   'md-sys-state': md-sys-state.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: validate.values(
     md-comp-filled-tonal-icon-button.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
@@ -83,6 +90,18 @@ $_default: (
         'toggle-focus-state-layer-color'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-filled-tonal-icon-button-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

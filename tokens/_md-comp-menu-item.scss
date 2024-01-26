@@ -4,7 +4,6 @@
 //
 
 // go/keep-sorted start
-@use 'sass:list';
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
@@ -73,7 +72,11 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: md-comp-menu.values($deps);
 
   // Like list items, menu items use their parent menu for their container
@@ -89,6 +92,18 @@ $_default: (
     $new-tokens: md-comp-list-item.values($deps),
     $renamed-tokens: _get-renamed-tokens($tokens)
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-menu-item-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

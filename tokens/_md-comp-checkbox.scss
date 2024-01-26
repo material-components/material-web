@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
@@ -89,9 +92,15 @@ $_default: (
   'md-sys-state': md-sys-state.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-checkbox.values($deps, $exclude-hardcoded-values);
+
   $tokens: validate.values(
-    md-comp-checkbox.values($deps, $exclude-hardcoded-values),
+    $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $renamed-tokens: (
@@ -119,6 +128,18 @@ $_default: (
       'unselected-focus-state-layer-opacity': 'focus-state-layer-opacity'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-checkbox-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

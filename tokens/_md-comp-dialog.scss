@@ -72,7 +72,11 @@ $unsupported-tokens: (
   // go/keep-sorted end
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: validate.values(
     md-comp-dialog.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
@@ -83,6 +87,14 @@ $unsupported-tokens: (
       'with-icon-icon-size': 'icon-size'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set($tokens, $token, var(--md-dialog-#{$token}, #{$value}));
+    }
+  }
 
   @return $tokens;
 }

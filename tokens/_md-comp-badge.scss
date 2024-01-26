@@ -21,8 +21,21 @@ $_default: (
 
 $_unsupported-tokens: ('large-label-text-tracking', 'large-label-text-type');
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: md-comp-badge.values($deps, $exclude-hardcoded-values);
   $tokens: map.remove($tokens, $_unsupported-tokens...);
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set($tokens, $token, var(--md-badge-#{$token}, #{$value}));
+    }
+  }
+
   @return $tokens;
 }

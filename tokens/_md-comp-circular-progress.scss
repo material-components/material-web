@@ -38,7 +38,11 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: validate.values(
     md-comp-circular-progress-indicator.values(
       $deps,
@@ -59,6 +63,18 @@ $_default: (
       'active-indicator-width',
       math.div($width, $size-without-padding) * 100
     );
+  }
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-circular-progress-#{$token}, #{$value})
+      );
+    }
   }
 
   @return $tokens;

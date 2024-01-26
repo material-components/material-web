@@ -77,13 +77,17 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: md-comp-primary-navigation-tab.values(
     $deps,
     $exclude-hardcoded-values: $exclude-hardcoded-values
   );
 
-  @return validate.values(
+  $tokens: validate.values(
     $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
@@ -128,4 +132,18 @@ $_default: (
       'with-label-text-label-text-type': 'label-text-type'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-primary-tab-#{$token}, #{$value})
+      );
+    }
+  }
+
+  @return $tokens;
 }

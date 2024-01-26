@@ -5,7 +5,6 @@
 
 // go/keep-sorted start
 @use 'sass:map';
-@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
 @use './internal/validate';
@@ -136,7 +135,11 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: validate.values(
     md-comp-outlined-select.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
@@ -150,6 +153,18 @@ $_default: (
       'text-field-focus-outline-width': if($exclude-hardcoded-values, null, 3px)
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-outlined-select-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

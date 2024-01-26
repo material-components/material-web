@@ -44,6 +44,7 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
+  // Note: <md-item> does not provide `--md-item-*` custom properties.
   $list-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
 
   $tokens: (
