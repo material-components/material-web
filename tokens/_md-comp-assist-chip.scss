@@ -5,8 +5,10 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-elevation';
@@ -20,6 +22,10 @@ $supported-tokens: (
   // go/keep-sorted start
   'container-height',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'disabled-label-text-color',
   'disabled-label-text-opacity',
   'disabled-leading-icon-color',
@@ -90,17 +96,23 @@ $_default: (
   $exclude-hardcoded-values: false,
   $exclude-custom-properties: true
 ) {
-  $tokens: validate.values(
-    md-comp-assist-chip.values($deps, $exclude-hardcoded-values),
-    $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens,
-    $new-tokens: (
+  $tokens: md-comp-assist-chip.values($deps, $exclude-hardcoded-values);
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
       'leading-space': if($exclude-hardcoded-values, null, 16px),
       'trailing-space': if($exclude-hardcoded-values, null, 16px),
       'icon-label-space': if($exclude-hardcoded-values, null, 8px),
       'with-leading-icon-leading-space':
         if($exclude-hardcoded-values, null, 8px),
-    ),
+    )
+  );
+
+  $tokens: validate.values(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // Remove "flat-*" prefix (b/275577569)
       'flat-container-elevation': 'container-elevation',
@@ -126,6 +138,11 @@ $_default: (
   // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-assist-chip-container-shape, #{$value});
+      }
+
       $tokens: map.set(
         $tokens,
         $token,

@@ -15,16 +15,7 @@
 $_custom-property-prefix: 'filled-tonal-icon-button';
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-filled-tonal-icon-button-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-filled-tonal-icon-button-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -42,27 +33,11 @@ $_custom-property-prefix: 'filled-tonal-icon-button';
   );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'container-shape');
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-filled-tonal-icon-button-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-filled-tonal-icon-button-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-filled-tonal-icon-button-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-filled-tonal-icon-button-container-shape-end-start,
-      var(--_container-shape)
-    );
   }
 
   .icon-button {

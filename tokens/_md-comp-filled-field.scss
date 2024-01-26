@@ -5,8 +5,10 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
@@ -22,6 +24,10 @@ $supported-tokens: (
   'bottom-space',
   'container-color',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'content-color',
   'content-font',
   'content-line-height',
@@ -253,12 +259,22 @@ $_default: (
     // go/keep-sorted end
   );
 
-  $tokens: validate.values($tokens, $supported-tokens: $supported-tokens);
+  $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'container-shape');
+  $tokens: validate.values(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $new-tokens: $new-tokens
+  );
 
   // Default to `$exclude-custom-properties: false` in the next breaking change.
   // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-filled-field-container-shape, #{$value});
+      }
+
       $tokens: map.set(
         $tokens,
         $token,

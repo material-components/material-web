@@ -5,8 +5,10 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-elevation';
@@ -19,6 +21,10 @@
 $supported-tokens: (
   // go/keep-sorted start
   'text-field-container-shape',
+  'text-field-container-shape-end-end',
+  'text-field-container-shape-end-start',
+  'text-field-container-shape-start-end',
+  'text-field-container-shape-start-start',
   'text-field-disabled-input-text-color',
   'text-field-disabled-input-text-opacity',
   'text-field-disabled-label-text-color',
@@ -140,10 +146,17 @@ $_default: (
   $exclude-hardcoded-values: false,
   $exclude-custom-properties: true
 ) {
+  $tokens: md-comp-outlined-select.values($deps, $exclude-hardcoded-values);
+  $new-tokens: shape.get-new-logical-shape-tokens(
+    $tokens,
+    'text-field-container-shape'
+  );
+
   $tokens: validate.values(
-    md-comp-outlined-select.values($deps, $exclude-hardcoded-values),
+    $tokens,
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens
   );
 
   $tokens: map.merge(
@@ -158,6 +171,11 @@ $_default: (
   // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
+      @if string.index($token, 'text-field-container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-outlined-select-text-field-container-shape, #{$value});
+      }
+
       $tokens: map.set(
         $tokens,
         $token,

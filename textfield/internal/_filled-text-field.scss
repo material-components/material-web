@@ -14,16 +14,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-filled-text-field-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-filled-text-field-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -45,38 +36,10 @@
   );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'container-shape');
     @each $token, $value in $tokens {
-      @if $token == 'container-shape' {
-        // Support logical shape properties. Filled text field has a default
-        // oblong shape, which is why the fallback value is unique per corner.
-
-        // Get the raw value without the container-shape custom property.
-        $value: map.get(
-          tokens.md-comp-filled-text-field-values(
-            $exclude-custom-properties: true,
-          ),
-          'container-shape'
-        );
-
-        --_container-shape-start-start: var(
-          --md-filled-text-field-container-shape-start-start,
-          var(--md-filled-text-field-container-shape, #{list.nth($value, 1)})
-        );
-        --_container-shape-start-end: var(
-          --md-filled-text-field-container-shape-start-end,
-          var(--md-filled-text-field-container-shape, #{list.nth($value, 2)})
-        );
-        --_container-shape-end-end: var(
-          --md-filled-text-field-container-shape-end-end,
-          var(--md-filled-text-field-container-shape, #{list.nth($value, 3)})
-        );
-        --_container-shape-end-start: var(
-          --md-filled-text-field-container-shape-end-start,
-          var(--md-filled-text-field-container-shape, #{list.nth($value, 4)})
-        );
-      } @else {
-        --_#{$token}: #{$value};
-      }
+      --_#{$token}: #{$value};
     }
 
     @include filled-field.theme(

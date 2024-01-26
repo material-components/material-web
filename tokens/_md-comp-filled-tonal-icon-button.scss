@@ -5,8 +5,10 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
@@ -19,6 +21,10 @@ $supported-tokens: (
   'container-color',
   'container-height',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'container-width',
   'disabled-container-color',
   'disabled-container-opacity',
@@ -72,10 +78,17 @@ $_default: (
   $exclude-hardcoded-values: false,
   $exclude-custom-properties: true
 ) {
+  $tokens: md-comp-filled-tonal-icon-button.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+
+  $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'container-shape');
   $tokens: validate.values(
-    md-comp-filled-tonal-icon-button.values($deps, $exclude-hardcoded-values),
+    $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // TODO(b/292244480): remove default unselected prefix
       'toggle-unselected-focus-icon-color': 'toggle-focus-icon-color',
@@ -95,6 +108,11 @@ $_default: (
   // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-filled-tonal-icon-button-container-shape, #{$value});
+      }
+
       $tokens: map.set(
         $tokens,
         $token,

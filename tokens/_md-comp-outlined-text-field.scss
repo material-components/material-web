@@ -5,8 +5,10 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
@@ -19,6 +21,10 @@ $supported-tokens: (
   'bottom-space',
   'caret-color',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'disabled-input-text-color',
   'disabled-input-text-opacity',
   'disabled-label-text-color',
@@ -122,11 +128,10 @@ $_default: (
   $exclude-hardcoded-values: false,
   $exclude-custom-properties: true
 ) {
-  $tokens: validate.values(
-    md-comp-outlined-text-field.values($deps, $exclude-hardcoded-values),
-    $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens,
-    $new-tokens: (
+  $tokens: md-comp-outlined-text-field.values($deps, $exclude-hardcoded-values);
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
       'leading-space': if($exclude-hardcoded-values, null, 16px),
       'trailing-space': if($exclude-hardcoded-values, null, 16px),
       'top-space': if($exclude-hardcoded-values, null, 16px),
@@ -138,6 +143,13 @@ $_default: (
       // TODO(b/270705687): remove when focus-caret-color token added
       'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
     )
+  );
+
+  $tokens: validate.values(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens
   );
 
   $tokens: map.merge(
@@ -152,6 +164,11 @@ $_default: (
   // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-outlined-text-field-container-shape, #{$value});
+      }
+
       $tokens: map.set(
         $tokens,
         $token,

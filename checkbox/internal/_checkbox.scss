@@ -25,16 +25,7 @@ $_indeterminate-bottom-left: 4px, -10px;
 $_checkmark-bottom-left: 7px, -14px;
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-checkbox-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: $md-comp-checkbox-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -49,22 +40,6 @@ $_checkmark-bottom-left: 7px, -14px;
 @mixin styles() {
   $tokens: tokens.md-comp-checkbox-values(
     $exclude-custom-properties: false,
-  );
-
-  // Support logical shape properties
-  $container-shape: map.get($tokens, 'container-shape');
-  $tokens: map.merge(
-    $tokens,
-    (
-      'container-shape-start-start':
-        var(--md-checkbox-container-shape-start-start, #{$container-shape}),
-      'container-shape-start-end':
-        var(--md-checkbox-container-shape-start-end, #{$container-shape}),
-      'container-shape-end-end':
-        var(--md-checkbox-container-shape-end-end, #{$container-shape}),
-      'container-shape-end-start':
-        var(--md-checkbox-container-shape-end-start, #{$container-shape}),
-    )
   );
 
   :host {

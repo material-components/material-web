@@ -16,20 +16,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-switch-supported-tokens,
-    (
-      'handle-shape-start-start',
-      'handle-shape-start-end',
-      'handle-shape-end-end',
-      'handle-shape-end-start',
-      'track-shape-start-start',
-      'track-shape-start-end',
-      'track-shape-end-end',
-      'track-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-switch-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -44,41 +31,6 @@
 @mixin styles() {
   $tokens: tokens.md-comp-switch-values(
     $exclude-custom-properties: false,
-  );
-
-  // Support logical shape properties
-  $tokens: map.merge(
-    $tokens,
-    (
-      'handle-shape-start-start':
-        var(
-          --md-switch-handle-shape-start-start,
-          map.get($tokens, 'handle-shape')
-        ),
-      'handle-shape-start-end':
-        var(
-          --md-switch-handle-shape-start-end,
-          map.get($tokens, 'handle-shape')
-        ),
-      'handle-shape-end-end':
-        var(--md-switch-handle-shape-end-end, map.get($tokens, 'handle-shape')),
-      'handle-shape-end-start':
-        var(
-          --md-switch-handle-shape-end-start,
-          map.get($tokens, 'handle-shape')
-        ),
-      'track-shape-start-start':
-        var(
-          --md-switch-track-shape-start-start,
-          map.get($tokens, 'track-shape')
-        ),
-      'track-shape-start-end':
-        var(--md-switch-track-shape-start-end, map.get($tokens, 'track-shape')),
-      'track-shape-end-end':
-        var(--md-switch-track-shape-end-end, map.get($tokens, 'track-shape')),
-      'track-shape-end-start':
-        var(--md-switch-track-shape-end-start, map.get($tokens, 'track-shape')),
-    )
   );
 
   @layer styles, hcm;

@@ -5,8 +5,10 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
@@ -19,6 +21,10 @@ $supported-tokens: (
   // go/keep-sorted start
   'container-height',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'disabled-icon-color',
   'disabled-icon-opacity',
   'disabled-label-text-color',
@@ -70,11 +76,10 @@ $_default: (
   $exclude-hardcoded-values: false,
   $exclude-custom-properties: true
 ) {
-  $tokens: validate.values(
-    md-comp-text-button.values($deps, $exclude-hardcoded-values),
-    $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens,
-    $new-tokens: (
+  $tokens: md-comp-text-button.values($deps, $exclude-hardcoded-values);
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
       // b/198759625 - Remove once spacing tokens are formally added
       // go/keep-sorted start
       'leading-space': if($exclude-hardcoded-values, null, 12px),
@@ -88,7 +93,14 @@ $_default: (
       'with-trailing-icon-trailing-space':
         if($exclude-hardcoded-values, null, 12px),
       // go/keep-sorted end
-    ),
+    )
+  );
+
+  $tokens: validate.values(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // Remove "with-*" prefixes (b/273534858)
       'with-icon-disabled-icon-color': 'disabled-icon-color',
@@ -105,6 +117,11 @@ $_default: (
   // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-text-button-container-shape, #{$value});
+      }
+
       $tokens: map.set(
         $tokens,
         $token,

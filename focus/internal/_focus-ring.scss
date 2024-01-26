@@ -14,11 +14,7 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-focus-ring-supported-tokens,
-    ('shape-start-start', 'shape-start-end', 'shape-end-end', 'shape-end-start')
-  );
-
+  $supported-tokens: tokens.$md-comp-focus-ring-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -41,20 +37,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   $width: map.get($tokens, 'width');
   $inward-offset: map.get($tokens, 'inward-offset');
   $outward-offset: map.get($tokens, 'outward-offset');
-  // Support logical shape properties
-  $start-start: var(
-    --md-focus-ring-shape-start-start,
-    #{map.get($tokens, 'shape')}
-  );
-  $start-end: var(
-    --md-focus-ring-shape-start-end,
-    #{map.get($tokens, 'shape')}
-  );
-  $end-end: var(--md-focus-ring-shape-end-end, #{map.get($tokens, 'shape')});
-  $end-start: var(
-    --md-focus-ring-shape-end-start,
-    #{map.get($tokens, 'shape')}
-  );
+  $start-start: map.get($tokens, 'shape-start-start');
+  $start-end: map.get($tokens, 'shape-start-end');
+  $end-end: map.get($tokens, 'shape-end-end');
+  $end-start: map.get($tokens, 'shape-end-start');
 
   :host {
     animation-delay: 0s, calc($duration * 0.25);

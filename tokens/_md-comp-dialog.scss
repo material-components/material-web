@@ -5,8 +5,10 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
 @use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-elevation';
@@ -20,6 +22,10 @@ $supported-tokens: (
   // go/keep-sorted start
   'container-color',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'headline-color',
   'headline-font',
   'headline-line-height',
@@ -77,10 +83,13 @@ $unsupported-tokens: (
   $exclude-hardcoded-values: false,
   $exclude-custom-properties: true
 ) {
+  $tokens: md-comp-dialog.values($deps, $exclude-hardcoded-values);
+  $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'container-shape');
   $tokens: validate.values(
-    md-comp-dialog.values($deps, $exclude-hardcoded-values),
+    $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // Remove "with-*" prefixes (b/273534858)
       'with-icon-icon-color': 'icon-color',
@@ -92,6 +101,11 @@ $unsupported-tokens: (
   // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-dialog-container-shape, #{$value});
+      }
+
       $tokens: map.set($tokens, $token, var(--md-dialog-#{$token}, #{$value}));
     }
   }

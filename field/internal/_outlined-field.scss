@@ -42,27 +42,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
   @layer styles {
     :host {
+      // Only use the logical properties.
+      $tokens: map.remove($tokens, 'container-shape');
       @each $token, $value in $tokens {
         --_#{$token}: #{$value};
       }
-
-      // Support logical shape properties
-      --_container-shape-start-start: var(
-        --md-outlined-field-container-shape-start-start,
-        var(--_container-shape)
-      );
-      --_container-shape-start-end: var(
-        --md-outlined-field-container-shape-start-end,
-        var(--_container-shape)
-      );
-      --_container-shape-end-end: var(
-        --md-outlined-field-container-shape-end-end,
-        var(--_container-shape)
-      );
-      --_container-shape-end-start: var(
-        --md-outlined-field-container-shape-end-start,
-        var(--_container-shape)
-      );
     }
 
     .outline {
