@@ -63,27 +63,37 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
           </md-text-button>
         </div>
         <div class="row">
-          <md-filled-button ?disabled=${disabled}>
+          <md-filled-button
+            ?disabled=${disabled}
+            aria-label="${label || 'Filled'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Filled'}
           </md-filled-button>
 
-          <md-outlined-button ?disabled=${disabled}>
+          <md-outlined-button
+            ?disabled=${disabled}
+            aria-label="${label || 'Outlined'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Outlined'}
           </md-outlined-button>
 
-          <md-elevated-button ?disabled=${disabled}>
+          <md-elevated-button
+            ?disabled=${disabled}
+            aria-label="${label || 'Elevated'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Elevated'}
           </md-elevated-button>
 
-          <md-filled-tonal-button ?disabled=${disabled}>
+          <md-filled-tonal-button
+            ?disabled=${disabled}
+            aria-label="${label || 'Tonal'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Tonal'}
           </md-filled-tonal-button>
 
-          <md-text-button ?disabled=${disabled}>
+          <md-text-button
+            ?disabled=${disabled}
+            aria-label="${label || 'Text'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Text'}
           </md-text-button>
@@ -137,6 +147,7 @@ const links: MaterialStoryInit<StoryKnobs> = {
         </div>
         <div class="row">
           <md-filled-button
+            aria-label="${label || 'Filled'} link with trailing icon"
             href="https://google.com"
             target="_blank"
             trailing-icon>
@@ -145,6 +156,7 @@ const links: MaterialStoryInit<StoryKnobs> = {
           </md-filled-button>
 
           <md-outlined-button
+            aria-label="${label || 'Outlined'} link with trailing icon"
             href="https://google.com"
             target="_blank"
             trailing-icon>
@@ -153,6 +165,7 @@ const links: MaterialStoryInit<StoryKnobs> = {
           </md-outlined-button>
 
           <md-elevated-button
+            aria-label="${label || 'Elevated'} link with trailing icon"
             href="https://google.com"
             target="_blank"
             trailing-icon>
@@ -161,6 +174,7 @@ const links: MaterialStoryInit<StoryKnobs> = {
           </md-elevated-button>
 
           <md-filled-tonal-button
+            aria-label="${label || 'Tonal'} link with trailing icon"
             href="https://google.com"
             target="_blank"
             trailing-icon>
@@ -169,6 +183,7 @@ const links: MaterialStoryInit<StoryKnobs> = {
           </md-filled-tonal-button>
 
           <md-text-button
+            aria-label="${label || 'Text'} link with trailing icon"
             href="https://google.com"
             target="_blank"
             trailing-icon>
