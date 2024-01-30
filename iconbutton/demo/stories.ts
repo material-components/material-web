@@ -24,12 +24,20 @@ const styles = css`
   .column {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: center;
   }
 
   .row {
     display: flex;
-    gap: 16px;
+    gap: 32px;
+  }
+
+  p {
+    color: var(--md-sys-color-on-surface);
+    font: var(--md-sys-typescale-body-medium-weight, 400)
+      var(--md-sys-typescale-body-medium-size, 0.875rem) /
+      var(--md-sys-typescale-body-medium-line-height, 1.25rem)
+      var(--md-sys-typescale-body-medium-font, 'Roboto');
   }
 `;
 
@@ -38,26 +46,34 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
   styles,
   render({icon, disabled}) {
     return html`
-      <div class="column">
-        <div class="row">
-          <md-icon-button aria-label="Standard icon" ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
+      <div class="row">
+        <div class="column">
+          <p>Standard</p>
+          <md-icon-button aria-label="Open settings" ?disabled=${disabled}>
+            <md-icon>${icon || 'settings'}</md-icon>
           </md-icon-button>
+        </div>
 
-          <md-outlined-icon-button
-            aria-label="Outlined icon"
-            ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
+        <div class="column">
+          <p>Outlined</p>
+          <md-outlined-icon-button aria-label="Search" ?disabled=${disabled}>
+            <md-icon>${icon || 'search'}</md-icon>
           </md-outlined-icon-button>
+        </div>
 
-          <md-filled-icon-button aria-label="Filled icon" ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
+        <div class="column">
+          <p>Filled</p>
+          <md-filled-icon-button aria-label="Complete" ?disabled=${disabled}>
+            <md-icon>${icon || 'done'}</md-icon>
           </md-filled-icon-button>
+        </div>
 
+        <div class="column">
+          <p>Filled tonal</p>
           <md-filled-tonal-icon-button
-            aria-label="Filled tonal icon"
+            aria-label="Add new"
             ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
+            <md-icon>${icon || 'add'}</md-icon>
           </md-filled-tonal-icon-button>
         </div>
       </div>
@@ -70,38 +86,54 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
   styles,
   render({icon, selectedIcon, disabled}) {
     return html`
-      <div class="column">
-        <div class="row">
+      <div class="row">
+        <div class="column">
+          <p>Standard</p>
           <md-icon-button
-            aria-label="Standard icon"
+            aria-label="Show password"
+            aria-label-selected="Hide password"
             toggle
             ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
-            <md-icon slot="selected">${selectedIcon}</md-icon>
+            <md-icon>${icon || 'visibility'}</md-icon>
+            <md-icon slot="selected">
+              ${selectedIcon || 'visibility_off'}
+            </md-icon>
           </md-icon-button>
+        </div>
 
+        <div class="column">
+          <p>Outlined</p>
           <md-outlined-icon-button
-            aria-label="Outlined icon"
+            aria-label="Play"
+            aria-label-selected="Pause"
             toggle
             ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
-            <md-icon slot="selected">${selectedIcon}</md-icon>
+            <md-icon>${icon || 'play_arrow'}</md-icon>
+            <md-icon slot="selected">${selectedIcon || 'pause'}</md-icon>
           </md-outlined-icon-button>
+        </div>
 
+        <div class="column">
+          <p>Filled</p>
           <md-filled-icon-button
-            aria-label="Filled icon"
+            aria-label="Show more"
+            aria-label-selected="Show less"
             toggle
             ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
-            <md-icon slot="selected">${selectedIcon}</md-icon>
+            <md-icon>${icon || 'expand_more'}</md-icon>
+            <md-icon slot="selected">${selectedIcon || 'expand_less'}</md-icon>
           </md-filled-icon-button>
+        </div>
 
+        <div class="column">
+          <p>Filled tonal</p>
           <md-filled-tonal-icon-button
-            aria-label="Filled tonal icon"
+            aria-label="Open menu"
+            aria-label-selected="Close menu"
             toggle
             ?disabled=${disabled}>
-            <md-icon>${icon}</md-icon>
-            <md-icon slot="selected">${selectedIcon}</md-icon>
+            <md-icon>${icon || 'menu'}</md-icon>
+            <md-icon slot="selected">${selectedIcon || 'close'}</md-icon>
           </md-filled-tonal-icon-button>
         </div>
       </div>
@@ -114,34 +146,44 @@ const links: MaterialStoryInit<StoryKnobs> = {
   styles,
   render({icon}) {
     return html`
-      <div class="column">
-        <div class="row">
+      <div class="row">
+        <div class="column">
+          <p>Standard</p>
           <md-icon-button
-            aria-label="Standard icon"
+            aria-label="Go home"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon}</md-icon>
+            <md-icon>${icon || 'home'}</md-icon>
           </md-icon-button>
+        </div>
 
+        <div class="column">
+          <p>Outlined</p>
           <md-outlined-icon-button
-            aria-label="Outlined icon"
+            aria-label="Open new tab"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon}</md-icon>
+            <md-icon>${icon || 'open_in_new'}</md-icon>
           </md-outlined-icon-button>
+        </div>
 
+        <div class="column">
+          <p>Filled</p>
           <md-filled-icon-button
-            aria-label="Filled icon"
+            aria-label="Download Google"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon}</md-icon>
+            <md-icon>${icon || 'download'}</md-icon>
           </md-filled-icon-button>
+        </div>
 
+        <div class="column">
+          <p>Filled tonal</p>
           <md-filled-tonal-icon-button
-            aria-label="Filled tonal icon"
+            aria-label="Logout"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon}</md-icon>
+            <md-icon>${icon || 'logout'}</md-icon>
           </md-filled-tonal-icon-button>
         </div>
       </div>

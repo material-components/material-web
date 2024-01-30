@@ -20,9 +20,9 @@ import {stories, StoryKnobs} from './stories.js';
 const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
   'Icon Button',
   [
-    new Knob('icon', {ui: textInput(), defaultValue: 'check'}),
-    new Knob('selectedIcon', {ui: textInput(), defaultValue: 'close'}),
     new Knob('disabled', {ui: boolInput(), defaultValue: false}),
+    new Knob('icon', {ui: textInput(), defaultValue: ''}),
+    new Knob('selectedIcon', {ui: textInput(), defaultValue: ''}),
   ],
 );
 
