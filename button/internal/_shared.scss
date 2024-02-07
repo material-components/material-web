@@ -126,6 +126,10 @@
     position: absolute;
   }
 
+  .background, .touch {
+    pointer-events: none
+  }
+
   .label {
     overflow: hidden;
   }
