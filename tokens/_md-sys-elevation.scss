@@ -15,8 +15,9 @@
   $tokens: map.merge(
     $tokens,
     (
-      // Elevation levels on web should use the level number, not the dp value
-      // TODO(b/261603279): remove once tokens are updated to use level
+      // Elevation levels on web should use the level number, not the dp value.
+      // We can remove this if the generated tokens swap from dp to level. See
+      // b/261602454.
       'level0': if($exclude-hardcoded-values, null, 0),
       'level1': if($exclude-hardcoded-values, null, 1),
       'level2': if($exclude-hardcoded-values, null, 2),
