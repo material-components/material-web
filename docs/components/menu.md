@@ -517,7 +517,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `anchor` | `anchor` | `string` | `''` | The ID of the element in the same root node in which the menu should align to. Overrides setting `anchorElement = elementReference`.<br>__NOTE__: anchor or anchorElement must either be an HTMLElement or resolve to an HTMLElement in order for menu to open.
-`positioning` | `positioning` | `string` | `'absolute'` | Whether the positioning algorithim should calculate relative to the parent of the anchor element (absolute) or relative to the window (fixed).<br>Examples for `position = 'fixed'`:<br>- If there is no `position:relative` in the given parent tree and the surface is `position:absolute` - If the surface is `position:fixed` - If the surface is in the "top layer" - The anchor and the surface do not share a common `position:relative` ancestor<br>When using positioning = fixed, in most cases, the menu should position itself above most other `position:absolute` or `position:fixed` elements when placed inside of them. e.g. using a menu inside of an `md-dialog`.<br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to the window instead.
+`positioning` | `positioning` | `string` | `'absolute'` | Whether the positioning algorithm should calculate relative to the parent of the anchor element (absolute) or relative to the window (fixed).<br>Examples for `position = 'fixed'`:<br>- If there is no `position:relative` in the given parent tree and the surface is `position:absolute` - If the surface is `position:fixed` - If the surface is in the "top layer" - The anchor and the surface do not share a common `position:relative` ancestor<br>When using positioning = fixed, in most cases, the menu should position itself above most other `position:absolute` or `position:fixed` elements when placed inside of them, e.g. using a menu inside of an `md-dialog`.<br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to the window instead.
 `quick` | `quick` | `boolean` | `false` | Skips the opening and closing animations.
 `hasOverflow` | `has-overflow` | `boolean` | `false` | Displays overflow content like a submenu.<br>__NOTE__: This may cause adverse effects if you set `md-menu {max-height:...}` and have items overflowing items in the "y" direction.
 `open` | `open` | `boolean` | `false` | Opens the menu and makes it visible. Alternative to the `.show()` and `.close()` methods
@@ -527,7 +527,7 @@ Property | Attribute | Type | Default | Description
 `anchorCorner` | `anchor-corner` | `string` | `Corner.END_START` | The corner of the anchor which to align the menu in the standard logical property style of <block>-<inline> e.g. `'end-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport.
 `menuCorner` | `menu-corner` | `string` | `Corner.START_START` | The corner of the menu which to align the anchor in the standard logical property style of <block>-<inline> e.g. `'start-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport.
 `stayOpenOnOutsideClick` | `stay-open-on-outside-click` | `boolean` | `false` | Keeps the user clicks outside the menu.<br>NOTE: clicking outside may still cause focusout to close the menu so see `stayOpenOnFocusout`.
-`stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br>NOTE: Focusout behavior will stop propagation of the focusout event. Set this property to true to opt-out of menu's focuout handling altogether.
+`stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br>NOTE: Focusout behavior will stop propagation of the focusout event. Set this property to true to opt-out of menu's focusout handling altogether.
 `skipRestoreFocus` | `skip-restore-focus` | `boolean` | `false` | After closing, does not restore focus to the last focused element before the menu was opened.
 `defaultFocus` | `default-focus` | `string` | `FocusState.FIRST_ITEM` | The element that should be focused by default once opened.<br>NOTE: When setting default focus to 'LIST_ROOT', remember to change `tabindex` to `0` and change md-menu's display to something other than `display: contents` when necessary.
 `isSubmenu` |  | `boolean` | `false` | Whether or not the current menu is a submenu and should not handle specific navigation keys.
@@ -627,7 +627,7 @@ Method | Parameters | Returns | Description
 Event | Description
 --- | ---
 `deactivate-items` | Requests the parent menu to deselect other items when a submenu opens
-`request-activation` | Requests the parent make the slotted item focusable and focuses the item.
+`request-activation` | Requests the parent to make the slotted item focusable and focus the item
 `deactivate-typeahead` | Requests the parent menu to deactivate the typeahead functionality when a submenu opens
 `activate-typeahead` | Requests the parent menu to activate the typeahead functionality when a submenu closes
 
