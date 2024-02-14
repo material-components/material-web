@@ -63,6 +63,7 @@ export class Tabs extends LitElement {
    *
    * @export
    */
+  @property({type: Number, attribute: 'active-tab-index'})
   get activeTabIndex() {
     return this.tabs.findIndex((tab) => tab.active);
   }

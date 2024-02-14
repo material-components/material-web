@@ -129,7 +129,25 @@ describe('<md-tabs>', () => {
       await env.waitForStability();
       const tabs = root.querySelector('md-tabs')!;
       expect(tabs.activeTabIndex).withContext('activeTabIndex').toBe(1);
-      expect(tabs.activeTab?.textContent).withContext('activeTab').toBe('B');
+      expect(tabs.activeTab?.textContent)
+        .withContext('activeTab')
+        .toBe('B');
+    });
+
+    it('should allow setting active-tab-index as an attribute', async () => {
+      const root = env.render(html`
+        <md-tabs active-tab-index=${1}>
+          <md-primary-tab>A</md-primary-tab>
+          <md-primary-tab>B</md-primary-tab>
+        </md-tabs>
+      `);
+
+      await env.waitForStability();
+      const tabs = root.querySelector('md-tabs')!;
+      expect(tabs.activeTabIndex).withContext('activeTabIndex').toBe(1);
+      expect(tabs.activeTab?.textContent)
+        .withContext('activeTab')
+        .toBe('B');
     });
   });
 

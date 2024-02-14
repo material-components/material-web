@@ -25,7 +25,10 @@ export interface StoryKnobs {
 
 const styles = css`
   [role='tabpanel']:not([hidden]) {
-    font-family: Roboto, Material Sans, system-ui;
+    font-family:
+      Roboto,
+      Material Sans,
+      system-ui;
   }
 
   [role='tabpanel']:not(.subtabs) {
@@ -56,7 +59,7 @@ const primary: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-tabs
         aria-label="Primary tabs"
-        .activeTabIndex=${knobs.activeTabIndex}
+        active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}
         ${setupTabPanels()}>
         <md-primary-tab
@@ -119,7 +122,7 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-tabs
         aria-label="Secondary tabs"
-        .activeTabIndex=${knobs.activeTabIndex}
+        active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}
         ${setupTabPanels()}>
         <md-secondary-tab id="tab-one" aria-controls="panel-one">
@@ -160,7 +163,7 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
     return html` <md-tabs
       aria-label="A tab bar that scrolls"
       class="scrolling"
-      .activeTabIndex=${knobs.activeTabIndex}
+      active-tab-index=${knobs.activeTabIndex}
       .autoActivate=${knobs.autoActivate}>
       ${new Array(10).fill(html`
         <md-primary-tab .inlineIcon=${inlineIcon}>
@@ -212,7 +215,7 @@ const custom: MaterialStoryInit<StoryKnobs> = {
       <md-tabs
         aria-label="A custom themed tab bar"
         class="custom"
-        .activeTabIndex=${knobs.activeTabIndex}
+        active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}>
         <md-primary-tab id="tab-one" aria-controls="panel-one">
           ${tabContent('flight', 'Travel')}
@@ -252,7 +255,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     return html`
       <md-tabs
         aria-label="Primary tabs"
-        .activeTabIndex=${knobs.activeTabIndex}
+        active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}
         ${setupTabPanels()}>
         <md-primary-tab .inlineIcon=${inlineIcon} aria-controls="movies">
@@ -269,7 +272,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
       <div role="tabpanel" id="movies" class="subtabs" aria-label="Movies">
         <md-tabs
           aria-label="Secondary tabs for movies"
-          .activeTabIndex=${knobs.activeTabIndex}
+          active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
           ${setupTabPanels()}>
           <md-secondary-tab aria-controls="star-wars"
@@ -298,7 +301,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         hidden>
         <md-tabs
           aria-label="Secondary tabs for photos"
-          .activeTabIndex=${knobs.activeTabIndex}
+          active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}>
           <md-secondary-tab aria-controls="yosemite">Yosemite</md-secondary-tab>
           <md-secondary-tab aria-controls="mona-lisa"
@@ -327,7 +330,7 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
       <div role="tabpanel" id="music" class="subtabs" aria-label="Music" hidden>
         <md-tabs
           aria-label="Secondary tabs for music"
-          .activeTabIndex=${knobs.activeTabIndex}
+          active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
           ${setupTabPanels()}>
           <md-secondary-tab aria-controls="rock">Rock</md-secondary-tab>
@@ -413,7 +416,7 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
       </div>
       <md-tabs
         class="scrolling"
-        .activeTabIndex=${knobs.activeTabIndex}
+        active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}>
         <md-primary-tab .inlineIcon=${inlineIcon}> Tab 1 </md-primary-tab>
         <md-primary-tab .inlineIcon=${inlineIcon}> Tab 2 </md-primary-tab>
