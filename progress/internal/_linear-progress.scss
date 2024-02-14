@@ -171,13 +171,6 @@ $_indeterminate-duration: 2s;
       calc($_indeterminate-duration * 2);
   }
 
-  // TODO(https://bugs.chromium.org/p/chromium/issues/detail?id=1420655):
-  // remove :host and :host-context once Chrome supports :dir
-  :host-context([dir='rtl']),
-  :host([dir='rtl']) {
-    transform: scale(-1);
-  }
-
   :host(:dir(rtl)) {
     transform: scale(-1);
   }

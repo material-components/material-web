@@ -28,8 +28,8 @@ Current browsers and versions supported:
 
 Browser | Version
 ------- | -------
-Chrome  | 112 +
-Edge    | 112 +
+Chrome  | 120 +
+Edge    | 120 +
 Firefox | 119 +
 Safari* | 16.4 +
 

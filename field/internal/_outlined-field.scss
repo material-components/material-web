@@ -324,17 +324,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       inset-inline-start: var(--_focus-outline-width);
     }
 
-    // TODO(https://bugs.chromium.org/p/chromium/issues/detail?id=1420655):
-    // remove :host and :host-context once Chrome supports :dir
-    :host-context([dir='rtl']),
-    :host([dir='rtl']) {
-      .resizable .container {
-        clip-path: inset(
-          var(--_focus-outline-width) var(--_focus-outline-width) 0 0
-        );
-      }
-    }
-
     .resizable .container:dir(rtl) {
       clip-path: inset(
         var(--_focus-outline-width) var(--_focus-outline-width) 0 0
