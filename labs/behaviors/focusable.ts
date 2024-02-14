@@ -77,10 +77,12 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
     constructor(...args: any[]) {
       super(...args);
       this[isFocusable] = true;
-      queueMicrotask(() => {
-        this[hasConstructed] = true;
-        this[updateTabIndex]();
-      });
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      this[hasConstructed] = true;
+      this[updateTabIndex]();
     }
 
     override attributeChangedCallback(
