@@ -77,13 +77,13 @@ export class Dialog extends LitElement {
    * Gets the opening animation for a dialog. Set to a new function to customize
    * the animation.
    */
-  getOpenAnimation = () => DIALOG_DEFAULT_OPEN_ANIMATION;
+  getOpenAnimation() { return DIALOG_DEFAULT_OPEN_ANIMATION; }
 
   /**
    * Gets the closing animation for a dialog. Set to a new function to customize
    * the animation.
    */
-  getCloseAnimation = () => DIALOG_DEFAULT_CLOSE_ANIMATION;
+  getCloseAnimation() { return DIALOG_DEFAULT_CLOSE_ANIMATION; }
 
   private isOpen = false;
   private isOpening = false;
