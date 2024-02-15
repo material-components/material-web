@@ -316,7 +316,7 @@ Token                                          | Default value
 ---------------------------------------------- | -------------
 `--md-linear-progress-track-color`             | `--md-sys-color-surface-container-highest`
 `--md-linear-progress-track-height`            | `4px`
-`--md-linear-progress-track-shape`             | `0px`
+`--md-linear-progress-track-shape`             | `--md-sys-shape-corner-none`
 `--md-linear-progress-active-indicator-color`  | `--md-sys-color-primary`
 `--md-linear-progress-active-indicator-height` | `4px`
 

@@ -105,7 +105,7 @@ customized in terms of color and shape.
 Token                   | Default value
 ----------------------- | --------------------------
 `--md-focus-ring-color` | `--md-sys-color-secondary`
-`--md-focus-ring-shape` | `9999px`
+`--md-focus-ring-shape` | `--md-sys-shape-corner-full`
 `--md-focus-ring-width` | `3px`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-focus-ring.scss)

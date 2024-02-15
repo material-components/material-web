@@ -119,11 +119,11 @@ in terms of color and shape.
 Token                              | Default value
 ---------------------------------- | ------------------------------------------
 `--md-slider-active-track-color`   | `--md-sys-color-primary`
-`--md-slider-active-track-shape`   | `9999px`
+`--md-slider-active-track-shape`   | `--md-sys-shape-corner-full`
 `--md-slider-inactive-track-color` | `--md-sys-color-surface-container-highest`
-`--md-slider-inactive-track-shape` | `9999px`
+`--md-slider-inactive-track-shape` | `--md-sys-shape-corner-full`
 `--md-slider-handle-color`         | `--md-sys-color-primary`
-`--md-slider-handle-shape`         | `9999px`
+`--md-slider-handle-shape`         | `--md-sys-shape-corner-full`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-slider.scss)
     <!-- {.external} -->

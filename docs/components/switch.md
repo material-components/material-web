@@ -137,9 +137,9 @@ in terms of color and shape.
 Token                               | Default value
 ----------------------------------- | ------------------------------------------
 `--md-switch-handle-color`          | `--md-sys-color-outline`
-`--md-switch-handle-shape`          | `9999px`
+`--md-switch-handle-shape`          | `--md-sys-shape-corner-full`
 `--md-switch-track-color`           | `--md-sys-color-surface-container-highest`
-`--md-switch-track-shape`           | `9999px`
+`--md-switch-track-shape`           | `--md-sys-shape-corner-full`
 `--md-switch-selected-handle-color` | `--md-sys-color-on-primary`
 `--md-switch-selected-track-color`  | `--md-sys-color-primary`
 

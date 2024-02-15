@@ -410,7 +410,7 @@ in terms of color, typography, and shape.
 Token                                   | Default value
 --------------------------------------- | -------------------------------------
 `--md-elevated-button-container-color`  | `--md-sys-color-surface`
-`--md-elevated-button-container-shape`  | `9999px`
+`--md-elevated-button-container-shape`  | `--md-sys-shape-corner-full`
 `--md-elevated-button-label-text-color` | `--md-sys-color-on-surface`
 `--md-elevated-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
@@ -470,7 +470,7 @@ Token                                   | Default value
 Token                                 | Default value
 ------------------------------------- | -------------------------------------
 `--md-filled-button-container-color`  | `--md-sys-color-primary`
-`--md-filled-button-container-shape`  | `9999px`
+`--md-filled-button-container-shape`  | `--md-sys-shape-corner-full`
 `--md-filled-button-label-text-color` | `--md-sys-color-on-primary`
 `--md-filled-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
@@ -530,7 +530,7 @@ Token                                 | Default value
 Token                                       | Default value
 ------------------------------------------- | -------------
 `--md-filled-tonal-button-container-color`  | `--md-sys-color-secondary-container`
-`--md-filled-tonal-button-container-shape`  | `9999px`
+`--md-filled-tonal-button-container-shape`  | `--md-sys-shape-corner-full`
 `--md-filled-tonal-button-label-text-color` | `--md-sys-color-on-secondary-container`
 `--md-filled-tonal-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
@@ -590,7 +590,7 @@ Token                                       | Default value
 Token                                   | Default value
 --------------------------------------- | -------------------------------------
 `--md-outlined-button-outline-color`    | `--md-sys-color-outline`
-`--md-outlined-button-container-shape`  | `9999px`
+`--md-outlined-button-container-shape`  | `--md-sys-shape-corner-full`
 `--md-outlined-button-label-text-color` | `--md-sys-color-primary`
 `--md-outlined-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
