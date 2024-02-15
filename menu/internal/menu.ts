@@ -98,7 +98,7 @@ export abstract class Menu extends LitElement {
    */
   @property() anchor = '';
   /**
-   * Whether the positioning algorithim should calculate relative to the parent
+   * Whether the positioning algorithm should calculate relative to the parent
    * of the anchor element (`absolute`), relative to the window (`fixed`), or
    * relative to the document (`document`). `popover` will use the popover API
    * to render the menu in the top-layer. If your browser does not support the
@@ -206,7 +206,7 @@ export abstract class Menu extends LitElement {
    * Keeps the menu open when focus leaves the menu's composed subtree.
    *
    * NOTE: Focusout behavior will stop propagation of the focusout event. Set
-   * this property to true to opt-out of menu's focuout handling altogether.
+   * this property to true to opt-out of menu's focusout handling altogether.
    */
   @property({type: Boolean, attribute: 'stay-open-on-focusout'})
   stayOpenOnFocusout = false;
