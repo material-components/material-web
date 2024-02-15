@@ -201,11 +201,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // rtl for active track clipping
-  @include _get-rtl-selectors('.track', '::after') {
+  .track:dir(rtl)::after {
     clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
   }
 
-  @include _get-rtl-selectors('.tickmarks', '::after') {
+  .tickmarks:dir(rtl)::after {
     clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
   }
 
@@ -440,7 +440,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // in 'rtl', clip right side of "lesser" input
-  @include _get-rtl-selectors('.ranged input.start') {
+  .ranged input.start:dir(rtl) {
     clip-path: inset(0 0 0 $_clip-to-end);
   }
 
@@ -450,7 +450,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // in 'rtl', clip left side of "greater" input
-  @include _get-rtl-selectors('.ranged input.end') {
+  .ranged input.end:dir(rtl) {
     clip-path: inset(0 $_clip-to-start 0 0);
   }
 
@@ -474,28 +474,6 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     border-radius: 50%;
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
-  }
-}
-
-// Creates a mixin of rtl selectors to construct distinct rulesets. If `:dir` is
-// supported, then it will take precedence over `:host-context` via a `@supports
-// not selector(:dir(rtl))` at-rule. Seprating rulesets ensure they are not
-// dropped on browsers where one is not supported;
-// Note, `:where` cannot be used to create compound selectors that contain
-// pseudo elements
-// (e.g. this does not work: `:where(:host([dir="rtl"]) .foo::after)`),
-@mixin _get-rtl-selectors($selector: '', $suffix: '') {
-  $host-context-selectors: ':host-context([dir="rtl"]) #{$selector}#{$suffix}, :host([dir="rtl"]) #{$selector}#{$suffix}';
-  $dir-selector: '#{$selector}:dir(rtl)#{$suffix}';
-
-  @supports not selector(:dir(rtl)) {
-    #{$host-context-selectors} {
-      @content;
-    }
-  }
-
-  #{$dir-selector} {
-    @content;
   }
 }
 
@@ -537,10 +515,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     transform: translateX(var(--_x-translate));
   }
 
-  @include _get-rtl-selectors(
-    'input.#{$start-or-end}',
-    '::-webkit-slider-thumb'
-  ) {
+  input.#{$start-or-end}:dir(rtl)::-webkit-slider-thumb {
     transform: translateX(calc(-1 * var(--_x-translate)));
   }
 }
