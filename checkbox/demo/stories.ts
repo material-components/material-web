@@ -38,9 +38,14 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
   styles: [
     labelStyles,
     css`
-      .column {
+      ol {
+        all: unset;
         display: flex;
         flex-direction: column;
+      }
+
+      li {
+        all: unset;
       }
 
       label {
@@ -50,31 +55,37 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
   ],
   render({disabled}) {
     return html`
-      <div class="column" role="group" aria-label="Animals">
-        <label>
-          <md-checkbox
-            ?disabled=${disabled}
-            aria-label="Cats"
-            touch-target="wrapper"></md-checkbox>
-          Cats
-        </label>
-        <label>
-          <md-checkbox
-            checked
-            ?disabled=${disabled}
-            aria-label="dogs"
-            touch-target="wrapper"></md-checkbox>
-          Dogs
-        </label>
-        <label>
-          <md-checkbox
-            indeterminate
-            ?disabled=${disabled}
-            aria-label="Birds"
-            touch-target="wrapper"></md-checkbox>
-          Birds
-        </label>
-      </div>
+      <ol aria-label="Animals">
+        <li>
+          <label>
+            <md-checkbox
+              ?disabled=${disabled}
+              aria-label="Cats"
+              touch-target="wrapper"></md-checkbox>
+            Cats
+          </label>
+        </li>
+        <li>
+          <label>
+            <md-checkbox
+              checked
+              ?disabled=${disabled}
+              aria-label="dogs"
+              touch-target="wrapper"></md-checkbox>
+            Dogs
+          </label>
+        </li>
+        <li>
+          <label>
+            <md-checkbox
+              indeterminate
+              ?disabled=${disabled}
+              aria-label="Birds"
+              touch-target="wrapper"></md-checkbox>
+            Birds
+          </label>
+        </li>
+      </ol>
     `;
   },
 };
