@@ -71,12 +71,6 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
     [externalTabIndex]: number | null = null;
     [isUpdatingTabIndex] = false;
 
-    // tslint:disable-next-line:no-any
-    constructor(...args: any[]) {
-      super(...args);
-      this[isFocusable] = true;
-    }
-
     override connectedCallback() {
       super.connectedCallback();
       this[updateTabIndex]();
