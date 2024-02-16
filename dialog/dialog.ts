@@ -38,6 +38,9 @@ declare global {
  * - More complex dialogs may contain actions that require a series of tasks
  * to complete. One example is creating a calendar entry with the event title,
  * date, location, and time.
+ *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-dialog')
 export class MdDialog extends Dialog {
