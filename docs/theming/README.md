@@ -10,7 +10,7 @@ order: 1
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-09-06' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-02-12' }
 tag: 'docType:concepts'
 *-->
 
@@ -101,7 +101,16 @@ details.
 
 #### Shape
 
-*MWC does not currently support `--md-sys-shape` tokens.*
+[`--md-sys-shape` tokens](shape.md#tokens) define corner shapes used in
+components. See the [shape guide](shape.md) for more details.
+
+```css
+:root {
+  --md-sys-shape-corner-small: 4px;
+  --md-sys-shape-corner-medium: 6px;
+  --md-sys-shape-corner-large: 8px;
+}
+```
 
 #### Motion
 

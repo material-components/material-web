@@ -200,7 +200,7 @@ and can be customized in terms of color, typography, and shape.
 Token                                           | Default value
 ----------------------------------------------- | -------------
 `--md-list-container-color`                     | `--md-sys-color-surface`
-`--md-list-item-container-shape`                | `0px`
+`--md-list-item-container-shape`                | `--md-sys-shape-corner-none`
 `--md-list-item-label-text-color`               | `--md-sys-color-on-surface`
 `--md-list-item-supporting-text-color`          | `--md-sys-color-on-surface-variant`
 `--md-list-item-trailing-supporting-text-color` | `--md-sys-color-on-surface-variant`
@@ -322,7 +322,7 @@ Token                                       | Default value
 `--md-list-item-leading-avatar-label-font`  | `--md-sys-typescale-title-medium-font`
 `--md-list-item-leading-avatar-color`       | `--md-sys-color-primary-container`
 `--md-list-item-leading-avatar-size`        | `40px`
-`--md-list-item-leading-avatar-shape`       | `9999px`
+`--md-list-item-leading-avatar-shape`       | `--md-sys-shape-corner-full`
 
 *   [All List Item tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-list-item.scss)
     <!-- {.external} -->
@@ -333,7 +333,7 @@ Token                                 | Default value
 ------------------------------------- | -------------
 `--md-list-item-leading-image-height` | `56px`
 `--md-list-item-leading-image-width`  | `56px`
-`--md-list-item-leading-image-shape`  | `0px`
+`--md-list-item-leading-image-shape`  | `--md-sys-shape-corner-none`
 
 *   [All List Item tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-list-item.scss)
     <!-- {.external} -->
