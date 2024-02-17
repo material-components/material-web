@@ -30,7 +30,7 @@ export class LinearProgress extends Progress {
       }%)`,
     };
 
-    const bufferValue = Math.min(this.buffer ?? 0, this.max);
+    const bufferValue = this.buffer ?? 0;
     const hasBuffer = bufferValue > 0;
 
     const dotSize = this.indeterminate || !hasBuffer ? 1 : bufferValue / this.max;
