@@ -233,7 +233,7 @@ export abstract class Menu extends LitElement {
    * Whether or not the current menu is a submenu and should not handle specific
    * navigation keys.
    *
-   * @exports
+   * @export
    */
   isSubmenu = false;
 
