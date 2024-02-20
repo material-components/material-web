@@ -89,25 +89,34 @@ describe('mixinFocusable()', () => {
       .toBe('0');
   });
 
-  it('should not throw attribute hydration errors on construction', async () => {
-    let element: TestFocusable | undefined;
+  it('should not throw attribute hydration errors on construction', () => {
     expect(() => {
-      element = new TestFocusable();
+      // We do not need to assign a variable to test construction.
+      // tslint:disable-next-line:no-unused-expression
+      new TestFocusable();
     }).not.toThrow();
-    if (!element) {
-      return;
-    }
+  });
+
+  it('should not add tabindex until after the element is connected', async () => {
+    const element = new TestFocusable();
 
     expect(element.hasAttribute('tabindex'))
       .withContext('has tabindex attribute synchronously after construction')
       .toBeFalse();
 
-    await new Promise<void>((resolve) => {
-      queueMicrotask(resolve);
-    });
+    await env.waitForStability();
 
+    // To avoid attribute hydration errors, we wait until the element is
+    // connected before we update the tabindex.
     expect(element.hasAttribute('tabindex'))
-      .withContext('has tabindex attribute after construction microtask')
+      .withContext('has tabindex attribute after task but before connected')
+      .toBeFalse();
+
+    env.render(html`${element}`);
+
+    expect(element.isConnected).withContext('element.isConnected').toBeTrue();
+    expect(element.hasAttribute('tabindex'))
+      .withContext('has tabindex attribute after connected to dom')
       .toBeTrue();
   });
 });

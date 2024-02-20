@@ -30,7 +30,6 @@ const privateIsFocusable = Symbol('privateIsFocusable');
 const externalTabIndex = Symbol('externalTabIndex');
 const isUpdatingTabIndex = Symbol('isUpdatingTabIndex');
 const updateTabIndex = Symbol('updateTabIndex');
-const hasConstructed = Symbol('hasConstructed');
 
 /**
  * Mixes in focusable functionality for a class.
@@ -68,19 +67,13 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
       this[updateTabIndex]();
     }
 
-    [privateIsFocusable] = false;
+    [privateIsFocusable] = true;
     [externalTabIndex]: number | null = null;
     [isUpdatingTabIndex] = false;
-    [hasConstructed] = false;
 
-    // tslint:disable-next-line:no-any
-    constructor(...args: any[]) {
-      super(...args);
-      this[isFocusable] = true;
-      queueMicrotask(() => {
-        this[hasConstructed] = true;
-        this[updateTabIndex]();
-      });
+    override connectedCallback() {
+      super.connectedCallback();
+      this[updateTabIndex]();
     }
 
     override attributeChangedCallback(
@@ -110,11 +103,6 @@ export function mixinFocusable<T extends MixinBase<LitElement>>(
     }
 
     [updateTabIndex]() {
-      if (!this[hasConstructed]) {
-        // Custom elements may not hydrate attributes during construction.
-        return;
-      }
-
       const internalTabIndex = this[isFocusable] ? 0 : -1;
       const computedTabIndex = this[externalTabIndex] ?? internalTabIndex;
 
