@@ -41,8 +41,8 @@ describe('<md-radio>', () => {
   async function simulateKeyDown(element: HTMLElement, key: string) {
     const event = new KeyboardEvent('keydown', {key, bubbles: true});
     element.dispatchEvent(event);
-    // TODO(https://bugzilla.mozilla.org/show_bug.cgi?id=1804576)
-    // Remove delay when issue addressed.
+    // We can remove the delay when FF issue addressed:
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1804576
     await env.waitForStability();
   }
 
