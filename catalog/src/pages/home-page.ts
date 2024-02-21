@@ -5,4 +5,4 @@
  */
 
 // this is used in /site/index.html
-// TODO implement when we decide to add stuff to home page
+// Note: implement when we decide to add stuff to home page
