@@ -10,9 +10,6 @@
       color: var(--_label-text-color);
       overflow: hidden;
       max-width: 100%;
-      // TODO: Check with design, should there be any transition from resting to
-      // floating when there is a mismatch between ellipsis, such as opacity
-      // transition?
       text-overflow: ellipsis;
       white-space: nowrap;
       z-index: 1;
