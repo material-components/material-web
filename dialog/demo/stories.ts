@@ -19,6 +19,7 @@ import {css, html, nothing} from 'lit';
 
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
+  quick: boolean;
   icon: string;
   headline: string;
   supportingText: string;

@@ -60,6 +60,11 @@ export class Dialog extends LitElement {
   }
 
   /**
+   * Skips the opening and closing animations.
+   */
+  @property({type: Boolean}) quick = false;
+
+  /**
    * Gets or sets the dialog's return value, usually to indicate which button
    * a user pressed to close it.
    *
@@ -396,6 +401,10 @@ export class Dialog extends LitElement {
   }
 
   private async animateDialog(animation: DialogAnimation) {
+    if (this.quick) {
+      return;
+    }
+
     const {dialog, scrim, container, headline, content, actions} = this;
     if (!dialog || !scrim || !container || !headline || !content || !actions) {
       return;
