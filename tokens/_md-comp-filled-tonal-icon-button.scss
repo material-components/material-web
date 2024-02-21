@@ -90,7 +90,7 @@ $_default: (
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: $new-tokens,
     $renamed-tokens: (
-      // TODO(b/292244480): remove default unselected prefix
+      // Remove default "unselected" prefix (b/292244480)
       'toggle-unselected-focus-icon-color': 'toggle-focus-icon-color',
       'toggle-unselected-hover-icon-color': 'toggle-hover-icon-color',
       'toggle-unselected-hover-state-layer-color':

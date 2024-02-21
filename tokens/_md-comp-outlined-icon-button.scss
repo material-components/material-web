@@ -83,7 +83,7 @@ $_default: (
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: $new-tokens,
     $renamed-tokens: (
-      // TODO(b/292244480): remove default unselected prefix
+      // Remove default "unselected" prefix (b/292244480)
       'disabled-unselected-outline-color': 'disabled-outline-color',
       'disabled-unselected-outline-opacity': 'disabled-outline-opacity',
       'unselected-focus-icon-color': 'focus-icon-color',
