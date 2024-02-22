@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.3.0](https://github.com/material-components/material-web/compare/v1.2.0...v1.3.0) (2024-02-22)
+
+
+### Features
+
+* add `--md-sys-shape-*` tokens for all components ([41bac9e](https://github.com/material-components/material-web/commit/41bac9e44d0afef2a9cba08cb855572556e61342))
+* **tabs:** expose activeTabIndex ([4bce86d](https://github.com/material-components/material-web/commit/4bce86d18b8d553607b8d2ee909faff0c095096b)), closes [#5297](https://github.com/material-components/material-web/issues/5297)
+* **tokens:** add component custom properties to Sass values ([feff721](https://github.com/material-components/material-web/commit/feff7214a753559bc5ed5da5ed50ad508b4417e7))
+
+
+### Bug Fixes
+
+* **icon:** fix uncentered icons when using WCAG text spacing overrides ([b23e321](https://github.com/material-components/material-web/commit/b23e3218eebc293dc99a7343a6ecddebe585e89e))
+* **labs:** hasConstructed and constructor deprecated, changing tabIndex update in connectedCallback ([fb086bb](https://github.com/material-components/material-web/commit/fb086bbd355d69a99dc9e6c38c2b8ebb7d7ce9ad))
+* **labs:** removing hasConstructed and setting privateIsConstructed to handle setting tabIndex ([ea518d0](https://github.com/material-components/material-web/commit/ea518d0353facd94037843aca7e623b91a16363c))
+* **labs:** update tabIndex once the element is connected to the DOM ([a6b8c09](https://github.com/material-components/material-web/commit/a6b8c090262ef173eb9d88161ba5051c31e2f930))
+* **menu:** left arrow in submenu closes submenu in closure ([2049323](https://github.com/material-components/material-web/commit/2049323dde3eec643f14a03f12f0b449e4432aeb))
+* remove `:host-context` rtl selectors ([f2ff867](https://github.com/material-components/material-web/commit/f2ff86725ccb96347af1881657428e4de1fe0bae))
+
 ## [1.2.0](https://github.com/material-components/material-web/compare/v1.1.1...v1.2.0) (2024-01-24)
 
 
