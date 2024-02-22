@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Card} from './internal/card.js';
@@ -22,5 +23,5 @@ declare global {
  */
 @customElement('md-outlined-card')
 export class MdOutlinedCard extends Card {
-  static override styles = [sharedStyles, outlinedStyles];
+  static override styles: CSSResult[] = [sharedStyles, outlinedStyles];
 }

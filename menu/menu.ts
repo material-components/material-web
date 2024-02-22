@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Menu} from './internal/menu.js';
@@ -11,7 +12,11 @@ import {styles} from './internal/menu-styles.css.js';
 
 export {type ListItem} from '../list/internal/list-navigation-helpers.js';
 export {type MenuItem} from './internal/controllers/menuItemController.js';
-export {type CloseMenuEvent, FocusState, type Menu} from './internal/controllers/shared.js';
+export {
+  FocusState,
+  type CloseMenuEvent,
+  type Menu,
+} from './internal/controllers/shared.js';
 export {Corner} from './internal/menu.js';
 
 declare global {
@@ -71,5 +76,5 @@ declare global {
  */
 @customElement('md-menu')
 export class MdMenu extends Menu {
-  static override styles = [styles];
+  static override styles: CSSResult[] = [styles];
 }

@@ -6,6 +6,7 @@
 
 import '../field/filled-field.js';
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
@@ -28,7 +29,7 @@ declare global {
  */
 @customElement('md-filled-text-field')
 export class MdFilledTextField extends FilledTextField {
-  static override styles = [sharedStyles, filledStyles];
+  static override styles: CSSResult[] = [sharedStyles, filledStyles];
 
   protected override readonly fieldTag = literal`md-filled-field`;
 }

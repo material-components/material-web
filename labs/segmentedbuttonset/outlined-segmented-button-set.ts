@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {OutlinedSegmentedButtonSet} from './internal/outlined-segmented-button-set.js';
@@ -24,5 +25,5 @@ declare global {
  */
 @customElement('md-outlined-segmented-button-set')
 export class MdOutlinedSegmentedButtonSet extends OutlinedSegmentedButtonSet {
-  static override styles = [sharedStyles, outlinedStyles];
+  static override styles: CSSResult[] = [sharedStyles, outlinedStyles];
 }

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Ripple} from './internal/ripple.js';
@@ -30,5 +31,5 @@ declare global {
  */
 @customElement('md-ripple')
 export class MdRipple extends Ripple {
-  static override styles = [styles];
+  static override styles: CSSResult[] = [styles];
 }

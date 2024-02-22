@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {AssistChip} from './internal/assist-chip.js';
@@ -25,5 +26,5 @@ declare global {
  */
 @customElement('md-assist-chip')
 export class MdAssistChip extends AssistChip {
-  static override styles = [sharedStyles, elevatedStyles, styles];
+  static override styles: CSSResult[] = [sharedStyles, elevatedStyles, styles];
 }

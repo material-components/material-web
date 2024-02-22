@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {OutlinedSelect} from './internal/outlined-select.js';
@@ -45,5 +46,5 @@ declare global {
  */
 @customElement('md-outlined-select')
 export class MdOutlinedSelect extends OutlinedSelect {
-  static override styles = [sharedStyles, styles];
+  static override styles: CSSResult[] = [sharedStyles, styles];
 }

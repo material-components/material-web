@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {styles} from './internal/filled-tonal-styles.css.js';
@@ -30,10 +31,13 @@ declare global {
  * __Example usages:__
  * - Add to Favorites
  * - Print
+ *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-filled-tonal-icon-button')
 export class MdFilledTonalIconButton extends IconButton {
-  static override styles = [sharedStyles, styles];
+  static override styles: CSSResult[] = [sharedStyles, styles];
 
   protected override getRenderClasses() {
     return {

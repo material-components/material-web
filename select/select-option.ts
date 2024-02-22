@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {styles} from '../menu/internal/menuitem/menu-item-styles.css.js';
@@ -50,5 +51,5 @@ declare global {
  */
 @customElement('md-select-option')
 export class MdSelectOption extends SelectOptionEl {
-  static override styles = [styles];
+  static override styles: CSSResult[] = [styles];
 }

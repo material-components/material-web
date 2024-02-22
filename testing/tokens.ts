@@ -12,7 +12,7 @@ import {CSSResult} from 'lit';
  * Create tests for `MdComponent.styles` that checks for undefined or unused
  * tokens.
  *
- * @param styles An array of `CSSResult`s to run tests on.
+ * @param styles Styles to run tests on.
  */
 export function createTokenTests(styles: CSSResult[]) {
   it('should not have any undefined tokens', () => {
@@ -39,17 +39,13 @@ export function createTokenTests(styles: CSSResult[]) {
  *
  * // returns ['--_undefined-token']
  *
- * @param styles An array of `CSSResult`s to get undefined tokens for.
+ * @param styles Styles to get undefined tokens for.
  * @return An array of all token names that are undefined.
  */
 export function getUndefinedTokens(styles: CSSResult[]) {
   let defined = new Set<string>();
   let used = new Set<string>();
-  for (const {styleSheet} of styles) {
-    if (!styleSheet) {
-      throw new Error('CSSResult.styleSheet is not supported.');
-    }
-
+  for (const styleSheet of cssResultsToStyleSheets(styles)) {
     defined = new Set([...defined, ...getDefinedTokensFromRule(styleSheet)]);
     used = new Set([...used, ...getUsedTokensFromRule(styleSheet)]);
   }
@@ -78,17 +74,13 @@ export function getUndefinedTokens(styles: CSSResult[]) {
  *
  * // returns ['--_unused-token']
  *
- * @param styles An array of `CSSResult`s to get unused tokens for.
+ * @param styles Styles to get unused tokens for.
  * @return An array of all token names that are unused.
  */
 export function getUnusedTokens(styles: CSSResult[]) {
   let defined = new Set<string>();
   let used = new Set<string>();
-  for (const {styleSheet} of styles) {
-    if (!styleSheet) {
-      throw new Error('CSSResult.styleSheet is not supported.');
-    }
-
+  for (const styleSheet of cssResultsToStyleSheets(styles)) {
     defined = new Set([...defined, ...getDefinedTokensFromRule(styleSheet)]);
     used = new Set([...used, ...getUsedTokensFromRule(styleSheet)]);
   }
@@ -203,3 +195,17 @@ const CSS_SHORTHAND_PROPERTIES = [
   'text-emphasis',
   'transition',
 ];
+
+function cssResultsToStyleSheets(styles: CSSResult[]): CSSStyleSheet[] {
+  return styles.map((style) => {
+    if (style instanceof CSSStyleSheet) {
+      return style;
+    }
+
+    if (!style.styleSheet) {
+      throw new Error('CSSResult.styleSheet is not supported.');
+    }
+
+    return style.styleSheet;
+  });
+}

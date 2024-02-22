@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Item} from './internal/item.js';
@@ -70,8 +71,11 @@ declare global {
  *   <slot name="end" slot="end"></slot>
  * </md-item>
  * ```
+ *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-item')
 export class MdItem extends Item {
-  static override styles = [styles];
+  static override styles: CSSResult[] = [styles];
 }

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {List} from './internal/list.js';
@@ -36,5 +37,5 @@ declare global {
  */
 @customElement('md-list')
 export class MdList extends List {
-  static override styles = [styles];
+  static override styles: CSSResult[] = [styles];
 }

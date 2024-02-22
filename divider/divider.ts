@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Divider} from './internal/divider.js';
@@ -27,5 +28,5 @@ declare global {
  */
 @customElement('md-divider')
 export class MdDivider extends Divider {
-  static override styles = [styles];
+  static override styles: CSSResult[] = [styles];
 }

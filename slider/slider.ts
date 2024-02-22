@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {styles as forcedColorsStyles} from './internal/forced-colors-styles.css.js';
@@ -29,8 +30,11 @@ declare global {
  * __Example usages:__
  * - Sliders are ideal for adjusting settings such as volume and brightness, or
  * for applying image filters.
+ *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-slider')
 export class MdSlider extends Slider {
-  static override styles = [styles, forcedColorsStyles];
+  static override styles: CSSResult[] = [styles, forcedColorsStyles];
 }

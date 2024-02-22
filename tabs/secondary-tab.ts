@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {SecondaryTab} from './internal/secondary-tab.js';
@@ -20,8 +21,10 @@ declare global {
 /**
  * @summary Tab allow users to display a tab within a Tabs.
  *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-secondary-tab')
 export class MdSecondaryTab extends SecondaryTab {
-  static override styles = [sharedStyles, secondaryStyles];
+  static override styles: CSSResult[] = [sharedStyles, secondaryStyles];
 }

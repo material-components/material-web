@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {FilledButton} from './internal/filled-button.js';
@@ -39,5 +40,9 @@ declare global {
  */
 @customElement('md-filled-button')
 export class MdFilledButton extends FilledButton {
-  static override styles = [sharedStyles, sharedElevationStyles, filledStyles];
+  static override styles: CSSResult[] = [
+    sharedStyles,
+    sharedElevationStyles,
+    filledStyles,
+  ];
 }

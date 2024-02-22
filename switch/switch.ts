@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Switch} from './internal/switch.js';
@@ -27,5 +28,5 @@ declare global {
  */
 @customElement('md-switch')
 export class MdSwitch extends Switch {
-  static override styles = [styles];
+  static override styles: CSSResult[] = [styles];
 }

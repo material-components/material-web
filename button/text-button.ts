@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {styles as sharedStyles} from './internal/shared-styles.css.js';
@@ -38,5 +39,5 @@ declare global {
  */
 @customElement('md-text-button')
 export class MdTextButton extends TextButton {
-  static override styles = [sharedStyles, textStyles];
+  static override styles: CSSResult[] = [sharedStyles, textStyles];
 }
