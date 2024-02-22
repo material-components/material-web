@@ -16,8 +16,9 @@ import {Progress} from './progress.js';
 export class LinearProgress extends Progress {
   /**
    * Buffer amount to display, a fraction between 0 and `max`.
+   * If the value is 0 or negative, the buffer is not displayed.
    */
-  @property({type: Number}) buffer = 1;
+  @property({type: Number}) buffer = 0;
 
   // Note, the indeterminate animation is rendered with transform %'s
   // Previously, this was optimized to use px calculated with the resizeObserver
@@ -28,16 +29,20 @@ export class LinearProgress extends Progress {
         (this.indeterminate ? 1 : this.value / this.max) * 100
       }%)`,
     };
+
+    const bufferValue = this.buffer ?? 0;
+    const hasBuffer = bufferValue > 0;
+
+    const dotSize = this.indeterminate || !hasBuffer ? 1 : bufferValue / this.max;
+
     const dotStyles = {
-      transform: `scaleX(${
-        (this.indeterminate ? 1 : this.buffer / this.max) * 100
-      }%)`,
+      transform: `scaleX(${dotSize * 100}%)`,
     };
 
     // Only display dots when visible - this prevents invisible infinite
     // animation.
     const hideDots =
-      this.indeterminate || this.buffer >= this.max || this.value >= this.max;
+      this.indeterminate || !hasBuffer || bufferValue >= this.max || this.value >= this.max;
     return html`
       <div class="dots" ?hidden=${hideDots}></div>
       <div class="inactive-track" style=${styleMap(dotStyles)}></div>
