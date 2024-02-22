@@ -60,6 +60,11 @@ export class Dialog extends LitElement {
   }
 
   /**
+   * Skips the opening and closing animations.
+   */
+  @property({type: Boolean}) quick = false;
+
+  /**
    * Gets or sets the dialog's return value, usually to indicate which button
    * a user pressed to close it.
    *
@@ -107,6 +112,7 @@ export class Dialog extends LitElement {
   @state() private hasHeadline = false;
   @state() private hasActions = false;
   @state() private hasIcon = false;
+  private cancelAnimations?: AbortController;
 
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1512224
   // Chrome v120 has a bug where escape keys do not trigger cancels. If we get
@@ -396,6 +402,16 @@ export class Dialog extends LitElement {
   }
 
   private async animateDialog(animation: DialogAnimation) {
+    // Always cancel the previous animations. Animations can include `fill`
+    // modes that need to be cleared when `quick` is toggled. If not, content
+    // that faded out will remain hidden when a `quick` dialog re-opens after
+    // previously opening and closing without `quick`.
+    this.cancelAnimations?.abort();
+    this.cancelAnimations = new AbortController();
+    if (this.quick) {
+      return;
+    }
+
     const {dialog, scrim, container, headline, content, actions} = this;
     if (!dialog || !scrim || !container || !headline || !content || !actions) {
       return;
@@ -422,11 +438,22 @@ export class Dialog extends LitElement {
     const animations: Animation[] = [];
     for (const [element, animation] of elementAndAnimation) {
       for (const animateArgs of animation) {
-        animations.push(element.animate(...animateArgs));
+        const animation = element.animate(...animateArgs);
+        this.cancelAnimations.signal.addEventListener('abort', () => {
+          animation.cancel();
+        });
+
+        animations.push(animation);
       }
     }
 
-    await Promise.all(animations.map((animation) => animation.finished));
+    await Promise.all(
+      animations.map((animation) =>
+        animation.finished.catch(() => {
+          // Ignore intentional AbortErrors when calling `animation.cancel()`.
+        }),
+      ),
+    );
   }
 
   private handleHeadlineChange(event: Event) {

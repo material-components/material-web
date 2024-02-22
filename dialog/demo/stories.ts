@@ -19,6 +19,7 @@ import {css, html, nothing} from 'lit';
 
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
+  quick: boolean;
   icon: string;
   headline: string;
   supportingText: string;
@@ -30,13 +31,15 @@ function showDialog(event: Event) {
 
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Dialog',
-  render({icon, headline, supportingText}) {
+  render({icon, headline, supportingText, quick}) {
     return html`
-      <md-filled-button @click=${showDialog} aria-label="Open a dialog"
-        >Open</md-filled-button
-      >
+      <md-filled-button @click=${showDialog} aria-label="Open a dialog">
+        Open
+      </md-filled-button>
 
-      <md-dialog aria-label=${headline ? nothing : 'A simple dialog'}>
+      <md-dialog
+        aria-label=${headline ? nothing : 'A simple dialog'}
+        ?quick=${quick}>
         ${icon ? html`<md-icon slot="icon">${icon}</md-icon>` : nothing}
         <div slot="headline">${headline}</div>
         <form id="form" slot="content" method="dialog">
@@ -53,13 +56,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 
 const alert: MaterialStoryInit<StoryKnobs> = {
   name: 'Alert',
-  render() {
+  render({quick}) {
     return html`
-      <md-filled-button @click=${showDialog} aria-label="Open an alert dialog"
-        >Alert</md-filled-button
-      >
+      <md-filled-button @click=${showDialog} aria-label="Open an alert dialog">
+        Alert
+      </md-filled-button>
 
-      <md-dialog type="alert">
+      <md-dialog type="alert" ?quick=${quick}>
         <div slot="headline">Alert dialog</div>
         <form id="form" slot="content" method="dialog">
           This is a standard alert dialog. Alert dialogs interrupt users with
@@ -75,15 +78,15 @@ const alert: MaterialStoryInit<StoryKnobs> = {
 
 const confirm: MaterialStoryInit<StoryKnobs> = {
   name: 'Confirm',
-  render() {
+  render({quick}) {
     return html`
       <md-filled-button
         @click=${showDialog}
-        aria-label="Open a confirmation dialog"
-        >Confirm</md-filled-button
-      >
+        aria-label="Open a confirmation dialog">
+        Confirm
+      </md-filled-button>
 
-      <md-dialog style="max-width: 320px;">
+      <md-dialog style="max-width: 320px;" ?quick=${quick}>
         <div slot="headline">Permanently delete?</div>
         <md-icon slot="icon">delete_outline</md-icon>
         <form id="form" slot="content" method="dialog">
@@ -109,13 +112,13 @@ const choose: MaterialStoryInit<StoryKnobs> = {
       align-items: center;
     }
   `,
-  render() {
+  render({quick}) {
     return html`
-      <md-filled-button @click=${showDialog} aria-label="Open a choice dialog"
-        >Choice</md-filled-button
-      >
+      <md-filled-button @click=${showDialog} aria-label="Open a choice dialog">
+        Choice
+      </md-filled-button>
 
-      <md-dialog>
+      <md-dialog ?quick=${quick}>
         <div slot="headline">Choose your favorite pet</div>
         <form id="form" slot="content" method="dialog">
           <label>
@@ -184,13 +187,13 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
       flex: 1;
     }
   `,
-  render() {
+  render({quick}) {
     return html`
-      <md-filled-button @click=${showDialog} aria-label="Open a form dialog"
-        >Form</md-filled-button
-      >
+      <md-filled-button @click=${showDialog} aria-label="Open a form dialog">
+        Form
+      </md-filled-button>
 
-      <md-dialog class="contacts">
+      <md-dialog class="contacts" ?quick=${quick}>
         <span slot="headline">
           <md-icon-button form="form" value="close" aria-label="Close dialog">
             <md-icon>close</md-icon>
@@ -226,13 +229,13 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
 
 const floatingSheet: MaterialStoryInit<StoryKnobs> = {
   name: 'Floating sheet',
-  render() {
+  render({quick}) {
     return html`
       <md-filled-button @click=${showDialog} aria-label="Open a floating sheet">
         Floating sheet
       </md-filled-button>
 
-      <md-dialog>
+      <md-dialog ?quick=${quick}>
         <span slot="headline">
           <span style="flex: 1;">Floating Sheet</span>
           <md-icon-button form="form" value="close" aria-label="Close dialog">
