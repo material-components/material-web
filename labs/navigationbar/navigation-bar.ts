@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {NavigationBar} from './internal/navigation-bar.js';
@@ -22,5 +22,5 @@ declare global {
  */
 @customElement('md-navigation-bar')
 export class MdNavigationBar extends NavigationBar {
-  static override styles: CSSResult[] = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

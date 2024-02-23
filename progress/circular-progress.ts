@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {CircularProgress} from './internal/circular-progress.js';
@@ -31,5 +31,5 @@ declare global {
  */
 @customElement('md-circular-progress')
 export class MdCircularProgress extends CircularProgress {
-  static override styles: CSSResult[] = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

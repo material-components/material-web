@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {TestTable} from './internal/test-table.js';
@@ -24,5 +24,5 @@ declare global {
  */
 @customElement('md-test-table')
 export class MdTestTable<S extends string = string> extends TestTable<S> {
-  static override styles: CSSResult[] = [testTableStyles];
+  static override styles: CSSResultOrNative[] = [testTableStyles];
 }

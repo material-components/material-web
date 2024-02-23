@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {IconButton} from './internal/icon-button.js';
@@ -37,7 +37,7 @@ declare global {
  */
 @customElement('md-outlined-icon-button')
 export class MdOutlinedIconButton extends IconButton {
-  static override styles: CSSResult[] = [sharedStyles, styles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, styles];
 
   protected override getRenderClasses() {
     return {

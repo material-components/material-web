@@ -6,7 +6,7 @@
 
 // import 'jasmine'; (google3-only)
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 
 /**
  * Create tests for `MdComponent.styles` that checks for undefined or unused
@@ -14,7 +14,7 @@ import {CSSResult} from 'lit';
  *
  * @param styles Styles to run tests on.
  */
-export function createTokenTests(styles: CSSResult[]) {
+export function createTokenTests(styles: CSSResultOrNative[]) {
   it('should not have any undefined tokens', () => {
     const undefinedTokens = getUndefinedTokens(styles);
     expect(undefinedTokens).withContext('undefined tokens').toHaveSize(0);
@@ -42,7 +42,7 @@ export function createTokenTests(styles: CSSResult[]) {
  * @param styles Styles to get undefined tokens for.
  * @return An array of all token names that are undefined.
  */
-export function getUndefinedTokens(styles: CSSResult[]) {
+export function getUndefinedTokens(styles: CSSResultOrNative[]) {
   let defined = new Set<string>();
   let used = new Set<string>();
   for (const styleSheet of cssResultsToStyleSheets(styles)) {
@@ -77,7 +77,7 @@ export function getUndefinedTokens(styles: CSSResult[]) {
  * @param styles Styles to get unused tokens for.
  * @return An array of all token names that are unused.
  */
-export function getUnusedTokens(styles: CSSResult[]) {
+export function getUnusedTokens(styles: CSSResultOrNative[]) {
   let defined = new Set<string>();
   let used = new Set<string>();
   for (const styleSheet of cssResultsToStyleSheets(styles)) {
@@ -196,7 +196,7 @@ const CSS_SHORTHAND_PROPERTIES = [
   'transition',
 ];
 
-function cssResultsToStyleSheets(styles: CSSResult[]): CSSStyleSheet[] {
+function cssResultsToStyleSheets(styles: CSSResultOrNative[]): CSSStyleSheet[] {
   return styles.map((style) => {
     if (style instanceof CSSStyleSheet) {
       return style;

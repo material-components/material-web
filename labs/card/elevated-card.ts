@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Card} from './internal/card.js';
@@ -23,5 +23,5 @@ declare global {
  */
 @customElement('md-elevated-card')
 export class MdElevatedCard extends Card {
-  static override styles: CSSResult[] = [sharedStyles, elevatedStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, elevatedStyles];
 }

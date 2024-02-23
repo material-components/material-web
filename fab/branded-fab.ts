@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Fab, FabVariant} from './internal/fab.js';
@@ -64,5 +64,5 @@ export class MdBrandedFab extends Fab {
       'small': false,
     };
   }
-  static override styles: CSSResult[] = [sharedStyles, styles, forcedColors];
+  static override styles: CSSResultOrNative[] = [sharedStyles, styles, forcedColors];
 }

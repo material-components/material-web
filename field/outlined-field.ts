@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {OutlinedField} from './internal/outlined-field.js';
@@ -24,5 +24,5 @@ declare global {
  */
 @customElement('md-outlined-field')
 export class MdOutlinedField extends OutlinedField {
-  static override styles: CSSResult[] = [sharedStyles, outlinedStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, outlinedStyles];
 }

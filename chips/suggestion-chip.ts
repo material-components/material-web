@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {styles as elevatedStyles} from './internal/elevated-styles.css.js';
@@ -26,5 +26,5 @@ declare global {
  */
 @customElement('md-suggestion-chip')
 export class MdSuggestionChip extends SuggestionChip {
-  static override styles: CSSResult[] = [sharedStyles, elevatedStyles, styles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, elevatedStyles, styles];
 }

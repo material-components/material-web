@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {InputChip} from './internal/input-chip.js';
@@ -27,7 +27,7 @@ declare global {
  */
 @customElement('md-input-chip')
 export class MdInputChip extends InputChip {
-  static override styles: CSSResult[] = [
+  static override styles: CSSResultOrNative[] = [
     sharedStyles,
     trailingIconStyles,
     selectableStyles,

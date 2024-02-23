@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {ElevatedButton} from './internal/elevated-button.js';
@@ -42,7 +42,7 @@ declare global {
  */
 @customElement('md-elevated-button')
 export class MdElevatedButton extends ElevatedButton {
-  static override styles: CSSResult[] = [
+  static override styles: CSSResultOrNative[] = [
     sharedStyles,
     sharedElevationStyles,
     elevatedStyles,

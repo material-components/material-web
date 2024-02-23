@@ -6,7 +6,7 @@
 
 import '../field/outlined-field.js';
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
@@ -29,7 +29,7 @@ declare global {
  */
 @customElement('md-outlined-text-field')
 export class MdOutlinedTextField extends OutlinedTextField {
-  static override styles: CSSResult[] = [sharedStyles, outlinedStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, outlinedStyles];
 
   protected override readonly fieldTag = literal`md-outlined-field`;
 }

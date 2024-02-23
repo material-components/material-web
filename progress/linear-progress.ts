@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {LinearProgress} from './internal/linear-progress.js';
@@ -30,5 +30,5 @@ declare global {
  */
 @customElement('md-linear-progress')
 export class MdLinearProgress extends LinearProgress {
-  static override styles: CSSResult[] = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }
