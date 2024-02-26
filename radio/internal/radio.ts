@@ -125,6 +125,7 @@ export class Radio extends radioBaseClass {
           tabindex="-1"
           .checked=${this.checked}
           .value=${this.value}
+          .required=${this.required}
           ?disabled=${this.disabled} />
       </div>
     `;
