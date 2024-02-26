@@ -226,6 +226,14 @@ export abstract class Menu extends LitElement {
   @property({attribute: 'default-focus'})
   defaultFocus: FocusState = FocusState.FIRST_ITEM;
 
+  /**
+   * Turns off navigation wrapping. By default, navigating past the end of the
+   * menu items will wrap focus back to the beginning and vice versa. Use this
+   * for ARIA patterns that do not wrap focus, like combobox.
+   */
+  @property({type: Boolean, attribute: 'no-navigation-wrap'})
+  noNavigationWrap = false;
+
   @queryAssignedElements({flatten: true}) protected slotItems!: HTMLElement[];
   @state() private typeaheadActive = true;
 
@@ -282,6 +290,7 @@ export abstract class Menu extends LitElement {
 
       return submenuNavKeys.has(key);
     },
+    wrapNavigation: () => !this.noNavigationWrap,
   });
 
   /**

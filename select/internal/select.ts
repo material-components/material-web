@@ -474,6 +474,7 @@ export abstract class Select extends selectBaseClass {
             ? `${this.selectWidth}px`
             : undefined,
         })}
+        no-navigation-wrap
         .open=${this.open}
         .quick=${this.quick}
         .positioning=${this.menuPositioning}
