@@ -114,6 +114,7 @@ export class Switch extends switchBaseClass {
           ?checked=${this.selected}
           ?disabled=${this.disabled}
           ?required=${this.required}
+          @input=${this.handleInput}
           @change=${this.handleChange} />
 
         <md-focus-ring part="focus-ring" for="switch"></md-focus-ring>
@@ -190,9 +191,16 @@ export class Switch extends switchBaseClass {
     return this.icons || this.showOnlySelectedIcon;
   }
 
+  private handleInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.selected = target.checked;
+    // <input> 'input' event bubbles and is composed, don't re-dispatch it.
+  }
+
   private handleChange(event: Event) {
     const target = event.target as HTMLInputElement;
     this.selected = target.checked;
+    // <input> 'change' event is not composed, re-dispatch it.
     redispatchEvent(this, event);
   }
 
