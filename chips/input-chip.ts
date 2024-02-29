@@ -8,10 +8,10 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {InputChip} from './internal/input-chip.js';
-import {styles} from './internal/input-styles.css.js';
-import {styles as selectableStyles} from './internal/selectable-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
-import {styles as trailingIconStyles} from './internal/trailing-icon-styles.css.js';
+import {styles} from './internal/input-styles.js';
+import {styles as selectableStyles} from './internal/selectable-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
+import {styles as trailingIconStyles} from './internal/trailing-icon-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

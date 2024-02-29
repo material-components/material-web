@@ -7,7 +7,7 @@
 import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles} from '../menu/internal/menuitem/menu-item-styles.css.js';
+import {styles} from '../menu/internal/menuitem/menu-item-styles.js';
 
 import {SelectOptionEl} from './internal/selectoption/select-option.js';
 

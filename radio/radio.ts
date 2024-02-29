@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Radio} from './internal/radio.js';
-import {styles} from './internal/radio-styles.css.js';
+import {styles} from './internal/radio-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

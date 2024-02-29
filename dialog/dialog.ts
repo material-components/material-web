@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Dialog} from './internal/dialog.js';
-import {styles} from './internal/dialog-styles.css.js';
+import {styles} from './internal/dialog-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

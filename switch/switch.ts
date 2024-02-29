@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Switch} from './internal/switch.js';
-import {styles} from './internal/switch-styles.css.js';
+import {styles} from './internal/switch-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

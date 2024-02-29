@@ -10,7 +10,7 @@ for (let i = 2; i < process.argv.length; i++) {
   try {
     const filePath = process.argv[i];
     const content = fs.readFileSync(filePath);
-    fs.writeFileSync(`${filePath}.ts`, `/**
+    fs.writeFileSync(filePath.replace('.css', '.ts'), `/**
   * @license
   * Copyright 2022 Google LLC
   * SPDX-License-Identifier: Apache-2.0

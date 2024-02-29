@@ -7,9 +7,9 @@
 import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 import {TextButton} from './internal/text-button.js';
-import {styles as textStyles} from './internal/text-styles.css.js';
+import {styles as textStyles} from './internal/text-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

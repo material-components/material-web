@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {List} from './internal/list.js';
-import {styles} from './internal/list-styles.css.js';
+import {styles} from './internal/list-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

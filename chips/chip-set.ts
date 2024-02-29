@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {ChipSet} from './internal/chip-set.js';
-import {styles} from './internal/chip-set-styles.css.js';
+import {styles} from './internal/chip-set-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

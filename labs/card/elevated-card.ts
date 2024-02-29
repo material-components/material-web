@@ -8,8 +8,8 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Card} from './internal/card.js';
-import {styles as elevatedStyles} from './internal/elevated-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as elevatedStyles} from './internal/elevated-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

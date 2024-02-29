@@ -10,9 +10,9 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
-import {styles as filledStyles} from './internal/filled-styles.css.js';
+import {styles as filledStyles} from './internal/filled-styles.js';
 import {FilledTextField} from './internal/filled-text-field.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 export {type TextFieldType} from './internal/text-field.js';
 

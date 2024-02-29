@@ -7,12 +7,12 @@
 import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles as elevatedStyles} from './internal/elevated-styles.css.js';
+import {styles as elevatedStyles} from './internal/elevated-styles.js';
 import {FilterChip} from './internal/filter-chip.js';
-import {styles} from './internal/filter-styles.css.js';
-import {styles as selectableStyles} from './internal/selectable-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
-import {styles as trailingIconStyles} from './internal/trailing-icon-styles.css.js';
+import {styles} from './internal/filter-styles.js';
+import {styles as selectableStyles} from './internal/selectable-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
+import {styles as trailingIconStyles} from './internal/trailing-icon-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

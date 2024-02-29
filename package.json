@@ -86,7 +86,7 @@
         "tsconfig.json",
         "**/*.ts",
         "!**/*.d.ts",
-        "!**/*.css.ts",
+        "!**/*-styles.ts",
         "!catalog",
         "!scripts/",
         "!node_modules"
@@ -109,14 +109,14 @@
       ]
     },
     "build:css-to-ts": {
-      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
+      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*-styles.css' -print | xargs node css-to-ts.js",
       "files": [
         "css-to-ts.js",
         "!scripts/",
         "!node_modules"
       ],
       "output": [
-        "**/*.css.ts",
+        "**/*-styles.ts",
         "!catalog",
         "!scripts/"
       ],
@@ -160,7 +160,7 @@
         "scripts/tsconfig.json",
         "scripts/**/*.ts",
         "!**/*.d.ts",
-        "!**/*.css.ts"
+        "!**/*-styles.ts"
       ],
       "output": [
         "scripts/.tsbuildinfo",
@@ -176,7 +176,7 @@
         "docs/components/*.md",
         "**/*.ts",
         "!**/*.d.ts",
-        "!**/*.css.ts",
+        "!**/*-styles.ts",
         "!catalog",
         "!scripts/",
         "scripts/analyzer/update-docs.js",

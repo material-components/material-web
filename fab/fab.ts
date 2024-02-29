@@ -8,9 +8,9 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Fab} from './internal/fab.js';
-import {styles} from './internal/fab-styles.css.js';
-import {styles as forcedColors} from './internal/forced-colors-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles} from './internal/fab-styles.js';
+import {styles as forcedColors} from './internal/forced-colors-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 export {type FabVariant} from './internal/fab.js';
 export {type FabSize} from './internal/shared.js';

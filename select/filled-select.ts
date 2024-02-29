@@ -8,8 +8,8 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {FilledSelect} from './internal/filled-select.js';
-import {styles} from './internal/filled-select-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles} from './internal/filled-select-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

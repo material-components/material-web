@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Menu} from './internal/menu.js';
-import {styles} from './internal/menu-styles.css.js';
+import {styles} from './internal/menu-styles.js';
 
 export {type ListItem} from '../list/internal/list-navigation-helpers.js';
 export {type MenuItem} from './internal/controllers/menuItemController.js';
