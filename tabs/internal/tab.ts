@@ -54,7 +54,6 @@ export class Tab extends tabBaseClass {
   @property({type: Boolean, reflect: true}) active = false;
 
   /**
-   * TODO(b/293476210): remove after migrating
    * @deprecated use `active`
    */
   @property({type: Boolean})
