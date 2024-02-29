@@ -39,8 +39,6 @@ $unsupported-tokens: (
   // go/keep-sorted end
 );
 
-// TODO(b/275045611) may need to update based on resolution of design
-// for buffer and background animation.
 @function values(
   $deps: $_default,
   $exclude-hardcoded-values: false,
