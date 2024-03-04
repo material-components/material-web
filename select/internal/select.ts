@@ -382,7 +382,6 @@ export abstract class Select extends selectBaseClass {
   }
 
   private renderField() {
-    // TODO(b/290078041): add aria-label/describedby
     return staticHtml`
       <${this.fieldTag}
           aria-haspopup="listbox"
