@@ -13,12 +13,7 @@ import {
   materialInitsToStoryInits,
   setUpDemo,
 } from './material-collection.js';
-import {
-  colorPicker,
-  cssCustomProperty,
-  Knob,
-  numberInput,
-} from './index.js';
+import {colorPicker, cssCustomProperty, Knob, numberInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 

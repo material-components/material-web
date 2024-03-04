@@ -26,5 +26,9 @@ declare global {
  */
 @customElement('md-suggestion-chip')
 export class MdSuggestionChip extends SuggestionChip {
-  static override styles: CSSResultOrNative[] = [sharedStyles, elevatedStyles, styles];
+  static override styles: CSSResultOrNative[] = [
+    sharedStyles,
+    elevatedStyles,
+    styles,
+  ];
 }

@@ -62,9 +62,9 @@ export class FilterChip extends MultiActionChip {
         aria-label=${ariaLabel || nothing}
         aria-pressed=${this.selected}
         ?disabled=${this.disabled && !this.alwaysFocusable}
-        @click=${this.handleClick}
-        >${content}</button
-      >
+        @click=${this.handleClick}>
+        ${content}
+      </button>
     `;
   }
 

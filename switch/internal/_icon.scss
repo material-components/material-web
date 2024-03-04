@@ -30,7 +30,9 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       justify-content: center;
       fill: currentColor;
 
-      transition: fill 67ms linear, opacity 33ms linear,
+      transition:
+        fill 67ms linear,
+        opacity 33ms linear,
         transform 167ms $_easing-standard;
       opacity: 0;
     }

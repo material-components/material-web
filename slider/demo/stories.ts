@@ -6,10 +6,7 @@
 
 import '@material/web/slider/slider.js';
 
-import {
-  labelStyles,
-  MaterialStoryInit,
-} from './material-collection.js';
+import {labelStyles, MaterialStoryInit} from './material-collection.js';
 import {MdSlider} from '@material/web/slider/slider.js';
 import {css, html} from 'lit';
 

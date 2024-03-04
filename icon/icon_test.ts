@@ -32,9 +32,9 @@ describe('<md-icon>', () => {
     });
 
     it('sets aria-hidden is removed when initalized as false', async () => {
-      const root = env.render(html` <md-icon aria-hidden="false"
-        >check</md-icon
-      >`);
+      const root = env.render(
+        html` <md-icon aria-hidden="false">check</md-icon>`,
+      );
       const icon = root.querySelector('md-icon')!;
 
       await env.waitForStability();
@@ -57,9 +57,10 @@ describe('<md-icon>', () => {
     });
 
     it('overrides invalid aria-hidden values to true', async () => {
-      const root =
-        env.render(html` <!-- @ts-ignore:disable-next-line:no-incompatible-type-binding -->
-          <md-icon aria-hidden="foo">check</md-icon>`);
+      const root = env.render(
+        html` <!-- @ts-ignore:disable-next-line:no-incompatible-type-binding -->
+          <md-icon aria-hidden="foo">check</md-icon>`,
+      );
       const icon = root.querySelector('md-icon')!;
 
       await env.waitForStability();

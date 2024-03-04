@@ -33,7 +33,8 @@ export class LinearProgress extends Progress {
     const bufferValue = this.buffer ?? 0;
     const hasBuffer = bufferValue > 0;
 
-    const dotSize = this.indeterminate || !hasBuffer ? 1 : bufferValue / this.max;
+    const dotSize =
+      this.indeterminate || !hasBuffer ? 1 : bufferValue / this.max;
 
     const dotStyles = {
       transform: `scaleX(${dotSize * 100}%)`,
@@ -42,7 +43,10 @@ export class LinearProgress extends Progress {
     // Only display dots when visible - this prevents invisible infinite
     // animation.
     const hideDots =
-      this.indeterminate || !hasBuffer || bufferValue >= this.max || this.value >= this.max;
+      this.indeterminate ||
+      !hasBuffer ||
+      bufferValue >= this.max ||
+      this.value >= this.max;
     return html`
       <div class="dots" ?hidden=${hideDots}></div>
       <div class="inactive-track" style=${styleMap(dotStyles)}></div>

@@ -131,12 +131,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             @close-menu=${displayCloseEvent}
             @closed=${setButtonAriaExpandedFalse}>
             ${fruitNames.map(
-              (name, index) => html` <md-menu-item
-                id=${index}
-                .keepOpen=${knobs.keepOpen}
-                .disabled=${knobs.disabled}>
-                <div slot="headline">${name}</div>
-              </md-menu-item>`,
+              (name, index) =>
+                html` <md-menu-item
+                  id=${index}
+                  .keepOpen=${knobs.keepOpen}
+                  .disabled=${knobs.disabled}>
+                  <div slot="headline">${name}</div>
+                </md-menu-item>`,
             )}
           </md-menu>
         </div>
@@ -367,7 +368,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
       <div
         class="root"
         style="${knobs.positioning === 'document' ? '' : 'position:relative;'}">
-        <div id="anchor"> This is the anchor (use the "open" knob) </div>
+        <div id="anchor">This is the anchor (use the "open" knob)</div>
         <md-menu
           slot="menu"
           anchor="anchor"

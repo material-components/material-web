@@ -72,7 +72,7 @@ export class ThemeChanger extends LitElement {
   render() {
     return html`
       <div id="head-wrapper">
-        <h2> Theme Controls </h2>
+        <h2>Theme Controls</h2>
         <copy-code-button
           button-title="Copy current theme to clipboard"
           label="Copy current theme"

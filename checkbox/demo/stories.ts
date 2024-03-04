@@ -6,10 +6,7 @@
 
 import '@material/web/checkbox/checkbox.js';
 
-import {
-  labelStyles,
-  MaterialStoryInit,
-} from './material-collection.js';
+import {labelStyles, MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';
 
 /** Knob types for checkbox stories. */

@@ -6,7 +6,11 @@
 
 // import 'jasmine'; (google3-only)
 
-import {ARIAProperty, ariaPropertyToAttribute, isAriaAttribute} from './aria.js';
+import {
+  ARIAProperty,
+  ariaPropertyToAttribute,
+  isAriaAttribute,
+} from './aria.js';
 
 describe('aria', () => {
   describe('isAriaAttribute()', () => {

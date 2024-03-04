@@ -57,7 +57,10 @@ export class Knob<T, Name extends string = string> extends EventTarget {
     HTMLElement | DocumentFragment
   >();
 
-  constructor(readonly name: Name, init: KnobInit<T>) {
+  constructor(
+    readonly name: Name,
+    init: KnobInit<T>,
+  ) {
     super();
     this.defaultValue = init.defaultValue;
     this.latestValue = this.defaultValue;

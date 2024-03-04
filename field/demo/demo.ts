@@ -13,12 +13,7 @@ import {
   materialInitsToStoryInits,
   setUpDemo,
 } from './material-collection.js';
-import {
-  boolInput,
-  Knob,
-  numberInput,
-  textInput,
-} from './index.js';
+import {boolInput, Knob, numberInput, textInput} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 

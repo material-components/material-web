@@ -4,11 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
-import { LitElement, css, html } from 'lit';
-import { customElement, state, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { styleMap } from 'lit/directives/style-map.js';
+import {LitElement, css, html} from 'lit';
+import {customElement, state, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 import '@material/web/icon/icon.js';
 
 /**
@@ -107,8 +106,7 @@ export class DragPlayground extends LitElement {
       id="wrapper"
       style=${styleMap({
         '--editor-percentage': `${this.editorHeightPercent}%`,
-      })}
-    >
+      })}>
       <slot name="preview"></slot>
       <div
         id="drag-bar"
@@ -128,8 +126,7 @@ export class DragPlayground extends LitElement {
         @pointermove=${this.onPointermove}
         class=${classMap({
           isDragging: this.isDragging,
-        })}
-      >
+        })}>
         <md-icon>drag_handle</md-icon>
       </div>
       <slot name="editor"></slot>
@@ -145,7 +142,7 @@ export class DragPlayground extends LitElement {
   }
 
   private onKeydown(event: KeyboardEvent) {
-    const { key } = event;
+    const {key} = event;
     switch (key) {
       case 'ArrowRight':
       case 'ArrowUp':
@@ -193,8 +190,8 @@ export class DragPlayground extends LitElement {
   private onPointermove(event: PointerEvent) {
     if (!this.isDragging) return;
 
-    const { clientY: mouseY } = event;
-    const { top: wrapperTop, bottom: wrapperBottom } =
+    const {clientY: mouseY} = event;
+    const {top: wrapperTop, bottom: wrapperBottom} =
       this.wrapperEl.getBoundingClientRect();
 
     // The height of the wrapper

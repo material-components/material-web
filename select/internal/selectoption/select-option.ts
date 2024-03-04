@@ -170,9 +170,9 @@ export class SelectOptionEl extends LitElement implements SelectOption {
         aria-haspopup=${(this as ARIAMixinStrict).ariaHasPopup || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"
         @click=${this.selectOptionController.onClick}
-        @keydown=${this.selectOptionController.onKeydown}
-        >${content}</li
-      >
+        @keydown=${this.selectOptionController.onKeydown}>
+        ${content}
+      </li>
     `;
   }
 

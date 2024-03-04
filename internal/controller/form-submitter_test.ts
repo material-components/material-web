@@ -38,9 +38,9 @@ describe('setupFormSubmitter()', () => {
 
   async function setupTest() {
     const root = env.render(
-      html`<form
-        ><test-form-submitter-button></test-form-submitter-button
-      ></form>`,
+      html`<form>
+        <test-form-submitter-button></test-form-submitter-button>
+      </form>`,
     );
     const submitter = root.querySelector('test-form-submitter-button');
     if (!submitter) {

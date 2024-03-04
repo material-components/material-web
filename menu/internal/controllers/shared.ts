@@ -7,7 +7,10 @@
 import {LitElement} from 'lit';
 
 import {MenuItem} from './menuItemController.js';
-import type {Corner, SurfacePositionTarget} from './surfacePositionController.js';
+import type {
+  Corner,
+  SurfacePositionTarget,
+} from './surfacePositionController.js';
 
 /**
  * The interface needed for a Menu to work with other md-menu elements.

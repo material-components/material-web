@@ -51,7 +51,9 @@ export class TestTable<S extends string = string> extends LitElement {
         <tbody>
           ${guard([this.templates, this.states], () => this.renderTemplates())}
         </tbody>
-        <caption class="md3-test-table__header">${this.title}</caption>
+        <caption class="md3-test-table__header">
+          ${this.title}
+        </caption>
       </table>
     `;
   }

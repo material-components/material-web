@@ -95,9 +95,9 @@ export class InputChip extends MultiActionChip {
         id="button"
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
-        type="button"
-        >${content}</button
-      >
+        type="button">
+        ${content}
+      </button>
     `;
   }
 

@@ -47,10 +47,10 @@ export class NavigationBar extends LitElement implements NavigationBarState {
       aria-label=${ariaLabel || nothing}
       @keydown="${this.handleKeydown}"
       @navigation-tab-interaction="${this.handleNavigationTabInteraction}"
-      @navigation-tab-rendered=${this.handleNavigationTabConnected}
-      ><md-elevation></md-elevation
-      ><div class="md3-navigation-bar__tabs-slot-container"><slot></slot></div
-    ></div>`;
+      @navigation-tab-rendered=${this.handleNavigationTabConnected}>
+      <md-elevation></md-elevation>
+      <div class="md3-navigation-bar__tabs-slot-container"><slot></slot></div>
+    </div>`;
   }
 
   protected override updated(changedProperties: PropertyValues<NavigationBar>) {
