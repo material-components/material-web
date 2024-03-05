@@ -223,6 +223,12 @@
   }
 
   a,
+  button {
+    // Override the user-agent text-transform: none of <button> and <a>
+    text-transform: inherit;
+  }
+
+  a,
   button:not(:disabled) {
     cursor: inherit;
   }

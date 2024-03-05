@@ -61,6 +61,8 @@
     vertical-align: middle;
     padding-inline-start: var(--_spacing-leading);
     padding-inline-end: var(--_spacing-trailing);
+    // Override the user-agent text-transform: none of <button>
+    text-transform: inherit;
 
     .md3-segmented-button__outline {
       border-color: var(--_outline-color);

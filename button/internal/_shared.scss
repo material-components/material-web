@@ -99,6 +99,8 @@
     color: var(--_label-text-color);
     padding: 0;
     gap: inherit;
+    // Override the user-agent text-transform: none of <button> and <a>
+    text-transform: inherit;
 
     &::-moz-focus-inner {
       padding: 0;

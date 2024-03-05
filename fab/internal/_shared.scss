@@ -55,6 +55,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     outline: none;
     // Required for elevation and ripple to stay below content
     z-index: 0;
+    // Override the user-agent text-transform: none of <button>
+    text-transform: inherit;
 
     &.extended {
       width: inherit;
