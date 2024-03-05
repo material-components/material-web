@@ -69,7 +69,7 @@ export class AssistChip extends Chip {
 
   protected override renderOutline() {
     if (this.elevated) {
-      return html`<md-elevation></md-elevation>`;
+      return html`<md-elevation part="elevation"></md-elevation>`;
     }
 
     return super.renderOutline();

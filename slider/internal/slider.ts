@@ -440,7 +440,9 @@ export class Slider extends sliderBaseClass {
         for=${name}
         class=${name}
         ?disabled=${this.disabled}></md-ripple>
-      <div class="handleNub"><md-elevation></md-elevation></div>
+      <div class="handleNub">
+        <md-elevation part="elevation"></md-elevation>
+      </div>
       ${when(this.labeled, () => this.renderLabel(label))}
     </div>`;
   }

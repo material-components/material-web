@@ -99,7 +99,7 @@ export class Tab extends tabBaseClass {
       role="presentation"
       @click=${this.handleContentClick}>
       <md-focus-ring part="focus-ring" inward .control=${this}></md-focus-ring>
-      <md-elevation></md-elevation>
+      <md-elevation part="elevation"></md-elevation>
       <md-ripple .control=${this}></md-ripple>
       <div
         class="content ${classMap(this.getContentClasses())}"

@@ -40,7 +40,7 @@ export class NavigationDrawer extends LitElement {
         aria-modal="${ariaModal || nothing}"
         class="md3-navigation-drawer ${this.getRenderClasses()}"
         role="dialog">
-        <md-elevation></md-elevation>
+        <md-elevation part="elevation"></md-elevation>
         <div class="md3-navigation-drawer__slot-content">
           <slot></slot>
         </div>
