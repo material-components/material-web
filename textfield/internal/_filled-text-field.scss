@@ -36,6 +36,9 @@
   );
 
   :host {
+    // Reset text-align like standard input
+    text-align: start;
+    
     // Only use the logical properties.
     $tokens: map.remove($tokens, 'container-shape');
     @each $token, $value in $tokens {
