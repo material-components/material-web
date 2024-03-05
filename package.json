@@ -39,13 +39,12 @@
     "**/*.js.map",
     "**/*.d.ts",
     "**/*.scss",
-    "!css-to-ts.js",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
     "!**/*_test.*",
     "!.wireit/**",
-    "!catalog",
+    "!catalog/",
     "!scripts/",
     "!**/testing/**",
     "testing/harness.{js,js.map,d.ts}",
@@ -87,20 +86,18 @@
         "**/*.ts",
         "!**/*.d.ts",
         "!**/*-styles.ts",
-        "!catalog",
-        "!scripts/",
-        "!node_modules"
+        "!catalog/",
+        "!scripts/"
       ],
       "output": [
         ".tsbuildinfo",
         "**/*.js",
         "**/*.js.map",
         "**/*.d.ts",
-        "!css-to-ts.js",
         "!web-test-runner.config.js",
         "!commitlint.config.js",
         "!types/",
-        "!catalog",
+        "!catalog/",
         "!scripts/"
       ],
       "clean": "if-file-deleted",
@@ -109,18 +106,17 @@
       ]
     },
     "build:css-to-ts": {
-      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*-styles.css' -print | xargs node css-to-ts.js",
+      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*-styles.css' -print | xargs -L1 node scripts/css-to-ts.js",
       "files": [
-        "css-to-ts.js",
-        "!scripts/",
-        "!node_modules"
+        "**/*-styles.css",
+        "!catalog/"
       ],
       "output": [
         "**/*-styles.ts",
-        "!catalog",
-        "!scripts/"
+        "!catalog/"
       ],
       "dependencies": [
+        "build:scripts",
         "build:sass"
       ]
     },
@@ -128,15 +124,12 @@
       "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
       "files": [
         "**/*.scss",
-        "!catalog",
-        "!scripts/",
-        "!node_modules"
+        "!catalog/"
       ],
       "output": [
         "**/*.css",
         "**/*.css.map",
-        "!catalog",
-        "!scripts/"
+        "!catalog/"
       ]
     },
     "test": {
@@ -177,10 +170,9 @@
         "**/*.ts",
         "!**/*.d.ts",
         "!**/*-styles.ts",
-        "!catalog",
+        "!catalog/",
         "!scripts/",
-        "scripts/analyzer/update-docs.js",
-        "!node_modules"
+        "scripts/analyzer/update-docs.js"
       ],
       "output": [],
       "dependencies": [
