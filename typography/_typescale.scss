@@ -5,6 +5,7 @@
 
 // go/keep-sorted start
 @use 'sass:list';
+@use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../tokens';
@@ -20,11 +21,11 @@
 ///   @use '@material/web/typography/typescale';
 ///
 ///   :root {
-///     @include typescale.theme(
+///     @include typescale.theme((
 ///       'body-medium-size': 1rem,
 ///       'body-medium-line-height': 1.5rem,
 ///       /* ... */
-///     );
+///     ));
 ///   }
 ///
 ///   /* Generated CSS */
@@ -47,4 +48,110 @@
       --md-sys-typescale-#{$token}: #{$value};
     }
   }
+}
+
+/// Emits `.md-typescale-*` classes with font styles for each typescale in the
+/// provided `$tokens`.
+///
+/// @example scss
+///   @include typescale.styles(tokens.md-sys-typescale-values());
+///   // Generates the following CSS:
+///   .md-typescale-display-small { font: ...; }
+///   .md-typescale-display-medium { font: ...; }
+///   .md-typescale-display-large { font: ...; }
+///   .md-typescale-body-small { font: ...; }
+///   .md-typescale-body-medium { font: ...; }
+///   .md-typescale-body-large { font: ...; }
+///   // etc...
+///
+/// @param {Map} $tokens - A Map with `md-sys-typescale` token values.
+/// @output Emits `.md-typescale-*` classes for each typescale size.
+@mixin styles($tokens) {
+  $typescale-properties: _tokens-to-typescale-properties-map($tokens);
+
+  // Use the default layer for lowered specificity.
+  @layer {
+    @each $typescale, $properties in $typescale-properties {
+      // $typescale is a scale and size (ex. 'body-medium').
+      // $properties is a Map with 'font', 'size', 'line-height', 'weight', and
+      // an optional 'weight-prominent'.
+      .md-typescale-#{$typescale} {
+        font: map.get($properties, 'weight')
+          map.get($properties, 'size') /
+          map.get($properties, 'line-height')
+          map.get($properties, 'font');
+      }
+
+      .md-typescale-#{$typescale}-prominent {
+        // Inherit the font styles from the non-prominent selector. This adds
+        // another class selector to the regular styles, instead of re-emitting
+        // them.
+        // ```
+        // .md-typescale-label-medium, .md-typescale-label-medium-prominent {
+        //   font: ...;
+        // }
+        // .md-typescale-label-medium-prominent {
+        //   font-weight: ...;
+        // }
+        // ```
+        @extend .md-typescale-#{$typescale};
+
+        // Note: the prominent selector is not emitted by Sass when a
+        // typescale's prominent values are null.
+        font-weight: map.get($properties, 'weight-prominent');
+      }
+    }
+  }
+}
+
+/// Takes a md-sys-typescale token values Map and returns a Map whose keys are
+/// typescale names ('body-medium', 'label-large', etc) and whose values are a
+/// Map of properties for that Typescale ('font', 'size', etc).
+@function _tokens-to-typescale-properties-map($tokens) {
+  $typescale-properties: ();
+  // The keys of $typescale-properties. Each typescale is joined with each size
+  // ('display-small', 'display-medium', 'display-large', 'headline-small'...).
+  $typescales: ('display', 'headline', 'title', 'body', 'label');
+  $sizes: ('small', 'medium', 'large');
+  // The keys to the Map for each scale in $typescale-properties. These
+  // properties are required...
+  $required-properties: ('font', 'line-height', 'size', 'weight');
+  // ...while not all typescales have these properties.
+  $optional-properties: ('weight-prominent');
+  $properties: list.join($required-properties, $optional-properties);
+
+  @each $typescale in $typescales {
+    @each $size in $sizes {
+      $typescale-and-size: #{$typescale}-#{$size};
+
+      @each $property in $properties {
+        $token: '#{$typescale-and-size}-#{$property}';
+        $value: map.get($tokens, $token);
+        @if $value ==
+          null and
+          list.index($required-properties, $property) !=
+          null
+        {
+          @error 'Missing required typescale token `#{$token}`';
+        }
+
+        // Remove token to check if we used them all at the end of the function.
+        $tokens: map.remove($tokens, $token);
+        $typescale-properties: map.set(
+          $typescale-properties,
+          $typescale-and-size,
+          $property,
+          $value
+        );
+      }
+    }
+  }
+
+  $unused-tokens: map.keys($tokens);
+  $unused-token-count: list.length($unused-tokens);
+  @if $unused-token-count > 0 {
+    @error 'Missing styles for #{$unused-token-count} typescale tokens (#{$unused-tokens})';
+  }
+
+  @return $typescale-properties;
 }

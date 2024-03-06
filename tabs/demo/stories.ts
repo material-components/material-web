@@ -14,6 +14,7 @@ import {MaterialStoryInit} from './material-collection.js';
 import {MdTabs} from '@material/web/tabs/tabs.js';
 import {css, html, nothing} from 'lit';
 import {ref} from 'lit/directives/ref.js';
+import {styles as typescaleStyles} from '../../typography/md-typescale.js';
 
 /** Knob types for Tabs stories. */
 export interface StoryKnobs {
@@ -23,31 +24,27 @@ export interface StoryKnobs {
   content: string;
 }
 
-const styles = css`
-  [role='tabpanel']:not([hidden]) {
-    font-family:
-      Roboto,
-      Material Sans,
-      system-ui;
-  }
+const styles = [
+  typescaleStyles,
+  css`
+    [role='tabpanel']:not(.subtabs) {
+      padding: 16px;
+    }
 
-  [role='tabpanel']:not(.subtabs) {
-    padding: 16px;
-  }
+    md-tabs {
+      --inline-size: 50vw;
+      min-inline-size: var(--inline-size);
+    }
 
-  md-tabs {
-    --inline-size: 50vw;
-    min-inline-size: var(--inline-size);
-  }
+    md-tabs.scrolling {
+      inline-size: var(--inline-size);
+    }
 
-  md-tabs.scrolling {
-    inline-size: var(--inline-size);
-  }
-
-  .controls {
-    height: 48px;
-  }
-`;
+    .controls {
+      height: 48px;
+    }
+  `,
+];
 
 const primary: MaterialStoryInit<StoryKnobs> = {
   name: 'Primary Tabs',
@@ -94,21 +91,45 @@ const primary: MaterialStoryInit<StoryKnobs> = {
         </md-primary-tab>
       </md-tabs>
 
-      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one"
-        >Keyboard</div
-      >
-      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden
-        >Guitar</div
-      >
-      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden
-        >Drums</div
-      >
-      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden
-        >Bass</div
-      >
-      <div role="tabpanel" id="panel-five" aria-labelledby="tab-five" hidden
-        >Saxophone</div
-      >
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-one"
+        aria-labelledby="tab-one">
+        Keyboard
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-two"
+        aria-labelledby="tab-two"
+        hidden>
+        Guitar
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-three"
+        aria-labelledby="tab-three"
+        hidden>
+        Drums
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-four"
+        aria-labelledby="tab-four"
+        hidden>
+        Bass
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-five"
+        aria-labelledby="tab-five"
+        hidden>
+        Saxophone
+      </div>
     `;
   },
 };
@@ -139,16 +160,37 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
         </md-secondary-tab>
       </md-tabs>
 
-      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">Travel</div>
-      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden
-        >Hotel</div
-      >
-      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden
-        >Activities</div
-      >
-      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden
-        >Food</div
-      >
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-one"
+        aria-labelledby="tab-one">
+        Travel
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-two"
+        aria-labelledby="tab-two"
+        hidden>
+        Hotel
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-three"
+        aria-labelledby="tab-three"
+        hidden>
+        Activities
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-four"
+        aria-labelledby="tab-four"
+        hidden>
+        Food
+      </div>
     `;
   },
 };
@@ -189,7 +231,7 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
 const custom: MaterialStoryInit<StoryKnobs> = {
   name: 'Custom Tabs',
   styles: [
-    styles,
+    ...styles,
     css`
       .custom {
         /* colors */
@@ -216,7 +258,8 @@ const custom: MaterialStoryInit<StoryKnobs> = {
         aria-label="A custom themed tab bar"
         class="custom"
         active-tab-index=${knobs.activeTabIndex}
-        .autoActivate=${knobs.autoActivate}>
+        .autoActivate=${knobs.autoActivate}
+        ${setupTabPanels()}>
         <md-primary-tab id="tab-one" aria-controls="panel-one">
           ${tabContent('flight', 'Travel')}
         </md-primary-tab>
@@ -231,16 +274,37 @@ const custom: MaterialStoryInit<StoryKnobs> = {
         </md-primary-tab>
       </md-tabs>
 
-      <div role="tabpanel" id="panel-one" aria-labelledby="tab-one">Travel</div>
-      <div role="tabpanel" id="panel-two" aria-labelledby="tab-two" hidden
-        >Hotel</div
-      >
-      <div role="tabpanel" id="panel-three" aria-labelledby="tab-three" hidden
-        >Activities</div
-      >
-      <div role="tabpanel" id="panel-four" aria-labelledby="tab-four" hidden
-        >Food</div
-      >
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-one"
+        aria-labelledby="tab-one">
+        Travel
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-two"
+        aria-labelledby="tab-two"
+        hidden>
+        Hotel
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-three"
+        aria-labelledby="tab-three"
+        hidden>
+        Activities
+      </div>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="panel-four"
+        aria-labelledby="tab-four"
+        hidden>
+        Food
+      </div>
     `;
   },
 };
@@ -269,32 +333,63 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         </md-primary-tab>
       </md-tabs>
 
-      <div role="tabpanel" id="movies" class="subtabs" aria-label="Movies">
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="movies"
+        class="subtabs"
+        aria-label="Movies">
         <md-tabs
           aria-label="Secondary tabs for movies"
           active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
           ${setupTabPanels()}>
-          <md-secondary-tab aria-controls="star-wars"
-            >Star Wars</md-secondary-tab
-          >
-          <md-secondary-tab aria-controls="avengers">Avengers</md-secondary-tab>
-          <md-secondary-tab aria-controls="jaws">Jaws</md-secondary-tab>
-          <md-secondary-tab aria-controls="forzen">Frozen</md-secondary-tab>
+          <md-secondary-tab aria-controls="star-wars">
+            Star Wars
+          </md-secondary-tab>
+          <md-secondary-tab aria-controls="avengers">
+            Avengers
+          </md-secondary-tab>
+          <md-secondary-tab aria-controls="jaws">Jaws </md-secondary-tab>
+          <md-secondary-tab aria-controls="forzen">Frozen </md-secondary-tab>
         </md-tabs>
 
-        <div role="tabpanel" id="star-wars" aria-label="Star Wars"
-          >Star Wars</div
-        >
-        <div role="tabpanel" id="avengers" aria-label="Avengers" hidden
-          >Avengers</div
-        >
-        <div role="tabpanel" id="jaws" aria-label="Jaws" hidden>Jaws</div>
-        <div role="tabpanel" id="frozen" aria-label="Frozen" hidden>Frozen</div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="star-wars"
+          aria-label="Star Wars">
+          Star Wars
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="avengers"
+          aria-label="Avengers"
+          hidden>
+          Avengers
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="jaws"
+          aria-label="Jaws"
+          hidden>
+          Jaws
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="frozen"
+          aria-label="Frozen"
+          hidden>
+          Frozen
+        </div>
       </div>
 
       <div
         role="tabpanel"
+        class="md-typescale-body-medium"
         id="photos"
         class="subtabs"
         aria-label="Photos"
@@ -303,54 +398,106 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
           aria-label="Secondary tabs for photos"
           active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}>
-          <md-secondary-tab aria-controls="yosemite">Yosemite</md-secondary-tab>
-          <md-secondary-tab aria-controls="mona-lisa"
-            >Mona Lisa</md-secondary-tab
-          >
-          <md-secondary-tab aria-controls="swiss-alps"
-            >Swiss Alps</md-secondary-tab
-          >
-          <md-secondary-tab aria-controls="niagra-falls"
-            >Niagra Falls</md-secondary-tab
-          >
+          <md-secondary-tab aria-controls="yosemite">
+            Yosemite
+          </md-secondary-tab>
+          <md-secondary-tab aria-controls="mona-lisa">
+            Mona Lisa
+          </md-secondary-tab>
+          <md-secondary-tab aria-controls="swiss-alps">
+            Swiss Alps
+          </md-secondary-tab>
+          <md-secondary-tab aria-controls="niagra-falls">
+            Niagra Falls
+          </md-secondary-tab>
         </md-tabs>
 
-        <div role="tabpanel" id="yosemite" aria-label="Yosemite">Yosemite</div>
-        <div role="tabpanel" id="mona-lisa" aria-label="Mona Lisa" hidden
-          >Mona Lisa</div
-        >
-        <div role="tabpanel" id="swiss-alps" aria-label="Swiss Alps" hidden
-          >Swiss Alps</div
-        >
-        <div role="tabpanel" id="niagra-falls" aria-label="Niagra Falls" hidden
-          >Niagra Falls</div
-        >
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="yosemite"
+          aria-label="Yosemite">
+          Yosemite
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="mona-lisa"
+          aria-label="Mona Lisa"
+          hidden>
+          Mona Lisa
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="swiss-alps"
+          aria-label="Swiss Alps"
+          hidden>
+          Swiss Alps
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="niagra-falls"
+          aria-label="Niagra Falls"
+          hidden>
+          Niagra Falls
+        </div>
       </div>
 
-      <div role="tabpanel" id="music" class="subtabs" aria-label="Music" hidden>
+      <div
+        role="tabpanel"
+        class="md-typescale-body-medium"
+        id="music"
+        class="subtabs"
+        aria-label="Music"
+        hidden>
         <md-tabs
           aria-label="Secondary tabs for music"
           active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
           ${setupTabPanels()}>
-          <md-secondary-tab aria-controls="rock">Rock</md-secondary-tab>
-          <md-secondary-tab aria-controls="ambient">Ambient</md-secondary-tab>
-          <md-secondary-tab aria-controls="sounds"
-            >Soundscapes</md-secondary-tab
-          >
-          <md-secondary-tab aria-controls="noise">White Noise</md-secondary-tab>
+          <md-secondary-tab aria-controls="rock">Rock </md-secondary-tab>
+          <md-secondary-tab aria-controls="ambient">Ambient </md-secondary-tab>
+          <md-secondary-tab aria-controls="sounds">
+            Soundscapes
+          </md-secondary-tab>
+          <md-secondary-tab aria-controls="noise">
+            White Noise
+          </md-secondary-tab>
         </md-tabs>
 
-        <div role="tabpanel" id="rock" aria-label="Rock">Rock</div>
-        <div role="tabpanel" id="ambient" aria-label="Ambient" hidden
-          >Ambient</div
-        >
-        <div role="tabpanel" id="sounds" aria-label="Soundscapes" hidden
-          >Soundscapes</div
-        >
-        <div role="tabpanel" id="noise" aria-label="White noise" hidden
-          >White Noise</div
-        >
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="rock"
+          aria-label="Rock">
+          Rock
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="ambient"
+          aria-label="Ambient"
+          hidden>
+          Ambient
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="sounds"
+          aria-label="Soundscapes"
+          hidden>
+          Soundscapes
+        </div>
+        <div
+          role="tabpanel"
+          class="md-typescale-body-medium"
+          id="noise"
+          aria-label="White noise"
+          hidden>
+          White Noise
+        </div>
       </div>
     `;
   },
@@ -403,16 +550,18 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
     }
 
     return html` <div class="controls">
-        <md-icon-button @click=${addTab}><md-icon>add</md-icon></md-icon-button>
-        <md-icon-button @click=${removeTab}
-          ><md-icon>remove</md-icon></md-icon-button
-        >
-        <md-icon-button @click=${moveTabTowardsStart}
-          ><md-icon>chevron_left</md-icon></md-icon-button
-        >
-        <md-icon-button @click=${moveTabTowardsEnd}
-          ><md-icon>chevron_right</md-icon></md-icon-button
-        >
+        <md-icon-button @click=${addTab}>
+          <md-icon>add</md-icon>
+        </md-icon-button>
+        <md-icon-button @click=${removeTab}>
+          <md-icon>remove</md-icon>
+        </md-icon-button>
+        <md-icon-button @click=${moveTabTowardsStart}>
+          <md-icon>chevron_left</md-icon>
+        </md-icon-button>
+        <md-icon-button @click=${moveTabTowardsEnd}>
+          <md-icon>chevron_right</md-icon>
+        </md-icon-button>
       </div>
       <md-tabs
         class="scrolling"

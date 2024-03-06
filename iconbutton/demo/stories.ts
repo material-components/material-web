@@ -11,6 +11,7 @@ import '@material/web/iconbutton/icon-button.js';
 import '@material/web/iconbutton/outlined-icon-button.js';
 
 import {MaterialStoryInit} from './material-collection.js';
+import {styles as typescaleStyles} from '@material/web/typography/md-typescale.js';
 import {css, html} from 'lit';
 
 /** Knob types for icon button stories. */
@@ -20,33 +21,32 @@ export interface StoryKnobs {
   disabled: boolean;
 }
 
-const styles = css`
-  .column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+const styles = [
+  typescaleStyles,
+  css`
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  .row {
-    display: flex;
-    gap: 32px;
-  }
+    .row {
+      display: flex;
+      gap: 32px;
+    }
 
-  p {
-    color: var(--md-sys-color-on-surface);
-    font: var(--md-sys-typescale-body-medium-weight, 400)
-      var(--md-sys-typescale-body-medium-size, 0.875rem) /
-      var(--md-sys-typescale-body-medium-line-height, 1.25rem)
-      var(--md-sys-typescale-body-medium-font, 'Roboto');
-  }
-`;
+    p {
+      color: var(--md-sys-color-on-surface);
+    }
+  `,
+];
 
 const buttons: MaterialStoryInit<StoryKnobs> = {
   name: 'Icon button variants',
   styles,
   render({icon, disabled}) {
     return html`
-      <div class="row">
+      <div class="row md-typescale-body-medium">
         <div class="column">
           <p>Standard</p>
           <md-icon-button aria-label="Open settings" ?disabled=${disabled}>
