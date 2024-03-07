@@ -30,11 +30,6 @@
     $exclude-custom-properties: false,
   );
 
-  :host {
-    display: flex;
-    pointer-events: none;
-  }
-
   :host,
   .shadow,
   .shadow::before,
@@ -45,6 +40,12 @@
     transition-duration: inherit;
     transition-property: inherit;
     transition-timing-function: inherit;
+  }
+
+  :host {
+    display: flex;
+    pointer-events: none;
+    transition-property: box-shadow, opacity;
   }
 
   .shadow::before,
