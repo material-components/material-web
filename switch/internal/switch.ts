@@ -198,8 +198,6 @@ export class Switch extends switchBaseClass {
   }
 
   private handleChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.selected = target.checked;
     // <input> 'change' event is not composed, re-dispatch it.
     redispatchEvent(this, event);
   }
