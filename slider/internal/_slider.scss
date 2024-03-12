@@ -163,7 +163,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   .track::before {
-    background-color: var(--_inactive-track-color);
+    background: var(--_inactive-track-color);
   }
 
   .tickmarks::before {
@@ -179,7 +179,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
       (1 / var(--_disabled-active-track-opacity)) *
         var(--_disabled-inactive-track-opacity)
     );
-    background-color: var(--_disabled-inactive-track-color);
+    background: var(--_disabled-inactive-track-color);
   }
 
   // active-track
@@ -191,7 +191,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   .track::after {
-    background-color: var(--_active-track-color);
+    background: var(--_active-track-color);
   }
 
   .tickmarks::after {
@@ -210,7 +210,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   :host([disabled]) .track::after {
-    background-color: var(--_disabled-active-track-color);
+    background: var(--_disabled-active-track-color);
   }
 
   :host([disabled]) .tickmarks::before {
