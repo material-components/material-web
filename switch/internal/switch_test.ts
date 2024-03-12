@@ -161,6 +161,23 @@ describe('md-switch', () => {
       toggle.click();
       expect(toggle.selected).withContext('should remain false').toBeFalse();
     });
+
+    it('reflects `selected` state in input events', () => {
+      let state = false;
+      const inputHandler = jasmine
+        .createSpy('inputHandler')
+        .and.callFake(() => {
+          state = toggle.selected;
+        });
+
+      toggle.addEventListener('input', inputHandler);
+
+      toggle.click();
+      expect(inputHandler).withContext('input listener').toHaveBeenCalled();
+      expect(state)
+        .withContext('switch.selected during input listener')
+        .toBeTrue();
+    });
   });
 
   describe('form submission', () => {
