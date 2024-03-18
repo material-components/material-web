@@ -10,7 +10,7 @@ dirname: list
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'emarquez' reviewed: '2023-08-09' }
+freshness: { owner: 'emarquez' reviewed: '2024-03-18' }
 tag: 'docType:reference'
 *-->
 
@@ -85,7 +85,7 @@ header which is on two lines.](images/list/usage.webp)
     <div slot="supporting-text">Cucumbers are long green fruits that are just as long as this multi-line description</div>
   </md-list-item>
   <md-list-item
-      interactive
+      type="link"
       href="https://google.com/search?q=buy+kiwis&tbm=shop"
       target="_blank">
     <div slot="headline">Shop for Kiwis</div>
