@@ -7,8 +7,8 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {html, isServer, LitElement, nothing} from 'lit';
+import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml} from 'lit/static-html.js';
 
@@ -19,6 +19,10 @@ import {
   setupFormSubmitter,
   type FormSubmitterType,
 } from '../../internal/controller/form-submitter.js';
+import {
+  dispatchActivationClick,
+  isActivationClick
+} from '../../internal/events/form-label-activation.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';
 import {
   internals,
@@ -125,6 +129,15 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   }
 
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
+
+  @query('.link') private readonly linkElement!: HTMLElement | null;
+
+  constructor() {
+    super();
+    if (!isServer) {
+      this.addEventListener('click', this.handleActivationClick);
+    }
+  }
 
   /**
    * Link buttons cannot be disabled.
@@ -235,4 +248,12 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
     // Additionally, native change event is not an InputEvent.
     this.dispatchEvent(new Event('change', {bubbles: true}));
   }
+
+  private readonly handleActivationClick = (event: MouseEvent) => {
+    if (!isActivationClick(event) || !this.linkElement) {
+      return;
+    }
+    this.focus();
+    dispatchActivationClick(this.linkElement);
+  };
 }
