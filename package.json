@@ -39,6 +39,8 @@
     "**/*.js.map",
     "**/*.d.ts",
     "**/*.scss",
+    "**/*.css",
+    "**/*.css.map",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
