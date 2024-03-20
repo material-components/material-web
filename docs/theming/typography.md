@@ -81,7 +81,7 @@ stylesheet.
 Class names follow the naming convention `.md-typescale-<scale>-<size>`.
 
 ```ts
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale.js';
+import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
 
 // `typescaleStyles.styleSheet` is a `CSSStyleSheet` that can be added to a
 // document or shadow root's `adoptedStyleSheets` to use the `.md-typescale-*`

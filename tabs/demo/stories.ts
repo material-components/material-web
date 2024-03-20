@@ -14,7 +14,7 @@ import {MaterialStoryInit} from './material-collection.js';
 import {MdTabs} from '@material/web/tabs/tabs.js';
 import {css, html, nothing} from 'lit';
 import {ref} from 'lit/directives/ref.js';
-import {styles as typescaleStyles} from '../../typography/md-typescale.js';
+import {styles as typescaleStyles} from '../../typography/md-typescale-styles.js';
 
 /** Knob types for Tabs stories. */
 export interface StoryKnobs {

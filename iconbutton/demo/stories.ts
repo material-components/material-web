@@ -11,7 +11,7 @@ import '@material/web/iconbutton/icon-button.js';
 import '@material/web/iconbutton/outlined-icon-button.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale.js';
+import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
 import {css, html} from 'lit';
 
 /** Knob types for icon button stories. */
