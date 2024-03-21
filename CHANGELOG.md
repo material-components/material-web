@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.4.0](https://github.com/material-components/material-web/compare/v1.3.0...v1.4.0) (2024-03-21)
+
+
+### Features
+
+* **menu:** add `no-navigation-wrap` to fix select accessibility ([c6ffd70](https://github.com/material-components/material-web/commit/c6ffd70fc82060d894e4f4ef7fc43a1fb15e2a65))
+* **typography:** add `@material/web/typography/md-typescale` classes ([36dd77e](https://github.com/material-components/material-web/commit/36dd77ef97bfa9fbbd9f3a8885f010cb0741e797))
+
+
+### Bug Fixes
+
+* **button,fab,chips,labs:** text-transform inherits through shadow root ([758e615](https://github.com/material-components/material-web/commit/758e61581ef30481e5dd8c1bd7707db2a2988ab8))
+* **elevation:** expose md-elevation `::part` in all components ([b74e3dd](https://github.com/material-components/material-web/commit/b74e3dd2e3f11fa20dd5a39148a6b491bacded16))
+* **elevation:** limit elevation transition to box-shadow and opacity ([34c0a67](https://github.com/material-components/material-web/commit/34c0a6779e8a722ec6dfbf6ad5c0d1bb607289e6))
+* publish `.css` files for `[@import](https://github.com/import)`-ing ([cde649c](https://github.com/material-components/material-web/commit/cde649c83b5236bc441607cda797bdd8caf7e6ad))
+* rename internal `&lt;styles&gt;.css.js` to `<styles>.css` ([c35bad0](https://github.com/material-components/material-web/commit/c35bad0c643a7c3ee982739868ee3676372e23ad))
+* **switch:** reflect `selected` state in input event ([8d201e0](https://github.com/material-components/material-web/commit/8d201e0d5dfb5c26aa6b4e58e526db1b1ef6c404))
+* **tabs:** default `scroll-behavior: smooth` not working ([274ce3e](https://github.com/material-components/material-web/commit/274ce3e4e06867acfab642123192e0a7aa9b45d4)), closes [#5497](https://github.com/material-components/material-web/issues/5497)
+* **textfield:** no longer inherits `text-align` from parents ([668f0ee](https://github.com/material-components/material-web/commit/668f0ee5e96ed0b697596d7fa7d0b4748924162b)), closes [#5509](https://github.com/material-components/material-web/issues/5509)
+* **typography:** rename md-typescale.js to md-typescale-styles.js ([1e47fd7](https://github.com/material-components/material-web/commit/1e47fd7383ea2818beab64e7f9f4339cc790a5ee))
+* use explicit `CSSResult[]` types for static styles ([ce41b7b](https://github.com/material-components/material-web/commit/ce41b7bfb3fc04f8e93a781eb6d92fe15b1d7fac))
+
 ## [1.3.0](https://github.com/material-components/material-web/compare/v1.2.0...v1.3.0) (2024-02-22)
 
 
