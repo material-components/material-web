@@ -160,7 +160,7 @@ export class Dialog extends LitElement {
    * Opens the dialog and fires a cancelable `open` event. After a dialog's
    * animation, an `opened` event is fired.
    *
-   * Add an `autocomplete` attribute to a child of the dialog that should
+   * Add an `autofocus` attribute to a child of the dialog that should
    * receive focus after opening.
    *
    * @return A Promise that resolves after the animation is finished and the
