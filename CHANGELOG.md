@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/material-components/material-web/compare/v1.4.0...v1.4.1) (2024-03-26)
+
+
+### Bug Fixes
+
+* **dialog:** update info comment with autocomplete -&gt; autofocus ([fc4c999](https://github.com/material-components/material-web/commit/fc4c9992f8827e2a07e5c0b32cc48a065356cf29))
+
 ## [1.4.0](https://github.com/material-components/material-web/compare/v1.3.0...v1.4.0) (2024-03-21)
 
 
