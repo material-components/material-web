@@ -12,11 +12,7 @@ dirname: tabs
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: {
-  owner: 'lizmitchell'
-  owner: 'ajakubowicz'
-  reviewed: '2023-09-08'
-}
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-26' }
 tag: 'docType:reference'
 *-->
 

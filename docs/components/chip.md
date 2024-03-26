@@ -10,7 +10,7 @@ dirname: chips
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-08-14' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-26' }
 tag: 'docType:reference'
 *-->
 
