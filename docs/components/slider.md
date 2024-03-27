@@ -12,7 +12,7 @@ dirname: slider
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'material-web-team' reviewed: '2023-08-01' }
+freshness: { owner: 'material-web-team' reviewed: '2024-03-27' }
 tag: 'docType:reference'
 *-->
 
