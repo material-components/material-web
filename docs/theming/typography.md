@@ -10,7 +10,7 @@ order: 3
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-03-05' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-28' }
 tag: 'docType:howTo'
 *-->
 
@@ -69,7 +69,11 @@ Plain    | `--md-ref-typeface-plain`
 A
 [typescale](https://m3.material.io/styles/typography/type-scale-tokens)<!-- {.external} -->
 is a collection of font styles: `font-family`, `font-size`, `line-height`, and
-`font-weight`.
+`font-weight`. They are organized into roles that describe their purpose.
+
+Material's
+[applying type guidelines](https://m3.material.io/styles/typography/applying-type)<!-- {.external} -->
+explains when to use each typescale role.
 
 ### Classes
 
