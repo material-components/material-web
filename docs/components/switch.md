@@ -10,7 +10,7 @@ dirname: switch
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-08-02' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-27' }
 tag: 'docType:reference'
 *-->
 
