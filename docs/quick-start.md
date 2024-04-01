@@ -8,7 +8,7 @@ order: 2
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-09-28' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-04-01' }
 tag: 'docType:gettingStarted'
 *-->
 
