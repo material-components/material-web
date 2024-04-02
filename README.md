@@ -13,9 +13,9 @@ Google's open-source design system.
 
 **Resources**
 
--   [Introduction](docs/intro.md)
--   [Roadmap](docs/roadmap.md)
--   [Quick start](docs/quick-start.md)
--   [Bundle sizes](docs/size.md)
--   [Component docs](docs/components/)
--   [Browser support and FAQ](docs/support.md)
+-   [Introduction](./docs/intro.md)
+-   [Roadmap](./docs/roadmap.md)
+-   [Quick start](./docs/quick-start.md)
+-   [Bundle sizes](./docs/size.md)
+-   [Component docs](./docs/components/)
+-   [Browser support and FAQ](./docs/support.md)
