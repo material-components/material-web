@@ -56,7 +56,7 @@ $_checkmark-bottom-left: 7px, -14px;
     cursor: pointer;
   }
 
-  :host([disabled]) {
+  :host(:disabled) {
     cursor: default;
   }
 

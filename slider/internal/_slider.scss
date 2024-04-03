@@ -103,7 +103,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // Note, opacity for active track and handle controlled via host.
   // This avoids bleed through from the handle to the track since they overlap.
   // It also means the inactive track opacity is calc'd to compensate.
-  :host([disabled]) {
+  :host(:disabled) {
     opacity: var(--_disabled-active-track-opacity);
 
     @include elevation.theme(
@@ -172,7 +172,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     );
   }
 
-  :host([disabled]) .track::before {
+  :host(:disabled) .track::before {
     // Note, the active track opacity is applied to the entire host,
     // so the inactive track is calc'd to compensate.
     opacity: calc(
@@ -209,11 +209,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
   }
 
-  :host([disabled]) .track::after {
+  :host(:disabled) .track::after {
     background: var(--_disabled-active-track-color);
   }
 
-  :host([disabled]) .tickmarks::before {
+  :host(:disabled) .tickmarks::before {
     background-image: _get-tick-image(
       var(--_with-tick-marks-disabled-container-color)
     );
@@ -265,7 +265,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background: var(--_handle-color);
   }
 
-  :host([disabled]) .handleNub {
+  :host(:disabled) .handleNub {
     background: var(--_disabled-handle-color);
   }
 
@@ -279,7 +279,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background: var(--_hover-handle-color);
   }
 
-  :host(:not([disabled])) {
+  :host(:not(:disabled)) {
     input.end:active ~ .handleContainerPadded .handle.end > .handleNub,
     input.start:active ~ .handleContainerPadded .handle.start > .handleNub {
       background: var(--_pressed-handle-color);

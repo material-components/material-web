@@ -373,22 +373,30 @@ export abstract class Select extends selectBaseClass {
     super.firstUpdated(changed);
   }
 
+  private get isControlDisabled() {
+    return this.disabled || this.matches(':disabled');
+  }
+
   private getRenderClasses(): ClassInfo {
+    const disabled = this.isControlDisabled;
+
     return {
-      'disabled': this.disabled,
+      'disabled': disabled,
       'error': this.error,
       'open': this.open,
     };
   }
 
   private renderField() {
+    const disabled = this.isControlDisabled;
+
     return staticHtml`
       <${this.fieldTag}
           aria-haspopup="listbox"
           role="combobox"
           part="field"
           id="field"
-          tabindex=${this.disabled ? '-1' : '0'}
+          tabindex=${disabled ? '-1' : '0'}
           aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
           aria-describedby="description"
           aria-expanded=${this.open ? 'true' : 'false'}
@@ -397,7 +405,7 @@ export abstract class Select extends selectBaseClass {
           label=${this.label}
           .focused=${this.focused || this.open}
           .populated=${!!this.displayText}
-          .disabled=${this.disabled}
+          .disabled=${disabled}
           .required=${this.required}
           .error=${this.hasError}
           ?has-start=${this.hasLeadingIcon}
@@ -500,8 +508,8 @@ export abstract class Select extends selectBaseClass {
    * Handles opening the select on keydown and typahead selection when the menu
    * is closed.
    */
-  private handleKeydown(event: KeyboardEvent) {
-    if (this.open || this.disabled || !this.menu) {
+  private handleKeydown(event: KeyboardEvent) {    
+    if (this.open || this.isControlDisabled || !this.menu) {
       return;
     }
 

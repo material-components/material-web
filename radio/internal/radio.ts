@@ -96,14 +96,20 @@ export class Radio extends radioBaseClass {
     }
   }
 
+  private get isControlDisabled() {
+    return this.disabled || this.matches(':disabled');
+  }
+
   protected override render() {
+    const disabled = this.isControlDisabled;
+
     const classes = {'checked': this.checked};
     return html`
       <div class="container ${classMap(classes)}" aria-hidden="true">
         <md-ripple
           part="ripple"
           .control=${this}
-          ?disabled=${this.disabled}></md-ripple>
+          ?disabled=${disabled}></md-ripple>
         <md-focus-ring part="focus-ring" .control=${this}></md-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
           <mask id="${this.maskId}">
@@ -125,7 +131,7 @@ export class Radio extends radioBaseClass {
           tabindex="-1"
           .checked=${this.checked}
           .value=${this.value}
-          ?disabled=${this.disabled} />
+          ?disabled=${disabled} />
       </div>
     `;
   }
@@ -135,7 +141,7 @@ export class Radio extends radioBaseClass {
   }
 
   private async handleClick(event: Event) {
-    if (this.disabled) {
+    if (this.isControlDisabled) {
       return;
     }
 
