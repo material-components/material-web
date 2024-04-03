@@ -79,7 +79,7 @@
     }
   }
 
-  .outlined:disabled .icon {
+  :host(:disabled) .outlined .icon {
     opacity: var(--_disabled-icon-opacity);
   }
 
@@ -139,7 +139,7 @@
   }
 
   @media (forced-colors: active) {
-    :host([disabled]) {
+    :host(:disabled) {
       --_disabled-outline-opacity: 1;
     }
 
