@@ -30,7 +30,7 @@ people take supplementary actions with a single tap.
 <img
     class="hero"
     alt="The top half of a phone application with a back icon button at the top left and three icon buttons on the top right, heart, share, and three dot."
-    src="images/iconbutton/hero.png">
+    src="images/iconbutton/hero.webp">
 
 </catalog-component-header>
 
@@ -55,7 +55,7 @@ people take supplementary actions with a single tap.
 
 <!-- no-catalog-start -->
 
-![Side by side view of standard and contained icon buttons](images/iconbutton/buttons.png "1 - Standard Icon Button. 2 - Contained Icon Button (including filled, filled tonal, and outlined styles)")
+![Side by side view of standard and contained icon buttons](images/iconbutton/buttons.webp "1 - Standard Icon Button. 2 - Contained Icon Button (including filled, filled tonal, and outlined styles)")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/buttons.html" -->
@@ -79,7 +79,7 @@ the icon font.
 
 <!-- no-catalog-start -->
 
-![A row of icon buttons](images/iconbutton/usage.png "Icon buttons can be used within other components, such as a bottom app bar")
+![A row of icon buttons](images/iconbutton/usage.webp "Icon buttons can be used within other components, such as a bottom app bar")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage.html" -->
@@ -119,7 +119,7 @@ attribute to turn the icon button into a link.
 
 ![Two rows of toggling icon buttons, the top row is unselected and the bottom
 row is
-selected](images/iconbutton/usage-toggle.png "Unselected and Selected Icon Button")
+selected](images/iconbutton/usage-toggle.webp "Unselected and Selected Icon Button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-toggle.html" -->
@@ -203,7 +203,7 @@ emphasis of the icon buttons.
 
 <!-- no-catalog-start -->
 
-![A check icon](images/iconbutton/usage-standard.png "Standard Icon Button with Check icon")
+![A check icon](images/iconbutton/usage-standard.webp "Standard Icon Button with Check icon")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-standard.html" -->
@@ -220,7 +220,7 @@ emphasis of the icon buttons.
 
 <!-- no-catalog-start -->
 
-![A circular button with a check icon](images/iconbutton/usage-filled.png "Filled Icon Button")
+![A circular button with a check icon](images/iconbutton/usage-filled.webp "Filled Icon Button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-filled.html" -->
@@ -240,7 +240,7 @@ actions.
 
 <!-- no-catalog-start -->
 
-![A filled tonal icon button with a check icon](images/iconbutton/usage-filled-tonal.png "Filled Tonal Icon Button")
+![A filled tonal icon button with a check icon](images/iconbutton/usage-filled-tonal.webp "Filled Tonal Icon Button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-filled-tonal.html" -->
@@ -262,7 +262,7 @@ high emphasis action.
 
 <!-- no-catalog-start -->
 
-![An outlined circular icon button with a check icon](images/iconbutton/usage-outlined.png "Outlined Icon button")
+![An outlined circular icon button with a check icon](images/iconbutton/usage-outlined.webp "Outlined Icon button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-outlined.html" -->
@@ -297,7 +297,7 @@ Token                                | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a standard icon button with a different theme applied](images/iconbutton/theming-standard.png "Standard icon button theming example.")
+![Image of a standard icon button with a different theme applied](images/iconbutton/theming-standard.webp "Standard icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-standard.html" -->
@@ -333,7 +333,7 @@ Token                                              | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a filled icon button with a different theme applied](images/iconbutton/theming-filled.png "Filled icon button theming example.")
+![Image of a filled icon button with a different theme applied](images/iconbutton/theming-filled.webp "Filled icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-filled.html" -->
@@ -368,7 +368,7 @@ Token                                                    | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a filled tonal icon button with a different theme applied](images/iconbutton/theming-filled-tonal.png "Filled tonal icon button theming example.")
+![Image of a filled tonal icon button with a different theme applied](images/iconbutton/theming-filled-tonal.webp "Filled tonal icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-filled-tonal.html" -->
@@ -403,7 +403,7 @@ Token                                        | Default value
 
 <!-- no-catalog-start -->
 
-![Image of an outlined icon button with a different theme applied](images/iconbutton/theming-outlined.png "Outlined icon button theming example.")
+![Image of an outlined icon button with a different theme applied](images/iconbutton/theming-outlined.webp "Outlined icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-outlined.html" -->

@@ -41,7 +41,7 @@ outlined, and text.
     alt="A phone showing a payment screen with a green filled button that says 'Make
 payment'"
     title="There are 5 types of common buttons"
-    src="images/button/hero.png">
+    src="images/button/hero.webp">
 
 </catalog-component-header>
 
@@ -66,7 +66,7 @@ payment'"
 
 <!-- no-catalog-start -->
 
-![The 5 types of common buttons](images/button/types.png "Elevated, filled, filled tonal, outlined, and text buttons")
+![The 5 types of common buttons](images/button/types.webp "Elevated, filled, filled tonal, outlined, and text buttons")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -151,7 +151,7 @@ a button.
 <!-- no-catalog-start -->
 
 ![An outlined button with the text "Back" next to a filled button with the text
-"Complete"](images/button/usage.png "Outlined and filled buttons.")
+"Complete"](images/button/usage.webp "Outlined and filled buttons.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -186,7 +186,7 @@ action and help draw attention.
 
 ![A tonal button with a right arrow send icon with text 'send' and a text button
 with the text 'open' with a trailing icon arrow
-box](images/button/usage-icon.png "Slot in icons to the appropriate slots")
+box](images/button/usage-icon.webp "Slot in icons to the appropriate slots")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -247,7 +247,7 @@ separation from a patterned background.
 
 <!-- no-catalog-start -->
 
-![An elevated button](images/button/usage-elevated-button.png)
+![An elevated button](images/button/usage-elevated-button.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -311,7 +311,7 @@ than an outline would give, such as "Next" in an onboarding flow.
 
 <!-- no-catalog-start -->
 
-![A filled tonal button](images/button/usage-filled-tonal-button.png)
+![A filled tonal button](images/button/usage-filled-tonal-button.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -344,7 +344,7 @@ the primary action in an app.
 
 <!-- no-catalog-start -->
 
-![An outlined button](images/button/usage-outlined-button.png)
+![An outlined button](images/button/usage-outlined-button.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -377,7 +377,7 @@ options.
 
 <!-- no-catalog-start -->
 
-![A text button](images/button/usage-text-button.png)
+![A text button](images/button/usage-text-button.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -421,7 +421,7 @@ Token                                   | Default value
 
 <!-- no-catalog-start -->
 
-![Image of an elevated button with a different theme applied](images/button/theming-elevated-button.png "Elevated button theming example.")
+![Image of an elevated button with a different theme applied](images/button/theming-elevated-button.webp "Elevated button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -481,7 +481,7 @@ Token                                 | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a filled button with a different theme applied](images/button/theming-filled-button.png "Filled button theming example.")
+![Image of a filled button with a different theme applied](images/button/theming-filled-button.webp "Filled button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -541,7 +541,7 @@ Token                                       | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a filled tonal button with a different theme applied](images/button/theming-filled-tonal-button.png "Filled tonal button theming example.")
+![Image of a filled tonal button with a different theme applied](images/button/theming-filled-tonal-button.webp "Filled tonal button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -601,7 +601,7 @@ Token                                   | Default value
 
 <!-- no-catalog-start -->
 
-![Image of an outlined button with a different theme applied](images/button/theming-outlined-button.png "Outlined button theming example.")
+![Image of an outlined button with a different theme applied](images/button/theming-outlined-button.webp "Outlined button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -659,7 +659,7 @@ Token                               | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a text button with a different theme applied](images/button/theming-text-button.png "Text button theming example.")
+![Image of a text button with a different theme applied](images/button/theming-text-button.webp "Text button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
