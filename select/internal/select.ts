@@ -825,6 +825,10 @@ export abstract class Select extends selectBaseClass {
     this.value = state;
   }
 
+  override click() {
+    this.field?.click();
+  }
+
   [createValidator]() {
     return new SelectValidator(() => this);
   }
