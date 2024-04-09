@@ -8,13 +8,67 @@ order: 2
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-04-01' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-04-09' }
 tag: 'docType:gettingStarted'
 *-->
 
 <!-- go/mwc-quick-start -->
 
 <!-- [TOC] -->
+
+## CDN
+
+For fast prototyping, we recommend using [esm.run](https://esm.run/)<!-- {.external} -->,
+a CDN that allows you to use `@material/web` without installing and building
+from NPM.
+
+<!-- LINT.IfChange -->
+
+```html
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
+</head>
+<body>
+  <h1 class="md-typescale-display-medium">Hello Material!</h1>
+  <form>
+    <p class="md-typescale-body-medium">Check out these controls in a form!</p>
+    <md-checkbox></md-checkbox>
+    <div>
+      <md-radio name="group"></md-radio>
+      <md-radio name="group"></md-radio>
+      <md-radio name="group"></md-radio>
+    </div>
+    <md-outlined-text-field label="Favorite color" value="Purple"></md-outlined-text-field>
+    <md-outlined-button type="reset">Reset</md-outlined-button>
+  </form>
+  <style>
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  </style>
+</body>
+```
+
+<!-- LINT.ThenChange(../../README.md) -->
+
+For production, follow the [install](#install) and [build](#building) steps
+below.
 
 ## Install
 
