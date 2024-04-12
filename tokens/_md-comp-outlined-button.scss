@@ -5,20 +5,26 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-outlined-button';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
   'container-height',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'disabled-icon-color',
   'disabled-icon-opacity',
   'disabled-label-text-color',
@@ -72,13 +78,16 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-outlined-button.values($deps, $exclude-hardcoded-values),
-    $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens,
-    $new-tokens: (
-      // TODO(b/198759625): Remove once spacing tokens are formally added
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-outlined-button.values($deps, $exclude-hardcoded-values);
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
+      // b/198759625 - Remove once spacing tokens are formally added
       // go/keep-sorted start
       'leading-space': if($exclude-hardcoded-values, null, 24px),
       'trailing-space': if($exclude-hardcoded-values, null, 24px),
@@ -91,7 +100,14 @@ $_default: (
       'with-trailing-icon-trailing-space':
         if($exclude-hardcoded-values, null, 16px),
       // go/keep-sorted end
-    ),
+    )
+  );
+
+  $tokens: validate.values(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // Remove "with-*" prefixes (b/273534858)
       'with-icon-disabled-icon-color': 'disabled-icon-color',
@@ -103,6 +119,23 @@ $_default: (
       'with-icon-pressed-icon-color': 'pressed-icon-color'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-outlined-button-container-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-outlined-button-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

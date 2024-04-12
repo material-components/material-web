@@ -7,11 +7,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: npm
 
-      - run: npm install -g commitlint @commitlint/config-conventional
-      - run: 'echo "${PR_TITLE}" | commitlint -x @commitlint/config-conventional'
+      - run: npm install -g @commitlint/cli @commitlint/config-conventional
+      - run: 'echo "${PR_TITLE}" | commitlint'
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}

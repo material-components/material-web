@@ -4,91 +4,99 @@
 //
 
 @mixin styles() {
-  .label {
-    box-sizing: border-box;
-    color: var(--_label-text-color);
-    overflow: hidden;
-    max-width: 100%;
-    // TODO: Check with design, should there be any transition from resting to
-    // floating when there is a mismatch between ellipsis, such as opacity
-    // transition?
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    z-index: 1;
-    font-family: var(--_label-text-font);
-    font-size: var(--_label-text-size);
-    line-height: var(--_label-text-line-height);
-    font-weight: var(--_label-text-weight);
-    width: min-content;
+  @layer styles {
+    .label {
+      box-sizing: border-box;
+      color: var(--_label-text-color);
+      overflow: hidden;
+      max-width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      z-index: 1;
+      font-family: var(--_label-text-font);
+      font-size: var(--_label-text-size);
+      line-height: var(--_label-text-line-height);
+      font-weight: var(--_label-text-weight);
+      width: min-content;
+    }
+
+    .label-wrapper {
+      inset: 0;
+      // The resting label at 100% height can block pointer events to the content
+      // if it's very long and spans the full width of the field. Additionally,
+      // selecting the label's text doesn't present a good UX, since the user
+      // selection should be re-focused to another element (such as the input)
+      // upon focusing. Finally, since the actual label elements are swapped, it
+      // is not easy to maintain the user's label text selection.
+      pointer-events: none;
+      position: absolute;
+    }
+
+    .label.resting {
+      position: absolute;
+      top: var(--_top-space);
+    }
+
+    .label.floating {
+      font-size: var(--_label-text-populated-size);
+      line-height: var(--_label-text-populated-line-height);
+      transform-origin: top left;
+    }
+
+    .label.hidden {
+      opacity: 0;
+    }
+
+    .no-label .label {
+      display: none;
+    }
+
+    // Labels need start/end padding when there isn't start/end content so they
+    // don't sit on the edge of the field. We use a wrapper element around the
+    // labels so as not to affect the dimensions used in the label keyframes.
+    .label-wrapper {
+      inset: 0;
+      position: absolute;
+      // Don't let setting text-align on the field change the label's alignment.
+      // It should only impact content text.
+      text-align: initial;
+    }
+
+    :hover .label {
+      color: var(--_hover-label-text-color);
+    }
+
+    .focused .label {
+      color: var(--_focus-label-text-color);
+    }
+
+    .disabled .label {
+      color: var(--_disabled-label-text-color);
+    }
+
+    .disabled .label:not(.hidden) {
+      opacity: var(--_disabled-label-text-opacity);
+    }
+
+    .error .label {
+      color: var(--_error-label-text-color);
+    }
+
+    .error:hover .label {
+      color: var(--_error-hover-label-text-color);
+    }
+
+    .error.focused .label {
+      color: var(--_error-focus-label-text-color);
+    }
   }
 
-  .label-wrapper {
-    inset: 0;
-    // The resting label at 100% height can block pointer events to the content
-    // if it's very long and spans the full width of the field. Additionally,
-    // selecting the label's text doesn't present a good UX, since the user
-    // selection should be re-focused to another element (such as the input)
-    // upon focusing. Finally, since the actual label elements are swapped, it
-    // is not easy to maintain the user's label text selection.
-    pointer-events: none;
-    position: absolute;
-  }
-
-  .label.resting {
-    position: absolute;
-    top: var(--_top-space);
-  }
-
-  .label.floating {
-    font-size: var(--_label-text-populated-size);
-    line-height: var(--_label-text-populated-line-height);
-    transform-origin: top left;
-  }
-
-  .label.hidden {
-    opacity: 0;
-  }
-
-  .no-label .label {
-    display: none;
-  }
-
-  // Labels need start/end padding when there isn't start/end content so they
-  // don't sit on the edge of the field. We use a wrapper element around the
-  // labels so as not to affect the dimensions used in the label keyframes.
-  .label-wrapper {
-    inset: 0;
-    position: absolute;
-    // Don't let setting text-align on the field change the label's alignment.
-    // It should only impact content text.
-    text-align: initial;
-  }
-
-  :hover .label {
-    color: var(--_hover-label-text-color);
-  }
-
-  .focused .label {
-    color: var(--_focus-label-text-color);
-  }
-
-  .disabled .label {
-    color: var(--_disabled-label-text-color);
-  }
-
-  .disabled .label:not(.hidden) {
-    opacity: var(--_disabled-label-text-opacity);
-  }
-
-  .error .label {
-    color: var(--_error-label-text-color);
-  }
-
-  .error:hover .label {
-    color: var(--_error-hover-label-text-color);
-  }
-
-  .error.focused .label {
-    color: var(--_error-focus-label-text-color);
+  @layer hcm {
+    @media (forced-colors: active) {
+      .disabled .label:not(.hidden) {
+        color: GrayText;
+        opacity: 1;
+      }
+    }
   }
 }

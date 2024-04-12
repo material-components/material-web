@@ -18,7 +18,7 @@ export interface FormTestsOptions<T extends HTMLElement> {
    * @param root The root element to query from.
    * @return `root.querySelector('md-component')`
    */
-  queryControl(root: Element): T|null;
+  queryControl(root: Element): T | null;
   /**
    * Tests for `setFormValue`. Tests should render a form element, then
    * assert that the form's `FormData` matches the expected value (or lack of
@@ -52,7 +52,8 @@ export interface FormTestsOptions<T extends HTMLElement> {
  * @param options Options for creating tests, including use cases.
  */
 export function createFormTests<T extends HTMLElement>(
-    options: FormTestsOptions<T>) {
+  options: FormTestsOptions<T>,
+) {
   // Patch attachInternals in order to spy on `setFormValue()` for simulating
   // form state restoration.
   const originalAttachInternals = HTMLElement.prototype.attachInternals;
@@ -71,11 +72,11 @@ export function createFormTests<T extends HTMLElement>(
   }
 
   beforeAll(() => {
-    HTMLElement.prototype.attachInternals = function(this: HTMLElement) {
+    HTMLElement.prototype.attachInternals = function (this: HTMLElement) {
       const internals = originalAttachInternals.call(this);
       spyOn(internals, 'setFormValue').and.callThrough();
       (this as unknown as HTMLElementWithInternals)[INTERNALS] =
-          internals as SpiedElementInternals;
+        internals as SpiedElementInternals;
       return internals;
     };
   });
@@ -84,7 +85,7 @@ export function createFormTests<T extends HTMLElement>(
     HTMLElement.prototype.attachInternals = originalAttachInternals;
   });
 
-  let root: HTMLElement|undefined;
+  let root: HTMLElement | undefined;
 
   beforeEach(() => {
     root = document.createElement('div');
@@ -106,9 +107,9 @@ export function createFormTests<T extends HTMLElement>(
       throw new Error('Could not query rendered <form>');
     }
 
-    const control =
-        options.queryControl(root) as (T & ExpectedFormAssociatedElement) |
-        null;
+    const control = options.queryControl(root) as
+      | (T & ExpectedFormAssociatedElement)
+      | null;
     if (!control) {
       throw new Error('`queryControl` must return an element.');
     }
@@ -121,8 +122,8 @@ export function createFormTests<T extends HTMLElement>(
     const {control} = await setupTest();
 
     expect(control.constructor.formAssociated)
-        .withContext('control.constructor.formAssociated')
-        .toBeTrue();
+      .withContext('control.constructor.formAssociated')
+      .toBeTrue();
   });
 
   it('should return associated form for `form` property', async () => {
@@ -147,38 +148,34 @@ export function createFormTests<T extends HTMLElement>(
     form.appendChild(labelParent);
 
     expect(control.labels)
-        .withContext('control.labels')
-        .toBeInstanceOf(NodeList);
+      .withContext('control.labels')
+      .toBeInstanceOf(NodeList);
     const labels = Array.from(control.labels);
     expect(labels)
-        .withContext('should contain parent label element')
-        .toContain(labelParent);
+      .withContext('should contain parent label element')
+      .toContain(labelParent);
     expect(labels)
-        .withContext('should contain label element with for attribute')
-        .toContain(labelFor);
+      .withContext('should contain label element with for attribute')
+      .toContain(labelFor);
   });
 
-  it('should return empty NodeList for `labels` when not part of a <form>',
-     async () => {
-       const {form, control} = await setupTest();
-       form.parentElement?.append(control);
-       expect(control.labels)
-           .withContext('control.labels')
-           .toBeInstanceOf(NodeList);
-       expect(control.labels.length)
-           .withContext('control.labels.length')
-           .toBe(0);
-     });
+  it('should return empty NodeList for `labels` when not part of a <form>', async () => {
+    const {form, control} = await setupTest();
+    form.parentElement?.append(control);
+    expect(control.labels)
+      .withContext('control.labels')
+      .toBeInstanceOf(NodeList);
+    expect(control.labels.length).withContext('control.labels.length').toBe(0);
+  });
 
-  it('should have a name property that reflects to the name attribute',
-     async () => {
-       const {control} = await setupTest();
-       control.name = 'control';
-       await control?.updateComplete;
-       expect(control.getAttribute('name'))
-           .withContext('"name" reflected attribute')
-           .toBe('control');
-     });
+  it('should have a name property that reflects to the name attribute', async () => {
+    const {control} = await setupTest();
+    control.name = 'control';
+    await control?.updateComplete;
+    expect(control.getAttribute('name'))
+      .withContext('"name" reflected attribute')
+      .toBe('control');
+  });
 
   it('should not add a form value without a name', async () => {
     const {form, control} = await setupTest();
@@ -208,24 +205,26 @@ export function createFormTests<T extends HTMLElement>(
   for (const restoreTest of options.restoreTests) {
     it(`it should pass the "${restoreTest.name}" restore test`, async () => {
       const {form} = await setupTest(restoreTest.render());
-      const controls =
-          Array.from(form.elements) as ExpectedFormAssociatedElement[];
+      const controls = Array.from(
+        form.elements,
+      ) as ExpectedFormAssociatedElement[];
       for (const control of controls) {
         // Simulate restoring a new set of controls. For each control, we
         // grab its value and state from its internals. Then, we remove it from
         // the form, add a new control, and simulate restoring the state and
         // value for that control.
-        const [value, state] =
-            getInternals(control).setFormValue.calls.mostRecent()?.args ??
-            [null, null];
+        const [value, state] = getInternals(
+          control,
+        ).setFormValue.calls.mostRecent()?.args ?? [null, null];
 
-        const newControl = document.createElement(control.tagName) as
-            ExpectedFormAssociatedElement;
+        const newControl = document.createElement(
+          control.tagName,
+        ) as ExpectedFormAssociatedElement;
         // Include any children for controls like `<select>`
         newControl.append(...control.children);
         control.remove();
         form.appendChild(newControl);
-        let restoreState: FormState|null|FormData = state ?? value;
+        let restoreState: FormState | null | FormData = state ?? value;
         if (restoreState instanceof FormData) {
           restoreState = Array.from(restoreState.entries());
         }
@@ -249,15 +248,18 @@ export function createFormTests<T extends HTMLElement>(
  * checking in this file only.
  */
 interface ExpectedFormAssociatedElement extends HTMLElement {
-  new(): ExpectedFormAssociatedElement;
-  constructor: (new() => ExpectedFormAssociatedElement)&
-      {readonly formAssociated: true};
+  new (): ExpectedFormAssociatedElement;
+  constructor: (new () => ExpectedFormAssociatedElement) & {
+    readonly formAssociated: true;
+  };
   prototype: ExpectedFormAssociatedElement;
-  form: HTMLFormElement|null;
+  form: HTMLFormElement | null;
   labels: NodeList;
   name: string;
   formStateRestoreCallback(
-      state: FormState|null, reason: 'restore'|'autocomplete'): void;
+    state: FormState | null,
+    reason: 'restore' | 'autocomplete',
+  ): void;
   updateComplete?: Promise<void>;
 }
 
@@ -265,7 +267,7 @@ interface ExpectedFormAssociatedElement extends HTMLElement {
  * `formStateRestoreCallback` type for `state`. May be a string, `File`,
  * `FormData` entries, or null.
  */
-type FormState = FormDataEntryValue|Array<[string, FormDataEntryValue]>;
+type FormState = FormDataEntryValue | Array<[string, FormDataEntryValue]>;
 
 /**
  * A test for `FormData` values.

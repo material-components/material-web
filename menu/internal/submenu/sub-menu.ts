@@ -7,20 +7,34 @@
 import {html, isServer, LitElement} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
-import {createDeactivateItemsEvent, createRequestActivationEvent, deactivateActiveItem, getFirstActivatableItem} from '../../../list/internal/list-navigation-helpers.js';
+import {
+  createDeactivateItemsEvent,
+  createRequestActivationEvent,
+  deactivateActiveItem,
+  getFirstActivatableItem,
+} from '../../../list/internal/list-navigation-helpers.js';
 import {MenuItem} from '../controllers/menuItemController.js';
-import {CloseMenuEvent, CloseReason, createActivateTypeaheadEvent, createDeactivateTypeaheadEvent, KeydownCloseKey, Menu, NavigableKey, SelectionKey} from '../controllers/shared.js';
+import {
+  CloseMenuEvent,
+  CloseReason,
+  createActivateTypeaheadEvent,
+  createDeactivateTypeaheadEvent,
+  KeydownCloseKey,
+  Menu,
+  NavigableKey,
+  SelectionKey,
+} from '../controllers/shared.js';
 import {Corner} from '../menu.js';
 
 /**
- * @fires deactivate-items Requests the parent menu to deselect other items when
- * a submenu opens
- * @fires request-activation Requests the parent make the slotted item focusable
- * and focuses the item.
- * @fires deactivate-typeahead Requests the parent menu to deactivate the
- * typeahead functionality when a submenu opens
- * @fires activate-typeahead Requests the parent menu to activate the typeahead
- * functionality when a submenu closes
+ * @fires deactivate-items {Event} Requests the parent menu to deselect other
+ * items when a submenu opens. --bubbles --composed
+ * @fires request-activation {Event} Requests the parent to make the slotted item
+ * focusable and focus the item. --bubbles --composed
+ * @fires deactivate-typeahead {Event} Requests the parent menu to deactivate
+ * the typeahead functionality when a submenu opens. --bubbles --composed
+ * @fires activate-typeahead {Event} Requests the parent menu to activate the
+ * typeahead functionality when a submenu closes. --bubbles --composed
  */
 export class SubMenu extends LitElement {
   /**
@@ -76,18 +90,18 @@ export class SubMenu extends LitElement {
 
   override render() {
     return html`
-        <slot
-            name="item"
-            @click=${this.onClick}
-            @keydown=${this.onKeydown}
-            @slotchange=${this.onSlotchange}
-        >
-        </slot>
-        <slot name="menu"
-            @keydown=${this.onSubMenuKeydown}
-            @close-menu=${this.onCloseSubmenu}
-            @slotchange=${this.onSlotchange}>
-        </slot>
+      <slot
+        name="item"
+        @click=${this.onClick}
+        @keydown=${this.onKeydown}
+        @slotchange=${this.onSlotchange}>
+      </slot>
+      <slot
+        name="menu"
+        @keydown=${this.onSubMenuKeydown}
+        @close-menu=${this.onCloseSubmenu}
+        @slotchange=${this.onSlotchange}>
+      </slot>
     `;
   }
 
@@ -111,13 +125,27 @@ export class SubMenu extends LitElement {
     // means Additionally, this cannot happen in onCloseSubmenu because
     // `close-menu` may not be called via focusout of outside click and not
     // triggered by an item
-    menu.addEventListener('closed', () => {
-      this.item.ariaExpanded = 'false';
-      this.dispatchEvent(createActivateTypeaheadEvent());
-      this.dispatchEvent(createDeactivateItemsEvent());
-      // aria-hidden required so ChromeVox doesn't announce the closed menu
-      menu.ariaHidden = 'true';
-    }, {once: true});
+    menu.addEventListener(
+      'closed',
+      () => {
+        this.item.ariaExpanded = 'false';
+        this.dispatchEvent(createActivateTypeaheadEvent());
+        this.dispatchEvent(createDeactivateItemsEvent());
+        // aria-hidden required so ChromeVox doesn't announce the closed menu
+        menu.ariaHidden = 'true';
+      },
+      {once: true},
+    );
+
+    // Parent menu is `position: absolute` – this creates a new CSS relative
+    // positioning context (similar to doing `position: relative`), so the
+    // submenu's `<md-menu slot="submenu" positioning="document">` would be
+    // wrong even if we change `md-sub-menu` from `position: relative` to
+    // `position: static` because the submenu it would still be positioning
+    // itself relative to the parent menu.
+    if (menu.positioning === 'document') {
+      menu.positioning = 'absolute';
+    }
     menu.quick = true;
     // Submenus are in overflow when not fixed. Can remove once we have native
     // popup support
@@ -266,8 +294,9 @@ export class SubMenu extends LitElement {
 
     if (event.defaultPrevented) return;
 
-    const openedWithLR = shouldOpenSubmenu &&
-        (NavigableKey.LEFT === event.code || NavigableKey.RIGHT === event.code);
+    const openedWithLR =
+      shouldOpenSubmenu &&
+      (NavigableKey.LEFT === event.code || NavigableKey.RIGHT === event.code);
 
     if (event.code === SelectionKey.SPACE || openedWithLR) {
       // prevent space from scrolling and Left + Right from selecting previous /
@@ -306,8 +335,10 @@ export class SubMenu extends LitElement {
     this.dispatchEvent(createActivateTypeaheadEvent());
     // Escape should only close one menu not all of the menus unlike space or
     // click selection which should close all menus.
-    if (reason.kind === CloseReason.KEYDOWN &&
-        reason.key === KeydownCloseKey.ESCAPE) {
+    if (
+      reason.kind === CloseReason.KEYDOWN &&
+      reason.key === KeydownCloseKey.ESCAPE
+    ) {
       event.stopPropagation();
       this.item.dispatchEvent(createRequestActivationEvent());
       return;

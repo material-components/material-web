@@ -6,7 +6,7 @@
 
 /* Slimmed down version of Lit stories story-renderer without IE renderer */
 
-import {css, LitElement, PropertyValues,} from 'lit';
+import {css, LitElement, PropertyValues} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
 import {Story} from '../story.js';
@@ -24,7 +24,7 @@ export class StoryRenderer extends LitElement {
     `,
   ];
   @property({attribute: false}) story?: Story = undefined;
-  private storyRenderComplete: Promise<void>|undefined = undefined;
+  private storyRenderComplete: Promise<void> | undefined = undefined;
 
   override updated(propertiesChanged: PropertyValues) {
     super.updated(propertiesChanged);

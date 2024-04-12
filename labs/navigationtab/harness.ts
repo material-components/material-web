@@ -14,7 +14,8 @@ import {NavigationTab} from './internal/navigation-tab.js';
 export class NavigationTabHarness extends Harness<NavigationTab> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector('.md3-navigation-tab') as
-        HTMLElement;
+    return this.element.renderRoot.querySelector(
+      '.md3-navigation-tab',
+    ) as HTMLElement;
   }
 }

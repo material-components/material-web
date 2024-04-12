@@ -28,11 +28,13 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-icon-button-values();
+  $tokens: tokens.md-comp-icon-button-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-icon-button-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     // These custom properties are not used, so set defaults so token tests pass

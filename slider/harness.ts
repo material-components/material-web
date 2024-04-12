@@ -14,19 +14,21 @@ import {Slider} from './internal/slider.js';
 export class SliderHarness extends Harness<Slider> {
   override async getInteractiveElement() {
     await this.element.updateComplete;
-    return this.element.renderRoot.querySelector<HTMLInputElement>('input.end')!;
+    return this.element.renderRoot.querySelector<HTMLInputElement>(
+      'input.end',
+    )!;
   }
 
   getInputs() {
     return [
       this.element.renderRoot.querySelector<HTMLInputElement>('input.end')!,
-      this.element.renderRoot.querySelector<HTMLInputElement>('input.start')!
+      this.element.renderRoot.querySelector<HTMLInputElement>('input.start')!,
     ];
   }
   getHandles() {
     return [
       this.element.renderRoot.querySelector('.handle.end')!,
-      this.element.renderRoot.querySelector('.handle.start')!
+      this.element.renderRoot.querySelector('.handle.start')!,
     ];
   }
 
@@ -36,7 +38,7 @@ export class SliderHarness extends Harness<Slider> {
 
   isLabelShowing() {
     const labels = this.getLabels();
-    return labels.some(l => {
+    return labels.some((l) => {
       // remove transition to avoid the need to wait for it.
       (l as HTMLElement).style.setProperty('transition', 'none');
       const {width} = l.getBoundingClientRect();
@@ -47,7 +49,7 @@ export class SliderHarness extends Harness<Slider> {
 
   async simulateValueInteraction(value: number, el?: HTMLInputElement) {
     if (!el) {
-      el = (this.getInputs())[0];
+      el = this.getInputs()[0];
     }
     el.focus();
     el.dispatchEvent(new Event('pointerdown', {bubbles: true, composed: true}));
@@ -65,16 +67,20 @@ export class SliderHarness extends Harness<Slider> {
   }
 
   protected override simulateStartHover(
-      element: HTMLElement, init: PointerEventInit = {}) {
+    element: HTMLElement,
+    init: PointerEventInit = {},
+  ) {
     const i = this.getInputs().indexOf(element as HTMLInputElement);
-    if ((i >= 0) || (element === this.element)) {
+    if (i >= 0 || element === this.element) {
       init = this.positionEventAtHandle(init, i === 1);
     }
     super.simulateStartHover(element, init);
   }
 
   protected override simulateMousePress(
-      element: HTMLElement, init: PointerEventInit = {}) {
+    element: HTMLElement,
+    init: PointerEventInit = {},
+  ) {
     super.simulateMousePress(element, init);
     // advance beyond RAF, which is used by the element's pointerDown handler.
     jasmine.clock().tick(1);

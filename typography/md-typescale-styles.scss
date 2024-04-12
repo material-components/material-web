@@ -1,0 +1,11 @@
+//
+// Copyright 2024 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use '../tokens';
+@use './typescale';
+// go/keep-sorted end
+
+@include typescale.styles(tokens.md-sys-typescale-values());

@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {ListItemEl as ListItem} from './internal/listitem/list-item.js';
-import {styles} from './internal/listitem/list-item-styles.css.js';
+import {styles} from './internal/listitem/list-item-styles.js';
 
-export {ListItemType} from './internal/listitem/list-item.js';
+export {type ListItemType} from './internal/listitem/list-item.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -37,24 +38,16 @@ declare global {
  *
  * Acceptable slot child variants are:
  *
- * - `video[slot=start-video]`
- * - `video[slot=start-video-large]`
- * - `img,span[slot=start-avatar]`
- * - `img[slot=start-image]`
- * - `md-icon[slot=start-icon]`
- * - `svg[slot=start-icon]`
- * - `img[slot=start-icon]`
- * - `md-icon[slot=end-icon]`
- * - `svg[slot=end-icon]`
- * - `img[slot=end-icon]`
+ * - `img[slot=end]`
+ * - `img[slot=start]`
  *
  *  @example
  * ```html
  * <md-list-item
  *     headline="User Name"
  *     supportingText="user@name.com">
- *   <md-icon slot="start-icon">account_circle</md-icon>
- *   <md-icon slot="end-icon">check</md-icon>
+ *   <md-icon slot="start">account_circle</md-icon>
+ *   <md-icon slot="end">check</md-icon>
  * </md-list-item>
  * ```
  *
@@ -65,5 +58,5 @@ declare global {
  */
 @customElement('md-list-item')
 export class MdListItem extends ListItem {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

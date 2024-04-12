@@ -28,7 +28,8 @@ export class MenuHarness extends Harness<Menu> {
   /** @return ListItem harnesses for the menu's items. */
   getItems() {
     return this.element.items.map(
-        (item) => new MenuItemHarness(item as typeof item&LitElement));
+      (item) => new MenuItemHarness(item as typeof item & LitElement),
+    );
   }
 
   async show() {
@@ -38,9 +39,13 @@ export class MenuHarness extends Harness<Menu> {
     }
 
     const opened = new Promise((resolve) => {
-      menu.addEventListener('opened', () => {
-        resolve(true);
-      }, {once: true});
+      menu.addEventListener(
+        'opened',
+        () => {
+          resolve(true);
+        },
+        {once: true},
+      );
     });
 
     menu.show();

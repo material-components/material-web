@@ -14,16 +14,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-outlined-select-supported-tokens,
-    (
-      'text-field-container-shape-start-start',
-      'text-field-container-shape-start-end',
-      'text-field-container-shape-end-end',
-      'text-field-container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-outlined-select-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -36,30 +27,16 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-select-values();
+  $tokens: tokens.md-comp-outlined-select-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'text-field-container-shape');
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-outlined-select-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
-
-    // Support logical shape properties
-    --_text-field-container-shape-start-start: var(
-      --md-outlined-select-text-field-container-shape-start-start,
-      var(--_text-field-container-shape)
-    );
-    --_text-field-container-shape-start-end: var(
-      --md-outlined-select-text-field-container-shape-start-end,
-      var(--_text-field-container-shape)
-    );
-    --_text-field-container-shape-end-end: var(
-      --md-outlined-select-text-field-container-shape-end-end,
-      var(--_text-field-container-shape)
-    );
-    --_text-field-container-shape-end-start: var(
-      --md-outlined-select-text-field-container-shape-end-start,
-      var(--_text-field-container-shape)
-    );
 
     @include outlined-field.theme(
       (

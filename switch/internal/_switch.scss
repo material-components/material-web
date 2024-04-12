@@ -16,20 +16,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-switch-supported-tokens,
-    (
-      'handle-shape-start-start',
-      'handle-shape-start-end',
-      'handle-shape-end-end',
-      'handle-shape-end-start',
-      'track-shape-start-start',
-      'track-shape-start-end',
-      'track-shape-end-end',
-      'track-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-switch-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -42,49 +29,13 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-switch-values();
+  $tokens: tokens.md-comp-switch-values(
+    $exclude-custom-properties: false,
+  );
 
   @layer styles, hcm;
   @layer styles {
     :host {
-      @each $token, $value in $tokens {
-        --_#{$token}: var(--md-switch-#{$token}, #{$value});
-      }
-
-      // Support logical shape properties
-      --_handle-shape-start-start: var(
-        --md-switch-handle-shape-start-start,
-        var(--_handle-shape)
-      );
-      --_handle-shape-start-end: var(
-        --md-switch-handle-shape-start-end,
-        var(--_handle-shape)
-      );
-      --_handle-shape-end-end: var(
-        --md-switch-handle-shape-end-end,
-        var(--_handle-shape)
-      );
-      --_handle-shape-end-start: var(
-        --md-switch-handle-shape-end-start,
-        var(--_handle-shape)
-      );
-      --_track-shape-start-start: var(
-        --md-switch-track-shape-start-start,
-        var(--_track-shape)
-      );
-      --_track-shape-start-end: var(
-        --md-switch-track-shape-start-end,
-        var(--_track-shape)
-      );
-      --_track-shape-end-end: var(
-        --md-switch-track-shape-end-end,
-        var(--_track-shape)
-      );
-      --_track-shape-end-start: var(
-        --md-switch-track-shape-end-start,
-        var(--_track-shape)
-      );
-
       display: inline-flex;
       outline: none;
       vertical-align: top;
@@ -97,16 +48,16 @@
     }
 
     :host([touch-target='wrapper']) {
-      margin: max(0px, (48px - var(--_track-height)) / 2) 0px;
+      margin: max(0px, (48px - map.get($tokens, 'track-height')) / 2) 0px;
     }
 
     md-focus-ring {
       @include focus-ring.theme(
         (
-          'shape-start-start': var(--_track-shape-start-start),
-          'shape-start-end': var(--_track-shape-start-end),
-          'shape-end-end': var(--_track-shape-end-end),
-          'shape-end-start': var(--_track-shape-end-start),
+          'shape-start-start': map.get($tokens, 'track-shape-start-start'),
+          'shape-start-end': map.get($tokens, 'track-shape-start-end'),
+          'shape-end-end': map.get($tokens, 'track-shape-end-end'),
+          'shape-end-start': map.get($tokens, 'track-shape-end-start'),
         )
       );
     }
@@ -116,14 +67,14 @@
       display: inline-flex;
       flex-shrink: 0; // Stop from collapsing in flex containers
       position: relative;
-      width: var(--_track-width);
-      height: var(--_track-height);
+      width: map.get($tokens, 'track-width');
+      height: map.get($tokens, 'track-height');
 
       // Track shape
-      border-start-start-radius: var(--_track-shape-start-start);
-      border-start-end-radius: var(--_track-shape-start-end);
-      border-end-end-radius: var(--_track-shape-end-end);
-      border-end-start-radius: var(--_track-shape-end-start);
+      border-start-start-radius: map.get($tokens, 'track-shape-start-start');
+      border-start-end-radius: map.get($tokens, 'track-shape-start-end');
+      border-end-end-radius: map.get($tokens, 'track-shape-end-end');
+      border-end-start-radius: map.get($tokens, 'track-shape-end-start');
     }
 
     // Input is also touch target
@@ -143,7 +94,7 @@
     }
   }
 
-  @include track.styles();
-  @include handle.styles();
-  @include icon.styles();
+  @include track.styles($tokens);
+  @include handle.styles($tokens);
+  @include icon.styles($tokens);
 }

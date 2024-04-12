@@ -4,14 +4,16 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-outlined-segmented-button';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -40,6 +42,10 @@ $supported-tokens: (
   'selected-pressed-label-text-color',
   'selected-pressed-state-layer-color',
   'shape',
+  'shape-end-end',
+  'shape-end-start',
+  'shape-start-end',
+  'shape-start-start',
   'unselected-focus-icon-color',
   'unselected-focus-label-text-color',
   'unselected-hover-icon-color',
@@ -74,11 +80,22 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-outlined-segmented-button.values($deps, $exclude-hardcoded-values),
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-outlined-segmented-button.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+
+  $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'shape');
+  $tokens: validate.values(
+    $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // Remove "with-*" prefixes (b/273534858)
       'with-icon-icon-size': 'icon-size',
@@ -86,6 +103,23 @@ $_default: (
       'unselected-with-icon-icon-color': 'unselected-icon-color'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-outlined-segmented-button-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-outlined-segmented-button-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

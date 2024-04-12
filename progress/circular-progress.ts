@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {CircularProgress} from './internal/circular-progress.js';
-import {styles} from './internal/circular-progress-styles.css.js';
+import {styles} from './internal/circular-progress-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -24,8 +25,11 @@ declare global {
  * Progress indicators inform users about the status of ongoing processes.
  * - Determinate indicators display how long a process will take.
  * - Indeterminate indicators express an unspecified amount of wait time.
+ *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-circular-progress')
 export class MdCircularProgress extends CircularProgress {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

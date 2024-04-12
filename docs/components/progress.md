@@ -13,7 +13,7 @@ ssrOnly: true
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-08-23' }
+freshness: { owner: 'lizmitchell' reviewed: '2023-12-18' }
 tag: 'docType:reference'
 *-->
 
@@ -72,7 +72,7 @@ Progress indicators may be determinate to show progress, or indeterminate for an
 unspecified amount of progress.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -112,7 +112,7 @@ Indeterminate progress indicators may cycle between four colors (primary,
 primary container, tertiary, and tertiary container by default).
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -157,7 +157,7 @@ Circular progress indicators display progress by animating along an invisible
 circular track in a clockwise direction.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -190,7 +190,7 @@ Linear progress indicators display progress by animating along the length of a
 fixed, visible track.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -222,7 +222,7 @@ indeterminate progress. The progress bar and track represent known progress
 while the buffer dots represent unknown progress.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
@@ -261,7 +261,7 @@ Token                                           | Default value
 > Note: the active indicator width must be specified as a unit-less percentage
 > of the size.
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-circular-progress-indicator.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-circular-progress.scss)
     <!-- {.external} -->
 
 ### Circular progress example
@@ -316,11 +316,11 @@ Token                                          | Default value
 ---------------------------------------------- | -------------
 `--md-linear-progress-track-color`             | `--md-sys-color-surface-container-highest`
 `--md-linear-progress-track-height`            | `4px`
-`--md-linear-progress-track-shape`             | `0px`
+`--md-linear-progress-track-shape`             | `--md-sys-shape-corner-none`
 `--md-linear-progress-active-indicator-color`  | `--md-sys-color-primary`
 `--md-linear-progress-active-indicator-height` | `4px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-linear-progress-indicator.scss)
+*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-linear-progress.scss)
     <!-- {.external} -->
 
 ### Linear progress example
@@ -388,7 +388,7 @@ Token                                          | Default value
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`buffer` | `buffer` | `number` | `1` | Buffer amount to display, a fraction between 0 and 1.
+`buffer` | `buffer` | `number` | `1` | Buffer amount to display, a fraction between 0 and `max`.
 `value` | `value` | `number` | `0` | Progress to display, a fraction between 0 and `max`.
 `max` | `max` | `number` | `1` | Maximum progress to display, defaults to 1.
 `indeterminate` | `indeterminate` | `boolean` | `false` | Whether or not to display indeterminate progress, which gives no indication to how long an activity will take.

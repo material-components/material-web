@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use '../../../tokens';
 // go/keep-sorted end
 
@@ -25,29 +28,15 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-segmented-button-values();
+  $tokens: tokens.md-comp-outlined-segmented-button-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'shape');
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-outlined-segmented-button-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
-
-    // Support logical shape properties
-    --_shape-start-start: var(
-      --md-outlined-segmented-button-shape-start-start,
-      var(--_shape)
-    );
-    --_shape-start-end: var(
-      --md-outlined-segmented-button-shape-start-end,
-      var(--_shape)
-    );
-    --_shape-end-end: var(
-      --md-outlined-segmented-button-shape-end-end,
-      var(--_shape)
-    );
-    --_shape-end-start: var(
-      --md-outlined-segmented-button-shape-end-start,
-      var(--_shape)
-    );
   }
 }

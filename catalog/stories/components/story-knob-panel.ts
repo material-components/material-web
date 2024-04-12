@@ -6,9 +6,9 @@
 
 /* Fork of Lit stories story-knob-renderer with m3 components and theming */
 
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/icon/icon.js';
 import '@material/web/elevation/elevation.js';
+import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
 
 import {css, html, LitElement, PropertyValues} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
@@ -29,13 +29,13 @@ export const DEFAULT_DIMENSIONS = {
  */
 @customElement('story-knob-panel')
 export class StoryKnobPanel extends LitElement {
-  @query('.dragBar') dragBar!: HTMLElement|null;
+  @query('.dragBar') dragBar!: HTMLElement | null;
 
   @property({type: Boolean}) showCloseIcon = true;
   @property({type: Boolean, reflect: true}) open = false;
   @property({type: Boolean, reflect: true}) override draggable = false;
   @property({type: Boolean}) hideDragIcon = false;
-  @property({type: String, reflect: true}) type: 'modal'|'inline' = 'inline';
+  @property({type: String, reflect: true}) type: 'modal' | 'inline' = 'inline';
   private isDragging = false;
   private previousX = 0;
   private currentX = 0;
@@ -84,8 +84,7 @@ export class StoryKnobPanel extends LitElement {
           class="dragBar"
           @pointerdown=${this.onDragStart}
           @pointermove=${this.onDrag}
-          @pointerup=${this.onDragEnd}
-        >
+          @pointerup=${this.onDragEnd}>
           <md-icon>drag_handle</md-icon>
         </div>
       `;
@@ -99,8 +98,7 @@ export class StoryKnobPanel extends LitElement {
         <md-icon-button
           class="dragIconButton"
           aria-label=${iconLabel}
-          @click=${this.onDragIconClick}
-        >
+          @click=${this.onDragIconClick}>
           <md-icon>${iconSvg}</md-icon>
         </md-icon-button>
       `;
@@ -127,11 +125,13 @@ export class StoryKnobPanel extends LitElement {
     super.updated(changed);
 
     if (changed.has('open')) {
-      this.dispatchEvent(new CustomEvent('open-changed', {
-        detail: {
-          open: this.open,
-        },
-      }));
+      this.dispatchEvent(
+        new CustomEvent('open-changed', {
+          detail: {
+            open: this.open,
+          },
+        }),
+      );
     }
   }
 
@@ -181,11 +181,12 @@ export class StoryKnobPanel extends LitElement {
     }
 
     const rightBound = DEFAULT_DIMENSIONS.RIGHT_OFFSET;
-    const leftBound = DEFAULT_DIMENSIONS.RIGHT_OFFSET + this.containerWidth -
-        window.innerWidth;
+    const leftBound =
+      DEFAULT_DIMENSIONS.RIGHT_OFFSET + this.containerWidth - window.innerWidth;
     const topBound = -DEFAULT_DIMENSIONS.TOP_OFFSET;
-    const bottomBound = window.innerHeight -
-        (DEFAULT_DIMENSIONS.DRAG_BAR_HEIGHT + DEFAULT_DIMENSIONS.TOP_OFFSET);
+    const bottomBound =
+      window.innerHeight -
+      (DEFAULT_DIMENSIONS.DRAG_BAR_HEIGHT + DEFAULT_DIMENSIONS.TOP_OFFSET);
 
     // do not allow drag outside right bound
     if (x > rightBound) {

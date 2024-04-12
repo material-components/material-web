@@ -10,7 +10,7 @@ order: 3
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-09-06' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-28' }
 tag: 'docType:howTo'
 *-->
 
@@ -69,7 +69,41 @@ Plain    | `--md-ref-typeface-plain`
 A
 [typescale](https://m3.material.io/styles/typography/type-scale-tokens)<!-- {.external} -->
 is a collection of font styles: `font-family`, `font-size`, `line-height`, and
-`font-weight`.
+`font-weight`. They are organized into roles that describe their purpose.
+
+Material's
+[applying type guidelines](https://m3.material.io/styles/typography/applying-type)<!-- {.external} -->
+explains when to use each typescale role.
+
+### Classes
+
+<!-- go/md-typescale -->
+
+Typescales can be applied to an element using the classes from the typescale
+stylesheet.
+
+Class names follow the naming convention `.md-typescale-<scale>-<size>`.
+
+```ts
+import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+// `typescaleStyles.styleSheet` is a `CSSStyleSheet` that can be added to a
+// document or shadow root's `adoptedStyleSheets` to use the `.md-typescale-*`
+// classes.
+document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+
+// `typescaleStyles` can also be added to a `LitElement` component's styles.
+class App extends LitElement {
+  static styles = [typescaleStyles, css`...`];
+
+  render() {
+    return html`
+      <h1 class="md-typescale-display-large">Large display</h1>
+      <p class="md-typescale-body-medium">Body text</p>
+    `;
+  }
+}
+```
 
 ### Tokens
 

@@ -4,47 +4,58 @@
 //
 
 @mixin styles() {
-  .supporting-text {
-    color: var(--_supporting-text-color);
-    display: flex;
-    font-family: var(--_supporting-text-font);
-    font-size: var(--_supporting-text-size);
-    line-height: var(--_supporting-text-line-height);
-    font-weight: var(--_supporting-text-weight);
-    gap: 16px;
-    justify-content: space-between;
-    padding-inline-start: var(--_supporting-text-leading-space);
-    padding-inline-end: var(--_supporting-text-trailing-space);
-    padding-top: var(--_supporting-text-top-space);
+  @layer styles {
+    .supporting-text {
+      color: var(--_supporting-text-color);
+      display: flex;
+      font-family: var(--_supporting-text-font);
+      font-size: var(--_supporting-text-size);
+      line-height: var(--_supporting-text-line-height);
+      font-weight: var(--_supporting-text-weight);
+      gap: 16px;
+      justify-content: space-between;
+      padding-inline-start: var(--_supporting-text-leading-space);
+      padding-inline-end: var(--_supporting-text-trailing-space);
+      padding-top: var(--_supporting-text-top-space);
+    }
+
+    // Don't shrink the counter when the supporting text is long and wraps
+    .supporting-text :nth-child(2) {
+      flex-shrink: 0;
+    }
+
+    :hover .supporting-text {
+      color: var(--_hover-supporting-text-color);
+    }
+
+    .focus .supporting-text {
+      color: var(--_focus-supporting-text-color);
+    }
+
+    .disabled .supporting-text {
+      color: var(--_disabled-supporting-text-color);
+      opacity: var(--_disabled-supporting-text-opacity);
+    }
+
+    .error .supporting-text {
+      color: var(--_error-supporting-text-color);
+    }
+
+    .error:hover .supporting-text {
+      color: var(--_error-hover-supporting-text-color);
+    }
+
+    .error.focus .supporting-text {
+      color: var(--_error-focus-supporting-text-color);
+    }
   }
 
-  // Don't shrink the counter when the supporting text is long and wraps
-  .supporting-text :nth-child(2) {
-    flex-shrink: 0;
-  }
-
-  :hover .supporting-text {
-    color: var(--_hover-supporting-text-color);
-  }
-
-  .focus .supporting-text {
-    color: var(--_focus-supporting-text-color);
-  }
-
-  .disabled .supporting-text {
-    color: var(--_disabled-supporting-text-color);
-    opacity: var(--_disabled-supporting-text-opacity);
-  }
-
-  .error .supporting-text {
-    color: var(--_error-supporting-text-color);
-  }
-
-  .error:hover .supporting-text {
-    color: var(--_error-hover-supporting-text-color);
-  }
-
-  .error.focus .supporting-text {
-    color: var(--_error-focus-supporting-text-color);
+  @layer hcm {
+    @media (forced-colors: active) {
+      .disabled .supporting-text {
+        color: GrayText;
+        opacity: 1;
+      }
+    }
   }
 }

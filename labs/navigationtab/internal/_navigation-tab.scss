@@ -76,6 +76,8 @@ $animation-duration: 100ms;
     font-size: var(--_label-text-size);
     line-height: var(--_label-text-line-height);
     font-weight: var(--_label-text-weight);
+    // Override the user-agent text-transform: none of <button>
+    text-transform: inherit;
 
     // Firefox draws a dotted border around focused buttons unless specifically overridden.
     &::-moz-focus-inner {

@@ -50,7 +50,7 @@ export interface MenuSelf {
   /**
    * The element the menu should anchor to.
    */
-  anchorElement: (HTMLElement&Partial<SurfacePositionTarget>)|null;
+  anchorElement: (HTMLElement & Partial<SurfacePositionTarget>) | null;
   /**
    * What the menu should focus by default when opened.
    */
@@ -59,6 +59,14 @@ export interface MenuSelf {
    * An array of items managed by the list.
    */
   items: MenuItem[];
+  /**
+   * The positioning strategy of the menu.
+   *
+   * - `absolute` is relative to the anchor element.
+   * - `fixed` is relative to the window
+   * - `document` is relative to the document
+   */
+  positioning?: 'absolute' | 'fixed' | 'document';
   /**
    * Opens the menu.
    */
@@ -73,7 +81,7 @@ export interface MenuSelf {
  * The interface needed for a Menu to work with other md-menu elements. Useful
  * for keeping your types safe when wrapping `md-menu`.
  */
-export type Menu = MenuSelf&LitElement;
+export type Menu = MenuSelf & LitElement;
 
 /**
  * The reason the `close-menu` event was dispatched.
@@ -103,18 +111,23 @@ export interface KeydownReason extends Reason {
 /**
  * The default menu closing reasons for the material md-menu package.
  */
-export type DefaultReasons = ClickReason|KeydownReason;
+export type DefaultReasons = ClickReason | KeydownReason;
 
 /**
  * Creates an event that closes any parent menus.
  */
 export function createCloseMenuEvent<T extends Reason = DefaultReasons>(
-    initiator: MenuItem, reason: T) {
-  return new CustomEvent<
-      {initiator: MenuItem, itemPath: MenuItem[], reason: T}>('close-menu', {
+  initiator: MenuItem,
+  reason: T,
+) {
+  return new CustomEvent<{
+    initiator: MenuItem;
+    itemPath: MenuItem[];
+    reason: T;
+  }>('close-menu', {
     bubbles: true,
     composed: true,
-    detail: {initiator, reason, itemPath: [initiator]}
+    detail: {initiator, reason, itemPath: [initiator]},
   });
 }
 
@@ -143,8 +156,9 @@ export const createDefaultCloseMenuEvent = createCloseMenuEvent<DefaultReasons>;
  * The type of the default close menu event used by md-menu.
  */
 // tslint:disable-next-line
-export type CloseMenuEvent<T extends Reason = DefaultReasons> =
-    ReturnType<typeof createCloseMenuEvent<T>>;
+export type CloseMenuEvent<T extends Reason = DefaultReasons> = ReturnType<
+  typeof createCloseMenuEvent<T>
+>;
 
 /**
  * Creates an event that requests the given item be selected.
@@ -157,8 +171,9 @@ export function createDeactivateTypeaheadEvent() {
  * The type of the event that requests the typeahead functionality of containing
  * menu be deactivated.
  */
-export type DeactivateTypeaheadEvent =
-    ReturnType<typeof createDeactivateTypeaheadEvent>;
+export type DeactivateTypeaheadEvent = ReturnType<
+  typeof createDeactivateTypeaheadEvent
+>;
 
 /**
  * Creates an event that requests the typeahead functionality of containing menu
@@ -172,8 +187,9 @@ export function createActivateTypeaheadEvent() {
  * The type of the event that requests the typeahead functionality of containing
  * menu be activated.
  */
-export type ActivateTypeaheadEvent =
-    ReturnType<typeof createActivateTypeaheadEvent>;
+export type ActivateTypeaheadEvent = ReturnType<
+  typeof createActivateTypeaheadEvent
+>;
 
 /**
  * Keys that are used to navigate menus.
@@ -224,9 +240,10 @@ type Values<T> = T[keyof T];
  * @return Whether or not the key code is in the predetermined list to close the
  * menu.
  */
-export function isClosableKey(code: string):
-    code is Values<typeof KeydownCloseKey> {
-  return Object.values(KeydownCloseKey).some(value => (value === code));
+export function isClosableKey(
+  code: string,
+): code is Values<typeof KeydownCloseKey> {
+  return Object.values(KeydownCloseKey).some((value) => value === code);
 }
 
 /**
@@ -237,9 +254,10 @@ export function isClosableKey(code: string):
  * @return Whether or not the key code is in the predetermined list to select a
  * menu item.
  */
-export function isSelectableKey(code: string):
-    code is Values<typeof SelectionKey> {
-  return Object.values(SelectionKey).some(value => (value === code));
+export function isSelectableKey(
+  code: string,
+): code is Values<typeof SelectionKey> {
+  return Object.values(SelectionKey).some((value) => value === code);
 }
 
 /**
@@ -252,7 +270,9 @@ export function isSelectableKey(code: string):
  * composed subtree
  */
 export function isElementInSubtree(
-    target: EventTarget, container: EventTarget) {
+  target: EventTarget,
+  container: EventTarget,
+) {
   // Dispatch a composed, bubbling event to check its path to see if the
   // newly-focused element is contained in container's subtree
   const focusEv = new Event('md-contains', {bubbles: true, composed: true});
@@ -277,10 +297,10 @@ export const FocusState = {
   NONE: 'none',
   LIST_ROOT: 'list-root',
   FIRST_ITEM: 'first-item',
-  LAST_ITEM: 'last-item'
+  LAST_ITEM: 'last-item',
 } as const;
 
 /**
  * Element to focus on when menu is first opened.
  */
-export type FocusState = typeof FocusState[keyof typeof FocusState];
+export type FocusState = (typeof FocusState)[keyof typeof FocusState];

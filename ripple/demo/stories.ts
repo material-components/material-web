@@ -80,7 +80,7 @@ const ripples: MaterialStoryInit<StoryKnobs> = {
         </div>
       </div>
     `;
-  }
+  },
 };
 
 /** Ripple stories. */

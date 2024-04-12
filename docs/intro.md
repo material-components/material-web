@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
-name: Intoduction
-title: Intoduction
+name: Introduction
+title: Introduction
 order: 1
 -----><!-- catalog-only-end -->
 
@@ -10,7 +10,7 @@ order: 1
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-08-10' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-27' }
 *-->
 
 Material web, also known as Material Web Components or MWC, is a library of

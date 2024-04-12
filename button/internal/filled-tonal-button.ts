@@ -14,7 +14,7 @@ import {Button} from './button.js';
  * A filled tonal button component.
  */
 export class FilledTonalButton extends Button {
-  protected override renderElevation() {
-    return html`<md-elevation></md-elevation>`;
+  protected override renderElevationOrOutline() {
+    return html`<md-elevation part="elevation"></md-elevation>`;
   }
 }

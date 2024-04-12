@@ -30,15 +30,17 @@ export class SelectHarness extends Harness<Select> {
 
   override async startHover() {
     const field = await this.getField();
-    const element =
-        await (new SelectFieldHardness(field)).getInteractiveElement();
+    const element = await new SelectFieldHardness(
+      field,
+    ).getInteractiveElement();
     this.simulateStartHover(element);
   }
 
   /** @return ListItem harnesses for the menu's items. */
   getItems() {
     return this.element.options.map(
-        (item) => new SelectOptionHarness(item as typeof item&LitElement));
+      (item) => new SelectOptionHarness(item as typeof item & LitElement),
+    );
   }
 
   async click() {
@@ -50,9 +52,20 @@ export class SelectHarness extends Harness<Select> {
     const menu = this.element.renderRoot.querySelector('md-menu')!;
     if (!menu.open) {
       console.warn(
-          'Internal menu is not open. Try calling SelectHarness.prototype.click()');
+        'Internal menu is not open. Try calling SelectHarness.prototype.click()',
+      );
     }
     (await this.getItems()[index].getInteractiveElement()).click();
+  }
+
+  get isOpen() {
+    const menu = this.element.renderRoot.querySelector('md-menu')!;
+    if (!menu) {
+      throw new Error(
+        'Internal md-menu is not found. md-select may not have finished rendering when isOpen has been checked',
+      );
+    }
+    return menu.open;
   }
 }
 

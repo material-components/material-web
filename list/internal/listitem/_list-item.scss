@@ -29,14 +29,14 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-list-item-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-list-item-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-list-item-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     border-radius: map.get($tokens, 'container-shape');
     display: flex;
+    -webkit-tap-highlight-color: transparent;
 
     @include ripple.theme(
       (
@@ -84,6 +84,7 @@
     outline: none;
     // hide android tap color since we have ripple
     -webkit-tap-highlight-color: transparent;
+    width: 100%;
   }
 
   .list-item.interactive {

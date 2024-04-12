@@ -8,18 +8,23 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-outlined-select';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
   'text-field-container-shape',
+  'text-field-container-shape-end-end',
+  'text-field-container-shape-end-start',
+  'text-field-container-shape-start-end',
+  'text-field-container-shape-start-start',
   'text-field-disabled-input-text-color',
   'text-field-disabled-input-text-opacity',
   'text-field-disabled-label-text-color',
@@ -136,11 +141,22 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-outlined-select.values($deps, $exclude-hardcoded-values),
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-outlined-select.values($deps, $exclude-hardcoded-values);
+  $new-tokens: shape.get-new-logical-shape-tokens(
+    $tokens,
+    'text-field-container-shape'
+  );
+
+  $tokens: validate.values(
+    $tokens,
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens
   );
 
   $tokens: map.merge(
@@ -150,6 +166,23 @@ $_default: (
       'text-field-focus-outline-width': if($exclude-hardcoded-values, null, 3px)
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'text-field-container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-outlined-select-text-field-container-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-outlined-select-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

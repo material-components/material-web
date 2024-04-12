@@ -55,13 +55,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
         <md-focus-ring ?inward=${inward}></md-focus-ring>
       </button>
     `;
-  }
+  },
 };
 
 const multiAction: MaterialStoryInit<StoryKnobs> = {
   name: 'Multi-action components',
   styles: css`
-    [role="list"] {
+    [role='list'] {
       align-items: center;
       appearance: none;
       background: var(--md-sys-color-surface);
@@ -76,11 +76,11 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
       position: relative;
     }
 
-    [role="list"]:focus-within {
+    [role='list']:focus-within {
       background: var(--md-sys-color-surface-variant);
     }
 
-    [role="listitem"] {
+    [role='listitem'] {
       display: flex;
       flex: 1;
     }
@@ -105,7 +105,7 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
       --md-focus-ring-shape: 32px;
     }
 
-    [role="list"]::before,
+    [role='list']::before,
     #secondary::before {
       border: 1px solid var(--md-sys-color-outline);
       border-radius: inherit;
@@ -120,20 +120,24 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
         <md-focus-ring for="primary" ?inward=${inward}></md-focus-ring>
 
         <div role="listitem">
-          <button id="primary" aria-label="The primary action for a multi-action component">
+          <button
+            id="primary"
+            aria-label="The primary action for a multi-action component">
             Action
           </button>
         </div>
 
         <div role="listitem">
-          <button id="secondary" aria-label="The secondary action for a multi-action component">
+          <button
+            id="secondary"
+            aria-label="The secondary action for a multi-action component">
             X
             <md-focus-ring ?inward=${inward}></md-focus-ring>
           </button>
         </div>
       </div>
     `;
-  }
+  },
 };
 
 /** Focus ring stories. */

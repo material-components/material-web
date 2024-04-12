@@ -1,0 +1,16 @@
+name: ✨ Feature Request
+description: Request a feature to be added to Material Web Components.
+
+body:
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Description
+      description: |
+        Please describe the feature request in as much detail as possible. Include why the feature is needed, and example code or screenshots to help describe it.
+      placeholder: |
+        Add support for '...'.
+        This is needed to '...'.
+        Requirements, code examples, and screenshots that help describe the feature.

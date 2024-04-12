@@ -29,6 +29,8 @@
     display: flex;
     height: 100%;
     overflow: inherit;
+    scroll-behavior: inherit;
+    scrollbar-width: inherit;
     justify-content: space-between;
     width: 100%;
   }

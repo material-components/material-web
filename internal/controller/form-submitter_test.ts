@@ -9,10 +9,9 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {Environment} from '../../testing/environment.js';
 import {Harness} from '../../testing/harness.js';
-
-import {internals} from './element-internals.js';
 import {FormSubmitterType, setupFormSubmitter} from './form-submitter.js';
 
 declare global {
@@ -22,7 +21,7 @@ declare global {
 }
 
 @customElement('test-form-submitter-button')
-class FormSubmitterButton extends LitElement {
+class FormSubmitterButton extends mixinElementInternals(LitElement) {
   static {
     setupFormSubmitter(FormSubmitterButton);
   }
@@ -32,17 +31,17 @@ class FormSubmitterButton extends LitElement {
   type: FormSubmitterType = 'submit';
   @property({reflect: true}) name = '';
   value = '';
-
-  [internals] = this.attachInternals();
 }
-
 
 describe('setupFormSubmitter()', () => {
   const env = new Environment();
 
   async function setupTest() {
     const root = env.render(
-        html`<form><test-form-submitter-button></test-form-submitter-button></form>`);
+      html`<form
+        ><test-form-submitter-button></test-form-submitter-button
+      ></form>`,
+    );
     const submitter = root.querySelector('test-form-submitter-button');
     if (!submitter) {
       throw new Error(`Could not query rendered <test-form-submitter-button>`);
@@ -69,6 +68,8 @@ describe('setupFormSubmitter()', () => {
     spyOn(form, 'requestSubmit');
     spyOn(form, 'reset');
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(form.requestSubmit).toHaveBeenCalled();
     expect(form.reset).not.toHaveBeenCalled();
@@ -81,6 +82,8 @@ describe('setupFormSubmitter()', () => {
     spyOn(form, 'requestSubmit');
     spyOn(form, 'reset');
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(form.requestSubmit).not.toHaveBeenCalled();
     expect(form.reset).toHaveBeenCalled();
@@ -92,36 +95,45 @@ describe('setupFormSubmitter()', () => {
 
     spyOn(form, 'requestSubmit');
 
-    harness.element.addEventListener('click', (event: Event) => {
-      event.preventDefault();
-    }, {once: true});
+    harness.element.addEventListener(
+      'click',
+      (event: Event) => {
+        event.preventDefault();
+      },
+      {once: true},
+    );
 
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(form.requestSubmit).not.toHaveBeenCalled();
   });
 
   it('should set the button as the SubmitEvent submitter', async () => {
     const {harness, form} = await setupTest();
-    const submitListener =
-        jasmine.createSpy('submitListener').and.callFake((event: Event) => {
-          event.preventDefault();
-        });
+    const submitListener = jasmine
+      .createSpy('submitListener')
+      .and.callFake((event: Event) => {
+        event.preventDefault();
+      });
 
     form.addEventListener('submit', submitListener);
 
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     expect(submitListener).toHaveBeenCalled();
     const event = submitListener.calls.argsFor(0)[0] as SubmitEvent;
     expect(event.submitter)
-        .withContext('event.submitter')
-        .toBe(harness.element);
+      .withContext('event.submitter')
+      .toBe(harness.element);
   });
 
   it('should add name/value to form data when present', async () => {
     const {harness, form} = await setupTest();
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
     });
 
@@ -129,6 +141,8 @@ describe('setupFormSubmitter()', () => {
     harness.element.value = 'bar';
 
     await harness.clickWithMouse();
+    // Submission happens after a task
+    await env.waitForStability();
 
     const formData = Array.from(new FormData(form));
     expect(formData.length).withContext('formData.length').toBe(1);

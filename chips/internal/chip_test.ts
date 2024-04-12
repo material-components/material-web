@@ -33,14 +33,13 @@ describe('Chip', () => {
     return {chip, harness: new ChipHarness(chip)};
   }
 
-  it('should dispatch `update-focus` for chip set when disabled changes',
-     async () => {
-       const {chip} = await setupTest();
-       const updateFocusListener = jasmine.createSpy('updateFocusListener');
-       chip.addEventListener('update-focus', updateFocusListener);
+  it('should dispatch `update-focus` for chip set when disabled changes', async () => {
+    const {chip} = await setupTest();
+    const updateFocusListener = jasmine.createSpy('updateFocusListener');
+    chip.addEventListener('update-focus', updateFocusListener);
 
-       chip.disabled = true;
-       await env.waitForStability();
-       expect(updateFocusListener).toHaveBeenCalled();
-     });
+    chip.disabled = true;
+    await env.waitForStability();
+    expect(updateFocusListener).toHaveBeenCalled();
+  });
 });

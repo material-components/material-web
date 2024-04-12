@@ -4,17 +4,26 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+@use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './v0_192/md-comp-outlined-icon-button';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
   'container-height',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'container-width',
   'disabled-icon-color',
   'disabled-icon-opacity',
@@ -57,13 +66,24 @@ $_default: (
   'md-sys-state': md-sys-state.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-outlined-icon-button.values($deps, $exclude-hardcoded-values),
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-outlined-icon-button.values(
+    $deps,
+    $exclude-hardcoded-values
+  );
+
+  $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'container-shape');
+  $tokens: validate.values(
+    $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
-      // TODO(b/292244480): remove default unselected prefix
+      // Remove default "unselected" prefix (b/292244480)
       'disabled-unselected-outline-color': 'disabled-outline-color',
       'disabled-unselected-outline-opacity': 'disabled-outline-opacity',
       'unselected-focus-icon-color': 'focus-icon-color',
@@ -77,6 +97,23 @@ $_default: (
       'unselected-focus-state-layer-color': 'focus-state-layer-color'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-outlined-icon-button-container-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-outlined-icon-button-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

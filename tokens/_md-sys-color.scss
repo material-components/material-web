@@ -7,9 +7,9 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/validate';
 @use './md-ref-palette';
 @use './v0_192/md-sys-color';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -89,7 +89,7 @@ $_default-dark: (
     }
   }
 
-  @return values.validate($tokens, $supported-tokens: $supported-tokens);
+  @return validate.values($tokens, $supported-tokens: $supported-tokens);
 }
 
 $_default-light: (
@@ -115,5 +115,5 @@ $_default-light: (
     }
   }
 
-  @return values.validate($tokens, $supported-tokens: $supported-tokens);
+  @return validate.values($tokens, $supported-tokens: $supported-tokens);
 }

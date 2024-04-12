@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {SubMenu} from './internal/submenu/sub-menu.js';
-import {styles} from './internal/submenu/sub-menu-styles.css.js';
+import {styles} from './internal/submenu/sub-menu-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -65,5 +66,5 @@ declare global {
  */
 @customElement('md-sub-menu')
 export class MdSubMenu extends SubMenu {
-  static override styles = styles;
+  static override styles: CSSResultOrNative[] = [styles];
 }

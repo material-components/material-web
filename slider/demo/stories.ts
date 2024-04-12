@@ -6,7 +6,10 @@
 
 import '@material/web/slider/slider.js';
 
-import {labelStyles, MaterialStoryInit} from './material-collection.js';
+import {
+  labelStyles,
+  MaterialStoryInit,
+} from './material-collection.js';
 import {MdSlider} from '@material/web/slider/slider.js';
 import {css, html} from 'lit';
 
@@ -31,26 +34,30 @@ const single: MaterialStoryInit<StoryKnobs> = {
     return html`
       <label>
         Continuous
-        <md-slider ?disabled=${disabled ?? false}
-          aria-label="An example continuous slider"
-        ></md-slider>
+        <md-slider
+          ?disabled=${disabled ?? false}
+          aria-label="An example continuous slider"></md-slider>
       </label>
 
       <label>
         Labeled
-        <md-slider labeled ?disabled=${disabled ?? false}
-          aria-label="An example slider with a label"
-        ></md-slider>
+        <md-slider
+          labeled
+          ?disabled=${disabled ?? false}
+          aria-label="An example slider with a label"></md-slider>
       </label>
 
       <label>
         Tick marks
-        <md-slider labeled step="10" ticks ?disabled=${disabled ?? false}
-          aria-label="An example slider with tick marks"
-        ></md-slider>
+        <md-slider
+          labeled
+          step="10"
+          ticks
+          ?disabled=${disabled ?? false}
+          aria-label="An example slider with tick marks"></md-slider>
       </label>
     `;
-  }
+  },
 };
 
 const range: MaterialStoryInit<StoryKnobs> = {
@@ -60,27 +67,35 @@ const range: MaterialStoryInit<StoryKnobs> = {
     return html`
       <label>
         Range
-        <md-slider range ?disabled=${disabled ?? false}
-          aria-label="An example range slider"
-        ></md-slider>
+        <md-slider
+          range
+          ?disabled=${disabled ?? false}
+          aria-label="An example range slider"></md-slider>
       </label>
 
       <label>
         Labeled
-        <md-slider labeled range ?disabled=${disabled ?? false}
-          aria-label="An example range slider with labels"
-        ></md-slider>
+        <md-slider
+          labeled
+          range
+          ?disabled=${disabled ?? false}
+          aria-label="An example range slider with labels"></md-slider>
       </label>
 
       <label>
         Tick marks
-        <md-slider labeled range step="10" ticks ?disabled=${disabled ?? false}
-          value-start="30" value-end="70"
-          aria-label="An example range slider with tick marks"
-        ></md-slider>
+        <md-slider
+          labeled
+          range
+          step="10"
+          ticks
+          ?disabled=${disabled ?? false}
+          value-start="30"
+          value-end="70"
+          aria-label="An example range slider with tick marks"></md-slider>
       </label>
     `;
-  }
+  },
 };
 
 const customStyling: MaterialStoryInit<StoryKnobs> = {
@@ -155,11 +170,10 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
           step="1"
           .disabled=${disabled ?? false}
           @pointerdown=${updateLabel}
-          @input=${updateLabel}
-        ></md-slider>
+          @input=${updateLabel}></md-slider>
       </label>
     `;
-  }
+  },
 };
 
 /** slider stories. */

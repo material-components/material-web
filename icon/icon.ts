@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Icon} from './internal/icon.js';
-import {styles} from './internal/icon-styles.css.js';
+import {styles} from './internal/icon-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -22,5 +23,5 @@ declare global {
 @customElement('md-icon')
 export class MdIcon extends Icon {
   /** @nocollapse */
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

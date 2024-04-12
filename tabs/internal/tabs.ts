@@ -9,17 +9,15 @@ import '../../divider/divider.js';
 import {html, isServer, LitElement} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
-import {polyfillElementInternalsAria, setupHostAria} from '../../internal/aria/aria.js';
-
 import {ANIMATE_INDICATOR, Tab} from './tab.js';
 
 /**
- * @fires change Fired when the selected tab changes. The target's selected or
+ * @fires change {Event} Fired when the selected tab changes. The target's selected or
  * selectedItem and previousSelected or previousSelectedItem provide information
  * about the selection change. The change event is fired when a user interaction
  * like a space/enter key or click cause a selection change. The tab selection
  * based on these actions can be cancelled by calling preventDefault on the
- * triggering `keydown` or `click` event.
+ * triggering `keydown` or `click` event. --bubbles
  *
  * @example
  * // perform an action if a tab is clicked
@@ -38,10 +36,6 @@ import {ANIMATE_INDICATOR, Tab} from './tab.js';
  *
  */
 export class Tabs extends LitElement {
-  static {
-    setupHostAria(Tabs, {focusable: false});
-  }
-
   /**
    * The tabs of this tab bar.
    */
@@ -54,9 +48,9 @@ export class Tabs extends LitElement {
    * @export
    */
   get activeTab() {
-    return this.tabs.find(tab => tab.active) ?? null;
+    return this.tabs.find((tab) => tab.active) ?? null;
   }
-  set activeTab(tab: Tab|null) {
+  set activeTab(tab: Tab | null) {
     // Ignore setting activeTab to null. As long as there are children, one tab
     // must be selected.
     if (tab) {
@@ -69,8 +63,9 @@ export class Tabs extends LitElement {
    *
    * @export
    */
+  @property({type: Number, attribute: 'active-tab-index'})
   get activeTabIndex() {
-    return this.tabs.findIndex(tab => tab.active);
+    return this.tabs.findIndex((tab) => tab.active);
   }
   set activeTabIndex(index: number) {
     const activateTabAtIndex = () => {
@@ -108,14 +103,16 @@ export class Tabs extends LitElement {
    */
   @property({type: Boolean, attribute: 'auto-activate'}) autoActivate = false;
 
-  @query('slot') private readonly slotElement!: HTMLSlotElement|null;
+  @query('.tabs') private readonly tabsScrollerElement!: HTMLElement | null;
+  @query('slot') private readonly slotElement!: HTMLSlotElement | null;
 
   private get focusedTab() {
-    return this.tabs.find(tab => tab.matches(':focus-within'));
+    return this.tabs.find((tab) => tab.matches(':focus-within'));
   }
 
-  private readonly internals = polyfillElementInternalsAria(
-      this, (this as HTMLElement /* needed for closure */).attachInternals());
+  private readonly internals =
+    // Cast needed for closure
+    (this as HTMLElement).attachInternals();
 
   constructor() {
     super();
@@ -135,11 +132,15 @@ export class Tabs extends LitElement {
    *     active tab.
    * @return A Promise that resolves after the tab has been scrolled to.
    */
-  async scrollToTab(tabToScrollTo?: Tab|null) {
+  async scrollToTab(tabToScrollTo?: Tab | null) {
     await this.updateComplete;
     const {tabs} = this;
     tabToScrollTo ??= this.activeTab;
-    if (!tabToScrollTo || !tabs.includes(tabToScrollTo)) {
+    if (
+      !tabToScrollTo ||
+      !tabs.includes(tabToScrollTo) ||
+      !this.tabsScrollerElement
+    ) {
       return;
     }
 
@@ -156,16 +157,20 @@ export class Tabs extends LitElement {
     const min = offset - scrollMargin;
     const max = offset + extent - hostExtent + scrollMargin;
     const to = Math.min(min, Math.max(max, scroll));
-    // TODO(b/299934312): improve focus smoothness
-    const behavior = !this.focusedTab ? 'smooth' : 'instant' as const;
-    this.scrollTo({behavior, top: 0, left: to});
+    // When a tab is focused, use 'auto' to use the CSS `scroll-behavior`. The
+    // default behavior is smooth scrolling. However, when there is not a tab
+    // focused on initialization, use 'instant' to immediately bring the focused
+    // tab into view.
+    const behavior: ScrollBehavior = !this.focusedTab ? 'instant' : 'auto';
+    this.tabsScrollerElement.scrollTo({behavior, top: 0, left: to});
   }
 
   protected override render() {
     return html`
       <div class="tabs">
-        <slot @slotchange=${this.handleSlotChange}
-            @click=${this.handleTabClick}></slot>
+        <slot
+          @slotchange=${this.handleSlotChange}
+          @click=${this.handleTabClick}></slot>
       </div>
       <md-divider part="divider"></md-divider>
     `;
@@ -198,7 +203,8 @@ export class Tabs extends LitElement {
       // Don't dispatch a change event if activating a tab when no previous tabs
       // were selected, such as when md-tabs auto-selects the first tab.
       const defaultPrevented = !this.dispatchEvent(
-          new Event('change', {bubbles: true, cancelable: true}));
+        new Event('change', {bubbles: true, cancelable: true}),
+      );
       if (defaultPrevented) {
         for (const tab of tabs) {
           tab.active = tab === previousTab;
@@ -228,7 +234,7 @@ export class Tabs extends LitElement {
     const isHome = event.key === 'Home';
     const isEnd = event.key === 'End';
     // Ignore non-navigation keys
-    if (event.defaultPrevented || !isLeft && !isRight && !isHome && !isEnd) {
+    if (event.defaultPrevented || (!isLeft && !isRight && !isHome && !isEnd)) {
       return;
     }
 

@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {FocusRing} from './internal/focus-ring.js';
-import {styles} from './internal/focus-ring-styles.css.js';
+import {styles} from './internal/focus-ring-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -23,5 +24,5 @@ declare global {
  */
 @customElement('md-focus-ring')
 export class MdFocusRing extends FocusRing {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

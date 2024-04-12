@@ -16,6 +16,8 @@
     display: inline-flex;
     outline: none;
     resize: both;
+    // Match default text-align of `<input>` instead of `inherit`.
+    text-align: start;
     -webkit-tap-highlight-color: transparent;
   }
 

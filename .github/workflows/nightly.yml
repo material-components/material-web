@@ -1,0 +1,52 @@
+name: Nightly publish
+
+on:
+  schedule:
+    - cron: '21 3 * * *'
+  workflow_dispatch:
+    # allows triggering from the github UI
+
+jobs:
+  check_for_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check if the current commit is less than 24 hours old
+        id: check
+        continue-on-error: true
+        run: test -n "$(git rev-list --after='24 hours' ${{ github.sha }})" && echo "changed=yes" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: check_for_changes
+    if: needs.check_for_changes.outputs.changed == 'yes'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      - uses: google/wireit@setup-github-actions-caching/v1
+
+      - run: npm ci
+      - run: npm run build
+        env:
+          WIREIT_FAILURES: continue
+
+      - name: Create nightly release commit
+        run: |
+          npm version --no-git-tag-version --preid nightly.$(git rev-parse --short HEAD) prepatch
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "chore: nightly publish"
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://wombat-dressing-room.appspot.com/'
+      - run: npm publish --tag nightly
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

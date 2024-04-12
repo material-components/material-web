@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {FilledTonalButton} from './internal/filled-tonal-button.js';
-import {styles as tonalStyles} from './internal/filled-tonal-styles.css.js';
-import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as tonalStyles} from './internal/filled-tonal-styles.js';
+import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -40,5 +41,9 @@ declare global {
  */
 @customElement('md-filled-tonal-button')
 export class MdFilledTonalButton extends FilledTonalButton {
-  static override styles = [sharedStyles, sharedElevationStyles, tonalStyles];
+  static override styles: CSSResultOrNative[] = [
+    sharedStyles,
+    sharedElevationStyles,
+    tonalStyles,
+  ];
 }

@@ -20,50 +20,50 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
   }
 
-  .button:disabled md-elevation {
+  :host([disabled]) md-elevation {
     transition: none;
   }
 
-  .button {
+  md-elevation {
     @include elevation.theme(
       (
         'level': var(--_container-elevation),
         'shadow-color': var(--_container-shadow-color),
       )
     );
+  }
 
-    // apply elevation in order of focused, hovered, pressed, disabled
-    // this ensures a button will have hover elevation after being focused
-    &:focus {
-      @include elevation.theme(
-        (
-          'level': var(--_focus-container-elevation),
-        )
-      );
-    }
+  // apply elevation in order of focused, hovered, pressed, disabled
+  // this ensures a button will have hover elevation after being focused
+  :host(:focus-within) md-elevation {
+    @include elevation.theme(
+      (
+        'level': var(--_focus-container-elevation),
+      )
+    );
+  }
 
-    &:hover {
-      @include elevation.theme(
-        (
-          'level': var(--_hover-container-elevation),
-        )
-      );
-    }
+  :host(:hover) md-elevation {
+    @include elevation.theme(
+      (
+        'level': var(--_hover-container-elevation),
+      )
+    );
+  }
 
-    &:active {
-      @include elevation.theme(
-        (
-          'level': var(--_pressed-container-elevation),
-        )
-      );
-    }
+  :host(:active) md-elevation {
+    @include elevation.theme(
+      (
+        'level': var(--_pressed-container-elevation),
+      )
+    );
+  }
 
-    &:disabled {
-      @include elevation.theme(
-        (
-          'level': var(--_disabled-container-elevation),
-        )
-      );
-    }
+  :host([disabled]) md-elevation {
+    @include elevation.theme(
+      (
+        'level': var(--_disabled-container-elevation),
+      )
+    );
   }
 }

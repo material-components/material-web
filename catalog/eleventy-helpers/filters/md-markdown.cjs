@@ -62,7 +62,7 @@ function blockquote($) {
     const $blockquote = $(blockquote);
     const $first = $blockquote.children().first();
     const text = $first.text().trim();
-    const iconRegex = /^(tip|important|note):\s*/i;
+    const iconRegex = /^(tip|important|note|warning):\s*/i;
     const match = text.match(iconRegex);
     const hasIcon = match;
 
@@ -84,6 +84,10 @@ function blockquote($) {
       case 'important':
         $blockquote.addClass('important');
         icon = 'priority_high';
+        break;
+      case 'warning':
+        $blockquote.addClass('warning');
+        icon = 'warning';
         break;
       case 'note':
         $blockquote.addClass('note');

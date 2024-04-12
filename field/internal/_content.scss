@@ -21,179 +21,192 @@ $_visible-duration: math.round(math.div($_label-duration * 5, 9));
 $_enter-delay: $_label-duration - $_visible-duration;
 
 @mixin styles() {
-  .start,
-  .middle,
-  .end {
-    display: flex;
-    box-sizing: border-box;
-    height: 100%;
-    // Relative position for absolutely positioned labels (to avoid interfering
-    // with baseline alignment).
-    position: relative;
+  @layer styles {
+    .start,
+    .middle,
+    .end {
+      display: flex;
+      box-sizing: border-box;
+      height: 100%;
+      // Relative position for absolutely positioned labels (to avoid interfering
+      // with baseline alignment).
+      position: relative;
+    }
+
+    .start {
+      color: var(--_leading-content-color);
+    }
+
+    .end {
+      color: var(--_trailing-content-color);
+    }
+
+    .start,
+    .end {
+      align-items: center;
+      justify-content: center;
+    }
+
+    // TODO(b/239188049): remove when layout tokens are ready
+    .with-start .start,
+    .with-end .end {
+      min-width: 48px;
+    }
+
+    .with-start .start {
+      margin-inline-end: 4px;
+    }
+
+    .with-end .end {
+      margin-inline-start: 4px;
+    }
+
+    .middle {
+      align-items: stretch;
+      // The container of the field aligns sections by "center". Only the middle
+      // section opts in to baseline alignment.
+      //
+      // Labels are absolutely positioned, which leaves only the content as the
+      // evaluated baseline for the field.
+      //
+      // See https://www.w3.org/TR/css-flexbox-1/#baseline-participation
+      align-self: baseline;
+      flex: 1;
+    }
+
+    .content {
+      color: var(--_content-color);
+      display: flex;
+      flex: 1;
+      opacity: 0;
+      transition: opacity $_visible-duration
+        map.get($_md-sys-motion, 'easing-emphasized');
+    }
+
+    .no-label .content,
+    .focused .content,
+    .populated .content {
+      opacity: 1;
+      transition-delay: $_enter-delay;
+    }
+
+    :is(.disabled, .disable-transitions) .content {
+      transition: none;
+    }
+
+    .content ::slotted(*) {
+      all: unset;
+      // Use `currentColor` to inherit the various state colors that are set
+      // below.
+      color: currentColor;
+      font-family: var(--_content-font);
+      font-size: var(--_content-size);
+      line-height: var(--_content-line-height);
+      font-weight: var(--_content-weight);
+      width: 100%;
+      // Reverting values before "all: unset"
+      overflow-wrap: revert; // Needed to break words in textarea
+      white-space: revert; // Needed for Firefox textarea
+    }
+
+    .content ::slotted(:not(textarea)) {
+      padding-top: var(--_top-space);
+      padding-bottom: var(--_bottom-space);
+    }
+
+    .content ::slotted(textarea) {
+      // Use margin for textareas since they will scroll over the label if not.
+      margin-top: var(--_top-space);
+      margin-bottom: var(--_bottom-space);
+    }
+
+    :hover .content {
+      color: var(--_hover-content-color);
+    }
+
+    :hover .start {
+      color: var(--_hover-leading-content-color);
+    }
+
+    :hover .end {
+      color: var(--_hover-trailing-content-color);
+    }
+
+    .focused .content {
+      color: var(--_focus-content-color);
+    }
+
+    .focused .start {
+      color: var(--_focus-leading-content-color);
+    }
+
+    .focused .end {
+      color: var(--_focus-trailing-content-color);
+    }
+
+    .disabled .content {
+      color: var(--_disabled-content-color);
+    }
+
+    .disabled.no-label .content,
+    .disabled.focused .content,
+    .disabled.populated .content {
+      opacity: var(--_disabled-content-opacity);
+    }
+
+    .disabled .start {
+      color: var(--_disabled-leading-content-color);
+      opacity: var(--_disabled-leading-content-opacity);
+    }
+
+    .disabled .end {
+      color: var(--_disabled-trailing-content-color);
+      opacity: var(--_disabled-trailing-content-opacity);
+    }
+
+    .error .content {
+      color: var(--_error-content-color);
+    }
+
+    .error .start {
+      color: var(--_error-leading-content-color);
+    }
+
+    .error .end {
+      color: var(--_error-trailing-content-color);
+    }
+
+    .error:hover .content {
+      color: var(--_error-hover-content-color);
+    }
+
+    .error:hover .start {
+      color: var(--_error-hover-leading-content-color);
+    }
+
+    .error:hover .end {
+      color: var(--_error-hover-trailing-content-color);
+    }
+
+    .error.focused .content {
+      color: var(--_error-focus-content-color);
+    }
+
+    .error.focused .start {
+      color: var(--_error-focus-leading-content-color);
+    }
+
+    .error.focused .end {
+      color: var(--_error-focus-trailing-content-color);
+    }
   }
 
-  .start {
-    color: var(--_leading-content-color);
-  }
-
-  .end {
-    color: var(--_trailing-content-color);
-  }
-
-  .start,
-  .end {
-    align-items: center;
-    justify-content: center;
-  }
-
-  // TODO(b/239188049): remove when layout tokens are ready
-  .with-start .start,
-  .with-end .end {
-    min-width: 48px;
-  }
-
-  .with-start .start {
-    margin-inline-end: 4px;
-  }
-
-  .with-end .end {
-    margin-inline-start: 4px;
-  }
-
-  .middle {
-    align-items: stretch;
-    // The container of the field aligns sections by "center". Only the middle
-    // section opts in to baseline alignment.
-    //
-    // Labels are absolutely positioned, which leaves only the content as the
-    // evaluated baseline for the field.
-    //
-    // See https://www.w3.org/TR/css-flexbox-1/#baseline-participation
-    align-self: baseline;
-    flex: 1;
-  }
-
-  .content {
-    color: var(--_content-color);
-    display: flex;
-    flex: 1;
-    opacity: 0;
-    transition: opacity $_visible-duration
-      map.get($_md-sys-motion, 'easing-emphasized');
-  }
-
-  .no-label .content,
-  .focused .content,
-  .populated .content {
-    opacity: 1;
-    transition-delay: $_enter-delay;
-  }
-
-  :is(.disabled, .disable-transitions) .content {
-    transition: none;
-  }
-
-  .content ::slotted(*) {
-    all: unset;
-    // Use `currentColor` to inherit the various state colors that are set
-    // below.
-    color: currentColor;
-    font-family: var(--_content-font);
-    font-size: var(--_content-size);
-    line-height: var(--_content-line-height);
-    font-weight: var(--_content-weight);
-    width: 100%;
-    white-space: pre-wrap; // Needed for Firefox textarea with "all: unset"
-  }
-
-  .content ::slotted(:not(textarea)) {
-    padding-top: var(--_top-space);
-    padding-bottom: var(--_bottom-space);
-  }
-
-  .content ::slotted(textarea) {
-    // Use margin for textareas since they will scroll over the label if not.
-    margin-top: var(--_top-space);
-    margin-bottom: var(--_bottom-space);
-  }
-
-  :hover .content {
-    color: var(--_hover-content-color);
-  }
-
-  :hover .start {
-    color: var(--_hover-leading-content-color);
-  }
-
-  :hover .end {
-    color: var(--_hover-trailing-content-color);
-  }
-
-  .focused .content {
-    color: var(--_focus-content-color);
-  }
-
-  .focused .start {
-    color: var(--_focus-leading-content-color);
-  }
-
-  .focused .end {
-    color: var(--_focus-trailing-content-color);
-  }
-
-  .disabled .content {
-    color: var(--_disabled-content-color);
-  }
-
-  .disabled.no-label .content,
-  .disabled.focused .content,
-  .disabled.populated .content {
-    opacity: var(--_disabled-content-opacity);
-  }
-
-  .disabled .start {
-    color: var(--_disabled-leading-content-color);
-    opacity: var(--_disabled-leading-content-opacity);
-  }
-
-  .disabled .end {
-    color: var(--_disabled-trailing-content-color);
-    opacity: var(--_disabled-trailing-content-opacity);
-  }
-
-  .error .content {
-    color: var(--_error-content-color);
-  }
-
-  .error .start {
-    color: var(--_error-leading-content-color);
-  }
-
-  .error .end {
-    color: var(--_error-trailing-content-color);
-  }
-
-  .error:hover .content {
-    color: var(--_error-hover-content-color);
-  }
-
-  .error:hover .start {
-    color: var(--_error-hover-leading-content-color);
-  }
-
-  .error:hover .end {
-    color: var(--_error-hover-trailing-content-color);
-  }
-
-  .error.focused .content {
-    color: var(--_error-focus-content-color);
-  }
-
-  .error.focused .start {
-    color: var(--_error-focus-leading-content-color);
-  }
-
-  .error.focused .end {
-    color: var(--_error-focus-trailing-content-color);
+  @layer hcm {
+    @media (forced-colors: active) {
+      .disabled :is(.start, .content, .end) {
+        color: GrayText;
+        opacity: 1;
+      }
+    }
   }
 }

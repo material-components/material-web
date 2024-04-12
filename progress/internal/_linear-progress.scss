@@ -31,11 +31,13 @@ $_determinate-easing: cubic-bezier(0.4, 0, 0.6, 1);
 $_indeterminate-duration: 2s;
 
 @mixin styles() {
-  $tokens: tokens.md-comp-linear-progress-values();
+  $tokens: tokens.md-comp-linear-progress-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-linear-progress-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     border-radius: var(--_track-shape);
@@ -114,6 +116,12 @@ $_indeterminate-duration: 2s;
     z-index: -1; // Place behind tracks for Safari
   }
 
+  // dots are hidden when indeterminate or when there is no visible buffer to
+  // prevent infinite invisible animation.
+  .dots[hidden] {
+    display: none;
+  }
+
   // indeterminate
   .indeterminate .bar {
     transition: none;
@@ -129,10 +137,6 @@ $_indeterminate-duration: 2s;
     inset-inline-start: -54.8889%;
     // this is display none by default.
     display: block;
-  }
-
-  .indeterminate .dots {
-    display: none;
   }
 
   .indeterminate .primary-bar {
@@ -165,13 +169,6 @@ $_indeterminate-duration: 2s;
     animation-name: secondary-indeterminate-scale, four-color;
     animation-duration: $_indeterminate-duration,
       calc($_indeterminate-duration * 2);
-  }
-
-  // TODO(https://bugs.chromium.org/p/chromium/issues/detail?id=1420655):
-  // remove :host and :host-context once Chrome supports :dir
-  :host-context([dir='rtl']),
-  :host([dir='rtl']) {
-    transform: scale(-1);
   }
 
   :host(:dir(rtl)) {

@@ -19,21 +19,29 @@ interface RemoveButtonProperties {
 }
 
 /** @protected */
-export function renderRemoveButton(
-    {ariaLabel, disabled, focusListener, tabbable = false}:
-        RemoveButtonProperties) {
+export function renderRemoveButton({
+  ariaLabel,
+  disabled,
+  focusListener,
+  tabbable = false,
+}: RemoveButtonProperties) {
   return html`
-    <button class="trailing action"
+    <button
+      class="trailing action"
       aria-label=${ariaLabel}
       tabindex=${!tabbable ? -1 : nothing}
       @click=${handleRemoveClick}
-      @focus=${focusListener}
-    >
+      @focus=${focusListener}>
       <md-focus-ring part="trailing-focus-ring"></md-focus-ring>
       <md-ripple ?disabled=${disabled}></md-ripple>
-      <svg class="trailing icon" viewBox="0 96 960 960" aria-hidden="true">
-        <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-      </svg>
+      <span class="trailing icon" aria-hidden="true">
+        <slot name="remove-trailing-icon">
+          <svg viewBox="0 96 960 960">
+            <path
+              d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
+          </svg>
+        </slot>
+      </span>
       <span class="touch"></span>
     </button>
   `;
@@ -45,8 +53,9 @@ function handleRemoveClick(this: Chip, event: Event) {
   }
 
   event.stopPropagation();
-  const preventDefault =
-      !this.dispatchEvent(new Event('remove', {cancelable: true}));
+  const preventDefault = !this.dispatchEvent(
+    new Event('remove', {cancelable: true}),
+  );
   if (preventDefault) {
     return;
   }

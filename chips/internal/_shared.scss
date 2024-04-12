@@ -21,6 +21,7 @@
     display: inline-flex;
     height: var(--_container-height);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 
     @include ripple.theme(
       (
@@ -30,6 +31,10 @@
         'pressed-opacity': var(--_pressed-state-layer-opacity),
       )
     );
+  }
+
+  :host([disabled]) {
+    pointer-events: none;
   }
 
   :host([touch-target='wrapper']) {
@@ -84,7 +89,6 @@
     border: none;
     border-radius: inherit;
     display: flex;
-    gap: 8px;
     outline: none;
     padding: 0;
     position: relative;
@@ -92,8 +96,12 @@
   }
 
   .primary.action {
-    padding-inline-start: 8px;
-    padding-inline-end: 16px;
+    padding-inline-start: var(--_leading-space);
+    padding-inline-end: var(--_trailing-space);
+  }
+
+  .has-icon .primary.action {
+    padding-inline-start: var(--_with-leading-icon-leading-space);
   }
 
   .touch {
@@ -185,6 +193,11 @@
     color: var(--_leading-icon-color);
   }
 
+  .leading.icon ::slotted(*),
+  .leading.icon svg {
+    margin-inline-end: var(--_icon-label-space);
+  }
+
   :where(:hover) .leading.icon {
     color: var(--_hover-leading-icon-color);
   }
@@ -207,6 +220,12 @@
       color: GrayText;
       opacity: 1;
     }
+  }
+
+  a,
+  button {
+    // Override the user-agent text-transform: none of <button> and <a>
+    text-transform: inherit;
   }
 
   a,

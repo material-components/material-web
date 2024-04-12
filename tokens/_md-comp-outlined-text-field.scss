@@ -5,19 +5,26 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-outlined-text-field';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
+  'bottom-space',
   'caret-color',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'disabled-input-text-color',
   'disabled-input-text-opacity',
   'disabled-label-text-color',
@@ -50,6 +57,7 @@ $supported-tokens: (
   'error-outline-color',
   'error-supporting-text-color',
   'error-trailing-icon-color',
+  'focus-caret-color',
   'focus-input-text-color',
   'focus-label-text-color',
   'focus-leading-icon-color',
@@ -69,8 +77,10 @@ $supported-tokens: (
   'input-text-line-height',
   'input-text-placeholder-color',
   'input-text-prefix-color',
+  'input-text-prefix-trailing-space',
   'input-text-size',
   'input-text-suffix-color',
+  'input-text-suffix-leading-space',
   'input-text-weight',
   'label-text-color',
   'label-text-font',
@@ -81,6 +91,7 @@ $supported-tokens: (
   'label-text-weight',
   'leading-icon-color',
   'leading-icon-size',
+  'leading-space',
   'outline-color',
   'outline-width',
   'supporting-text-color',
@@ -88,8 +99,10 @@ $supported-tokens: (
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-weight',
+  'top-space',
   'trailing-icon-color',
   'trailing-icon-size',
+  'trailing-space',
   // go/keep-sorted end
 );
 
@@ -110,11 +123,33 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-outlined-text-field.values($deps, $exclude-hardcoded-values),
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-outlined-text-field.values($deps, $exclude-hardcoded-values);
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
+      'leading-space': if($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if($exclude-hardcoded-values, null, 16px),
+      'top-space': if($exclude-hardcoded-values, null, 16px),
+      'bottom-space': if($exclude-hardcoded-values, null, 16px),
+      'input-text-prefix-trailing-space':
+        if($exclude-hardcoded-values, null, 2px),
+      'input-text-suffix-leading-space':
+        if($exclude-hardcoded-values, null, 2px),
+      // TODO(b/270705687): remove when focus-caret-color token added
+      'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
+    )
+  );
+
+  $tokens: validate.values(
+    $tokens,
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens
   );
 
   $tokens: map.merge(
@@ -124,6 +159,23 @@ $_default: (
       'focus-outline-width': if($exclude-hardcoded-values, null, 3px)
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-outlined-text-field-container-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-outlined-text-field-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

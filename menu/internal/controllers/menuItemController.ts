@@ -6,7 +6,11 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {CloseReason, createDefaultCloseMenuEvent, isClosableKey} from './shared.js';
+import {
+  CloseReason,
+  createDefaultCloseMenuEvent,
+  isClosableKey,
+} from './shared.js';
 
 /**
  * Interface specific to menu item and not HTMLElement.
@@ -52,12 +56,12 @@ interface MenuItemAdditions {
  *
  * NOTE, the required properties are recommended to be reactive properties.
  */
-export type MenuItem = MenuItemAdditions&HTMLElement;
+export type MenuItem = MenuItemAdditions & HTMLElement;
 
 /**
  * Supported behaviors for a menu item.
  */
-export type MenuItemType = 'menuitem'|'option'|'button'|'link';
+export type MenuItemType = 'menuitem' | 'option' | 'button' | 'link';
 
 /**
  * The options used to inialize MenuItemController.
@@ -67,6 +71,16 @@ export interface MenuItemControllerConfig {
    * A function that returns the headline element of the menu item.
    */
   getHeadlineElements: () => HTMLElement[];
+
+  /**
+   * A function that returns the supporting-text element of the menu item.
+   */
+  getSupportingTextElements: () => HTMLElement[];
+
+  /**
+   * A function that returns the default slot / misc content.
+   */
+  getDefaultElements: () => Node[];
 
   /**
    * The HTML Element that accepts user interactions like click. Used for
@@ -81,31 +95,32 @@ export interface MenuItemControllerConfig {
  * the MenuItem interface.
  */
 export class MenuItemController implements ReactiveController {
-  private internalTypeaheadText: string|null = null;
-  private readonly getHeadlineElements:
-      MenuItemControllerConfig['getHeadlineElements'];
-  private readonly getInteractiveElement:
-      MenuItemControllerConfig['getInteractiveElement'];
+  private internalTypeaheadText: string | null = null;
+  private readonly getHeadlineElements: MenuItemControllerConfig['getHeadlineElements'];
+  private readonly getSupportingTextElements: MenuItemControllerConfig['getSupportingTextElements'];
+  private readonly getDefaultElements: MenuItemControllerConfig['getDefaultElements'];
+  private readonly getInteractiveElement: MenuItemControllerConfig['getInteractiveElement'];
 
   /**
    * @param host The MenuItem in which to attach this controller to.
    * @param config The object that configures this controller's behavior.
    */
   constructor(
-      private readonly host: ReactiveControllerHost&MenuItem,
-      config: MenuItemControllerConfig) {
-    const {
-      getHeadlineElements,
-      getInteractiveElement,
-    } = config;
-    this.getHeadlineElements = getHeadlineElements;
-    this.getInteractiveElement = getInteractiveElement;
+    private readonly host: ReactiveControllerHost & MenuItem,
+    config: MenuItemControllerConfig,
+  ) {
+    this.getHeadlineElements = config.getHeadlineElements;
+    this.getSupportingTextElements = config.getSupportingTextElements;
+    this.getDefaultElements = config.getDefaultElements;
+    this.getInteractiveElement = config.getInteractiveElement;
     this.host.addController(this);
   }
 
   /**
    * The text that is selectable via typeahead. If not set, defaults to the
-   * innerText of the item slotted into the `"headline"` slot.
+   * innerText of the item slotted into the `"headline"` slot, and if there are
+   * no slotted elements into headline, then it checks the _default_ slot, and
+   * then the `"supporting-text"` slot if nothing is in _default_.
    */
   get typeaheadText() {
     if (this.internalTypeaheadText !== null) {
@@ -120,6 +135,28 @@ export class MenuItemController implements ReactiveController {
         textParts.push(headlineElement.textContent.trim());
       }
     });
+
+    // If there are no headline elements, check the default slot's text content
+    if (textParts.length === 0) {
+      this.getDefaultElements().forEach((defaultElement) => {
+        if (defaultElement.textContent && defaultElement.textContent.trim()) {
+          textParts.push(defaultElement.textContent.trim());
+        }
+      });
+    }
+
+    // If there are no headline nor default slot elements, check the
+    //supporting-text slot's text content
+    if (textParts.length === 0) {
+      this.getSupportingTextElements().forEach((supportingTextElement) => {
+        if (
+          supportingTextElement.textContent &&
+          supportingTextElement.textContent.trim()
+        ) {
+          textParts.push(supportingTextElement.textContent.trim());
+        }
+      });
+    }
 
     return textParts.join(' ');
   }
@@ -166,8 +203,11 @@ export class MenuItemController implements ReactiveController {
   onClick = () => {
     if (this.host.keepOpen) return;
 
-    this.host.dispatchEvent(createDefaultCloseMenuEvent(
-        this.host, {kind: CloseReason.CLICK_SELECTION}));
+    this.host.dispatchEvent(
+      createDefaultCloseMenuEvent(this.host, {
+        kind: CloseReason.CLICK_SELECTION,
+      }),
+    );
   };
 
   /**
@@ -183,13 +223,22 @@ export class MenuItemController implements ReactiveController {
       }
     }
 
-    if (this.host.keepOpen || event.defaultPrevented) return;
-    const keyCode = event.code;
+    if (event.defaultPrevented) return;
 
-    if (!event.defaultPrevented && isClosableKey(keyCode)) {
+    // If the host has keepOpen = true we should ignore clicks & Space/Enter,
+    // however we always maintain the ability to close a menu with a explicit
+    // `escape` keypress.
+    const keyCode = event.code;
+    if (this.host.keepOpen && keyCode !== 'Escape') return;
+
+    if (isClosableKey(keyCode)) {
       event.preventDefault();
-      this.host.dispatchEvent(createDefaultCloseMenuEvent(
-          this.host, {kind: CloseReason.KEYDOWN, key: keyCode}));
+      this.host.dispatchEvent(
+        createDefaultCloseMenuEvent(this.host, {
+          kind: CloseReason.KEYDOWN,
+          key: keyCode,
+        }),
+      );
     }
   };
 

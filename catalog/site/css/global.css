@@ -71,6 +71,10 @@
   }
 }
 
+strong {
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   margin: 0;
   font-size: var(--catalog-body-l-font-size);

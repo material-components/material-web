@@ -6,7 +6,10 @@
 
 import {isServer, ReactiveElement} from 'lit';
 
-import {internals, WithInternals} from './element-internals.js';
+import {
+  internals,
+  WithElementInternals,
+} from '../../labs/behaviors/element-internals.js';
 
 /**
  * A string indicating the form submission behavior of the element.
@@ -17,13 +20,13 @@ import {internals, WithInternals} from './element-internals.js';
  * - reset: The element resets the form.
  * - button: The element does nothing.
  */
-export type FormSubmitterType = 'button'|'submit'|'reset';
+export type FormSubmitterType = 'button' | 'submit' | 'reset';
 
 /**
  * An element that can submit or reset a `<form>`, similar to
  * `<button type="submit">`.
  */
-export interface FormSubmitter extends ReactiveElement, WithInternals {
+export interface FormSubmitter extends ReactiveElement, WithElementInternals {
   /**
    * A string indicating the form submission behavior of the element.
    *
@@ -51,7 +54,8 @@ export interface FormSubmitter extends ReactiveElement, WithInternals {
 }
 
 type FormSubmitterConstructor =
-    (new () => FormSubmitter)|(abstract new () => FormSubmitter);
+  | (new () => FormSubmitter)
+  | (abstract new () => FormSubmitter);
 
 /**
  * Sets up an element's constructor to enable form submission. The element
@@ -62,7 +66,7 @@ type FormSubmitterConstructor =
  *
  * @example
  * ```ts
- * class MyElement extends LitElement {
+ * class MyElement extends mixinElementInternals(LitElement) {
  *   static {
  *     setupFormSubmitter(MyElement);
  *   }
@@ -70,8 +74,6 @@ type FormSubmitterConstructor =
  *   static formAssociated = true;
  *
  *   type: FormSubmitterType = 'submit';
- *
- *   [internals] = this.attachInternals();
  * }
  * ```
  *
@@ -82,18 +84,18 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
     return;
   }
 
-  (ctor as unknown as typeof ReactiveElement).addInitializer(instance => {
+  (ctor as unknown as typeof ReactiveElement).addInitializer((instance) => {
     const submitter = instance as FormSubmitter;
-    submitter.addEventListener('click', async event => {
+    submitter.addEventListener('click', async (event) => {
       const {type, [internals]: elementInternals} = submitter;
       const {form} = elementInternals;
       if (!form || type === 'button') {
         return;
       }
 
-      // Wait a microtask for event bubbling to complete.
-      await new Promise<void>(resolve => {
-        resolve();
+      // Wait a full task for event bubbling to complete.
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve);
       });
 
       if (event.defaultPrevented) {
@@ -109,13 +111,17 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
       // elements. This patches the dispatched submit event to add the correct
       // `submitter`.
       // See https://github.com/WICG/webcomponents/issues/814
-      form.addEventListener('submit', submitEvent => {
-        Object.defineProperty(submitEvent, 'submitter', {
-          configurable: true,
-          enumerable: true,
-          get: () => submitter,
-        });
-      }, {capture: true, once: true});
+      form.addEventListener(
+        'submit',
+        (submitEvent) => {
+          Object.defineProperty(submitEvent, 'submitter', {
+            configurable: true,
+            enumerable: true,
+            get: () => submitter,
+          });
+        },
+        {capture: true, once: true},
+      );
 
       elementInternals.setFormValue(submitter.value);
       form.requestSubmit();

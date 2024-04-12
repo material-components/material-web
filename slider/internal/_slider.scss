@@ -31,7 +31,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-slider-values();
+  $tokens: tokens.md-comp-slider-values(
+    $exclude-custom-properties: false,
+  );
 
   // The max clip is reduced by 1 full tick display which is 2x the container
   // size to account for always showing the active track on the outside
@@ -61,7 +63,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-slider-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     // Set these to avoid token test failures
@@ -161,7 +163,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   .track::before {
-    background-color: var(--_inactive-track-color);
+    background: var(--_inactive-track-color);
   }
 
   .tickmarks::before {
@@ -177,7 +179,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
       (1 / var(--_disabled-active-track-opacity)) *
         var(--_disabled-inactive-track-opacity)
     );
-    background-color: var(--_disabled-inactive-track-color);
+    background: var(--_disabled-inactive-track-color);
   }
 
   // active-track
@@ -189,7 +191,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   .track::after {
-    background-color: var(--_active-track-color);
+    background: var(--_active-track-color);
   }
 
   .tickmarks::after {
@@ -199,20 +201,16 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // rtl for active track clipping
-  @each $_rtl-selectors in _get-rtl-selectors('.track', '::after') {
-    #{$_rtl-selectors} {
-      clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
-    }
+  .track:dir(rtl)::after {
+    clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
   }
 
-  @each $_rtl-selectors in _get-rtl-selectors('.tickmarks', '::after') {
-    #{$_rtl-selectors} {
-      clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
-    }
+  .tickmarks:dir(rtl)::after {
+    clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
   }
 
   :host([disabled]) .track::after {
-    background-color: var(--_disabled-active-track-color);
+    background: var(--_disabled-active-track-color);
   }
 
   :host([disabled]) .tickmarks::before {
@@ -442,10 +440,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // in 'rtl', clip right side of "lesser" input
-  @each $_rtl-selector in _get-rtl-selectors('.ranged input.start') {
-    #{$_rtl-selector} {
-      clip-path: inset(0 0 0 $_clip-to-end);
-    }
+  .ranged input.start:dir(rtl) {
+    clip-path: inset(0 0 0 $_clip-to-end);
   }
 
   // clip right side of "end" input
@@ -454,10 +450,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // in 'rtl', clip left side of "greater" input
-  @each $_rtl-selector in _get-rtl-selectors('.ranged input.end') {
-    #{$_rtl-selector} {
-      clip-path: inset(0 $_clip-to-start 0 0);
-    }
+  .ranged input.end:dir(rtl) {
+    clip-path: inset(0 $_clip-to-start 0 0);
   }
 
   .onTop {
@@ -481,21 +475,6 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);
   }
-}
-
-// Returns a list of rtl selectors to construct distinct rulesets. Seprating
-// rulesets ensure they are not dropped on browsers where one is not supported;
-// note, `:where` cannot be used to create compound selectors that contain
-// pseudo elements
-// (e.g. this does not work: `:where(:host([dir="rtl"]) .foo::after)`),
-@function _get-rtl-selectors($selector: '', $suffix: '') {
-  @return (
-    // TODO(b/279152429) remove selectors other than `:dir` when browser
-    // support improves.
-    ':host-context([dir="rtl"]) #{$selector}#{$suffix}',
-    ':host([dir="rtl"]) #{$selector}#{$suffix}',
-    '#{$selector}:dir(rtl)#{$suffix}'
-  );
 }
 
 // Returns a background-image with sized circular ticks of the given color.
@@ -536,11 +515,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     transform: translateX(var(--_x-translate));
   }
 
-  @each $_rtl-selectors
-    in _get-rtl-selectors('input.#{$start-or-end}', '::-webkit-slider-thumb')
-  {
-    #{$_rtl-selectors} {
-      transform: translateX(calc(-1 * var(--_x-translate)));
-    }
+  input.#{$start-or-end}:dir(rtl)::-webkit-slider-thumb {
+    transform: translateX(calc(-1 * var(--_x-translate)));
   }
 }

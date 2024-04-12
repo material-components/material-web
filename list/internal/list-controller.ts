@@ -4,7 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {activateFirstItem, activateLastItem, activateNextItem, activatePreviousItem, getActiveItem, getFirstActivatableItem, ListItem} from './list-navigation-helpers.js';
+import {
+  activateFirstItem,
+  activateLastItem,
+  activateNextItem,
+  activatePreviousItem,
+  getActiveItem,
+  getFirstActivatableItem,
+  ListItem,
+} from './list-navigation-helpers.js';
 
 // TODO: move this file to List and make List use this
 
@@ -25,7 +33,7 @@ export const NavigableKeys = {
 /**
  * Default set of navigable keys.
  */
-export type NavigableKeys = typeof NavigableKeys[keyof typeof NavigableKeys];
+export type NavigableKeys = (typeof NavigableKeys)[keyof typeof NavigableKeys];
 
 /**
  * The configuration object to customize the behavior of the List Controller
@@ -63,6 +71,11 @@ export interface ListControllerConfig<Item extends ListItem> {
    * disabled.
    */
   isActivatable?: (item: Item) => boolean;
+  /**
+   * Whether or not navigating past the end of the list wraps to the beginning
+   * and vice versa. Defaults to true.
+   */
+  wrapNavigation?: () => boolean;
 }
 
 /**
@@ -76,6 +89,7 @@ export class ListController<Item extends ListItem> {
   private readonly activateItem: (item: Item) => void;
   private readonly isNavigableKey: (key: string) => boolean;
   private readonly isActivatable?: (item: Item) => boolean;
+  private readonly wrapNavigation: () => boolean;
 
   constructor(config: ListControllerConfig<Item>) {
     const {
@@ -86,6 +100,7 @@ export class ListController<Item extends ListItem> {
       activateItem,
       isNavigableKey,
       isActivatable,
+      wrapNavigation,
     } = config;
     this.isItem = isItem;
     this.getPossibleItems = getPossibleItems;
@@ -94,6 +109,7 @@ export class ListController<Item extends ListItem> {
     this.activateItem = activateItem;
     this.isNavigableKey = isNavigableKey;
     this.isActivatable = isActivatable;
+    this.wrapNavigation = wrapNavigation ?? (() => true);
   }
 
   /**
@@ -141,43 +157,62 @@ export class ListController<Item extends ListItem> {
 
     const activeItemRecord = getActiveItem(items, this.isActivatable);
 
-    if (activeItemRecord) {
-      activeItemRecord.item.tabIndex = -1;
-    }
-
     event.preventDefault();
 
     const isRtl = this.isRtl();
-    const inlinePrevious =
-        isRtl ? NavigableKeys.ArrowRight : NavigableKeys.ArrowLeft;
-    const inlineNext =
-        isRtl ? NavigableKeys.ArrowLeft : NavigableKeys.ArrowRight;
+    const inlinePrevious = isRtl
+      ? NavigableKeys.ArrowRight
+      : NavigableKeys.ArrowLeft;
+    const inlineNext = isRtl
+      ? NavigableKeys.ArrowLeft
+      : NavigableKeys.ArrowRight;
 
+    let nextActiveItem: Item | null = null;
     switch (key) {
       // Activate the next item
       case NavigableKeys.ArrowDown:
       case inlineNext:
-        activateNextItem(items, activeItemRecord, this.isActivatable);
+        nextActiveItem = activateNextItem(
+          items,
+          activeItemRecord,
+          this.isActivatable,
+          this.wrapNavigation(),
+        );
         break;
 
       // Activate the previous item
       case NavigableKeys.ArrowUp:
       case inlinePrevious:
-        activatePreviousItem(items, activeItemRecord, this.isActivatable);
+        nextActiveItem = activatePreviousItem(
+          items,
+          activeItemRecord,
+          this.isActivatable,
+          this.wrapNavigation(),
+        );
         break;
 
       // Activate the first item
       case NavigableKeys.Home:
-        activateFirstItem(items, this.isActivatable);
+        nextActiveItem = activateFirstItem(items, this.isActivatable);
         break;
 
       // Activate the last item
       case NavigableKeys.End:
-        activateLastItem(items, this.isActivatable);
+        nextActiveItem = activateLastItem(items, this.isActivatable);
         break;
 
       default:
         break;
+    }
+
+    if (
+      nextActiveItem &&
+      activeItemRecord &&
+      activeItemRecord.item !== nextActiveItem
+    ) {
+      // If a new item was activated, remove the tabindex of the previous
+      // activated item.
+      activeItemRecord.item.tabIndex = -1;
     }
   };
 
@@ -187,13 +222,18 @@ export class ListController<Item extends ListItem> {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activateNextItem(): Item|null {
+  activateNextItem(): Item | null {
     const items = this.items;
     const activeItemRecord = getActiveItem(items, this.isActivatable);
     if (activeItemRecord) {
       activeItemRecord.item.tabIndex = -1;
     }
-    return activateNextItem(items, activeItemRecord, this.isActivatable);
+    return activateNextItem(
+      items,
+      activeItemRecord,
+      this.isActivatable,
+      this.wrapNavigation(),
+    );
   }
 
   /**
@@ -202,13 +242,18 @@ export class ListController<Item extends ListItem> {
    *
    * @return The activated list item or `null` if there are no items.
    */
-  activatePreviousItem(): Item|null {
+  activatePreviousItem(): Item | null {
     const items = this.items;
     const activeItemRecord = getActiveItem(items, this.isActivatable);
     if (activeItemRecord) {
       activeItemRecord.item.tabIndex = -1;
     }
-    return activatePreviousItem(items, activeItemRecord, this.isActivatable);
+    return activatePreviousItem(
+      items,
+      activeItemRecord,
+      this.isActivatable,
+      this.wrapNavigation(),
+    );
   }
 
   /**
@@ -258,8 +303,10 @@ export class ListController<Item extends ListItem> {
       return;
     }
 
-    const firstActivatableItem =
-        getFirstActivatableItem(items, this.isActivatable);
+    const firstActivatableItem = getFirstActivatableItem(
+      items,
+      this.isActivatable,
+    );
 
     if (!firstActivatableItem) {
       return;

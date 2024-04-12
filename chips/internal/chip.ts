@@ -15,6 +15,8 @@ import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 
 /**
  * A chip component.
+ *
+ * @fires update-focus {Event} Dispatched when `disabled` is toggled. --bubbles
  */
 export abstract class Chip extends LitElement {
   static {
@@ -24,7 +26,7 @@ export abstract class Chip extends LitElement {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
-    delegatesFocus: true
+    delegatesFocus: true,
   };
 
   /**
@@ -32,7 +34,7 @@ export abstract class Chip extends LitElement {
    *
    * Disabled chips are not focusable, unless `always-focusable` is set.
    */
-  @property({type: Boolean}) disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * When true, allow disabled chips to be focused with arrow keys.
@@ -50,7 +52,17 @@ export abstract class Chip extends LitElement {
   @property() label = '';
 
   /**
+   * Only needed for SSR.
+   *
+   * Add this attribute when a chip has a `slot="icon"` to avoid a Flash Of
+   * Unstyled Content.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'has-icon'}) hasIcon =
+    false;
+
+  /**
    * The `id` of the action the primary focus ring and ripple are for.
+   * TODO(b/310046938): use the same id for both elements
    */
   protected abstract readonly primaryId: string;
 
@@ -87,16 +99,17 @@ export abstract class Chip extends LitElement {
   protected getContainerClasses(): ClassInfo {
     return {
       'disabled': this.disabled,
+      'has-icon': this.hasIcon,
     };
   }
 
   protected renderContainerContent() {
     return html`
       ${this.renderOutline()}
-      <md-focus-ring part="focus-ring"
-          for=${this.primaryId}></md-focus-ring>
-      <md-ripple for=${this.primaryId}
-          ?disabled=${this.rippleDisabled}></md-ripple>
+      <md-focus-ring part="focus-ring" for=${this.primaryId}></md-focus-ring>
+      <md-ripple
+        for=${this.primaryId}
+        ?disabled=${this.rippleDisabled}></md-ripple>
       ${this.renderPrimaryAction(this.renderPrimaryContent())}
     `;
   }
@@ -106,7 +119,7 @@ export abstract class Chip extends LitElement {
   }
 
   protected renderLeadingIcon(): TemplateResult {
-    return html`<slot name="icon"></slot>`;
+    return html`<slot name="icon" @slotchange=${this.handleIconChange}></slot>`;
   }
 
   protected abstract renderPrimaryAction(content: unknown): unknown;
@@ -119,5 +132,10 @@ export abstract class Chip extends LitElement {
       <span class="label">${this.label}</span>
       <span class="touch"></span>
     `;
+  }
+
+  private handleIconChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    this.hasIcon = slot.assignedElements({flatten: true}).length > 0;
   }
 }

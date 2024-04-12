@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {SecondaryTab} from './internal/secondary-tab.js';
-import {styles as secondaryStyles} from './internal/secondary-tab-styles.css.js';
-import {styles as sharedStyles} from './internal/tab-styles.css.js';
+import {styles as secondaryStyles} from './internal/secondary-tab-styles.js';
+import {styles as sharedStyles} from './internal/tab-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,8 +21,10 @@ declare global {
 /**
  * @summary Tab allow users to display a tab within a Tabs.
  *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-secondary-tab')
 export class MdSecondaryTab extends SecondaryTab {
-  static override styles = [sharedStyles, secondaryStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, secondaryStyles];
 }

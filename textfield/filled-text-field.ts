@@ -6,15 +6,15 @@
 
 import '../field/filled-field.js';
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
-import {styles as filledForcedColorsStyles} from './internal/filled-forced-colors-styles.css.js';
-import {styles as filledStyles} from './internal/filled-styles.css.js';
+import {styles as filledStyles} from './internal/filled-styles.js';
 import {FilledTextField} from './internal/filled-text-field.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
-export {TextFieldType} from './internal/text-field.js';
+export {type TextFieldType} from './internal/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,8 +29,7 @@ declare global {
  */
 @customElement('md-filled-text-field')
 export class MdFilledTextField extends FilledTextField {
-  static override styles =
-      [sharedStyles, filledStyles, filledForcedColorsStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, filledStyles];
 
   protected override readonly fieldTag = literal`md-filled-field`;
 }

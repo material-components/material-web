@@ -31,32 +31,30 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-radio-values();
+  $tokens: tokens.md-comp-radio-values(
+    $exclude-custom-properties: false,
+  );
 
   @layer {
     :host {
-      @each $token, $value in $tokens {
-        --_#{$token}: var(--md-radio-#{$token}, #{$value});
-      }
-
-      @include ripple.theme(
-        (
-          hover-color: var(--_hover-state-layer-color),
-          hover-opacity: var(--_hover-state-layer-opacity),
-          pressed-color: var(--_pressed-state-layer-color),
-          pressed-opacity: var(--_pressed-state-layer-opacity),
-        )
-      );
-
       display: inline-flex;
-      height: var(--_icon-size);
+      height: map.get($tokens, 'icon-size');
       outline: none;
       position: relative;
       vertical-align: top; // Fix extra space when placed inside display: block
-      width: var(--_icon-size);
+      width: map.get($tokens, 'icon-size');
       // Remove highlight color for mobile Safari
       -webkit-tap-highlight-color: transparent;
       cursor: pointer;
+
+      @include ripple.theme(
+        (
+          hover-color: map.get($tokens, 'hover-state-layer-color'),
+          hover-opacity: map.get($tokens, 'hover-state-layer-opacity'),
+          pressed-color: map.get($tokens, 'pressed-state-layer-color'),
+          pressed-opacity: map.get($tokens, 'pressed-state-layer-opacity'),
+        )
+      );
     }
 
     :host([disabled]) {
@@ -64,7 +62,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
 
     :host([touch-target='wrapper']) {
-      margin: max(0px, ((48px - var(--_icon-size)) / 2));
+      margin: max(0px, ((48px - map.get($tokens, 'icon-size')) / 2));
     }
 
     .container {
@@ -84,10 +82,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     .checked {
       @include ripple.theme(
         (
-          hover-color: var(--_selected-hover-state-layer-color),
-          hover-opacity: var(--_selected-hover-state-layer-opacity),
-          pressed-color: var(--_selected-pressed-state-layer-color),
-          pressed-opacity: var(--_selected-pressed-state-layer-opacity),
+          hover-color: map.get($tokens, 'selected-hover-state-layer-color'),
+          hover-opacity: map.get($tokens, 'selected-hover-state-layer-opacity'),
+          pressed-color: map.get($tokens, 'selected-pressed-state-layer-color'),
+          pressed-opacity:
+            map.get($tokens, 'selected-pressed-state-layer-opacity'),
         )
       );
     }
@@ -109,13 +108,13 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
     md-ripple {
       border-radius: 50%;
-      height: var(--_state-layer-size);
+      height: map.get($tokens, 'state-layer-size');
       inset: unset;
-      width: var(--_state-layer-size);
+      width: map.get($tokens, 'state-layer-size');
     }
 
     .icon {
-      fill: var(--_icon-color);
+      fill: map.get($tokens, 'icon-color');
       inset: 0;
       position: absolute;
     }
@@ -132,7 +131,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
 
     .checked .icon {
-      fill: var(--_selected-icon-color);
+      fill: map.get($tokens, 'selected-icon-color');
     }
 
     .checked .inner.circle {
@@ -157,37 +156,37 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
 
     :host(:hover) .icon {
-      fill: var(--_hover-icon-color);
+      fill: map.get($tokens, 'hover-icon-color');
     }
 
     :host(:focus-within) .icon {
-      fill: var(--_focus-icon-color);
+      fill: map.get($tokens, 'focus-icon-color');
     }
 
     :host(:active) .icon {
-      fill: var(--_pressed-icon-color);
+      fill: map.get($tokens, 'pressed-icon-color');
     }
 
     :host([disabled]) .icon {
-      fill: var(--_disabled-unselected-icon-color);
-      opacity: var(--_disabled-unselected-icon-opacity);
+      fill: map.get($tokens, 'disabled-unselected-icon-color');
+      opacity: map.get($tokens, 'disabled-unselected-icon-opacity');
     }
 
     :host(:hover) .checked .icon {
-      fill: var(--_selected-hover-icon-color);
+      fill: map.get($tokens, 'selected-hover-icon-color');
     }
 
     :host(:focus-within) .checked .icon {
-      fill: var(--_selected-focus-icon-color);
+      fill: map.get($tokens, 'selected-focus-icon-color');
     }
 
     :host(:active) .checked .icon {
-      fill: var(--_selected-pressed-icon-color);
+      fill: map.get($tokens, 'selected-pressed-icon-color');
     }
 
     :host([disabled]) .checked .icon {
-      fill: var(--_disabled-selected-icon-color);
-      opacity: var(--_disabled-selected-icon-opacity);
+      fill: map.get($tokens, 'disabled-selected-icon-color');
+      opacity: map.get($tokens, 'disabled-selected-icon-opacity');
     }
   }
 

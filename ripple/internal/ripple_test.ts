@@ -24,8 +24,7 @@ declare global {
 }
 
 @customElement('test-ripple')
-class TestRipple extends Ripple {
-}
+class TestRipple extends Ripple {}
 
 interface WithState {
   state: number;
@@ -74,7 +73,7 @@ describe('Ripple', () => {
     it('sets pressed class on begin press', async () => {
       const {harness, surface} = await setupTest();
       await harness.startTap();
-      jasmine.clock().tick(150);  // touch delay
+      jasmine.clock().tick(150); // touch delay
       await env.waitForStability();
 
       expect(surface).toHaveClass(RippleStateClasses.PRESSED);
@@ -83,10 +82,10 @@ describe('Ripple', () => {
     it('removes pressed class on end press', async () => {
       const {harness, surface} = await setupTest();
       await harness.startTap();
-      jasmine.clock().tick(150);  // touch delay
+      jasmine.clock().tick(150); // touch delay
       await harness.endTap();
       await harness.endTapClick();
-      jasmine.clock().tick(225);  // MINIMUM_PRESS_MS
+      jasmine.clock().tick(225); // MINIMUM_PRESS_MS
       await env.waitForStability();
 
       expect(surface).not.toHaveClass(RippleStateClasses.PRESSED);

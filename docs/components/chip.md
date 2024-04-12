@@ -10,7 +10,7 @@ dirname: chips
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-08-14' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-26' }
 tag: 'docType:reference'
 *-->
 
@@ -22,7 +22,7 @@ tag: 'docType:reference'
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/chips/)**
+[Material Web catalog](https://material-web.dev/components/chip/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
@@ -78,9 +78,9 @@ Choose the type of chip based on its purpose and author.
     text message replies.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <md-chip-set>
@@ -100,9 +100,9 @@ Chips should always appear in a set. Chip sets are
 that can display any type of chip or other toolbar items.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
 <h3>New event</h3>
@@ -119,9 +119,9 @@ All chips may display an optional icon. Input chips can specify if an avatar
 picture is displayed.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -142,9 +142,9 @@ Assist, filter, and suggestion chips can be elevated if the placement requires
 protection, such as on top of an image.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -208,9 +208,9 @@ Assist chips function as though the user asked an assistant to complete the
 action. They should appear dynamically and contextually in a UI.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -234,9 +234,9 @@ use tags or descriptive words to filter content. They can be a good alternative
 to toggle buttons or checkboxes.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -255,9 +255,9 @@ Filter chips can optionally be removable from the chip set. Removable chips have
 a trailing remove icon.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -282,9 +282,9 @@ Input chips whose icons are user images may add the `avatar` attribute to
 display the image in a larger circle.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -306,9 +306,9 @@ All input chips are removable. If an input chip does not have an action
 associated with clicking on it, it may be marked as `remove-only`.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -328,9 +328,9 @@ help narrow a user’s intent by presenting dynamically generated suggestions,
 such as possible responses or search filters.
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/usage-scenario-one.html" -->
+<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
 <!-- catalog-only-end -->
 
 ```html
@@ -352,7 +352,7 @@ terms of color, typography, and shape.
 Token                               | Default value
 ----------------------------------- | -------------------------------------
 `--md-assist-chip-outline-color`    | `--md-sys-color-outline`
-`--md-assist-chip-container-shape`  | `8px`
+`--md-assist-chip-container-shape`  | `--md-sys-shape-corner-small`
 `--md-assist-chip-icon-size`        | `18px`
 `--md-assist-chip-label-text-color` | `--md-sys-color-on-surface`
 `--md-assist-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
@@ -363,9 +363,9 @@ Token                               | Default value
 ### Assist chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>
@@ -386,7 +386,7 @@ Token                                       | Default value
 ------------------------------------------- | -------------
 `--md-filter-chip-selected-container-color` | `--md-sys-color-secondary-container`
 `--md-filter-chip-outline-color`            | `--md-sys-color-outline`
-`--md-filter-chip-container-shape`          | `8px`
+`--md-filter-chip-container-shape`          | `--md-sys-shape-corner-small`
 `--md-filter-chip-icon-size`                | `18px`
 `--md-filter-chip-label-text-color`         | `--md-sys-color-on-surface`
 `--md-filter-chip-label-text-font`          | `--md-sys-typescale-label-large-font`
@@ -397,9 +397,9 @@ Token                                       | Default value
 ### Filter chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>
@@ -420,7 +420,7 @@ Token                                       | Default value
 Token                              | Default value
 ---------------------------------- | -------------------------------------
 `--md-input-chip-outline-color`    | `--md-sys-color-outline`
-`--md-input-chip-container-shape`  | `8px`
+`--md-input-chip-container-shape`  | `--md-sys-shape-corner-small`
 `--md-input-chip-icon-size`        | `18px`
 `--md-input-chip-label-text-color` | `--md-sys-color-on-surface`
 `--md-input-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
@@ -431,9 +431,9 @@ Token                              | Default value
 ### Input chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>
@@ -453,7 +453,7 @@ Token                              | Default value
 Token                                   | Default value
 --------------------------------------- | -------------------------------------
 `--md-suggestion-chip-outline-color`    | `--md-sys-color-outline`
-`--md-suggestion-chip-container-shape`  | `8px`
+`--md-suggestion-chip-container-shape`  | `--md-sys-shape-corner-small`
 `--md-suggestion-chip-icon-size`        | `18px`
 `--md-suggestion-chip-label-text-color` | `--md-sys-color-on-surface`
 `--md-suggestion-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
@@ -464,9 +464,9 @@ Token                                   | Default value
 ### Suggestion chip example
 
 <!-- no-catalog-start -->
-<!-- TODO: add image -->
+<!-- Need to add image -->
 <!-- no-catalog-end -->
-<!-- TODO: catalog-include "figures/<component>/theming.html" -->
+<!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
 <style>
@@ -494,7 +494,7 @@ Token                                   | Default value
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`chips` |  | `Chip[]` | `undefined` | 
+`chips` |  | `Chip[]` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -506,9 +506,9 @@ Property | Attribute | Type | Default | Description
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`elevated` | `elevated` | `boolean` | `false` | 
-`href` | `href` | `string` | `''` | 
-`target` | `target` | `string` | `''` | 
+`elevated` | `elevated` | `boolean` | `false` |
+`href` | `href` | `string` | `''` |
+`target` | `target` | `string` | `''` |
 `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set.
 `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed.
 `label` | `label` | `string` | `''` | The label of the chip.
@@ -523,14 +523,14 @@ Property | Attribute | Type | Default | Description
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`elevated` | `elevated` | `boolean` | `false` | 
-`removable` | `removable` | `boolean` | `false` | 
-`selected` | `selected` | `boolean` | `false` | 
+`elevated` | `elevated` | `boolean` | `false` |
+`removable` | `removable` | `boolean` | `false` |
+`selected` | `selected` | `boolean` | `false` |
 `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set.
 `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed.
 `label` | `label` | `string` | `''` | The label of the chip.
-`handleTrailingActionFocus` |  | `() => void` | `undefined` | 
-`ariaLabelRemove` |  | `string` | `undefined` | 
+`handleTrailingActionFocus` |  | `() => void` | `undefined` |
+`ariaLabelRemove` |  | `string` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -542,16 +542,16 @@ Property | Attribute | Type | Default | Description
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`avatar` | `avatar` | `boolean` | `false` | 
-`href` | `href` | `string` | `''` | 
-`target` | `target` | `string` | `''` | 
-`removeOnly` | `remove-only` | `boolean` | `false` | 
-`selected` | `selected` | `boolean` | `false` | 
+`avatar` | `avatar` | `boolean` | `false` |
+`href` | `href` | `string` | `''` |
+`target` | `target` | `string` | `''` |
+`removeOnly` | `remove-only` | `boolean` | `false` |
+`selected` | `selected` | `boolean` | `false` |
 `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set.
 `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed.
 `label` | `label` | `string` | `''` | The label of the chip.
-`handleTrailingActionFocus` |  | `() => void` | `undefined` | 
-`ariaLabelRemove` |  | `string` | `undefined` | 
+`handleTrailingActionFocus` |  | `() => void` | `undefined` |
+`ariaLabelRemove` |  | `string` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -563,9 +563,9 @@ Property | Attribute | Type | Default | Description
 
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
-`elevated` | `elevated` | `boolean` | `false` | 
-`href` | `href` | `string` | `''` | 
-`target` | `target` | `string` | `''` | 
+`elevated` | `elevated` | `boolean` | `false` |
+`href` | `href` | `string` | `''` |
+`target` | `target` | `string` | `''` |
 `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set.
 `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed.
 `label` | `label` | `string` | `''` | The label of the chip.

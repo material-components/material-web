@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles} from './internal/filled-tonal-styles.css.js';
+import {styles} from './internal/filled-tonal-styles.js';
 import {IconButton} from './internal/icon-button.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -30,10 +31,13 @@ declare global {
  * __Example usages:__
  * - Add to Favorites
  * - Print
+ *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-filled-tonal-icon-button')
 export class MdFilledTonalIconButton extends IconButton {
-  static override styles = [sharedStyles, styles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, styles];
 
   protected override getRenderClasses() {
     return {

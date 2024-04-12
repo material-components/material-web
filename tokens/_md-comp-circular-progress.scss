@@ -8,10 +8,10 @@
 @use 'sass:math';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './v0_192/md-comp-circular-progress-indicator';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -38,8 +38,12 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: validate.values(
     md-comp-circular-progress-indicator.values(
       $deps,
       $exclude-hardcoded-values
@@ -59,6 +63,18 @@ $_default: (
       'active-indicator-width',
       math.div($width, $size-without-padding) * 100
     );
+  }
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-circular-progress-#{$token}, #{$value})
+      );
+    }
   }
 
   @return $tokens;

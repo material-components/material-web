@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Tabs} from './internal/tabs.js';
-import {styles} from './internal/tabs-styles.css.js';
+import {styles} from './internal/tabs-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -19,8 +20,10 @@ declare global {
 /**
  * @summary Tabs displays a list of selectable tabs.
  *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-tabs')
 export class MdTabs extends Tabs {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

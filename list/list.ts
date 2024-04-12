@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {List} from './internal/list.js';
-import {styles} from './internal/list-styles.css.js';
+import {styles} from './internal/list-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -36,5 +37,5 @@ declare global {
  */
 @customElement('md-list')
 export class MdList extends List {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

@@ -8,10 +8,11 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-motion';
 @use './md-sys-shape';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -22,6 +23,10 @@ $supported-tokens: (
   'inward-offset',
   'outward-offset',
   'shape',
+  'shape-end-end',
+  'shape-end-start',
+  'shape-start-end',
+  'shape-start-start',
   'width',
   // go/keep-sorted end
 );
@@ -32,7 +37,11 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $tokens: (
     'active-width': if($exclude-hardcoded-values, null, 8px),
     'color': map.get($deps, 'md-sys-color', 'secondary'),
@@ -43,5 +52,29 @@ $_default: (
     'width': if($exclude-hardcoded-values, null, 3px),
   );
 
-  @return values.validate($tokens, $supported-tokens: $supported-tokens);
+  $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'shape');
+  $tokens: validate.values(
+    $tokens,
+    $supported-tokens: $supported-tokens,
+    $new-tokens: $new-tokens
+  );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-focus-ring-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-focus-ring-#{$token}, #{$value})
+      );
+    }
+  }
+
+  @return $tokens;
 }

@@ -12,7 +12,7 @@ import {Button} from './button.js';
  * An outlined button component.
  */
 export class OutlinedButton extends Button {
-  protected override renderOutline() {
-    return html`<span class="button__outline"></span>`;
+  protected override renderElevationOrOutline() {
+    return html`<div class="outline"></div>`;
   }
 }

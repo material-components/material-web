@@ -12,16 +12,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-outlined-button-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-outlined-button-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -34,37 +25,23 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-button-values();
+  $tokens: tokens.md-comp-outlined-button-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'container-shape');
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-outlined-button-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     --_container-color: none;
     --_disabled-container-color: none;
     --_disabled-container-opacity: 0;
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-outlined-button-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-outlined-button-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-outlined-button-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-outlined-button-container-shape-end-start,
-      var(--_container-shape)
-    );
   }
 
-  .button__outline {
+  .outline {
     inset: 0;
     border-style: solid;
     position: absolute;
@@ -74,37 +51,39 @@
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);
     border-end-end-radius: var(--_container-shape-end-end);
+  }
 
-    .button:active & {
-      border-color: var(--_pressed-outline-color);
+  :host(:active) .outline {
+    border-color: var(--_pressed-outline-color);
+  }
+
+  :host([disabled]) .outline {
+    border-color: var(--_disabled-outline-color);
+    opacity: var(--_disabled-outline-opacity);
+  }
+
+  @media (forced-colors: active) {
+    :host([disabled]) .background {
+      // Only outlined buttons change their border when disabled to distinguish
+      // them from other buttons that add a border for increased visibility in
+      // HCM.
+      border-color: GrayText;
     }
 
-    .button:disabled & {
-      border-color: var(--_disabled-outline-color);
-      opacity: var(--_disabled-outline-opacity);
-    }
-
-    @media (forced-colors: active) {
-      .button:disabled & {
-        opacity: 1;
-      }
+    :host([disabled]) .outline {
+      opacity: 1;
     }
   }
 
-  .button__outline,
-  .button__ripple {
+  .outline,
+  md-ripple {
     border-width: var(--_outline-width);
   }
 
-  .button__ripple {
+  md-ripple {
     inline-size: calc(100% - 2 * var(--_outline-width));
     block-size: calc(100% - 2 * var(--_outline-width));
     border-style: solid;
     border-color: transparent;
   }
-}
-
-@function _resolve-tokens($tokens) {
-  $tokens: shared.remove-unsupported-tokens($tokens);
-  @return $tokens;
 }

@@ -25,13 +25,11 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-ripple-values();
+  $tokens: tokens.md-comp-ripple-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-ripple-#{$token}, #{$value});
-    }
-
     display: flex;
     margin: auto;
     pointer-events: none;
@@ -66,7 +64,7 @@
     }
 
     &::before {
-      background-color: var(--_hover-color);
+      background-color: map.get($tokens, 'hover-color');
       inset: 0;
       transition: opacity 15ms linear, background-color 15ms linear;
     }
@@ -75,7 +73,7 @@
       // press ripple fade-out
       background: radial-gradient(
         closest-side,
-        var(--_pressed-color) max(calc(100% - 70px), 65%),
+        map.get($tokens, 'pressed-color') max(calc(100% - 70px), 65%),
         transparent 100%
       );
       transform-origin: center center;
@@ -84,13 +82,13 @@
   }
 
   .hovered::before {
-    background-color: var(--_hover-color);
-    opacity: var(--_hover-opacity);
+    background-color: map.get($tokens, 'hover-color');
+    opacity: map.get($tokens, 'hover-opacity');
   }
 
   .pressed::after {
     // press ripple fade-in
-    opacity: var(--_pressed-opacity);
+    opacity: map.get($tokens, 'pressed-opacity');
     transition-duration: 105ms;
   }
 }

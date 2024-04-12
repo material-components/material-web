@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Radio} from './internal/radio.js';
-import {styles} from './internal/radio-styles.css.js';
+import {styles} from './internal/radio-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -33,5 +34,5 @@ declare global {
  */
 @customElement('md-radio')
 export class MdRadio extends Radio {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

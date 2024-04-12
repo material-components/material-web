@@ -36,322 +36,311 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-field-values();
+  $tokens: tokens.md-comp-outlined-field-values(
+    $exclude-custom-properties: false,
+  );
 
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-outlined-field-#{$token}, #{$value});
+  @layer styles {
+    :host {
+      // Only use the logical properties.
+      $tokens: map.remove($tokens, 'container-shape');
+      @each $token, $value in $tokens {
+        --_#{$token}: #{$value};
+      }
     }
 
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-outlined-field-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-outlined-field-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-outlined-field-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-outlined-field-container-shape-end-start,
-      var(--_container-shape)
-    );
-  }
+    .outline {
+      border-color: var(--_outline-color);
+      border-radius: inherit;
+      display: flex;
+      // Allow events to target elements underneath the outline, such as icons.
+      pointer-events: none;
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+    }
 
-  .outline {
-    border-color: var(--_outline-color);
-    border-radius: inherit;
-    color: var(--_outline-color); // Needed for Firefox HCM
-    display: flex;
-    // Allow events to target elements underneath the outline, such as icons.
-    pointer-events: none;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-  }
+    .outline-start,
+    .outline-panel-inactive,
+    .outline-panel-active,
+    .outline-end {
+      // ::before is inactive border, ::after is active border. Borders are
+      // absolutely positioned within their elements.
+      &::before,
+      &::after {
+        border: inherit;
+        content: '';
+        inset: 0;
+        position: absolute;
+      }
+    }
 
-  .outline-start,
-  .outline-panel-inactive,
-  .outline-panel-active,
-  .outline-end {
-    // ::before is inactive border, ::after is active border. Borders are
-    // absolutely positioned within their elements.
-    &::before,
-    &::after {
+    .outline-start,
+    .outline-end {
       border: inherit;
-      content: '';
+      border-radius: inherit;
+      box-sizing: border-box;
+      position: relative;
+
+      &::before,
+      &::after {
+        border-bottom-style: solid;
+        border-top-style: solid;
+      }
+
+      &::after {
+        opacity: 0;
+        transition: opacity map.get($_md-sys-motion, 'duration-short3')
+          map.get($_md-sys-motion, 'easing-emphasized');
+      }
+    }
+
+    .focused .outline-start::after,
+    .focused .outline-end::after {
+      opacity: 1;
+    }
+
+    .outline-start {
+      &::before,
+      &::after {
+        border-inline-start-style: solid;
+        border-inline-end-style: none;
+        border-start-start-radius: inherit;
+        border-start-end-radius: 0;
+        border-end-start-radius: inherit;
+        border-end-end-radius: 0;
+        margin-inline-end: var(--_outline-label-padding);
+      }
+    }
+
+    .outline-end {
+      flex-grow: 1;
+      margin-inline-start: calc(-1 * var(--_outline-label-padding));
+
+      &::before,
+      &::after {
+        border-inline-start-style: none;
+        border-inline-end-style: solid;
+        border-start-start-radius: 0;
+        border-start-end-radius: inherit;
+        border-end-start-radius: 0;
+        border-end-end-radius: inherit;
+      }
+    }
+
+    .outline-notch {
+      align-items: flex-start;
+      border: inherit;
+      display: flex;
+      margin-inline-start: calc(-1 * var(--_outline-label-padding));
+      margin-inline-end: var(--_outline-label-padding);
+      max-width: calc(100% - var(--_leading-space) - var(--_trailing-space));
+      padding: 0 var(--_outline-label-padding);
+      position: relative;
+    }
+
+    .no-label .outline-notch {
+      display: none;
+    }
+
+    .outline-panel-inactive,
+    .outline-panel-active {
+      border: inherit;
+      border-bottom-style: solid;
       inset: 0;
       position: absolute;
+
+      &::before,
+      &::after {
+        border-top-style: solid;
+        border-bottom: none;
+        bottom: auto;
+        transform: scaleX(1);
+        transition: transform map.get($_md-sys-motion, 'duration-short3')
+          map.get($_md-sys-motion, 'easing-emphasized');
+      }
+
+      // Note: no need to do any RTL flipping here. If RTLCSS flips this, it's also
+      // ok, we just need one to be left and one to be right.
+      &::before {
+        right: 50%;
+        transform-origin: top left;
+      }
+
+      &::after {
+        left: 50%;
+        transform-origin: top right;
+      }
     }
-  }
 
-  .outline-start,
-  .outline-end {
-    border: inherit;
-    border-radius: inherit;
-    box-sizing: border-box;
-    position: relative;
-
-    &::before,
-    &::after {
-      border-bottom-style: solid;
-      border-top-style: solid;
+    .populated .outline-panel-inactive,
+    .populated .outline-panel-active,
+    .focused .outline-panel-inactive,
+    .focused .outline-panel-active {
+      &::before,
+      &::after {
+        transform: scaleX(0);
+      }
     }
 
-    &::after {
+    .outline-panel-active {
       opacity: 0;
       transition: opacity map.get($_md-sys-motion, 'duration-short3')
         map.get($_md-sys-motion, 'easing-emphasized');
     }
-  }
 
-  .focused .outline-start::after,
-  .focused .outline-end::after {
-    opacity: 1;
-  }
-
-  .outline-start {
-    &::before,
-    &::after {
-      border-inline-start-style: solid;
-      border-inline-end-style: none;
-      border-start-start-radius: inherit;
-      border-start-end-radius: 0;
-      border-end-start-radius: inherit;
-      border-end-end-radius: 0;
-      margin-inline-end: var(--_outline-label-padding);
-    }
-  }
-
-  .outline-end {
-    flex-grow: 1;
-    margin-inline-start: calc(-1 * var(--_outline-label-padding));
-
-    &::before,
-    &::after {
-      border-inline-start-style: none;
-      border-inline-end-style: solid;
-      border-start-start-radius: 0;
-      border-start-end-radius: inherit;
-      border-end-start-radius: 0;
-      border-end-end-radius: inherit;
-    }
-  }
-
-  .outline-notch {
-    align-items: flex-start;
-    border: inherit;
-    display: flex;
-    margin-inline-start: calc(-1 * var(--_outline-label-padding));
-    margin-inline-end: var(--_outline-label-padding);
-    max-width: calc(100% - var(--_leading-space) - var(--_trailing-space));
-    padding: 0 var(--_outline-label-padding);
-    position: relative;
-  }
-
-  .no-label .outline-notch {
-    display: none;
-  }
-
-  .outline-panel-inactive,
-  .outline-panel-active {
-    border: inherit;
-    border-bottom-style: solid;
-    inset: 0;
-    position: absolute;
-
-    &::before,
-    &::after {
-      border-top-style: solid;
-      border-bottom: none;
-      bottom: auto;
-      transform: scaleX(1);
-      transition: transform map.get($_md-sys-motion, 'duration-short3')
-        map.get($_md-sys-motion, 'easing-emphasized');
+    .focused .outline-panel-active {
+      opacity: 1;
     }
 
-    // Note: no need to do any RTL flipping here. If RTLCSS flips this, it's also
-    // ok, we just need one to be left and one to be right.
-    &::before {
-      right: 50%;
-      transform-origin: top left;
+    .outline-label {
+      display: flex;
+      max-width: 100%;
+      // Center the floating label within the outline stroke
+      transform: translateY(calc(-100% + var(--_label-text-padding-bottom)));
     }
 
-    &::after {
-      left: 50%;
-      transform-origin: top right;
-    }
-  }
-
-  .populated .outline-panel-inactive,
-  .populated .outline-panel-active,
-  .focused .outline-panel-inactive,
-  .focused .outline-panel-active {
-    &::before,
-    &::after {
-      transform: scaleX(0);
-    }
-  }
-
-  .outline-panel-active {
-    opacity: 0;
-    transition: opacity map.get($_md-sys-motion, 'duration-short3')
-      map.get($_md-sys-motion, 'easing-emphasized');
-  }
-
-  .focused .outline-panel-active {
-    opacity: 1;
-  }
-
-  .outline-label {
-    display: flex;
-    max-width: 100%;
-    // Center the floating label within the outline stroke
-    transform: translateY(calc(-100% + var(--_label-text-padding-bottom)));
-  }
-
-  // Add padding that will grow to compensate for the outline's shape.
-  // This is needed to prevent the outline border from clipping with the label
-  // and is mirrored in the container padding to align the content and resting
-  // label with the adjusted floating label.
-  $shape-start: max(
-    var(--_container-shape-start-start),
-    var(--_container-shape-end-start)
-  );
-  $shape-end: max(
-    var(--_container-shape-start-end),
-    var(--_container-shape-end-end)
-  );
-  $start-space: max(
-    var(--_leading-space),
-    $shape-start + var(--_outline-label-padding)
-  );
-  $end-space: max(var(--_trailing-space), $shape-end);
-
-  .outline-start,
-  .field:not(.with-start) .content ::slotted(*) {
-    padding-inline-start: $start-space;
-  }
-
-  .field:not(.with-start) .label-wrapper {
-    margin-inline-start: $start-space;
-  }
-
-  .field:not(.with-end) .content ::slotted(*) {
-    padding-inline-end: $end-space;
-  }
-
-  .field:not(.with-end) .label-wrapper {
-    margin-inline-end: $end-space;
-  }
-
-  .outline-start::before,
-  .outline-end::before,
-  .outline-panel-inactive,
-  .outline-panel-inactive::before,
-  .outline-panel-inactive::after {
-    border-width: var(--_outline-width);
-  }
-
-  // States
-
-  :hover .outline {
-    border-color: var(--_hover-outline-color);
-    color: var(--_hover-outline-color); // Needed for Firefox HCM
-  }
-
-  :hover .outline-start::before,
-  :hover .outline-end::before,
-  :hover .outline-panel-inactive,
-  :hover .outline-panel-inactive::before,
-  :hover .outline-panel-inactive::after {
-    border-width: var(--_hover-outline-width);
-  }
-
-  .focused .outline {
-    border-color: var(--_focus-outline-color);
-    color: var(--_focus-outline-color); // Needed for Firefox HCM
-  }
-
-  .outline-start::after,
-  .outline-end::after,
-  .outline-panel-active,
-  .outline-panel-active::before,
-  .outline-panel-active::after {
-    border-width: var(--_focus-outline-width);
-  }
-
-  .disabled .outline {
-    border-color: var(--_disabled-outline-color);
-    color: var(--_disabled-outline-color); // Needed for Firefox HCM
-  }
-
-  .disabled .outline-start,
-  .disabled .outline-end,
-  .disabled .outline-panel-inactive {
-    opacity: var(--_disabled-outline-opacity);
-  }
-
-  .disabled .outline-start::before,
-  .disabled .outline-end::before,
-  .disabled .outline-panel-inactive,
-  .disabled .outline-panel-inactive::before,
-  .disabled .outline-panel-inactive::after {
-    border-width: var(--_disabled-outline-width);
-  }
-
-  .error .outline {
-    border-color: var(--_error-outline-color);
-    color: var(--_error-outline-color); // Needed for Firefox HCM
-  }
-
-  .error:hover .outline {
-    border-color: var(--_error-hover-outline-color);
-    // Needed for Firefox HCM
-    color: var(--_error-hover-outline-color);
-  }
-
-  .error.focused .outline {
-    border-color: var(--_error-focus-outline-color);
-    // Needed for Firefox HCM
-    color: var(--_error-focus-outline-color);
-  }
-
-  // Move the container up and to the left so that the resize handle doesn't
-  // overlap the focus outline. Content is moved back the opposite direction.
-  .resizable .container {
-    bottom: var(--_focus-outline-width);
-    inset-inline-end: var(--_focus-outline-width);
-    // Ensures the container doesn't create an overhang that can be clicked on.
-    clip-path: inset(
-      var(--_focus-outline-width) 0 0 var(--_focus-outline-width)
+    // Add padding that will grow to compensate for the outline's shape.
+    // This is needed to prevent the outline border from clipping with the label
+    // and is mirrored in the container padding to align the content and resting
+    // label with the adjusted floating label.
+    $shape-start: max(
+      var(--_container-shape-start-start),
+      var(--_container-shape-end-start)
     );
-  }
+    $shape-end: max(
+      var(--_container-shape-start-end),
+      var(--_container-shape-end-end)
+    );
+    $start-space: max(
+      var(--_leading-space),
+      $shape-start + var(--_outline-label-padding)
+    );
+    $end-space: max(var(--_trailing-space), $shape-end);
 
-  .resizable .container > * {
-    top: var(--_focus-outline-width);
-    inset-inline-start: var(--_focus-outline-width);
-  }
+    .outline-start,
+    .field:not(.with-start) .content ::slotted(*) {
+      padding-inline-start: $start-space;
+    }
 
-  // TODO(https://bugs.chromium.org/p/chromium/issues/detail?id=1420655):
-  // remove :host and :host-context once Chrome supports :dir
-  :host-context([dir='rtl']),
-  :host([dir='rtl']) {
+    .field:not(.with-start) .label-wrapper {
+      margin-inline-start: $start-space;
+    }
+
+    .field:not(.with-end) .content ::slotted(*) {
+      padding-inline-end: $end-space;
+    }
+
+    .field:not(.with-end) .label-wrapper {
+      margin-inline-end: $end-space;
+    }
+
+    .outline-start::before,
+    .outline-end::before,
+    .outline-panel-inactive,
+    .outline-panel-inactive::before,
+    .outline-panel-inactive::after {
+      border-width: var(--_outline-width);
+    }
+
+    // States
+
+    :hover .outline {
+      border-color: var(--_hover-outline-color);
+      color: var(--_hover-outline-color); // Needed for Firefox HCM
+    }
+
+    :hover .outline-start::before,
+    :hover .outline-end::before,
+    :hover .outline-panel-inactive,
+    :hover .outline-panel-inactive::before,
+    :hover .outline-panel-inactive::after {
+      border-width: var(--_hover-outline-width);
+    }
+
+    .focused .outline {
+      border-color: var(--_focus-outline-color);
+      color: var(--_focus-outline-color); // Needed for Firefox HCM
+    }
+
+    .outline-start::after,
+    .outline-end::after,
+    .outline-panel-active,
+    .outline-panel-active::before,
+    .outline-panel-active::after {
+      border-width: var(--_focus-outline-width);
+    }
+
+    .disabled .outline {
+      border-color: var(--_disabled-outline-color);
+      color: var(--_disabled-outline-color); // Needed for Firefox HCM
+    }
+
+    .disabled .outline-start,
+    .disabled .outline-end,
+    .disabled .outline-panel-inactive {
+      opacity: var(--_disabled-outline-opacity);
+    }
+
+    .disabled .outline-start::before,
+    .disabled .outline-end::before,
+    .disabled .outline-panel-inactive,
+    .disabled .outline-panel-inactive::before,
+    .disabled .outline-panel-inactive::after {
+      border-width: var(--_disabled-outline-width);
+    }
+
+    .error .outline {
+      border-color: var(--_error-outline-color);
+      color: var(--_error-outline-color); // Needed for Firefox HCM
+    }
+
+    .error:hover .outline {
+      border-color: var(--_error-hover-outline-color);
+      // Needed for Firefox HCM
+      color: var(--_error-hover-outline-color);
+    }
+
+    .error.focused .outline {
+      border-color: var(--_error-focus-outline-color);
+      // Needed for Firefox HCM
+      color: var(--_error-focus-outline-color);
+    }
+
+    // Move the container up and to the left so that the resize handle doesn't
+    // overlap the focus outline. Content is moved back the opposite direction.
     .resizable .container {
+      bottom: var(--_focus-outline-width);
+      inset-inline-end: var(--_focus-outline-width);
+      // Ensures the container doesn't create an overhang that can be clicked on.
+      clip-path: inset(
+        var(--_focus-outline-width) 0 0 var(--_focus-outline-width)
+      );
+    }
+
+    .resizable .container > * {
+      top: var(--_focus-outline-width);
+      inset-inline-start: var(--_focus-outline-width);
+    }
+
+    .resizable .container:dir(rtl) {
       clip-path: inset(
         var(--_focus-outline-width) var(--_focus-outline-width) 0 0
       );
     }
   }
 
-  .resizable .container:dir(rtl) {
-    clip-path: inset(
-      var(--_focus-outline-width) var(--_focus-outline-width) 0 0
-    );
+  @layer hcm {
+    @media (forced-colors: active) {
+      .disabled .outline {
+        border-color: GrayText;
+        color: GrayText; // Needed for Firefox HCM
+      }
+
+      .disabled :is(.outline-start, .outline-end, .outline-panel-inactive) {
+        opacity: 1;
+      }
+    }
   }
 }

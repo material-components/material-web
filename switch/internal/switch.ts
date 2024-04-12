@@ -7,12 +7,33 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../../internal/controller/events.js';
+import {
+  dispatchActivationClick,
+  isActivationClick,
+} from '../../internal/events/form-label-activation.js';
+import {redispatchEvent} from '../../internal/events/redispatch-event.js';
+import {
+  createValidator,
+  getValidityAnchor,
+  mixinConstraintValidation,
+} from '../../labs/behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {
+  getFormState,
+  getFormValue,
+  mixinFormAssociated,
+} from '../../labs/behaviors/form-associated.js';
+import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
+
+// Separate variable needed for closure.
+const switchBaseClass = mixinConstraintValidation(
+  mixinFormAssociated(mixinElementInternals(LitElement)),
+);
 
 /**
  * @fires input {InputEvent} Fired whenever `selected` changes due to user
@@ -20,22 +41,16 @@ import {dispatchActivationClick, isActivationClick, redispatchEvent} from '../..
  * @fires change {Event} Fired whenever `selected` changes due to user
  * interaction (bubbles).
  */
-export class Switch extends LitElement {
+export class Switch extends switchBaseClass {
   static {
     requestUpdateOnAriaChange(Switch);
   }
 
   /** @nocollapse */
-  static override shadowRootOptions:
-      ShadowRootInit = {mode: 'open', delegatesFocus: true};
-
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
-  /**
-   * Disables the switch and makes it non-interactive.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  static override shadowRootOptions: ShadowRootInit = {
+    mode: 'open',
+    delegatesFocus: true,
+  };
 
   /**
    * Puts the switch in the selected state and sets the form submission value to
@@ -69,138 +84,19 @@ export class Switch extends LitElement {
    */
   @property() value = 'on';
 
-  /**
-   * The HTML name to use in form submission.
-   */
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.internals.form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this.internals.labels;
-  }
-
-  /**
-   * Returns a ValidityState object that represents the validity states of the
-   * switch.
-   *
-   * Note that switches will only set `valueMissing` if `required` and not
-   * selected.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#validation
-   */
-  get validity() {
-    this.syncValidity();
-    return this.internals.validity;
-  }
-
-  /**
-   * Returns the native validation error message.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
-   */
-  get validationMessage() {
-    this.syncValidity();
-    return this.internals.validationMessage;
-  }
-
-  /**
-   * Returns whether an element will successfully validate based on forms
-   * validation rules and constraints.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
-   */
-  get willValidate() {
-    this.syncValidity();
-    return this.internals.willValidate;
-  }
-
-  @query('input') private readonly input!: HTMLInputElement|null;
-  // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
-  // Replace with this.internals.validity.customError when resolved.
-  private hasCustomValidityError = false;
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  @query('input') private readonly input!: HTMLInputElement | null;
 
   constructor() {
     super();
     if (!isServer) {
       this.addEventListener('click', (event: MouseEvent) => {
-        if (!isActivationClick(event)) {
+        if (!isActivationClick(event) || !this.input) {
           return;
         }
         this.focus();
-        dispatchActivationClick(this.input!);
+        dispatchActivationClick(this.input);
       });
     }
-  }
-
-  /**
-   * Checks the switch's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
-   *
-   * @return true if the switch is valid, or false if not.
-   */
-  checkValidity() {
-    this.syncValidity();
-    return this.internals.checkValidity();
-  }
-
-  /**
-   * Checks the switch's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * The `validationMessage` is reported to the user by the browser. Use
-   * `setCustomValidity()` to customize the `validationMessage`.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity
-   *
-   * @return true if the switch is valid, or false if not.
-   */
-  reportValidity() {
-    this.syncValidity();
-    return this.internals.reportValidity();
-  }
-
-  /**
-   * Sets the switch's native validation error message. This is used to
-   * customize `validationMessage`.
-   *
-   * When the error is not an empty string, the switch is considered invalid
-   * and `validity.customError` will be true.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity
-   *
-   * @param error The error message to display.
-   */
-  setCustomValidity(error: string) {
-    this.hasCustomValidityError = !!error;
-    this.internals.setValidity({customError: !!error}, error, this.getInput());
-  }
-
-  protected override update(changed: PropertyValues<Switch>) {
-    const state = String(this.selected);
-    this.internals.setFormValue(this.selected ? this.value : null, state);
-    super.update(changed);
   }
 
   protected override render(): TemplateResult {
@@ -218,21 +114,13 @@ export class Switch extends LitElement {
           ?checked=${this.selected}
           ?disabled=${this.disabled}
           ?required=${this.required}
-          @change=${this.handleChange}
-        >
+          @input=${this.handleInput}
+          @change=${this.handleChange} />
 
         <md-focus-ring part="focus-ring" for="switch"></md-focus-ring>
-        <span class="track">
-          ${this.renderHandle()}
-        </span>
+        <span class="track"> ${this.renderHandle()} </span>
       </div>
     `;
-  }
-
-  protected override updated() {
-    // Sync validity when properties change, since validation properties may
-    // have changed.
-    this.syncValidity();
   }
 
   private getRenderClasses(): ClassInfo {
@@ -272,9 +160,12 @@ export class Switch extends LitElement {
    */
   private renderOnIcon() {
     return html`
-      <svg class="icon icon--on" viewBox="0 0 24 24">
-        <path d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z"/>
-      </svg>
+      <slot class="icon icon--on" name="on-icon">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M9.55 18.2 3.65 12.3 5.275 10.675 9.55 14.95 18.725 5.775 20.35 7.4Z" />
+        </svg>
+      </slot>
     `;
   }
 
@@ -283,9 +174,12 @@ export class Switch extends LitElement {
    */
   private renderOffIcon() {
     return html`
-      <svg class="icon icon--off" viewBox="0 0 24 24">
-        <path d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z"/>
-      </svg>
+      <slot class="icon icon--off" name="off-icon">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M6.4 19.2 4.8 17.6 10.4 12 4.8 6.4 6.4 4.8 12 10.4 17.6 4.8 19.2 6.4 13.6 12 19.2 17.6 17.6 19.2 12 13.6Z" />
+        </svg>
+      </slot>
     `;
   }
 
@@ -297,52 +191,47 @@ export class Switch extends LitElement {
     return this.icons || this.showOnlySelectedIcon;
   }
 
-  private handleChange(event: Event) {
+  private handleInput(event: Event) {
     const target = event.target as HTMLInputElement;
     this.selected = target.checked;
+    // <input> 'input' event bubbles and is composed, don't re-dispatch it.
+  }
+
+  private handleChange(event: Event) {
+    // <input> 'change' event is not composed, re-dispatch it.
     redispatchEvent(this, event);
   }
 
-  private syncValidity() {
-    // Sync the internal <input>'s validity and the host's ElementInternals
-    // validity. We do this to re-use native `<input>` validation messages.
-    const input = this.getInput();
-    if (this.hasCustomValidityError) {
-      input.setCustomValidity(this.internals.validationMessage);
-    } else {
-      input.setCustomValidity('');
-    }
+  // Writable mixin properties for lit-html binding, needed for lit-analyzer
+  declare disabled: boolean;
+  declare name: string;
 
-    this.internals.setValidity(
-        input.validity, input.validationMessage, this.getInput());
+  override [getFormValue]() {
+    return this.selected ? this.value : null;
   }
 
-  private getInput() {
-    if (!this.input) {
-      // If the input is not yet defined, synchronously render.
-      this.connectedCallback();
-      this.performUpdate();
-    }
-
-    if (this.isUpdatePending) {
-      // If there are pending updates, synchronously perform them. This ensures
-      // that constraint validation properties (like `required`) are synced
-      // before interacting with input APIs that depend on them.
-      this.scheduleUpdate();
-    }
-
-    return this.input!;
+  override [getFormState]() {
+    return String(this.selected);
   }
 
-  /** @private */
-  formResetCallback() {
+  override formResetCallback() {
     // The selected property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.selected = this.hasAttribute('selected');
   }
 
-  /** @private */
-  formStateRestoreCallback(state: string) {
+  override formStateRestoreCallback(state: string) {
     this.selected = state === 'true';
+  }
+
+  [createValidator]() {
+    return new CheckboxValidator(() => ({
+      checked: this.selected,
+      required: this.required,
+    }));
+  }
+
+  [getValidityAnchor]() {
+    return this.input;
   }
 }

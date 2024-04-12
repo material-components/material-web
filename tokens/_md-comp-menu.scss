@@ -4,16 +4,14 @@
 //
 
 // go/keep-sorted start
-@use 'sass:list';
 @use 'sass:map';
-@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './v0_192/md-comp-menu';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -40,12 +38,24 @@ $_default: (
   'md-sys-shape': md-sys-shape.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: validate.values(
     md-comp-menu.values($deps),
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set($tokens, $token, var(--md-menu-#{$token}, #{$value}));
+    }
+  }
 
   @return $tokens;
 }

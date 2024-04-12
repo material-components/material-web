@@ -66,10 +66,10 @@ export class StoriesRenderer extends LitElement {
   @property({type: Boolean}) hideLabels = false;
   @property({type: Boolean, reflect: true}) hasKnobs = false;
   @state() knobsOpen = true;
-  @state() knobsPanelType: 'modal'|'inline' = 'inline';
+  @state() knobsPanelType: 'modal' | 'inline' = 'inline';
 
-  private observedKnobs: undefined|KnobValues<PolymorphicArrayOfKnobs> =
-      undefined;
+  private observedKnobs: undefined | KnobValues<PolymorphicArrayOfKnobs> =
+    undefined;
 
   override render() {
     const collection = this.collection;
@@ -90,11 +90,12 @@ export class StoriesRenderer extends LitElement {
 
   private renderStories(stories: Story[]): TemplateResult[] {
     return stories.map((story) => {
-      let label: string|TemplateResult = '';
+      let label: string | TemplateResult = '';
 
       if (!this.hideLabels) {
-        const description =
-            story.description ? html`<small>${story.description}</small>` : '';
+        const description = story.description
+          ? html`<small>${story.description}</small>`
+          : '';
         label = html`
           <h3 class="m-headline5">${story.name}</h3>
           ${description}
@@ -113,7 +114,7 @@ export class StoriesRenderer extends LitElement {
   private renderKnobs(collection: Collection) {
     const knobs = collection.knobs;
 
-    let knobsSection: string|TemplateResult = '';
+    let knobsSection: string | TemplateResult = '';
 
     this.hasKnobs = !this.hideKnobs && !knobs.empty;
 
@@ -126,8 +127,7 @@ export class StoriesRenderer extends LitElement {
         <story-knob-panel
           .open=${this.knobsOpen}
           .type=${this.knobsPanelType}
-          @open-changed=${onOpenChanged}
-        >
+          @open-changed=${onOpenChanged}>
           ${knobs.renderUI()}
         </story-knob-panel>
       `;
@@ -163,7 +163,7 @@ export class StoriesRenderer extends LitElement {
 
   private updateObservedKnobs() {
     if (this.collection?.knobs === this.observedKnobs) {
-      return;  // nothing to do;
+      return; // nothing to do;
     }
     // Stop watching the knobs that we're currently observing.
     this.unobserveKnobs();
@@ -183,8 +183,9 @@ export class StoriesRenderer extends LitElement {
       for (const story of this.focusStories) {
         if (!allowedStories.has(story)) {
           console.error(
-              `A stories renderer can only render stories ` +
-              `from its collection.`);
+            `A stories renderer can only render stories ` +
+              `from its collection.`,
+          );
         } else {
           storiesToRender.push(story);
         }
@@ -199,7 +200,9 @@ export class StoriesRenderer extends LitElement {
   private unobserveKnobs() {
     if (this.observedKnobs !== undefined) {
       this.observedKnobs.removeEventListener(
-          'changed', this.boundRequestUpdate);
+        'changed',
+        this.boundRequestUpdate,
+      );
     }
   }
 

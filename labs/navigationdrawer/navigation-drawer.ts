@@ -7,8 +7,8 @@
 import {customElement} from 'lit/decorators.js';
 
 import {NavigationDrawer} from './internal/navigation-drawer.js';
-import {styles} from './internal/navigation-drawer-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles} from './internal/navigation-drawer-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {

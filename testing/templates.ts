@@ -6,6 +6,7 @@
 
 import {TemplateResult} from 'lit';
 import {DirectiveResult} from 'lit/directive.js';
+import {ClassInfo} from 'lit/directives/class-map.js';
 import {ref} from 'lit/directives/ref.js';
 import {literal, StaticValue} from 'lit/static-html.js';
 
@@ -68,8 +69,10 @@ export enum State {
  * @template H Optional element harness type.
  * @template V Variant name types.
  */
-export class TemplateBuilder<H extends Harness = never,
-                                       V extends string = never> {
+export class TemplateBuilder<
+  H extends Harness = Harness,
+  V extends string = never,
+> {
   /**
    * A map of variant names and their template factories.
    */
@@ -77,7 +80,7 @@ export class TemplateBuilder<H extends Harness = never,
   /**
    * The current harness constructor to use when rendering.
    */
-  private harnessCtor?: new(element: HarnessElement<H>) => H;
+  private harnessCtor?: new (element: HarnessElement<H>) => H;
   /**
    * The current state callback to invoke after rendering.
    */
@@ -97,7 +100,7 @@ export class TemplateBuilder<H extends Harness = never,
     }
 
     return Array.from(this.variants.values()).flatMap(({display, factory}) => {
-      return testCaseProps.map(props => ({display, render: factory(props)}));
+      return testCaseProps.map((props) => ({display, render: factory(props)}));
     });
   }
 
@@ -128,7 +131,8 @@ export class TemplateBuilder<H extends Harness = never,
    * @return The template builder, now using the provided harness type.
    */
   withHarness<NewHarness extends Harness>(
-      harnessCtor: new(element: HarnessElement<NewHarness>) => NewHarness) {
+    harnessCtor: new (element: HarnessElement<NewHarness>) => NewHarness,
+  ) {
     const typedThis = this as unknown as TemplateBuilder<NewHarness, V>;
     typedThis.harnessCtor = harnessCtor;
     return typedThis;
@@ -178,15 +182,18 @@ export class TemplateBuilder<H extends Harness = never,
    * @return The template builder, now using the provided variants.
    */
   withVariants(
-      variants: Record<string, TemplateRender<H>|TemplateVariantOptions<H>>) {
+    variants: Record<string, TemplateRender<H> | TemplateVariantOptions<H>>,
+  ) {
     // TODO: clean this up by only allowing TemplateVariantOptions and force
     // users to specify the display name.
     for (const variant of Object.keys(variants)) {
       this.withVariant(variant, variants[variant]);
     }
 
-    return this as unknown as
-        TemplateBuilder<H, V|Extract<keyof typeof variants, string>>;
+    return this as unknown as TemplateBuilder<
+      H,
+      V | Extract<keyof typeof variants, string>
+    >;
   }
 
   /**
@@ -199,26 +206,30 @@ export class TemplateBuilder<H extends Harness = never,
    * @return The template builder, now using the provided variant.
    */
   withVariant<NewVariant extends string>(
-      variant: NewVariant,
-      renderOrOptions: TemplateRender<H>|TemplateVariantOptions<H>) {
+    variant: NewVariant,
+    renderOrOptions: TemplateRender<H> | TemplateVariantOptions<H>,
+  ) {
     // TODO: clean this up by only allowing TemplateVariantOptions and force
     // users to specify the display name.
-    const typedThis = this as unknown as TemplateBuilder<H, V|NewVariant>;
-    const {display, render} = typeof renderOrOptions === 'function' ?
-        {display: variant, render: renderOrOptions} :
-        renderOrOptions;
+    const typedThis = this as unknown as TemplateBuilder<H, V | NewVariant>;
+    const {display, render} =
+      typeof renderOrOptions === 'function'
+        ? {display: variant, render: renderOrOptions}
+        : renderOrOptions;
 
     typedThis.variants.set(variant, {
       display: display ?? variant,
-      factory: props => {
-        return state => {
-          const directive = ref(async element => {
+      factory: (props) => {
+        return (state) => {
+          const directive = ref(async (element) => {
             if (!element) {
               return;
             }
 
             const harness = await this.createHarnessAndApplyState(
-                element as HarnessElement<H>, state);
+              element as HarnessElement<H>,
+              state,
+            );
 
             // Allow the component to apply additional state or perform custom
             // state logic.
@@ -227,7 +238,7 @@ export class TemplateBuilder<H extends Harness = never,
 
           return render(directive, props || {}, state);
         };
-      }
+      },
     });
 
     return typedThis;
@@ -244,14 +255,16 @@ export class TemplateBuilder<H extends Harness = never,
    *     being used.
    */
   private async createHarnessAndApplyState(
-      element: HarnessElement<H>, state: string): Promise<H|never> {
+    element: HarnessElement<H>,
+    state: string,
+  ): Promise<H | never> {
     if (!this.harnessCtor) {
       return undefined as never;
     }
 
-    const harness = isElementWithHarness(element) ?
-        element.harness as H :
-        new this.harnessCtor(element);
+    const harness = isElementWithHarness(element)
+      ? (element.harness as H)
+      : new this.harnessCtor(element);
     // Common shared component state harness actions
     await harness.reset();
     switch (state) {
@@ -280,7 +293,7 @@ export class TemplateBuilder<H extends Harness = never,
  */
 export interface TemplateVariant<H extends Harness> {
   /** The variant's display name. */
-  display: string|StaticValue;
+  display: string | StaticValue;
   /**
    * A factory function that takes an object of element properties and returns
    * another a test table template that renders the variant's element for a
@@ -298,7 +311,7 @@ export interface TemplateVariantOptions<H extends Harness> {
   /** A function to render this variant. */
   render: TemplateRender<H>;
   /** Custom variant display name. Defaults to the name of the variant. */
-  display?: string|ReturnType<typeof literal>;
+  display?: string | ReturnType<typeof literal>;
 }
 
 // TODO: clean this devx up a bit by swapping props/state args
@@ -318,9 +331,11 @@ export interface TemplateVariantOptions<H extends Harness> {
  * @param state The current state to render the element in.
  * @return A `TemplateResult` rendering the element.
  */
-export type TemplateRender<H extends Harness> =
-    (directive: DirectiveResult, props: TemplateProps<H>, state: string) =>
-        TemplateResult|null;
+export type TemplateRender<H extends Harness> = (
+  directive: DirectiveResult,
+  props: TemplateProps<H>,
+  state: string,
+) => TemplateResult | null;
 
 /**
  * A callback that is invoked after the template's element has rendered. It
@@ -333,8 +348,10 @@ export type TemplateRender<H extends Harness> =
  * @param state The current test table state.
  * @param harness The rendered element's harness.
  */
-export type TemplateStateCallback<H extends Harness> =
-    (state: string, harness: H) => void;
+export type TemplateStateCallback<H extends Harness> = (
+  state: string,
+  harness: H,
+) => void;
 
 /**
  * Element properties for a harness constructor. Returns a partial object with
@@ -343,9 +360,10 @@ export type TemplateStateCallback<H extends Harness> =
  *
  * @template H The harness type.
  */
-export type TemplateProps<H extends Harness> = Partial<Pick<
-    HarnessElement<H>, Exclude<keyof HarnessElement<H>, keyof HTMLElement>>>&
-    SharedTemplateProps;
+export type TemplateProps<H extends Harness = Harness> = Partial<
+  Pick<HarnessElement<H>, Exclude<keyof HarnessElement<H>, keyof HTMLElement>>
+> &
+  SharedTemplateProps;
 
 /**
  * Shared element properties for all harnesses.
@@ -355,4 +373,8 @@ export interface SharedTemplateProps {
    * The light DOM content of the element.
    */
   content?: TemplateResult;
+  /**
+   * Classes to add to the element.
+   */
+  classes?: ClassInfo;
 }

@@ -31,8 +31,11 @@ class TestField extends Field {
   }
 
   didErrorAnnounce() {
-    return this.renderRoot.querySelector('.supporting-text')
-               ?.getAttribute('role') === 'alert';
+    return (
+      this.renderRoot
+        .querySelector('.supporting-text')
+        ?.getAttribute('role') === 'alert'
+    );
   }
 
   // Ensure floating/resting labels are both rendered
@@ -54,9 +57,8 @@ describe('Field', () => {
         .populated=${props.populated ?? false}
         .required=${props.required ?? false}
         .supportingText=${props.supportingText ?? ''}
-        .errorText=${props.errorText ?? ''}
-      >
-        <input>
+        .errorText=${props.errorText ?? ''}>
+        <input />
       </md-test-field>
     `;
     const root = env.render(template);
@@ -82,8 +84,8 @@ describe('Field', () => {
     await env.waitForStability();
     // Assertion.
     expect(instance.focused)
-        .withContext('focused is false after disabled is set to true')
-        .toBe(false);
+      .withContext('focused is false after disabled is set to true')
+      .toBe(false);
   });
 
   it('should not allow focus when disabled', async () => {
@@ -94,8 +96,8 @@ describe('Field', () => {
     await env.waitForStability();
     // Assertion.
     expect(instance.focused)
-        .withContext('focused set back to false when disabled')
-        .toBe(false);
+      .withContext('focused set back to false when disabled')
+      .toBe(false);
   });
 
   /*
@@ -291,9 +293,10 @@ describe('Field', () => {
       const {instance} = await setupTest({label: undefined});
       // Assertion.
       expect(instance.labelText)
-          .withContext(
-              'label text should be empty string if label is not provided')
-          .toBe('');
+        .withContext(
+          'label text should be empty string if label is not provided',
+        )
+        .toBe('');
     });
 
     it('should render label', async () => {
@@ -303,8 +306,8 @@ describe('Field', () => {
       const {instance} = await setupTest({label: labelValue});
       // Assertion.
       expect(instance.labelText)
-          .withContext('label text should equal label when not required')
-          .toBe(labelValue);
+        .withContext('label text should equal label when not required')
+        .toBe(labelValue);
     });
 
     it('should adds asterisk if required', async () => {
@@ -314,44 +317,49 @@ describe('Field', () => {
       const {instance} = await setupTest({required: true, label: labelValue});
       // Assertion.
       expect(instance.labelText)
-          .withContext(
-              'label text should equal label with asterisk when required')
-          .toBe(`${labelValue}*`);
+        .withContext(
+          'label text should equal label with asterisk when required',
+        )
+        .toBe(`${labelValue}*`);
     });
 
-    it('should not render asterisk if required when there is no label',
-       async () => {
-         // Setup.
-         // Test case.
-         const {instance} = await setupTest({required: true, label: undefined});
-         // Assertion.
-         expect(instance.labelText)
-             .withContext(
-                 'label text should be empty string if label is not provided, even when required')
-             .toBe('');
-       });
+    it('should not render asterisk if required when there is no label', async () => {
+      // Setup.
+      // Test case.
+      const {instance} = await setupTest({required: true, label: undefined});
+      // Assertion.
+      expect(instance.labelText)
+        .withContext(
+          'label text should be empty string if label is not provided, even when required',
+        )
+        .toBe('');
+    });
   });
 
   describe('supporting text', () => {
     it('should update to errorText when error is true', async () => {
       const errorText = 'Error message';
-      const {instance} = await setupTest(
-          {error: true, supportingText: 'Supporting text', errorText});
+      const {instance} = await setupTest({
+        error: true,
+        supportingText: 'Supporting text',
+        errorText,
+      });
 
       expect(instance.supportingTextContent).toEqual(errorText);
     });
   });
 
   describe('error announcement', () => {
-    it('should announce errors when both error and errorText are set',
-       async () => {
-         const {instance} =
-             await setupTest({error: true, errorText: 'Error message'});
+    it('should announce errors when both error and errorText are set', async () => {
+      const {instance} = await setupTest({
+        error: true,
+        errorText: 'Error message',
+      });
 
-         expect(instance.didErrorAnnounce())
-             .withContext('instance.didErrorAnnounce()')
-             .toBeTrue();
-       });
+      expect(instance.didErrorAnnounce())
+        .withContext('instance.didErrorAnnounce()')
+        .toBeTrue();
+    });
 
     it('should not announce supporting text', async () => {
       const {instance} = await setupTest();
@@ -360,26 +368,28 @@ describe('Field', () => {
       await env.waitForStability();
 
       expect(instance.didErrorAnnounce())
-          .withContext('instance.didErrorAnnounce()')
-          .toBeFalse();
+        .withContext('instance.didErrorAnnounce()')
+        .toBeFalse();
     });
 
     it('should re-announce when reannounceError() is called', async () => {
-      const {instance} =
-          await setupTest({error: true, errorText: 'Error message'});
+      const {instance} = await setupTest({
+        error: true,
+        errorText: 'Error message',
+      });
 
       instance.reannounceError();
       await env.waitForStability();
       // After lit update, but before re-render refresh
       expect(instance.didErrorAnnounce())
-          .withContext('didErrorAnnounce() before refresh')
-          .toBeFalse();
+        .withContext('didErrorAnnounce() before refresh')
+        .toBeFalse();
 
       // After the second lit update render refresh
       await env.waitForStability();
       expect(instance.didErrorAnnounce())
-          .withContext('didErrorAnnounce() after refresh')
-          .toBeTrue();
+        .withContext('didErrorAnnounce() after refresh')
+        .toBeTrue();
     });
   });
 });

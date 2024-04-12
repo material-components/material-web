@@ -19,14 +19,11 @@ interface TabsTestProps {
 }
 
 function getTabsTemplate(props?: TabsTestProps) {
-  return html`
-    <md-tabs
-      .activeTabIndex=${props?.activeTabIndex ?? 0}
-    >
-      <md-primary-tab>A</md-primary-tab>
-      <md-primary-tab>B</md-primary-tab>
-      <md-primary-tab>C</md-primary-tab>
-    </md-tabs>`;
+  return html` <md-tabs .activeTabIndex=${props?.activeTabIndex ?? 0}>
+    <md-primary-tab>A</md-primary-tab>
+    <md-primary-tab>B</md-primary-tab>
+    <md-primary-tab>C</md-primary-tab>
+  </md-tabs>`;
 }
 
 describe('<md-tabs>', () => {
@@ -121,20 +118,37 @@ describe('<md-tabs>', () => {
       expect(harness.element.activeTab).toBe(firstTab);
     });
 
-    it('should allow setting activeTabIndex in a lit property binding',
-       async () => {
-         const root = env.render(html`
-            <md-tabs .activeTabIndex=${1}>
-              <md-primary-tab>A</md-primary-tab>
-              <md-primary-tab>B</md-primary-tab>
-            </md-tabs>
-          `);
+    it('should allow setting activeTabIndex in a lit property binding', async () => {
+      const root = env.render(html`
+        <md-tabs .activeTabIndex=${1}>
+          <md-primary-tab>A</md-primary-tab>
+          <md-primary-tab>B</md-primary-tab>
+        </md-tabs>
+      `);
 
-         await env.waitForStability();
-         const tabs = root.querySelector('md-tabs')!;
-         expect(tabs.activeTabIndex).withContext('activeTabIndex').toBe(1);
-         expect(tabs.activeTab?.textContent).withContext('activeTab').toBe('B');
-       });
+      await env.waitForStability();
+      const tabs = root.querySelector('md-tabs')!;
+      expect(tabs.activeTabIndex).withContext('activeTabIndex').toBe(1);
+      expect(tabs.activeTab?.textContent)
+        .withContext('activeTab')
+        .toBe('B');
+    });
+
+    it('should allow setting active-tab-index as an attribute', async () => {
+      const root = env.render(html`
+        <md-tabs active-tab-index=${1}>
+          <md-primary-tab>A</md-primary-tab>
+          <md-primary-tab>B</md-primary-tab>
+        </md-tabs>
+      `);
+
+      await env.waitForStability();
+      const tabs = root.querySelector('md-tabs')!;
+      expect(tabs.activeTabIndex).withContext('activeTabIndex').toBe(1);
+      expect(tabs.activeTab?.textContent)
+        .withContext('activeTab')
+        .toBe('B');
+    });
   });
 
   it('should dispatch "change" when tab changes', async () => {
@@ -146,25 +160,23 @@ describe('<md-tabs>', () => {
     expect(changeListener).toHaveBeenCalledTimes(1);
   });
 
-  it('should not dispatch "change" when changing to unrelated tab',
-     async () => {
-       const {harness} = await setupTest();
-       const changeListener = jasmine.createSpy('changeListener');
-       harness.element.addEventListener('change', changeListener);
+  it('should not dispatch "change" when changing to unrelated tab', async () => {
+    const {harness} = await setupTest();
+    const changeListener = jasmine.createSpy('changeListener');
+    harness.element.addEventListener('change', changeListener);
 
-       harness.element.activeTab = document.createElement('md-primary-tab');
-       await env.waitForStability();
-       expect(changeListener).not.toHaveBeenCalled();
-     });
+    harness.element.activeTab = document.createElement('md-primary-tab');
+    await env.waitForStability();
+    expect(changeListener).not.toHaveBeenCalled();
+  });
 
-  it('should not dispatch "change" when setting activeTab to itself',
-     async () => {
-       const {harness} = await setupTest();
-       const changeListener = jasmine.createSpy('changeListener');
-       harness.element.addEventListener('change', changeListener);
+  it('should not dispatch "change" when setting activeTab to itself', async () => {
+    const {harness} = await setupTest();
+    const changeListener = jasmine.createSpy('changeListener');
+    harness.element.addEventListener('change', changeListener);
 
-       harness.element.activeTab = harness.element.activeTab;
-       await env.waitForStability();
-       expect(changeListener).not.toHaveBeenCalled();
-     });
+    harness.element.activeTab = harness.element.activeTab;
+    await env.waitForStability();
+    expect(changeListener).not.toHaveBeenCalled();
+  });
 });

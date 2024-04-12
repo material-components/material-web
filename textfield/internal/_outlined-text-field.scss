@@ -13,23 +13,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-outlined-text-field-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start',
-      'leading-space',
-      'trailing-space',
-      'top-space',
-      'bottom-space',
-      'input-text-prefix-trailing-space',
-      'input-text-suffix-leading-space',
-      'focus-caret-color'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-outlined-text-field-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -42,45 +26,16 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-text-field-values();
-  // Add missing tokens
-  $tokens: map.merge(
-    (
-      'leading-space': 16px,
-      'trailing-space': 16px,
-      'top-space': 16px,
-      'bottom-space': 16px,
-      'input-text-prefix-trailing-space': 2px,
-      'input-text-suffix-leading-space': 2px,
-      // TODO(b/270705687): remove when focus-caret-color token added
-      'focus-caret-color':
-        map.get(tokens.md-sys-color-values-light(), 'primary'),
-    ),
-    $tokens
+  $tokens: tokens.md-comp-outlined-text-field-values(
+    $exclude-custom-properties: false,
   );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'container-shape');
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-outlined-text-field-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-outlined-text-field-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-outlined-text-field-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-outlined-text-field-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-outlined-text-field-container-shape-end-start,
-      var(--_container-shape)
-    );
 
     @include outlined-field.theme(
       (

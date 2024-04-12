@@ -1,0 +1,93 @@
+//
+// Copyright 2024 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+// go/keep-sorted end
+
+/// Returns a map of 4 logical tokens (start-start, start-end, end-end,
+/// and end-start) for each of the given shape tokens in the provided token
+/// map.
+///
+/// @example scss
+///   $tokens: ('container-shape': 16px 16px 0px 0px);
+///   $new-tokens: shape.get-new-logical-shape-tokens(
+///     $tokens,
+///     'container-shape'
+///   );
+///   // (
+///   //   'container-shape-start-start': 16px,
+///   //   'container-shape-start-end': 16px,
+///   //   'container-shape-end-end': 0px,
+///   //   'container-shape-end-start': 0px,
+///   // )
+///
+/// @param $tokens A Map of tokens.
+/// @param $shape-tokens One or more shape tokens in the provided map. Each
+///     shape token will add 4 logical shape tokens to the returned map.
+/// @return A map with 4 logical tokens for each provided shape token.
+@function get-new-logical-shape-tokens($tokens, $shape-tokens...) {
+  $new-logical-tokens: ();
+  $logical-suffixes: (
+    // top-left
+    'start-start',
+    // top-right
+    'start-end',
+    // bottom-right
+    'end-end',
+    // bottom-left
+    'end-start'
+  );
+
+  @each $shape-token in $shape-tokens {
+    $shorthand-value: _expand-shorthand-to-list(map.get($tokens, $shape-token));
+
+    @each $logical-suffix in $logical-suffixes {
+      $logical-token: '#{$shape-token}-#{$logical-suffix}';
+      $logical-index: list.index($logical-suffixes, $logical-suffix);
+
+      $new-logical-tokens: map.set(
+        $new-logical-tokens,
+        $logical-token,
+        list.nth($shorthand-value, $logical-index)
+      );
+    }
+  }
+
+  @return $new-logical-tokens;
+}
+
+@function _expand-shorthand-to-list($shorthand) {
+  @if meta.type-of($shorthand) != 'list' or list.length($shorthand) == 1 {
+    @return ($shorthand, $shorthand, $shorthand, $shorthand);
+  }
+
+  @if list.length($shorthand) == 2 {
+    $top-left-and-bottom-right: list.nth($shorthand, 1);
+    $top-right-and-bottom-left: list.nth($shorthand, 2);
+    @return (
+      $top-left-and-bottom-right,
+      $top-right-and-bottom-left,
+      $top-left-and-bottom-right,
+      $top-right-and-bottom-left
+    );
+  }
+
+  @if list.length($shorthand) == 3 {
+    $top-left: list.nth($shorthand, 1);
+    $top-right-and-bottom-left: list.nth($shorthand, 2);
+    $bottom-right: list.nth($shorthand, 3);
+    @return (
+      $top-left,
+      $top-right-and-bottom-left,
+      $bottom-right,
+      $top-right-and-bottom-left
+    );
+  }
+
+  @return $shorthand;
+}

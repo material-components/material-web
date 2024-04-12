@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {NavigationTab} from './internal/navigation-tab.js';
-import {styles} from './internal/navigation-tab-styles.css.js';
+import {styles} from './internal/navigation-tab-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,5 +22,5 @@ declare global {
  */
 @customElement('md-navigation-tab')
 export class MdNavigationTab extends NavigationTab {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

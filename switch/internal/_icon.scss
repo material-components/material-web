@@ -13,7 +13,7 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
-@mixin styles() {
+@mixin styles($tokens) {
   @layer styles {
     .icons {
       position: relative;
@@ -25,6 +25,10 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       position: absolute;
       inset: 0;
       margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      fill: currentColor;
 
       transition: fill 67ms linear, opacity 33ms linear,
         transform 167ms $_easing-standard;
@@ -46,49 +50,49 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     }
 
     .icon--off {
-      width: var(--_icon-size);
-      height: var(--_icon-size);
-      fill: var(--_icon-color);
+      width: map.get($tokens, 'icon-size');
+      height: map.get($tokens, 'icon-size');
+      color: map.get($tokens, 'icon-color');
     }
 
     .unselected:hover .icon--off {
-      fill: var(--_hover-icon-color);
+      color: map.get($tokens, 'hover-icon-color');
     }
 
     .unselected:focus-within .icon--off {
-      fill: var(--_focus-icon-color);
+      color: map.get($tokens, 'focus-icon-color');
     }
 
     .unselected:active .icon--off {
-      fill: var(--_pressed-icon-color);
+      color: map.get($tokens, 'pressed-icon-color');
     }
 
     .unselected.disabled .icon--off {
-      fill: var(--_disabled-icon-color);
-      opacity: var(--_disabled-icon-opacity);
+      color: map.get($tokens, 'disabled-icon-color');
+      opacity: map.get($tokens, 'disabled-icon-opacity');
     }
 
     .icon--on {
-      width: var(--_selected-icon-size);
-      height: var(--_selected-icon-size);
-      fill: var(--_selected-icon-color);
+      width: map.get($tokens, 'selected-icon-size');
+      height: map.get($tokens, 'selected-icon-size');
+      color: map.get($tokens, 'selected-icon-color');
     }
 
     .selected:hover .icon--on {
-      fill: var(--_selected-hover-icon-color);
+      color: map.get($tokens, 'selected-hover-icon-color');
     }
 
     .selected:focus-within .icon--on {
-      fill: var(--_selected-focus-icon-color);
+      color: map.get($tokens, 'selected-focus-icon-color');
     }
 
     .selected:active .icon--on {
-      fill: var(--_selected-pressed-icon-color);
+      color: map.get($tokens, 'selected-pressed-icon-color');
     }
 
     .selected.disabled .icon--on {
-      fill: var(--_disabled-selected-icon-color);
-      opacity: var(--_disabled-selected-icon-opacity);
+      color: map.get($tokens, 'disabled-selected-icon-color');
+      opacity: map.get($tokens, 'disabled-selected-icon-opacity');
     }
   }
 

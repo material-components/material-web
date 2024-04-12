@@ -52,11 +52,11 @@ export function title(): KnobUi<void> {
  * ```
  */
 export type KnobTypesToKnobs<
-    // tslint:disable-next-line:no-any No way to represent this type clearly.
-    T extends {[name: string]: any},
-              Names extends Extract<keyof T, string> = Extract<keyof T, string>,
-    // tslint:disable-next-line:no-any We need to "map" the union type to knobs.
-    > = ReadonlyArray<Names extends any ? Knob<T[Names], Names>: never>;
+  // tslint:disable-next-line:no-any No way to represent this type clearly.
+  T extends {[name: string]: any},
+  Names extends Extract<keyof T, string> = Extract<keyof T, string>,
+  // tslint:disable-next-line:no-any We need to "map" the union type to knobs.
+> = ReadonlyArray<Names extends any ? Knob<T[Names], Names> : never>;
 
 /**
  * An init object for Material Stories. This should be exposed to the user.
@@ -86,7 +86,7 @@ export type KnobTypesToKnobs<
 export interface MaterialStoryInit<T extends {[name: string]: any}> {
   name: string;
   render: (knobs: T) => TemplateResult | Promise<TemplateResult>;
-  styles?: CSSResult|CSSResult[];
+  styles?: CSSResult | CSSResult[];
 }
 
 /**
@@ -94,8 +94,8 @@ export interface MaterialStoryInit<T extends {[name: string]: any}> {
  */
 // tslint:disable-next-line:no-any No way to represent this type clearly.
 export function materialInitsToStoryInits<T extends {[name: string]: any}>(
-    inits: Array<MaterialStoryInit<T>>):
-    Array<LitStoryInit<KnobValues<KnobTypesToKnobs<T>>>> {
+  inits: Array<MaterialStoryInit<T>>,
+): Array<LitStoryInit<KnobValues<KnobTypesToKnobs<T>>>> {
   return inits.map((init) => {
     return {
       name: init.name,

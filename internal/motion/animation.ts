@@ -72,7 +72,7 @@ export interface AnimationSignal {
  */
 export function createAnimationSignal(): AnimationSignal {
   // The current animation's AbortController
-  let animationAbortController: AbortController|null = null;
+  let animationAbortController: AbortController | null = null;
 
   return {
     start() {
@@ -98,10 +98,12 @@ export function createAnimationSignal(): AnimationSignal {
 export function createThrottle() {
   const stack = new Set();
   return async (
-             key = '', cb: (...args: unknown[]) => unknown,
-             timeout = async () => {
-               await new Promise(requestAnimationFrame);
-             }) => {
+    key = '',
+    cb: (...args: unknown[]) => unknown,
+    timeout = async () => {
+      await new Promise(requestAnimationFrame);
+    },
+  ) => {
     if (!stack.has(key)) {
       stack.add(key);
       await timeout();

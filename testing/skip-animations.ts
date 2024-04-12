@@ -8,11 +8,17 @@
 export function installSkipWebAnimations() {
   const nativeAnimate = Element.prototype.animate;
   function patchedAnimate(
-      this: Element, ...args: Parameters<typeof nativeAnimate>) {
+    this: Element,
+    ...args: Parameters<typeof nativeAnimate>
+  ) {
     const animation = nativeAnimate.apply(this, args);
     if (animation.effect) {
-      animation.effect.updateTiming(
-          {delay: 0, duration: 1, easing: 'step-start', iterations: 1});
+      animation.effect.updateTiming({
+        delay: 0,
+        duration: 1,
+        easing: 'step-start',
+        iterations: 1,
+      });
     }
 
     return animation;
@@ -22,7 +28,7 @@ export function installSkipWebAnimations() {
     configurable: true,
     enumerable: true,
     writable: true,
-    value: patchedAnimate
+    value: patchedAnimate,
   });
 
   // return uninstall function.
@@ -31,7 +37,7 @@ export function installSkipWebAnimations() {
       configurable: true,
       enumerable: true,
       writable: true,
-      value: nativeAnimate
+      value: nativeAnimate,
     });
   };
 }

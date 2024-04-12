@@ -10,7 +10,7 @@ dirname: iconbutton
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'dfreedm' reviewed: '2023-04-03' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-26' }
 tag: 'docType:reference'
 *-->
 
@@ -127,6 +127,10 @@ selected](images/iconbutton/usage-toggle.png "Unselected and Selected Icon Butto
 Toggle icon buttons allow a single choice to be selected or deselected, such as
 adding or removing something from favorites.
 
+Add a second icon in the `slot="selected"` slot to change the icon when
+selected. Toggle icon buttons can be pre-selected by adding the `selected`
+attribute.
+
 ```html
 <div>
   <md-icon-button toggle>
@@ -170,7 +174,7 @@ adding or removing something from favorites.
 
 Add an
 [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)<!-- {.external} -->
-attribute to buttons whose labels need a more descriptive label.
+attribute to icon buttons whose labels need a more descriptive label.
 
 ```html
 <md-icon-button aria-label="Search for Contact">
@@ -180,8 +184,8 @@ attribute to buttons whose labels need a more descriptive label.
 
 ### Toggle
 
-Add a `aria-label-selected` attribute to toggle buttons whose labels need a more
-descriptive label when selected.
+Add an `aria-label-selected` attribute to toggle buttons whose labels need a
+more descriptive label when selected.
 
 ```html
 <md-icon-button toggle
@@ -194,13 +198,8 @@ descriptive label when selected.
 
 ## Icon Button
 
-Use
-[icon buttons](https://m3.material.io/components/icon-buttons/guidelines)<!-- {.external} -->
-to display actions in a compact layout. Icon buttons can represent opening
-actions such as opening an overflow menu or search, or represent binary actions
-that can be toggled on and off, such as favorite or bookmark.
-
-Icon buttons can be grouped together or they can stand alone.
+Standard icon buttons do not have a background or outline, and have the lowest
+emphasis of the icon buttons.
 
 <!-- no-catalog-start -->
 
@@ -288,7 +287,7 @@ customized in terms of color, and shape.
 Token                                | Default value
 ------------------------------------ | -----------------------------------
 `--md-icon-button-icon-color`        | `--md-sys-color-on-surface-variant`
-`--md-icon-button-state-layer-shape` | `9999px`
+`--md-icon-button-state-layer-shape` | `--md-sys-shape-corner-full`
 `--md-icon-button-icon-size`         | `24px`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-icon-button.scss)
@@ -322,7 +321,7 @@ Token                                | Default value
 Token                                              | Default value
 -------------------------------------------------- | ------------------------
 `--md-filled-icon-button-selected-container-color` | `--md-sys-color-primary`
-`--md-filled-icon-button-container-shape`          | `9999px`
+`--md-filled-icon-button-container-shape`          | `--md-sys-shape-corner-full`
 `--md-filled-icon-button-container-width`          | `40px`
 `--md-filled-icon-button-container-height`         | `40px`
 `--md-filled-icon-button-icon-size`                | `24px`
@@ -360,7 +359,7 @@ Token                                              | Default value
 Token                                                    | Default value
 -------------------------------------------------------- | -------------
 `--md-filled-tonal-icon-button-selected-container-color` | `--md-sys-color-secondary-container`
-`--md-filled-tonal-icon-button-container-shape`          | `9999px`
+`--md-filled-tonal-icon-button-container-shape`          | `--md-sys-shape-corner-full`
 `--md-filled-tonal-icon-button-container-width`          | `40px`
 `--md-filled-tonal-icon-button-container-height`         | `40px`
 `--md-filled-tonal-icon-button-icon-size`                | `24px`
@@ -395,7 +394,7 @@ Token                                        | Default value
 -------------------------------------------- | ------------------------
 `--md-outlined-icon-button-outline-color`    | `--md-sys-color-outline`
 `--md-outlined-icon-button-outline-width`    | `1px`
-`--md-outlined-icon-button-container-shape`  | `9999px`
+`--md-outlined-icon-button-container-shape`  | `--md-sys-shape-corner-full`
 `--md-outlined-icon-button-container-width`  | `40px`
 `--md-outlined-icon-button-container-height` | `40px`
 `--md-outlined-icon-button-icon-size`        | `24px`
@@ -429,7 +428,6 @@ Token                                        | Default value
 
 ## API
 
-
 ### MdIconButton <code>&lt;md-icon-button&gt;</code>
 
 #### Properties
@@ -445,11 +443,11 @@ Property | Attribute | Type | Default | Description
 `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
 `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
 `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` | 
-`value` | `value` | `string` | `''` | 
-`name` |  | `string` | `undefined` | 
-`form` |  | `HTMLFormElement` | `undefined` | 
-`labels` |  | `NodeList` | `undefined` | 
+`type` | `type` | `string` | `'submit'` |
+`value` | `value` | `string` | `''` |
+`name` |  | `string` | `undefined` |
+`form` |  | `HTMLFormElement` | `undefined` |
+`labels` |  | `NodeList` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -468,11 +466,11 @@ Property | Attribute | Type | Default | Description
 `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
 `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
 `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` | 
-`value` | `value` | `string` | `''` | 
-`name` |  | `string` | `undefined` | 
-`form` |  | `HTMLFormElement` | `undefined` | 
-`labels` |  | `NodeList` | `undefined` | 
+`type` | `type` | `string` | `'submit'` |
+`value` | `value` | `string` | `''` |
+`name` |  | `string` | `undefined` |
+`form` |  | `HTMLFormElement` | `undefined` |
+`labels` |  | `NodeList` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -491,11 +489,11 @@ Property | Attribute | Type | Default | Description
 `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
 `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
 `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` | 
-`value` | `value` | `string` | `''` | 
-`name` |  | `string` | `undefined` | 
-`form` |  | `HTMLFormElement` | `undefined` | 
-`labels` |  | `NodeList` | `undefined` | 
+`type` | `type` | `string` | `'submit'` |
+`value` | `value` | `string` | `''` |
+`name` |  | `string` | `undefined` |
+`form` |  | `HTMLFormElement` | `undefined` |
+`labels` |  | `NodeList` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -514,11 +512,11 @@ Property | Attribute | Type | Default | Description
 `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
 `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
 `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` | 
-`value` | `value` | `string` | `''` | 
-`name` |  | `string` | `undefined` | 
-`form` |  | `HTMLFormElement` | `undefined` | 
-`labels` |  | `NodeList` | `undefined` | 
+`type` | `type` | `string` | `'submit'` |
+`value` | `value` | `string` | `''` |
+`name` |  | `string` | `undefined` |
+`form` |  | `HTMLFormElement` | `undefined` |
+`labels` |  | `NodeList` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 

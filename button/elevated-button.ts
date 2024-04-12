@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {ElevatedButton} from './internal/elevated-button.js';
-import {styles as elevatedStyles} from './internal/elevated-styles.css.js';
-import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as elevatedStyles} from './internal/elevated-styles.js';
+import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -41,6 +42,9 @@ declare global {
  */
 @customElement('md-elevated-button')
 export class MdElevatedButton extends ElevatedButton {
-  static override styles =
-      [sharedStyles, sharedElevationStyles, elevatedStyles];
+  static override styles: CSSResultOrNative[] = [
+    sharedStyles,
+    sharedElevationStyles,
+    elevatedStyles,
+  ];
 }

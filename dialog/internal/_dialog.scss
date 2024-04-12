@@ -12,16 +12,7 @@
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-dialog-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-dialog-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -34,37 +25,17 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-dialog-values();
   $md-sys-color: tokens.md-sys-color-values-light();
   $md-sys-motion: tokens.md-sys-motion-values();
+  $tokens: tokens.md-comp-dialog-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-dialog-#{$token}, #{$value});
-    }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-dialog-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-dialog-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-dialog-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-dialog-container-shape-end-start,
-      var(--_container-shape)
-    );
-
-    border-start-start-radius: var(--_container-shape-start-start);
-    border-start-end-radius: var(--_container-shape-start-end);
-    border-end-end-radius: var(--_container-shape-end-end);
-    border-end-start-radius: var(--_container-shape-end-start);
+    border-start-start-radius: map.get($tokens, 'container-shape-start-start');
+    border-start-end-radius: map.get($tokens, 'container-shape-start-end');
+    border-end-end-radius: map.get($tokens, 'container-shape-end-end');
+    border-end-start-radius: map.get($tokens, 'container-shape-end-start');
     display: contents;
     margin: auto;
     max-height: min(560px, calc(100% - 48px));
@@ -123,13 +94,13 @@
 
   .headline {
     align-items: center;
-    color: var(--_headline-color);
+    color: map.get($tokens, 'headline-color');
     display: flex;
     flex-direction: column;
-    font-family: var(--_headline-font);
-    font-size: var(--_headline-size);
-    line-height: var(--_headline-line-height);
-    font-weight: var(--_headline-weight);
+    font-family: map.get($tokens, 'headline-font');
+    font-size: map.get($tokens, 'headline-size');
+    line-height: map.get($tokens, 'headline-line-height');
+    font-weight: map.get($tokens, 'headline-weight');
     position: relative;
   }
 
@@ -147,12 +118,12 @@
   }
 
   slot[name='icon']::slotted(*) {
-    color: var(--_icon-color);
+    color: map.get($tokens, 'icon-color');
     fill: currentColor;
-    font-size: var(--_icon-size);
-    padding-top: 24px;
-    height: var(--_icon-size);
-    width: var(--_icon-size);
+    font-size: map.get($tokens, 'icon-size');
+    margin-top: 24px;
+    height: map.get($tokens, 'icon-size');
+    width: map.get($tokens, 'icon-size');
   }
 
   .has-icon slot[name='headline']::slotted(*) {
@@ -181,7 +152,7 @@
   }
 
   .container::before {
-    background: var(--_container-color);
+    background: map.get($tokens, 'container-color');
     border-radius: inherit;
     content: '';
     inset: 0;
@@ -208,11 +179,11 @@
   }
 
   .content {
-    color: var(--_supporting-text-color);
-    font-family: var(--_supporting-text-font);
-    font-size: var(--_supporting-text-size);
-    line-height: var(--_supporting-text-line-height);
-    font-weight: var(--_supporting-text-weight);
+    color: map.get($tokens, 'supporting-text-color');
+    font-family: map.get($tokens, 'supporting-text-font');
+    font-size: map.get($tokens, 'supporting-text-size');
+    line-height: map.get($tokens, 'supporting-text-line-height');
+    font-weight: map.get($tokens, 'supporting-text-weight');
     height: min-content; // Needed for Safari
     position: relative;
   }

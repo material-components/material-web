@@ -4,9 +4,99 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './internal/validate';
 @use './v0_192/md-sys-shape';
 // go/keep-sorted end
 
-@function values($exclude-hardcoded-values: false) {
-  @return md-sys-shape.values($exclude-hardcoded-values);
+$supported-tokens: (
+  // go/keep-sorted start
+  'corner-extra-large',
+  'corner-extra-small',
+  'corner-full',
+  'corner-large',
+  'corner-medium',
+  'corner-none',
+  'corner-small',
+  // go/keep-sorted end
+);
+
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'corner-extra-large-top',
+  'corner-extra-small-top',
+  'corner-large-end',
+  'corner-large-start',
+  'corner-large-top',
+  // go/keep-sorted end
+);
+
+@function values(
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: false
+) {
+  $original-tokens: md-sys-shape.values($exclude-hardcoded-values);
+  $tokens: validate.values(
+    $original-tokens,
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
+  );
+
+  @if not $exclude-custom-properties {
+    // Create --md-sys-shape-* custom properties
+    @each $token, $value in $tokens {
+      @if $value != null {
+        $tokens: map.set(
+          $tokens,
+          $token,
+          var(--md-sys-shape-#{$token}, #{$value})
+        );
+      }
+    }
+  }
+
+  // Add multi-corner shape tokens purely for other Sass token APIs. These do
+  // not represent real token custom properties that can be set (there is no
+  // `--md-sys-shape-corner-extra-large-top` custom property).
+  // Instead, these are shorthand values that point to single-corner custom
+  // properties for usage in Sass component token mappings.
+  $tokens: map.merge(
+    $tokens,
+    (
+      'corner-extra-large-top': (
+        map.get($tokens, 'corner-extra-large'),
+        map.get($tokens, 'corner-extra-large'),
+        map.get($tokens, 'corner-none'),
+        map.get($tokens, 'corner-none'),
+      ),
+      'corner-extra-small-top': (
+        map.get($tokens, 'corner-extra-small'),
+        map.get($tokens, 'corner-extra-small'),
+        map.get($tokens, 'corner-none'),
+        map.get($tokens, 'corner-none'),
+      ),
+      'corner-large-end': (
+        map.get($tokens, 'corner-none'),
+        map.get($tokens, 'corner-large'),
+        map.get($tokens, 'corner-large'),
+        map.get($tokens, 'corner-none'),
+      ),
+      'corner-large-start': (
+        map.get($tokens, 'corner-large'),
+        map.get($tokens, 'corner-none'),
+        map.get($tokens, 'corner-none'),
+        map.get($tokens, 'corner-large'),
+      ),
+      'corner-large-top': (
+        map.get($tokens, 'corner-large'),
+        map.get($tokens, 'corner-large'),
+        map.get($tokens, 'corner-none'),
+        map.get($tokens, 'corner-none'),
+      ),
+    )
+  );
+
+  @return $tokens;
 }

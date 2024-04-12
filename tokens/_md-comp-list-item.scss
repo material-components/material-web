@@ -4,24 +4,21 @@
 //
 
 // go/keep-sorted start
-@use 'sass:list';
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-list';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
   'bottom-space',
   'disabled-opacity',
-  'focus-state-layer-color',
-  'focus-state-layer-opacity',
   'hover-state-layer-color',
   'hover-state-layer-opacity',
   'label-text-color',
@@ -74,6 +71,8 @@ $unsupported-tokens: (
   'dragged-trailing-icon-icon-color',
   'focus-label-text-color',
   'focus-leading-icon-icon-color',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
   'focus-trailing-icon-icon-color',
   'hover-label-text-color',
   'hover-leading-icon-icon-color',
@@ -125,10 +124,14 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
   $original-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
 
-  $tokens: values.validate(
+  $tokens: validate.values(
     $original-tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
@@ -140,6 +143,18 @@ $_default: (
     ),
     $renamed-tokens: _get-renamed-tokens($original-tokens)
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-list-item-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

@@ -4,10 +4,13 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-state';
 @use './v0_192/md-comp-radio-button';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -51,8 +54,12 @@ $_default: (
   'md-sys-state': md-sys-state.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: validate.values(
     md-comp-radio-button.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
@@ -68,6 +75,14 @@ $_default: (
       'unselected-pressed-state-layer-opacity': 'pressed-state-layer-opacity'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set($tokens, $token, var(--md-radio-#{$token}, #{$value}));
+    }
+  }
 
   @return $tokens;
 }

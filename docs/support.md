@@ -10,7 +10,7 @@ order: 4
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2023-09-15' }
+freshness: { owner: 'lizmitchell' reviewed: '2024-03-27' }
 *-->
 
 <!-- [TOC] -->
@@ -19,6 +19,8 @@ freshness: { owner: 'lizmitchell' reviewed: '2023-09-15' }
 
 ## Browsers
 
+<!-- go/mwc-browsers -->
+
 MWC aims to support the latest two major versions of browsers at the time of
 each release.
 
@@ -26,9 +28,9 @@ Current browsers and versions supported:
 
 Browser | Version
 ------- | -------
-Chrome  | 112 +
-Edge    | 112 +
-Firefox | 113 +
+Chrome  | 120 +
+Edge    | 120 +
+Firefox | 119 +
 Safari* | 16.4 +
 
 *\* previous versions of Safari may be supported with an

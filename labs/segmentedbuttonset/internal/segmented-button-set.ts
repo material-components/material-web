@@ -15,6 +15,11 @@ import {SegmentedButton} from '../../segmentedbutton/internal/segmented-button.j
  * SegmentedButtonSet is the parent component for two or more
  * `SegmentedButton` components. **Only** `SegmentedButton` components may be
  * used as children.
+ *
+ * @fires segmented-button-set-selection {CustomEvent<{button: SegmentedButton, selected: boolean, index: number}>}
+ * Dispatched when a button is selected programattically with the
+ * `setButtonSelected` or the `toggleSelection` methods as well as on user
+ * interaction. --bubbles --composed
  */
 export class SegmentedButtonSet extends LitElement {
   static {
@@ -79,29 +84,31 @@ export class SegmentedButtonSet extends LitElement {
   }
 
   private emitSelectionEvent(index: number) {
-    this.dispatchEvent(new CustomEvent('segmented-button-set-selection', {
-      detail: {
-        button: this.buttons[index],
-        selected: this.buttons[index].selected,
-        index,
-      },
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('segmented-button-set-selection', {
+        detail: {
+          button: this.buttons[index],
+          selected: this.buttons[index].selected,
+          index,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   protected override render() {
     // Needed for closure conformance
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-     <span
-       role="group"
-       @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
-       aria-label=${ariaLabel || nothing}
-       class="md3-segmented-button-set">
-       <slot></slot>
-     </span>
-     `;
+      <span
+        role="group"
+        @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
+        aria-label=${ariaLabel || nothing}
+        class="md3-segmented-button-set">
+        <slot></slot>
+      </span>
+    `;
   }
 
   protected getRenderClasses() {

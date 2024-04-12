@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Dialog} from './internal/dialog.js';
-import {styles} from './internal/dialog-styles.css.js';
+import {styles} from './internal/dialog-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -38,8 +39,11 @@ declare global {
  * - More complex dialogs may contain actions that require a series of tasks
  * to complete. One example is creating a calendar entry with the event title,
  * date, location, and time.
+ *
+ * @final
+ * @suppress {visibility}
  */
 @customElement('md-dialog')
 export class MdDialog extends Dialog {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

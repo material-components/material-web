@@ -7,10 +7,10 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './v0_192/md-comp-linear-progress-indicator';
-@use './values';
 // go/keep-sorted end
 
 $_default: (
@@ -39,12 +39,28 @@ $unsupported-tokens: (
   // go/keep-sorted end
 );
 
-// TODO(b/275045611) may need to update based on resolution of design
-// for buffer and background animation.
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return values.validate(
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: validate.values(
     md-comp-linear-progress-indicator.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-linear-progress-#{$token}, #{$value})
+      );
+    }
+  }
+
+  @return $tokens;
 }

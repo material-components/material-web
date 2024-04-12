@@ -5,26 +5,14 @@
 
 // go/keep-sorted start
 @use 'sass:list';
+@use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-fab-branded-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start',
-      'large-container-shape-start-start',
-      'large-container-shape-start-end',
-      'large-container-shape-end-end',
-      'large-container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-fab-branded-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -37,45 +25,15 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-fab-branded-values();
+  $tokens: tokens.md-comp-fab-branded-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'container-shape', 'large-container-shape');
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-fab-branded-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-fab-branded-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-fab-branded-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-fab-branded-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-fab-branded-container-shape-end-start,
-      var(--_container-shape)
-    );
-    --_large-container-shape-start-start: var(
-      --md-fab-branded-large-container-shape-start-start,
-      var(--_large-container-shape)
-    );
-    --_large-container-shape-start-end: var(
-      --md-fab-branded-large-container-shape-start-end,
-      var(--_large-container-shape)
-    );
-    --_large-container-shape-end-end: var(
-      --md-fab-branded-large-container-shape-end-end,
-      var(--_large-container-shape)
-    );
-    --_large-container-shape-end-start: var(
-      --md-fab-branded-large-container-shape-end-start,
-      var(--_large-container-shape)
-    );
   }
 }

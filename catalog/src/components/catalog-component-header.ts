@@ -17,13 +17,10 @@ import {customElement} from 'lit/decorators.js';
 @customElement('catalog-component-header')
 export class CatalogComponentHeader extends LitElement {
   render() {
-    return html`
-      <div>
-        <slot class="title" name="title"></slot>
-        <slot
-          class="image"
-        ></slot>
-      </div>`;
+    return html` <div>
+      <slot class="title" name="title"></slot>
+      <slot class="image"></slot>
+    </div>`;
   }
 
   static styles = css`

@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-type WithStylesheet =
-    typeof globalThis&{[stylesheetName: string]: CSSStyleSheet | undefined};
+type WithStylesheet = typeof globalThis & {
+  [stylesheetName: string]: CSSStyleSheet | undefined;
+};
 
 /**
  * Applies a stringified CSS theme to a document or shadowroot by creating or
@@ -23,7 +24,10 @@ type WithStylesheet =
  *     used to generate the localstorage name.
  */
 export function applyThemeString(
-    doc: DocumentOrShadowRoot, themeString: string, ssName = 'material-theme') {
+  doc: DocumentOrShadowRoot,
+  themeString: string,
+  ssName = 'material-theme',
+) {
   // Get constructable stylesheet
   let sheet = (globalThis as WithStylesheet)[ssName];
   // Create a new sheet if it doesn't exist already and save it globally.
@@ -34,11 +38,13 @@ export function applyThemeString(
   }
 
   // Set the color of the URL bar because we are cool like that.
-  const surfaceContainer =
-      themeString.match(/--md-sys-color-surface-container:(.+?);/)?.[1];
+  const surfaceContainer = themeString.match(
+    /--md-sys-color-surface-container:(.+?);/,
+  )?.[1];
   if (surfaceContainer) {
-    document.querySelector('meta[name="theme-color"]')
-        ?.setAttribute('content', surfaceContainer);
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', surfaceContainer);
   }
 
   sheet.replaceSync(themeString);

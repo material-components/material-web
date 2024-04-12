@@ -6,15 +6,15 @@
 
 import '../field/outlined-field.js';
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {literal} from 'lit/static-html.js';
 
-import {styles as outlinedForcedColorsStyles} from './internal/outlined-forced-colors-styles.css.js';
-import {styles as outlinedStyles} from './internal/outlined-styles.css.js';
+import {styles as outlinedStyles} from './internal/outlined-styles.js';
 import {OutlinedTextField} from './internal/outlined-text-field.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
-export {TextFieldType} from './internal/text-field.js';
+export {type TextFieldType} from './internal/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,8 +29,7 @@ declare global {
  */
 @customElement('md-outlined-text-field')
 export class MdOutlinedTextField extends OutlinedTextField {
-  static override styles =
-      [sharedStyles, outlinedStyles, outlinedForcedColorsStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, outlinedStyles];
 
   protected override readonly fieldTag = literal`md-outlined-field`;
 }

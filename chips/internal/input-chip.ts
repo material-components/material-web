@@ -14,11 +14,13 @@ import {renderRemoveButton} from './trailing-icons.js';
 
 /**
  * An input chip component.
+ *
+ * @fires remove {Event} Dispatched when the remove button is clicked.
  */
 export class InputChip extends MultiActionChip {
   @property({type: Boolean}) avatar = false;
   @property() href = '';
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
   @property({type: Boolean, attribute: 'remove-only'}) removeOnly = false;
   @property({type: Boolean, reflect: true}) selected = false;
 
@@ -50,7 +52,7 @@ export class InputChip extends MultiActionChip {
   }
 
   @query('.trailing.action')
-  protected readonly trailingAction!: HTMLElement|null;
+  protected readonly trailingAction!: HTMLElement | null;
 
   protected override getContainerClasses() {
     return {
@@ -68,12 +70,14 @@ export class InputChip extends MultiActionChip {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
       return html`
-        <a class="primary action"
+        <a
+          class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
-        >${content}</a>
+          >${content}</a
+        >
       `;
     }
 
@@ -86,12 +90,14 @@ export class InputChip extends MultiActionChip {
     }
 
     return html`
-      <button class="primary action"
+      <button
+        class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"
-      >${content}</button>
+        >${content}</button
+      >
     `;
   }
 

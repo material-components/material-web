@@ -4,11 +4,16 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+@use 'sass:string';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './v0_192/md-comp-switch';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -32,6 +37,10 @@ $supported-tokens: (
   'handle-color',
   'handle-height',
   'handle-shape',
+  'handle-shape-end-end',
+  'handle-shape-end-start',
+  'handle-shape-start-end',
+  'handle-shape-start-start',
   'handle-width',
   'hover-handle-color',
   'hover-icon-color',
@@ -75,6 +84,10 @@ $supported-tokens: (
   'track-outline-color',
   'track-outline-width',
   'track-shape',
+  'track-shape-end-end',
+  'track-shape-end-start',
+  'track-shape-start-end',
+  'track-shape-start-start',
   'track-width',
   'with-icon-handle-height',
   'with-icon-handle-width',
@@ -96,11 +109,23 @@ $_default: (
   'md-sys-state': md-sys-state.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-switch.values($deps, $exclude-hardcoded-values),
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-switch.values($deps, $exclude-hardcoded-values);
+  $new-tokens: shape.get-new-logical-shape-tokens(
+    $tokens,
+    'handle-shape',
+    'track-shape'
+  );
+
+  $tokens: validate.values(
+    $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // Remove default "unselected" prefix (b/292244480)
       'disabled-unselected-handle-color': 'disabled-handle-color',
@@ -136,6 +161,22 @@ $_default: (
       'unselected-track-outline-color': 'track-outline-color'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $shape-tokens: ('handle-shape', 'track-shape');
+      @each $shape-token in $shape-tokens {
+        @if string.index($token, '#{$shape-token}-') == 1 {
+          // Add fallback to shorthand for logical shape properties.
+          $value: var(--md-switch-#{$shape-token}, #{$value});
+        }
+      }
+
+      $tokens: map.set($tokens, $token, var(--md-switch-#{$token}, #{$value}));
+    }
+  }
 
   @return $tokens;
 }

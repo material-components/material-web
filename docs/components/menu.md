@@ -12,7 +12,7 @@ dirname: menu
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'emarquez' reviewed: '2023-08-28' }
+freshness: { owner: 'emarquez' reviewed: '2024-03-26' }
 tag: 'docType:reference'
 *-->
 
@@ -61,7 +61,7 @@ choices on a temporary surface.
 When opened, menus position themselves to an anchor. Thus, either `anchor` or
 `anchorElement` must be supplied to `md-menu` before opening. Additionally, a
 shared parent of `position:relative` should be present around the menu and it's
-anchor.
+anchor, because the default menu is positioned relative to the anchor element.
 
 Menus also render menu items such as `md-menu-item` and handle keyboard
 navigation between `md-menu-item`s as well as typeahead functionality.
@@ -215,14 +215,69 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
 </script>
 ```
 
-### Fixed menus
+### Popover-positioned menus
 
 Internally menu uses `position: absolute` by default. Though there are cases
 when the anchor and the node cannot share a common ancestor that is `position:
 relative`, or sometimes, menu will render below another item due to limitations
-with `position: absolute`. In most of these cases, you would want to use the
-`positioning="fixed"` attribute to position the menu relative to the window
-instead of relative to the parent.
+with `position: absolute`.
+
+Popover-positioned menus use the native
+[Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)<!-- {.external} -->
+to render above all other content. This may fix most issues where the default
+menu positioning (`positioning="absolute"`) is not positioning as expected by
+rendering into the
+[top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer)<!-- {.external} -->.
+
+> Warning: Popover API support was added in Chrome 114 and Safari 17. At the
+> time of writing, Firefox does not support the Popover API
+> ([see latest browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#browser_compatibility)<!-- {.external} -->).
+>
+> For browsers that do not support the Popover API, `md-menu` will fall back to
+> using [fixed-positioned menus](#fixed-positioned-menus).
+
+<!-- no-catalog-start -->
+
+!["A filled button that says open popover menu. There is an open menu anchored
+to the bottom of the button with three items, Apple, Banana, and
+Cucumber."](images/menu/usage-popover.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/menu/usage-popover.html" -->
+
+```html
+<!-- Note the lack of position: relative parent. -->
+<div style="margin: 16px;">
+  <md-filled-button id="usage-popover-anchor">Open popover menu</md-filled-button>
+</div>
+
+<!-- popover menus do not require a common ancestor with the anchor. -->
+<md-menu positioning="popover" id="usage-popover" anchor="usage-popover-anchor">
+  <md-menu-item>
+    <div slot="headline">Apple</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Banana</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Cucumber</div>
+  </md-menu-item>
+</md-menu>
+
+<script type="module">
+  const anchorEl = document.body.querySelector('#usage-popover-anchor');
+  const menuEl = document.body.querySelector('#usage-popover');
+
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
+</script>
+```
+
+### Fixed-positioned menus
+
+This is the fallback implementation of
+[popover-positioned menus](#popover-positioned-menus) and uses `position: fixed`
+rather than the default `position: absolute` which calculates its position
+relative to the window rather than the element.
 
 > Note: Fixed menu positions are positioned relative to the window and not the
 > document. This means that the menu will not scroll with the anchor as the page
@@ -264,6 +319,64 @@ Cucumber."](images/menu/usage-fixed.webp)
 </script>
 ```
 
+### Document-positioned menus
+
+When set to `positioning="document"`, `md-menu` will position itself relative to
+the document as opposed to the element or the window from `"absolute"` and
+`"fixed"` values respectively.
+
+Document level positioning is useful for the following cases:
+
+-   There are no ancestor elements that produce a `relative` positioning
+    context.
+    -   `position: relative`
+    -   `position: absolute`
+    -   `position: fixed`
+    -   `transform: translate(x, y)`
+    -   etc.
+-   The menu is hoisted to the top of the DOM
+    -   The last child of `<body>`
+    -   [Top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer)
+        <!-- {.external} -->
+-   The same `md-menu` is being reused and the contents and anchors are being
+    dynamically changed
+
+<!-- no-catalog-start -->
+
+!["A filled button that says open document menu. There is an open menu anchored
+to the bottom of the button with three items, Apple, Banana, and
+Cucumber."](images/menu/usage-document.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/menu/usage-document.html" -->
+
+```html
+<!-- Note the lack of position: relative parent. -->
+<div style="margin: 16px;">
+  <md-filled-button id="usage-document-anchor">Open document menu</md-filled-button>
+</div>
+
+<!-- document menus do not require a common ancestor with the anchor. -->
+<md-menu positioning="document" id="usage-document" anchor="usage-document-anchor">
+  <md-menu-item>
+    <div slot="headline">Apple</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Banana</div>
+  </md-menu-item>
+  <md-menu-item>
+    <div slot="headline">Cucumber</div>
+  </md-menu-item>
+</md-menu>
+
+<script type="module">
+  const anchorEl = document.body.querySelector('#usage-document-anchor');
+  const menuEl = document.body.querySelector('#usage-document');
+
+  anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
+</script>
+```
+
 ## Accessibility
 
 By default Menu is set up to function as a `role="menu"` with children as
@@ -291,7 +404,7 @@ cases should be set to `role="none"`, and `md-divider` should have
     aria-expanded="true"
     aria-activedescendant="1"
     value="Ala">
-</md-filled-textfield>
+</md-filled-text-field>
 <md-menu
     id="menu"
     anchor="textfield"
@@ -320,7 +433,7 @@ the tokens for those components can also be used for Menu.
 Token                                     | Default value
 ----------------------------------------- | ------------------------------------
 `--md-menu-container-color`               | `--md-sys-color-surface-container`
-`--md-menu-container-shape`               | `4px`
+`--md-menu-container-shape`               | `--md-sys-shape-corner-extra-small`
 `--md-menu-item-container-color`          | `--md-sys-color-surface-container`
 `--md-menu-item-selected-container-color` | `--md-sys-color-secondary-container`
 
@@ -395,7 +508,6 @@ a sharp 0px border radius.](images/menu/theming.webp)
 
 ## API
 
-
 ### MdMenu <code>&lt;md-menu&gt;</code>
 
 #### Properties
@@ -405,7 +517,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 Property | Attribute | Type | Default | Description
 --- | --- | --- | --- | ---
 `anchor` | `anchor` | `string` | `''` | The ID of the element in the same root node in which the menu should align to. Overrides setting `anchorElement = elementReference`.<br>__NOTE__: anchor or anchorElement must either be an HTMLElement or resolve to an HTMLElement in order for menu to open.
-`positioning` | `positioning` | `string` | `'absolute'` | Whether the positioning algorithim should calculate relative to the parent of the anchor element (absolute) or relative to the window (fixed).<br>Examples for `position = 'fixed'`:<br>- If there is no `position:relative` in the given parent tree and the surface is `position:absolute` - If the surface is `position:fixed` - If the surface is in the "top layer" - The anchor and the surface do not share a common `position:relative` ancestor<br>When using positioning = fixed, in most cases, the menu should position itself above most other `position:absolute` or `position:fixed` elements when placed inside of them. e.g. using a menu inside of an `md-dialog`.<br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to the window instead.
+`positioning` | `positioning` | `string` | `'absolute'` | Whether the positioning algorithm should calculate relative to the parent of the anchor element (absolute) or relative to the window (fixed).<br>Examples for `position = 'fixed'`:<br>- If there is no `position:relative` in the given parent tree and the surface is `position:absolute` - If the surface is `position:fixed` - If the surface is in the "top layer" - The anchor and the surface do not share a common `position:relative` ancestor<br>When using positioning = fixed, in most cases, the menu should position itself above most other `position:absolute` or `position:fixed` elements when placed inside of them, e.g. using a menu inside of an `md-dialog`.<br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to the window instead.
 `quick` | `quick` | `boolean` | `false` | Skips the opening and closing animations.
 `hasOverflow` | `has-overflow` | `boolean` | `false` | Displays overflow content like a submenu.<br>__NOTE__: This may cause adverse effects if you set `md-menu {max-height:...}` and have items overflowing items in the "y" direction.
 `open` | `open` | `boolean` | `false` | Opens the menu and makes it visible. Alternative to the `.show()` and `.close()` methods
@@ -415,13 +527,13 @@ Property | Attribute | Type | Default | Description
 `anchorCorner` | `anchor-corner` | `string` | `Corner.END_START` | The corner of the anchor which to align the menu in the standard logical property style of <block>-<inline> e.g. `'end-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport.
 `menuCorner` | `menu-corner` | `string` | `Corner.START_START` | The corner of the menu which to align the anchor in the standard logical property style of <block>-<inline> e.g. `'start-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport.
 `stayOpenOnOutsideClick` | `stay-open-on-outside-click` | `boolean` | `false` | Keeps the user clicks outside the menu.<br>NOTE: clicking outside may still cause focusout to close the menu so see `stayOpenOnFocusout`.
-`stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br>NOTE: Focusout behavior will stop propagation of the focusout event. Set this property to true to opt-out of menu's focuout handling altogether.
+`stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br>NOTE: Focusout behavior will stop propagation of the focusout event. Set this property to true to opt-out of menu's focusout handling altogether.
 `skipRestoreFocus` | `skip-restore-focus` | `boolean` | `false` | After closing, does not restore focus to the last focused element before the menu was opened.
 `defaultFocus` | `default-focus` | `string` | `FocusState.FIRST_ITEM` | The element that should be focused by default once opened.<br>NOTE: When setting default focus to 'LIST_ROOT', remember to change `tabindex` to `0` and change md-menu's display to something other than `display: contents` when necessary.
 `isSubmenu` |  | `boolean` | `false` | Whether or not the current menu is a submenu and should not handle specific navigation keys.
 `typeaheadController` |  | `TypeaheadController` | `function { ... }` | Handles typeahead navigation through the menu.
-`anchorElement` |  | `HTMLElement & Partial<SurfacePositionTarget>` | `undefined` | 
-`items` |  | `MenuItem[]` | `undefined` | 
+`anchorElement` |  | `HTMLElement & Partial<SurfacePositionTarget>` | `undefined` |
+`items` |  | `MenuItem[]` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -431,8 +543,8 @@ Property | Attribute | Type | Default | Description
 
 Method | Parameters | Returns | Description
 --- | --- | --- | ---
-`close` | _None_ | `void` | 
-`show` | _None_ | `void` | 
+`close` | _None_ | `void` |
+`show` | _None_ | `void` |
 `activateNextItem` | _None_ | `MenuItem` | Activates the next item in the menu. If at the end of the menu, the first item will be activated.
 `activatePreviousItem` | _None_ | `MenuItem` | Activates the previous item in the menu. If at the start of the menu, the last item will be activated.
 
@@ -465,7 +577,7 @@ Property | Attribute | Type | Default | Description
 `target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is set.
 `keepOpen` | `keep-open` | `boolean` | `false` | Keeps the menu open if clicked or keyboard selected.
 `selected` | `selected` | `boolean` | `false` | Sets the item in the selected visual state when a submenu is opened.
-`typeaheadText` |  | `string` | `undefined` | 
+`typeaheadText` |  | `string` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -475,7 +587,7 @@ Property | Attribute | Type | Default | Description
 
 Event | Description
 --- | ---
-`close-menu` | 
+`close-menu` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -492,8 +604,8 @@ Property | Attribute | Type | Default | Description
 `hoverOpenDelay` | `hover-open-delay` | `number` | `400` | The delay between mouseenter and submenu opening.
 `hoverCloseDelay` | `hover-close-delay` | `number` | `400` | The delay between ponterleave and the submenu closing.
 `isSubMenu` | `md-sub-menu` | `boolean` | `true` | READONLY: self-identifies as a menu item and sets its identifying attribute
-`item` |  | `MenuItem` | `undefined` | 
-`menu` |  | `Menu` | `undefined` | 
+`item` |  | `MenuItem` | `undefined` |
+`menu` |  | `Menu` | `undefined` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -515,7 +627,7 @@ Method | Parameters | Returns | Description
 Event | Description
 --- | ---
 `deactivate-items` | Requests the parent menu to deselect other items when a submenu opens
-`request-activation` | Requests the parent make the slotted item focusable and focuses the item.
+`request-activation` | Requests the parent to make the slotted item focusable and focus the item
 `deactivate-typeahead` | Requests the parent menu to deactivate the typeahead functionality when a submenu opens
 `activate-typeahead` | Requests the parent menu to activate the typeahead functionality when a submenu closes
 

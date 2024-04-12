@@ -4,6 +4,9 @@
 //
 
 // go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
@@ -20,6 +23,24 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  @return md-comp-navigation-bar.values($deps, $exclude-hardcoded-values);
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-navigation-bar.values($deps, $exclude-hardcoded-values);
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-navigation-bar-#{$token}, #{$value})
+      );
+    }
+  }
+
+  @return $tokens;
 }

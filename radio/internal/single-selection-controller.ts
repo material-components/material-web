@@ -51,8 +51,25 @@ export interface SingleSelectionElement extends HTMLElement {
  * }
  */
 export class SingleSelectionController implements ReactiveController {
+  /**
+   * All single selection elements in the host element's root with the same
+   * `name` attribute, including the host element.
+   */
+  get controls(): [SingleSelectionElement, ...SingleSelectionElement[]] {
+    const name = this.host.getAttribute('name');
+    if (!name || !this.root || !this.host.isConnected) {
+      return [this.host];
+    }
+
+    // Cast as unknown since there is not enough information for typescript to
+    // know that there is always at least one element (the host).
+    return Array.from(
+      this.root.querySelectorAll<SingleSelectionElement>(`[name="${name}"]`),
+    ) as unknown as [SingleSelectionElement, ...SingleSelectionElement[]];
+  }
+
   private focused = false;
-  private root: ParentNode|null = null;
+  private root: ParentNode | null = null;
 
   constructor(private readonly host: SingleSelectionElement) {}
 
@@ -104,7 +121,7 @@ export class SingleSelectionController implements ReactiveController {
   };
 
   private uncheckSiblings() {
-    for (const sibling of this.getNamedSiblings()) {
+    for (const sibling of this.controls) {
       if (sibling !== this.host) {
         sibling.checked = false;
       }
@@ -117,8 +134,8 @@ export class SingleSelectionController implements ReactiveController {
   private updateTabIndices() {
     // There are three tabindex states for a group of elements:
     // 1. If any are checked, that element is focusable.
-    const siblings = this.getNamedSiblings();
-    const checkedSibling = siblings.find(sibling => sibling.checked);
+    const siblings = this.controls;
+    const checkedSibling = siblings.find((sibling) => sibling.checked);
     // 2. If an element is focused, the others are no longer focusable.
     if (checkedSibling || this.focused) {
       const focusable = checkedSibling || this.host;
@@ -139,20 +156,6 @@ export class SingleSelectionController implements ReactiveController {
   }
 
   /**
-   * Retrieves all siblings in the host element's root with the same `name`
-   * attribute.
-   */
-  private getNamedSiblings() {
-    const name = this.host.getAttribute('name');
-    if (!name || !this.root) {
-      return [];
-    }
-
-    return Array.from(
-        this.root.querySelectorAll<SingleSelectionElement>(`[name="${name}"]`));
-  }
-
-  /**
    * Handles arrow key events from the host. Using the arrow keys will
    * select and check the next or previous sibling with the host's
    * `name` attribute.
@@ -168,7 +171,7 @@ export class SingleSelectionController implements ReactiveController {
     }
 
     // Don't try to select another sibling if there aren't any.
-    const siblings = this.getNamedSiblings();
+    const siblings = this.controls;
     if (!siblings.length) {
       return;
     }

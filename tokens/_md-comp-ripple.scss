@@ -7,10 +7,10 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
@@ -27,7 +27,7 @@ $_default: (
   'md-sys-state': md-sys-state.values(),
 );
 
-@function values($deps: $_default) {
+@function values($deps: $_default, $exclude-custom-properties: true) {
   $tokens: (
     'hover-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'hover-opacity': map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
@@ -36,5 +36,15 @@ $_default: (
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
   );
 
-  @return values.validate($tokens, $supported-tokens: $supported-tokens);
+  $tokens: validate.values($tokens, $supported-tokens: $supported-tokens);
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set($tokens, $token, var(--md-ripple-#{$token}, #{$value}));
+    }
+  }
+
+  @return $tokens;
 }

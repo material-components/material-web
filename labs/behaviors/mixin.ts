@@ -26,10 +26,11 @@
  * }
  * ```
  */
-// Mixins must have a constructor with `...args: any[]`
-// tslint:disable-next-line:no-any
-export type MixinBase<ExpectedBase = object> = abstract new (...args: any[]) =>
-    ExpectedBase;
+export type MixinBase<ExpectedBase = object> = abstract new (
+  // Mixins must have a constructor with `...args: any[]`
+  // tslint:disable-next-line:no-any
+  ...args: any[]
+) => ExpectedBase;
 
 /**
  * The return value of a mixin.
@@ -55,11 +56,8 @@ export type MixinBase<ExpectedBase = object> = abstract new (...args: any[]) =>
  *   return FooImpl;
  * }
  * ```
- *
  */
-// Mixins must have a constructor with `...args: any[]`
-// tslint:disable-next-line:no-any
 export type MixinReturn<MixinBase, MixinClass = object> =
-    // Mixins must have a constructor with `...args: any[]`
-    // tslint:disable-next-line:no-any
-    (abstract new (...args: any[]) => MixinClass)&MixinBase;
+  // Mixins must have a constructor with `...args: any[]`
+  // tslint:disable-next-line:no-any
+  (abstract new (...args: any[]) => MixinClass) & MixinBase;

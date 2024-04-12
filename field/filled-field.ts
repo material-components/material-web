@@ -4,11 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {FilledField} from './internal/filled-field.js';
-import {styles as filledStyles} from './internal/filled-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles as filledStyles} from './internal/filled-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -23,5 +24,5 @@ declare global {
  */
 @customElement('md-filled-field')
 export class MdFilledField extends FilledField {
-  static override styles = [sharedStyles, filledStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, filledStyles];
 }

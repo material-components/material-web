@@ -12,7 +12,16 @@
  * and global scroll listeners.
  */
 
-import {changeColor, changeColorAndMode, changeColorMode, getCurrentMode, getCurrentSeedColor, getCurrentThemeString, getLastSavedAutoColorMode, isModeDark} from '../utils/theme.js';
+import {
+  changeColor,
+  changeColorAndMode,
+  changeColorMode,
+  getCurrentMode,
+  getCurrentSeedColor,
+  getCurrentThemeString,
+  getLastSavedAutoColorMode,
+  isModeDark,
+} from '../utils/theme.js';
 
 /**
  * Applies theme-based event listeners such as changing color, mode, and
@@ -29,14 +38,15 @@ function applyColorThemeListeners() {
 
   // Listen for system color change and applies the new theme if the current
   // color mode is 'auto'.
-  window.matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', () => {
-        if (getCurrentMode() !== 'auto') {
-          return;
-        }
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', () => {
+      if (getCurrentMode() !== 'auto') {
+        return;
+      }
 
-        changeColor(getCurrentSeedColor()!);
-      });
+      changeColor(getCurrentSeedColor()!);
+    });
 }
 
 /**

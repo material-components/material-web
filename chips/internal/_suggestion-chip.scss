@@ -5,22 +5,14 @@
 
 // go/keep-sorted start
 @use 'sass:list';
+@use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-suggestion-chip-supported-tokens,
-    (
-      'container-shape-start-start',
-      'container-shape-start-end',
-      'container-shape-end-end',
-      'container-shape-end-start'
-    )
-  );
-
+  $supported-tokens: tokens.$md-comp-suggestion-chip-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -33,30 +25,16 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-suggestion-chip-values();
+  $tokens: tokens.md-comp-suggestion-chip-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
+    // Only use the logical properties.
+    $tokens: map.remove($tokens, 'container-shape');
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-suggestion-chip-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
-
-    // Support logical shape properties
-    --_container-shape-start-start: var(
-      --md-suggestion-chip-container-shape-start-start,
-      var(--_container-shape)
-    );
-    --_container-shape-start-end: var(
-      --md-suggestion-chip-container-shape-start-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-end: var(
-      --md-suggestion-chip-container-shape-end-end,
-      var(--_container-shape)
-    );
-    --_container-shape-end-start: var(
-      --md-suggestion-chip-container-shape-end-start,
-      var(--_container-shape)
-    );
   }
 
   @media (forced-colors: active) {

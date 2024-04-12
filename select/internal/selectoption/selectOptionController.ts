@@ -6,33 +6,11 @@
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
 
-import {MenuItem, MenuItemController, MenuItemControllerConfig} from '../../../menu/internal/controllers/menuItemController.js';
-
-/**
- * The interface specific to a Select Option
- */
-interface SelectOptionSelf {
-  /**
-   * The form value associated with the Select Option. (Note: the visual portion
-   * of the SelectOption is the headline defined in ListItem)
-   */
-  value: string;
-  /**
-   * Whether or not the SelectOption is selected.
-   */
-  selected: boolean;
-  /**
-   * The text to display in the select when selected. Defaults to the
-   * textContent of the Element slotted into the headline.
-   */
-  displayText: string;
-}
-
-/**
- * The interface to implement for a select option. Additionally, the element
- * must have `md-list-item` and `md-menu-item` attributes on the host.
- */
-export type SelectOption = SelectOptionSelf&MenuItem;
+import {
+  MenuItemController,
+  MenuItemControllerConfig,
+} from '../../../menu/internal/controllers/menuItemController.js';
+import {SelectOption} from './select-option.js';
 
 /**
  * Creates an event fired by a SelectOption to request selection from md-select.
@@ -67,9 +45,7 @@ export type SelectOptionConfig = MenuItemControllerConfig;
  */
 export class SelectOptionController implements ReactiveController {
   private readonly menuItemController: MenuItemController;
-  private readonly getHeadlineElements:
-      SelectOptionConfig['getHeadlineElements'];
-  private internalDisplayText: string|null = null;
+  private internalDisplayText: string | null = null;
   private lastSelected = this.host.selected;
   private firstUpdate = true;
 
@@ -82,7 +58,9 @@ export class SelectOptionController implements ReactiveController {
 
   /**
    * The text that is selectable via typeahead. If not set, defaults to the
-   * innerText of the item slotted into the `"headline"` slot.
+   * innerText of the item slotted into the `"headline"` slot, and if there are
+   * no slotted elements into headline, then it checks the _default_ slot, and
+   * then the `"supporting-text"` slot if nothing is in _default_.
    */
   get typeaheadText() {
     return this.menuItemController.typeaheadText;
@@ -94,23 +72,17 @@ export class SelectOptionController implements ReactiveController {
 
   /**
    * The text that is displayed in the select field when selected. If not set,
-   * defaults to the textContent of the item slotted into the `"headline"` slot.
+   * defaults to the textContent of the item slotted into the `"headline"` slot,
+   * and if there are no slotted elements into headline, then it checks the
+   * _default_ slot, and then the `"supporting-text"` slot if nothing is in
+   * _default_.
    */
   get displayText() {
     if (this.internalDisplayText !== null) {
       return this.internalDisplayText;
     }
 
-    const headlineElements = this.getHeadlineElements();
-
-    const textParts: string[] = [];
-    headlineElements.forEach((headlineElement) => {
-      if (headlineElement.textContent && headlineElement.textContent.trim()) {
-        textParts.push(headlineElement.textContent.trim());
-      }
-    });
-
-    return textParts.join(' ');
+    return this.menuItemController.typeaheadText;
   }
 
   setDisplayText(text: string) {
@@ -122,10 +94,10 @@ export class SelectOptionController implements ReactiveController {
    * @param config The object that configures this controller's behavior.
    */
   constructor(
-      private readonly host: ReactiveControllerHost&SelectOption,
-      config: SelectOptionConfig) {
+    private readonly host: ReactiveControllerHost & SelectOption,
+    config: SelectOptionConfig,
+  ) {
     this.menuItemController = new MenuItemController(host, config);
-    this.getHeadlineElements = config.getHeadlineElements;
     host.addController(this);
   }
 

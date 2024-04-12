@@ -9,7 +9,7 @@ import '@material/web/labs/navigationbar/navigation-bar.js';
 import '@material/web/labs/navigationtab/navigation-tab.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {html, css} from 'lit';
+import {css, html} from 'lit';
 
 /** Knob types for nav bar stories. */
 export interface StoryKnobs {
@@ -27,48 +27,48 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     :host {
       /* Material Symbols does not include filled star. */
       --md-icon-font: 'Material Icons';
-    }`,
+    }
+  `,
   render(knobs) {
     const {hideInactiveLabels, label, showBadge, badgeValue} = knobs;
-    return html`
-      <div style="width:400px">
-        <md-navigation-bar
-            activeIndex="1"
-            .hideInactiveLabels=${hideInactiveLabels}>
-          <md-navigation-tab
-              .label=${label}
-              .showBadge=${showBadge}
-              .badgeValue=${badgeValue}>
-            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
-          </md-navigation-tab>
+    return html` <div style="width:400px">
+      <md-navigation-bar
+        activeIndex="1"
+        .hideInactiveLabels=${hideInactiveLabels}>
+        <md-navigation-tab
+          .label=${label}
+          .showBadge=${showBadge}
+          .badgeValue=${badgeValue}>
+          <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+          <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
+        </md-navigation-tab>
 
-          <md-navigation-tab
-              .label=${label}
-              .showBadge=${showBadge}
-              .badgeValue=${badgeValue}>
-            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
-          </md-navigation-tab>
+        <md-navigation-tab
+          .label=${label}
+          .showBadge=${showBadge}
+          .badgeValue=${badgeValue}>
+          <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+          <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
+        </md-navigation-tab>
 
-          <md-navigation-tab
-              .label=${label}
-              .showBadge=${showBadge}
-              .badgeValue=${badgeValue}>
-            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
-          </md-navigation-tab>
+        <md-navigation-tab
+          .label=${label}
+          .showBadge=${showBadge}
+          .badgeValue=${badgeValue}>
+          <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+          <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
+        </md-navigation-tab>
 
-          <md-navigation-tab
-              .label=${label}
-              .showBadge=${showBadge}
-              .badgeValue=${badgeValue}>
-            <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
-            <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
-          </md-navigation-tab>
-        </md-navigation-bar>
-      </div>`;
-  }
+        <md-navigation-tab
+          .label=${label}
+          .showBadge=${showBadge}
+          .badgeValue=${badgeValue}>
+          <md-icon slot="active-icon">${knobs['active icon']}</md-icon>
+          <md-icon slot="inactive-icon">${knobs['inactive icon']}</md-icon>
+        </md-navigation-tab>
+      </md-navigation-bar>
+    </div>`;
+  },
 };
 
 /** Nav Bar stories. */

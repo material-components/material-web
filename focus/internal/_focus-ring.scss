@@ -14,11 +14,7 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
-  $supported-tokens: list.join(
-    tokens.$md-comp-focus-ring-supported-tokens,
-    ('shape-start-start', 'shape-start-end', 'shape-end-end', 'shape-end-start')
-  );
-
+  $supported-tokens: tokens.$md-comp-focus-ring-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
@@ -31,40 +27,20 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-focus-ring-values();
+  $tokens: tokens.md-comp-focus-ring-values(
+    $exclude-custom-properties: false,
+  );
 
-  $active-width: var(
-    --md-focus-ring-active-width,
-    #{map.get($tokens, 'active-width')}
-  );
-  $color: var(--md-focus-ring-color, #{map.get($tokens, 'color')});
-  $duration: var(--md-focus-ring-duration, #{map.get($tokens, 'duration')});
-  $width: var(--md-focus-ring-width, #{map.get($tokens, 'width')});
-  $inward-offset: var(
-    --md-focus-ring-inward-offset,
-    #{map.get($tokens, 'inward-offset')}
-  );
-  $outward-offset: var(
-    --md-focus-ring-outward-offset,
-    #{map.get($tokens, 'outward-offset')}
-  );
-  // Support logical shape properties
-  $start-start: var(
-    --md-focus-ring-shape-start-start,
-    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
-  );
-  $start-end: var(
-    --md-focus-ring-shape-start-end,
-    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
-  );
-  $end-end: var(
-    --md-focus-ring-shape-end-end,
-    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
-  );
-  $end-start: var(
-    --md-focus-ring-shape-end-start,
-    var(--md-focus-ring-shape, #{map.get($tokens, 'shape')})
-  );
+  $active-width: map.get($tokens, 'active-width');
+  $color: map.get($tokens, 'color');
+  $duration: map.get($tokens, 'duration');
+  $width: map.get($tokens, 'width');
+  $inward-offset: map.get($tokens, 'inward-offset');
+  $outward-offset: map.get($tokens, 'outward-offset');
+  $start-start: map.get($tokens, 'shape-start-start');
+  $start-end: map.get($tokens, 'shape-start-end');
+  $end-end: map.get($tokens, 'shape-end-end');
+  $end-start: map.get($tokens, 'shape-end-start');
 
   :host {
     animation-delay: 0s, calc($duration * 0.25);

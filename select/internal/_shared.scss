@@ -69,6 +69,20 @@
     display: flex;
   }
 
+  md-menu {
+    // Not inherited because it is applied every time the menu opens
+    min-width: var(--__menu-min-width);
+    // Inherits from `.menu-wrapper` because it is applied only when
+    // `clampMenuWidth` is true
+    max-width: var(--__menu-max-width, inherit);
+  }
+
+  .menu-wrapper {
+    width: 0px;
+    height: 0px;
+    max-width: inherit;
+  }
+
   md-menu ::slotted(:not[disabled]) {
     cursor: pointer;
   }

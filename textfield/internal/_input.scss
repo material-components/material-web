@@ -39,7 +39,19 @@
     }
 
     @media (forced-colors: active) {
-      background-color: Field; // Remove white background in Firefox HCM
+      background: none; // Remove background in Firefox HCM
+    }
+  }
+
+  // Optionally remove number input's spinner
+  .no-spinner .input {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      display: none;
+    }
+
+    &[type='number'] {
+      -moz-appearance: textfield;
     }
   }
 

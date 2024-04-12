@@ -26,16 +26,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-elevation-values();
-
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-elevation-#{$token}, #{$value});
-    }
-
-    display: flex;
-    pointer-events: none;
-  }
+  $tokens: tokens.md-comp-elevation-values(
+    $exclude-custom-properties: false,
+  );
 
   :host,
   .shadow,
@@ -49,10 +42,23 @@
     transition-timing-function: inherit;
   }
 
+  :host {
+    display: flex;
+    pointer-events: none;
+    transition-property: box-shadow, opacity;
+  }
+
   .shadow::before,
   .shadow::after {
     content: '';
     transition-property: box-shadow, opacity;
+
+    // Elevation doesn't share styles with multiple variants, so we normally
+    // would not use private custom properties. However, these variables are
+    // repeated several times in the styles below, and a shorter custom property
+    // reduces the CSS size, minified and gzip.
+    --_level: #{map.get($tokens, 'level')};
+    --_shadow-color: #{map.get($tokens, 'shadow-color')};
   }
 
   // Key box shadow

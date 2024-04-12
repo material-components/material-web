@@ -20,51 +20,54 @@ describe('<md-switch>', () => {
 
   describe('forms', () => {
     createFormTests({
-      queryControl: root => root.querySelector('md-switch'),
+      queryControl: (root) => root.querySelector('md-switch'),
       valueTests: [
         {
           name: 'unnamed',
           render: () => html`<md-switch selected></md-switch>`,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form without a name')
-                .toHaveSize(0);
-          }
+              .withContext('should not add anything to form without a name')
+              .toHaveSize(0);
+          },
         },
         {
           name: 'unselected',
           render: () => html`<md-switch name="switch"></md-switch>`,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form when unselected')
-                .toHaveSize(0);
-          }
+              .withContext('should not add anything to form when unselected')
+              .toHaveSize(0);
+          },
         },
         {
           name: 'selected default value',
           render: () => html`<md-switch name="switch" selected></md-switch>`,
           assertValue(formData) {
             expect(formData.get('switch')).toBe('on');
-          }
+          },
         },
         {
           name: 'selected custom value',
           render: () =>
-              html`<md-switch name="switch" selected value="Custom value"></md-switch>`,
+            html`<md-switch
+              name="switch"
+              selected
+              value="Custom value"></md-switch>`,
           assertValue(formData) {
             expect(formData.get('switch')).toBe('Custom value');
-          }
+          },
         },
         {
           name: 'disabled',
           render: () =>
-              html`<md-switch name="switch" selected disabled></md-switch>`,
+            html`<md-switch name="switch" selected disabled></md-switch>`,
           assertValue(formData) {
             expect(formData)
-                .withContext('should not add anything to form when disabled')
-                .toHaveSize(0);
-          }
-        }
+              .withContext('should not add anything to form when disabled')
+              .toHaveSize(0);
+          },
+        },
       ],
       resetTests: [
         {
@@ -75,9 +78,9 @@ describe('<md-switch>', () => {
           },
           assertReset(control) {
             expect(control.selected)
-                .withContext('control.selected after reset')
-                .toBeFalse();
-          }
+              .withContext('control.selected after reset')
+              .toBeFalse();
+          },
         },
         {
           name: 'reset to selected',
@@ -87,9 +90,9 @@ describe('<md-switch>', () => {
           },
           assertReset(control) {
             expect(control.selected)
-                .withContext('control.selected after reset')
-                .toBeTrue();
-          }
+              .withContext('control.selected after reset')
+              .toBeTrue();
+          },
         },
       ],
       restoreTests: [
@@ -98,20 +101,20 @@ describe('<md-switch>', () => {
           render: () => html`<md-switch name="switch"></md-switch>`,
           assertRestored(control) {
             expect(control.selected)
-                .withContext('control.selected after restore')
-                .toBeFalse();
-          }
+              .withContext('control.selected after restore')
+              .toBeFalse();
+          },
         },
         {
           name: 'restore selected',
           render: () => html`<md-switch name="switch" selected></md-switch>`,
           assertRestored(control) {
             expect(control.selected)
-                .withContext('control.selected after restore')
-                .toBeTrue();
-          }
+              .withContext('control.selected after restore')
+              .toBeTrue();
+          },
         },
-      ]
+      ],
     });
   });
 });

@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles as filledForcedColorsStyles} from './internal/filled-forced-colors-styles.css.js';
 import {FilledSelect} from './internal/filled-select.js';
-import {styles} from './internal/filled-select-styles.css.js';
-import {styles as sharedStyles} from './internal/shared-styles.css.js';
+import {styles} from './internal/filled-select-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -46,5 +46,5 @@ declare global {
  */
 @customElement('md-filled-select')
 export class MdFilledSelect extends FilledSelect {
-  static override styles = [sharedStyles, styles, filledForcedColorsStyles];
+  static override styles: CSSResultOrNative[] = [sharedStyles, styles];
 }

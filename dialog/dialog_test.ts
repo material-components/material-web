@@ -20,7 +20,7 @@ describe('<md-dialog>', () => {
       <md-dialog>
         <form id="form" method="dialog" slot="content">
           Content
-          <input autofocus>
+          <input autofocus />
         </form>
         <div slot="actions">
           <button form="form" value="button">Close</button>
@@ -107,14 +107,19 @@ describe('<md-dialog>', () => {
     it('closes when element with action is clicked', async () => {
       const {harness} = await setupTest();
       await harness.element.show();
-      const closedPromise = new Promise<void>(resolve => {
-        harness.element.addEventListener('closed', () => {
-          resolve();
-        }, {once: true});
+      const closedPromise = new Promise<void>((resolve) => {
+        harness.element.addEventListener(
+          'closed',
+          () => {
+            resolve();
+          },
+          {once: true},
+        );
       });
 
-      harness.element.querySelector<HTMLButtonElement>(
-                         '[value="button"]')!.click();
+      harness.element
+        .querySelector<HTMLButtonElement>('[value="button"]')!
+        .click();
       await closedPromise;
       expect(harness.element.open).toBeFalse();
       expect(harness.element.returnValue).toBe('button');
@@ -132,19 +137,18 @@ describe('<md-dialog>', () => {
       expect(isClosing).toHaveBeenCalled();
     });
 
-    it('focuses element with autofocus when shown and previously focused element when closed',
-       async () => {
-         const {harness, focusElement} = await setupTest();
-         const button = document.createElement('button');
-         document.body.append(button);
-         button.focus();
-         expect(document.activeElement).toBe(button);
-         await harness.element.show();
-         expect(document.activeElement).toBe(focusElement);
-         await harness.element.close();
-         expect(document.activeElement).toBe(button);
-         button.remove();
-       });
+    it('focuses element with autofocus when shown and previously focused element when closed', async () => {
+      const {harness, focusElement} = await setupTest();
+      const button = document.createElement('button');
+      document.body.append(button);
+      button.focus();
+      expect(document.activeElement).toBe(button);
+      await harness.element.show();
+      expect(document.activeElement).toBe(focusElement);
+      await harness.element.close();
+      expect(document.activeElement).toBe(button);
+      button.remove();
+    });
   });
 
   it('should set returnValue during the close event', async () => {
@@ -159,14 +163,14 @@ describe('<md-dialog>', () => {
     const returnValue = 'foo';
     await harness.element.close(returnValue);
     expect(returnValueDuringClose)
-        .withContext('dialog.returnValue during close event')
-        .toBe(returnValue);
+      .withContext('dialog.returnValue during close event')
+      .toBe(returnValue);
   });
 
   it('should not change returnValue if close event is canceled', async () => {
     const {harness} = await setupTest();
 
-    harness.element.addEventListener('close', event => {
+    harness.element.addEventListener('close', (event) => {
       event.preventDefault();
     });
 
@@ -174,8 +178,8 @@ describe('<md-dialog>', () => {
     const prevReturnValue = harness.element.returnValue;
     await harness.element.close('new return value');
     expect(harness.element.returnValue)
-        .withContext('dialog.returnValue after close event canceled')
-        .toBe(prevReturnValue);
+      .withContext('dialog.returnValue after close event canceled')
+      .toBe(prevReturnValue);
   });
 
   it('should open on connected if opened before connected to DOM', async () => {
@@ -185,50 +189,49 @@ describe('<md-dialog>', () => {
     dialog.addEventListener('open', openListener);
     dialog.open = true;
     expect(openListener)
-        .withContext('should not trigger open before connected')
-        .not.toHaveBeenCalled();
+      .withContext('should not trigger open before connected')
+      .not.toHaveBeenCalled();
 
     const root = env.render(html``);
     root.appendChild(dialog);
     await env.waitForStability();
     expect(openListener)
-        .withContext('opens after connecting')
-        .toHaveBeenCalled();
+      .withContext('opens after connecting')
+      .toHaveBeenCalled();
   });
 
-  it('should not open on connected if opened, but closed before connected to DOM',
-     async () => {
-       const openListener = jasmine.createSpy('openListener');
-       const dialog = document.createElement('md-dialog');
-       disableDialogAnimations(dialog);
-       dialog.addEventListener('open', openListener);
-       dialog.open = true;
-       await env.waitForStability();
-       dialog.open = false;
-       const root = env.render(html``);
-       root.appendChild(dialog);
-       await env.waitForStability();
-       expect(openListener)
-           .withContext('should not open on connected since close was called')
-           .not.toHaveBeenCalled();
-     });
+  it('should not open on connected if opened, but closed before connected to DOM', async () => {
+    const openListener = jasmine.createSpy('openListener');
+    const dialog = document.createElement('md-dialog');
+    disableDialogAnimations(dialog);
+    dialog.addEventListener('open', openListener);
+    dialog.open = true;
+    await env.waitForStability();
+    dialog.open = false;
+    const root = env.render(html``);
+    root.appendChild(dialog);
+    await env.waitForStability();
+    expect(openListener)
+      .withContext('should not open on connected since close was called')
+      .not.toHaveBeenCalled();
+  });
 
-  it('should not open on connected if opened before connection but closed after',
-     async () => {
-       const openListener = jasmine.createSpy('openListener');
-       const dialog = document.createElement('md-dialog');
-       disableDialogAnimations(dialog);
-       dialog.addEventListener('open', openListener);
-       dialog.open = true;
-       const root = env.render(html``);
-       root.appendChild(dialog);
-       dialog.open = false;
-       await env.waitForStability();
-       expect(openListener)
-           .withContext(
-               'should not open on connected since close was called before open could complete')
-           .not.toHaveBeenCalled();
-     });
+  it('should not open on connected if opened before connection but closed after', async () => {
+    const openListener = jasmine.createSpy('openListener');
+    const dialog = document.createElement('md-dialog');
+    disableDialogAnimations(dialog);
+    dialog.addEventListener('open', openListener);
+    dialog.open = true;
+    const root = env.render(html``);
+    root.appendChild(dialog);
+    dialog.open = false;
+    await env.waitForStability();
+    expect(openListener)
+      .withContext(
+        'should not open on connected since close was called before open could complete',
+      )
+      .not.toHaveBeenCalled();
+  });
 
   it('should not dispatch close if closed while disconnected', async () => {
     const {harness, root} = await setupTest();
@@ -240,19 +243,19 @@ describe('<md-dialog>', () => {
     await env.waitForStability();
 
     expect(closeListener)
-        .withContext('should not trigger close when disconnected')
-        .not.toHaveBeenCalled();
+      .withContext('should not trigger close when disconnected')
+      .not.toHaveBeenCalled();
 
     await harness.element.close();
     expect(closeListener)
-        .withContext('should not trigger close when disconnected')
-        .not.toHaveBeenCalled();
+      .withContext('should not trigger close when disconnected')
+      .not.toHaveBeenCalled();
 
     root.appendChild(harness.element);
     await env.waitForStability();
     expect(closeListener)
-        .withContext('should not trigger close when disconnected')
-        .not.toHaveBeenCalled();
+      .withContext('should not trigger close when disconnected')
+      .not.toHaveBeenCalled();
   });
 });
 

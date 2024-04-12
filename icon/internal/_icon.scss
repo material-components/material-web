@@ -26,26 +26,38 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-icon-values();
+  $tokens: tokens.md-comp-icon-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
+    font-size: map.get($tokens, 'size');
+    width: map.get($tokens, 'size');
+    height: map.get($tokens, 'size');
     color: inherit;
     font-variation-settings: inherit;
     font-weight: 400;
-    font-family: var(--md-icon-font, #{map.get($tokens, font)});
+    font-family: map.get($tokens, 'font');
     display: inline-flex;
     font-style: normal;
+    place-items: center;
+    place-content: center;
     line-height: 1;
     // Avoid displaying overflowing text if font ligatures have not loaded.
     overflow: hidden;
+    // Changing the letter-spacing for WCAG text spacing compliance will shift
+    // around font ligature icons, so we revert that to normal. Note: some a11y
+    // tools use `!important` style injection and may see shifting icons. Actual
+    // text spacing override implementations in projects should not set
+    // `letter-spacing` on icons, or revert it with a `text-indent` of the same
+    // size.
     letter-spacing: normal;
     text-transform: none;
     user-select: none;
     white-space: nowrap;
     word-wrap: normal;
+    // Prevent icons from shrinking when placed in a flex container.
+    flex-shrink: 0;
 
     /* Support for all WebKit browsers. */
     -webkit-font-smoothing: antialiased;

@@ -8,55 +8,89 @@ import '../../menu/menu.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import {ClassInfo, classMap} from 'lit/directives/class-map.js';
+import {styleMap} from 'lit/directives/style-map.js';
 import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
-import {redispatchEvent} from '../../internal/controller/events.js';
+import {redispatchEvent} from '../../internal/events/redispatch-event.js';
+import {
+  createValidator,
+  getValidityAnchor,
+  mixinConstraintValidation,
+} from '../../labs/behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {
+  getFormValue,
+  mixinFormAssociated,
+} from '../../labs/behaviors/form-associated.js';
+import {
+  mixinOnReportValidity,
+  onReportValidity,
+} from '../../labs/behaviors/on-report-validity.js';
+import {SelectValidator} from '../../labs/behaviors/validators/select-validator.js';
 import {getActiveItem} from '../../list/internal/list-navigation-helpers.js';
-import {CloseMenuEvent, isElementInSubtree, isSelectableKey} from '../../menu/internal/controllers/shared.js';
+import {
+  CloseMenuEvent,
+  FocusState,
+  isElementInSubtree,
+  isSelectableKey,
+} from '../../menu/internal/controllers/shared.js';
 import {TYPEAHEAD_RECORD} from '../../menu/internal/controllers/typeaheadController.js';
 import {DEFAULT_TYPEAHEAD_BUFFER_TIME, Menu} from '../../menu/internal/menu.js';
-
-import {createRequestDeselectionEvent, createRequestSelectionEvent, SelectOption} from './selectoption/selectOptionController.js';
+import {SelectOption} from './selectoption/select-option.js';
+import {
+  createRequestDeselectionEvent,
+  createRequestSelectionEvent,
+} from './selectoption/selectOptionController.js';
 import {getSelectedItems, SelectOptionRecord} from './shared.js';
 
 const VALUE = Symbol('value');
 
+// Separate variable needed for closure.
+const selectBaseClass = mixinOnReportValidity(
+  mixinConstraintValidation(
+    mixinFormAssociated(mixinElementInternals(LitElement)),
+  ),
+);
+
 /**
- * @fires input Fired when a selection is made by the user via mouse or keyboard
- * interaction.
- * @fires change Fired when a selection is made by the user via mouse or
- * keyboard interaction.
- * @fires opening Fired when the select's menu is about to open.
- * @fires opened Fired when the select's menu has finished animations and
- * opened.
- * @fires closing Fired when the select's menu is about to close.
- * @fires closed Fired when the select's menu has finished animations and
- * closed.
+ * @fires change {Event} The native `change` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event)
+ * --bubbles
+ * @fires input {InputEvent} The native `input` event on
+ * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)
+ * --bubbles --composed
+ * @fires opening {Event} Fired when the select's menu is about to open.
+ * @fires opened {Event} Fired when the select's menu has finished animations
+ * and opened.
+ * @fires closing {Event} Fired when the select's menu is about to close.
+ * @fires closed {Event} Fired when the select's menu has finished animations
+ * and closed.
  */
-export abstract class Select extends LitElement {
+export abstract class Select extends selectBaseClass {
   static {
     requestUpdateOnAriaChange(Select);
   }
 
-  /** @nocollapse  */
-  static readonly formAssociated = true;
+  /** @nocollapse */
+  static override shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * Opens the menu synchronously with no animation.
    */
   @property({type: Boolean}) quick = false;
+
   /**
    * Whether or not the select is required.
    */
   @property({type: Boolean}) required = false;
-  /**
-   * Disables the select.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
+
   /**
    * The error message that replaces supporting text when `error` is true. If
    * `errorText` is an empty string, then the supporting text will continue to
@@ -66,15 +100,18 @@ export abstract class Select extends LitElement {
    * `reportValidity()`.
    */
   @property({type: String, attribute: 'error-text'}) errorText = '';
+
   /**
    * The floating label for the field.
    */
   @property() label = '';
+
   /**
    * Conveys additional information below the select, such as how it should
    * be used.
    */
   @property({type: String, attribute: 'supporting-text'}) supportingText = '';
+
   /**
    * Gets or sets whether or not the select is in a visually invalid state.
    *
@@ -82,6 +119,7 @@ export abstract class Select extends LitElement {
    * `reportValidity()`.
    */
   @property({type: Boolean, reflect: true}) error = false;
+
   /**
    * Whether or not the underlying md-menu should be position: fixed to display
    * in a top-level manner, or position: absolute.
@@ -90,22 +128,37 @@ export abstract class Select extends LitElement {
    * element with stacking context and hidden overflows such as `md-dialog`.
    */
   @property({attribute: 'menu-positioning'})
-  menuPositioning: 'absolute'|'fixed' = 'absolute';
+  menuPositioning: 'absolute' | 'fixed' | 'popover' = 'popover';
+
+  /**
+   * Clamps the menu-width to the width of the select.
+   */
+  @property({type: Boolean, attribute: 'clamp-menu-width'})
+  clampMenuWidth = false;
+
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
    * before it clears the typeahead buffer.
    */
   @property({type: Number, attribute: 'typeahead-delay'})
   typeaheadDelay = DEFAULT_TYPEAHEAD_BUFFER_TIME;
+
   /**
    * Whether or not the text field has a leading icon. Used for SSR.
    */
   @property({type: Boolean, attribute: 'has-leading-icon'})
   hasLeadingIcon = false;
+
   /**
    * Text to display in the field. Only set for SSR.
    */
   @property({attribute: 'display-text'}) displayText = '';
+
+  /**
+   * Whether the menu should be aligned to the start or the end of the select's
+   * textbox.
+   */
+  @property({attribute: 'menu-align'}) menuAlign: 'start' | 'end' = 'start';
 
   /**
    * The value of the currently selected option.
@@ -159,80 +212,23 @@ export abstract class Select extends LitElement {
     return (this.getSelectedOptions() ?? []).map(([option]) => option);
   }
 
-  /**
-   * The HTML name to use in form submission.
-   */
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this.internals.form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this.internals.labels;
-  }
-
-  /**
-   * Returns a ValidityState object that represents the validity states of the
-   * checkbox.
-   *
-   * Note that selects will only set `valueMissing` if unselected and
-   * `required`.
-   */
-  get validity() {
-    this.syncValidity();
-    return this.internals.validity;
-  }
-
-  /**
-   * Returns the native validation error message.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
-   */
-  get validationMessage() {
-    this.syncValidity();
-    return this.internals.validationMessage;
-  }
-
-  /**
-   * Returns whether an element will successfully validate based on forms
-   * validation rules and constraints.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#constraint_validation_process
-   */
-  get willValidate() {
-    this.syncValidity();
-    return this.internals.willValidate;
-  }
-
   protected abstract readonly fieldTag: StaticValue;
 
   /**
    * Used for initializing select when the user sets the `value` directly.
    */
-  private lastUserSetValue: string|null = null;
+  private lastUserSetValue: string | null = null;
 
   /**
    * Used for initializing select when the user sets the `selectedIndex`
    * directly.
    */
-  private lastUserSetSelectedIndex: number|null = null;
+  private lastUserSetSelectedIndex: number | null = null;
 
   /**
    * Used for `input` and `change` event change detection.
    */
-  private lastSelectedOption: SelectOption|null = null;
+  private lastSelectedOption: SelectOption | null = null;
 
   // tslint:disable-next-line:enforce-name-casing
   private lastSelectedOptionRecords: SelectOptionRecord[] = [];
@@ -253,21 +249,35 @@ export abstract class Select extends LitElement {
 
   @state() private focused = false;
   @state() private open = false;
-  @query('.field') private readonly field!: Field|null;
-  @query('md-menu') private readonly menu!: Menu|null;
+  @state() private defaultFocus: FocusState = FocusState.NONE;
+  @query('.field') private readonly field!: Field | null;
+  @query('md-menu') private readonly menu!: Menu | null;
   @query('#label') private readonly labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
-  private customValidationMessage = '';
-  private readonly internals =
-      (this as HTMLElement /* needed for closure */).attachInternals();
+  // Have to keep track of previous open because it's state and private and thus
+  // cannot be tracked in PropertyValues<this> map.
+  private prevOpen = this.open;
+  private selectWidth = 0;
+
+  constructor() {
+    super();
+    if (isServer) {
+      return;
+    }
+
+    this.addEventListener('focus', this.handleFocus.bind(this));
+    this.addEventListener('blur', this.handleBlur.bind(this));
+  }
 
   /**
    * Selects an option given the value of the option, and updates MdSelect's
    * value.
    */
   select(value: string) {
-    const optionToSelect = this.options.find(option => option.value === value);
+    const optionToSelect = this.options.find(
+      (option) => option.value === value,
+    );
     if (optionToSelect) {
       this.selectItem(optionToSelect);
     }
@@ -297,73 +307,17 @@ export abstract class Select extends LitElement {
     this.nativeErrorText = '';
   }
 
-  /**
-   * Checks the select's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/checkValidity
-   *
-   * @return true if the select is valid, or false if not.
-   */
-  checkValidity() {
-    this.syncValidity();
-    return this.internals.checkValidity();
-  }
-
-  /**
-   * Checks the select's native validation and returns whether or not the
-   * element is valid.
-   *
-   * If invalid, this method will dispatch the `invalid` event.
-   *
-   * This method will display or clear an error text message equal to the
-   * select's `validationMessage`, unless the invalid event is canceled.
-   *
-   * Use `setCustomValidity()` to customize the `validationMessage`.
-   *
-   * This method can also be used to re-announce error messages to screen
-   * readers.
-   *
-   * @return true if the select is valid, or false if not.
-   */
-  reportValidity() {
-    let invalidEvent: Event|undefined;
-    this.addEventListener('invalid', event => {
-      invalidEvent = event;
-    }, {once: true});
-
-    const valid = this.checkValidity();
-    if (invalidEvent?.defaultPrevented) {
-      return valid;
-    }
+  [onReportValidity](invalidEvent: Event | null) {
+    // Prevent default pop-up behavior.
+    invalidEvent?.preventDefault();
 
     const prevMessage = this.getErrorText();
-    this.nativeError = !valid;
+    this.nativeError = !!invalidEvent;
     this.nativeErrorText = this.validationMessage;
 
     if (prevMessage === this.getErrorText()) {
       this.field?.reannounceError();
     }
-
-    return valid;
-  }
-
-  /**
-   * Sets the select's native validation error message. This is used to
-   * customize `validationMessage`.
-   *
-   * When the error is not an empty string, the select is considered invalid
-   * and `validity.customError` will be true.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity
-   *
-   * @param error The error message to display.
-   */
-  setCustomValidity(error: string) {
-    this.customValidationMessage = error;
-    this.syncValidity();
   }
 
   protected override update(changed: PropertyValues<Select>) {
@@ -373,24 +327,28 @@ export abstract class Select extends LitElement {
       this.initUserSelection();
     }
 
+    // We have just opened the menu.
+    // We are only able to check for the select's rect in `update()` instead of
+    // having to wait for `updated()` because the menu can never be open on
+    // first render since it is not settable and Lit SSR does not support click
+    // events which would open the menu.
+    if (this.prevOpen !== this.open && this.open) {
+      const selectRect = this.getBoundingClientRect();
+      this.selectWidth = selectRect.width;
+    }
+
+    this.prevOpen = this.open;
     super.update(changed);
   }
 
   protected override render() {
     return html`
       <span
-          class="select ${classMap(this.getRenderClasses())}"
-          @focusout=${this.handleFocusout}>
-        ${this.renderField()}
-        ${this.renderMenu()}
+        class="select ${classMap(this.getRenderClasses())}"
+        @focusout=${this.handleFocusout}>
+        ${this.renderField()} ${this.renderMenu()}
       </span>
     `;
-  }
-
-  protected override updated(changed: PropertyValues<Select>) {
-    if (changed.has('required')) {
-      this.syncValidity();
-    }
   }
 
   protected override async firstUpdated(changed: PropertyValues<Select>) {
@@ -402,8 +360,11 @@ export abstract class Select extends LitElement {
 
     // Case for when the DOM is streaming, there are no children, and a child
     // has [selected] set on it, we need to wait for DOM to render something.
-    if (!this.lastSelectedOptionRecords.length && !isServer &&
-        !this.options.length) {
+    if (
+      !this.lastSelectedOptionRecords.length &&
+      !isServer &&
+      !this.options.length
+    ) {
       setTimeout(() => {
         this.updateValueAndDisplayText();
       });
@@ -412,7 +373,7 @@ export abstract class Select extends LitElement {
     super.firstUpdated(changed);
   }
 
-  private getRenderClasses() {
+  private getRenderClasses(): ClassInfo {
     return {
       'disabled': this.disabled,
       'error': this.error,
@@ -421,7 +382,6 @@ export abstract class Select extends LitElement {
   }
 
   private renderField() {
-    // TODO(b/290078041): add aria-label/describedby
     return staticHtml`
       <${this.fieldTag}
           aria-haspopup="listbox"
@@ -431,7 +391,7 @@ export abstract class Select extends LitElement {
           tabindex=${this.disabled ? '-1' : '0'}
           aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
           aria-describedby="description"
-          aria-expanded=${this.open ? 'true' : nothing}
+          aria-expanded=${this.open ? 'true' : 'false'}
           aria-controls="listbox"
           class="field"
           label=${this.label}
@@ -445,9 +405,7 @@ export abstract class Select extends LitElement {
           supporting-text=${this.supportingText}
           error-text=${this.getErrorText()}
           @keydown=${this.handleKeydown}
-          @click=${this.handleClick}
-          @focus=${this.handleFocus}
-          @blur=${this.handleBlur}>
+          @click=${this.handleClick}>
          ${this.renderFieldContent()}
          <div id="description" slot="aria-describedby"></div>
       </${this.fieldTag}>`;
@@ -464,9 +422,9 @@ export abstract class Select extends LitElement {
   private renderLeadingIcon() {
     return html`
       <span class="icon leading" slot="start">
-         <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
+        <slot name="leading-icon" @slotchange=${this.handleIconChange}></slot>
       </span>
-     `;
+    `;
   }
 
   private renderTrailingIcon() {
@@ -474,12 +432,20 @@ export abstract class Select extends LitElement {
       <span class="icon trailing" slot="end">
         <slot name="trailing-icon" @slotchange=${this.handleIconChange}>
           <svg height="5" viewBox="7 10 10 5" focusable="false">
-            <polygon class="down" stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
-            <polygon class="up" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15"></polygon>
+            <polygon
+              class="down"
+              stroke="none"
+              fill-rule="evenodd"
+              points="7 10 12 15 17 10"></polygon>
+            <polygon
+              class="up"
+              stroke="none"
+              fill-rule="evenodd"
+              points="7 15 12 10 17 15"></polygon>
           </svg>
         </slot>
       </span>
-     `;
+    `;
   }
 
   private renderLabel() {
@@ -490,30 +456,40 @@ export abstract class Select extends LitElement {
 
   private renderMenu() {
     const ariaLabel = this.label || (this as ARIAMixinStrict).ariaLabel;
-    return html`
+    return html`<div class="menu-wrapper">
       <md-menu
-          id="listbox"
-          default-focus="none"
-          role="listbox"
-          tabindex="-1"
-          aria-label=${ariaLabel || nothing}
-          stay-open-on-focusout
-          part="menu"
-          exportparts="focus-ring: menu-focus-ring"
-          anchor="field"
-          .open=${this.open}
-          .quick=${this.quick}
-          .positioning=${this.menuPositioning}
-          .typeaheadDelay=${this.typeaheadDelay}
-          @opening=${this.handleOpening}
-          @opened=${this.redispatchEvent}
-          @closing=${this.redispatchEvent}
-          @closed=${this.handleClosed}
-          @close-menu=${this.handleCloseMenu}
-          @request-selection=${this.handleRequestSelection}
-          @request-deselection=${this.handleRequestDeselection}>
+        id="listbox"
+        .defaultFocus=${this.defaultFocus}
+        role="listbox"
+        tabindex="-1"
+        aria-label=${ariaLabel || nothing}
+        stay-open-on-focusout
+        part="menu"
+        exportparts="focus-ring: menu-focus-ring"
+        anchor="field"
+        style=${styleMap({
+          '--__menu-min-width': `${this.selectWidth}px`,
+          '--__menu-max-width': this.clampMenuWidth
+            ? `${this.selectWidth}px`
+            : undefined,
+        })}
+        no-navigation-wrap
+        .open=${this.open}
+        .quick=${this.quick}
+        .positioning=${this.menuPositioning}
+        .typeaheadDelay=${this.typeaheadDelay}
+        .anchorCorner=${this.menuAlign === 'start' ? 'end-start' : 'end-end'}
+        .menuCorner=${this.menuAlign === 'start' ? 'start-start' : 'start-end'}
+        @opening=${this.handleOpening}
+        @opened=${this.redispatchEvent}
+        @closing=${this.redispatchEvent}
+        @closed=${this.handleClosed}
+        @close-menu=${this.handleCloseMenu}
+        @request-selection=${this.handleRequestSelection}
+        @request-deselection=${this.handleRequestDeselection}>
         ${this.renderMenuContent()}
-      </md-menu>`;
+      </md-menu>
+    </div>`;
   }
 
   private renderMenuContent() {
@@ -530,14 +506,38 @@ export abstract class Select extends LitElement {
     }
 
     const typeaheadController = this.menu.typeaheadController;
-    const isOpenKey = event.code === 'Space' || event.code === 'ArrowDown' ||
-        event.code === 'Enter';
+    const isOpenKey =
+      event.code === 'Space' ||
+      event.code === 'ArrowDown' ||
+      event.code === 'ArrowUp' ||
+      event.code === 'End' ||
+      event.code === 'Home' ||
+      event.code === 'Enter';
 
     // Do not open if currently typing ahead because the user may be typing the
     // spacebar to match a word with a space
     if (!typeaheadController.isTypingAhead && isOpenKey) {
       event.preventDefault();
       this.open = true;
+
+      // https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/#kbd_label
+      switch (event.code) {
+        case 'Space':
+        case 'ArrowDown':
+        case 'Enter':
+          // We will handle focusing last selected item in this.handleOpening()
+          this.defaultFocus = FocusState.NONE;
+          break;
+        case 'End':
+          this.defaultFocus = FocusState.LAST_ITEM;
+          break;
+        case 'ArrowUp':
+        case 'Home':
+          this.defaultFocus = FocusState.FIRST_ITEM;
+          break;
+        default:
+          break;
+      }
       return;
     }
 
@@ -557,7 +557,8 @@ export abstract class Select extends LitElement {
 
       this.labelEl?.setAttribute?.('aria-live', 'polite');
       const hasChanged = this.selectItem(
-          lastActiveRecord[TYPEAHEAD_RECORD.ITEM] as SelectOption);
+        lastActiveRecord[TYPEAHEAD_RECORD.ITEM] as SelectOption,
+      );
 
       if (hasChanged) {
         this.dispatchInteractionEvents();
@@ -566,7 +567,7 @@ export abstract class Select extends LitElement {
   }
 
   private handleClick() {
-    this.open = true;
+    this.open = !this.open;
   }
 
   private handleFocus() {
@@ -627,11 +628,10 @@ export abstract class Select extends LitElement {
     if (selectedOptions.length) {
       const [firstSelectedOption] = selectedOptions[0];
       hasSelectedOptionChanged =
-          this.lastSelectedOption !== firstSelectedOption;
+        this.lastSelectedOption !== firstSelectedOption;
       this.lastSelectedOption = firstSelectedOption;
       this[VALUE] = firstSelectedOption.value;
       this.displayText = firstSelectedOption.displayText;
-
     } else {
       hasSelectedOptionChanged = this.lastSelectedOption !== null;
       this.lastSelectedOption = null;
@@ -639,8 +639,6 @@ export abstract class Select extends LitElement {
       this.displayText = '';
     }
 
-    this.internals.setFormValue(this.value);
-    this.syncValidity();
     return hasSelectedOptionChanged;
   }
 
@@ -651,6 +649,12 @@ export abstract class Select extends LitElement {
   private async handleOpening(e: Event) {
     this.labelEl?.removeAttribute?.('aria-live');
     this.redispatchEvent(e);
+
+    // FocusState.NONE means we want to handle focus ourselves and focus the
+    // last selected item.
+    if (this.defaultFocus !== FocusState.NONE) {
+      return;
+    }
 
     const items = this.menu!.items as SelectOption[];
     const activeItem = getActiveItem(items)?.item;
@@ -713,7 +717,8 @@ export abstract class Select extends LitElement {
    * @return Whether the last selected option has changed.
    */
   private selectItem(item: SelectOption) {
-    this.lastSelectedOptionRecords.forEach(([option]) => {
+    const selectedOptions = this.getSelectedOptions() ?? [];
+    selectedOptions.forEach(([option]) => {
       if (item !== option) {
         option.selected = false;
       }
@@ -728,12 +733,16 @@ export abstract class Select extends LitElement {
    * property / attribute change.
    */
   private handleRequestSelection(
-      event: ReturnType<typeof createRequestSelectionEvent>) {
+    event: ReturnType<typeof createRequestSelectionEvent>,
+  ) {
     const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is already selected.
-    if (this.lastSelectedOptionRecords.some(
-            ([option]) => option === requestingOptionEl)) {
+    if (
+      this.lastSelectedOptionRecords.some(
+        ([option]) => option === requestingOptionEl,
+      )
+    ) {
       return;
     }
 
@@ -745,12 +754,16 @@ export abstract class Select extends LitElement {
    * property / attribute change.
    */
   private handleRequestDeselection(
-      event: ReturnType<typeof createRequestDeselectionEvent>) {
+    event: ReturnType<typeof createRequestDeselectionEvent>,
+  ) {
     const requestingOptionEl = event.target as SelectOption & HTMLElement;
 
     // No-op if this item is not even in the list of tracked selected items.
-    if (!this.lastSelectedOptionRecords.some(
-            ([option]) => option === requestingOptionEl)) {
+    if (
+      !this.lastSelectedOptionRecords.some(
+        ([option]) => option === requestingOptionEl,
+      )
+    ) {
       return;
     }
 
@@ -769,8 +782,9 @@ export abstract class Select extends LitElement {
       // User has set `.selectedIndex` directly, but internals have not yet
       // booted up.
     } else if (
-        this.lastUserSetSelectedIndex !== null &&
-        !this.lastSelectedOptionRecords.length) {
+      this.lastUserSetSelectedIndex !== null &&
+      !this.lastSelectedOptionRecords.length
+    ) {
       this.selectIndex(this.lastUserSetSelectedIndex);
 
       // Regular boot up!
@@ -795,31 +809,31 @@ export abstract class Select extends LitElement {
     return this.error ? this.errorText : this.nativeErrorText;
   }
 
-  private syncValidity() {
-    const valueMissing = this.required && !this.value;
-    const customError = !!this.customValidationMessage;
-    const validationMessage = this.customValidationMessage ||
-        valueMissing && this.getRequiredValidationMessage() || '';
+  // Writable mixin properties for lit-html binding, needed for lit-analyzer
+  declare disabled: boolean;
+  declare name: string;
 
-    this.internals.setValidity(
-        {valueMissing, customError}, validationMessage,
-        this.field ?? undefined);
+  override [getFormValue]() {
+    return this.value;
   }
 
-  // Returns the platform `<select>` validation message for i18n.
-  private getRequiredValidationMessage() {
-    const select = document.createElement('select');
-    select.required = true;
-    return select.validationMessage;
-  }
-
-  /** @private */
-  formResetCallback() {
+  override formResetCallback() {
     this.reset();
   }
 
-  /** @private */
-  formStateRestoreCallback(state: string) {
+  override formStateRestoreCallback(state: string) {
     this.value = state;
+  }
+
+  override click() {
+    this.field?.click();
+  }
+
+  [createValidator]() {
+    return new SelectValidator(() => this);
+  }
+
+  [getValidityAnchor]() {
+    return this.field;
   }
 }

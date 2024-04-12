@@ -6,7 +6,7 @@
 
 import {animate, fadeIn, fadeOut} from '@lit-labs/motion';
 import {EASING} from '@material/web/internal/motion/animation.js';
-import {css, html, LitElement, nothing, PropertyValues} from 'lit';
+import {LitElement, PropertyValues, css, html, nothing} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 
 import {drawerOpenSignal} from '../signals/drawer-open-state.js';
@@ -21,8 +21,8 @@ import {SignalElement} from '../signals/signal-element.js';
  * widths, and position itself inline with the page at wider page widths. Most
  * importantly, this sidebar is SSR compatible.
  */
-@customElement('nav-drawer') export class NavDrawer extends SignalElement
-(LitElement) {
+@customElement('nav-drawer')
+export class NavDrawer extends SignalElement(LitElement) {
   /**
    * Whether or not the side drawer is collapsible or inline.
    */
@@ -45,8 +45,9 @@ import {SignalElement} from '../signals/signal-element.js';
     const drawerContentOpacityDuration = showModal ? 300 : 150;
     const scrimOpacityDuration = 150;
 
-    const drawerSlideAnimationEasing =
-        showModal ? EASING.EMPHASIZED : EASING.EMPHASIZED_ACCELERATE;
+    const drawerSlideAnimationEasing = showModal
+      ? EASING.EMPHASIZED
+      : EASING.EMPHASIZED_ACCELERATE;
 
     return html`
       <div class="root">
@@ -65,8 +66,7 @@ import {SignalElement} from '../signals/signal-element.js';
                     },
                     in: fadeIn,
                     out: fadeOut,
-                  })}
-                ></div>`
+                  })}></div>`
               : nothing}
             <aside
               ?inert=${this.isCollapsible && !drawerOpenSignal.value}
@@ -76,18 +76,16 @@ import {SignalElement} from '../signals/signal-element.js';
                   duration: drawerSlideAnimationDuration,
                   easing: drawerSlideAnimationEasing,
                 },
-              })}
-            >
-            <div class="scroll-wrapper">
-              <slot
-                ${animate({
-                  properties: ['opacity'],
-                  keyframeOptions: {
-                    duration: drawerContentOpacityDuration,
-                    easing: 'linear',
-                  },
-                })}
-              ></slot>
+              })}>
+              <div class="scroll-wrapper">
+                <slot
+                  ${animate({
+                    properties: ['opacity'],
+                    keyframeOptions: {
+                      duration: drawerContentOpacityDuration,
+                      easing: 'linear',
+                    },
+                  })}></slot>
               </div>
             </aside>
           </div>
@@ -102,8 +100,7 @@ import {SignalElement} from '../signals/signal-element.js';
   private renderContent(showModal: boolean) {
     return html` <div
       class="pane content-pane"
-      ?inert=${showModal || inertContentSignal.value}
-    >
+      ?inert=${showModal || inertContentSignal.value}>
       <div class="scroll-wrapper">
         <div class="content">
           <slot name="app-content"></slot>
@@ -119,8 +116,7 @@ import {SignalElement} from '../signals/signal-element.js';
 
     return html` <div
       class="pane toc"
-      ?inert=${showModal || inertContentSignal.value}
-    >
+      ?inert=${showModal || inertContentSignal.value}>
       <div class="scroll-wrapper">
         <p>On this page:</p>
         <h2>${this.pageTitle}</h2>
@@ -148,11 +144,16 @@ import {SignalElement} from '../signals/signal-element.js';
 
   updated(changed: PropertyValues<this>) {
     super.updated(changed);
-    if (this.lastDrawerOpen !== drawerOpenSignal.value &&
-        drawerOpenSignal.value && this.isCollapsible) {
-      (this.querySelector('md-list.nav md-list-item[tabindex="0"]') as
-       HTMLElement)
-          ?.focus();
+    if (
+      this.lastDrawerOpen !== drawerOpenSignal.value &&
+      drawerOpenSignal.value &&
+      this.isCollapsible
+    ) {
+      (
+        this.querySelector(
+          'md-list.nav md-list-item[tabindex="0"]',
+        ) as HTMLElement
+      )?.focus();
     }
   }
 

@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Checkbox} from './internal/checkbox.js';
-import {styles} from './internal/checkbox-styles.css.js';
+import {styles} from './internal/checkbox-styles.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -30,5 +31,5 @@ declare global {
  */
 @customElement('md-checkbox')
 export class MdCheckbox extends Checkbox {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

@@ -4,12 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles} from '../menu/internal/menuitem/menu-item-styles.css.js';
+import {styles} from '../menu/internal/menuitem/menu-item-styles.js';
 
-// TODO(b/236285090): update with HCM best practices
 import {SelectOptionEl} from './internal/selectoption/select-option.js';
+
+export {type SelectOption} from './internal/selectoption/select-option.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -49,5 +51,5 @@ declare global {
  */
 @customElement('md-select-option')
 export class MdSelectOption extends SelectOptionEl {
-  static override styles = [styles];
+  static override styles: CSSResultOrNative[] = [styles];
 }

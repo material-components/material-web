@@ -45,6 +45,7 @@
   :host {
     display: inline-flex;
     outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .md3-segmented-button {
@@ -60,6 +61,8 @@
     vertical-align: middle;
     padding-inline-start: var(--_spacing-leading);
     padding-inline-end: var(--_spacing-trailing);
+    // Override the user-agent text-transform: none of <button>
+    text-transform: inherit;
 
     .md3-segmented-button__outline {
       border-color: var(--_outline-color);
@@ -97,7 +100,7 @@
     &.md3-segmented-button--selected.md3-segmented-button--with-label.md3-segmented-button--with-checkmark,
     &.md3-segmented-button--selected.md3-segmented-button--without-label.md3-segmented-button--with-checkmark {
       .md3-segmented-button__graphic {
-        // TODO(b/198759625): Use padding token instead of hardcoded 8px value.
+        // b/198759625 - Use padding token instead of hardcoded 8px value.
         width: calc(var(--_icon-size) + 8px);
       }
     }

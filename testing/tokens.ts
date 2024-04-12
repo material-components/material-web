@@ -6,15 +6,15 @@
 
 // import 'jasmine'; (google3-only)
 
-import {CSSResult} from 'lit';
+import {CSSResultOrNative} from 'lit';
 
 /**
  * Create tests for `MdComponent.styles` that checks for undefined or unused
  * tokens.
  *
- * @param styles An array of `CSSResult`s to run tests on.
+ * @param styles Styles to run tests on.
  */
-export function createTokenTests(styles: CSSResult[]) {
+export function createTokenTests(styles: CSSResultOrNative[]) {
   it('should not have any undefined tokens', () => {
     const undefinedTokens = getUndefinedTokens(styles);
     expect(undefinedTokens).withContext('undefined tokens').toHaveSize(0);
@@ -39,17 +39,13 @@ export function createTokenTests(styles: CSSResult[]) {
  *
  * // returns ['--_undefined-token']
  *
- * @param styles An array of `CSSResult`s to get undefined tokens for.
+ * @param styles Styles to get undefined tokens for.
  * @return An array of all token names that are undefined.
  */
-export function getUndefinedTokens(styles: CSSResult[]) {
+export function getUndefinedTokens(styles: CSSResultOrNative[]) {
   let defined = new Set<string>();
   let used = new Set<string>();
-  for (const {styleSheet} of styles) {
-    if (!styleSheet) {
-      throw new Error('CSSResult.styleSheet is not supported.');
-    }
-
+  for (const styleSheet of cssResultsToStyleSheets(styles)) {
     defined = new Set([...defined, ...getDefinedTokensFromRule(styleSheet)]);
     used = new Set([...used, ...getUsedTokensFromRule(styleSheet)]);
   }
@@ -78,17 +74,13 @@ export function getUndefinedTokens(styles: CSSResult[]) {
  *
  * // returns ['--_unused-token']
  *
- * @param styles An array of `CSSResult`s to get unused tokens for.
+ * @param styles Styles to get unused tokens for.
  * @return An array of all token names that are unused.
  */
-export function getUnusedTokens(styles: CSSResult[]) {
+export function getUnusedTokens(styles: CSSResultOrNative[]) {
   let defined = new Set<string>();
   let used = new Set<string>();
-  for (const {styleSheet} of styles) {
-    if (!styleSheet) {
-      throw new Error('CSSResult.styleSheet is not supported.');
-    }
-
+  for (const styleSheet of cssResultsToStyleSheets(styles)) {
     defined = new Set([...defined, ...getDefinedTokensFromRule(styleSheet)]);
     used = new Set([...used, ...getUsedTokensFromRule(styleSheet)]);
   }
@@ -103,8 +95,9 @@ export function getUnusedTokens(styles: CSSResult[]) {
   return unusedTokens;
 }
 
-function getDefinedTokensFromRule(rule: CSSRule|CSSStyleSheet|
-                                  CSSStyleRule): Set<string> {
+function getDefinedTokensFromRule(
+  rule: CSSRule | CSSStyleSheet | CSSStyleRule,
+): Set<string> {
   let defined = new Set<string>();
   if ('cssRules' in rule) {
     // Rule is either a CSSStyleSheet, CSSKeyframesRule, or one of the
@@ -125,8 +118,9 @@ function getDefinedTokensFromRule(rule: CSSRule|CSSStyleSheet|
   return defined;
 }
 
-function getUsedTokensFromRule(rule: CSSRule|CSSStyleSheet|
-                               CSSStyleRule): Set<string> {
+function getUsedTokensFromRule(
+  rule: CSSRule | CSSStyleSheet | CSSStyleRule,
+): Set<string> {
   let used = new Set<string>();
   if ('cssRules' in rule) {
     // Rule is either a CSSStyleSheet, CSSKeyframesRule, or one of the
@@ -141,7 +135,10 @@ function getUsedTokensFromRule(rule: CSSRule|CSSStyleSheet|
     // Check them explicitly as well for properties like border-radius.
     for (const property of [...rule.style, ...CSS_SHORTHAND_PROPERTIES]) {
       const value = rule.style.getPropertyValue(property);
-      for (const match of value.matchAll(/--_[\w-]+/g)) {
+      // match css custom properties of --_ but not --__ as --_ are tokens and
+      // --__ are private custom properties used for our convenience not to be
+      // exposed to users.
+      for (const match of value.matchAll(/--_(?!_)[\w-]+/g)) {
         used.add(match[0]);
       }
     }
@@ -198,3 +195,17 @@ const CSS_SHORTHAND_PROPERTIES = [
   'text-emphasis',
   'transition',
 ];
+
+function cssResultsToStyleSheets(styles: CSSResultOrNative[]): CSSStyleSheet[] {
+  return styles.map((style) => {
+    if (style instanceof CSSStyleSheet) {
+      return style;
+    }
+
+    if (!style.styleSheet) {
+      throw new Error('CSSResult.styleSheet is not supported.');
+    }
+
+    return style.styleSheet;
+  });
+}

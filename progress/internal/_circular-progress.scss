@@ -24,7 +24,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-circular-progress-values();
+  $tokens: tokens.md-comp-circular-progress-values(
+    $exclude-custom-properties: false,
+  );
 
   // If changing this value, make sure to change $size-without-padding in the
   // circular-progress tokens.
@@ -50,13 +52,13 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-circular-progress-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     display: inline-flex;
     vertical-align: middle;
-    min-block-size: var(--_size);
-    min-inline-size: var(--_size);
+    width: var(--_size);
+    height: var(--_size);
     position: relative;
     align-items: center;
     justify-content: center;

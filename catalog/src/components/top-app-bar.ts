@@ -5,8 +5,8 @@
  */
 
 import '@material/web/focus/md-focus-ring.js';
-import '@material/web/iconbutton/icon-button.js';
 import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
 
 import type {MdIconButton} from '@material/web/iconbutton/icon-button.js';
 import {css, html, LitElement} from 'lit';
@@ -21,8 +21,8 @@ import {materialDesign} from '../svg/material-design-logo.js';
 /**
  * Top app bar of the catalog.
  */
-@customElement('top-app-bar') export class TopAppBar extends SignalElement
-(LitElement) {
+@customElement('top-app-bar')
+export class TopAppBar extends SignalElement(LitElement) {
   /**
    * Whether or not the color picker menu is open.
    */
@@ -40,11 +40,11 @@ import {materialDesign} from '../svg/material-design-logo.js';
               aria-label-selected="open navigation menu"
               aria-label="close navigation menu"
               aria-expanded=${drawerOpenSignal.value ? 'false' : 'true'}
-              title="${
-        !drawerOpenSignal.value ? 'Open' : 'Close'} navigation menu"
+              title="${!drawerOpenSignal.value
+                ? 'Open'
+                : 'Close'} navigation menu"
               .selected=${live(!drawerOpenSignal.value)}
-              @input=${this.onMenuIconToggle}
-            >
+              @input=${this.onMenuIconToggle}>
               <md-icon slot="selected">menu</md-icon>
               <md-icon>menu_open</md-icon>
             </md-icon-button>
@@ -52,8 +52,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
               href="/"
               class="home-button"
               title="Home"
-              aria-label="Home"
-            >
+              aria-label="Home">
               ${materialDesign}
             </md-icon-button>
           </section>
@@ -71,16 +70,14 @@ import {materialDesign} from '../svg/material-design-logo.js';
             <lit-island
               on:interaction="pointerenter,focusin,pointerdown"
               import="/js/hydration-entrypoints/menu.js"
-              id="menu-island"
-            >
+              id="menu-island">
               <md-icon-button
                 id="theme-button"
                 @click="${this.onPaletteClick}"
                 title="Page theme controls"
                 aria-label="Page theme controls"
                 aria-haspopup="dialog"
-                aria-expanded=${this.menuOpen ? 'true' : 'false'}
-              >
+                aria-expanded=${this.menuOpen ? 'true' : 'false'}>
                 <md-icon>palette</md-icon>
               </md-icon-button>
               <md-menu
@@ -93,8 +90,7 @@ import {materialDesign} from '../svg/material-design-logo.js';
                 .open=${this.menuOpen}
                 @opened=${this.onMenuOpened}
                 @closed=${this.onMenuClosed}
-                @keydown=${this.onKeydown}
-              >
+                @keydown=${this.onKeydown}>
                 <theme-changer></theme-changer>
               </md-menu>
             </lit-island>

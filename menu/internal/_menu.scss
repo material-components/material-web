@@ -31,10 +31,9 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-menu-values();
-  @each $token, $value in $tokens {
-    $tokens: map.set($tokens, $token, var(--md-menu-#{$token}, #{$value}));
-  }
+  $tokens: tokens.md-comp-menu-values(
+    $exclude-custom-properties: false,
+  );
 
   :host {
     @include elevation.theme(
@@ -60,6 +59,13 @@
   .menu {
     border-radius: map.get($tokens, 'container-shape');
     display: none;
+    inset: auto;
+    border: none;
+    padding: 0px;
+    overflow: visible;
+    // [popover] adds a canvas background
+    background-color: transparent;
+    color: inherit;
     opacity: 0;
     z-index: 20;
     position: absolute;
@@ -68,6 +74,10 @@
     height: inherit;
     min-width: inherit;
     max-width: inherit;
+  }
+
+  .menu::backdrop {
+    display: none;
   }
 
   .fixed {
@@ -93,10 +103,11 @@
     padding-block: 8px;
   }
 
-  .has-overflow .items {
+  .has-overflow:not([popover]) .items {
     overflow: visible;
   }
 
+  .has-overflow.animating .items,
   .animating .items {
     overflow: hidden;
   }

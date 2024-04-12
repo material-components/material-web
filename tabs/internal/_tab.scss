@@ -18,10 +18,20 @@
 @mixin styles() {
   :host {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     outline: none;
+    padding: 0 16px;
+    position: relative;
     -webkit-tap-highlight-color: transparent;
     vertical-align: middle;
     user-select: none;
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    line-height: var(--_label-text-line-height);
+    font-weight: var(--_label-text-weight);
+    color: var(--_label-text-color);
+    z-index: 0; // Ensure this is a stacking context so the indicator displays
 
     @include ripple.theme(
       (
@@ -29,6 +39,13 @@
         hover-opacity: var(--_hover-state-layer-opacity),
         pressed-color: var(--_pressed-state-layer-color),
         pressed-opacity: var(--_pressed-state-layer-opacity),
+      )
+    );
+
+    // b/316459034 - elevation should be removed
+    @include elevation.theme(
+      (
+        level: var(--_container-elevation),
       )
     );
   }
@@ -45,24 +62,6 @@
     margin-bottom: calc(var(--_active-indicator-height) + 1px);
   }
 
-  .button {
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-    width: 100%;
-    position: relative;
-    padding: 0 16px;
-    margin: 0;
-    z-index: 0; // Ensure this is a stacking context so the indicator displays
-    font-family: var(--_label-text-font);
-    font-size: var(--_label-text-size);
-    line-height: var(--_label-text-line-height);
-    font-weight: var(--_label-text-weight);
-    color: var(--_label-text-color);
-  }
-
   .button::before {
     background: var(--_container-color);
     content: '';
@@ -72,7 +71,8 @@
   }
 
   .button::before,
-  md-ripple {
+  md-ripple,
+  md-elevation {
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-end-radius: var(--_container-shape-end-end);
@@ -104,7 +104,7 @@
   }
 
   // unselected states
-  .button ::slotted([slot='icon']) {
+  ::slotted([slot='icon']) {
     display: inline-flex;
     position: relative;
     writing-mode: horizontal-tb;
@@ -115,29 +115,28 @@
     height: var(--_icon-size);
   }
 
-  .button:hover {
+  :host(:hover) {
     color: var(--_hover-label-text-color);
     cursor: pointer;
   }
 
-  .button:hover ::slotted([slot='icon']) {
+  :host(:hover) ::slotted([slot='icon']) {
     color: var(--_hover-icon-color);
   }
 
-  .button:focus {
+  :host(:focus) {
     color: var(--_focus-label-text-color);
   }
 
-  .button:focus ::slotted([slot='icon']) {
+  :host(:focus) ::slotted([slot='icon']) {
     color: var(--_focus-icon-color);
   }
 
-  .button:active {
+  :host(:active) {
     color: var(--_pressed-label-text-color);
-    outline: none;
   }
 
-  .button:active ::slotted([slot='icon']) {
+  :host(:active) ::slotted([slot='icon']) {
     color: var(--_pressed-icon-color);
   }
 
@@ -145,13 +144,8 @@
   :host([active]) .indicator {
     opacity: 1;
   }
-  :host([active]) .button {
+  :host([active]) {
     color: var(--_active-label-text-color);
-    @include elevation.theme(
-      (
-        level: var(--_container-elevation),
-      )
-    );
 
     @include ripple.theme(
       (
@@ -163,32 +157,32 @@
     );
   }
 
-  :host([active]) .button ::slotted([slot='icon']) {
+  :host([active]) ::slotted([slot='icon']) {
     color: var(--_active-icon-color);
   }
 
   // selected states
-  :host([active]) .button:hover {
+  :host([active]:hover) {
     color: var(--_active-hover-label-text-color);
   }
 
-  :host([active]) .button:hover ::slotted([slot='icon']) {
+  :host([active]:hover) ::slotted([slot='icon']) {
     color: var(--_active-hover-icon-color);
   }
 
-  :host([active]) .button:focus {
+  :host([active]:focus) {
     color: var(--_active-focus-label-text-color);
   }
 
-  :host([active]) .button:focus ::slotted([slot='icon']) {
+  :host([active]:focus) ::slotted([slot='icon']) {
     color: var(--_active-focus-icon-color);
   }
 
-  :host([active]) .button:active {
+  :host([active]:active) {
     color: var(--_active-pressed-label-text-color);
   }
 
-  :host([active]) .button:active ::slotted([slot='icon']) {
+  :host([active]:active) ::slotted([slot='icon']) {
     color: var(--_active-pressed-icon-color);
   }
 

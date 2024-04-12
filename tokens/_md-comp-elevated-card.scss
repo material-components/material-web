@@ -1,0 +1,82 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:map';
+// go/keep-sorted end
+// go/keep-sorted start
+@use './internal/validate';
+@use './md-sys-color';
+@use './md-sys-elevation';
+@use './md-sys-shape';
+@use './md-sys-state';
+@use './v0_192/md-comp-elevated-card';
+// go/keep-sorted end
+
+$supported-tokens: (
+  // go/keep-sorted start
+  'container-color',
+  'container-elevation',
+  'container-shadow-color',
+  'container-shape',
+  // go/keep-sorted end
+);
+
+// TODO(b/307362112): Add interactive card tokens (hover, focus, pressed)
+// TODO(b/307361748): Add disabled cards tokens.
+$unsupported-tokens: (
+  // go/keep-sorted start
+  'disabled-container-color',
+  'disabled-container-elevation',
+  'disabled-container-opacity',
+  'dragged-container-elevation',
+  'dragged-state-layer-color',
+  'dragged-state-layer-opacity',
+  'focus-container-elevation',
+  'focus-state-layer-color',
+  'focus-state-layer-opacity',
+  'hover-container-elevation',
+  'hover-state-layer-color',
+  'hover-state-layer-opacity',
+  'icon-color',
+  'icon-size',
+  'pressed-container-elevation',
+  'pressed-state-layer-color',
+  'pressed-state-layer-opacity',
+  // go/keep-sorted end
+);
+
+$_default: (
+  'md-sys-color': md-sys-color.values-light(),
+  'md-sys-elevation': md-sys-elevation.values(),
+  'md-sys-shape': md-sys-shape.values(),
+  'md-sys-state': md-sys-state.values(),
+);
+
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: validate.values(
+    md-comp-elevated-card.values($deps, $exclude-hardcoded-values),
+    $supported-tokens: $supported-tokens,
+    $unsupported-tokens: $unsupported-tokens
+  );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-elevated-card-#{$token}, #{$value})
+      );
+    }
+  }
+
+  @return $tokens;
+}

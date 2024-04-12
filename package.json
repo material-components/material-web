@@ -1,6 +1,6 @@
 {
   "name": "@material/web",
-  "version": "1.0.1",
+  "version": "1.4.0",
   "publishConfig": {
     "access": "public"
   },
@@ -29,8 +29,9 @@
     "build:sass": "wireit",
     "test": "wireit",
     "build:catalog": "wireit",
-    "build:analyzer": "wireit",
-    "update-docs": "wireit"
+    "build:scripts": "wireit",
+    "update-docs": "wireit",
+    "update-size": "wireit"
   },
   "type": "module",
   "files": [
@@ -38,14 +39,18 @@
     "**/*.js.map",
     "**/*.d.ts",
     "**/*.scss",
-    "!css-to-ts.js",
+    "**/*.css",
+    "**/*.css.map",
     "!web-test-runner.config.js",
+    "!commitlint.config.js",
     "!**/test/**",
-    "!**/testing/**",
     "!**/*_test.*",
     "!.wireit/**",
-    "!catalog",
-    "!scripts/"
+    "!catalog/",
+    "!scripts/",
+    "!**/testing/**",
+    "testing/harness.{js,js.map,d.ts}",
+    "testing/transform-pseudo-classes.{js,js.map,d.ts}"
   ],
   "workspaces": [
     "catalog"
@@ -56,10 +61,14 @@
   },
   "devDependencies": {
     "@lit-labs/analyzer": "^0.9.2",
+    "@rollup/plugin-multi-entry": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/jasmine": "^4.0.3",
     "@web/test-runner": "^0.15.0",
     "@web/test-runner-playwright": "^0.9.0",
     "jasmine": "^4.5.0",
+    "rollup": "^2.79.1",
     "sass": "^1.52.3",
     "sass-true": "^6.1.0",
     "typescript": "5.1.6",
@@ -78,20 +87,19 @@
         "tsconfig.json",
         "**/*.ts",
         "!**/*.d.ts",
-        "!**/*.css.ts",
-        "!catalog",
-        "!scripts/",
-        "!node_modules"
+        "!**/*-styles.ts",
+        "!catalog/",
+        "!scripts/"
       ],
       "output": [
         ".tsbuildinfo",
         "**/*.js",
         "**/*.js.map",
         "**/*.d.ts",
-        "!css-to-ts.js",
         "!web-test-runner.config.js",
+        "!commitlint.config.js",
         "!types/",
-        "!catalog",
+        "!catalog/",
         "!scripts/"
       ],
       "clean": "if-file-deleted",
@@ -100,18 +108,17 @@
       ]
     },
     "build:css-to-ts": {
-      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
+      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*-styles.css' -print | xargs -L1 node scripts/css-to-ts.js",
       "files": [
-        "css-to-ts.js",
-        "!scripts/",
-        "!node_modules"
+        "**/*-styles.css",
+        "!catalog/"
       ],
       "output": [
-        "**/*.css.ts",
-        "!catalog",
-        "!scripts/"
+        "**/*-styles.ts",
+        "!catalog/"
       ],
       "dependencies": [
+        "build:scripts",
         "build:sass"
       ]
     },
@@ -119,15 +126,12 @@
       "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
       "files": [
         "**/*.scss",
-        "!catalog",
-        "!scripts/",
-        "!node_modules"
+        "!catalog/"
       ],
       "output": [
         "**/*.css",
         "**/*.css.map",
-        "!catalog",
-        "!scripts/"
+        "!catalog/"
       ]
     },
     "test": {
@@ -145,19 +149,19 @@
         "./catalog:build:prod"
       ]
     },
-    "build:analyzer": {
+    "build:scripts": {
       "command": "tsc -b scripts/tsconfig.json --pretty",
       "files": [
         "scripts/tsconfig.json",
-        "scripts/analyzer/**/*.ts",
+        "scripts/**/*.ts",
         "!**/*.d.ts",
-        "!**/*.css.ts"
+        "!**/*-styles.ts"
       ],
       "output": [
         "scripts/.tsbuildinfo",
-        "scripts/analyzer/**/*.js",
-        "scripts/analyzer/**/*.js.map",
-        "scripts/analyzer/**/*.d.ts"
+        "scripts/**/*.js",
+        "scripts/**/*.js.map",
+        "scripts/**/*.d.ts"
       ],
       "clean": "if-file-deleted"
     },
@@ -167,15 +171,21 @@
         "docs/components/*.md",
         "**/*.ts",
         "!**/*.d.ts",
-        "!**/*.css.ts",
-        "!catalog",
+        "!**/*-styles.ts",
+        "!catalog/",
         "!scripts/",
-        "scripts/analyzer/update-docs.js",
-        "!node_modules"
+        "scripts/analyzer/update-docs.js"
       ],
       "output": [],
       "dependencies": [
-        "build:analyzer"
+        "build:scripts"
+      ]
+    },
+    "update-size": {
+      "command": "node scripts/size/update-size.js",
+      "dependencies": [
+        "build:scripts",
+        "build"
       ]
     }
   }

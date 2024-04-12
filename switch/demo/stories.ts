@@ -6,7 +6,10 @@
 
 import '@material/web/switch/switch.js';
 
-import {labelStyles, MaterialStoryInit} from './material-collection.js';
+import {
+  labelStyles,
+  MaterialStoryInit,
+} from './material-collection.js';
 import {css, html} from 'lit';
 
 /** Knob types for Switch stories. */
@@ -20,21 +23,20 @@ export interface StoryKnobs {
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Switch',
   render(knobs) {
-    return html`
-      <md-switch
-        aria-label="An example switch"
-        .disabled=${knobs.disabled}
-        .selected=${knobs.selected}
-        .icons=${knobs.icons}
-        .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}
-      ></md-switch>`;
-  }
+    return html` <md-switch
+      aria-label="An example switch"
+      .disabled=${knobs.disabled}
+      .selected=${knobs.selected}
+      .icons=${knobs.icons}
+      .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></md-switch>`;
+  },
 };
 
 const labeled: MaterialStoryInit<StoryKnobs> = {
   name: 'With labels',
   styles: [
-    labelStyles, css`
+    labelStyles,
+    css`
       .column {
         display: flex;
         flex-direction: column;
@@ -45,7 +47,7 @@ const labeled: MaterialStoryInit<StoryKnobs> = {
       label {
         justify-content: space-between;
       }
-    `
+    `,
   ],
   render(knobs) {
     return html`
@@ -56,8 +58,7 @@ const labeled: MaterialStoryInit<StoryKnobs> = {
             aria-label="Wi-Fi"
             .disabled=${knobs.disabled}
             .icons=${knobs.icons}
-            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}
-          ></md-switch>
+            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></md-switch>
         </label>
         <label>
           Bluetooth
@@ -66,12 +67,11 @@ const labeled: MaterialStoryInit<StoryKnobs> = {
             selected
             .disabled=${knobs.disabled}
             .icons=${knobs.icons}
-            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}
-          ></md-switch>
+            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></md-switch>
         </label>
       </div>
     `;
-  }
+  },
 };
 
 /** Switch stories. */

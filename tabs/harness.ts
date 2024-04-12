@@ -48,14 +48,13 @@ export class TabsHarness extends Harness<Tabs> {
     }
 
     const selectedItemHarness =
-        (this.element.activeTab as ElementWithHarness<Tab>).harness as
-            TabHarness ??
-        new TabHarness(this.element.activeTab);
+      ((this.element.activeTab as ElementWithHarness<Tab>)
+        .harness as TabHarness) ?? new TabHarness(this.element.activeTab);
     return await selectedItemHarness.getInteractiveElement();
   }
 
   get harnessedItems() {
-    return (this.element.tabs as Array<ElementWithHarness<Tab>>).map(item => {
+    return (this.element.tabs as Array<ElementWithHarness<Tab>>).map((item) => {
       return (item.harness ?? new TabHarness(item)) as TabHarness;
     });
   }

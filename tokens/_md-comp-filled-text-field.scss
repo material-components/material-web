@@ -5,23 +5,30 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-filled-text-field';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
   'active-indicator-color',
   'active-indicator-height',
+  'bottom-space',
   'caret-color',
   'container-color',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'disabled-active-indicator-color',
   'disabled-active-indicator-height',
   'disabled-active-indicator-opacity',
@@ -60,6 +67,7 @@ $supported-tokens: (
   'error-trailing-icon-color',
   'focus-active-indicator-color',
   'focus-active-indicator-height',
+  'focus-caret-color',
   'focus-input-text-color',
   'focus-label-text-color',
   'focus-leading-icon-color',
@@ -79,8 +87,10 @@ $supported-tokens: (
   'input-text-line-height',
   'input-text-placeholder-color',
   'input-text-prefix-color',
+  'input-text-prefix-trailing-space',
   'input-text-size',
   'input-text-suffix-color',
+  'input-text-suffix-leading-space',
   'input-text-weight',
   'label-text-color',
   'label-text-font',
@@ -91,13 +101,18 @@ $supported-tokens: (
   'label-text-weight',
   'leading-icon-color',
   'leading-icon-size',
+  'leading-space',
   'supporting-text-color',
   'supporting-text-font',
   'supporting-text-line-height',
   'supporting-text-size',
   'supporting-text-weight',
+  'top-space',
   'trailing-icon-color',
   'trailing-icon-size',
+  'trailing-space',
+  'with-label-bottom-space',
+  'with-label-top-space',
   // go/keep-sorted end
 );
 
@@ -119,11 +134,35 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-filled-text-field.values($deps, $exclude-hardcoded-values),
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-filled-text-field.values($deps, $exclude-hardcoded-values);
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
+      'leading-space': if($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if($exclude-hardcoded-values, null, 16px),
+      'top-space': if($exclude-hardcoded-values, null, 16px),
+      'bottom-space': if($exclude-hardcoded-values, null, 16px),
+      'input-text-prefix-trailing-space':
+        if($exclude-hardcoded-values, null, 2px),
+      'input-text-suffix-leading-space':
+        if($exclude-hardcoded-values, null, 2px),
+      'with-label-top-space': if($exclude-hardcoded-values, null, 8px),
+      'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
+      // TODO(b/270705687): remove when focus-caret-color token added
+      'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
+    )
+  );
+
+  $tokens: validate.values(
+    $tokens,
     $supported-tokens: $supported-tokens,
-    $unsupported-tokens: $unsupported-tokens
+    $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens
   );
 
   $tokens: map.merge(
@@ -133,6 +172,23 @@ $_default: (
       'focus-active-indicator-height': if($exclude-hardcoded-values, null, 3px)
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-filled-text-field-container-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-filled-text-field-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

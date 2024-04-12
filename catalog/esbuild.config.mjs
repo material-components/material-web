@@ -66,7 +66,7 @@ if (DEV) {
     treeShaking: true,
     legalComments: 'external',
     plugins: [
-      // TODO: this plugin currently breaks certain css props for SVGs
+      // This plugin currently breaks certain css props for SVGs
       // (circularprogress) minifyHTMLLiteralsPlugin({
       //   shouldMinify: (template) => {
       //     const tag = template.tag && template.tag.toLowerCase();

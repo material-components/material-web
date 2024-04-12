@@ -5,21 +5,27 @@
 
 // go/keep-sorted start
 @use 'sass:map';
+@use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
+@use './internal/shape';
+@use './internal/validate';
 @use './md-sys-color';
 @use './md-sys-elevation';
 @use './md-sys-shape';
 @use './md-sys-state';
 @use './md-sys-typescale';
 @use './v0_192/md-comp-assist-chip';
-@use './values';
 // go/keep-sorted end
 
 $supported-tokens: (
   // go/keep-sorted start
   'container-height',
   'container-shape',
+  'container-shape-end-end',
+  'container-shape-end-start',
+  'container-shape-start-end',
+  'container-shape-start-start',
   'disabled-label-text-color',
   'disabled-label-text-opacity',
   'disabled-leading-icon-color',
@@ -42,6 +48,7 @@ $supported-tokens: (
   'hover-leading-icon-color',
   'hover-state-layer-color',
   'hover-state-layer-opacity',
+  'icon-label-space',
   'icon-size',
   'label-text-color',
   'label-text-font',
@@ -49,12 +56,15 @@ $supported-tokens: (
   'label-text-size',
   'label-text-weight',
   'leading-icon-color',
+  'leading-space',
   'outline-color',
   'outline-width',
   'pressed-label-text-color',
   'pressed-leading-icon-color',
   'pressed-state-layer-color',
   'pressed-state-layer-opacity',
+  'trailing-space',
+  'with-leading-icon-leading-space',
   // go/keep-sorted end
 );
 
@@ -81,11 +91,28 @@ $_default: (
   'md-sys-typescale': md-sys-typescale.values(),
 );
 
-@function values($deps: $_default, $exclude-hardcoded-values: false) {
-  $tokens: values.validate(
-    md-comp-assist-chip.values($deps, $exclude-hardcoded-values),
+@function values(
+  $deps: $_default,
+  $exclude-hardcoded-values: false,
+  $exclude-custom-properties: true
+) {
+  $tokens: md-comp-assist-chip.values($deps, $exclude-hardcoded-values);
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
+      'leading-space': if($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if($exclude-hardcoded-values, null, 16px),
+      'icon-label-space': if($exclude-hardcoded-values, null, 8px),
+      'with-leading-icon-leading-space':
+        if($exclude-hardcoded-values, null, 8px),
+    )
+  );
+
+  $tokens: validate.values(
+    $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
+    $new-tokens: $new-tokens,
     $renamed-tokens: (
       // Remove "flat-*" prefix (b/275577569)
       'flat-container-elevation': 'container-elevation',
@@ -106,6 +133,23 @@ $_default: (
       'with-icon-pressed-icon-color': 'pressed-leading-icon-color'
     )
   );
+
+  // Default to `$exclude-custom-properties: false` in the next breaking change.
+  // See b/321816473.
+  @if not $exclude-custom-properties {
+    @each $token, $value in $tokens {
+      @if string.index($token, 'container-shape-') == 1 {
+        // Add fallback to shorthand for logical shape properties.
+        $value: var(--md-assist-chip-container-shape, #{$value});
+      }
+
+      $tokens: map.set(
+        $tokens,
+        $token,
+        var(--md-assist-chip-#{$token}, #{$value})
+      );
+    }
+  }
 
   @return $tokens;
 }

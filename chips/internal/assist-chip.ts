@@ -19,7 +19,7 @@ import {Chip} from './chip.js';
 export class AssistChip extends Chip {
   @property({type: Boolean}) elevated = false;
   @property() href = '';
-  @property() target: '_blank'|'_parent'|'_self'|'_top'|'' = '';
+  @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
   protected get primaryId() {
     return this.href ? 'link' : 'button';
@@ -44,28 +44,32 @@ export class AssistChip extends Chip {
     const {ariaLabel} = this as ARIAMixinStrict;
     if (this.href) {
       return html`
-        <a class="primary action"
+        <a
+          class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
-        >${content}</a>
+          >${content}</a
+        >
       `;
     }
 
     return html`
-      <button class="primary action"
+      <button
+        class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"
-      >${content}</button>
+        >${content}</button
+      >
     `;
   }
 
   protected override renderOutline() {
     if (this.elevated) {
-      return html`<md-elevation></md-elevation>`;
+      return html`<md-elevation part="elevation"></md-elevation>`;
     }
 
     return super.renderOutline();
