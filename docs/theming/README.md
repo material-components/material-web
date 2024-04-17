@@ -88,14 +88,14 @@ to components. See the [color guide](color.md) for more details.
 
 #### Typography
 
-[`--md-sys-typography` tokens](typography.md#typescale) define typescale roles
+[`--md-sys-typescale` tokens](typography.md#typescale) define typescale roles
 that map to components. See the [typography guide](typography.md) for more
 details.
 
 ```css
 :root {
-  --md-sys-typography-body-medium-size: 1rem;
-  --md-sys-typography-body-medium-line-height: 1.5rem;
+  --md-sys-typescale-body-medium-size: 1rem;
+  --md-sys-typescale-body-medium-line-height: 1.5rem;
 }
 ```
 
