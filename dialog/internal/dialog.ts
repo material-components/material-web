@@ -36,6 +36,10 @@ export class Dialog extends LitElement {
     requestUpdateOnAriaChange(Dialog);
   }
 
+  // We do not use `delegatesFocus: true` due to a Chromium bug with
+  // selecting text.
+  // See https://bugs.chromium.org/p/chromium/issues/detail?id=950357
+
   /**
    * Opens the dialog when set to `true` and closes it when set to `false`.
    */
@@ -79,6 +83,21 @@ export class Dialog extends LitElement {
   @property() type?: 'alert';
 
   /**
+   * Disables focus trapping, which by default keeps keyboard Tab navigation
+   * within the dialog.
+   *
+   * When disabled, after focusing the last element of a dialog, pressing Tab
+   * again will release focus from the window back to the browser (such as the
+   * URL bar).
+   *
+   * Focus trapping is recommended for accessibility, and should not typically
+   * be disabled. Only turn this off if the use case of a dialog is more
+   * accessible without focus trapping.
+   */
+  @property({type: Boolean, attribute: 'no-focus-trap'})
+  noFocusTrap = false;
+
+  /**
    * Gets the opening animation for a dialog. Set to a new function to customize
    * the animation.
    */
@@ -106,6 +125,8 @@ export class Dialog extends LitElement {
   @query('.scroller') private readonly scroller!: HTMLElement | null;
   @query('.top.anchor') private readonly topAnchor!: HTMLElement | null;
   @query('.bottom.anchor') private readonly bottomAnchor!: HTMLElement | null;
+  @query('.focus-trap')
+  private readonly firstFocusTrap!: HTMLElement | null;
   private nextClickIsFromContent = false;
   private intersectionObserver?: IntersectionObserver;
   // Dialogs should not be SSR'd while open, so we can just use runtime checks.
@@ -128,31 +149,17 @@ export class Dialog extends LitElement {
   // in Chromium is fixed to fire 'cancel' with one escape press and close with
   // multiple.
   private escapePressedWithoutCancel = false;
+  // This TreeWalker is used to walk through a dialog's children to find
+  // focusable elements. TreeWalker is faster than `querySelectorAll('*')`.
+  private readonly treewalker = document.createTreeWalker(
+    this,
+    NodeFilter.SHOW_ELEMENT,
+  );
 
   constructor() {
     super();
     if (!isServer) {
       this.addEventListener('submit', this.handleSubmit);
-
-      // We do not use `delegatesFocus: true` due to a Chromium bug with
-      // selecting text.
-      // See https://bugs.chromium.org/p/chromium/issues/detail?id=950357
-      //
-      // Material requires using focus trapping within the dialog (see
-      // b/314840853 for the bug to add it). This would normally mean we don't
-      // care about delegating focus since the `<dialog>` never receives it.
-      // However, we still need to handle situations when a user has not
-      // provided an focusable child in the content. When that happens, the
-      // `<dialog>` itself is focused.
-      //
-      // Listen to focus/blur instead of focusin/focusout since those can bubble
-      // from content.
-      this.addEventListener('focus', () => {
-        this.dialog?.focus();
-      });
-      this.addEventListener('blur', () => {
-        this.dialog?.blur();
-      });
     }
   }
 
@@ -184,6 +191,7 @@ export class Dialog extends LitElement {
     );
     if (preventOpen) {
       this.open = false;
+      this.isOpening = false;
       return;
     }
 
@@ -268,6 +276,17 @@ export class Dialog extends LitElement {
       'show-bottom-divider': scrollable && !this.isAtScrollBottom,
     };
 
+    // The focus trap sentinels are only added after the dialog opens, since
+    // dialog.showModal() will try to autofocus them, even with tabindex="-1".
+    const showFocusTrap = this.open && !this.noFocusTrap;
+    const focusTrap = html`
+      <div
+        class="focus-trap"
+        tabindex="0"
+        aria-hidden="true"
+        @focus=${this.handleFocusTrapFocus}></div>
+    `;
+
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <div class="scrim"></div>
@@ -281,6 +300,7 @@ export class Dialog extends LitElement {
         @close=${this.handleClose}
         @keydown=${this.handleKeydown}
         .returnValue=${this.returnValue || nothing}>
+        ${showFocusTrap ? focusTrap : nothing}
         <div class="container" @click=${this.handleContentClick}>
           <div class="headline">
             <div class="icon" aria-hidden="true">
@@ -305,6 +325,7 @@ export class Dialog extends LitElement {
             <slot name="actions" @slotchange=${this.handleActionsChange}></slot>
           </div>
         </div>
+        ${showFocusTrap ? focusTrap : nothing}
       </dialog>
     `;
   }
@@ -487,4 +508,114 @@ export class Dialog extends LitElement {
       this.isConnectedPromiseResolve = resolve;
     });
   }
+
+  private handleFocusTrapFocus(event: FocusEvent) {
+    const [firstFocusableChild, lastFocusableChild] =
+      this.getFirstAndLastFocusableChildren();
+    if (!firstFocusableChild || !lastFocusableChild) {
+      // When a dialog does not have focusable children, the dialog itself
+      // receives focus.
+      this.dialog?.focus();
+      return;
+    }
+
+    // To determine which child to focus, we need to know which focus trap
+    // received focus...
+    const isFirstFocusTrap = event.target === this.firstFocusTrap;
+    const isLastFocusTrap = !isFirstFocusTrap;
+    // ...and where the focus came from (what was previously focused).
+    const focusCameFromFirstChild = event.relatedTarget === firstFocusableChild;
+    const focusCameFromLastChild = event.relatedTarget === lastFocusableChild;
+    // Although this is a focus trap, focus can come from outside the trap.
+    // This can happen when elements are programmatically `focus()`'d. It also
+    // happens when focus leaves and returns to the window, such as clicking on
+    // the browser's URL bar and pressing Tab, or switching focus between
+    // iframes.
+    const focusCameFromOutsideDialog =
+      !focusCameFromFirstChild && !focusCameFromLastChild;
+
+    // Focus the dialog's first child when we reach the end of the dialog and
+    // focus is moving forward. Or, when focus is moving forwards into the
+    // dialog from outside of the window.
+    const shouldFocusFirstChild =
+      (isLastFocusTrap && focusCameFromLastChild) ||
+      (isFirstFocusTrap && focusCameFromOutsideDialog);
+    if (shouldFocusFirstChild) {
+      firstFocusableChild.focus();
+      return;
+    }
+
+    // Focus the dialog's last child when we reach the beginning of the dialog
+    // and focus is moving backward. Or, when focus is moving backwards into the
+    // dialog from outside of the window.
+    const shouldFocusLastChild =
+      (isFirstFocusTrap && focusCameFromFirstChild) ||
+      (isLastFocusTrap && focusCameFromOutsideDialog);
+    if (shouldFocusLastChild) {
+      lastFocusableChild.focus();
+      return;
+    }
+
+    // The booleans above are verbose for readability, but code executation
+    // won't actually reach here.
+  }
+
+  private getFirstAndLastFocusableChildren() {
+    let firstFocusableChild: HTMLElement | null = null;
+    let lastFocusableChild: HTMLElement | null = null;
+
+    // Reset the current node back to the root host element.
+    this.treewalker.currentNode = this.treewalker.root;
+    while (this.treewalker.nextNode()) {
+      // Cast as Element since the TreeWalker filter only accepts Elements.
+      const nextChild = this.treewalker.currentNode as Element;
+      if (!isFocusable(nextChild)) {
+        continue;
+      }
+
+      if (!firstFocusableChild) {
+        firstFocusableChild = nextChild;
+      }
+
+      lastFocusableChild = nextChild;
+    }
+
+    // We set lastFocusableChild immediately after finding a
+    // firstFocusableChild, which means the pair is either both null or both
+    // non-null. Cast since TypeScript does not recognize this.
+    return [firstFocusableChild, lastFocusableChild] as
+      | [HTMLElement, HTMLElement]
+      | [null, null];
+  }
+}
+
+function isFocusable(element: Element): element is HTMLElement {
+  // Check if the element is a known built-in focusable element:
+  // - <a> and <area> with `href` attributes.
+  // - Form controls that are not disabled.
+  // - `contenteditable` elements.
+  // - Anything with a non-negative `tabindex`.
+  const knownFocusableElements =
+    ':is(button,input,select,textarea,object,:is(a,area)[href],[tabindex],[contenteditable=true])';
+  const notDisabled = ':not(:disabled,[disabled])';
+  const notNegativeTabIndex = ':not([tabindex^="-"])';
+  if (
+    element.matches(knownFocusableElements + notDisabled + notNegativeTabIndex)
+  ) {
+    return true;
+  }
+
+  const isCustomElement = element.localName.includes('-');
+  if (!isCustomElement) {
+    return false;
+  }
+
+  // If a custom element does not have a tabindex, it may still be focusable
+  // if it delegates focus with a shadow root. We also need to check again if
+  // the custom element is a disabled form control.
+  if (!element.matches(notDisabled)) {
+    return false;
+  }
+
+  return element.shadowRoot?.delegatesFocus ?? false;
 }

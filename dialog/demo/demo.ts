@@ -24,6 +24,10 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       defaultValue: false,
       ui: boolInput(),
     }),
+    new Knob('noFocusTrap', {
+      defaultValue: false,
+      ui: boolInput(),
+    }),
     new Knob('icon', {defaultValue: '', ui: textInput()}),
     new Knob('headline', {defaultValue: 'Dialog', ui: textInput()}),
     new Knob('supportingText', {
