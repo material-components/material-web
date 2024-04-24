@@ -34,12 +34,6 @@ export class ListItemEl extends LitElement implements ListItem {
     requestUpdateOnAriaChange(ListItemEl);
   }
 
-  /** @nocollapse */
-  static override shadowRootOptions = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
-
   /**
    * Disables the item and makes it non-selectable and non-interactive.
    */
