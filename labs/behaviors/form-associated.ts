@@ -292,7 +292,7 @@ export function mixinFormAssociated<
     }
 
     formDisabledCallback(disabled: boolean) {
-      this.disabled = disabled;
+      this.requestUpdate();
     }
 
     abstract formResetCallback(): void;

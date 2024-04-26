@@ -83,7 +83,7 @@
     max-width: inherit;
   }
 
-  md-menu ::slotted(:not[disabled]) {
+  md-menu ::slotted(:not(:disabled)) {
     cursor: pointer;
   }
 
@@ -96,7 +96,7 @@
     display: inline-flex;
   }
 
-  :host([disabled]) {
+  :host(:disabled) {
     pointer-events: none;
   }
 }

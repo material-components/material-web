@@ -331,6 +331,10 @@ export class Slider extends sliderBaseClass {
     this.performUpdate();
   }
 
+  private get isControlDisabled() {
+    return this.disabled || this.matches(':disabled');
+  }
+
   protected override render() {
     const step = this.step === 0 ? 1 : this.step;
     const range = Math.max(this.max - this.min, step);
@@ -425,8 +429,10 @@ export class Slider extends sliderBaseClass {
     hover: boolean;
     label: string;
   }) {
-    const onTop = !this.disabled && start === this.startOnTop;
-    const isOverlapping = !this.disabled && this.handlesOverlapping;
+    const disabled = this.isControlDisabled;
+    
+    const onTop = !disabled && start === this.startOnTop;
+    const isOverlapping = !disabled && this.handlesOverlapping;
     const name = start ? 'start' : 'end';
     return html`<div
       class="handle ${classMap({
@@ -439,7 +445,7 @@ export class Slider extends sliderBaseClass {
       <md-ripple
         for=${name}
         class=${name}
-        ?disabled=${this.disabled}></md-ripple>
+        ?disabled=${disabled}></md-ripple>
       <div class="handleNub">
         <md-elevation part="elevation"></md-elevation>
       </div>
@@ -462,6 +468,8 @@ export class Slider extends sliderBaseClass {
     ariaMin: number;
     ariaMax: number;
   }) {
+    const disabled = this.isControlDisabled;
+
     // Slider requires min/max set to the overall min/max for both inputs.
     // This is reported to screen readers, which is why we need aria-valuemin
     // and aria-valuemax.
@@ -483,7 +491,7 @@ export class Slider extends sliderBaseClass {
       @input=${this.handleInput}
       @change=${this.handleChange}
       id=${name}
-      .disabled=${this.disabled}
+      .disabled=${disabled}
       .min=${String(this.min)}
       aria-valuemin=${ariaMin}
       .max=${String(this.max)}
@@ -557,11 +565,13 @@ export class Slider extends sliderBaseClass {
     this.startAction(event);
     this.ripplePointerId = event.pointerId;
     const isStart = (event.target as HTMLInputElement) === this.inputStart;
+
+    const disabled = this.isControlDisabled;
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
     this.handleStartHover =
-      !this.disabled && isStart && Boolean(this.handleStart);
-    this.handleEndHover = !this.disabled && !isStart && Boolean(this.handleEnd);
+      !disabled && isStart && Boolean(this.handleStart);
+    this.handleEndHover = !disabled && !isStart && Boolean(this.handleEnd);
   }
 
   private async handleUp(event: PointerEvent) {
@@ -600,8 +610,10 @@ export class Slider extends sliderBaseClass {
    * slider is updated.
    */
   private handleMove(event: PointerEvent) {
-    this.handleStartHover = !this.disabled && inBounds(event, this.handleStart);
-    this.handleEndHover = !this.disabled && inBounds(event, this.handleEnd);
+    const disabled = this.isControlDisabled;
+
+    this.handleStartHover = !disabled && inBounds(event, this.handleStart);
+    this.handleEndHover = !disabled && inBounds(event, this.handleEnd);
   }
 
   private handleEnter(event: PointerEvent) {

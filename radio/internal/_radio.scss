@@ -57,7 +57,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       );
     }
 
-    :host([disabled]) {
+    :host(:disabled) {
       cursor: default;
     }
 
@@ -150,7 +150,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
 
     // Don't animate when disabled
-    :host([disabled]) .circle {
+    :host(:disabled) .circle {
       animation-duration: 0s;
       transition-duration: 0s;
     }
@@ -167,7 +167,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       fill: map.get($tokens, 'pressed-icon-color');
     }
 
-    :host([disabled]) .icon {
+    :host(:disabled) .icon {
       fill: map.get($tokens, 'disabled-unselected-icon-color');
       opacity: map.get($tokens, 'disabled-unselected-icon-opacity');
     }
@@ -184,7 +184,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       fill: map.get($tokens, 'selected-pressed-icon-color');
     }
 
-    :host([disabled]) .checked .icon {
+    :host(:disabled) .checked .icon {
       fill: map.get($tokens, 'disabled-selected-icon-color');
       opacity: map.get($tokens, 'disabled-selected-icon-opacity');
     }
@@ -196,7 +196,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
         fill: CanvasText;
       }
 
-      :host([disabled]) .icon {
+      :host(:disabled) .icon {
         fill: GrayText;
         opacity: 1;
       }

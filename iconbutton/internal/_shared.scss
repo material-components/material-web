@@ -41,7 +41,7 @@
     );
   }
 
-  :host([disabled]) {
+  :host(:disabled) {
     pointer-events: none;
   }
 
@@ -109,7 +109,7 @@
   }
 
   @media (forced-colors: active) {
-    :host([disabled]) {
+    :host(:disabled) {
       --_disabled-icon-opacity: 1;
     }
   }
