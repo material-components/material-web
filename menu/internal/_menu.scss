@@ -74,6 +74,7 @@
     height: inherit;
     min-width: inherit;
     max-width: inherit;
+    scrollbar-width: inherit;
   }
 
   .menu::backdrop {
@@ -97,6 +98,7 @@
     min-width: inherit;
     max-width: inherit;
     border-radius: inherit;
+    scrollbar-width: inherit;
   }
 
   .item-padding {
