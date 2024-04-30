@@ -44,7 +44,7 @@
   }
 
   // inactive track
-  :host(:not([disabled])) .track::before {
+  :host(:not(:disabled)) .track::before {
     border: 1px solid var(--_active-track-color);
   }
 
@@ -78,7 +78,7 @@
     // stylelint-enable function-url-quotes
   }
 
-  :host([disabled]) .tickmarks::before {
+  :host(:disabled) .tickmarks::before {
     // TODO(b/298051946): Tick marks cannot be resized in HCM
     // stylelint-disable function-url-quotes -- SVG data URI
     // SVG is optimized for data URI (https://codepen.io/tigt/post/optimizing-svgs-in-data-uris)

@@ -118,15 +118,20 @@ export class Checkbox extends checkboxBaseClass {
     super.update(changed);
   }
 
+  private get isControlDisabled() {
+    return this.disabled || this.matches(':disabled');
+  }
+
   protected override render() {
     const prevNone = !this.prevChecked && !this.prevIndeterminate;
     const prevChecked = this.prevChecked && !this.prevIndeterminate;
     const prevIndeterminate = this.prevIndeterminate;
     const isChecked = this.checked && !this.indeterminate;
     const isIndeterminate = this.indeterminate;
+    const disabled = this.isControlDisabled;
 
     const containerClasses = classMap({
-      'disabled': this.disabled,
+      'disabled': disabled,
       'selected': isChecked || isIndeterminate,
       'unselected': !isChecked && !isIndeterminate,
       'checked': isChecked,
@@ -149,7 +154,7 @@ export class Checkbox extends checkboxBaseClass {
           aria-checked=${isIndeterminate ? 'mixed' : nothing}
           aria-label=${ariaLabel || nothing}
           aria-invalid=${ariaInvalid || nothing}
-          ?disabled=${this.disabled}
+          ?disabled=${disabled}
           ?required=${this.required}
           .indeterminate=${this.indeterminate}
           .checked=${this.checked}
@@ -159,7 +164,7 @@ export class Checkbox extends checkboxBaseClass {
         <div class="outline"></div>
         <div class="background"></div>
         <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
-        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
+        <md-ripple for="input" ?disabled=${disabled}></md-ripple>
         <svg class="icon" viewBox="0 0 18 18" aria-hidden="true">
           <rect class="mark short" />
           <rect class="mark long" />

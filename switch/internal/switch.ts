@@ -99,7 +99,13 @@ export class Switch extends switchBaseClass {
     }
   }
 
+  private get isControlDisabled() {
+    return this.disabled || this.matches(':disabled');
+  }
+
   protected override render(): TemplateResult {
+    const disabled = this.isControlDisabled;
+
     // NOTE: buttons must use only [phrasing
     // content](https://html.spec.whatwg.org/multipage/dom.html#phrasing-content)
     // children, which includes custom elements, but not `div`s
@@ -112,7 +118,7 @@ export class Switch extends switchBaseClass {
           role="switch"
           aria-label=${(this as ARIAMixin).ariaLabel || nothing}
           ?checked=${this.selected}
-          ?disabled=${this.disabled}
+          ?disabled=${disabled}
           ?required=${this.required}
           @input=${this.handleInput}
           @change=${this.handleChange} />
@@ -124,21 +130,25 @@ export class Switch extends switchBaseClass {
   }
 
   private getRenderClasses(): ClassInfo {
+    const disabled = this.isControlDisabled;
+
     return {
       'selected': this.selected,
       'unselected': !this.selected,
-      'disabled': this.disabled,
+      'disabled': disabled,
     };
   }
 
   private renderHandle() {
+    const disabled = this.isControlDisabled;
+
     const classes = {
       'with-icon': this.showOnlySelectedIcon ? this.selected : this.icons,
     };
     return html`
       ${this.renderTouchTarget()}
       <span class="handle-container">
-        <md-ripple for="switch" ?disabled="${this.disabled}"></md-ripple>
+        <md-ripple for="switch" ?disabled="${disabled}"></md-ripple>
         <span class="handle ${classMap(classes)}">
           ${this.shouldShowIcons() ? this.renderIcons() : html``}
         </span>

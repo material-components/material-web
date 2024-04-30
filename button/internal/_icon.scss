@@ -31,7 +31,7 @@
     color: var(--_pressed-icon-color);
   }
 
-  :host([disabled]) ::slotted([slot='icon']) {
+  :host(:disabled) ::slotted([slot='icon']) {
     color: var(--_disabled-icon-color);
     opacity: var(--_disabled-icon-opacity);
   }

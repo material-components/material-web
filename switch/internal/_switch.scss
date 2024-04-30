@@ -43,7 +43,7 @@
       cursor: pointer;
     }
 
-    :host([disabled]) {
+    :host(:disabled) {
       cursor: default;
     }
 
