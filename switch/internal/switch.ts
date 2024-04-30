@@ -100,9 +100,6 @@ export class Switch extends switchBaseClass {
   }
 
   protected override render(): TemplateResult {
-    // NOTE: buttons must use only [phrasing
-    // content](https://html.spec.whatwg.org/multipage/dom.html#phrasing-content)
-    // children, which includes custom elements, but not `div`s
     return html`
       <div class="switch ${classMap(this.getRenderClasses())}">
         <input
