@@ -21,7 +21,7 @@
     align-items: center;
     justify-content: center;
     outline: none;
-    padding: 0 16px;
+    padding: 0;
     position: relative;
     -webkit-tap-highlight-color: transparent;
     vertical-align: middle;
@@ -60,6 +60,10 @@
 
   :host([active]) md-focus-ring {
     margin-bottom: calc(var(--_active-indicator-height) + 1px);
+  }
+
+  .button{
+    padding: 0 16px;
   }
 
   .button::before {
@@ -190,6 +194,23 @@
   ::slotted(*) {
     white-space: nowrap;
   }
+
+  .button.vertical {
+    width: 100%;
+    padding: 0;
+
+    .content{
+      width: 100%;
+      padding: 0 16px;
+    }
+
+    .indicator {
+      inset: 0 0 0 auto;
+      width: var(--_active-indicator-height);
+      height: unset;
+    }
+  }
+
 
   @media (forced-colors: active) {
     .indicator {

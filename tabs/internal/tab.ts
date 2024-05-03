@@ -49,6 +49,11 @@ export class Tab extends tabBaseClass {
   readonly isTab = true;
 
   /**
+   * Whether or not the tab is vertical.
+   */
+  @property({type: Boolean}) vertical = false;
+
+  /**
    * Whether or not the tab is selected.
    **/
   @property({type: Boolean, reflect: true}) active = false;
@@ -95,7 +100,7 @@ export class Tab extends tabBaseClass {
   protected override render() {
     const indicator = html`<div class="indicator"></div>`;
     return html`<div
-      class="button"
+      class="button ${this.vertical ? 'vertical' : ''}"
       role="presentation"
       @click=${this.handleContentClick}>
       <md-focus-ring part="focus-ring" inward .control=${this}></md-focus-ring>
@@ -170,11 +175,11 @@ export class Tab extends tabBaseClass {
     const from: Keyframe = {};
     const fromRect =
       previousTab[INDICATOR]?.getBoundingClientRect() ?? ({} as DOMRect);
-    const fromPos = fromRect.left;
-    const fromExtent = fromRect.width;
+    const fromPos = !this.vertical ? fromRect.left : fromRect.top;
+    const fromExtent = !this.vertical ? fromRect.width : fromRect.height;
     const toRect = this[INDICATOR]!.getBoundingClientRect();
-    const toPos = toRect.left;
-    const toExtent = toRect.width;
+    const toPos = !this.vertical ? toRect.left : toRect.top;
+    const toExtent = !this.vertical ? toRect.width : toRect.height;
     const scale = fromExtent / toExtent;
     if (
       !reduceMotion &&
@@ -182,9 +187,9 @@ export class Tab extends tabBaseClass {
       toPos !== undefined &&
       !isNaN(scale)
     ) {
-      from['transform'] = `translateX(${(fromPos - toPos).toFixed(
+      from['transform'] = `translate${(!this.vertical ? 'X' : 'Y')}(${(fromPos - toPos).toFixed(
         4,
-      )}px) scaleX(${scale.toFixed(4)})`;
+      )}px) scale${(!this.vertical ? 'X' : 'Y')}(${scale.toFixed(4)})`;
     } else {
       from['opacity'] = 0;
     }

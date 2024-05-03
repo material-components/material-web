@@ -44,4 +44,14 @@
   ::slotted([active]) {
     z-index: 1;
   }
+
+  .tabs.vertical {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    ::slotted(*) {
+      flex: none;
+    }
+  }
 }

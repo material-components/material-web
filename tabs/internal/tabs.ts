@@ -99,6 +99,11 @@ export class Tabs extends LitElement {
   }
 
   /**
+   * Whether the tabs should be displayed vertically.
+   */
+  @property({type: Boolean}) vertical = false;
+
+  /**
    * Whether or not to automatically select a tab when it is focused.
    */
   @property({type: Boolean, attribute: 'auto-activate'}) autoActivate = false;
@@ -149,10 +154,10 @@ export class Tabs extends LitElement {
       await tab.updateComplete;
     }
 
-    const offset = tabToScrollTo.offsetLeft;
-    const extent = tabToScrollTo.offsetWidth;
-    const scroll = this.scrollLeft;
-    const hostExtent = this.offsetWidth;
+    const offset = !this.vertical ? tabToScrollTo.offsetLeft : tabToScrollTo.offsetTop;
+    const extent = !this.vertical ? tabToScrollTo.offsetWidth : tabToScrollTo.offsetHeight;
+    const scroll = !this.vertical ? this.scrollLeft : this.scrollTop;
+    const hostExtent = !this.vertical ? this.offsetWidth : this.offsetHeight;
     const scrollMargin = 48;
     const min = offset - scrollMargin;
     const max = offset + extent - hostExtent + scrollMargin;
@@ -162,17 +167,17 @@ export class Tabs extends LitElement {
     // focused on initialization, use 'instant' to immediately bring the focused
     // tab into view.
     const behavior: ScrollBehavior = !this.focusedTab ? 'instant' : 'auto';
-    this.tabsScrollerElement.scrollTo({behavior, top: 0, left: to});
+    this.tabsScrollerElement.scrollTo({behavior, top: !this.vertical ? 0 : to, left: !this.vertical ? to : 0});
   }
 
   protected override render() {
     return html`
-      <div class="tabs">
+      <div class="tabs ${this.vertical ? 'vertical' : ''}">
         <slot
           @slotchange=${this.handleSlotChange}
           @click=${this.handleTabClick}></slot>
       </div>
-      <md-divider part="divider"></md-divider>
+      ${!this.vertical ? html`<md-divider part="divider"></md-divider>` : ''}
     `;
   }
 
@@ -229,8 +234,8 @@ export class Tabs extends LitElement {
   private async handleKeydown(event: KeyboardEvent) {
     // Allow event to bubble.
     await 0;
-    const isLeft = event.key === 'ArrowLeft';
-    const isRight = event.key === 'ArrowRight';
+    const isLeft = event.key === 'ArrowLeft' || event.key === 'ArrowUp';
+    const isRight = event.key === 'ArrowRight' || event.key === 'ArrowDown';
     const isHome = event.key === 'Home';
     const isEnd = event.key === 'End';
     // Ignore non-navigation keys
