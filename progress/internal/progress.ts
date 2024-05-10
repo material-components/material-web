@@ -9,16 +9,15 @@ import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
+
+// Separate variable needed for closure.
+const progressBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * A progress component.
  */
-export abstract class Progress extends LitElement {
-  static {
-    requestUpdateOnAriaChange(Progress);
-  }
-
+export abstract class Progress extends progressBaseClass {
   /**
    * Progress to display, a fraction between 0 and `max`.
    */

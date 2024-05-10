@@ -11,7 +11,10 @@ import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
+
+// Separate variable needed for closure.
+const navigationDrawerBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * b/265346501 - add docs
@@ -19,11 +22,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
  * @fires navigation-drawer-changed {CustomEvent<{opened: boolean}>}
  * Dispatched whenever the drawer opens or closes --bubbles --composed
  */
-export class NavigationDrawer extends LitElement {
-  static {
-    requestUpdateOnAriaChange(NavigationDrawer);
-  }
-
+export class NavigationDrawer extends navigationDrawerBaseClass {
   @property({type: Boolean}) opened = false;
   @property() pivot: 'start' | 'end' = 'end';
 

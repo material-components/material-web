@@ -14,7 +14,7 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
   createValidator,
@@ -50,9 +50,11 @@ import {getSelectedItems, SelectOptionRecord} from './shared.js';
 const VALUE = Symbol('value');
 
 // Separate variable needed for closure.
-const selectBaseClass = mixinOnReportValidity(
-  mixinConstraintValidation(
-    mixinFormAssociated(mixinElementInternals(LitElement)),
+const selectBaseClass = mixinDelegatesAria(
+  mixinOnReportValidity(
+    mixinConstraintValidation(
+      mixinFormAssociated(mixinElementInternals(LitElement)),
+    ),
   ),
 );
 
@@ -71,10 +73,6 @@ const selectBaseClass = mixinOnReportValidity(
  * and closed.
  */
 export abstract class Select extends selectBaseClass {
-  static {
-    requestUpdateOnAriaChange(Select);
-  }
-
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,

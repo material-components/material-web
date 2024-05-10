@@ -10,12 +10,15 @@ import {html, LitElement, nothing, PropertyValues} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
 import {isRtl} from '../../../internal/controller/is-rtl.js';
 import {NavigationTab} from '../../navigationtab/internal/navigation-tab.js';
 
 import {NavigationTabInteractionEvent} from './constants.js';
 import {NavigationBarState} from './state.js';
+
+// Separate variable needed for closure.
+const navigationBarBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * b/265346501 - add docs
@@ -23,11 +26,10 @@ import {NavigationBarState} from './state.js';
  * @fires navigation-bar-activated {CustomEvent<tab: NavigationTab, activeIndex: number>}
  * Dispatched whenever the `activeIndex` changes. --bubbles --composed
  */
-export class NavigationBar extends LitElement implements NavigationBarState {
-  static {
-    requestUpdateOnAriaChange(NavigationBar);
-  }
-
+export class NavigationBar
+  extends navigationBarBaseClass
+  implements NavigationBarState
+{
   @property({type: Number, attribute: 'active-index'}) activeIndex = 0;
 
   @property({type: Boolean, attribute: 'hide-inactive-labels'})

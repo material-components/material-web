@@ -11,7 +11,7 @@ import {html, isServer, LitElement, nothing, TemplateResult} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
   afterDispatch,
   setupDispatchHooks,
@@ -35,8 +35,10 @@ import {
 import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
 
 // Separate variable needed for closure.
-const switchBaseClass = mixinConstraintValidation(
-  mixinFormAssociated(mixinElementInternals(LitElement)),
+const switchBaseClass = mixinDelegatesAria(
+  mixinConstraintValidation(
+    mixinFormAssociated(mixinElementInternals(LitElement)),
+  ),
 );
 
 /**
@@ -46,10 +48,6 @@ const switchBaseClass = mixinConstraintValidation(
  * interaction (bubbles).
  */
 export class Switch extends switchBaseClass {
-  static {
-    requestUpdateOnAriaChange(Switch);
-  }
-
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',

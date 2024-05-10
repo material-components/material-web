@@ -13,19 +13,18 @@ import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 
 /**
  * Sizes variants available to non-extended FABs.
  */
 export type FabSize = 'medium' | 'small' | 'large';
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
-export abstract class SharedFab extends LitElement {
-  static {
-    requestUpdateOnAriaChange(SharedFab);
-  }
+// Separate variable needed for closure.
+const fabBaseClass = mixinDelegatesAria(LitElement);
 
+// tslint:disable-next-line:enforce-comments-on-exported-symbols
+export abstract class SharedFab extends fabBaseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open' as const,
