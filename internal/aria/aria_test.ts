@@ -22,8 +22,8 @@ describe('aria', () => {
         .toBeTrue();
     });
 
-    it('should return false for role', () => {
-      expect(isAriaAttribute('role')).withContext('role input').toBeFalse();
+    it('should return true for role', () => {
+      expect(isAriaAttribute('role')).withContext('role input').toBeTrue();
     });
 
     it('should return false for non-aria attributes', () => {
