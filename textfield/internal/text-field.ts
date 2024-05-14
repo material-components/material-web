@@ -133,6 +133,12 @@ export abstract class TextField extends textFieldBaseClass {
   @property() label = '';
 
   /**
+   * Disables the asterisk on the floating label, when the text field is
+   * required.
+   */
+  @property({type: Boolean, attribute: 'no-asterisk'}) noAsterisk = false;
+
+  /**
    * Indicates that the user must specify a value for the input before the
    * owning form can be submitted and will render an error state when
    * `reportValidity()` is invoked when value is empty. Additionally the
@@ -554,6 +560,7 @@ export abstract class TextField extends textFieldBaseClass {
       ?has-end=${this.hasTrailingIcon}
       ?has-start=${this.hasLeadingIcon}
       label=${this.label}
+      ?no-asterisk=${this.noAsterisk}
       max=${this.maxLength}
       ?populated=${!!this.value}
       ?required=${this.required}
