@@ -604,6 +604,7 @@ export abstract class TextField extends textFieldBaseClass {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
+          name=${this.name || nothing}
           ?disabled=${this.disabled}
           maxlength=${hasMaxLength ? this.maxLength : nothing}
           minlength=${hasMinLength ? this.minLength : nothing}
@@ -638,6 +639,7 @@ export abstract class TextField extends textFieldBaseClass {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
+          name=${this.name || nothing}
           ?disabled=${this.disabled}
           inputmode=${inputMode || nothing}
           max=${(this.max || nothing) as unknown as number}
