@@ -11,18 +11,21 @@
 // go/keep-sorted end
 
 @mixin styles() {
-  .md3-navigation-drawer-modal {
+  .md3-navigation-drawer-modal,
+  .md3-navigation-drawer {
     background-color: var(--_container-color);
     border-radius: var(--_container-shape);
     height: var(--_container-height);
+  }
 
-    &.md3-navigation-drawer-modal--opened {
-      inline-size: var(--_container-width);
-    }
+  .md3-navigation-drawer-modal.md3-navigation-drawer-modal--opened,
+  .md3-navigation-drawer.md3-navigation-drawer--opened {
+    inline-size: var(--_container-width);
+  }
 
-    .md3-navigation-drawer-modal__slot-content {
-      min-inline-size: var(--_container-width);
-      max-inline-size: var(--_container-width);
-    }
+  .md3-navigation-drawer-modal .md3-navigation-drawer-modal__slot-content,
+  .md3-navigation-drawer .md3-navigation-drawer__slot-content {
+    min-inline-size: var(--_container-width);
+    max-inline-size: var(--_container-width);
   }
 }
