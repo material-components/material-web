@@ -17,7 +17,7 @@ Material's elevation system is deliberately limited to just a handful of levels.
 This creative constraint means you need to make thoughtful decisions about your
 UI’s elevation story.
 
-![Diagram showing the five elevation levels and their respective dp values](images/elevation/hero.png "Material uses six levels of elevation, each with a corresponding dp value. These values are named for their relative distance above the UI’s surface: 0, +1, +2, +3, +4, and +5. An element’s resting state can be on levels 0 to +3, while levels +4 and +5 are reserved for user-interacted states such as hover and dragged.")
+![Diagram showing the five elevation levels and their respective dp values](images/elevation/hero.webp "Material uses six levels of elevation, each with a corresponding dp value. These values are named for their relative distance above the UI’s surface: 0, +1, +2, +3, +4, and +5. An element’s resting state can be on levels 0 to +3, while levels +4 and +5 are reserved for user-interacted states such as hover and dragged.")
 
 *   [Design article](https://m3.material.io/styles/elevation) <!-- {.external} -->
 *   [API Documentation](#api)
@@ -30,7 +30,7 @@ Elevation can be set from 0 to 5 using the `--md-elevation-level` CSS custom
 property. The elevation will automatically fill the nearest `position: relative`
 element's size and shape.
 
-![A rounded square with a drop shadow beneath it.](images/elevation/usage.png "A surface with an elevation shadow.")
+![A rounded square with a drop shadow beneath it.](images/elevation/usage.webp "A surface with an elevation shadow.")
 
 ```html
 <style>
@@ -99,7 +99,7 @@ Token                         | Default value
 
 ### Example
 
-![Image of an elevation surface with a different theme applied](images/elevation/theming.png "Elevation theming example.")
+![Image of an elevation surface with a different theme applied](images/elevation/theming.webp "Elevation theming example.")
 
 ```html
 <style>

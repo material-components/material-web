@@ -33,7 +33,7 @@ selected menu item above the menu.
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/select/hero.png" alt="A textfield containing the text Item 2, with a dropdown menu containing Item 1, Item 2, and Item 3.">
+<img class="hero" src="images/select/hero.webp" alt="A textfield containing the text Item 2, with a dropdown menu containing Item 1, Item 2, and Item 3.">
 
 </catalog-component-header>
 
@@ -50,7 +50,7 @@ fixed list of available options. It is analogous to the native HTML
 
 <!-- no-catalog-start -->
 
-![Example usage of an outlined dropdown menu and a filled dropdown menu.](images/select/usage.png "An outlined dropdown menu filled with Apple, and a filled dropdown menu.")
+![Example usage of an outlined dropdown menu and a filled dropdown menu.](images/select/usage.webp "An outlined dropdown menu filled with Apple, and a filled dropdown menu.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/select/usage.html" -->
@@ -130,7 +130,7 @@ To theme the select's dropdown menu, use the `md-menu` component tokens on the
 
 <!-- no-catalog-start -->
 
-![Image of a filled select with a different theme applied](images/select/theming-filled.png "Filled select theming example.")
+![Image of a filled select with a different theme applied](images/select/theming-filled.webp "Filled select theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/select/theming-filled.html" -->
@@ -176,7 +176,7 @@ Token                                              | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a outlined select with a different theme applied](images/select/theming-outlined.png "Outlined select theming example.")
+![Image of a outlined select with a different theme applied](images/select/theming-outlined.webp "Outlined select theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/select/theming-outlined.html" -->
