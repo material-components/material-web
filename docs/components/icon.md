@@ -26,7 +26,7 @@ created at seven weights across three different styles.
 Icons can be specified by name, unicode code point, or have an `<svg>` child
 element.
 
-![Settings icon as ligature, check box icon as codepoint, and house icon as SVG](images/icon/usage.png "Example icons")
+![Settings icon as ligature, check box icon as codepoint, and house icon as SVG](images/icon/usage.webp "Example icons")
 
 ```html
 <md-icon>settings</md-icon>
@@ -67,7 +67,7 @@ Load the font with
 
 ### Rounded
 
-![Settings, checkbox, and house icons in Rounded style](images/icon/usage_rounded.png "Rounded Icons")
+![Settings, checkbox, and house icons in Rounded style](images/icon/usage_rounded.webp "Rounded Icons")
 
 Rounded symbols use a corner radius that pairs well with brands that use heavier
 typography, curved logos, or circular elements to express their style.
@@ -82,7 +82,7 @@ To use Rounded icons, set `--md-icon-font` to `'Material Symbols Rounded'`.
 
 ### Sharp
 
-![Settings, checkbox, and house icons in Sharp style](images/icon/usage_sharp.png "Sharp Icons")
+![Settings, checkbox, and house icons in Sharp style](images/icon/usage_sharp.webp "Sharp Icons")
 
 Sharp symbols display corners with straight edges, for a crisp style that
 remains legible even at smaller scales. These rectangular shapes can support
@@ -98,7 +98,7 @@ To use Sharp icons, set `font-family` to `'Material Symbols Sharp'`.
 
 ### Fill
 
-![Filed settings, checkbox, and house icons](images/icon/usage_filled.png "Filled Icons")
+![Filed settings, checkbox, and house icons](images/icon/usage_filled.webp "Filled Icons")
 
 Filled Icons gives you the ability to transition from a more outlined style to a
 reversed or more filled style.
@@ -148,7 +148,7 @@ Token            | Default value
 
 ### Example
 
-![Image of icons with a different theme applied](images/icon/theming.png "Icon theming example.")
+![Image of icons with a different theme applied](images/icon/theming.webp "Icon theming example.")
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1" rel="stylesheet">

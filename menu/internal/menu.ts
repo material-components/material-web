@@ -461,6 +461,20 @@ export abstract class Menu extends LitElement {
     this.cleanUpGlobalEventListeners();
   }
 
+  override getBoundingClientRect() {
+    if (!this.surfaceEl) {
+      return super.getBoundingClientRect();
+    }
+    return this.surfaceEl.getBoundingClientRect();
+  }
+
+  override getClientRects() {
+    if (!this.surfaceEl) {
+      return super.getClientRects();
+    }
+    return this.surfaceEl.getClientRects();
+  }
+
   protected override render() {
     return this.renderSurface();
   }

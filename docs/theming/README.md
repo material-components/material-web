@@ -22,7 +22,7 @@ interactions.
 
 ![collage of views of a mobile UI that show a user's setting and preference for
 a green primary color flows through system UI
-harmoniously](images/theming.png "A user-generated color scheme can flow through apps that use a custom theme.")
+harmoniously](images/theming.webp "A user-generated color scheme can flow through apps that use a custom theme.")
 
 ## Tokens
 
@@ -35,7 +35,7 @@ value.
 
 ![A diagram showing the heirachy of component tokens to system tokens to
 reference
-tokens](images/token-types.png "The relationship between reference, system, and component tokens.")
+tokens](images/token-types.webp "The relationship between reference, system, and component tokens.")
 
 On the web, design tokens are
 [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)<!-- {.external} -->

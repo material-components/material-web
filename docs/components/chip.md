@@ -36,7 +36,7 @@ elements.
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/chips/hero.png" alt="Two collections of filter chips, with some options selected and some unselected."
+<img class="hero" src="images/chips/hero.webp" alt="Two collections of filter chips, with some options selected and some unselected."
 title="Filter chips">
 
 </catalog-component-header>

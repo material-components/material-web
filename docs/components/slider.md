@@ -38,7 +38,7 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 <img
     class="hero"
     alt="Sound settings screen with sliders labeled 'Media volume', and 'Call volume'."
-    src="images/slider/hero.png">
+    src="images/slider/hero.webp">
 
 </catalog-component-header>
 
@@ -132,7 +132,7 @@ Token                              | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a slider with a different theme applied](images/slider/theming.png "Slider theming example.")
+![Image of a slider with a different theme applied](images/slider/theming.webp "Slider theming example.")
 
 <!-- no-catalog-end -->
 

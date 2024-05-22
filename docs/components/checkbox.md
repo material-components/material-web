@@ -13,7 +13,7 @@ dirname: checkbox
 freshness: {
   owner: 'emarquez'
   owner: 'lizmitchell'
-  reviewed: '2023-11-10'
+  reviewed: '2024-05-15'
 }
 tag: 'docType:reference'
 *-->
@@ -41,7 +41,7 @@ user needs to select one or more options from a list.
 
 <img
     class="hero"
-    src="images/checkbox/hero.png"
+    src="images/checkbox/hero.webp"
     alt="A list of burger additions represented with checkboxes"
     title="Checkboxes in a list of items.">
 
@@ -70,7 +70,7 @@ Checkboxes may be standalone, pre-checked, or indeterminate.
 
 <!-- no-catalog-start -->
 
-![Three checkboxes in a row that are unselected, selected, and indeterminate](images/checkbox/usage.png "Unselected, selected, and indeterminate checkboxes.")
+![Three checkboxes in a row that are unselected, selected, and indeterminate](images/checkbox/usage.webp "Unselected, selected, and indeterminate checkboxes.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/checkbox/usage.html" -->
@@ -87,7 +87,7 @@ Associate a label with a checkbox using the `<label>` element.
 
 <!-- no-catalog-start -->
 
-![Two checkboxes with labels](images/checkbox/usage-label.png "Labeled checkboxes.")
+![Two checkboxes with labels](images/checkbox/usage-label.webp "Labeled checkboxes.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/checkbox/usage-label.html" -->
@@ -142,7 +142,7 @@ Token                                    | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a checkbox with a different theme applied](images/checkbox/theming.png "Checkbox theming example.")
+![Image of a checkbox with a different theme applied](images/checkbox/theming.webp "Checkbox theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/checkbox/theming.html" -->

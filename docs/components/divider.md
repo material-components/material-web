@@ -16,7 +16,7 @@ that groups content in lists and containers.
 Dividers can reinforce tapability, such as when used to separate list items or
 define tappable regions in an accordion.
 
-![Screenshot of five stacked dividers](images/divider/hero.png "Dividers separating items in a list.")
+![Screenshot of five stacked dividers](images/divider/hero.webp "Dividers separating items in a list.")
 
 *   [Design article](https://m3.material.io/components/divider) <!-- {.external} -->
 *   [API Documentation](#api)
@@ -27,7 +27,7 @@ define tappable regions in an accordion.
 
 Use full width dividers to separate larger sections of unrelated content.
 
-![A full width divider separating two paragraphs of "Lorem ipsum"](images/divider/usage.png "Full width divider example")
+![A full width divider separating two paragraphs of "Lorem ipsum"](images/divider/usage.webp "Full width divider example")
 
 ```html
 <section>
@@ -41,7 +41,7 @@ Use full width dividers to separate larger sections of unrelated content.
 
 Use inset dividers to separate related content within a section.
 
-![A list of design system names separated by an inset divider](images/divider/usage-inset.png "Inset divider example")
+![A list of design system names separated by an inset divider](images/divider/usage-inset.webp "Inset divider example")
 
 ```html
 <section>
@@ -54,7 +54,7 @@ Use inset dividers to separate related content within a section.
 Inset dividers are equally indented from both sides of the screen by default.
 Use `inset-start` or `inset-end` to change this.
 
-![A list of design system names separated by a leading inset divider](images/divider/usage-inset-start.png "Leading inset divider example")
+![A list of design system names separated by a leading inset divider](images/divider/usage-inset-start.webp "Leading inset divider example")
 
 ```html
 <section>
@@ -101,7 +101,7 @@ Token                    | Default value
 
 ### Example
 
-![A customized divider with a different color and thickness](images/divider/theming.png "Divider theming example.")
+![A customized divider with a different color and thickness](images/divider/theming.webp "Divider theming example.")
 
 ```html
 <style>
