@@ -135,7 +135,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       ${this.renderElevationOrOutline?.()}
       <div class="background"></div>
       <md-focus-ring part="focus-ring" for=${buttonId}></md-focus-ring>
-      <md-ripple for=${buttonId} ?disabled="${isDisabled}"></md-ripple>
+      <md-ripple part="ripple" for=${buttonId} ?disabled="${isDisabled}"></md-ripple>
       ${buttonOrLink}
     `;
   }
