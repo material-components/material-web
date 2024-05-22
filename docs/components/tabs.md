@@ -34,7 +34,7 @@ related content that are at the same level of hierarchy.
 
 <img
   class="hero"
-  src="images/tabs/hero.png"
+  src="images/tabs/hero.webp"
   alt="Media gallery screen with tabs labeled 'Video', 'Photos', and 'Audio'.">
 
 </catalog-component-header>
@@ -303,7 +303,7 @@ Token                                     | Default value
 
 <!-- no-catalog-start -->
 
-![Image of tabs with a different theme applied](images/tabs/theming.png "Tab theming example.")
+![Image of tabs with a different theme applied](images/tabs/theming.webp "Tab theming example.")
 
 <!-- no-catalog-end -->
 

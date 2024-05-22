@@ -268,7 +268,7 @@ Token                                           | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a circular progress indicator with a different theme applied](images/progress/theming-circular.png "Circular progress indicator theming example.")
+![Image of a circular progress indicator with a different theme applied](images/progress/theming-circular.webp "Circular progress indicator theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -327,7 +327,7 @@ Token                                          | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a linear progress indicator with a different theme applied](images/progress/theming-linear.png "Linear progress theming example.")
+![Image of a linear progress indicator with a different theme applied](images/progress/theming-linear.webp "Linear progress theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
