@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0](https://github.com/material-components/material-web/compare/v1.4.1...v1.5.0) (2024-05-23)
+
+
+### Features
+
+* **menu:** allow customizing `scrollbar-width` ([1bf8b5f](https://github.com/material-components/material-web/commit/1bf8b5fbf9ff8f7c0084acee77988b1af9ad7e19))
+* **select:** make required asterisk optional ([8f194a5](https://github.com/material-components/material-web/commit/8f194a51dbc85ead2d9d8c10e0be69f183788a31))
+* **textfield:** make required asterisk optional ([be5bb43](https://github.com/material-components/material-web/commit/be5bb43100fbf0df3a7cfec4c4d4399559a23114))
+
+
+### Bug Fixes
+
+* **button:** add part attribute to button ([a2b5c91](https://github.com/material-components/material-web/commit/a2b5c91a549e206603f23d84233de83a8c165d77))
+* **dialog:** focus is trapped for a11y, use `no-focus-trap` to disable ([0aea436](https://github.com/material-components/material-web/commit/0aea4364a142f3db84b77ae99eea1df6a3cd8456))
+* **docs:** progress.webp not playing ([2f0c99a](https://github.com/material-components/material-web/commit/2f0c99ad3d3320341a4ae61db5abe64c37649ddb)), closes [#5569](https://github.com/material-components/material-web/issues/5569)
+* **menu:** `getBoundingClientRect()` and `getClientRects()` not working ([e1f9cbc](https://github.com/material-components/material-web/commit/e1f9cbc59e4cbb50921304158edbb8e68706c405))
+
 ## [1.4.1](https://github.com/material-components/material-web/compare/v1.4.0...v1.4.1) (2024-04-15)
 
 
