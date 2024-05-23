@@ -22,6 +22,7 @@ export interface StoryKnobs {
   focused: boolean;
   populated: boolean;
   required: boolean;
+  noAsterisk: boolean;
   'Leading icon': boolean;
   'Trailing icon': boolean;
   resizable: boolean;
@@ -48,6 +49,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
       disabled,
       error,
       focused,
+      noAsterisk,
       populated,
       required,
       resizable,
@@ -73,6 +75,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
         .focused=${focused}
         .hasStart=${hasStart}
         .hasEnd=${hasEnd}
+        .noAsterisk=${noAsterisk}
         .populated=${populated}
         .required=${required}
         supporting-text=${supportingText}
@@ -95,6 +98,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
       disabled,
       error,
       focused,
+      noAsterisk,
       populated,
       required,
       resizable,
@@ -122,6 +126,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
         .focused=${focused}
         .hasStart=${hasStart}
         .hasEnd=${hasEnd}
+        .noAsterisk=${noAsterisk}
         .populated=${populated}
         .required=${required}
         supporting-text=${supportingText}

@@ -19,6 +19,7 @@ export interface StoryKnobs {
   typeaheadDelay: number;
   quick: boolean;
   required: boolean;
+  noAsterisk: boolean;
   disabled: boolean;
   errorText: string;
   supportingText: string;
@@ -41,6 +42,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}
+          .noAsterisk=${knobs.noAsterisk}
           .disabled=${knobs.disabled}
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
@@ -58,6 +60,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}
+          .noAsterisk=${knobs.noAsterisk}
           .disabled=${knobs.disabled}
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}

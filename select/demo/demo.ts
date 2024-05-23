@@ -32,6 +32,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     new Knob('typeaheadDelay', {ui: numberInput(), defaultValue: 200}),
     new Knob('quick', {ui: boolInput(), defaultValue: false}),
     new Knob('required', {ui: boolInput(), defaultValue: false}),
+    new Knob('noAsterisk', {ui: boolInput(), defaultValue: false}),
     new Knob('disabled', {ui: boolInput(), defaultValue: false}),
     new Knob('errorText', {ui: textInput(), defaultValue: ''}),
     new Knob('supportingText', {ui: textInput(), defaultValue: ''}),

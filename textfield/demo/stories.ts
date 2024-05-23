@@ -213,12 +213,14 @@ const forms: MaterialStoryInit<StoryKnobs> = {
             label="First name"
             name="first-name"
             required
+            no-asterisk
             autocomplete="given-name"></md-filled-text-field>
           <md-filled-text-field
             ?disabled=${knobs.disabled}
             label="Last name"
             name="last-name"
             required
+            no-asterisk
             autocomplete="family-name"></md-filled-text-field>
         </div>
         <div class="row buttons">

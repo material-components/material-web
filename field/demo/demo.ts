@@ -38,6 +38,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     new Knob('focused', {ui: boolInput(), defaultValue: false}),
     new Knob('populated', {ui: boolInput(), defaultValue: false}),
     new Knob('required', {ui: boolInput(), defaultValue: false}),
+    new Knob('noAsterisk', {ui: boolInput(), defaultValue: false}),
     new Knob('Leading icon', {ui: boolInput(), defaultValue: false}),
     new Knob('Trailing icon', {ui: boolInput(), defaultValue: false}),
     new Knob('resizable', {ui: boolInput(), defaultValue: false}),

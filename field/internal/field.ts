@@ -25,6 +25,7 @@ export class Field extends LitElement {
   @property({type: Boolean}) error = false;
   @property({type: Boolean}) focused = false;
   @property() label = '';
+  @property({type: Boolean, attribute: 'no-asterisk'}) noAsterisk = false;
   @property({type: Boolean}) populated = false;
   @property({type: Boolean}) required = false;
   @property({type: Boolean}) resizable = false;
@@ -242,7 +243,9 @@ export class Field extends LitElement {
     };
 
     // Add '*' if a label is present and the field is required
-    const labelText = `${this.label}${this.required ? '*' : ''}`;
+    const labelText = `${this.label}${
+      this.required && !this.noAsterisk ? '*' : ''
+    }`;
 
     return html`
       <span class="label ${classMap(classes)}" aria-hidden=${!visible}
