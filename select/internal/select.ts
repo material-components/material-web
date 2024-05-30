@@ -212,7 +212,7 @@ export abstract class Select extends selectBaseClass {
   /**
    * Returns an array of selected options.
    *
-   * NOTE: md-select only suppoprts single selection.
+   * NOTE: md-select only supports single selection.
    */
   get selectedOptions() {
     return (this.getSelectedOptions() ?? []).map(([option]) => option);
