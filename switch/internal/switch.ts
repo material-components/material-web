@@ -13,6 +13,10 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
 import {
+  afterDispatch,
+  setupDispatchHooks,
+} from '../../internal/events/dispatch-hooks.js';
+import {
   dispatchActivationClick,
   isActivationClick,
 } from '../../internal/events/form-label-activation.js';
@@ -88,15 +92,33 @@ export class Switch extends switchBaseClass {
 
   constructor() {
     super();
-    if (!isServer) {
-      this.addEventListener('click', (event: MouseEvent) => {
-        if (!isActivationClick(event) || !this.input) {
+    if (isServer) {
+      return;
+    }
+
+    // This click listener does not currently need dispatch hooks since it does
+    // not check `event.defaultPrevented`.
+    this.addEventListener('click', (event: MouseEvent) => {
+      if (!isActivationClick(event) || !this.input) {
+        return;
+      }
+      this.focus();
+      dispatchActivationClick(this.input);
+    });
+
+    // Add the aria keyboard interaction pattern for switch and the Enter key.
+    // See https://www.w3.org/WAI/ARIA/apg/patterns/switch/.
+    setupDispatchHooks(this, 'keydown');
+    this.addEventListener('keydown', (event: KeyboardEvent) => {
+      afterDispatch(event, () => {
+        const ignoreEvent = event.defaultPrevented || event.key !== 'Enter';
+        if (ignoreEvent || this.disabled || !this.input) {
           return;
         }
-        this.focus();
-        dispatchActivationClick(this.input);
+
+        this.input.click();
       });
-    }
+    });
   }
 
   protected override render(): TemplateResult {
