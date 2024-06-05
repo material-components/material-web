@@ -183,6 +183,7 @@
     font-family: map.get($tokens, 'supporting-text-font');
     font-size: map.get($tokens, 'supporting-text-size');
     line-height: map.get($tokens, 'supporting-text-line-height');
+    flex: 1;
     font-weight: map.get($tokens, 'supporting-text-weight');
     height: min-content; // Needed for Safari
     position: relative;
