@@ -129,7 +129,9 @@ export abstract class Chip extends LitElement {
       <span class="leading icon" aria-hidden="true">
         ${this.renderLeadingIcon()}
       </span>
-      <span class="label">${this.label}</span>
+      <div class="label-container">
+        <span class="label">${this.label}</span>
+      </div>
       <span class="touch"></span>
     `;
   }
