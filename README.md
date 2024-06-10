@@ -17,6 +17,9 @@ that helps build beautiful and accessible web applications. It uses
 [Material 3](https://m3.material.io/)<!-- {.external} -->, the latest version of Google's
 open-source design system.
 
+**Note:
+[MWC is in maintenance mode pending new maintainers](https://github.com/material-components/material-web/discussions/5642).**
+
 ## Resources
 
 -   [Introduction](./docs/intro.md)
