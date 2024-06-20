@@ -25,7 +25,7 @@ $_indeterminate-bottom-left: 4px, -10px;
 $_checkmark-bottom-left: 7px, -14px;
 
 @mixin theme($tokens) {
-  $supported-tokens: $md-comp-checkbox-supported-tokens;
+  $supported-tokens: tokens.$md-comp-checkbox-supported-tokens;
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
       @error 'Token `#{$token}` is not a supported token.';
