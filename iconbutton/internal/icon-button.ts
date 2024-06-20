@@ -92,7 +92,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   @property({type: Boolean, reflect: true}) selected = false;
 
   /**
-   * The default behavior of the button. May be "text", "reset", or "submit"
+   * The default behavior of the button. May be "button", "reset", or "submit"
    * (default).
    */
   @property() type: FormSubmitterType = 'submit';

@@ -717,7 +717,7 @@ Token                               | Default value
 | `target` | `target` | `string` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
@@ -737,7 +737,7 @@ Token                               | Default value
 | `target` | `target` | `string` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
@@ -757,7 +757,7 @@ Token                               | Default value
 | `target` | `target` | `string` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
@@ -777,7 +777,7 @@ Token                               | Default value
 | `target` | `target` | `string` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
@@ -797,7 +797,7 @@ Token                               | Default value
 | `target` | `target` | `string` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |

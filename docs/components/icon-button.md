@@ -444,7 +444,7 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
@@ -478,7 +478,7 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
@@ -512,7 +512,7 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
@@ -546,7 +546,7 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
-| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "text", "reset", or "submit" (default). |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
 | `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
 | `name` |  | `string` | `undefined` |  |
 | `form` |  | `HTMLFormElement` | `undefined` |  |
