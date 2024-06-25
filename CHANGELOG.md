@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.5.1](https://github.com/material-components/material-web/compare/v1.5.0...v1.5.1) (2024-06-25)
+
+
+### Bug Fixes
+
+* **checkbox:** sass theme mixin not working ([46d66ed](https://github.com/material-components/material-web/commit/46d66ed9d188243e313e6833f244a5b750aa9fdb)), closes [#5651](https://github.com/material-components/material-web/issues/5651)
+* **dialog:** have content expand to fill height ([17aa21a](https://github.com/material-components/material-web/commit/17aa21a53ecc949b3326ed0d2c2bf461a20617c6))
+* **menu:** resolve aborted animations as false rather than reject ([4f7ff4f](https://github.com/material-components/material-web/commit/4f7ff4f63adaec11cfc7e2772990a757139be01b)), closes [#5638](https://github.com/material-components/material-web/issues/5638)
+* **switch:** pressing enter toggles the switch ([99ec9e2](https://github.com/material-components/material-web/commit/99ec9e25eb0d64887a3530e494ba8683909c0e62))
+
 ## [1.5.0](https://github.com/material-components/material-web/compare/v1.4.1...v1.5.0) (2024-05-23)
 
 
