@@ -596,21 +596,15 @@ export abstract class Menu extends LitElement {
 
     let animationAborted = !this.quick;
 
-    if (this.quick) {
-      this.dispatchEvent(new Event('opening'));
-    } else {
-      animationAborted = !!(await this.animateOpen());
-    }
-
-    // This must come after the opening animation or else it may focus one of
-    // the items before the animation has begun and causes the list to slide
-    // (block-padding-of-the-menu)px at the end of the animation
+    // Focusing one of the items before the animation has begun causes the list
+    // to slide (block-padding-of-the-menu)px at the end of the animation.
+    // Setting preventScroll avoids this.
     switch (this.defaultFocus) {
       case FocusState.FIRST_ITEM:
         const first = getFirstActivatableItem(items);
         if (first) {
           first.tabIndex = 0;
-          first.focus();
+          first.focus({ preventScroll: true });
           await (first as LitElement & MenuItem).updateComplete;
         }
         break;
@@ -618,17 +612,23 @@ export abstract class Menu extends LitElement {
         const last = getLastActivatableItem(items);
         if (last) {
           last.tabIndex = 0;
-          last.focus();
+          last.focus({ preventScroll: true });
           await (last as LitElement & MenuItem).updateComplete;
         }
         break;
       case FocusState.LIST_ROOT:
-        this.focus();
+        this.focus({ preventScroll: true });
         break;
       default:
       case FocusState.NONE:
         // Do nothing.
         break;
+    }
+
+    if (this.quick) {
+      this.dispatchEvent(new Event('opening'));
+    } else {
+      animationAborted = !!(await this.animateOpen());
     }
 
     if (!animationAborted) {
