@@ -30,7 +30,7 @@ The latest version, Material 3, enables personal, adaptive, and expressive
 experiences – from dynamic color and enhanced accessibility, to foundations for
 large screen layouts and design tokens.
 
-![An example of a Material Design application.](images/what-is-material.png "What is Material?")
+![An example of a Material Design application.](images/what-is-material.webp "What is Material?")
 
 ## What are web components?
 
