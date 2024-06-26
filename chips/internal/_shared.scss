@@ -14,6 +14,7 @@
 
 @mixin styles() {
   :host {
+    overflow: hidden;
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-start-radius: var(--_container-shape-end-start);
@@ -76,6 +77,12 @@
 
   .container.disabled {
     pointer-events: none;
+  }
+
+  .container.has-icon {
+    .label-container {
+      width: calc(100% - var(--_icon-size) - var(--_with-leading-icon-leading-space));
+    }
   }
 
   .cell {
@@ -145,17 +152,23 @@
     z-index: 1;
   }
 
-  .label {
-    align-items: center;
-    color: var(--_label-text-color);
+  .label-container {
     display: flex;
+    align-items: center;
+    user-select: none;
+    height: 100%;
+    width: 100%;;
+  }
+
+  .label {
+    display: inline-block;
+    color: var(--_label-text-color);
     font-family: var(--_label-text-font);
     font-size: var(--_label-text-size);
     line-height: var(--_label-text-line-height);
     font-weight: var(--_label-text-weight);
-    height: 100%;
+    overflow: hidden;
     text-overflow: ellipsis;
-    user-select: none;
     white-space: nowrap;
   }
 
@@ -226,6 +239,8 @@
   button {
     // Override the user-agent text-transform: none of <button> and <a>
     text-transform: inherit;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   a,
