@@ -130,7 +130,7 @@
     "@lit-labs/ssr-client": "^1.1.1",
     "@material/material-color-utilities": "^0.2.7",
     "@material/mwc-drawer": "^0.27.0",
-    "@material/web": "^1.0.0-pre.6",
+    "@material/web": "*",
     "@preact/signals-core": "^1.3.0",
     "lit": "^2.7.4",
     "playground-elements": "^0.17.0",
