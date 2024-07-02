@@ -82,7 +82,7 @@ export class TestTable<S extends string = string> extends LitElement {
             </th>
             ${this.states.map(
               (state, colIndex) => html`
-                <td class="md3-test-table__cell">
+                <td class="md3-test-table__cell" part="cell">
                   <slot name="${`${rowIndex}-${colIndex}`}">
                     <div class="md3-test-table__text">N/A</div>
                   </slot>
