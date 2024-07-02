@@ -13,7 +13,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
   FormSubmitter,
   setupFormSubmitter,
@@ -28,7 +28,9 @@ import {
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
 // Separate variable needed for closure.
-const iconButtonBaseClass = mixinElementInternals(LitElement);
+const iconButtonBaseClass = mixinDelegatesAria(
+  mixinElementInternals(LitElement),
+);
 
 /**
  * A button for rendering icons.
@@ -39,7 +41,6 @@ const iconButtonBaseClass = mixinElementInternals(LitElement);
  */
 export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   static {
-    requestUpdateOnAriaChange(IconButton);
     setupFormSubmitter(IconButton);
   }
 

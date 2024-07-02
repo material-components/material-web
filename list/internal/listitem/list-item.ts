@@ -14,7 +14,7 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
 import {
   createRequestActivationEvent,
   ListItem,
@@ -25,15 +25,14 @@ import {
  */
 export type ListItemType = 'text' | 'button' | 'link';
 
+// Separate variable needed for closure.
+const listItemBaseClass = mixinDelegatesAria(LitElement);
+
 /**
  * @fires request-activation {Event} Requests the list to set `tabindex=0` on
  * the item and focus it. --bubbles --composed
  */
-export class ListItemEl extends LitElement implements ListItem {
-  static {
-    requestUpdateOnAriaChange(ListItemEl);
-  }
-
+export class ListItemEl extends listItemBaseClass implements ListItem {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,

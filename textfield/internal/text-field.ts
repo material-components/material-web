@@ -13,7 +13,7 @@ import {StaticValue, html as staticHtml} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
@@ -72,9 +72,11 @@ export type InvalidTextFieldType =
   | 'submit';
 
 // Separate variable needed for closure.
-const textFieldBaseClass = mixinOnReportValidity(
-  mixinConstraintValidation(
-    mixinFormAssociated(mixinElementInternals(LitElement)),
+const textFieldBaseClass = mixinDelegatesAria(
+  mixinOnReportValidity(
+    mixinConstraintValidation(
+      mixinFormAssociated(mixinElementInternals(LitElement)),
+    ),
   ),
 );
 
@@ -92,10 +94,6 @@ const textFieldBaseClass = mixinOnReportValidity(
  * --bubbles --composed
  */
 export abstract class TextField extends textFieldBaseClass {
-  static {
-    requestUpdateOnAriaChange(TextField);
-  }
-
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,

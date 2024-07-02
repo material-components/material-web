@@ -13,9 +13,12 @@ import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
 
 import {NavigationTabState} from './state.js';
+
+// Separate variable needed for closure.
+const navigationTabBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * b/265346501 - add docs
@@ -26,11 +29,10 @@ import {NavigationTabState} from './state.js';
  * @fires navigation-tab-interaction {CustomEvent<{state: MdNavigationTab}>}
  * Dispatched when the navigation tab has been clicked. --bubbles --composed
  */
-export class NavigationTab extends LitElement implements NavigationTabState {
-  static {
-    requestUpdateOnAriaChange(NavigationTab);
-  }
-
+export class NavigationTab
+  extends navigationTabBaseClass
+  implements NavigationTabState
+{
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean, reflect: true}) active = false;
   @property({type: Boolean, attribute: 'hide-inactive-label'})

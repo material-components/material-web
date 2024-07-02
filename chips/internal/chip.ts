@@ -11,18 +11,17 @@ import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
+
+// Separate variable needed for closure.
+const chipBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * A chip component.
  *
  * @fires update-focus {Event} Dispatched when `disabled` is toggled. --bubbles
  */
-export abstract class Chip extends LitElement {
-  static {
-    requestUpdateOnAriaChange(Chip);
-  }
-
+export abstract class Chip extends chipBaseClass {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,

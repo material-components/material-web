@@ -23,7 +23,7 @@
     "inlineSources": true,
     "strict": true,
     "strictNullChecks": false,
-    "target": "es2020",
+    "target": "es2021",
     "types": ["lit", "jasmine"]
   },
   "exclude": [
