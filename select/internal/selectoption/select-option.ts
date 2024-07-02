@@ -18,7 +18,7 @@ import {
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
 import {MenuItem} from '../../../menu/internal/controllers/menuItemController.js';
 
 import {SelectOptionController} from './selectOptionController.js';
@@ -49,6 +49,9 @@ interface SelectOptionSelf {
  */
 export type SelectOption = SelectOptionSelf & MenuItem;
 
+// Separate variable needed for closure.
+const selectOptionBaseClass = mixinDelegatesAria(LitElement);
+
 /**
  * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
  * Closes the encapsulating menu on closable interaction. --bubbles --composed
@@ -58,11 +61,10 @@ export type SelectOption = SelectOptionSelf & MenuItem;
  * @fires request-deselection {Event} Requests the parent md-select to deselect
  * this element when `selected` changed to `false`. --bubbles --composed
  */
-export class SelectOptionEl extends LitElement implements SelectOption {
-  static {
-    requestUpdateOnAriaChange(SelectOptionEl);
-  }
-
+export class SelectOptionEl
+  extends selectOptionBaseClass
+  implements SelectOption
+{
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,

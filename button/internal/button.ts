@@ -11,7 +11,7 @@ import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
   FormSubmitter,
   setupFormSubmitter,
@@ -27,14 +27,13 @@ import {
 } from '../../labs/behaviors/element-internals.js';
 
 // Separate variable needed for closure.
-const buttonBaseClass = mixinElementInternals(LitElement);
+const buttonBaseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
 
 /**
  * A button component.
  */
 export abstract class Button extends buttonBaseClass implements FormSubmitter {
   static {
-    requestUpdateOnAriaChange(Button);
     setupFormSubmitter(Button);
   }
 

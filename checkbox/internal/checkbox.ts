@@ -12,7 +12,7 @@ import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
   dispatchActivationClick,
   isActivationClick,
@@ -32,8 +32,10 @@ import {
 import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
 
 // Separate variable needed for closure.
-const checkboxBaseClass = mixinConstraintValidation(
-  mixinFormAssociated(mixinElementInternals(LitElement)),
+const checkboxBaseClass = mixinDelegatesAria(
+  mixinConstraintValidation(
+    mixinFormAssociated(mixinElementInternals(LitElement)),
+  ),
 );
 
 /**
@@ -48,10 +50,6 @@ const checkboxBaseClass = mixinConstraintValidation(
  * --bubbles --composed
  */
 export class Checkbox extends checkboxBaseClass {
-  static {
-    requestUpdateOnAriaChange(Checkbox);
-  }
-
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,

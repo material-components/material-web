@@ -11,7 +11,7 @@ import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 
 import {
@@ -20,6 +20,9 @@ import {
   DialogAnimation,
   DialogAnimationArgs,
 } from './animations.js';
+
+// Separate variable needed for closure.
+const dialogBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * A dialog component.
@@ -31,11 +34,7 @@ import {
  * @fires cancel {Event} Dispatched when the dialog has been canceled by clicking
  * on the scrim or pressing Escape.
  */
-export class Dialog extends LitElement {
-  static {
-    requestUpdateOnAriaChange(Dialog);
-  }
-
+export class Dialog extends dialogBaseClass {
   // We do not use `delegatesFocus: true` due to a Chromium bug with
   // selecting text.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=950357

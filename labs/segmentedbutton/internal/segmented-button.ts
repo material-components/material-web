@@ -12,7 +12,10 @@ import {property, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
+
+// Separate variable needed for closure.
+const segmentedButtonBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * SegmentedButton is a web component implementation of the Material Design
@@ -23,11 +26,7 @@ import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
  * @fires segmented-button-interaction {Event} Dispatched whenever a button is
  * clicked. --bubbles --composed
  */
-export class SegmentedButton extends LitElement {
-  static {
-    requestUpdateOnAriaChange(SegmentedButton);
-  }
-
+export class SegmentedButton extends segmentedButtonBaseClass {
   @property({type: Boolean}) disabled = false;
   @property({type: Boolean}) selected = false;
   @property() label = '';

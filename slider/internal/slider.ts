@@ -15,7 +15,7 @@ import {styleMap} from 'lit/directives/style-map.js';
 import {when} from 'lit/directives/when.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
   dispatchActivationClick,
   isActivationClick,
@@ -32,7 +32,9 @@ import {MdRipple} from '../../ripple/ripple.js';
 // tslint:disable:no-implicit-dictionary-conversion
 
 // Separate variable needed for closure.
-const sliderBaseClass = mixinFormAssociated(mixinElementInternals(LitElement));
+const sliderBaseClass = mixinDelegatesAria(
+  mixinFormAssociated(mixinElementInternals(LitElement)),
+);
 
 /**
  * Slider component.
@@ -46,10 +48,6 @@ const sliderBaseClass = mixinFormAssociated(mixinElementInternals(LitElement));
  * --bubbles --composed
  */
 export class Slider extends sliderBaseClass {
-  static {
-    requestUpdateOnAriaChange(Slider);
-  }
-
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,

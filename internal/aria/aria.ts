@@ -73,7 +73,7 @@ export const ARIA_ATTRIBUTES = ARIA_PROPERTIES.map(ariaPropertyToAttribute);
  * @return True if the attribute is an aria attribute, or false if not.
  */
 export function isAriaAttribute(attribute: string): attribute is ARIAAttribute {
-  return attribute.startsWith('aria-') || attribute === 'role';
+  return ARIA_ATTRIBUTES.includes(attribute as ARIAAttribute);
 }
 
 /**

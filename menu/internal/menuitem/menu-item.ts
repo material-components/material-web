@@ -19,22 +19,21 @@ import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
 import {
   MenuItem,
   MenuItemController,
   type MenuItemType,
 } from '../controllers/menuItemController.js';
 
+// Separate variable needed for closure.
+const menuItemBaseClass = mixinDelegatesAria(LitElement);
+
 /**
  * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
  * Closes the encapsulating menu on closable interaction. --bubbles --composed
  */
-export class MenuItemEl extends LitElement implements MenuItem {
-  static {
-    requestUpdateOnAriaChange(MenuItemEl);
-  }
-
+export class MenuItemEl extends menuItemBaseClass implements MenuItem {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
