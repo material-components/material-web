@@ -128,7 +128,9 @@ export abstract class Chip extends chipBaseClass {
       <span class="leading icon" aria-hidden="true">
         ${this.renderLeadingIcon()}
       </span>
-      <span class="label">${this.label}</span>
+      <span class="label">
+        <span class="label-text">${this.label}</span>
+      </span>
       <span class="touch"></span>
     `;
   }
