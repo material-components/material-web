@@ -236,6 +236,28 @@ attribute to buttons whose labels need a more descriptive label.
 <md-elevated-button aria-label="Add a new contact">Add</md-elevated-button>
 ```
 
+### Focusable and disabled
+
+By default, disabled buttons are not focusable with the keyboard. Some use cases
+encourage focusability of disabled toolbar items to increase their
+discoverability.
+
+See the
+[ARIA guidelines on focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls)<!-- {.external} -->
+for guidance on when this is recommended.
+
+```html
+<div role="toolbar">
+  <md-text-button>Copy</md-text-button>
+  <md-text-button>Cut</md-text-button>
+  <!--
+    This button is disabled, but kept focusable to improve its discoverability
+    in the toolbar.
+  -->
+  <md-text-button disabled always-focusable>Paste</md-text-button>
+</div>
+```
+
 ## Elevated button
 
 <!-- go/md-elevated-button -->
@@ -703,7 +725,6 @@ Token                               | Default value
 
 ## API
 
-
 ### MdElevatedButton <code>&lt;md-elevated-button&gt;</code>
 
 #### Properties
@@ -713,6 +734,7 @@ Token                               | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the button is disabled. |
+| `alwaysFocusable` | `always-focusable` | `boolean` | `false` | Whether the button is still focusable when disabled. |
 | `href` | `href` | `string` | `''` | The URL that the link button points to. |
 | `target` | `target` | `string` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |

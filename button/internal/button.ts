@@ -52,6 +52,16 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
+   * When true, allows disabled buttons to be focused.
+   *
+   * Add this when a button needs increased visibility when disabled. See
+   * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
+   * for more guidance on when this is needed.
+   */
+  @property({type: Boolean, attribute: 'always-focusable'})
+  alwaysFocusable = false;
+
+  /**
    * The URL that the link button points to.
    */
   @property() href = '';
@@ -154,7 +164,8 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     return html`<button
       id="button"
       class="button"
-      ?disabled=${this.disabled}
+      ?disabled=${this.disabled && !this.alwaysFocusable}
+      aria-disabled=${this.disabled && this.alwaysFocusable ? 'true' : nothing}
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}">
