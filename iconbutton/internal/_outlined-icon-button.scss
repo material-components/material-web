@@ -69,7 +69,8 @@
       color: var(--_pressed-icon-color);
     }
 
-    &:disabled {
+    &:disabled,
+    &[aria-disabled='true'] {
       color: var(--_disabled-icon-color);
 
       &::before {
@@ -79,7 +80,8 @@
     }
   }
 
-  .outlined:disabled .icon {
+  .outlined:disabled .icon,
+  .outlined[aria-disabled='true'] .icon {
     opacity: var(--_disabled-icon-opacity);
   }
 
@@ -103,7 +105,7 @@
 
   // Selected icon button toggle.
   .selected {
-    &:not(:disabled) {
+    &:not(:disabled, [aria-disabled='true']) {
       color: var(--_selected-icon-color);
 
       &:hover {
@@ -129,11 +131,12 @@
     );
   }
 
-  .selected:not(:disabled)::before {
+  .selected:not(:disabled, [aria-disabled='true'])::before {
     background-color: var(--_selected-container-color);
   }
 
-  .selected:disabled::before {
+  .selected:disabled::before,
+  .selected[aria-disabled='true']::before {
     background-color: var(--_disabled-selected-container-color);
     opacity: var(--_disabled-selected-container-opacity);
   }
@@ -150,7 +153,8 @@
         border-width: var(--_outline-width);
       }
 
-      &:disabled::before {
+      &:disabled::before,
+      &[aria-disabled='true']::before {
         border-color: GrayText;
         opacity: 1;
       }

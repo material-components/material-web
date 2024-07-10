@@ -59,6 +59,16 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
+   * When true, allows disabled buttons to be focused.
+   *
+   * Add this when a button needs increased visibility when disabled. See
+   * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
+   * for more guidance on when this is needed.
+   */
+  @property({type: Boolean, attribute: 'always-focusable'})
+  alwaysFocusable = false;
+
+  /**
    * Flips the icon if it is in an RTL context at startup.
    */
   @property({type: Boolean, attribute: 'flip-icon-in-rtl'})
@@ -156,7 +166,8 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
         aria-haspopup="${(!this.href && ariaHasPopup) || nothing}"
         aria-expanded="${(!this.href && ariaExpanded) || nothing}"
         aria-pressed="${ariaPressedValue}"
-        ?disabled="${!this.href && this.disabled}"
+        aria-disabled=${!this.href && this.disabled && this.alwaysFocusable ? 'true' : nothing}
+        ?disabled=${!this.href && this.disabled && !this.alwaysFocusable}
         @click="${this.handleClick}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}

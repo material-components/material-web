@@ -91,7 +91,8 @@
       color: var(--_pressed-icon-color);
     }
 
-    &:disabled {
+    &:disabled,
+    &[aria-disabled='true'] {
       color: var(--_disabled-icon-color);
     }
   }
@@ -100,12 +101,13 @@
     border-radius: var(--_state-layer-shape);
   }
 
-  .standard:disabled .icon {
+  .standard:disabled .icon,
+  .standard[aria-disabled='true'] .icon {
     opacity: var(--_disabled-icon-opacity);
   }
 
   .selected {
-    &:not(:disabled) {
+    &:not(:disabled, [aria-disabled='true']) {
       color: var(--_selected-icon-color);
 
       &:hover {
