@@ -94,6 +94,9 @@ export class InputChip extends MultiActionChip {
         class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
+        aria-disabled=${this.disabled && this.alwaysFocusable
+          ? 'true'
+          : nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"
         >${content}</button

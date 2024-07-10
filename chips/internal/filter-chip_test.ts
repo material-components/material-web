@@ -99,5 +99,16 @@ describe('Filter chip', () => {
         .withContext('chip.selected reverts to true')
         .toBeTrue();
     });
+
+    it('should use aria-disabled when disabled and alwaysFocusable', async () => {
+      const {chip} = await setupTest();
+      chip.disabled = true;
+      chip.alwaysFocusable = true;
+      await chip.updateComplete;
+
+      expect(chip.renderRoot.querySelector('button[aria-disabled="true"]'))
+        .withContext('should have aria-disabled="true"')
+        .not.toBeNull();
+    });
   });
 });

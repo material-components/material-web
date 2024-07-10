@@ -45,5 +45,16 @@ describe('Assist chip', () => {
         .withContext('should not have any disabled styling or behavior')
         .toBeNull();
     });
+
+    it('should use aria-disabled when disabled and alwaysFocusable', async () => {
+      const chip = await setupTest();
+      chip.disabled = true;
+      chip.alwaysFocusable = true;
+      await chip.updateComplete;
+
+      expect(chip.renderRoot.querySelector('button[aria-disabled="true"]'))
+        .withContext('should have aria-disabled="true"')
+        .not.toBeNull();
+    });
   });
 });
