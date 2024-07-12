@@ -196,6 +196,34 @@ more descriptive label when selected.
 </md-icon-button>
 ```
 
+### Focusable and disabled
+
+By default, disabled icon buttons are not focusable with the keyboard, while
+"soft-disabled" icon buttons are. Some use cases encourage focusability of
+disabled toolbar items to increase their discoverability.
+
+See the
+[ARIA guidelines on focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls)<!-- {.external} -->
+for guidance on when this is recommended.
+
+```html
+<div role="toolbar">
+  <md-icon-button aria-label="Copy">
+    <md-icon>copy</md-icon>
+  </md-icon-button>
+  <md-icon-button aria-label="Cut">
+    <md-icon>cut</md-icon>
+  </md-icon-button>
+  <!--
+    This icon button is disabled but kept focusable to improve its
+    discoverability in the toolbar.
+  -->
+  <md-icon-button aria-label="Paste" soft-disabled>
+    <md-icon>paste</md-icon>
+  </md-icon-button>
+</div>
+```
+
 ## Icon Button
 
 Standard icon buttons do not have a background or outline, and have the lowest
@@ -319,7 +347,7 @@ Token                                | Default value
 ### Filled Icon Button tokens
 
 Token                                              | Default value
--------------------------------------------------- | ------------------------
+-------------------------------------------------- | -------------
 `--md-filled-icon-button-selected-container-color` | `--md-sys-color-primary`
 `--md-filled-icon-button-container-shape`          | `--md-sys-shape-corner-full`
 `--md-filled-icon-button-container-width`          | `40px`
@@ -391,7 +419,7 @@ Token                                                    | Default value
 ### Outlined Icon Button tokens
 
 Token                                        | Default value
--------------------------------------------- | ------------------------
+-------------------------------------------- | ----------------------------
 `--md-outlined-icon-button-outline-color`    | `--md-sys-color-outline`
 `--md-outlined-icon-button-outline-width`    | `1px`
 `--md-outlined-icon-button-container-shape`  | `--md-sys-shape-corner-full`
@@ -427,7 +455,6 @@ Token                                        | Default value
 <!-- auto-generated API docs start -->
 
 ## API
-
 
 ### MdIconButton <code>&lt;md-icon-button&gt;</code>
 
@@ -472,6 +499,7 @@ Token                                        | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive. |
+| `softDisabled` | `soft-disabled` | `boolean` | `false` | "Soft-disables" the icon button (disabled but still focusable). |
 | `flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup. |
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
 | `target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
