@@ -52,6 +52,17 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
+   * Whether or not the button is "soft-disabled" (disabled but still
+   * focusable).
+   *
+   * Use this when a button needs increased visibility when disabled. See
+   * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
+   * for more guidance on when this is needed.
+   */
+  @property({type: Boolean, attribute: 'soft-disabled', reflect: true})
+  softDisabled = false;
+
+  /**
    * The URL that the link button points to.
    */
   @property() href = '';
@@ -111,7 +122,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   constructor() {
     super();
     if (!isServer) {
-      this.addEventListener('click', this.handleActivationClick);
+      this.addEventListener('click', this.handleClick.bind(this));
     }
   }
 
@@ -125,7 +136,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
 
   protected override render() {
     // Link buttons may not be disabled
-    const isDisabled = this.disabled && !this.href;
+    const isRippleDisabled = !this.href && (this.disabled || this.softDisabled);
     const buttonOrLink = this.href ? this.renderLink() : this.renderButton();
     // TODO(b/310046938): due to a limitation in focus ring/ripple, we can't use
     // the same ID for different elements, so we change the ID instead.
@@ -137,7 +148,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       <md-ripple
         part="ripple"
         for=${buttonId}
-        ?disabled="${isDisabled}"></md-ripple>
+        ?disabled="${isRippleDisabled}"></md-ripple>
       ${buttonOrLink}
     `;
   }
@@ -155,6 +166,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       id="button"
       class="button"
       ?disabled=${this.disabled}
+      aria-disabled=${this.softDisabled || nothing}
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}">
@@ -190,13 +202,22 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     `;
   }
 
-  private readonly handleActivationClick = (event: MouseEvent) => {
+  private handleClick(event: MouseEvent) {
+    // If the button is soft-disabled, we need to explicitly prevent the click
+    // from propagating to other event listeners as well as prevent the default
+    // action.
+    if (!this.href && this.softDisabled) {
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      return;
+    }
+
     if (!isActivationClick(event) || !this.buttonElement) {
       return;
     }
     this.focus();
     dispatchActivationClick(this.buttonElement);
-  };
+  }
 
   private handleSlotChange() {
     this.hasIcon = this.assignedIcons.length > 0;

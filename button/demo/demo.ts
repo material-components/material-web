@@ -22,6 +22,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
   [
     new Knob('label', {ui: textInput(), defaultValue: ''}),
     new Knob('disabled', {ui: boolInput(), defaultValue: false}),
+    new Knob('softDisabled', {ui: boolInput(), defaultValue: false}),
   ],
 );
 

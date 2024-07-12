@@ -24,6 +24,7 @@ export enum State {
   HOVER = 'Hover',
   PRESSED = 'Pressed',
   SELECTED = 'Selected',
+  SOFT_DISABLED = 'Soft disabled',
 }
 
 /**
