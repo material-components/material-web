@@ -19,6 +19,7 @@ export interface StoryKnobs {
   icon: string;
   selectedIcon: string;
   disabled: boolean;
+  softDisabled: boolean;
 }
 
 const styles = [
@@ -44,26 +45,35 @@ const styles = [
 const buttons: MaterialStoryInit<StoryKnobs> = {
   name: 'Icon button variants',
   styles,
-  render({icon, disabled}) {
+  render({icon, disabled, softDisabled}) {
     return html`
       <div class="row md-typescale-body-medium">
         <div class="column">
           <p>Standard</p>
-          <md-icon-button aria-label="Open settings" ?disabled=${disabled}>
+          <md-icon-button
+            aria-label="Open settings"
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'settings'}</md-icon>
           </md-icon-button>
         </div>
 
         <div class="column">
           <p>Outlined</p>
-          <md-outlined-icon-button aria-label="Search" ?disabled=${disabled}>
+          <md-outlined-icon-button
+            aria-label="Search"
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'search'}</md-icon>
           </md-outlined-icon-button>
         </div>
 
         <div class="column">
           <p>Filled</p>
-          <md-filled-icon-button aria-label="Complete" ?disabled=${disabled}>
+          <md-filled-icon-button
+            aria-label="Complete"
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'done'}</md-icon>
           </md-filled-icon-button>
         </div>
@@ -72,7 +82,8 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
           <p>Filled tonal</p>
           <md-filled-tonal-icon-button
             aria-label="Add new"
-            ?disabled=${disabled}>
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'add'}</md-icon>
           </md-filled-tonal-icon-button>
         </div>
@@ -84,7 +95,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
 const toggles: MaterialStoryInit<StoryKnobs> = {
   name: 'Toggle icon buttons',
   styles,
-  render({icon, selectedIcon, disabled}) {
+  render({icon, selectedIcon, disabled, softDisabled}) {
     return html`
       <div class="row">
         <div class="column">
@@ -93,7 +104,8 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             aria-label="Show password"
             aria-label-selected="Hide password"
             toggle
-            ?disabled=${disabled}>
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'visibility'}</md-icon>
             <md-icon slot="selected">
               ${selectedIcon || 'visibility_off'}
@@ -107,7 +119,8 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             aria-label="Play"
             aria-label-selected="Pause"
             toggle
-            ?disabled=${disabled}>
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'play_arrow'}</md-icon>
             <md-icon slot="selected">${selectedIcon || 'pause'}</md-icon>
           </md-outlined-icon-button>
@@ -119,7 +132,8 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             aria-label="Show more"
             aria-label-selected="Show less"
             toggle
-            ?disabled=${disabled}>
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'expand_more'}</md-icon>
             <md-icon slot="selected">${selectedIcon || 'expand_less'}</md-icon>
           </md-filled-icon-button>
@@ -131,7 +145,8 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
             aria-label="Open menu"
             aria-label-selected="Close menu"
             toggle
-            ?disabled=${disabled}>
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             <md-icon>${icon || 'menu'}</md-icon>
             <md-icon slot="selected">${selectedIcon || 'close'}</md-icon>
           </md-filled-tonal-icon-button>

@@ -23,6 +23,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     new Knob('disabled', {ui: boolInput(), defaultValue: false}),
     new Knob('icon', {ui: textInput(), defaultValue: ''}),
     new Knob('selectedIcon', {ui: textInput(), defaultValue: ''}),
+    new Knob('softDisabled', {ui: boolInput(), defaultValue: false}),
   ],
 );
 

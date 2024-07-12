@@ -69,7 +69,7 @@
       color: var(--_pressed-icon-color);
     }
 
-    &:disabled {
+    &:is(:disabled, [aria-disabled='true']) {
       color: var(--_disabled-icon-color);
 
       &::before {
@@ -79,7 +79,7 @@
     }
   }
 
-  .outlined:disabled .icon {
+  .outlined:is(:disabled, [aria-disabled='true']) .icon {
     opacity: var(--_disabled-icon-opacity);
   }
 
@@ -103,7 +103,7 @@
 
   // Selected icon button toggle.
   .selected {
-    &:not(:disabled) {
+    &:not(:disabled, [aria-disabled='true']) {
       color: var(--_selected-icon-color);
 
       &:hover {
@@ -129,17 +129,17 @@
     );
   }
 
-  .selected:not(:disabled)::before {
+  .selected:not(:disabled, [aria-disabled='true'])::before {
     background-color: var(--_selected-container-color);
   }
 
-  .selected:disabled::before {
+  .selected:is(:disabled, [aria-disabled='true'])::before {
     background-color: var(--_disabled-selected-container-color);
     opacity: var(--_disabled-selected-container-opacity);
   }
 
   @media (forced-colors: active) {
-    :host([disabled]) {
+    :host(:is([disabled], [soft-disabled])) {
       --_disabled-outline-opacity: 1;
     }
 
@@ -150,7 +150,7 @@
         border-width: var(--_outline-width);
       }
 
-      &:disabled::before {
+      &:is(:disabled, [aria-disabled='true'])::before {
         border-color: GrayText;
         opacity: 1;
       }

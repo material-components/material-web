@@ -41,7 +41,7 @@
     );
   }
 
-  :host([disabled]) {
+  :host(:is([disabled], [soft-disabled])) {
     pointer-events: none;
   }
 
@@ -109,7 +109,8 @@
   }
 
   @media (forced-colors: active) {
-    :host([disabled]) {
+    :host(:is([disabled], [soft-disabled])) {
+      --_disabled-icon-color: GrayText;
       --_disabled-icon-opacity: 1;
     }
   }
