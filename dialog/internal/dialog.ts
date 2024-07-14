@@ -150,7 +150,9 @@ export class Dialog extends dialogBaseClass {
   private escapePressedWithoutCancel = false;
   // This TreeWalker is used to walk through a dialog's children to find
   // focusable elements. TreeWalker is faster than `querySelectorAll('*')`.
-  private readonly treewalker = document.createTreeWalker(
+  // We check for isServer because there isn't a "document" during an SSR
+  // run.
+  private readonly treewalker = isServer ? {} : document.createTreeWalker(
     this,
     NodeFilter.SHOW_ELEMENT,
   );
