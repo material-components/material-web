@@ -564,7 +564,7 @@ export class Dialog extends dialogBaseClass {
   private getFirstAndLastFocusableChildren(): [HTMLElement, HTMLElement]
   | [null, null] {
     if (!this.treewalker) {
-      return [null, null] as const;
+      return [null, null];
     }
 
     let firstFocusableChild: HTMLElement | null = null;
