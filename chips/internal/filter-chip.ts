@@ -61,8 +61,9 @@ export class FilterChip extends MultiActionChip {
         id="button"
         aria-label=${ariaLabel || nothing}
         aria-pressed=${this.selected}
+        aria-disabled=${this.softDisabled || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
-        @click=${this.handleClick}
+        @click=${this.handleClickOnChild}
         >${content}</button
       >
     `;
@@ -88,7 +89,7 @@ export class FilterChip extends MultiActionChip {
       return renderRemoveButton({
         focusListener,
         ariaLabel: this.ariaLabelRemove,
-        disabled: this.disabled,
+        disabled: this.disabled || this.softDisabled,
       });
     }
 
@@ -103,8 +104,8 @@ export class FilterChip extends MultiActionChip {
     return super.renderOutline();
   }
 
-  private handleClick(event: MouseEvent) {
-    if (this.disabled) {
+  private handleClickOnChild(event: MouseEvent) {
+    if (this.disabled || this.softDisabled) {
       return;
     }
 

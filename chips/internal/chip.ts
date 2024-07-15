@@ -7,7 +7,7 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, isServer, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
@@ -36,11 +36,24 @@ export abstract class Chip extends chipBaseClass {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
+   * Whether or not the chip is "soft-disabled" (disabled but still
+   * focusable).
+   *
+   * Use this when a chip needs increased visibility when disabled. See
+   * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
+   * for more guidance on when this is needed.
+   */
+  @property({type: Boolean, attribute: 'soft-disabled', reflect: true})
+  softDisabled = false;
+
+  /**
    * When true, allow disabled chips to be focused with arrow keys.
    *
    * Add this when a chip needs increased visibility when disabled. See
    * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
    * for more guidance on when this is needed.
+   *
+   * @deprecated Use `softDisabled` instead of `alwaysFocusable` + `disabled`.
    */
   @property({type: Boolean, attribute: 'always-focusable'})
   alwaysFocusable = false;
@@ -70,7 +83,14 @@ export abstract class Chip extends chipBaseClass {
    * Some chip actions such as links cannot be disabled.
    */
   protected get rippleDisabled() {
-    return this.disabled;
+    return this.disabled || this.softDisabled;
+  }
+
+  constructor() {
+    super();
+    if (!isServer) {
+      this.addEventListener('click', this.handleClick.bind(this));
+    }
   }
 
   override focus(options?: FocusOptions) {
@@ -97,7 +117,7 @@ export abstract class Chip extends chipBaseClass {
 
   protected getContainerClasses(): ClassInfo {
     return {
-      'disabled': this.disabled,
+      'disabled': this.disabled || this.softDisabled,
       'has-icon': this.hasIcon,
     };
   }
@@ -138,5 +158,16 @@ export abstract class Chip extends chipBaseClass {
   private handleIconChange(event: Event) {
     const slot = event.target as HTMLSlotElement;
     this.hasIcon = slot.assignedElements({flatten: true}).length > 0;
+  }
+
+  private handleClick(event: Event) {
+    // If the chip is soft-disabled or disabled + always-focusable, we need to
+    // explicitly prevent the click from propagating to other event listeners
+    // as well as prevent the default action.
+    if (this.softDisabled || (this.disabled && this.alwaysFocusable)) {
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      return;
+    }
   }
 }

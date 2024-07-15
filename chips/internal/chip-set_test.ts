@@ -220,6 +220,21 @@ describe('Chip set', () => {
       });
     });
 
+    it('should NOT skip over soft-disabled chips', async () => {
+      const first = new TestAssistChip();
+      const second = new TestAssistChip();
+      second.softDisabled = true;
+      const third = new TestAssistChip();
+      const chipSet = await setupTest([first, second, third]);
+      await testNavigation({
+        chipSet,
+        ltrKey: 'ArrowRight',
+        rtlKey: 'ArrowLeft',
+        current: first,
+        next: second,
+      });
+    });
+
     it('should focus trailing actions when navigating backwards', async () => {
       const first = new TestInputChip();
       const second = new TestInputChip();

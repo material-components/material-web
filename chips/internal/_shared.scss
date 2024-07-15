@@ -33,7 +33,7 @@
     );
   }
 
-  :host([disabled]) {
+  :host(:is([disabled], [soft-disabled])) {
     pointer-events: none;
   }
 
@@ -242,7 +242,7 @@
   }
 
   a,
-  button:not(:disabled) {
+  button:not(:disabled, [aria-disabled='true']) {
     cursor: inherit;
   }
 }

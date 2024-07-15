@@ -48,7 +48,7 @@ export function renderRemoveButton({
 }
 
 function handleRemoveClick(this: Chip, event: Event) {
-  if (this.disabled) {
+  if (this.disabled || this.softDisabled) {
     return;
   }
 

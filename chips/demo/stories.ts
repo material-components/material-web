@@ -68,8 +68,8 @@ const assist: MaterialStoryInit<StoryKnobs> = {
           >${GOOGLE_LOGO}</md-assist-chip
         >
         <md-assist-chip
-          label=${label || 'Disabled assist chip (focusable)'}
-          disabled
+          label=${label || 'Soft-disabled assist chip (focusable)'}
+          soft-disabled
           always-focusable
           ?elevated=${elevated}></md-assist-chip>
       </md-chip-set>
@@ -100,9 +100,8 @@ const filters: MaterialStoryInit<StoryKnobs> = {
           ?elevated=${elevated}
           removable></md-filter-chip>
         <md-filter-chip
-          label=${label || 'Disabled filter chip (focusable)'}
-          disabled
-          always-focusable
+          label=${label || 'Soft-disabled filter chip (focusable)'}
+          soft-disabled
           ?elevated=${elevated}
           removable></md-filter-chip>
       </md-chip-set>
@@ -144,9 +143,8 @@ const inputs: MaterialStoryInit<StoryKnobs> = {
           ?disabled=${disabled}
           remove-only></md-input-chip>
         <md-input-chip
-          label=${label || 'Disabled input chip (focusable)'}
-          disabled
-          always-focusable></md-input-chip>
+          label=${label || 'Soft-disabled input chip (focusable)'}
+          soft-disabled></md-input-chip>
       </md-chip-set>
     `;
   },
@@ -177,9 +175,8 @@ const suggestions: MaterialStoryInit<StoryKnobs> = {
           >${GOOGLE_LOGO}</md-suggestion-chip
         >
         <md-suggestion-chip
-          label=${label || 'Disabled suggestion chip (focusable)'}
-          disabled
-          always-focusable
+          label=${label || 'Soft-disabled suggestion chip (focusable)'}
+          soft-disabled
           ?elevated=${elevated}></md-suggestion-chip>
       </md-chip-set>
     `;

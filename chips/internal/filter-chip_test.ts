@@ -53,6 +53,18 @@ describe('Filter chip', () => {
       expect(chip.selected).withContext('chip.selected').toBeFalse();
     });
 
+    it('should not select on click when soft-disabled', async () => {
+      // Arrange
+      const {chip, harness} = await setupTest();
+      chip.softDisabled = true;
+
+      // Act
+      await harness.clickWithMouse();
+
+      // Assert
+      expect(chip.selected).withContext('chip.selected').toBeFalse();
+    });
+
     it('can prevent default', async () => {
       const {chip, harness} = await setupTest();
       const handler = jasmine.createSpy();
@@ -99,5 +111,47 @@ describe('Filter chip', () => {
         .withContext('chip.selected reverts to true')
         .toBeTrue();
     });
+  });
+
+  it('should be focusable when soft-disabled', async () => {
+    // Arrange
+    const {chip} = await setupTest();
+    chip.softDisabled = true;
+    await chip.updateComplete;
+
+    // Act
+    chip.focus();
+
+    // Assert
+    expect(document.activeElement)
+      .withContext('soft-disabled chip should be focused')
+      .toBe(chip);
+  });
+
+  it('should not be clickable when soft-disabled', async () => {
+    // Arrange
+    const clickListener = jasmine.createSpy('clickListener');
+    const {chip, harness} = await setupTest();
+    chip.softDisabled = true;
+    chip.addEventListener('click', clickListener);
+
+    // Act
+    await harness.clickWithMouse();
+
+    // Assert
+    expect(clickListener).not.toHaveBeenCalled();
+  });
+
+  it('should use aria-disabled when soft-disabled', async () => {
+    // Arrange
+    // Act
+    const {chip} = await setupTest();
+    chip.softDisabled = true;
+    await chip.updateComplete;
+
+    // Assert
+    expect(chip.renderRoot.querySelector('button[aria-disabled="true"]'))
+      .withContext('should have aria-disabled="true"')
+      .not.toBeNull();
   });
 });
