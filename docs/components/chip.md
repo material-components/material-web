@@ -176,9 +176,9 @@ Add an `aria-label` to chips whose labels need to be more descriptive.
 
 ### Focusable and disabled
 
-By default, disabled chips are not focusable with the keyboard. Some use cases
-encourage focusability of disabled toolbar items to increase their
-discoverability.
+By default, disabled chips are not focusable with the keyboard, while
+"soft-disabled" chips are. Some use cases encourage focusability of disabled
+toolbar items to increase their discoverability.
 
 See the
 [ARIA guidelines on focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls)<!-- {.external} -->
@@ -190,8 +190,8 @@ for guidance on when this is recommended.
     Disabled until text is selected. Since both are disabled by default, keep
     them focusable so that screen readers can discover the actions available.
   -->
-  <md-assist-chip label="Copy" disabled always-focusable></md-assist-chip>
-  <md-assist-chip label="Paste" disabled always-focusable></md-assist-chip>
+  <md-assist-chip label="Copy" soft-disabled></md-assist-chip>
+  <md-assist-chip label="Paste" soft-disabled></md-assist-chip>
 </md-chip-set>
 <md-outlined-text-field type="textarea"></md-outlined-text-field>
 ```
