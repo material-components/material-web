@@ -26,9 +26,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-divider-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-divider-values();
 
   :host {
     box-sizing: border-box;

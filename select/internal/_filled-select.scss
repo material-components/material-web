@@ -35,9 +35,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-select-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-filled-select-values();
 
   :host {
     // Only use the logical properties.

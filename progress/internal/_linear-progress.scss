@@ -31,9 +31,7 @@ $_determinate-easing: cubic-bezier(0.4, 0, 0.6, 1);
 $_indeterminate-duration: 2s;
 
 @mixin styles() {
-  $tokens: tokens.md-comp-linear-progress-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-linear-progress-values();
 
   :host {
     @each $token, $value in $tokens {

@@ -29,9 +29,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-switch-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-switch-values();
 
   @layer styles, hcm;
   @layer styles {

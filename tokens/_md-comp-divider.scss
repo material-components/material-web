@@ -26,15 +26,13 @@ $_default: (
 @function values(
   $deps: $_default,
   $exclude-hardcoded-values: false,
-  $exclude-custom-properties: true
+  $exclude-custom-properties: false
 ) {
   $tokens: validate.values(
     md-comp-divider.values($deps, $exclude-hardcoded-values),
     $supported-tokens: $supported-tokens
   );
 
-  // Default to `$exclude-custom-properties: false` in the next breaking change.
-  // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
       $tokens: map.set($tokens, $token, var(--md-divider-#{$token}, #{$value}));

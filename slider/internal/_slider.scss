@@ -31,9 +31,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-slider-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-slider-values();
 
   // The max clip is reduced by 1 full tick display which is 2x the container
   // size to account for always showing the active track on the outside

@@ -28,9 +28,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-icon-button-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-icon-button-values();
 
   :host {
     @each $token, $value in $tokens {

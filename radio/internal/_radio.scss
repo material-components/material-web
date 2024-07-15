@@ -31,9 +31,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-radio-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-radio-values();
 
   @layer {
     :host {

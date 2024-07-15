@@ -31,9 +31,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-menu-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-menu-values();
 
   :host {
     @include elevation.theme(

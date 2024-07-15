@@ -39,3 +39,48 @@ const agreeCheckbox = document.querySelector(
 
 Note: Element APIs, such as `element.getAttribute('role')` and
 `element.ariaLabel` will continue to work as expected.
+
+## Sass `tokens.md-comp-*-values()` include custom properties by default
+
+**What changed?**
+
+Sass component token functions return a `var()` with the component's custom
+property, instead of just a value.
+
+```scss
+@use '@material/web/tokens';
+
+$checkbox-tokens: tokens.md-comp-checkbox-values();
+// (
+//   // 'icon-size': 18px, // Before
+//   'icon-size': var(--md-checkbox-icon-size, 18px), // After
+// )
+```
+
+**What broke?**
+
+Sass token values from `tokens.md-comp-*-values()` functions are `var()`
+functions instead of CSS values. This may introduce additional unnecessary CSS
+or break Sass.
+
+```scss
+@use '@material/web/tokens';
+
+$checkbox-tokens: tokens.md-comp-checkbox-values();
+
+$double-icon-size: math.mult(map.get($checkbox-tokens, 'icon-size'), 2);
+// @error var(--md-checkbox-icon-size, 18px) is not a number.
+```
+
+**How to fix?**
+
+Add the parameter `$exclude-custom-properties: true` to the values function.
+
+```scss
+@use '@material/web/tokens';
+
+$checkbox-tokens: tokens.md-comp-checkbox-values($exclude-custom-properties: true);
+// (
+//   'icon-size': 18px,
+// )
+```

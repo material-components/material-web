@@ -26,9 +26,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-text-field-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-outlined-text-field-values();
 
   :host {
     // Only use the logical properties.

@@ -26,9 +26,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-icon-button-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-filled-icon-button-values();
 
   :host {
     // Only use the logical properties.

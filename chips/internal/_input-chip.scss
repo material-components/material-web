@@ -25,9 +25,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-input-chip-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-input-chip-values();
 
   :host {
     // Only use the logical properties.

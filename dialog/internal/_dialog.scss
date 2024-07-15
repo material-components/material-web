@@ -27,9 +27,7 @@
 @mixin styles() {
   $md-sys-color: tokens.md-sys-color-values-light();
   $md-sys-motion: tokens.md-sys-motion-values();
-  $tokens: tokens.md-comp-dialog-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-dialog-values();
 
   :host {
     border-start-start-radius: map.get($tokens, 'container-shape-start-start');
