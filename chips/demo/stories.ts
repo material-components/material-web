@@ -50,28 +50,22 @@ const assist: MaterialStoryInit<StoryKnobs> = {
     const classes = {'scrolling': scrolling};
     return html`
       <md-chip-set class=${classMap(classes)} aria-label="Assist chips">
-        <md-assist-chip
-          label=${label || 'Assist chip'}
-          ?disabled=${disabled}
-          ?elevated=${elevated}></md-assist-chip>
-        <md-assist-chip
-          label=${label || 'Assist chip with icon'}
-          ?disabled=${disabled}
-          ?elevated=${elevated}>
+        <md-assist-chip ?disabled=${disabled} ?elevated=${elevated}>
+          ${label || 'Assist chip'}
+        </md-assist-chip>
+        <md-assist-chip ?disabled=${disabled} ?elevated=${elevated}>
           <md-icon slot="icon">local_laundry_service</md-icon>
+          ${label || 'Assist chip with icon'}
         </md-assist-chip>
         <md-assist-chip
-          label=${label || 'Assist link chip'}
           ?elevated=${elevated}
           href="https://google.com"
-          target="_blank"
-          >${GOOGLE_LOGO}</md-assist-chip
-        >
-        <md-assist-chip
-          label=${label || 'Soft-disabled assist chip (focusable)'}
-          soft-disabled
-          always-focusable
-          ?elevated=${elevated}></md-assist-chip>
+          target="_blank">
+          ${GOOGLE_LOGO} ${label || 'Assist link chip'}
+        </md-assist-chip>
+        <md-assist-chip soft-disabled always-focusable ?elevated=${elevated}>
+          ${label || 'Soft-disabled assist chip (focusable)'}
+        </md-assist-chip>
       </md-chip-set>
     `;
   },
@@ -84,26 +78,23 @@ const filters: MaterialStoryInit<StoryKnobs> = {
     const classes = {'scrolling': scrolling};
     return html`
       <md-chip-set class=${classMap(classes)} aria-label="Filter chips">
-        <md-filter-chip
-          label=${label || 'Filter chip'}
-          ?disabled=${disabled}
-          ?elevated=${elevated}></md-filter-chip>
-        <md-filter-chip
-          label=${label || 'Filter chip with icon'}
-          ?disabled=${disabled}
-          ?elevated=${elevated}>
+        <md-filter-chip ?disabled=${disabled} ?elevated=${elevated}>
+          ${label || 'Filter chip'}
+        </md-filter-chip>
+        <md-filter-chip ?disabled=${disabled} ?elevated=${elevated}>
           <md-icon slot="icon">local_laundry_service</md-icon>
+          ${label || 'Filter chip with icon'}
+        </md-filter-chip>
+        <md-filter-chip ?disabled=${disabled} ?elevated=${elevated} removable>
+          ${label || 'Removable filter chip'}
         </md-filter-chip>
         <md-filter-chip
-          label=${label || 'Removable filter chip'}
-          ?disabled=${disabled}
-          ?elevated=${elevated}
-          removable></md-filter-chip>
-        <md-filter-chip
-          label=${label || 'Soft-disabled filter chip (focusable)'}
           soft-disabled
+          always-focusable
           ?elevated=${elevated}
-          removable></md-filter-chip>
+          removable>
+          ${label || 'Soft-disabled filter chip (focusable)'}
+        </md-filter-chip>
       </md-chip-set>
     `;
   },
@@ -116,35 +107,28 @@ const inputs: MaterialStoryInit<StoryKnobs> = {
     const classes = {'scrolling': scrolling};
     return html`
       <md-chip-set class=${classMap(classes)} aria-label="Input chips">
-        <md-input-chip
-          label=${label || 'Input chip'}
-          ?disabled=${disabled}></md-input-chip>
-        <md-input-chip
-          label=${label || 'Input chip with icon'}
-          ?disabled=${disabled}>
-          <md-icon slot="icon">local_laundry_service</md-icon>
+        <md-input-chip ?disabled=${disabled}>
+          ${label || 'Input chip'}
         </md-input-chip>
-        <md-input-chip
-          label=${label || 'Input chip with avatar'}
-          ?disabled=${disabled}
-          avatar>
+        <md-input-chip ?disabled=${disabled}>
+          <md-icon slot="icon">local_laundry_service</md-icon>
+          ${label || 'Input chip with icon'}
+        </md-input-chip>
+        <md-input-chip ?disabled=${disabled} avatar>
           <img
             slot="icon"
             src="https://lh3.googleusercontent.com/a/default-user=s48" />
+          ${label || 'Input chip with avatar'}
         </md-input-chip>
-        <md-input-chip
-          label=${label || 'Input link chip'}
-          href="https://google.com"
-          target="_blank"
-          >${GOOGLE_LOGO}</md-input-chip
+        <md-input-chip href="https://google.com" target="_blank"
+          >${GOOGLE_LOGO} ${label || 'Input link chip'}</md-input-chip
         >
-        <md-input-chip
-          label=${label || 'Remove-only input chip'}
-          ?disabled=${disabled}
-          remove-only></md-input-chip>
-        <md-input-chip
-          label=${label || 'Soft-disabled input chip (focusable)'}
-          soft-disabled></md-input-chip>
+        <md-input-chip ?disabled=${disabled} remove-only>
+          ${label || 'Remove-only input chip'}
+        </md-input-chip>
+        <md-input-chip soft-disabled always-focusable>
+          ${label || 'Soft-disabled input chip (focusable)'}
+        </md-input-chip>
       </md-chip-set>
     `;
   },
@@ -157,27 +141,25 @@ const suggestions: MaterialStoryInit<StoryKnobs> = {
     const classes = {'scrolling': scrolling};
     return html`
       <md-chip-set class=${classMap(classes)} aria-label="Suggestion chips">
-        <md-suggestion-chip
-          label=${label || 'Suggestion chip'}
-          ?disabled=${disabled}
-          ?elevated=${elevated}></md-suggestion-chip>
-        <md-suggestion-chip
-          label=${label || 'Suggestion chip with icon'}
-          ?disabled=${disabled}
-          ?elevated=${elevated}>
+        <md-suggestion-chip ?disabled=${disabled} ?elevated=${elevated}>
+          ${label || 'Suggestion chip'}
+        </md-suggestion-chip>
+        <md-suggestion-chip ?disabled=${disabled} ?elevated=${elevated}>
           <md-icon slot="icon">local_laundry_service</md-icon>
+          ${label || 'Suggestion chip with icon'}
         </md-suggestion-chip>
         <md-suggestion-chip
-          label=${label || 'Suggestion link chip'}
           ?elevated=${elevated}
           href="https://google.com"
           target="_blank"
-          >${GOOGLE_LOGO}</md-suggestion-chip
+          >${GOOGLE_LOGO} ${label || 'Suggestion link chip'}</md-suggestion-chip
         >
         <md-suggestion-chip
-          label=${label || 'Soft-disabled suggestion chip (focusable)'}
           soft-disabled
-          ?elevated=${elevated}></md-suggestion-chip>
+          always-focusable
+          ?elevated=${elevated}>
+          ${label || 'Soft-disabled suggestion chip (focusable)'}
+        </md-suggestion-chip>
       </md-chip-set>
     `;
   },

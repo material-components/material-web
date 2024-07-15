@@ -29,8 +29,8 @@ class TestMultiActionChip extends MultiActionChip {
 
   protected primaryId = 'primary';
 
-  protected override renderPrimaryAction() {
-    return html`<button id="primary"></button>`;
+  protected override renderPrimaryAction(content: unknown) {
+    return html`<button id="primary">${content}</button>`;
   }
 
   protected override renderTrailingAction(focusListener: EventListener) {
@@ -49,10 +49,18 @@ class TestMultiActionChip extends MultiActionChip {
 describe('Multi-action chips', () => {
   const env = new Environment();
 
-  async function setupTest() {
-    const chip = new TestMultiActionChip();
-    env.render(html`${chip}`);
+  async function setupTest(
+    template = html`<test-multi-action-chip></test-multi-action-chip>`,
+  ): Promise<TestMultiActionChip> {
+    const root = env.render(template);
     await env.waitForStability();
+    const chip = root.querySelector<TestMultiActionChip>(
+      'test-multi-action-chip',
+    );
+    if (!chip) {
+      throw new Error('Failed to query the rendered <test-multi-action-chip>');
+    }
+
     return chip;
   }
 
@@ -222,28 +230,132 @@ describe('Multi-action chips', () => {
     });
 
     it('should provide a default "ariaLabelRemove" value', async () => {
-      const chip = await setupTest();
-      chip.label = 'Label';
+      const label = 'Label';
+      const chip = await setupTest(
+        html`<test-multi-action-chip>${label}</test-multi-action-chip>`,
+      );
 
-      expect(chip.ariaLabelRemove).toEqual(`Remove ${chip.label}`);
+      expect(getA11yLabelForChipRemoveButton(chip)).toEqual(`Remove ${label}`);
     });
 
     it('should provide a default "ariaLabelRemove" when "ariaLabel" is provided', async () => {
-      const chip = await setupTest();
-      chip.label = 'Label';
-      chip.ariaLabel = 'Descriptive label';
+      const label = 'Label';
+      const chip = await setupTest(
+        html`<test-multi-action-chip aria-label=${'Descriptive label'}>
+          ${label}
+        </test-multi-action-chip>`,
+      );
 
-      expect(chip.ariaLabelRemove).toEqual(`Remove ${chip.ariaLabel}`);
+      expect(getA11yLabelForChipRemoveButton(chip)).toEqual(
+        `Remove ${chip.ariaLabel}`,
+      );
     });
 
     it('should allow setting a custom "ariaLabelRemove"', async () => {
+      const label = 'Label';
+      const customAriaLabelRemove = 'Remove custom label';
+      const chip = await setupTest(
+        html`<test-multi-action-chip
+          aria-label=${'Descriptive label'}
+          aria-label-remove=${customAriaLabelRemove}>
+          ${label}
+        </test-multi-action-chip>`,
+      );
+
+      expect(getA11yLabelForChipRemoveButton(chip)).toEqual(
+        customAriaLabelRemove,
+      );
+    });
+
+    // TODO(b/350810013): remove test when label property is removed.
+    it('should provide a default "ariaLabelRemove" value (using the label property)', async () => {
+      const chip = await setupTest();
+      chip.label = 'Label';
+      await env.waitForStability();
+
+      expect(getA11yLabelForChipRemoveButton(chip)).toEqual(
+        `Remove ${chip.label}`,
+      );
+    });
+
+    // TODO(b/350810013): remove test when label property is removed.
+    it('should provide a default "ariaLabelRemove" when "ariaLabel" is provided (using the label property)', async () => {
+      const chip = await setupTest();
+      chip.label = 'Label';
+      chip.ariaLabel = 'Descriptive label';
+      await env.waitForStability();
+
+      expect(getA11yLabelForChipRemoveButton(chip)).toEqual(
+        `Remove ${chip.ariaLabel}`,
+      );
+    });
+
+    // TODO(b/350810013): remove test when label property is removed.
+    it('should allow setting a custom "ariaLabelRemove" (using the label property)', async () => {
       const chip = await setupTest();
       chip.label = 'Label';
       chip.ariaLabel = 'Descriptive label';
       const customAriaLabelRemove = 'Remove custom label';
       chip.ariaLabelRemove = customAriaLabelRemove;
+      await env.waitForStability();
 
-      expect(chip.ariaLabelRemove).toEqual(customAriaLabelRemove);
+      expect(getA11yLabelForChipRemoveButton(chip)).toEqual(
+        customAriaLabelRemove,
+      );
     });
   });
 });
+
+/**
+ * Returns the text content of a slot.
+ */
+function getSlotTextContent(slot: HTMLSlotElement) {
+  // Remove any newlines, comments, and whitespace from the label slot.
+  let text = '';
+  for (const node of slot.assignedNodes() ?? []) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      text += node.textContent?.trim() || '';
+    }
+  }
+  return text;
+}
+
+/**
+ * Returns the a11y label of the remove button. If the button has an aria-label,
+ * it will return that. If it has aria-labelledby, it will return the text
+ * content of the elements it is labelled by.
+ */
+function getA11yLabelForChipRemoveButton(chip: TestMultiActionChip): string {
+  const removeButton = chip.shadowRoot!.querySelector<HTMLButtonElement>(
+    'button.trailing.action',
+  )!;
+
+  if (removeButton.ariaLabel) {
+    return removeButton.ariaLabel;
+  }
+
+  // If the remove button is not aria-labelled, it should be aria-labelledby.
+  const removeButtonAriaLabelledBy =
+    removeButton.getAttribute('aria-labelledby')!;
+  const elementsLabelledBy: HTMLElement[] = [];
+  removeButtonAriaLabelledBy.split(' ').forEach((id) => {
+    const labelledByElement = chip.shadowRoot?.getElementById(id);
+    if (!labelledByElement) {
+      throw new Error(
+        `Cannot find element with ID "#{id}" in the chip's shadow root`,
+      );
+    }
+    elementsLabelledBy.push(labelledByElement);
+  });
+  const textFromAriaLabelledBy: string[] = [];
+  elementsLabelledBy.forEach((element) => {
+    const unnamedSlotChildElement =
+      element.querySelector<HTMLSlotElement>('slot:not([name])');
+    if (unnamedSlotChildElement) {
+      textFromAriaLabelledBy.push(getSlotTextContent(unnamedSlotChildElement));
+    } else {
+      textFromAriaLabelledBy.push(element.textContent ?? '');
+    }
+  });
+  return textFromAriaLabelledBy.join(' ');
+}

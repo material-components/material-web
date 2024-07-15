@@ -373,7 +373,7 @@ export interface SharedTemplateProps {
   /**
    * The light DOM content of the element.
    */
-  content?: TemplateResult;
+  content?: unknown;
   /**
    * Classes to add to the element.
    */

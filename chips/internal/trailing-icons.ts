@@ -12,7 +12,7 @@ import {html, nothing} from 'lit';
 import {Chip} from './chip.js';
 
 interface RemoveButtonProperties {
-  ariaLabel: string;
+  ariaLabel: string | null;
   disabled: boolean;
   focusListener: EventListener;
   tabbable?: boolean;
@@ -25,10 +25,15 @@ export function renderRemoveButton({
   focusListener,
   tabbable = false,
 }: RemoveButtonProperties) {
+  // When an aria-label is not provided, we use two spans with aria-labelledby
+  // to create the "Remove <textContent>" label for the remove button. The first
+  // is this #remove-label span, the second is the chip's #label slot span.
   return html`
+    <span id="remove-label" hidden aria-hidden="true">Remove</span>
     <button
       class="trailing action"
-      aria-label=${ariaLabel}
+      aria-label=${ariaLabel || nothing}
+      aria-labelledby=${!ariaLabel ? 'remove-label label' : nothing}
       tabindex=${!tabbable ? -1 : nothing}
       @click=${handleRemoveClick}
       @focus=${focusListener}>
