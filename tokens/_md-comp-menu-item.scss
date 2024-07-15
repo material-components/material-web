@@ -89,7 +89,8 @@ $_default: (
     $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
-    $new-tokens: md-comp-list-item.values($deps),
+    $new-tokens:
+      md-comp-list-item.values($deps, $exclude-custom-properties: true),
     $renamed-tokens: _get-renamed-tokens($tokens)
   );
 
