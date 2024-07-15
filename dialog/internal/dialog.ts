@@ -152,7 +152,7 @@ export class Dialog extends dialogBaseClass {
   // focusable elements. TreeWalker is faster than `querySelectorAll('*')`.
   // We check for isServer because there isn't a "document" during an SSR
   // run.
-  private readonly treewalker = isServer ? {} as TreeWalker : document.createTreeWalker(
+  private readonly treewalker = isServer ? null : document.createTreeWalker(
     this,
     NodeFilter.SHOW_ELEMENT,
   );
@@ -561,7 +561,12 @@ export class Dialog extends dialogBaseClass {
     // won't actually reach here.
   }
 
-  private getFirstAndLastFocusableChildren() {
+  private getFirstAndLastFocusableChildren(): [HTMLElement, HTMLElement]
+  | [null, null] {
+    if (!this.treewalker) {
+      return [null, null] as const;
+    }
+
     let firstFocusableChild: HTMLElement | null = null;
     let lastFocusableChild: HTMLElement | null = null;
 
@@ -584,9 +589,7 @@ export class Dialog extends dialogBaseClass {
     // We set lastFocusableChild immediately after finding a
     // firstFocusableChild, which means the pair is either both null or both
     // non-null. Cast since TypeScript does not recognize this.
-    return [firstFocusableChild, lastFocusableChild] as
-      | [HTMLElement, HTMLElement]
-      | [null, null];
+    return [firstFocusableChild, lastFocusableChild];
   }
 }
 
