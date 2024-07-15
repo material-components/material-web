@@ -152,7 +152,7 @@ export class Dialog extends dialogBaseClass {
   // focusable elements. TreeWalker is faster than `querySelectorAll('*')`.
   // We check for isServer because there isn't a "document" during an SSR
   // run.
-  private readonly treewalker = isServer ? {} : document.createTreeWalker(
+  private readonly treewalker = isServer ? {} as TreeWalker : document.createTreeWalker(
     this,
     NodeFilter.SHOW_ELEMENT,
   );
