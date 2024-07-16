@@ -150,10 +150,11 @@ export class Dialog extends dialogBaseClass {
   private escapePressedWithoutCancel = false;
   // This TreeWalker is used to walk through a dialog's children to find
   // focusable elements. TreeWalker is faster than `querySelectorAll('*')`.
-  private readonly treewalker = document.createTreeWalker(
-    this,
-    NodeFilter.SHOW_ELEMENT,
-  );
+  // We check for isServer because there isn't a "document" during an SSR
+  // run.
+  private readonly treewalker = isServer
+    ? null
+    : document.createTreeWalker(this, NodeFilter.SHOW_ELEMENT);
 
   constructor() {
     super();
@@ -559,7 +560,13 @@ export class Dialog extends dialogBaseClass {
     // won't actually reach here.
   }
 
-  private getFirstAndLastFocusableChildren() {
+  private getFirstAndLastFocusableChildren():
+    | [HTMLElement, HTMLElement]
+    | [null, null] {
+    if (!this.treewalker) {
+      return [null, null];
+    }
+
     let firstFocusableChild: HTMLElement | null = null;
     let lastFocusableChild: HTMLElement | null = null;
 
