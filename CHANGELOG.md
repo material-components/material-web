@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.0.0](https://github.com/material-components/material-web/compare/v1.5.1...v2.0.0) (2024-07-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tokens:** Sass component tokens, such as `tokens.md-comp-checkbox-values()`, return `var(--md-<component>, <value>)` instead of just the CSS value. Use `$exclude-custom-properties: true` to remove them.
+* `querySelector` for `[role]` and `[aria-*]` attributes may no longer work. See `@material/web/migrations/v2/README.md` and `@material/web/migrations/v2/query-selector-aria.ts`.
+
+### Features
+
+* **button:** add `soft-disabled` attribute for focusable disabled buttons ([48124ba](https://github.com/material-components/material-web/commit/48124ba09f538c6264407a49e6bc0ba097991a9d))
+* check for server before creating treewalker from document ([0d50ed9](https://github.com/material-components/material-web/commit/0d50ed91f0c542b4d5b5e2c913930a52a46136e5))
+* **chips:** add label slot ([7ec70c4](https://github.com/material-components/material-web/commit/7ec70c4c2d8863fa1e1d38724d77a9b6d4e6a20c))
+* **chips:** add new `soft-disabled` attribute for focusable disabled chips ([750b886](https://github.com/material-components/material-web/commit/750b886acfa15960d66f83a08599d2a2155ae659))
+* **iconbutton:** add `soft-disabled` attribute for focusable disabled icon buttons ([281c092](https://github.com/material-components/material-web/commit/281c092d061f77b812e57f473e77cfd123016471))
+
+
+### Bug Fixes
+
+* add typecast ([1482bff](https://github.com/material-components/material-web/commit/1482bfff0de55e136513861c1976776c5a4b4b93))
+* aria-labels announcing twice with "group" on components ([5df9410](https://github.com/material-components/material-web/commit/5df9410e604cf446c83bb5ada3454596c34b2c50))
+* **chips:** add truncation support ([713f0a8](https://github.com/material-components/material-web/commit/713f0a80fcfc9ef730e1c1f88e15098b9d10735b))
+* **tokens:** `tokens.md-comp-*-values()` include custom properties by default ([55b4650](https://github.com/material-components/material-web/commit/55b46500634c022c335d9c4818121a1b5d95e111))
+
 ## [1.5.1](https://github.com/material-components/material-web/compare/v1.5.0...v1.5.1) (2024-06-25)
 
 
