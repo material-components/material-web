@@ -31,6 +31,8 @@ export interface StoryKnobs {
   skipRestoreFocus: boolean;
   xOffset: number;
   yOffset: number;
+  noVerticalFlip: boolean;
+  noHorizontalFlip: boolean;
   typeaheadDelay: number;
   listTabIndex: number;
 
@@ -122,6 +124,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
             .yOffset=${knobs.yOffset}
+            .noVerticalFlip=${knobs.noVerticalFlip}
+            .noHorizontalFlip=${knobs.noHorizontalFlip}
             .positioning=${knobs.positioning!}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
@@ -191,6 +195,8 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
             .yOffset=${knobs.yOffset}
+            .noVerticalFlip=${knobs.noVerticalFlip}
+            .noHorizontalFlip=${knobs.noHorizontalFlip}
             .positioning=${knobs.positioning!}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
@@ -327,6 +333,8 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
             .yOffset=${knobs.yOffset}
+            .noVerticalFlip=${knobs.noVerticalFlip}
+            .noHorizontalFlip=${knobs.noHorizontalFlip}
             .positioning=${knobs.positioning!}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
@@ -379,6 +387,8 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
           .menuCorner="${knobs.menuCorner!}"
           .xOffset=${knobs.xOffset}
           .yOffset=${knobs.yOffset}
+          .noVerticalFlip=${knobs.noVerticalFlip}
+          .noHorizontalFlip=${knobs.noHorizontalFlip}
           .positioning=${knobs.positioning!}
           .defaultFocus=${knobs.defaultFocus!}
           .skipRestoreFocus=${knobs.skipRestoreFocus}
