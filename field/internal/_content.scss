@@ -47,18 +47,22 @@ $_enter-delay: $_label-duration - $_visible-duration;
       justify-content: center;
     }
 
-    // TODO(b/239188049): remove when layout tokens are ready
-    .with-start .start,
+    .with-start .start {
+      min-width: var(--_leading-content-min-width);
+    }
+
     .with-end .end {
-      min-width: 48px;
+      min-width: var(--_trailing-content-min-width);
     }
 
     .with-start .start {
-      margin-inline-end: 4px;
+      margin-inline: var(--_leading-content-leading-space)
+        var(--_leading-content-trailing-space);
     }
 
     .with-end .end {
-      margin-inline-start: 4px;
+      margin-inline: var(--_trailing-content-leading-space)
+        var(--_trailing-content-trailing-space);
     }
 
     .middle {
@@ -105,8 +109,10 @@ $_enter-delay: $_label-duration - $_visible-duration;
       font-weight: var(--_content-weight);
       width: 100%;
       // Reverting values before "all: unset"
-      overflow-wrap: revert; // Needed to break words in textarea
-      white-space: revert; // Needed for Firefox textarea
+      overflow-wrap: var(
+        --_content-overflow-wrap
+      ); // Needed to break words in textarea
+      white-space: var(--_content-white-space); // Needed for Firefox textarea
     }
 
     .content ::slotted(:not(textarea)) {

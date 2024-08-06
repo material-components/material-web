@@ -28,8 +28,10 @@ $supported-tokens: (
   'content-color',
   'content-font',
   'content-line-height',
+  'content-overflow-wrap',
   'content-size',
   'content-weight',
+  'content-white-space',
   'disabled-content-color',
   'disabled-content-opacity',
   'disabled-label-text-color',
@@ -84,6 +86,9 @@ $supported-tokens: (
   'label-text-size',
   'label-text-weight',
   'leading-content-color',
+  'leading-content-leading-space',
+  'leading-content-min-width',
+  'leading-content-trailing-space',
   'leading-space',
   'outline-color',
   'outline-label-padding',
@@ -98,6 +103,9 @@ $supported-tokens: (
   'supporting-text-weight',
   'top-space',
   'trailing-content-color',
+  'trailing-content-leading-space',
+  'trailing-content-min-width',
+  'trailing-content-trailing-space',
   'trailing-space',
   // go/keep-sorted end
 );
@@ -234,7 +242,22 @@ $_default: (
     // go/keep-sorted end
   );
 
-  $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'container-shape');
+  $new-tokens: map.merge(
+    shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
+    (
+      // go/keep-sorted start
+      'content-overflow-wrap': 'revert',
+      'content-white-space': 'revert',
+      'leading-content-leading-space': 0px,
+      'leading-content-min-width': 48px,
+      'leading-content-trailing-space': 4px,
+      'trailing-content-leading-space': 4px,
+      'trailing-content-min-width': 48px,
+      'trailing-content-trailing-space': 0px,
+      // go/keep-sorted end
+    )
+  );
+
   $tokens: validate.values(
     $tokens,
     $supported-tokens: $supported-tokens,
