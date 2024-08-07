@@ -31,6 +31,8 @@ export interface StoryKnobs {
   skipRestoreFocus: boolean;
   xOffset: number;
   yOffset: number;
+  noVerticalFlip: boolean;
+  noHorizontalFlip: boolean;
   typeaheadDelay: number;
   listTabIndex: number;
 
@@ -122,6 +124,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
             .yOffset=${knobs.yOffset}
+            .noVerticalFlip=${knobs.noVerticalFlip}
+            .noHorizontalFlip=${knobs.noHorizontalFlip}
             .positioning=${knobs.positioning!}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
@@ -131,12 +135,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             @close-menu=${displayCloseEvent}
             @closed=${setButtonAriaExpandedFalse}>
             ${fruitNames.map(
-              (name, index) => html` <md-menu-item
-                id=${index}
-                .keepOpen=${knobs.keepOpen}
-                .disabled=${knobs.disabled}>
-                <div slot="headline">${name}</div>
-              </md-menu-item>`,
+              (name, index) =>
+                html`<md-menu-item
+                  id=${index}
+                  .keepOpen=${knobs.keepOpen}
+                  .disabled=${knobs.disabled}>
+                  <div slot="headline">${name}</div>
+                </md-menu-item>`,
             )}
           </md-menu>
         </div>
@@ -191,6 +196,8 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
             .yOffset=${knobs.yOffset}
+            .noVerticalFlip=${knobs.noVerticalFlip}
+            .noHorizontalFlip=${knobs.noHorizontalFlip}
             .positioning=${knobs.positioning!}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
@@ -327,6 +334,8 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
             .menuCorner="${knobs.menuCorner!}"
             .xOffset=${knobs.xOffset}
             .yOffset=${knobs.yOffset}
+            .noVerticalFlip=${knobs.noVerticalFlip}
+            .noHorizontalFlip=${knobs.noHorizontalFlip}
             .positioning=${knobs.positioning!}
             .defaultFocus=${knobs.defaultFocus!}
             .skipRestoreFocus=${knobs.skipRestoreFocus}
@@ -379,6 +388,8 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
           .menuCorner="${knobs.menuCorner!}"
           .xOffset=${knobs.xOffset}
           .yOffset=${knobs.yOffset}
+          .noVerticalFlip=${knobs.noVerticalFlip}
+          .noHorizontalFlip=${knobs.noHorizontalFlip}
           .positioning=${knobs.positioning!}
           .defaultFocus=${knobs.defaultFocus!}
           .skipRestoreFocus=${knobs.skipRestoreFocus}

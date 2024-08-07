@@ -172,6 +172,18 @@ export abstract class Menu extends LitElement {
    */
   @property({type: Number, attribute: 'y-offset'}) yOffset = 0;
   /**
+   * Disable the `flip` behavior that usually happens on the horizontal axis
+   * when the surface would render outside the viewport.
+   */
+  @property({type: Boolean, attribute: 'no-horizontal-flip'}) noHorizontalFlip =
+    false;
+  /**
+   * Disable the `flip` behavior that usually happens on the vertical axis when
+   * the surface would render outside the viewport.
+   */
+  @property({type: Boolean, attribute: 'no-vertical-flip'}) noVerticalFlip =
+    false;
+  /**
    * The max time between the keystrokes of the typeahead menu behavior before
    * it clears the typeahead buffer.
    */
@@ -183,6 +195,7 @@ export abstract class Menu extends LitElement {
    *
    * NOTE: This value may not be respected by the menu positioning algorithm
    * if the menu would render outisde the viewport.
+   * Use `no-horizontal-flip` or `no-vertical-flip` to force the usage of the value
    */
   @property({attribute: 'anchor-corner'})
   anchorCorner: Corner = Corner.END_START;
@@ -192,6 +205,7 @@ export abstract class Menu extends LitElement {
    *
    * NOTE: This value may not be respected by the menu positioning algorithm
    * if the menu would render outisde the viewport.
+   * Use `no-horizontal-flip` or `no-vertical-flip` to force the usage of the value
    */
   @property({attribute: 'menu-corner'}) menuCorner: Corner = Corner.START_START;
   /**
@@ -376,6 +390,8 @@ export abstract class Menu extends LitElement {
         isOpen: this.open,
         xOffset: this.xOffset,
         yOffset: this.yOffset,
+        disableBlockFlip: this.noVerticalFlip,
+        disableInlineFlip: this.noHorizontalFlip,
         onOpen: this.onOpened,
         beforeClose: this.beforeClose,
         onClose: this.onClosed,
