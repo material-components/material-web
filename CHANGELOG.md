@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/material-components/material-web/compare/v2.0.0...v2.1.0) (2024-08-08)
+
+
+### Features
+
+* **switch:** add touch target token ([b8f362a](https://github.com/material-components/material-web/commit/b8f362a97d8369e0f6bab834794f99bd50b5ab78))
+
 ## [2.0.0](https://github.com/material-components/material-web/compare/v1.5.1...v2.0.0) (2024-07-23)
 
 
