@@ -79,6 +79,7 @@ $supported-tokens: (
   'selected-track-color',
   'state-layer-shape',
   'state-layer-size',
+  'touch-target-size',
   'track-color',
   'track-height',
   'track-outline-color',
@@ -119,6 +120,12 @@ $_default: (
     $tokens,
     'handle-shape',
     'track-shape'
+  );
+  $new-tokens: map.merge(
+    $new-tokens,
+    (
+      'touch-target-size': if($exclude-hardcoded-values, null, 48px)
+    )
   );
 
   $tokens: validate.values(
