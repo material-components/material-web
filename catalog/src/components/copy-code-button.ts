@@ -7,8 +7,8 @@
 import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/icon-button.js';
 
-import { MdIconButton } from '@material/web/iconbutton/icon-button.js';
-import { css, html, LitElement } from 'lit';
+import {MdIconButton} from '@material/web/iconbutton/icon-button.js';
+import {css, html, LitElement} from 'lit';
 import {
   customElement,
   property,
@@ -56,16 +56,16 @@ export class CopyCodeButton extends LitElement {
    * The aria label for the copy button when it has been clicked and the copy is
    * successul.
    */
-  @property({ attribute: 'success-label' }) successLabel = 'Copy successful';
+  @property({attribute: 'success-label'}) successLabel = 'Copy successful';
 
   /**
    * The title to be set on the copy button.
    */
-  @property({ attribute: 'button-title' }) buttonTitle = 'Copy code';
+  @property({attribute: 'button-title'}) buttonTitle = 'Copy code';
 
   @query('md-icon-button') private copyButton!: MdIconButton;
 
-  @queryAssignedElements({ flatten: true, selector: '*' })
+  @queryAssignedElements({flatten: true, selector: '*'})
   private slottedEls!: NodeListOf<HTMLElement>;
 
   render() {
