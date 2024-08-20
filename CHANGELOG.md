@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/material-components/material-web/compare/v2.0.0...v2.1.0) (2024-08-20)
+
+
+### Features
+
+* **switch:** add touch target token ([b8f362a](https://github.com/material-components/material-web/commit/b8f362a97d8369e0f6bab834794f99bd50b5ab78))
+* **textfield,field:** add leading/trailing icon spacing tokens ([c1991c4](https://github.com/material-components/material-web/commit/c1991c4c894c48fe77abe09a2791f97dc77d438f))
+
+
+### Bug Fixes
+
+* changed checkmark to check in md-icon selected slot ([2e2817b](https://github.com/material-components/material-web/commit/2e2817bab5fc51bb32363b36471cb01d1f029a46))
+
 ## [2.0.0](https://github.com/material-components/material-web/compare/v1.5.1...v2.0.0) (2024-07-23)
 
 
