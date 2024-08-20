@@ -47,18 +47,14 @@ $_enter-delay: $_label-duration - $_visible-duration;
       justify-content: center;
     }
 
-    // TODO(b/239188049): remove when layout tokens are ready
-    .with-start .start,
-    .with-end .end {
-      min-width: 48px;
-    }
-
     .with-start .start {
-      margin-inline-end: 4px;
+      margin-inline: var(--_with-leading-content-leading-space)
+        var(--_content-space);
     }
 
     .with-end .end {
-      margin-inline-start: 4px;
+      margin-inline: var(--_content-space)
+        var(--_with-trailing-content-trailing-space);
     }
 
     .middle {
