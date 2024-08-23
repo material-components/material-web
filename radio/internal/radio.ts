@@ -99,7 +99,7 @@ export class Radio extends radioBaseClass {
   protected override render() {
     const classes = {'checked': this.checked};
     return html`
-      <div class="container ${classMap(classes)}" aria-hidden="true">
+      <div class="container ${classMap(classes)}" inert">
         <md-ripple
           part="ripple"
           .control=${this}
