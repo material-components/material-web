@@ -204,11 +204,11 @@ export class Checkbox extends checkboxBaseClass {
     this.checked = state === 'true';
   }
 
-  [createValidator]() {
+  override [createValidator]() {
     return new CheckboxValidator(() => this);
   }
 
-  [getValidityAnchor]() {
+  override [getValidityAnchor]() {
     return this.input;
   }
 }
