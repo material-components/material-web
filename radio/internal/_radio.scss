@@ -96,8 +96,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
 
     :host([touch-target='none']) .touch-target {
-      width: 100%;
-      height: 100%;
+      display: none;
     }
 
     md-ripple {
