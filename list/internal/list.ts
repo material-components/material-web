@@ -102,6 +102,6 @@ export class List extends LitElement {
    *     index of the item or `null` if none are activated.
    */
   get activeItem(): ItemRecord<ListItem> | null {
-    return getActiveItem(this.items)
+    return getActiveItem(this.items);
   }
 }
