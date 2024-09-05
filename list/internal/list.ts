@@ -90,4 +90,13 @@ export class List extends LitElement {
   activatePreviousItem(): ListItem | null {
     return this.listController.activatePreviousItem();
   }
+
+  /**
+   * Returns the activated item in the list.
+   *
+   * @return The activated list item or `null` if there are no items.
+   */
+  get activatedItem(): ListItem | null {
+    return this.items.find((i: ListItem) => i.tabIndex === 0);
+  }
 }
