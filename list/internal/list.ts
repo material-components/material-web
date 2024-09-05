@@ -8,7 +8,7 @@ import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
 import {ListController, NavigableKeys} from './list-controller.js';
-import {ListItem as SharedListItem} from './list-navigation-helpers.js';
+import {getActiveItem, ItemRecord, ListItem as SharedListItem} from './list-navigation-helpers.js';
 
 const NAVIGABLE_KEY_SET = new Set<string>(Object.values(NavigableKeys));
 
@@ -92,11 +92,12 @@ export class List extends LitElement {
   }
 
   /**
-   * Returns the activated item in the list.
+   * Retrieves the first activated item of a given array of items.
    *
-   * @return The activated list item or `null` if there are no items.
+   * @return A record of the first activated item including the item and the
+   *     index of the item or `null` if none are activated.
    */
-  get activatedItem(): ListItem | null {
-    return this.items.find((i: ListItem) => i.tabIndex === 0);
+  get activeItem(): ItemRecord<ListItem> | null {
+    return getActiveItem(this.items)
   }
 }
