@@ -8,7 +8,7 @@ import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
 import {ListController, NavigableKeys} from './list-controller.js';
-import {getActiveItem, ItemRecord, ListItem as SharedListItem} from './list-navigation-helpers.js';
+import {getActiveItem, type ItemRecord, ListItem as SharedListItem} from './list-navigation-helpers.js';
 
 const NAVIGABLE_KEY_SET = new Set<string>(Object.values(NavigableKeys));
 
