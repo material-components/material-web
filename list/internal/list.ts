@@ -8,11 +8,7 @@ import {html, isServer, LitElement} from 'lit';
 import {queryAssignedElements} from 'lit/decorators.js';
 
 import {ListController, NavigableKeys} from './list-controller.js';
-import {
-	getActiveItem,
-	type ItemRecord,
-	ListItem as SharedListItem,
-} from './list-navigation-helpers.js';
+import {ListItem as SharedListItem} from './list-navigation-helpers.js';
 
 const NAVIGABLE_KEY_SET = new Set<string>(Object.values(NavigableKeys));
 
@@ -96,12 +92,12 @@ export class List extends LitElement {
   }
 
   /**
-   * Retrieves the first activated item of a given array of items.
+   * Retrieves the first activated item of the array of items.
    *
    * @return A record of the first activated item including the item and the
    *     index of the item or `null` if none are activated.
    */
-  get activeItem(): ItemRecord<ListItem> | null {
-    return getActiveItem(this.items);
+  get activeItem() {
+    return this.listController.activeItem;
   }
 }
