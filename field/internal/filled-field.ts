@@ -12,9 +12,8 @@ import {Field} from './field.js';
  * A filled field component.
  */
 export class FilledField extends Field {
-  protected override renderBackground() {
+  protected override renderStateLayer() {
     return html`
-      <div class="background"></div>
       <div class="state-layer"></div>
     `;
   }

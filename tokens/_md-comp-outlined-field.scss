@@ -20,6 +20,7 @@
 $supported-tokens: (
   // go/keep-sorted start
   'bottom-space',
+  'container-color',
   'container-shape',
   'container-shape-end-end',
   'container-shape-end-start',
@@ -31,6 +32,8 @@ $supported-tokens: (
   'content-size',
   'content-space',
   'content-weight',
+  'disabled-container-color',
+  'disabled-container-opacity',
   'disabled-content-color',
   'disabled-content-opacity',
   'disabled-label-text-color',
@@ -125,6 +128,7 @@ $_default: (
   $tokens: (
     // go/keep-sorted start
     'bottom-space': if($exclude-hardcoded-values, null, 16px),
+    'container-color': map.get($text-field, 'container-color', 'transparent'),
     'container-shape': map.get($text-field, 'container-shape'),
     'content-color': map.get($text-field, 'input-text-color'),
     'content-font': map.get($text-field, 'input-text-font'),
@@ -132,6 +136,10 @@ $_default: (
     'content-size': map.get($text-field, 'input-text-size'),
     'content-space': if($exclude-hardcoded-values, null, 16px),
     'content-weight': map.get($text-field, 'input-text-weight'),
+    'disabled-container-color':
+      map.get($text-field, 'disabled-container-color', 'transparent'),
+    'disabled-container-opacity':
+      map.get($text-field, 'disabled-container-opacity'),
     'disabled-content-color': map.get($text-field, 'disabled-input-text-color'),
     'disabled-content-opacity':
       map.get($text-field, 'disabled-input-text-opacity'),

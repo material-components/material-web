@@ -52,19 +52,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       }
     }
 
-    .background,
     .state-layer {
       border-radius: inherit;
       inset: 0;
       pointer-events: none;
       position: absolute;
-    }
-
-    .background {
-      background: var(--_container-color);
-    }
-
-    .state-layer {
       visibility: hidden;
     }
 
@@ -159,11 +151,6 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       border-bottom-color: var(--_disabled-active-indicator-color);
       border-bottom-width: var(--_disabled-active-indicator-height);
       opacity: var(--_disabled-active-indicator-opacity);
-    }
-
-    .disabled .background {
-      background: var(--_disabled-container-color);
-      opacity: var(--_disabled-container-opacity);
     }
 
     .error .active-indicator::before {
