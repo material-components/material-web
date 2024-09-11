@@ -13,10 +13,11 @@ import {Field} from './field.js';
  */
 export class FilledField extends Field {
   protected override renderBackground() {
-    return html`
-      <div class="background"></div>
-      <div class="state-layer"></div>
-    `;
+    return html` <div class="background"></div> `;
+  }
+
+  protected override renderStateLayer() {
+    return html` <div class="state-layer"></div> `;
   }
 
   protected override renderIndicator() {

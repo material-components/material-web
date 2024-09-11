@@ -569,6 +569,7 @@ export abstract class TextField extends textFieldBaseClass {
       ${this.renderInputOrTextarea()}
       ${this.renderTrailingIcon()}
       <div id="description" slot="aria-describedby"></div>
+      <slot name="container" slot="container"></slot>
     </${this.fieldTag}>`;
   }
 

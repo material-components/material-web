@@ -44,6 +44,10 @@
     resize: inherit;
   }
 
+  slot[name='container'] {
+    border-radius: inherit;
+  }
+
   @include icon.styles;
   @include input.styles;
 }
