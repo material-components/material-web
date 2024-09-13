@@ -768,18 +768,18 @@ export abstract class TextField extends textFieldBaseClass {
     this.getInputOrTextarea().focus();
   }
 
-  [createValidator](): Validator<unknown> {
+  override [createValidator](): Validator<unknown> {
     return new TextFieldValidator(() => ({
       state: this,
       renderedControl: this.inputOrTextarea,
     }));
   }
 
-  [getValidityAnchor](): HTMLElement | null {
+  override [getValidityAnchor](): HTMLElement | null {
     return this.inputOrTextarea;
   }
 
-  [onReportValidity](invalidEvent: Event | null) {
+  override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
 
