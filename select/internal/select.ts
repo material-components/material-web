@@ -311,7 +311,7 @@ export abstract class Select extends selectBaseClass {
     this.nativeErrorText = '';
   }
 
-  [onReportValidity](invalidEvent: Event | null) {
+  override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
 
@@ -834,11 +834,11 @@ export abstract class Select extends selectBaseClass {
     this.field?.click();
   }
 
-  [createValidator]() {
+  override [createValidator]() {
     return new SelectValidator(() => this);
   }
 
-  [getValidityAnchor]() {
+  override [getValidityAnchor]() {
     return this.field;
   }
 }
