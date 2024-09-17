@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
+
+
+### Features
+
+* **field,textfield:** add `container` slot for custom background content ([44c13cd](https://github.com/material-components/material-web/commit/44c13cdd753108137e9765bf14a6ea3ed46be18e))
+
+
+### Bug Fixes
+
+* **checkbox:** add override to symbol properties ([a9ee4f5](https://github.com/material-components/material-web/commit/a9ee4f5bc1d6702e5dc352eefed13a1d849577e3))
+* remove the input entirely and replace it with a touch target ([cf84a27](https://github.com/material-components/material-web/commit/cf84a271e75b806075427f4d176b38f8884fdd7e))
+* remove unnecessary css variable prefixes ([5044e6e](https://github.com/material-components/material-web/commit/5044e6eb2fe6c6bd3e53b19bef04ba6b6c0b2a2b))
+* Replace aria-hidden attribute with inert attribute in &lt;md-radio&gt; component ([192f17e](https://github.com/material-components/material-web/commit/192f17e8c1ce4a38cf76b5a81cb6c2b1ddcfbe46))
+* Set touch target to `display: none` ([a696121](https://github.com/material-components/material-web/commit/a69612162d79b63f0b82da0468201942dc82ed9e))
+
 ## [2.1.0](https://github.com/material-components/material-web/compare/v2.0.0...v2.1.0) (2024-08-20)
 
 
