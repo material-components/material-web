@@ -53,7 +53,7 @@ export class MdBrandedFab extends Fab {
   /**
    * Branded FABs have no variants
    */
-  override variant!: FabVariant;
+  declare variant: FabVariant;
 
   override getRenderClasses() {
     return {
@@ -64,5 +64,9 @@ export class MdBrandedFab extends Fab {
       'small': false,
     };
   }
-  static override styles: CSSResultOrNative[] = [sharedStyles, styles, forcedColors];
+  static override styles: CSSResultOrNative[] = [
+    sharedStyles,
+    styles,
+    forcedColors,
+  ];
 }
