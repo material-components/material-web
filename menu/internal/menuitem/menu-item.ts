@@ -207,9 +207,9 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
     `;
   }
 
-  override focus() {
+  override focus(options?: FocusOptions) {
     // TODO(b/300334509): needed for some cases where delegatesFocus doesn't
     // work programmatically like in FF and select-option
-    this.listItemRoot?.focus();
+    this.listItemRoot?.focus(options);
   }
 }
