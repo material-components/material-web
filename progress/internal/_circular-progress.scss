@@ -24,9 +24,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-circular-progress-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-circular-progress-values();
 
   // If changing this value, make sure to change $size-without-padding in the
   // circular-progress tokens.

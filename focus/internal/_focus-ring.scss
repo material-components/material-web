@@ -27,9 +27,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-focus-ring-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-focus-ring-values();
 
   $active-width: map.get($tokens, 'active-width');
   $color: map.get($tokens, 'color');

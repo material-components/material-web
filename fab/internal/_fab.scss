@@ -27,9 +27,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-fab-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-fab-values();
 
   :host {
     // Only use the logical properties.

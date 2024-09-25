@@ -38,7 +38,7 @@ export class InputChip extends MultiActionChip {
 
   protected override get rippleDisabled() {
     // Link chips cannot be disabled
-    return !this.href && this.disabled;
+    return !this.href && (this.disabled || this.softDisabled);
   }
 
   protected get primaryAction() {
@@ -59,7 +59,7 @@ export class InputChip extends MultiActionChip {
       ...super.getContainerClasses(),
       avatar: this.avatar,
       // Link chips cannot be disabled
-      disabled: !this.href && this.disabled,
+      disabled: !this.href && (this.disabled || this.softDisabled),
       link: !!this.href,
       selected: this.selected,
       'has-trailing': true,
@@ -94,6 +94,7 @@ export class InputChip extends MultiActionChip {
         class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
+        aria-disabled=${this.softDisabled || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"
         >${content}</button
@@ -105,7 +106,7 @@ export class InputChip extends MultiActionChip {
     return renderRemoveButton({
       focusListener,
       ariaLabel: this.ariaLabelRemove,
-      disabled: !this.href && this.disabled,
+      disabled: !this.href && (this.disabled || this.softDisabled),
       tabbable: this.removeOnly,
     });
   }

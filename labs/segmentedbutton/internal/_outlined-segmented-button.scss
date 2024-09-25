@@ -26,7 +26,7 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-outlined-segmented-button-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
   }
 

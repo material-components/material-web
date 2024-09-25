@@ -52,6 +52,7 @@ describe('Field', () => {
     const template = html`
       <md-test-field
         .label=${props.label ?? ''}
+        ?no-asterisk=${props.noAsterisk ?? false}
         ?disabled=${props.disabled ?? false}
         .error=${props.error ?? false}
         .populated=${props.populated ?? false}
@@ -333,6 +334,21 @@ describe('Field', () => {
           'label text should be empty string if label is not provided, even when required',
         )
         .toBe('');
+    });
+
+    it('should not render asterisk if required, but noAsterisk', async () => {
+      // Setup.
+      // Test case.
+      const labelValue = 'Label';
+      const {instance} = await setupTest({
+        required: true, label: labelValue, noAsterisk: true
+      });
+      //Assertion
+      expect(instance.labelText)
+        .withContext(
+          'label test should equal label without asterisk, when required and noAsterisk',
+        )
+        .toBe(labelValue);
     });
   });
 

@@ -20,6 +20,7 @@ import {css, html, nothing} from 'lit';
 /** Knob types for dialog stories. */
 export interface StoryKnobs {
   quick: boolean;
+  noFocusTrap: boolean;
   icon: string;
   headline: string;
   supportingText: string;
@@ -31,7 +32,7 @@ function showDialog(event: Event) {
 
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Dialog',
-  render({icon, headline, supportingText, quick}) {
+  render({icon, headline, supportingText, quick, noFocusTrap}) {
     return html`
       <md-filled-button @click=${showDialog} aria-label="Open a dialog">
         Open
@@ -39,7 +40,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 
       <md-dialog
         aria-label=${headline ? nothing : 'A simple dialog'}
-        ?quick=${quick}>
+        ?quick=${quick}
+        ?no-focus-trap=${noFocusTrap}>
         ${icon ? html`<md-icon slot="icon">${icon}</md-icon>` : nothing}
         <div slot="headline">${headline}</div>
         <form id="form" slot="content" method="dialog">
@@ -56,13 +58,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
 
 const alert: MaterialStoryInit<StoryKnobs> = {
   name: 'Alert',
-  render({quick}) {
+  render({quick, noFocusTrap}) {
     return html`
       <md-filled-button @click=${showDialog} aria-label="Open an alert dialog">
         Alert
       </md-filled-button>
 
-      <md-dialog type="alert" ?quick=${quick}>
+      <md-dialog type="alert" ?quick=${quick} ?no-focus-trap=${noFocusTrap}>
         <div slot="headline">Alert dialog</div>
         <form id="form" slot="content" method="dialog">
           This is a standard alert dialog. Alert dialogs interrupt users with
@@ -78,7 +80,7 @@ const alert: MaterialStoryInit<StoryKnobs> = {
 
 const confirm: MaterialStoryInit<StoryKnobs> = {
   name: 'Confirm',
-  render({quick}) {
+  render({quick, noFocusTrap}) {
     return html`
       <md-filled-button
         @click=${showDialog}
@@ -86,7 +88,10 @@ const confirm: MaterialStoryInit<StoryKnobs> = {
         Confirm
       </md-filled-button>
 
-      <md-dialog style="max-width: 320px;" ?quick=${quick}>
+      <md-dialog
+        style="max-width: 320px;"
+        ?quick=${quick}
+        ?no-focus-trap=${noFocusTrap}>
         <div slot="headline">Permanently delete?</div>
         <md-icon slot="icon">delete_outline</md-icon>
         <form id="form" slot="content" method="dialog">
@@ -112,13 +117,13 @@ const choose: MaterialStoryInit<StoryKnobs> = {
       align-items: center;
     }
   `,
-  render({quick}) {
+  render({quick, noFocusTrap}) {
     return html`
       <md-filled-button @click=${showDialog} aria-label="Open a choice dialog">
         Choice
       </md-filled-button>
 
-      <md-dialog ?quick=${quick}>
+      <md-dialog ?quick=${quick} ?no-focus-trap=${noFocusTrap}>
         <div slot="headline">Choose your favorite pet</div>
         <form id="form" slot="content" method="dialog">
           <label>
@@ -187,13 +192,13 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
       flex: 1;
     }
   `,
-  render({quick}) {
+  render({quick, noFocusTrap}) {
     return html`
       <md-filled-button @click=${showDialog} aria-label="Open a form dialog">
         Form
       </md-filled-button>
 
-      <md-dialog class="contacts" ?quick=${quick}>
+      <md-dialog class="contacts" ?quick=${quick} ?no-focus-trap=${noFocusTrap}>
         <span slot="headline">
           <md-icon-button form="form" value="close" aria-label="Close dialog">
             <md-icon>close</md-icon>
@@ -229,13 +234,13 @@ const contacts: MaterialStoryInit<StoryKnobs> = {
 
 const floatingSheet: MaterialStoryInit<StoryKnobs> = {
   name: 'Floating sheet',
-  render({quick}) {
+  render({quick, noFocusTrap}) {
     return html`
       <md-filled-button @click=${showDialog} aria-label="Open a floating sheet">
         Floating sheet
       </md-filled-button>
 
-      <md-dialog ?quick=${quick}>
+      <md-dialog ?quick=${quick} ?no-focus-trap=${noFocusTrap}>
         <span slot="headline">
           <span style="flex: 1;">Floating Sheet</span>
           <md-icon-button form="form" value="close" aria-label="Close dialog">

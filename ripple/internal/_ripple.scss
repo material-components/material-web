@@ -25,9 +25,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-ripple-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-ripple-values();
 
   :host {
     display: flex;

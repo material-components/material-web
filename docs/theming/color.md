@@ -29,9 +29,9 @@ is the group of
 [key color tones](https://m3.material.io/styles/color/the-color-system/key-colors-tones#5fdf196d-1e21-4d03-ae63-e802d61ad5ee)<!-- {.external} -->
 assigned to specific roles that get mapped to components.
 
-![Full palette derived from baseline colors](images/color-scheme-light.png "From five key colors, roles are automatically assigned that map to light theme components")
+![Full palette derived from baseline colors](images/color-scheme-light.webp "From five key colors, roles are automatically assigned that map to light theme components")
 
-![Dark palette derived from baseline colors](images/color-scheme-dark.png "From five key colors, roles are automatically assigned that map to dark theme components")
+![Dark palette derived from baseline colors](images/color-scheme-dark.webp "From five key colors, roles are automatically assigned that map to dark theme components")
 
 > Tip: use the
 > [Material theme builder Figma plugin](https://www.figma.com/community/plugin/1034969338659738588/Material-Theme-Builder)<!-- {.external} -->

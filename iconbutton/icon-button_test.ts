@@ -61,6 +61,66 @@ describe('icon button tests', () => {
       },
     );
 
+    it('should not be focusable when disabled', async () => {
+      // Arrange
+      const {element} = await setUpTest('button');
+      element.disabled = true;
+      await element.updateComplete;
+
+      // Act
+      element.focus();
+
+      // Assert
+      expect(document.activeElement)
+        .withContext('disabled button should not be focused')
+        .not.toBe(element);
+    });
+
+    it('should be focusable when soft-disabled', async () => {
+      // Arrange
+      const {element} = await setUpTest('button');
+      element.softDisabled = true;
+      await element.updateComplete;
+
+      // Act
+      element.focus();
+
+      // Assert
+      expect(document.activeElement)
+        .withContext('soft-disabled button should be focused')
+        .toBe(element);
+    });
+
+    it('should not be clickable when disabled', async () => {
+      // Arrange
+      const clickListener = jasmine.createSpy('clickListener');
+      const {element} = await setUpTest('button');
+      element.disabled = true;
+      element.addEventListener('click', clickListener);
+      await element.updateComplete;
+
+      // Act
+      element.click();
+
+      // Assert
+      expect(clickListener).not.toHaveBeenCalled();
+    });
+
+    it('should not be clickable when soft-disabled', async () => {
+      // Arrange
+      const clickListener = jasmine.createSpy('clickListener');
+      const {element} = await setUpTest('button');
+      element.softDisabled = true;
+      element.addEventListener('click', clickListener);
+      await element.updateComplete;
+
+      // Act
+      element.click();
+
+      // Assert
+      expect(clickListener).not.toHaveBeenCalled();
+    });
+
     it(
       'setting `ariaLabel` updates the aria-label attribute on the native ' +
         'button element',

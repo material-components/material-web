@@ -16,18 +16,24 @@ describe('aria', () => {
         .toBeTrue();
     });
 
-    it('should return true for aria idref attributes', () => {
+    it('should return false for aria idref attributes', () => {
       expect(isAriaAttribute('aria-labelledby'))
         .withContext('aria-labelledby input')
-        .toBeTrue();
+        .toBeFalse();
     });
 
-    it('should return false for role', () => {
-      expect(isAriaAttribute('role')).withContext('role input').toBeFalse();
+    it('should return true for role', () => {
+      expect(isAriaAttribute('role')).withContext('role input').toBeTrue();
     });
 
     it('should return false for non-aria attributes', () => {
       expect(isAriaAttribute('label')).withContext('label input').toBeFalse();
+    });
+
+    it('should return false for custom aria-* attributes', () => {
+      expect(isAriaAttribute('aria-label-custom'))
+        .withContext('aria-label-custom input')
+        .toBeFalse();
     });
   });
 

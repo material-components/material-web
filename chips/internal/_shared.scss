@@ -33,7 +33,7 @@
     );
   }
 
-  :host([disabled]) {
+  :host(:is([disabled], [soft-disabled])) {
     pointer-events: none;
   }
 
@@ -96,6 +96,9 @@
   }
 
   .primary.action {
+    // Set a min-width on the primary action so that trailing actions remain
+    // inside the chip as the chip is resized.
+    min-width: 0;
     padding-inline-start: var(--_leading-space);
     padding-inline-end: var(--_trailing-space);
   }
@@ -151,11 +154,21 @@
     display: flex;
     font-family: var(--_label-text-font);
     font-size: var(--_label-text-size);
-    line-height: var(--_label-text-line-height);
     font-weight: var(--_label-text-weight);
     height: 100%;
-    text-overflow: ellipsis;
+    line-height: var(--_label-text-line-height);
+    overflow: hidden;
     user-select: none;
+  }
+
+  // An inner span is needed to truncate the label, since elements with a flex
+  // display do not support the text-overflow property. The outer wrapper .label
+  // needs to be a flex display to correctly set the element's baseline,
+  // supporting external elements aligning to the baseline of the chip's text
+  // instead of its edges or icons.
+  .label-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
@@ -229,7 +242,7 @@
   }
 
   a,
-  button:not(:disabled) {
+  button:not(:disabled, [aria-disabled='true']) {
     cursor: inherit;
   }
 }

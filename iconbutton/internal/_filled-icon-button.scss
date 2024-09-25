@@ -26,9 +26,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-icon-button-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-filled-icon-button-values();
 
   :host {
     // Only use the logical properties.
@@ -53,7 +51,7 @@
       color: var(--_pressed-icon-color);
     }
 
-    &:disabled {
+    &:is(:disabled, [aria-disabled='true']) {
       color: var(--_disabled-icon-color);
     }
 
@@ -77,17 +75,17 @@
     z-index: -1; // place behind content
   }
 
-  .icon-button:disabled::before {
+  .icon-button:is(:disabled, [aria-disabled='true'])::before {
     background-color: var(--_disabled-container-color);
     opacity: var(--_disabled-container-opacity);
   }
 
-  .icon-button:disabled .icon {
+  .icon-button:is(:disabled, [aria-disabled='true']) .icon {
     opacity: var(--_disabled-icon-opacity);
   }
 
   .toggle-filled {
-    &:not(:disabled) {
+    &:not(:disabled, [aria-disabled='true']) {
       color: var(--_toggle-icon-color);
 
       &:hover {
@@ -111,14 +109,14 @@
     );
   }
 
-  .toggle-filled:not(:disabled)::before {
+  .toggle-filled:not(:disabled, [aria-disabled='true'])::before {
     // Note: filled icon buttons have three container colors,
     // "container-color" for regular, then selected/unselected for toggle.
     background-color: var(--_unselected-container-color);
   }
 
   .selected {
-    &:not(:disabled) {
+    &:not(:disabled, [aria-disabled='true']) {
       color: var(--_toggle-selected-icon-color);
 
       &:hover {
@@ -142,7 +140,7 @@
     );
   }
 
-  .selected:not(:disabled)::before {
+  .selected:not(:disabled, [aria-disabled='true'])::before {
     background-color: var(--_selected-container-color);
   }
 }

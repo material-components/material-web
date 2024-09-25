@@ -18,6 +18,7 @@ import {css, html} from 'lit';
 export interface StoryKnobs {
   label: string;
   disabled: boolean;
+  softDisabled: boolean;
 }
 
 const styles = css`
@@ -38,33 +39,42 @@ const styles = css`
 const buttons: MaterialStoryInit<StoryKnobs> = {
   name: 'Button variants',
   styles,
-  render({label, disabled}) {
+  render({label, disabled, softDisabled}) {
     return html`
       <div class="column">
         <div class="row">
-          <md-filled-button ?disabled=${disabled}>
+          <md-filled-button
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             ${label || 'Filled'}
           </md-filled-button>
 
-          <md-outlined-button ?disabled=${disabled}>
+          <md-outlined-button
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             ${label || 'Outlined'}
           </md-outlined-button>
 
-          <md-elevated-button ?disabled=${disabled}>
+          <md-elevated-button
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             ${label || 'Elevated'}
           </md-elevated-button>
 
-          <md-filled-tonal-button ?disabled=${disabled}>
+          <md-filled-tonal-button
+            ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}>
             ${label || 'Tonal'}
           </md-filled-tonal-button>
 
-          <md-text-button ?disabled=${disabled}>
+          <md-text-button ?disabled=${disabled} ?soft-disabled=${softDisabled}>
             ${label || 'Text'}
           </md-text-button>
         </div>
         <div class="row">
           <md-filled-button
             ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}
             aria-label="${label || 'Filled'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Filled'}
@@ -72,6 +82,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
 
           <md-outlined-button
             ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}
             aria-label="${label || 'Outlined'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Outlined'}
@@ -79,6 +90,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
 
           <md-elevated-button
             ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}
             aria-label="${label || 'Elevated'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Elevated'}
@@ -86,6 +98,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
 
           <md-filled-tonal-button
             ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}
             aria-label="${label || 'Tonal'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Tonal'}
@@ -93,6 +106,7 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
 
           <md-text-button
             ?disabled=${disabled}
+            ?soft-disabled=${softDisabled}
             aria-label="${label || 'Text'} button with icon">
             <md-icon slot="icon">upload</md-icon>
             ${label || 'Text'}

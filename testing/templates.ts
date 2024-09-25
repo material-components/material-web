@@ -24,6 +24,7 @@ export enum State {
   HOVER = 'Hover',
   PRESSED = 'Pressed',
   SELECTED = 'Selected',
+  SOFT_DISABLED = 'Soft disabled',
 }
 
 /**
@@ -372,7 +373,7 @@ export interface SharedTemplateProps {
   /**
    * The light DOM content of the element.
    */
-  content?: TemplateResult;
+  content?: unknown;
   /**
    * Classes to add to the element.
    */

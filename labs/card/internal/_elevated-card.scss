@@ -25,9 +25,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-elevated-card-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-elevated-card-values();
 
   :host {
     @each $token, $value in $tokens {

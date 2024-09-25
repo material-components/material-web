@@ -52,6 +52,14 @@ export interface SurfacePositionTarget extends HTMLElement {
  */
 export interface SurfacePositionControllerProperties {
   /**
+   * Disable the `flip` behavior on the block axis of the surface's corner
+   */
+  disableBlockFlip: boolean;
+  /**
+   * Disable the `flip` behavior on the inline axis of the surface's corner
+   */
+  disableInlineFlip: boolean;
+  /**
    * The corner of the anchor to align the surface's position.
    */
   anchorCorner: Corner;
@@ -172,6 +180,8 @@ export class SurfacePositionController implements ReactiveController {
       positioning,
       xOffset,
       yOffset,
+      disableBlockFlip,
+      disableInlineFlip,
       repositionStrategy,
     } = this.getProperties();
     const anchorCorner = anchorCornerRaw.toLowerCase().trim();
@@ -293,7 +303,7 @@ export class SurfacePositionController implements ReactiveController {
 
     // If the surface should be out of bounds in the block direction, flip the
     // surface and anchor corner block values and recalculate
-    if (blockOutOfBoundsCorrection) {
+    if (blockOutOfBoundsCorrection && !disableBlockFlip) {
       const flippedSurfaceBlock = surfaceBlock === 'start' ? 'end' : 'start';
       const flippedAnchorBlock = anchorBlock === 'start' ? 'end' : 'start';
 
@@ -335,7 +345,7 @@ export class SurfacePositionController implements ReactiveController {
 
     // If the surface should be out of bounds in the inline direction, flip the
     // surface and anchor corner inline values and recalculate
-    if (inlineOutOfBoundsCorrection) {
+    if (inlineOutOfBoundsCorrection && !disableInlineFlip) {
       const flippedSurfaceInline = surfaceInline === 'start' ? 'end' : 'start';
       const flippedAnchorInline = anchorInline === 'start' ? 'end' : 'start';
 

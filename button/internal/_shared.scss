@@ -71,7 +71,7 @@
     );
   }
 
-  :host([disabled]) {
+  :host(:is([disabled], [soft-disabled])) {
     cursor: default;
     pointer-events: none;
   }
@@ -139,12 +139,12 @@
     text-overflow: inherit;
   }
 
-  :host([disabled]) .label {
+  :host(:is([disabled], [soft-disabled])) .label {
     color: var(--_disabled-label-text-color);
     opacity: var(--_disabled-label-text-opacity);
   }
 
-  :host([disabled]) .background {
+  :host(:is([disabled], [soft-disabled])) .background {
     background-color: var(--_disabled-container-color);
     opacity: var(--_disabled-container-opacity);
   }
@@ -157,7 +157,7 @@
       border: 1px solid CanvasText;
     }
 
-    :host([disabled]) {
+    :host(:is([disabled], [soft-disabled])) {
       --_disabled-icon-color: GrayText;
       --_disabled-icon-opacity: 1;
       --_disabled-container-opacity: 1;

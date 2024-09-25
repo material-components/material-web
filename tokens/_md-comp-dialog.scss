@@ -81,7 +81,7 @@ $unsupported-tokens: (
 @function values(
   $deps: $_default,
   $exclude-hardcoded-values: false,
-  $exclude-custom-properties: true
+  $exclude-custom-properties: false
 ) {
   $tokens: md-comp-dialog.values($deps, $exclude-hardcoded-values);
   $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'container-shape');
@@ -97,8 +97,6 @@ $unsupported-tokens: (
     )
   );
 
-  // Default to `$exclude-custom-properties: false` in the next breaking change.
-  // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
       @if string.index($token, 'container-shape-') == 1 {

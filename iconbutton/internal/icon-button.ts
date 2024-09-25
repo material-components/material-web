@@ -7,13 +7,13 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing} from 'lit';
+import {html, isServer, LitElement, nothing} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
   FormSubmitter,
   setupFormSubmitter,
@@ -28,7 +28,9 @@ import {
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
 // Separate variable needed for closure.
-const iconButtonBaseClass = mixinElementInternals(LitElement);
+const iconButtonBaseClass = mixinDelegatesAria(
+  mixinElementInternals(LitElement),
+);
 
 /**
  * A button for rendering icons.
@@ -39,7 +41,6 @@ const iconButtonBaseClass = mixinElementInternals(LitElement);
  */
 export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   static {
-    requestUpdateOnAriaChange(IconButton);
     setupFormSubmitter(IconButton);
   }
 
@@ -56,6 +57,16 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
    * Disables the icon button and makes it non-interactive.
    */
   @property({type: Boolean, reflect: true}) disabled = false;
+
+  /**
+   * "Soft-disables" the icon button (disabled but still focusable).
+   *
+   * Use this when an icon button needs increased visibility when disabled. See
+   * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
+   * for more guidance on when this is needed.
+   */
+  @property({type: Boolean, attribute: 'soft-disabled', reflect: true})
+  softDisabled = false;
 
   /**
    * Flips the icon if it is in an RTL context at startup.
@@ -92,7 +103,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   @property({type: Boolean, reflect: true}) selected = false;
 
   /**
-   * The default behavior of the button. May be "text", "reset", or "submit"
+   * The default behavior of the button. May be "button", "reset", or "submit"
    * (default).
    */
   @property() type: FormSubmitterType = 'submit';
@@ -126,12 +137,18 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
 
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
 
-  /**
-   * Link buttons cannot be disabled.
-   */
+  constructor() {
+    super();
+    if (!isServer) {
+      this.addEventListener('click', this.handleClick.bind(this));
+    }
+  }
+
   protected override willUpdate() {
+    // Link buttons cannot be disabled or soft-disabled.
     if (this.href) {
       this.disabled = false;
+      this.softDisabled = false;
     }
   }
 
@@ -155,8 +172,9 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
         aria-haspopup="${(!this.href && ariaHasPopup) || nothing}"
         aria-expanded="${(!this.href && ariaExpanded) || nothing}"
         aria-pressed="${ariaPressedValue}"
+        aria-disabled=${(!this.href && this.softDisabled) || nothing}
         ?disabled="${!this.href && this.disabled}"
-        @click="${this.handleClick}">
+        @click="${this.handleClickOnChild}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}
         ${!this.selected ? this.renderIcon() : nothing}
@@ -209,10 +227,11 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   }
 
   private renderRipple() {
+    const isRippleDisabled = !this.href && (this.disabled || this.softDisabled);
     // TODO(b/310046938): use the same id for both elements
     return html`<md-ripple
       for=${this.href ? 'link' : nothing}
-      ?disabled="${!this.href && this.disabled}"></md-ripple>`;
+      ?disabled="${isRippleDisabled}"></md-ripple>`;
   }
 
   override connectedCallback() {
@@ -220,10 +239,31 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
     super.connectedCallback();
   }
 
-  private async handleClick(event: Event) {
+  /** Handles a click on this element. */
+  private handleClick(event: MouseEvent) {
+    // If the icon button is soft-disabled, we need to explicitly prevent the
+    // click from propagating to other event listeners as well as prevent the
+    // default action.
+    if (!this.href && this.softDisabled) {
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      return;
+    }
+  }
+
+  /**
+   * Handles a click on the child <div> or <button> element within this
+   * element's shadow DOM.
+   */
+  private async handleClickOnChild(event: Event) {
     // Allow the event to propagate
     await 0;
-    if (!this.toggle || this.disabled || event.defaultPrevented) {
+    if (
+      !this.toggle ||
+      this.disabled ||
+      this.softDisabled ||
+      event.defaultPrevented
+    ) {
       return;
     }
 

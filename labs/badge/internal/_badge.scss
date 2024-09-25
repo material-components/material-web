@@ -29,7 +29,7 @@
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-badge-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
   }
 

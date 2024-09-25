@@ -27,9 +27,7 @@
 @mixin styles() {
   $md-sys-color: tokens.md-sys-color-values-light();
   $md-sys-motion: tokens.md-sys-motion-values();
-  $tokens: tokens.md-comp-dialog-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-dialog-values();
 
   :host {
     border-start-start-radius: map.get($tokens, 'container-shape-start-start');
@@ -183,6 +181,7 @@
     font-family: map.get($tokens, 'supporting-text-font');
     font-size: map.get($tokens, 'supporting-text-size');
     line-height: map.get($tokens, 'supporting-text-line-height');
+    flex: 1;
     font-weight: map.get($tokens, 'supporting-text-weight');
     height: min-content; // Needed for Safari
     position: relative;

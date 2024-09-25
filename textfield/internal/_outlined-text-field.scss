@@ -26,9 +26,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-text-field-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-outlined-text-field-values();
 
   :host {
     // Only use the logical properties.
@@ -49,6 +47,7 @@
         'content-font': var(--_input-text-font),
         'content-line-height': var(--_input-text-line-height),
         'content-size': var(--_input-text-size),
+        'content-space': var(--_icon-input-space),
         'content-weight': var(--_input-text-weight),
         'disabled-content-color': var(--_disabled-input-text-color),
         'disabled-content-opacity': var(--_disabled-input-text-opacity),
@@ -124,6 +123,10 @@
         'top-space': var(--_top-space),
         'trailing-content-color': var(--_trailing-icon-color),
         'trailing-space': var(--_trailing-space),
+        'with-leading-content-leading-space':
+          var(--_with-leading-icon-leading-space),
+        'with-trailing-content-trailing-space':
+          var(--_with-trailing-icon-trailing-space),
         // go/keep-sorted end
       )
     );

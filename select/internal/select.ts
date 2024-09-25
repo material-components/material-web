@@ -14,7 +14,7 @@ import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
   createValidator,
@@ -50,9 +50,11 @@ import {getSelectedItems, SelectOptionRecord} from './shared.js';
 const VALUE = Symbol('value');
 
 // Separate variable needed for closure.
-const selectBaseClass = mixinOnReportValidity(
-  mixinConstraintValidation(
-    mixinFormAssociated(mixinElementInternals(LitElement)),
+const selectBaseClass = mixinDelegatesAria(
+  mixinOnReportValidity(
+    mixinConstraintValidation(
+      mixinFormAssociated(mixinElementInternals(LitElement)),
+    ),
   ),
 );
 
@@ -71,10 +73,6 @@ const selectBaseClass = mixinOnReportValidity(
  * and closed.
  */
 export abstract class Select extends selectBaseClass {
-  static {
-    requestUpdateOnAriaChange(Select);
-  }
-
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
@@ -105,6 +103,12 @@ export abstract class Select extends selectBaseClass {
    * The floating label for the field.
    */
   @property() label = '';
+
+  /**
+   * Disables the asterisk on the floating label, when the select is
+   * required.
+   */
+  @property({type: Boolean, attribute: 'no-asterisk'}) noAsterisk = false;
 
   /**
    * Conveys additional information below the select, such as how it should
@@ -206,7 +210,7 @@ export abstract class Select extends selectBaseClass {
   /**
    * Returns an array of selected options.
    *
-   * NOTE: md-select only suppoprts single selection.
+   * NOTE: md-select only supports single selection.
    */
   get selectedOptions() {
     return (this.getSelectedOptions() ?? []).map(([option]) => option);
@@ -307,7 +311,7 @@ export abstract class Select extends selectBaseClass {
     this.nativeErrorText = '';
   }
 
-  [onReportValidity](invalidEvent: Event | null) {
+  override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
 
@@ -395,6 +399,7 @@ export abstract class Select extends selectBaseClass {
           aria-controls="listbox"
           class="field"
           label=${this.label}
+          ?no-asterisk=${this.noAsterisk}
           .focused=${this.focused || this.open}
           .populated=${!!this.displayText}
           .disabled=${this.disabled}
@@ -829,11 +834,11 @@ export abstract class Select extends selectBaseClass {
     this.field?.click();
   }
 
-  [createValidator]() {
+  override [createValidator]() {
     return new SelectValidator(() => this);
   }
 
-  [getValidityAnchor]() {
+  override [getValidityAnchor]() {
     return this.field;
   }
 }

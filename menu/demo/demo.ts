@@ -105,6 +105,14 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       defaultValue: 0,
       ui: numberInput(),
     }),
+    new Knob('noHorizontalFlip', {
+      defaultValue: false,
+      ui: boolInput(),
+    }),
+    new Knob('noVerticalFlip', {
+      defaultValue: false,
+      ui: boolInput(),
+    }),
     new Knob('typeaheadDelay', {
       defaultValue: 200,
       ui: numberInput(),

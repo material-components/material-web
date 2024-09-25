@@ -8,12 +8,16 @@
 
 import {html} from 'lit';
 
+import {Environment} from '../testing/environment.js';
 import {createFormTests} from '../testing/forms.js';
 import {createTokenTests} from '../testing/tokens.js';
 
+import {SwitchHarness} from './harness.js';
 import {MdSwitch} from './switch.js';
 
 describe('<md-switch>', () => {
+  const env = new Environment();
+
   describe('.styles', () => {
     createTokenTests(MdSwitch.styles);
   });
@@ -115,6 +119,75 @@ describe('<md-switch>', () => {
           },
         },
       ],
+    });
+  });
+
+  describe('enter key activation', () => {
+    // Don't use harness.clickWithKeyboard() since it simulates a click event.
+    // The underlying `<input type="checkbox">` will not dispatch click events
+    // in response to the Enter key.
+
+    it('should toggle the switch on', async () => {
+      // Arrange
+      const root = env.render(html`<md-switch></md-switch>`);
+      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+
+      // Act
+      await harness.keypress('Enter');
+      await harness.element.updateComplete;
+
+      // Assert
+      expect(harness.element.selected)
+        .withContext('switch is selected after Enter')
+        .toBeTrue();
+    });
+
+    it('should toggle the switch off', async () => {
+      // Arrange
+      const root = env.render(html`<md-switch selected></md-switch>`);
+      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+
+      // Act
+      await harness.keypress('Enter');
+      await harness.element.updateComplete;
+
+      // Assert
+      expect(harness.element.selected)
+        .withContext('switch is unselected after Enter')
+        .toBeFalse();
+    });
+
+    it('should not toggle the switch when disabled', async () => {
+      // Arrange
+      const root = env.render(html`<md-switch disabled></md-switch>`);
+      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+
+      // Act
+      await harness.keypress('Enter');
+      await harness.element.updateComplete;
+
+      // Assert
+      expect(harness.element.selected)
+        .withContext('disabled switch is not selected after Enter')
+        .toBeFalse();
+    });
+
+    it('should not toggle the switch when keydown event is canceled', async () => {
+      // Arrange
+      const root = env.render(html`<md-switch></md-switch>`);
+      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+      harness.element.addEventListener('keydown', (event) => {
+        event.preventDefault();
+      });
+
+      // Act
+      await harness.keypress('Enter');
+      await harness.element.updateComplete;
+
+      // Assert
+      expect(harness.element.selected)
+        .withContext('switch is not selected when Enter is canceled')
+        .toBeFalse();
     });
   });
 });

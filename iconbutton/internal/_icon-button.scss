@@ -28,9 +28,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-icon-button-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-icon-button-values();
 
   :host {
     @each $token, $value in $tokens {
@@ -91,7 +89,7 @@
       color: var(--_pressed-icon-color);
     }
 
-    &:disabled {
+    &:is(:disabled, [aria-disabled='true']) {
       color: var(--_disabled-icon-color);
     }
   }
@@ -100,12 +98,12 @@
     border-radius: var(--_state-layer-shape);
   }
 
-  .standard:disabled .icon {
+  .standard:is(:disabled, [aria-disabled='true']) {
     opacity: var(--_disabled-icon-opacity);
   }
 
   .selected {
-    &:not(:disabled) {
+    &:not(:disabled, [aria-disabled='true']) {
       color: var(--_selected-icon-color);
 
       &:hover {

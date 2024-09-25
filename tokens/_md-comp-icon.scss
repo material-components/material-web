@@ -28,7 +28,7 @@ $supported-tokens: (
 
 @function values(
   $exclude-hardcoded-values: false,
-  $exclude-custom-properties: true
+  $exclude-custom-properties: false
 ) {
   $tokens: validate.values(
     (),
@@ -36,8 +36,6 @@ $supported-tokens: (
     $new-tokens: _get-new-tokens($exclude-hardcoded-values)
   );
 
-  // Default to `$exclude-custom-properties: false` in the next breaking change.
-  // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
       $tokens: map.set($tokens, $token, var(--md-icon-#{$token}, #{$value}));

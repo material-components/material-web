@@ -41,9 +41,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filled-field-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-filled-field-values();
 
   @layer styles {
     :host {

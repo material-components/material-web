@@ -46,7 +46,7 @@ export type SelectOptionConfig = MenuItemControllerConfig;
 export class SelectOptionController implements ReactiveController {
   private readonly menuItemController: MenuItemController;
   private internalDisplayText: string | null = null;
-  private lastSelected = this.host.selected;
+  private lastSelected: boolean;
   private firstUpdate = true;
 
   /**
@@ -97,6 +97,7 @@ export class SelectOptionController implements ReactiveController {
     private readonly host: ReactiveControllerHost & SelectOption,
     config: SelectOptionConfig,
   ) {
+    this.lastSelected = this.host.selected;
     this.menuItemController = new MenuItemController(host, config);
     host.addController(this);
   }

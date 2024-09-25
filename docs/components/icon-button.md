@@ -30,7 +30,7 @@ people take supplementary actions with a single tap.
 <img
     class="hero"
     alt="The top half of a phone application with a back icon button at the top left and three icon buttons on the top right, heart, share, and three dot."
-    src="images/iconbutton/hero.png">
+    src="images/iconbutton/hero.webp">
 
 </catalog-component-header>
 
@@ -55,7 +55,7 @@ people take supplementary actions with a single tap.
 
 <!-- no-catalog-start -->
 
-![Side by side view of standard and contained icon buttons](images/iconbutton/buttons.png "1 - Standard Icon Button. 2 - Contained Icon Button (including filled, filled tonal, and outlined styles)")
+![Side by side view of standard and contained icon buttons](images/iconbutton/buttons.webp "1 - Standard Icon Button. 2 - Contained Icon Button (including filled, filled tonal, and outlined styles)")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/buttons.html" -->
@@ -79,7 +79,7 @@ the icon font.
 
 <!-- no-catalog-start -->
 
-![A row of icon buttons](images/iconbutton/usage.png "Icon buttons can be used within other components, such as a bottom app bar")
+![A row of icon buttons](images/iconbutton/usage.webp "Icon buttons can be used within other components, such as a bottom app bar")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage.html" -->
@@ -119,7 +119,7 @@ attribute to turn the icon button into a link.
 
 ![Two rows of toggling icon buttons, the top row is unselected and the bottom
 row is
-selected](images/iconbutton/usage-toggle.png "Unselected and Selected Icon Button")
+selected](images/iconbutton/usage-toggle.webp "Unselected and Selected Icon Button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-toggle.html" -->
@@ -196,6 +196,34 @@ more descriptive label when selected.
 </md-icon-button>
 ```
 
+### Focusable and disabled
+
+By default, disabled icon buttons are not focusable with the keyboard, while
+"soft-disabled" icon buttons are. Some use cases encourage focusability of
+disabled toolbar items to increase their discoverability.
+
+See the
+[ARIA guidelines on focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls)<!-- {.external} -->
+for guidance on when this is recommended.
+
+```html
+<div role="toolbar">
+  <md-icon-button aria-label="Copy">
+    <md-icon>copy</md-icon>
+  </md-icon-button>
+  <md-icon-button aria-label="Cut">
+    <md-icon>cut</md-icon>
+  </md-icon-button>
+  <!--
+    This icon button is disabled but kept focusable to improve its
+    discoverability in the toolbar.
+  -->
+  <md-icon-button aria-label="Paste" soft-disabled>
+    <md-icon>paste</md-icon>
+  </md-icon-button>
+</div>
+```
+
 ## Icon Button
 
 Standard icon buttons do not have a background or outline, and have the lowest
@@ -203,7 +231,7 @@ emphasis of the icon buttons.
 
 <!-- no-catalog-start -->
 
-![A check icon](images/iconbutton/usage-standard.png "Standard Icon Button with Check icon")
+![A check icon](images/iconbutton/usage-standard.webp "Standard Icon Button with Check icon")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-standard.html" -->
@@ -220,7 +248,7 @@ emphasis of the icon buttons.
 
 <!-- no-catalog-start -->
 
-![A circular button with a check icon](images/iconbutton/usage-filled.png "Filled Icon Button")
+![A circular button with a check icon](images/iconbutton/usage-filled.webp "Filled Icon Button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-filled.html" -->
@@ -240,7 +268,7 @@ actions.
 
 <!-- no-catalog-start -->
 
-![A filled tonal icon button with a check icon](images/iconbutton/usage-filled-tonal.png "Filled Tonal Icon Button")
+![A filled tonal icon button with a check icon](images/iconbutton/usage-filled-tonal.webp "Filled Tonal Icon Button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-filled-tonal.html" -->
@@ -262,7 +290,7 @@ high emphasis action.
 
 <!-- no-catalog-start -->
 
-![An outlined circular icon button with a check icon](images/iconbutton/usage-outlined.png "Outlined Icon button")
+![An outlined circular icon button with a check icon](images/iconbutton/usage-outlined.webp "Outlined Icon button")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/usage-outlined.html" -->
@@ -297,7 +325,7 @@ Token                                | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a standard icon button with a different theme applied](images/iconbutton/theming-standard.png "Standard icon button theming example.")
+![Image of a standard icon button with a different theme applied](images/iconbutton/theming-standard.webp "Standard icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-standard.html" -->
@@ -319,7 +347,7 @@ Token                                | Default value
 ### Filled Icon Button tokens
 
 Token                                              | Default value
--------------------------------------------------- | ------------------------
+-------------------------------------------------- | -------------
 `--md-filled-icon-button-selected-container-color` | `--md-sys-color-primary`
 `--md-filled-icon-button-container-shape`          | `--md-sys-shape-corner-full`
 `--md-filled-icon-button-container-width`          | `40px`
@@ -333,7 +361,7 @@ Token                                              | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a filled icon button with a different theme applied](images/iconbutton/theming-filled.png "Filled icon button theming example.")
+![Image of a filled icon button with a different theme applied](images/iconbutton/theming-filled.webp "Filled icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-filled.html" -->
@@ -368,7 +396,7 @@ Token                                                    | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a filled tonal icon button with a different theme applied](images/iconbutton/theming-filled-tonal.png "Filled tonal icon button theming example.")
+![Image of a filled tonal icon button with a different theme applied](images/iconbutton/theming-filled-tonal.webp "Filled tonal icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-filled-tonal.html" -->
@@ -391,7 +419,7 @@ Token                                                    | Default value
 ### Outlined Icon Button tokens
 
 Token                                        | Default value
--------------------------------------------- | ------------------------
+-------------------------------------------- | ----------------------------
 `--md-outlined-icon-button-outline-color`    | `--md-sys-color-outline`
 `--md-outlined-icon-button-outline-width`    | `1px`
 `--md-outlined-icon-button-container-shape`  | `--md-sys-shape-corner-full`
@@ -403,7 +431,7 @@ Token                                        | Default value
 
 <!-- no-catalog-start -->
 
-![Image of an outlined icon button with a different theme applied](images/iconbutton/theming-outlined.png "Outlined icon button theming example.")
+![Image of an outlined icon button with a different theme applied](images/iconbutton/theming-outlined.webp "Outlined icon button theming example.")
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/iconbutton/theming-outlined.html" -->
@@ -434,20 +462,31 @@ Token                                        | Default value
 
 <!-- mdformat off(autogenerated might break rendering in catalog) -->
 
-Property | Attribute | Type | Default | Description
---- | --- | --- | --- | ---
-`disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive.
-`flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup.
-`href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
-`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute.
-`ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
-`toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
-`selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` |
-`value` | `value` | `string` | `''` |
-`name` |  | `string` | `undefined` |
-`form` |  | `HTMLFormElement` | `undefined` |
-`labels` |  | `NodeList` | `undefined` |
+| Property | Attribute | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive. |
+| `flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup. |
+| `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
+| `target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
+| `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
+| `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
+| `name` |  | `string` | `undefined` |  |
+| `form` |  | `HTMLFormElement` | `undefined` |  |
+| `labels` |  | `NodeList` | `undefined` |  |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -457,20 +496,32 @@ Property | Attribute | Type | Default | Description
 
 <!-- mdformat off(autogenerated might break rendering in catalog) -->
 
-Property | Attribute | Type | Default | Description
---- | --- | --- | --- | ---
-`disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive.
-`flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup.
-`href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
-`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute.
-`ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
-`toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
-`selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` |
-`value` | `value` | `string` | `''` |
-`name` |  | `string` | `undefined` |
-`form` |  | `HTMLFormElement` | `undefined` |
-`labels` |  | `NodeList` | `undefined` |
+| Property | Attribute | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive. |
+| `softDisabled` | `soft-disabled` | `boolean` | `false` | "Soft-disables" the icon button (disabled but still focusable). |
+| `flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup. |
+| `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
+| `target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
+| `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
+| `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
+| `name` |  | `string` | `undefined` |  |
+| `form` |  | `HTMLFormElement` | `undefined` |  |
+| `labels` |  | `NodeList` | `undefined` |  |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -480,20 +531,31 @@ Property | Attribute | Type | Default | Description
 
 <!-- mdformat off(autogenerated might break rendering in catalog) -->
 
-Property | Attribute | Type | Default | Description
---- | --- | --- | --- | ---
-`disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive.
-`flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup.
-`href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
-`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute.
-`ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
-`toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
-`selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` |
-`value` | `value` | `string` | `''` |
-`name` |  | `string` | `undefined` |
-`form` |  | `HTMLFormElement` | `undefined` |
-`labels` |  | `NodeList` | `undefined` |
+| Property | Attribute | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive. |
+| `flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup. |
+| `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
+| `target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
+| `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
+| `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
+| `name` |  | `string` | `undefined` |  |
+| `form` |  | `HTMLFormElement` | `undefined` |  |
+| `labels` |  | `NodeList` | `undefined` |  |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -503,20 +565,31 @@ Property | Attribute | Type | Default | Description
 
 <!-- mdformat off(autogenerated might break rendering in catalog) -->
 
-Property | Attribute | Type | Default | Description
---- | --- | --- | --- | ---
-`disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive.
-`flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup.
-`href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute.
-`target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute.
-`ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected.
-`toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states
-`selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided.
-`type` | `type` | `string` | `'submit'` |
-`value` | `value` | `string` | `''` |
-`name` |  | `string` | `undefined` |
-`form` |  | `HTMLFormElement` | `undefined` |
-`labels` |  | `NodeList` | `undefined` |
+| Property | Attribute | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `disabled` | `disabled` | `boolean` | `false` | Disables the icon button and makes it non-interactive. |
+| `flipIconInRtl` | `flip-icon-in-rtl` | `boolean` | `false` | Flips the icon if it is in an RTL context at startup. |
+| `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
+| `target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
+| `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `type` | `type` | `string` | `'submit'` | The default behavior of the button. May be "button", "reset", or "submit" (default). |
+| `value` | `value` | `string` | `''` | The value added to a form with the button's name when the button submits a form. |
+| `name` |  | `string` | `undefined` |  |
+| `form` |  | `HTMLFormElement` | `undefined` |  |
+| `labels` |  | `NodeList` | `undefined` |  |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 

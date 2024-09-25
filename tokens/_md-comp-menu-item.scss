@@ -75,7 +75,7 @@ $_default: (
 @function values(
   $deps: $_default,
   $exclude-hardcoded-values: false,
-  $exclude-custom-properties: true
+  $exclude-custom-properties: false
 ) {
   $tokens: md-comp-menu.values($deps);
 
@@ -89,12 +89,11 @@ $_default: (
     $tokens,
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
-    $new-tokens: md-comp-list-item.values($deps),
+    $new-tokens:
+      md-comp-list-item.values($deps, $exclude-custom-properties: true),
     $renamed-tokens: _get-renamed-tokens($tokens)
   );
 
-  // Default to `$exclude-custom-properties: false` in the next breaking change.
-  // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
       $tokens: map.set(

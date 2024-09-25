@@ -27,14 +27,14 @@ export class AssistChip extends Chip {
 
   protected override get rippleDisabled() {
     // Link chips cannot be disabled
-    return !this.href && this.disabled;
+    return !this.href && (this.disabled || this.softDisabled);
   }
 
   protected override getContainerClasses() {
     return {
       ...super.getContainerClasses(),
       // Link chips cannot be disabled
-      disabled: !this.href && this.disabled,
+      disabled: !this.href && (this.disabled || this.softDisabled),
       elevated: this.elevated,
       link: !!this.href,
     };
@@ -60,6 +60,7 @@ export class AssistChip extends Chip {
         class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
+        aria-disabled=${this.softDisabled || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"
         >${content}</button

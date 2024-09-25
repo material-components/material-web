@@ -7,12 +7,13 @@
 /**
  * Accessibility Object Model reflective aria property name types.
  */
-export type ARIAProperty = Exclude<keyof ARIAMixin, 'role'>;
+export type ARIAProperty = keyof ARIAMixin;
 
 /**
  * Accessibility Object Model reflective aria properties.
  */
 export const ARIA_PROPERTIES: ARIAProperty[] = [
+  'role',
   'ariaAtomic',
   'ariaAutoComplete',
   'ariaBusy',
@@ -72,7 +73,7 @@ export const ARIA_ATTRIBUTES = ARIA_PROPERTIES.map(ariaPropertyToAttribute);
  * @return True if the attribute is an aria attribute, or false if not.
  */
 export function isAriaAttribute(attribute: string): attribute is ARIAAttribute {
-  return attribute.startsWith('aria-');
+  return ARIA_ATTRIBUTES.includes(attribute as ARIAAttribute);
 }
 
 /**
@@ -84,9 +85,7 @@ export function isAriaAttribute(attribute: string): attribute is ARIAAttribute {
  * @param property The aria property.
  * @return The aria attribute.
  */
-export function ariaPropertyToAttribute<K extends ARIAProperty | 'role'>(
-  property: K,
-) {
+export function ariaPropertyToAttribute<K extends ARIAProperty>(property: K) {
   return (
     property
       .replace('aria', 'aria-')
@@ -101,8 +100,8 @@ type ARIAPropertyToAttribute<K extends string> =
   K extends `aria${infer Suffix}Element${infer OptS}`
     ? `aria-${Lowercase<Suffix>}`
     : K extends `aria${infer Suffix}`
-    ? `aria-${Lowercase<Suffix>}`
-    : K;
+      ? `aria-${Lowercase<Suffix>}`
+      : K;
 
 /**
  * An extension of `ARIAMixin` that enforces strict value types for aria

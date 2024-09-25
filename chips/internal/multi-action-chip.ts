@@ -16,14 +16,21 @@ const ARIA_LABEL_REMOVE = 'aria-label-remove';
  * A chip component with multiple actions.
  */
 export abstract class MultiActionChip extends Chip {
-  get ariaLabelRemove(): string {
+  get ariaLabelRemove(): string | null {
     if (this.hasAttribute(ARIA_LABEL_REMOVE)) {
       return this.getAttribute(ARIA_LABEL_REMOVE)!;
     }
 
     const {ariaLabel} = this as ARIAMixinStrict;
-    return `Remove ${ariaLabel || this.label}`;
+
+    // TODO(b/350810013): remove `this.label` when label property is removed.
+    if (ariaLabel || this.label) {
+      return `Remove ${ariaLabel || this.label}`;
+    }
+
+    return null;
   }
+
   set ariaLabelRemove(ariaLabel: string | null) {
     const prev = this.ariaLabelRemove;
     if (ariaLabel === prev) {

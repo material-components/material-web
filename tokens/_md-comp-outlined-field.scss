@@ -29,6 +29,7 @@ $supported-tokens: (
   'content-font',
   'content-line-height',
   'content-size',
+  'content-space',
   'content-weight',
   'disabled-content-color',
   'disabled-content-opacity',
@@ -99,6 +100,8 @@ $supported-tokens: (
   'top-space',
   'trailing-content-color',
   'trailing-space',
+  'with-leading-content-leading-space',
+  'with-trailing-content-trailing-space',
   // go/keep-sorted end
 );
 
@@ -112,7 +115,7 @@ $_default: (
 @function values(
   $deps: $_default,
   $exclude-hardcoded-values: false,
-  $exclude-custom-properties: true
+  $exclude-custom-properties: false
 ) {
   $text-field: md-comp-outlined-text-field.values(
     $deps,
@@ -127,6 +130,7 @@ $_default: (
     'content-font': map.get($text-field, 'input-text-font'),
     'content-line-height': map.get($text-field, 'input-text-line-height'),
     'content-size': map.get($text-field, 'input-text-size'),
+    'content-space': if($exclude-hardcoded-values, null, 16px),
     'content-weight': map.get($text-field, 'input-text-weight'),
     'disabled-content-color': map.get($text-field, 'disabled-input-text-color'),
     'disabled-content-opacity':
@@ -231,6 +235,10 @@ $_default: (
     'top-space': if($exclude-hardcoded-values, null, 16px),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
     'trailing-space': if($exclude-hardcoded-values, null, 16px),
+    'with-leading-content-leading-space':
+      if($exclude-hardcoded-values, null, 12px),
+    'with-trailing-content-trailing-space':
+      if($exclude-hardcoded-values, null, 12px),
     // go/keep-sorted end
   );
 
@@ -241,8 +249,6 @@ $_default: (
     $new-tokens: $new-tokens
   );
 
-  // Default to `$exclude-custom-properties: false` in the next breaking change.
-  // See b/321816473.
   @if not $exclude-custom-properties {
     @each $token, $value in $tokens {
       @if string.index($token, 'container-shape-') == 1 {

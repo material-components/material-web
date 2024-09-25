@@ -1,5 +1,93 @@
 # Changelog
 
+## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
+
+
+### Features
+
+* **field,textfield:** add `container` slot for custom background content ([44c13cd](https://github.com/material-components/material-web/commit/44c13cdd753108137e9765bf14a6ea3ed46be18e))
+
+
+### Bug Fixes
+
+* **checkbox:** add override to symbol properties ([a9ee4f5](https://github.com/material-components/material-web/commit/a9ee4f5bc1d6702e5dc352eefed13a1d849577e3))
+* remove the input entirely and replace it with a touch target ([cf84a27](https://github.com/material-components/material-web/commit/cf84a271e75b806075427f4d176b38f8884fdd7e))
+* remove unnecessary css variable prefixes ([5044e6e](https://github.com/material-components/material-web/commit/5044e6eb2fe6c6bd3e53b19bef04ba6b6c0b2a2b))
+* Replace aria-hidden attribute with inert attribute in &lt;md-radio&gt; component ([192f17e](https://github.com/material-components/material-web/commit/192f17e8c1ce4a38cf76b5a81cb6c2b1ddcfbe46))
+* Set touch target to `display: none` ([a696121](https://github.com/material-components/material-web/commit/a69612162d79b63f0b82da0468201942dc82ed9e))
+
+## [2.1.0](https://github.com/material-components/material-web/compare/v2.0.0...v2.1.0) (2024-08-20)
+
+
+### Features
+
+* **switch:** add touch target token ([b8f362a](https://github.com/material-components/material-web/commit/b8f362a97d8369e0f6bab834794f99bd50b5ab78))
+* **textfield,field:** add leading/trailing icon spacing tokens ([c1991c4](https://github.com/material-components/material-web/commit/c1991c4c894c48fe77abe09a2791f97dc77d438f))
+
+
+### Bug Fixes
+
+* changed checkmark to check in md-icon selected slot ([2e2817b](https://github.com/material-components/material-web/commit/2e2817bab5fc51bb32363b36471cb01d1f029a46))
+
+## [2.0.0](https://github.com/material-components/material-web/compare/v1.5.1...v2.0.0) (2024-07-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tokens:** Sass component tokens, such as `tokens.md-comp-checkbox-values()`, return `var(--md-<component>, <value>)` instead of just the CSS value. Use `$exclude-custom-properties: true` to remove them.
+* `querySelector` for `[role]` and `[aria-*]` attributes may no longer work. See `@material/web/migrations/v2/README.md` and `@material/web/migrations/v2/query-selector-aria.ts`.
+
+### Features
+
+* **button:** add `soft-disabled` attribute for focusable disabled buttons ([48124ba](https://github.com/material-components/material-web/commit/48124ba09f538c6264407a49e6bc0ba097991a9d))
+* check for server before creating treewalker from document ([0d50ed9](https://github.com/material-components/material-web/commit/0d50ed91f0c542b4d5b5e2c913930a52a46136e5))
+* **chips:** add label slot ([7ec70c4](https://github.com/material-components/material-web/commit/7ec70c4c2d8863fa1e1d38724d77a9b6d4e6a20c))
+* **chips:** add new `soft-disabled` attribute for focusable disabled chips ([750b886](https://github.com/material-components/material-web/commit/750b886acfa15960d66f83a08599d2a2155ae659))
+* **iconbutton:** add `soft-disabled` attribute for focusable disabled icon buttons ([281c092](https://github.com/material-components/material-web/commit/281c092d061f77b812e57f473e77cfd123016471))
+
+
+### Bug Fixes
+
+* add typecast ([1482bff](https://github.com/material-components/material-web/commit/1482bfff0de55e136513861c1976776c5a4b4b93))
+* aria-labels announcing twice with "group" on components ([5df9410](https://github.com/material-components/material-web/commit/5df9410e604cf446c83bb5ada3454596c34b2c50))
+* **chips:** add truncation support ([713f0a8](https://github.com/material-components/material-web/commit/713f0a80fcfc9ef730e1c1f88e15098b9d10735b))
+* **tokens:** `tokens.md-comp-*-values()` include custom properties by default ([55b4650](https://github.com/material-components/material-web/commit/55b46500634c022c335d9c4818121a1b5d95e111))
+
+## [1.5.1](https://github.com/material-components/material-web/compare/v1.5.0...v1.5.1) (2024-06-25)
+
+
+### Bug Fixes
+
+* **checkbox:** sass theme mixin not working ([46d66ed](https://github.com/material-components/material-web/commit/46d66ed9d188243e313e6833f244a5b750aa9fdb)), closes [#5651](https://github.com/material-components/material-web/issues/5651)
+* **dialog:** have content expand to fill height ([17aa21a](https://github.com/material-components/material-web/commit/17aa21a53ecc949b3326ed0d2c2bf461a20617c6))
+* **menu:** resolve aborted animations as false rather than reject ([4f7ff4f](https://github.com/material-components/material-web/commit/4f7ff4f63adaec11cfc7e2772990a757139be01b)), closes [#5638](https://github.com/material-components/material-web/issues/5638)
+* **switch:** pressing enter toggles the switch ([99ec9e2](https://github.com/material-components/material-web/commit/99ec9e25eb0d64887a3530e494ba8683909c0e62))
+
+## [1.5.0](https://github.com/material-components/material-web/compare/v1.4.1...v1.5.0) (2024-05-23)
+
+
+### Features
+
+* **menu:** allow customizing `scrollbar-width` ([1bf8b5f](https://github.com/material-components/material-web/commit/1bf8b5fbf9ff8f7c0084acee77988b1af9ad7e19))
+* **select:** make required asterisk optional ([8f194a5](https://github.com/material-components/material-web/commit/8f194a51dbc85ead2d9d8c10e0be69f183788a31))
+* **textfield:** make required asterisk optional ([be5bb43](https://github.com/material-components/material-web/commit/be5bb43100fbf0df3a7cfec4c4d4399559a23114))
+
+
+### Bug Fixes
+
+* **button:** add part attribute to button ([a2b5c91](https://github.com/material-components/material-web/commit/a2b5c91a549e206603f23d84233de83a8c165d77))
+* **dialog:** focus is trapped for a11y, use `no-focus-trap` to disable ([0aea436](https://github.com/material-components/material-web/commit/0aea4364a142f3db84b77ae99eea1df6a3cd8456))
+* **docs:** progress.webp not playing ([2f0c99a](https://github.com/material-components/material-web/commit/2f0c99ad3d3320341a4ae61db5abe64c37649ddb)), closes [#5569](https://github.com/material-components/material-web/issues/5569)
+* **menu:** `getBoundingClientRect()` and `getClientRects()` not working ([e1f9cbc](https://github.com/material-components/material-web/commit/e1f9cbc59e4cbb50921304158edbb8e68706c405))
+
+## [1.4.1](https://github.com/material-components/material-web/compare/v1.4.0...v1.4.1) (2024-04-15)
+
+
+### Bug Fixes
+
+* **dialog:** update info comment with autocomplete -&gt; autofocus ([fc4c999](https://github.com/material-components/material-web/commit/fc4c9992f8827e2a07e5c0b32cc48a065356cf29))
+* **select:** select.click() opens the menu ([7a6cf16](https://github.com/material-components/material-web/commit/7a6cf16a4e37889d0497af4f1c4df8be78aefa54))
+
 ## [1.4.0](https://github.com/material-components/material-web/compare/v1.3.0...v1.4.0) (2024-03-21)
 
 

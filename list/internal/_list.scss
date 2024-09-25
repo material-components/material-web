@@ -27,9 +27,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-list-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-list-values();
 
   :host {
     background: map.get($tokens, 'container-color');

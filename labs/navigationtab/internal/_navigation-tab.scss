@@ -38,7 +38,7 @@ $animation-duration: 100ms;
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-navigation-bar-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     display: flex;

@@ -83,7 +83,8 @@ const interactive: MaterialStoryInit<StoryKnobs> = {
         </md-list-item>
 
         <md-list-item ?disabled=${knobs.disabled}>
-          Non-interactive item ${getKnobContent(knobs)}
+          Non-interactive item ${knobs.disabled ? '(disabled)' : nothing}
+          ${getKnobContent(knobs)}
         </md-list-item>
       </md-list>
     `;

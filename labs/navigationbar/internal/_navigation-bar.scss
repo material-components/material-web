@@ -35,7 +35,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
   :host {
     @each $token, $value in $tokens {
-      --_#{$token}: var(--md-navigation-bar-#{$token}, #{$value});
+      --_#{$token}: #{$value};
     }
 
     @include elevation.theme(

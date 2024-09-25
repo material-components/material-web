@@ -25,9 +25,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-button-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-outlined-button-values();
 
   :host {
     // Only use the logical properties.
@@ -57,20 +55,20 @@
     border-color: var(--_pressed-outline-color);
   }
 
-  :host([disabled]) .outline {
+  :host(:is([disabled], [soft-disabled])) .outline {
     border-color: var(--_disabled-outline-color);
     opacity: var(--_disabled-outline-opacity);
   }
 
   @media (forced-colors: active) {
-    :host([disabled]) .background {
+    :host(:is([disabled], [soft-disabled])) .background {
       // Only outlined buttons change their border when disabled to distinguish
       // them from other buttons that add a border for increased visibility in
       // HCM.
       border-color: GrayText;
     }
 
-    :host([disabled]) .outline {
+    :host(:is([disabled], [soft-disabled])) .outline {
       opacity: 1;
     }
   }

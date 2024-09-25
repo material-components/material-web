@@ -31,9 +31,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-radio-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-radio-values();
 
   @layer {
     :host {
@@ -91,19 +89,14 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       );
     }
 
-    // <input> is also the touch target
-    input {
-      appearance: none;
+    .touch-target {
       height: 48px;
-      margin: 0;
       position: absolute;
       width: 48px;
-      cursor: inherit;
     }
 
-    :host([touch-target='none']) input {
-      width: 100%;
-      height: 100%;
+    :host([touch-target='none']) .touch-target {
+      display: none;
     }
 
     md-ripple {

@@ -29,9 +29,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-switch-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-switch-values();
 
   @layer styles, hcm;
   @layer styles {
@@ -80,13 +78,16 @@
     // Input is also touch target
     input {
       appearance: none;
-      height: 48px;
+      height: max(100%, map.get($tokens, 'touch-target-size'));
       outline: none;
       margin: 0;
       position: absolute;
-      width: 100%;
+      width: max(100%, map.get($tokens, 'touch-target-size'));
       z-index: 1;
       cursor: inherit;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     :host([touch-target='none']) input {

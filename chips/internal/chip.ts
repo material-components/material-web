@@ -7,22 +7,21 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, PropertyValues, TemplateResult} from 'lit';
+import {html, isServer, LitElement, PropertyValues, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
+
+// Separate variable needed for closure.
+const chipBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * A chip component.
  *
  * @fires update-focus {Event} Dispatched when `disabled` is toggled. --bubbles
  */
-export abstract class Chip extends LitElement {
-  static {
-    requestUpdateOnAriaChange(Chip);
-  }
-
+export abstract class Chip extends chipBaseClass {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
@@ -37,17 +36,33 @@ export abstract class Chip extends LitElement {
   @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
+   * Whether or not the chip is "soft-disabled" (disabled but still
+   * focusable).
+   *
+   * Use this when a chip needs increased visibility when disabled. See
+   * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
+   * for more guidance on when this is needed.
+   */
+  @property({type: Boolean, attribute: 'soft-disabled', reflect: true})
+  softDisabled = false;
+
+  /**
    * When true, allow disabled chips to be focused with arrow keys.
    *
    * Add this when a chip needs increased visibility when disabled. See
    * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls
    * for more guidance on when this is needed.
+   *
+   * @deprecated Use `softDisabled` instead of `alwaysFocusable` + `disabled`.
    */
   @property({type: Boolean, attribute: 'always-focusable'})
   alwaysFocusable = false;
 
+  // TODO(b/350810013): remove the label property.
   /**
    * The label of the chip.
+   *
+   * @deprecated Set text as content of the chip instead.
    */
   @property() label = '';
 
@@ -71,7 +86,14 @@ export abstract class Chip extends LitElement {
    * Some chip actions such as links cannot be disabled.
    */
   protected get rippleDisabled() {
-    return this.disabled;
+    return this.disabled || this.softDisabled;
+  }
+
+  constructor() {
+    super();
+    if (!isServer) {
+      this.addEventListener('click', this.handleClick.bind(this));
+    }
   }
 
   override focus(options?: FocusOptions) {
@@ -98,7 +120,7 @@ export abstract class Chip extends LitElement {
 
   protected getContainerClasses(): ClassInfo {
     return {
-      'disabled': this.disabled,
+      'disabled': this.disabled || this.softDisabled,
       'has-icon': this.hasIcon,
     };
   }
@@ -129,7 +151,11 @@ export abstract class Chip extends LitElement {
       <span class="leading icon" aria-hidden="true">
         ${this.renderLeadingIcon()}
       </span>
-      <span class="label">${this.label}</span>
+      <span class="label">
+        <span class="label-text" id="label">
+          ${this.label ? this.label : html`<slot></slot>`}
+        </span>
+      </span>
       <span class="touch"></span>
     `;
   }
@@ -137,5 +163,16 @@ export abstract class Chip extends LitElement {
   private handleIconChange(event: Event) {
     const slot = event.target as HTMLSlotElement;
     this.hasIcon = slot.assignedElements({flatten: true}).length > 0;
+  }
+
+  private handleClick(event: Event) {
+    // If the chip is soft-disabled or disabled + always-focusable, we need to
+    // explicitly prevent the click from propagating to other event listeners
+    // as well as prevent the default action.
+    if (this.softDisabled || (this.disabled && this.alwaysFocusable)) {
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      return;
+    }
   }
 }

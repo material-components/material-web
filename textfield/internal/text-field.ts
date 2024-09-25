@@ -13,7 +13,7 @@ import {StaticValue, html as staticHtml} from 'lit/static-html.js';
 
 import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
@@ -72,9 +72,11 @@ export type InvalidTextFieldType =
   | 'submit';
 
 // Separate variable needed for closure.
-const textFieldBaseClass = mixinOnReportValidity(
-  mixinConstraintValidation(
-    mixinFormAssociated(mixinElementInternals(LitElement)),
+const textFieldBaseClass = mixinDelegatesAria(
+  mixinOnReportValidity(
+    mixinConstraintValidation(
+      mixinFormAssociated(mixinElementInternals(LitElement)),
+    ),
   ),
 );
 
@@ -92,10 +94,6 @@ const textFieldBaseClass = mixinOnReportValidity(
  * --bubbles --composed
  */
 export abstract class TextField extends textFieldBaseClass {
-  static {
-    requestUpdateOnAriaChange(TextField);
-  }
-
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
@@ -131,6 +129,12 @@ export abstract class TextField extends textFieldBaseClass {
    * https://m3.material.io/components/text-fields/guidelines
    */
   @property() label = '';
+
+  /**
+   * Disables the asterisk on the floating label, when the text field is
+   * required.
+   */
+  @property({type: Boolean, attribute: 'no-asterisk'}) noAsterisk = false;
 
   /**
    * Indicates that the user must specify a value for the input before the
@@ -554,6 +558,7 @@ export abstract class TextField extends textFieldBaseClass {
       ?has-end=${this.hasTrailingIcon}
       ?has-start=${this.hasLeadingIcon}
       label=${this.label}
+      ?no-asterisk=${this.noAsterisk}
       max=${this.maxLength}
       ?populated=${!!this.value}
       ?required=${this.required}
@@ -564,6 +569,7 @@ export abstract class TextField extends textFieldBaseClass {
       ${this.renderInputOrTextarea()}
       ${this.renderTrailingIcon()}
       <div id="description" slot="aria-describedby"></div>
+      <slot name="container" slot="container"></slot>
     </${this.fieldTag}>`;
   }
 
@@ -604,6 +610,7 @@ export abstract class TextField extends textFieldBaseClass {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
+          name=${this.name || nothing}
           ?disabled=${this.disabled}
           maxlength=${hasMaxLength ? this.maxLength : nothing}
           minlength=${hasMinLength ? this.minLength : nothing}
@@ -638,6 +645,7 @@ export abstract class TextField extends textFieldBaseClass {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
+          name=${this.name || nothing}
           ?disabled=${this.disabled}
           inputmode=${inputMode || nothing}
           max=${(this.max || nothing) as unknown as number}
@@ -760,18 +768,18 @@ export abstract class TextField extends textFieldBaseClass {
     this.getInputOrTextarea().focus();
   }
 
-  [createValidator](): Validator<unknown> {
+  override [createValidator](): Validator<unknown> {
     return new TextFieldValidator(() => ({
       state: this,
       renderedControl: this.inputOrTextarea,
     }));
   }
 
-  [getValidityAnchor](): HTMLElement | null {
+  override [getValidityAnchor](): HTMLElement | null {
     return this.inputOrTextarea;
   }
 
-  [onReportValidity](invalidEvent: Event | null) {
+  override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
 

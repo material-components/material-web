@@ -8,8 +8,11 @@ import {html, LitElement, nothing} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
-import {requestUpdateOnAriaChange} from '../../../internal/aria/delegate.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
 import {SegmentedButton} from '../../segmentedbutton/internal/segmented-button.js';
+
+// Separate variable needed for closure.
+const segmentedButtonSetBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * SegmentedButtonSet is the parent component for two or more
@@ -21,11 +24,7 @@ import {SegmentedButton} from '../../segmentedbutton/internal/segmented-button.j
  * `setButtonSelected` or the `toggleSelection` methods as well as on user
  * interaction. --bubbles --composed
  */
-export class SegmentedButtonSet extends LitElement {
-  static {
-    requestUpdateOnAriaChange(SegmentedButtonSet);
-  }
-
+export class SegmentedButtonSet extends segmentedButtonSetBaseClass {
   @property({type: Boolean}) multiselect = false;
 
   @queryAssignedElements({flatten: true}) buttons!: SegmentedButton[];

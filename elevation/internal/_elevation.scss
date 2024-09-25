@@ -26,9 +26,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-elevation-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-elevation-values();
 
   :host,
   .shadow,

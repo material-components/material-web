@@ -28,9 +28,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-segmented-button-values(
-    $exclude-custom-properties: false,
-  );
+  $tokens: tokens.md-comp-outlined-segmented-button-values();
 
   :host {
     // Only use the logical properties.
