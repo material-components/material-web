@@ -37,26 +37,26 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // size to account for always showing the active track on the outside
   // edge of the last tick.
   $_active-track-max-clip: calc(
-    100% - var(--_with-tick-marks-container-size) * 2
+          100% - var(--_with-tick-marks-container-size) * 2
   );
   // When the start fraction is !0, add clipping by the tick container size
   $_start-fraction-not-zero: min(var(--_start-fraction) * 1e9, 1);
   $_active-track-start-offset: calc(
-    var(--_with-tick-marks-container-size) * $_start-fraction-not-zero
+          var(--_with-tick-marks-container-size) * $_start-fraction-not-zero
   );
   $_active-track-start-clip: calc(
-    $_active-track-start-offset + $_active-track-max-clip *
-      var(--_start-fraction)
+          $_active-track-start-offset + $_active-track-max-clip *
+          var(--_start-fraction)
   );
 
   // When the end fraction is !1, add clipping by the tick container size
   $_end-fraction-not-one: min((1 - var(--_end-fraction)) * 1e9, 1);
   $_active-track-end-offset: calc(
-    var(--_with-tick-marks-container-size) * $_end-fraction-not-one
+          var(--_with-tick-marks-container-size) * $_end-fraction-not-one
   );
   $_active-track-end-clip: calc(
-    $_active-track-end-offset + $_active-track-max-clip *
-      (1 - var(--_end-fraction))
+          $_active-track-end-offset + $_active-track-max-clip *
+          (1 - var(--_end-fraction))
   );
 
   :host {
@@ -74,17 +74,17 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     min-inline-size: 200px;
 
     @include elevation.theme(
-      (
-        level: var(--_handle-elevation),
-        shadow-color: var(--_handle-shadow-color),
-      )
+                    (
+                            level: var(--_handle-elevation),
+                            shadow-color: var(--_handle-shadow-color),
+                    )
     );
   }
 
   md-focus-ring {
     height: 48px;
     inset: unset;
-    width: 48px;
+    width: 8px;
   }
 
   md-elevation {
@@ -105,9 +105,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     opacity: var(--_disabled-active-track-opacity);
 
     @include elevation.theme(
-      (
-        level: var(--_disabled-handle-elevation),
-      )
+                    (
+                            level: var(--_disabled-handle-elevation),
+                    )
     );
   }
 
@@ -139,24 +139,42 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     border-bottom-left-radius: var(--_active-track-shape);
     border-top-right-radius: if(var(--_start-fraction) == 1, var(--_active-track-shape), 5000px);
     border-bottom-right-radius: if(var(--_start-fraction) == 1, var(--_active-track-shape), 5000px);
-    inline-size: calc(100%*var(--_start-fraction) - var(--_state-layer-size) / 2);
+    inline-size: calc(100% * var(--_start-fraction) - var(--_state-layer-size) / 2);
     margin-inline-end: calc(var(--_state-layer-size) / 2);
+  }
+
+  input.start:focus ~ .track .track-start,
+  input.end:focus ~ .track .track-start {
+    width: calc(100% * var(--_start-fraction) - var(--_state-layer-size) / 2 + 2px);
   }
 
   .track-middle {
     background: var(--_active-track-color);
     block-size: var(--_active-track-height);
-    border-radius: 0;
+    border-radius: 5000px;
     inline-size: calc(100% * (var(--_end-fraction) - var(--_start-fraction)) - 6px);
     margin-inline-start: 6px;
+  }
+
+  input.start:focus ~ .track .track-middle,
+  input.end:focus ~ .track .track-middle {
+    width: calc(100% * (var(--_end-fraction) - var(--_start-fraction)) - 6px);
   }
 
   .track-end {
     background: var(--_inactive-track-color);
     block-size: var(--_inactive-track-height);
-    border-radius: var(--_inactive-track-shape);
-    inline-size: calc(100% * (1 - var(--_end-fraction)) - 6px);
+    border-top-right-radius: var(--_inactive-track-shape);
+    border-bottom-right-radius: var(--_inactive-track-shape);
+    border-top-left-radius: if(var(--_end-fraction) == 0, var(--_inactive-track-shape), 5000px);
+    border-bottom-left-radius: if(var(--_end-fraction) == 0, var(--_inactive-track-shape), 5000px);
+    inline-size: calc(100% * (1 - var(--_end-fraction)) - var(--_state-layer-size) / 2);
     margin-inline-start: auto;
+  }
+
+  input.start:focus ~ .track .track-end,
+  input.end:focus ~ .track .track-end {
+    width: calc(100% * (1 - var(--_end-fraction)) - var(--_state-layer-size) / 2 + 2px);
   }
 
   .tickmarks::before,
@@ -165,16 +183,15 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     content: '';
     // pad the track inward by half the ripple size offset by the tick container size.
     $_track-padding: calc(
-      (var(--_state-layer-size) / 2) - var(--_with-tick-marks-container-size)
+            (var(--_state-layer-size) / 2) - var(--_with-tick-marks-container-size)
     );
     inset-inline-start: $_track-padding;
     inset-inline-end: $_track-padding;
 
     // ticks size: set here since it does not change.
     background-size: calc(
-        (100% - var(--_with-tick-marks-container-size) * 2) / var(--_tick-count)
-      )
-      100%;
+            (100% - var(--_with-tick-marks-container-size) * 2) / var(--_tick-count)
+    ) 100%;
   }
 
   // inactive-track
@@ -190,7 +207,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
   .tickmarks::before {
     background-image: _get-tick-image(
-      var(--_with-tick-marks-inactive-container-color)
+                    var(--_with-tick-marks-inactive-container-color)
     );
     margin-left: 4px;
     margin-right: 4px;
@@ -200,8 +217,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     // Note, the active track opacity is applied to the entire host,
     // so the inactive track is calc'd to compensate.
     opacity: calc(
-      (1 / var(--_disabled-active-track-opacity)) *
-        var(--_disabled-inactive-track-opacity)
+            (1 / var(--_disabled-active-track-opacity)) *
+            var(--_disabled-inactive-track-opacity)
     );
     background: var(--_disabled-inactive-track-color);
   }
@@ -220,7 +237,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
   .tickmarks::after {
     background-image: _get-tick-image(
-      var(--_with-tick-marks-active-container-color)
+                    var(--_with-tick-marks-active-container-color)
     );
     margin-left: 4px;
     margin-right: 4px;
@@ -241,7 +258,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 
   :host([disabled]) .tickmarks::before {
     background-image: _get-tick-image(
-      var(--_with-tick-marks-disabled-container-color)
+                    var(--_with-tick-marks-disabled-container-color)
     );
   }
 
@@ -298,6 +315,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   input.end:focus ~ .handleContainerPadded .handle.end > .handleNub,
   input.start:focus ~ .handleContainerPadded .handle.start > .handleNub {
     background: var(--_focus-handle-color);
+    width: 2px;
   }
 
   // prefix classes exist to overcome specificity of focus styling.
@@ -315,13 +333,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   .onTop.isOverlapping {
     .label,
     .label::before {
-      outline: var(--_with-overlap-handle-outline-color) solid
-        var(--_with-overlap-handle-outline-width);
+      outline: var(--_with-overlap-handle-outline-color) solid var(--_with-overlap-handle-outline-width);
     }
 
     .handleNub {
-      border: var(--_with-overlap-handle-outline-color) solid
-        var(--_with-overlap-handle-outline-width);
+      border: var(--_with-overlap-handle-outline-color) solid var(--_with-overlap-handle-outline-width);
     }
   }
 
@@ -351,12 +367,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     line-height: var(--_label-text-line-height);
     font-weight: var(--_label-text-weight);
 
-    inset-block-end: 100%;
+    inset-block-end: calc(100% + 18px);
     min-inline-size: var(--_label-container-height);
     min-block-size: var(--_label-container-height);
     background: var(--_label-container-color);
-    transition: transform map.get($_md-sys-motion, 'duration-short2')
-      map.get($_md-sys-motion, 'easing-emphasized');
+    transition: transform map.get($_md-sys-motion, 'duration-short2') map.get($_md-sys-motion, 'easing-emphasized');
     transform-origin: center bottom;
     transform: scale(0);
   }
@@ -376,16 +391,6 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     content: '';
     background: inherit;
   }
-
-  // triangle below label
-  //.label::before {
-    // Note, sizing carefully estimated to create an ice cream cone shape.
-  //  $_triangleSize: calc(var(--_label-container-height) / 2);
-  //  inline-size: $_triangleSize;
-  //  block-size: $_triangleSize;
-  //  bottom: calc(var(--_label-container-height) / -10);
-  //  transform: rotate(45deg);
-  //}
 
   // fits inside label and occludes top half of triangle.
   .label::after {
@@ -454,11 +459,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // Clip the inputs to the space left/right of the center point between the
   // values so the right input gets pointer events.
   $_clip-to-start: calc(
-    var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
-      (
-        var(--_start-fraction) +
-          ((var(--_end-fraction) - var(--_start-fraction)) / 2)
-      )
+          var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
+          (var(--_start-fraction) +
+          ((var(--_end-fraction) - var(--_start-fraction)) / 2))
   );
 
   $_clip-to-end: calc(100% - $_clip-to-start);
@@ -490,12 +493,12 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // Ripple
   .handle {
     @include ripple.theme(
-      (
-        hover-color: var(--_hover-state-layer-color),
-        hover-opacity: var(--_hover-state-layer-opacity),
-        pressed-color: var(--_pressed-state-layer-color),
-        pressed-opacity: var(--_pressed-state-layer-opacity),
-      )
+                    (
+                            hover-color: var(--_hover-state-layer-color),
+                            hover-opacity: var(--_hover-state-layer-opacity),
+                            pressed-color: var(--_pressed-state-layer-color),
+                            pressed-opacity: var(--_pressed-state-layer-opacity),
+                    )
     );
   }
 
@@ -509,10 +512,10 @@ $_md-sys-shape: tokens.md-sys-shape-values();
 // Returns a background-image with sized circular ticks of the given color.
 @function _get-tick-image($color) {
   @return radial-gradient(
-    circle at var(--_with-tick-marks-container-size) center,
-    #{$color} 0,
-    #{$color} calc(var(--_with-tick-marks-container-size) / 2),
-    transparent calc(var(--_with-tick-marks-container-size) / 2)
+                  circle at var(--_with-tick-marks-container-size) center,
+                  #{$color} 0,
+                  #{$color} calc(var(--_with-tick-marks-container-size) / 2),
+                  transparent calc(var(--_with-tick-marks-container-size) / 2)
   );
 }
 
@@ -535,11 +538,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   input.#{$start-or-end}::-webkit-slider-thumb {
     // AKA `layout-shift` in the equations above
     --_track-and-knob-padding: calc(
-      (var(--_state-layer-size) - var(--_handle-width)) / 2
+            (var(--_state-layer-size) - var(--_handle-width)) / 2
     );
     --_x-translate: calc(
-      var(--_track-and-knob-padding) - 2 * var(--_#{$start-or-end}-fraction) *
-        var(--_track-and-knob-padding)
+            var(--_track-and-knob-padding) - 2 * var(--_#{$start-or-end}-fraction) *
+            var(--_track-and-knob-padding)
     );
     transform: translateX(var(--_x-translate));
   }
