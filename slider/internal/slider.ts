@@ -338,7 +338,7 @@ export class Slider extends sliderBaseClass {
     const endFraction = ((this.renderValueEnd ?? this.min) - this.min) / range;
     const containerStyles = {
       // for clipping inputs and active track.
-      '--_start-fraction': String(startFraction),
+      '--_start-fraction': String(this.range ? startFraction : endFraction),
       '--_end-fraction': String(endFraction),
       // for generating tick marks
       '--_tick-count': String(range / step),
@@ -403,9 +403,17 @@ export class Slider extends sliderBaseClass {
 
   private renderTrack() {
     return html`
-      <div class="track"></div>
+      <div class="track">
+        ${this.renderTrackPart('start')}
+        ${when(this.range, () => this.renderTrackPart('middle'))}
+        ${this.renderTrackPart('end')}
+      </div>
       ${this.ticks ? html`<div class="tickmarks"></div>` : nothing}
     `;
+  }
+
+  private renderTrackPart(part: string) {
+    return html`<div class="track-${part}"></div>`;
   }
 
   private renderLabel(value: string) {
@@ -434,10 +442,6 @@ export class Slider extends sliderBaseClass {
         isOverlapping,
       })}">
       <md-focus-ring part="focus-ring" for=${name}></md-focus-ring>
-      <md-ripple
-        for=${name}
-        class=${name}
-        ?disabled=${this.disabled}></md-ripple>
       <div class="handleNub">
         <md-elevation part="elevation"></md-elevation>
       </div>

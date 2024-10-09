@@ -59,6 +59,70 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 
 <!-- catalog-only-end -->
 
+## Types
+
+<!-- no-catalog-start -->
+
+![The 5 types of common buttons](images/button/types.webp "Elevated, filled, filled tonal, outlined, and text buttons")
+
+<!-- no-catalog-end -->
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      class="types-image"
+      style="justify-content:center;"
+      title="Elevated, filled, filled tonal, outlined, and text buttons"
+      aria-label="The 5 types of common buttons">
+    <style>
+      .types-image .wrapper,
+      .types-image .wrapper > * {
+        display: flex;
+        padding: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .types-image .wrapper > * {
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 16px;
+      }
+      .types-image span {
+        display: inline-flex;
+        background-color: var(--md-sys-color-inverse-surface);
+        color: var(--md-sys-color-inverse-on-surface);
+        padding: 8px;
+        margin-block-start: 8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <div class="wrapper">
+      <div>
+        <md-slider></md-slider>
+        <span>1</span>
+      </div>
+      <div>
+        <md-slider ticks labeled value="5" min="0" max="10"></md-slider>
+        <span>2</span>
+      </div>
+      <div>
+        <md-slider range labeled value-start="25" value-end="75"></md-slider>
+        <span>3</span>
+      </div>
+    </div>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Sliders may be continuous or discrete, and may also represent a range.

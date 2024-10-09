@@ -129,13 +129,37 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     inset: 0;
     display: flex;
     align-items: center;
+    padding-inline: calc(var(--_state-layer-size) / 2);
   }
 
-  // inactive-track
-  .track::before,
+  .track-start {
+    background: var(--_active-track-color);
+    block-size: var(--_active-track-height);
+    border-top-left-radius: var(--_active-track-shape);
+    border-bottom-left-radius: var(--_active-track-shape);
+    border-top-right-radius: if(var(--_start-fraction) == 1, var(--_active-track-shape), 5000px);
+    border-bottom-right-radius: if(var(--_start-fraction) == 1, var(--_active-track-shape), 5000px);
+    inline-size: calc(100%*var(--_start-fraction) - var(--_state-layer-size) / 2);
+    margin-inline-end: calc(var(--_state-layer-size) / 2);
+  }
+
+  .track-middle {
+    background: var(--_active-track-color);
+    block-size: var(--_active-track-height);
+    border-radius: 0;
+    inline-size: calc(100% * (var(--_end-fraction) - var(--_start-fraction)) - 6px);
+    margin-inline-start: 6px;
+  }
+
+  .track-end {
+    background: var(--_inactive-track-color);
+    block-size: var(--_inactive-track-height);
+    border-radius: var(--_inactive-track-shape);
+    inline-size: calc(100% * (1 - var(--_end-fraction)) - 6px);
+    margin-inline-start: auto;
+  }
+
   .tickmarks::before,
-  // active-track
-  .track::after,
   .tickmarks::after {
     position: absolute;
     content: '';
@@ -168,6 +192,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background-image: _get-tick-image(
       var(--_with-tick-marks-inactive-container-color)
     );
+    margin-left: 4px;
+    margin-right: 4px;
   }
 
   :host([disabled]) .track::before {
@@ -196,6 +222,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     background-image: _get-tick-image(
       var(--_with-tick-marks-active-container-color)
     );
+    margin-left: 4px;
+    margin-right: 4px;
   }
 
   // rtl for active track clipping
@@ -309,7 +337,10 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     position: absolute;
     box-sizing: border-box;
     display: flex;
-    padding: 4px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
     place-content: center;
     place-items: center;
     border-radius: map.get($_md-sys-shape, 'corner-full');
@@ -347,14 +378,14 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // triangle below label
-  .label::before {
+  //.label::before {
     // Note, sizing carefully estimated to create an ice cream cone shape.
-    $_triangleSize: calc(var(--_label-container-height) / 2);
-    inline-size: $_triangleSize;
-    block-size: $_triangleSize;
-    bottom: calc(var(--_label-container-height) / -10);
-    transform: rotate(45deg);
-  }
+  //  $_triangleSize: calc(var(--_label-container-height) / 2);
+  //  inline-size: $_triangleSize;
+  //  block-size: $_triangleSize;
+  //  bottom: calc(var(--_label-container-height) / -10);
+  //  transform: rotate(45deg);
+  //}
 
   // fits inside label and occludes top half of triangle.
   .label::after {
