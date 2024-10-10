@@ -338,7 +338,7 @@ export class Slider extends sliderBaseClass {
     const endFraction = ((this.renderValueEnd ?? this.min) - this.min) / range;
     const containerStyles = {
       // for clipping inputs and active track.
-      '--_start-fraction': String(this.range ? startFraction : endFraction),
+      '--_start-fraction': String(startFraction),
       '--_end-fraction': String(endFraction),
       // for generating tick marks
       '--_tick-count': String(range / step),
@@ -403,10 +403,12 @@ export class Slider extends sliderBaseClass {
 
   private renderTrack() {
     return html`
-      <div class="track">
-        ${this.renderTrackPart('start')}
-        ${when(this.range, () => this.renderTrackPart('middle'))}
-        ${this.renderTrackPart('end')}
+      <div class="trackPadded">
+        <div class="trackBlock">
+          ${this.renderTrackPart('start')}
+          ${when(this.range, () => this.renderTrackPart('middle'))}
+          ${this.renderTrackPart('end')}
+        </div>
       </div>
       ${this.ticks ? html`<div class="tickmarks"></div>` : nothing}
     `;

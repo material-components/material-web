@@ -63,7 +63,7 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 
 <!-- no-catalog-start -->
 
-![The 5 types of common buttons](images/button/types.webp "Elevated, filled, filled tonal, outlined, and text buttons")
+![The 5 types of common buttons](images/button/types.webp "Continous, discrete, range sliders")
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -104,15 +104,15 @@ Sliders can use icons or labels to represent a numeric or relative scale.
     </style>
     <div class="wrapper">
       <div>
-        <md-slider></md-slider>
+        <md-slider min="0" max="100" value="50"></md-slider>
         <span>1</span>
       </div>
       <div>
-        <md-slider ticks labeled value="5" min="0" max="10"></md-slider>
+        <md-slider step="5" ticks min="0" max="20"></md-slider>
         <span>2</span>
       </div>
       <div>
-        <md-slider range labeled value-start="25" value-end="75"></md-slider>
+        <md-slider range value-start="25" value-end="50"></md-slider>
         <span>3</span>
       </div>
     </div>
@@ -122,6 +122,10 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 -->
 
 <!-- catalog-only-end -->
+
+1.  [Continuous](#continuous)
+1.  [Discrete](#discrete)
+1.  [Range](#range)
 
 ## Usage
 
