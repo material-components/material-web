@@ -61,11 +61,6 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 
 ## Types
 
-<!-- no-catalog-start -->
-
-![The 5 types of common buttons](images/button/types.webp "Continous, discrete, range sliders")
-
-<!-- no-catalog-end -->
 <!-- catalog-only-start -->
 
 <!--
@@ -74,8 +69,8 @@ Sliders can use icons or labels to represent a numeric or relative scale.
   <figure
       class="types-image"
       style="justify-content:center;"
-      title="Elevated, filled, filled tonal, outlined, and text buttons"
-      aria-label="The 5 types of common buttons">
+      title="Continous, discrete and range sliders"
+      aria-label="The 3 types of sliders">
     <style>
       .types-image .wrapper,
       .types-image .wrapper > * {
@@ -94,7 +89,7 @@ Sliders can use icons or labels to represent a numeric or relative scale.
         background-color: var(--md-sys-color-inverse-surface);
         color: var(--md-sys-color-inverse-on-surface);
         padding: 8px;
-        margin-block-start: 8px;
+        margin-block-start: 24px;
         width: 24px;
         height: 24px;
         border-radius: 50%;
