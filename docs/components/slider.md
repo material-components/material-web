@@ -103,7 +103,7 @@ Sliders can use icons or labels to represent a numeric or relative scale.
         <span>1</span>
       </div>
       <div>
-        <md-slider step="5" ticks min="0" max="20"></md-slider>
+        <md-slider labeled step="5" ticks min="0" max="20"></md-slider>
         <span>2</span>
       </div>
       <div>

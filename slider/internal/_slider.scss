@@ -74,10 +74,10 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     min-inline-size: 200px;
 
     @include elevation.theme(
-                    (
-                            level: var(--_handle-elevation),
-                            shadow-color: var(--_handle-shadow-color),
-                    )
+      (
+        level: var(--_handle-elevation),
+        shadow-color: var(--_handle-shadow-color),
+      )
     );
   }
 
@@ -105,9 +105,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     opacity: var(--_disabled-active-track-opacity);
 
     @include elevation.theme(
-                    (
-                            level: var(--_disabled-handle-elevation),
-                    )
+      (
+        level: var(--_disabled-handle-elevation),
+      )
     );
   }
 
@@ -207,14 +207,9 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 
   // inactive-track
-  .track::before,
   .tickmarks::before {
     block-size: var(--_inactive-track-height);
     border-radius: var(--_inactive-track-shape);
-  }
-
-  .track::before {
-    background: var(--_inactive-track-color);
   }
 
   .tickmarks::before {
@@ -535,12 +530,12 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // Ripple
   .handle {
     @include ripple.theme(
-                    (
-                            hover-color: var(--_hover-state-layer-color),
-                            hover-opacity: var(--_hover-state-layer-opacity),
-                            pressed-color: var(--_pressed-state-layer-color),
-                            pressed-opacity: var(--_pressed-state-layer-opacity),
-                    )
+      (
+        hover-color: var(--_hover-state-layer-color),
+        hover-opacity: var(--_hover-state-layer-opacity),
+        pressed-color: var(--_pressed-state-layer-color),
+        pressed-opacity: var(--_pressed-state-layer-opacity),
+      )
     );
   }
 
