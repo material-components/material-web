@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -444,9 +443,7 @@ export class Slider extends sliderBaseClass {
         isOverlapping,
       })}">
       <md-focus-ring part="focus-ring" for=${name}></md-focus-ring>
-      <div class="handleNub">
-        <md-elevation part="elevation"></md-elevation>
-      </div>
+      <div class="handleNub"></div>
       ${when(this.labeled, () => this.renderLabel(label))}
     </div>`;
   }
