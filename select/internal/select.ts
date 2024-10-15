@@ -386,6 +386,7 @@ export abstract class Select extends selectBaseClass {
   }
 
   private renderField() {
+    const ariaLabel = (this as ARIAMixinStrict).ariaLabel || this.label;
     return staticHtml`
       <${this.fieldTag}
           aria-haspopup="listbox"
@@ -393,7 +394,7 @@ export abstract class Select extends selectBaseClass {
           part="field"
           id="field"
           tabindex=${this.disabled ? '-1' : '0'}
-          aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
+          aria-label=${ariaLabel || nothing}
           aria-describedby="description"
           aria-expanded=${this.open ? 'true' : 'false'}
           aria-controls="listbox"
