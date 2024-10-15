@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/material-components/material-web/compare/v2.2.0...v2.2.1) (2024-10-15)
+
+
+### Bug Fixes
+
+* **select:** missing accessible label ([1bdcbd3](https://github.com/material-components/material-web/commit/1bdcbd38ab96f6a7537c36cb7d61d9e8db2144e7))
+
 ## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
 
 
