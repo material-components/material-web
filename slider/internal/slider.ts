@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
@@ -403,9 +402,19 @@ export class Slider extends sliderBaseClass {
 
   private renderTrack() {
     return html`
-      <div class="track"></div>
+      <div class="trackPadded">
+        <div class="trackBlock">
+          ${this.renderTrackPart('start')}
+          ${when(this.range, () => this.renderTrackPart('middle'))}
+          ${this.renderTrackPart('end')}
+        </div>
+      </div>
       ${this.ticks ? html`<div class="tickmarks"></div>` : nothing}
     `;
+  }
+
+  private renderTrackPart(part: string) {
+    return html`<div class="track-${part}"></div>`;
   }
 
   private renderLabel(value: string) {
@@ -434,13 +443,7 @@ export class Slider extends sliderBaseClass {
         isOverlapping,
       })}">
       <md-focus-ring part="focus-ring" for=${name}></md-focus-ring>
-      <md-ripple
-        for=${name}
-        class=${name}
-        ?disabled=${this.disabled}></md-ripple>
-      <div class="handleNub">
-        <md-elevation part="elevation"></md-elevation>
-      </div>
+      <div class="handleNub"></div>
       ${when(this.labeled, () => this.renderLabel(label))}
     </div>`;
   }
