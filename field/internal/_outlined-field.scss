@@ -130,6 +130,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     .outline-notch {
       align-items: flex-start;
       border: inherit;
+      border-color: inherit !important;
       display: flex;
       margin-inline-start: calc(-1 * var(--_outline-label-padding));
       margin-inline-end: var(--_outline-label-padding);
@@ -259,7 +260,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
 
     .focused .outline,
-    .focused .outline-notch{
+    .focused .outline-notch {
       border-color: var(--_focus-outline-color);
       color: var(--_focus-outline-color); // Needed for Firefox HCM
     }
