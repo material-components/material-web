@@ -23,7 +23,10 @@ import {
   getValidityAnchor,
   mixinConstraintValidation,
 } from '../../labs/behaviors/constraint-validation.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {
+  internals,
+  mixinElementInternals,
+} from '../../labs/behaviors/element-internals.js';
 import {
   getFormState,
   getFormValue,
@@ -111,6 +114,12 @@ export class Checkbox extends checkboxBaseClass {
       this.prevDisabled = changed.get('disabled') ?? this.disabled;
       this.prevIndeterminate =
         changed.get('indeterminate') ?? this.indeterminate;
+
+      if (this.checked) {
+        this[internals].states.add('checked');
+      } else {
+        this[internals].states.delete('checked');
+      }
     }
 
     super.update(changed);

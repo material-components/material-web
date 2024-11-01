@@ -50,6 +50,7 @@ describe('checkbox', () => {
       expect(harness.element.indeterminate).toEqual(false);
       expect(harness.element.disabled).toEqual(false);
       expect(harness.element.value).toEqual('on');
+      expect(harness.element.matches(':state(checked)')).toEqual(false);
     });
 
     it('user input updates checked state', async () => {
@@ -57,6 +58,7 @@ describe('checkbox', () => {
       await harness.clickWithMouse();
       await env.waitForStability();
       expect(harness.element.checked).toEqual(true);
+      expect(harness.element.matches(':state(checked)')).toEqual(true);
     });
 
     it('should trigger changed event when checkbox is selected', async () => {
