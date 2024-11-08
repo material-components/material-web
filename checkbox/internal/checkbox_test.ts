@@ -152,6 +152,31 @@ describe('checkbox', () => {
       expect(input.checked).toEqual(true);
       expect(harness.element.checked).toEqual(true);
     });
+
+    it('matches :state(checked) when true', async () => {
+      // Arrange
+      const {harness} = await setupTest();
+
+      // Act
+      harness.element.checked = true;
+      await env.waitForStability();
+
+      // Assert
+      expect(harness.element.matches(':state(checked)'))
+        .withContext("element.matches(':state(checked)')")
+        .toBeTrue();
+    });
+
+    it('does not match :state(checked) when false', async () => {
+      // Arrange
+      // Act
+      const {harness} = await setupTest();
+
+      // Assert
+      expect(harness.element.matches(':state(checked)'))
+        .withContext("element.matches(':state(checked)')")
+        .toBeFalse();
+    });
   });
 
   describe('indeterminate', () => {
@@ -168,6 +193,31 @@ describe('checkbox', () => {
 
       expect(input.indeterminate).toEqual(false);
       expect(input.getAttribute('aria-checked')).not.toEqual('mixed');
+    });
+
+    it('matches :state(indeterminate) when true', async () => {
+      // Arrange
+      const {harness} = await setupTest();
+
+      // Act
+      harness.element.indeterminate = true;
+      await env.waitForStability();
+
+      // Assert
+      expect(harness.element.matches(':state(indeterminate)'))
+        .withContext("element.matches(':state(indeterminate)')")
+        .toBeTrue();
+    });
+
+    it('does not match :state(indeterminate) when false', async () => {
+      // Arrange
+      // Act
+      const {harness} = await setupTest();
+
+      // Assert
+      expect(harness.element.matches(':state(indeterminate)'))
+        .withContext("element.matches(':state(indeterminate)')")
+        .toBeFalse();
     });
   });
 
@@ -186,13 +236,15 @@ describe('checkbox', () => {
 
   describe('form submission', () => {
     async function setupFormTest(propsInit: Partial<Checkbox> = {}) {
-      return await setupTest(html` <form>
-        <md-test-checkbox
-          .checked=${propsInit.checked === true}
-          .disabled=${propsInit.disabled === true}
-          .name=${propsInit.name ?? ''}
-          .value=${propsInit.value ?? ''}></md-test-checkbox>
-      </form>`);
+      return await setupTest(
+        html`<form>
+          <md-test-checkbox
+            .checked=${propsInit.checked === true}
+            .disabled=${propsInit.disabled === true}
+            .name=${propsInit.name ?? ''}
+            .value=${propsInit.value ?? ''}></md-test-checkbox>
+        </form>`,
+      );
     }
 
     it('does not submit if not checked', async () => {
