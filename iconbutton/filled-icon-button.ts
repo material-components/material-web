@@ -6,10 +6,14 @@
 
 import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
+import {literal} from 'lit/static-html.js';
 
 import {styles} from './internal/filled-styles.js';
 import {IconButton} from './internal/icon-button.js';
 import {styles as sharedStyles} from './internal/shared-styles.js';
+
+import '../focus/md-focus-ring.js';
+import '../ripple/ripple.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -38,6 +42,10 @@ declare global {
 @customElement('md-filled-icon-button')
 export class MdFilledIconButton extends IconButton {
   static override styles: CSSResultOrNative[] = [sharedStyles, styles];
+
+  protected readonly focusRingTag = literal`md-focus-ring`;
+
+  protected readonly rippleTag = literal`md-ripple`;
 
   protected override getRenderClasses() {
     return {

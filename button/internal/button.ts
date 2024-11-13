@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../focus/md-focus-ring.js';
-import '../../ripple/ripple.js';
-
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
@@ -25,6 +22,7 @@ import {
   internals,
   mixinElementInternals,
 } from '../../labs/behaviors/element-internals.js';
+import {html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 // Separate variable needed for closure.
 const buttonBaseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
@@ -36,6 +34,10 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   static {
     setupFormSubmitter(Button);
   }
+
+  protected abstract readonly focusRingTag: StaticValue;
+
+  protected abstract readonly rippleTag: StaticValue;
 
   /** @nocollapse */
   static readonly formAssociated = true;
@@ -141,14 +143,17 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     // TODO(b/310046938): due to a limitation in focus ring/ripple, we can't use
     // the same ID for different elements, so we change the ID instead.
     const buttonId = this.href ? 'link' : 'button';
-    return html`
+    return staticHtml`
       ${this.renderElevationOrOutline?.()}
       <div class="background"></div>
-      <md-focus-ring part="focus-ring" for=${buttonId}></md-focus-ring>
-      <md-ripple
+      <${this.focusRingTag}
+        part="focus-ring" for=${buttonId}
+      ></${this.focusRingTag}>
+      <${this.rippleTag}
         part="ripple"
         for=${buttonId}
-        ?disabled="${isRippleDisabled}"></md-ripple>
+        ?disabled="${isRippleDisabled}"
+      ></${this.rippleTag}>
       ${buttonOrLink}
     `;
   }

@@ -4,13 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../focus/md-focus-ring.js';
-import '../../ripple/ripple.js';
-
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
-import {literal, html as staticHtml} from 'lit/static-html.js';
+import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
@@ -39,10 +36,14 @@ const iconButtonBaseClass = mixinDelegatesAria(
  * --composed
  * @fires change {Event} Dispatched when a toggle button toggles --bubbles
  */
-export class IconButton extends iconButtonBaseClass implements FormSubmitter {
+export abstract class IconButton extends iconButtonBaseClass implements FormSubmitter {
   static {
     setupFormSubmitter(IconButton);
   }
+
+  protected abstract readonly focusRingTag: StaticValue;
+
+  protected abstract readonly rippleTag: StaticValue;
 
   /** @nocollapse */
   static readonly formAssociated = true;
@@ -221,17 +222,17 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
 
   private renderFocusRing() {
     // TODO(b/310046938): use the same id for both elements
-    return html`<md-focus-ring
+    return staticHtml`<${this.focusRingTag}
       part="focus-ring"
-      for=${this.href ? 'link' : 'button'}></md-focus-ring>`;
+      for=${this.href ? 'link' : 'button'}></${this.focusRingTag}>`;
   }
 
   private renderRipple() {
     const isRippleDisabled = !this.href && (this.disabled || this.softDisabled);
     // TODO(b/310046938): use the same id for both elements
-    return html`<md-ripple
+    return staticHtml`<${this.rippleTag}
       for=${this.href ? 'link' : nothing}
-      ?disabled="${isRippleDisabled}"></md-ripple>`;
+      ?disabled="${isRippleDisabled}"></${this.rippleTag}>`;
   }
 
   override connectedCallback() {
