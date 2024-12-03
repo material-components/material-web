@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.2.1](https://github.com/material-components/material-web/compare/v2.2.0...v2.2.1) (2024-12-03)
+
+
+### Bug Fixes
+
+* **iconbutton:** href will respond to touch target ([ea1134a](https://github.com/material-components/material-web/commit/ea1134a1a77c032f8b8c6c749e670fca90d8cd89))
+* **labs:** add mixinCustomStateSet() for :state() compatibility ([045fe94](https://github.com/material-components/material-web/commit/045fe94872607f67da6c18d3689bff6a541102d2))
+* **select:** missing accessible label ([1bdcbd3](https://github.com/material-components/material-web/commit/1bdcbd38ab96f6a7537c36cb7d61d9e8db2144e7))
+
 ## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
 
 
