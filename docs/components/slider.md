@@ -59,6 +59,69 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 
 <!-- catalog-only-end -->
 
+## Types
+
+<!-- catalog-only-start -->
+
+<!--
+
+<div class="figure-wrapper">
+  <figure
+      class="types-image"
+      style="justify-content:center;"
+      title="Continous, discrete and range sliders"
+      aria-label="The 3 types of sliders">
+    <style>
+      .types-image .wrapper,
+      .types-image .wrapper > * {
+        display: flex;
+        padding: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .types-image .wrapper > * {
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 16px;
+      }
+      .types-image span {
+        display: inline-flex;
+        background-color: var(--md-sys-color-inverse-surface);
+        color: var(--md-sys-color-inverse-on-surface);
+        padding: 8px;
+        margin-block-start: 24px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <div class="wrapper">
+      <div>
+        <md-slider min="0" max="100" value="50"></md-slider>
+        <span>1</span>
+      </div>
+      <div>
+        <md-slider labeled step="5" ticks min="0" max="20"></md-slider>
+        <span>2</span>
+      </div>
+      <div>
+        <md-slider range value-start="25" value-end="50"></md-slider>
+        <span>3</span>
+      </div>
+    </div>
+  </figure>
+</div>
+
+-->
+
+<!-- catalog-only-end -->
+
+1.  [Continuous](#continuous)
+1.  [Discrete](#discrete)
+1.  [Range](#range)
+
 ## Usage
 
 Sliders may be continuous or discrete, and may also represent a range.
