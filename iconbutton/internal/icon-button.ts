@@ -179,8 +179,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
         ${this.renderRipple()}
         ${!this.selected ? this.renderIcon() : nothing}
         ${this.selected ? this.renderSelectedIcon() : nothing}
-        ${this.renderTouchTarget()}
-        ${this.href && this.renderLink()}
+        ${this.href ? this.renderLink() : this.renderTouchTarget()}
   </${tag}>`;
   }
 
@@ -193,7 +192,9 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
         id="link"
         href="${this.href}"
         target="${this.target || nothing}"
-        aria-label="${ariaLabel || nothing}"></a>
+        aria-label="${ariaLabel || nothing}">
+        ${this.renderTouchTarget()}
+      </a>
     `;
   }
 
