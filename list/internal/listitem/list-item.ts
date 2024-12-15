@@ -203,4 +203,8 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
     // work programmatically like in FF and select-option
     this.listItemRoot?.focus();
   }
+
+  override click() {
+    this.listItemRoot?.click();
+  }
 }
