@@ -107,7 +107,7 @@ payment'"
     </style>
     <div class="wrapper">
       <div>
-        <md-elevated-button hasicon>
+        <md-elevated-button has-icon>
           <md-icon slot="icon">add</md-icon>
           Elevated
         </md-elevated-button>
