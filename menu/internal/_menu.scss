@@ -100,7 +100,8 @@
   }
 
   .item-padding {
-    padding-block: 8px;
+    padding-block: map.get($tokens, 'top-space')
+      map.get($tokens, 'bottom-space');
   }
 
   .has-overflow:not([popover]) .items {
