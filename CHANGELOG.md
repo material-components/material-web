@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.3.0](https://github.com/material-components/material-web/compare/v2.2.0...v2.3.0) (2025-01-29)
+
+
+### Features
+
+* **menu:** add menu padding tokens ([767d1f1](https://github.com/material-components/material-web/commit/767d1f159e9ebcd001968bb7e8bcdf6c4ef1e537))
+
+
+### Bug Fixes
+
+* **catalog:** add hyphen to md-evelated-button attribute ([ac9b14a](https://github.com/material-components/material-web/commit/ac9b14a65c384d9389022f11555fb063b932ec96))
+* **iconbutton:** href will respond to touch target ([ea1134a](https://github.com/material-components/material-web/commit/ea1134a1a77c032f8b8c6c749e670fca90d8cd89))
+* **labs:** add mixinCustomStateSet() for :state() compatibility ([045fe94](https://github.com/material-components/material-web/commit/045fe94872607f67da6c18d3689bff6a541102d2))
+* **listitem:** click() from listItemRoot ([1c60e56](https://github.com/material-components/material-web/commit/1c60e56c6c1210fd5a116290271b9bc7e612fdf7))
+* **select:** missing accessible label ([1bdcbd3](https://github.com/material-components/material-web/commit/1bdcbd38ab96f6a7537c36cb7d61d9e8db2144e7))
+
 ## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
 
 
