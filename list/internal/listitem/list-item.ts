@@ -203,4 +203,16 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
     // work programmatically like in FF and select-option
     this.listItemRoot?.focus();
   }
+
+  override click() {
+    if (!this.listItemRoot) {
+      // If the element has not finished rendering, call super to ensure click
+      // events are dispatched.
+      super.click();
+      return;
+    }
+
+    // Forward click to the element to ensure link <a>.click() works correctly.
+    this.listItemRoot.click();
+  }
 }
