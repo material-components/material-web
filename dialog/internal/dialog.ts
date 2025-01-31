@@ -115,6 +115,8 @@ export class Dialog extends dialogBaseClass {
   private isConnectedPromise = this.getIsConnectedPromise();
   @query('dialog') private readonly dialog!: HTMLDialogElement | null;
   @query('.scrim') private readonly scrim!: HTMLDialogElement | null;
+  @query('.container-slot')
+  private readonly containerSlot!: HTMLDialogElement | null;
   @query('.container') private readonly container!: HTMLDialogElement | null;
   @query('.headline') private readonly headline!: HTMLDialogElement | null;
   @query('.content') private readonly content!: HTMLDialogElement | null;
@@ -301,6 +303,9 @@ export class Dialog extends dialogBaseClass {
         @keydown=${this.handleKeydown}
         .returnValue=${this.returnValue || nothing}>
         ${showFocusTrap ? focusTrap : nothing}
+        <div class="container-slot">
+          <slot name="container"></slot>
+        </div>
         <div class="container" @click=${this.handleContentClick}>
           <div class="headline">
             <div class="icon" aria-hidden="true">
@@ -433,13 +438,30 @@ export class Dialog extends dialogBaseClass {
       return;
     }
 
-    const {dialog, scrim, container, headline, content, actions} = this;
-    if (!dialog || !scrim || !container || !headline || !content || !actions) {
+    const {
+      dialog,
+      scrim,
+      containerSlot,
+      container,
+      headline,
+      content,
+      actions,
+    } = this;
+    if (
+      !dialog ||
+      !scrim ||
+      !containerSlot ||
+      !container ||
+      !headline ||
+      !content ||
+      !actions
+    ) {
       return;
     }
 
     const {
       container: containerAnimate,
+      containerSlot: containerSlotAnimate,
       dialog: dialogAnimate,
       scrim: scrimAnimate,
       headline: headlineAnimate,
@@ -450,6 +472,7 @@ export class Dialog extends dialogBaseClass {
     const elementAndAnimation: Array<[Element, DialogAnimationArgs[]]> = [
       [dialog, dialogAnimate ?? []],
       [scrim, scrimAnimate ?? []],
+      [containerSlot, containerSlotAnimate ?? []],
       [container, containerAnimate ?? []],
       [headline, headlineAnimate ?? []],
       [content, contentAnimate ?? []],
