@@ -72,7 +72,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
    * If not specified, the browser will determine a filename. 
    * This is only applicable when the button is used as a link (`href` is set).
    */
-  @property() downloadFilename = '';
+  @property() download = '';
 
   /**
    * Where to display the linked `href` URL for a link button. Common options
@@ -191,7 +191,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}"
       href=${this.href}
-      download=${this.downloadFilename || nothing}
+      download=${this.download || nothing}
       target=${this.target || nothing}
       >${this.renderContent()}
     </a>`;
