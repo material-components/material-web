@@ -80,6 +80,13 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   @property() href = '';
 
   /**
+   * The filename to use when downloading the linked resource. 
+   * If not specified, the browser will determine a filename. 
+   * This is only applicable when the icon button is used as a link (`href` is set).
+   */
+  @property() download = '';
+
+  /**
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute.
    */
   @property() target: LinkTarget | '' = '';
@@ -191,6 +198,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
         class="link"
         id="link"
         href="${this.href}"
+        download="${this.download || nothing}"
         target="${this.target || nothing}"
         aria-label="${ariaLabel || nothing}">
         ${this.renderTouchTarget()}
