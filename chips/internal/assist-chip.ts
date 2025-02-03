@@ -19,6 +19,12 @@ import {Chip} from './chip.js';
 export class AssistChip extends Chip {
   @property({type: Boolean}) elevated = false;
   @property() href = '';
+  /**
+   * The filename to use when downloading the linked resource. 
+   * If not specified, the browser will determine a filename. 
+   * This is only applicable when the chip is used as a link (`href` is set).
+   */
+  @property() download = '';
   @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
   protected get primaryId() {
@@ -49,6 +55,7 @@ export class AssistChip extends Chip {
           id="link"
           aria-label=${ariaLabel || nothing}
           href=${this.href}
+          download=${this.download || nothing}
           target=${this.target || nothing}
           >${content}</a
         >
