@@ -13,6 +13,7 @@ import {styles} from './internal/menu-styles.js';
 export {type ListItem} from '../list/internal/list-navigation-helpers.js';
 export {type MenuItem} from './internal/controllers/menuItemController.js';
 export {
+  CloseReason,
   FocusState,
   type CloseMenuEvent,
   type Menu,
