@@ -80,7 +80,7 @@ export class CopyCodeButton extends LitElement {
         aria-label=${this.label}
         aria-label-selected=${this.successLabel}>
         <md-icon>content_copy</md-icon>
-        <md-icon slot="selected">checkmark</md-icon>
+        <md-icon slot="selected">check</md-icon>
       </md-icon-button>
     `;
   }

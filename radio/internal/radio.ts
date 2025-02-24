@@ -119,13 +119,7 @@ export class Radio extends radioBaseClass {
           <circle class="inner circle" cx="10" cy="10" r="5" />
         </svg>
 
-        <input
-          id="input"
-          type="radio"
-          tabindex="-1"
-          .checked=${this.checked}
-          .value=${this.value}
-          ?disabled=${this.disabled} />
+        <div class="touch-target"></div>
       </div>
     `;
   }
@@ -189,7 +183,7 @@ export class Radio extends radioBaseClass {
     this.checked = state === 'true';
   }
 
-  [createValidator]() {
+  override [createValidator]() {
     return new RadioValidator(() => {
       if (!this.selectionController) {
         // Validation runs on superclass construction, so selection controller
@@ -201,7 +195,7 @@ export class Radio extends radioBaseClass {
     });
   }
 
-  [getValidityAnchor]() {
+  override [getValidityAnchor]() {
     return this.container;
   }
 }

@@ -352,7 +352,7 @@ function generateMethodMarkdownTable(element: MdModuleInfo): MarkdownTable {
     methodsTable.addRow([
       `\`${rowObj.name}\``,
       rowObj.parameters.map((p) => `\`${p.name}\``).join(', ') || '_None_',
-      `\`${rowObj.returns}\`` ?? '`void`',
+      `\`${rowObj.returns ?? 'void'}\``,
       rowObj.description ?? '',
     ]);
   }

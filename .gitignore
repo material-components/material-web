@@ -9,6 +9,7 @@ node_modules
 *.d.ts
 !types/*.d.ts
 .wireit/
+*.tsbuildinfo
 
 !catalog/**/*.css
 catalog/_dev
@@ -23,7 +24,6 @@ catalog/site/theming/*.md
 catalog/site/theming/images
 catalog/site/about/*.md
 catalog/site/about/images
-catalog/*.tsbuildinfo
 catalog/stories/*/
 !catalog/stories/components/
 !catalog/src/types/**/*.d.ts

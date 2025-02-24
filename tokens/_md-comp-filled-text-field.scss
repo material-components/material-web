@@ -82,6 +82,7 @@ $supported-tokens: (
   'hover-state-layer-opacity',
   'hover-supporting-text-color',
   'hover-trailing-icon-color',
+  'icon-input-space',
   'input-text-color',
   'input-text-font',
   'input-text-line-height',
@@ -113,6 +114,8 @@ $supported-tokens: (
   'trailing-space',
   'with-label-bottom-space',
   'with-label-top-space',
+  'with-leading-icon-leading-space',
+  'with-trailing-icon-trailing-space',
   // go/keep-sorted end
 );
 
@@ -143,6 +146,7 @@ $_default: (
   $new-tokens: map.merge(
     shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
     (
+      'icon-input-space': if($exclude-hardcoded-values, null, 16px),
       'leading-space': if($exclude-hardcoded-values, null, 16px),
       'trailing-space': if($exclude-hardcoded-values, null, 16px),
       'top-space': if($exclude-hardcoded-values, null, 16px),
@@ -155,6 +159,10 @@ $_default: (
       'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
       // TODO(b/270705687): remove when focus-caret-color token added
       'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
+      'with-leading-icon-leading-space':
+        if($exclude-hardcoded-values, null, 12px),
+      'with-trailing-icon-trailing-space':
+        if($exclude-hardcoded-values, null, 12px),
     )
   );
 

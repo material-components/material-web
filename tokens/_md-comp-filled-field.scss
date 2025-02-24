@@ -32,6 +32,7 @@ $supported-tokens: (
   'content-font',
   'content-line-height',
   'content-size',
+  'content-space',
   'content-weight',
   'disabled-active-indicator-color',
   'disabled-active-indicator-height',
@@ -106,6 +107,8 @@ $supported-tokens: (
   'trailing-space',
   'with-label-bottom-space',
   'with-label-top-space',
+  'with-leading-content-leading-space',
+  'with-trailing-content-trailing-space',
   // go/keep-sorted end
 );
 
@@ -137,6 +140,7 @@ $_default: (
     'content-font': map.get($text-field, 'input-text-font'),
     'content-line-height': map.get($text-field, 'input-text-line-height'),
     'content-size': map.get($text-field, 'input-text-size'),
+    'content-space': if($exclude-hardcoded-values, null, 16px),
     'content-weight': map.get($text-field, 'input-text-weight'),
     'disabled-active-indicator-color':
       map.get($text-field, 'disabled-active-indicator-color'),
@@ -256,6 +260,10 @@ $_default: (
     'trailing-space': if($exclude-hardcoded-values, null, 16px),
     'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
     'with-label-top-space': if($exclude-hardcoded-values, null, 8px),
+    'with-leading-content-leading-space':
+      if($exclude-hardcoded-values, null, 12px),
+    'with-trailing-content-trailing-space':
+      if($exclude-hardcoded-values, null, 12px),
     // go/keep-sorted end
   );
 

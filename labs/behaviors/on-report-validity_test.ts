@@ -38,15 +38,15 @@ describe('mixinOnReportValidity()', () => {
       return html`<div id="root"></div>`;
     }
 
-    [createValidator]() {
+    override [createValidator]() {
       return new CheckboxValidator(() => this);
     }
 
-    [getValidityAnchor]() {
+    override [getValidityAnchor]() {
       return this.shadowRoot?.querySelector<HTMLElement>('#root') ?? null;
     }
 
-    [getFormValue]() {
+    override [getFormValue]() {
       return String(this.checked);
     }
   }

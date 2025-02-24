@@ -7,21 +7,28 @@
   .icon {
     color: currentColor;
     display: flex;
+    align-items: center;
+    justify-content: center;
     fill: currentColor;
+    position: relative;
   }
 
   .icon ::slotted(*) {
     // Remove excess whitespace below inline elements
     display: flex;
+    // Absolutely position the icons within their `icon-size` container. This
+    // supports icon buttons whose actual width and height is greater than the
+    // 24px `icon-size` due to their 40px ripple.
+    position: absolute;
   }
 
-  [hasstart] .icon.leading {
+  [has-start] .icon.leading {
     font-size: var(--_leading-icon-size);
     height: var(--_leading-icon-size);
     width: var(--_leading-icon-size);
   }
 
-  [hasend] .icon.trailing {
+  [has-end] .icon.trailing {
     font-size: var(--_trailing-icon-size);
     height: var(--_trailing-icon-size);
     width: var(--_trailing-icon-size);

@@ -132,7 +132,9 @@ export class Field extends LitElement {
     return html`
       <div class="field ${classMap(classes)}">
         <div class="container-overflow">
-          ${this.renderBackground?.()} ${this.renderIndicator?.()} ${outline}
+          ${this.renderBackground?.()}
+          <slot name="container"></slot>
+          ${this.renderStateLayer?.()} ${this.renderIndicator?.()} ${outline}
           <div class="container">
             <div class="start">
               <slot name="start"></slot>
@@ -181,6 +183,7 @@ export class Field extends LitElement {
   }
 
   protected renderBackground?(): TemplateResult;
+  protected renderStateLayer?(): TemplateResult;
   protected renderIndicator?(): TemplateResult;
   protected renderOutline?(floatingLabel: unknown): TemplateResult;
 
