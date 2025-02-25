@@ -254,7 +254,7 @@ customized in terms of color.
 
 Token                                           | Default value
 ----------------------------------------------- | ------------------------
-`--md-circular-progress-color`                  | `--md-sys-color-primary`
+`--md-circular-progress-active-indicator-color` | `--md-sys-color-primary`
 `--md-circular-progress-size`                   | `48px`
 `--md-circular-progress-active-indicator-width` | `8.3333` (%)
 
@@ -378,7 +378,6 @@ Token                                          | Default value
 <!-- auto-generated API docs start -->
 
 ## API
-
 
 ### MdLinearProgress <code>&lt;md-linear-progress&gt;</code>
 
