@@ -157,6 +157,16 @@
     position: absolute;
   }
 
+  .container-slot {
+    border-radius: inherit;
+    inset: 0;
+    position: absolute;
+  }
+
+  slot[name='container'] {
+    border-radius: inherit;
+  }
+
   .scroller {
     display: flex;
     flex: 1;
