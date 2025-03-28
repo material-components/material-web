@@ -142,8 +142,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   }
 
   protected override render() {
-    // Link buttons may not be disabled
-    const isRippleDisabled = !this.href && (this.disabled || this.softDisabled);
+    const isRippleDisabled = this.disabled || this.softDisabled;
     const buttonOrLink = this.href ? this.renderLink() : this.renderButton();
     // TODO(b/310046938): due to a limitation in focus ring/ripple, we can't use
     // the same ID for different elements, so we change the ID instead.
@@ -190,6 +189,8 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}"
++      aria-disabled=${this.disabled || this.softDisabled || nothing}
++      tabindex="${(this.disabled && !this.softDisabled) ? -1 : nothing}"
       href=${this.href}
       download=${this.download || nothing}
       target=${this.target || nothing}
@@ -211,10 +212,10 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   }
 
   private handleClick(event: MouseEvent) {
-    // If the button is soft-disabled, we need to explicitly prevent the click
-    // from propagating to other event listeners as well as prevent the default
-    // action.
-    if (!this.href && this.softDisabled) {
+    // If the button is soft-disabled or a disabled link, we need to explicitly
+    // prevent the click from propagating to other event listeners as well as
+    // prevent the default action.
+    if (this.softDisabled || (this.disabled && this.href)) {
       event.stopImmediatePropagation();
       event.preventDefault();
       return;
