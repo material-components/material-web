@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/material-components/material-web/compare/v2.3.0...v2.4.0) (2025-04-02)
+
+
+### Features
+
+* **button:** add disabled link support ([c3c4848](https://github.com/material-components/material-web/commit/c3c48485b152595c0e892383dc5ab38fdb1ac442))
+
+
+### Bug Fixes
+
+* **menu:** output menu item theme values ([ca5f750](https://github.com/material-components/material-web/commit/ca5f75094b3ac2d314ccb31ec06ec653501cf801))
+
 ## [2.3.0](https://github.com/material-components/material-web/compare/v2.2.0...v2.3.0) (2025-03-26)
 
 
