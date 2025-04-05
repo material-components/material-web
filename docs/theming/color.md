@@ -72,7 +72,7 @@ Neutral   | `--md-sys-color-background`
 &nbsp;    | `--md-sys-color-outline`
 &nbsp;    | `--md-sys-color-outline-variant`
 
-*\* all surface tokens use `--md-sys-on-surface` or
+*\* all surface tokens use `--md-sys-color-on-surface` or
 `--md-sys-color-on-surface-variant` for their content.*
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-sys-color.scss)
