@@ -10,7 +10,7 @@ order: 3
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-01-19' }
+freshness: { owner: 'lizmitchell' reviewed: '2025-04-15' }
 *-->
 
 <!-- [TOC] -->
@@ -22,20 +22,42 @@ Components.
 
 ## Current
 
-### Build new components
+**MWC is currently in maintenance mode,
+[see this announcement](https://github.com/material-components/material-web/discussions/5642)
+for more details.**
 
-*Planned for 2024*
+There is no current work planned for new features or components. Bug fixes or
+other contributions may be added on a case-by-case basis.
 
-One of our core goals is to provide Material Design components for the web.
-These are the components we are currently working on.
+## Future
 
+**Note: No future work is planned while MWC is in
+[maintenance mode](https://github.com/material-components/material-web/discussions/5642).**
+These roadmap items represent what used to be planned.
+
+### New components
+
+These are components we have not built yet.
+
+*   Autocomplete
+*   Badge
+*   Banner
+*   Bottom app bar
+*   Bottom sheet
 *   Card
+*   Data table
+*   Date picker
+*   Navigation bar
 *   Navigation drawer
+*   Navigation rail
+*   Search
+*   Segmented button
 *   Snackbar
+*   Time picker
+*   Top app bar
+*   Tooltip
 
 ### Expand Material Design tokens
-
-*Planned for Q1 2024*
 
 We are adding shape and motion system tokens to support building expressive
 Material experiences.
@@ -43,66 +65,40 @@ Material experiences.
 We also want to make it easier to use Material Design tokens, such as applying
 Material typescale, shape, and color to your own components.
 
-### Create TSX components
-
-*Planned for Q1 2024*
-
-[TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) is a popular
-language extension for frameworks like [React](https://reactjs.org/). We want to
-make it easier and more seamless to use Material Web Components in TSX.
-
-### Follow accessibility best practices
-
-*Planned for Q2 2024*
-
-Everyone should be able to access and enjoy the web. We want our components to
-help others build accessible experiences.
-
-We are working on supporting all of the following screen readers:
-
-*   VoiceOver
-*   Talkback
-*   ChromeVox
-*   JAWS
-*   NVDA
-
-### Explore Material Design layouts
-
-*Planned for Q4 2024*
-
-Components are only part of the story to build fully expressive Material Design
-applications. We want to explore ways to support building applications that
-follow
-[Material's layout patterns](https://m3.material.io/foundations/layout/understanding-layout/overview).
-
-## Future
-
-### Planned new components
-
-These are components we want to build next.
-
-*   Autocomplete
-*   Badge
-*   Banner
-*   Bottom app bar
-*   Bottom sheet
-*   Data table
-*   Date picker
-*   Navigation bar
-*   Navigation rail
-*   Search
-*   Segmented button
-*   Time picker
-*   Top app bar
-*   Tooltip
-
 ### Density and spacing tokens
 
 Density allows components to take up less vertical space for larger displays.
 While we have some spacing tokens already, we need a comprehensive spacing
 system to fully support density across components.
 
+### Create TSX components
+
+[TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) is a popular
+language extension for frameworks like [React](https://reactjs.org/). We want to
+make it easier and more seamless to use Material Web Components in TSX.
+
+### Explore Material Design layouts
+
+Components are only part of the story to build fully expressive Material Design
+applications. We want to explore ways to support building applications that
+follow
+[Material's layout patterns](https://m3.material.io/foundations/layout/understanding-layout/overview).
+
 ## Past
+
+### Follow accessibility best practices
+
+*Completed in Q1 2024*
+
+Everyone should be able to access and enjoy the web. We want our components to
+help others build accessible experiences. The following screen readers are fully
+supported:
+
+*   VoiceOver
+*   Talkback
+*   ChromeVox
+*   JAWS
+*   NVDA
 
 ### Cards and more
 
