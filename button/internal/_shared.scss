@@ -23,6 +23,8 @@
     gap: 8px;
     // min-height instead of height so that label can wrap and expand height
     min-height: var(--_container-height);
+    // max-width set to 100% to prevent label from overflowing
+    max-width: 100%;
     outline: none;
     // Add extra space between label and the edge for if the label text wraps.
     // The padding added should be relative to the height of the container and
