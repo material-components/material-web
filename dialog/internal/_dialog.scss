@@ -173,7 +173,7 @@
     // space from appearing on platforms that reserve scrollbar space.
     // Note: we only scroll vertically. Horizontal scrolling should be handled
     // by the content.
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .content {
@@ -185,6 +185,7 @@
     font-weight: map.get($tokens, 'supporting-text-weight');
     height: min-content; // Needed for Safari
     position: relative;
+    overflow-y: clip; // Needed for .scrollable .scroller
   }
 
   slot[name='content']::slotted(*) {
