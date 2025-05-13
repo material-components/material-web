@@ -11,6 +11,18 @@
 @use '../../tokens';
 // go/keep-sorted end
 
+@mixin controls {
+  :host(:hover) md-ripple {
+    background-color: var(--md-ripple-hover-color);
+    opacity: var(--md-ripple-hover-opacity);
+  }
+
+  :host(:active) md-ripple {
+    opacity: var(--md-ripple-pressed-opacity);
+    transition-duration: 105ms;
+  }
+}
+
 @mixin theme($tokens) {
   $supported-tokens: tokens.$md-comp-ripple-supported-tokens;
   @each $token, $value in $tokens {
