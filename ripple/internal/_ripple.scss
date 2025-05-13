@@ -11,15 +11,24 @@
 @use '../../tokens';
 // go/keep-sorted end
 
+@mixin ripple-hover($tokens) {
+  background-color: map.get($tokens, 'hover-color');
+  opacity: map.get($tokens, 'hover-opacity');
+}
+
+@mixin ripple-active($tokens) {
+  opacity: map.get($tokens, 'pressed-opacity');
+  transition-duration: 105ms;
+}
+
 @mixin controls {
+  $tokens: tokens.md-comp-ripple-values();
   :host(:hover) md-ripple {
-    background-color: var(--md-ripple-hover-color);
-    opacity: var(--md-ripple-hover-opacity);
+    @include ripple-hover($tokens);
   }
 
   :host(:active) md-ripple {
-    opacity: var(--md-ripple-pressed-opacity);
-    transition-duration: 105ms;
+    @include ripple-active($tokens);
   }
 }
 
@@ -92,13 +101,11 @@
   }
 
   .hovered::before {
-    background-color: map.get($tokens, 'hover-color');
-    opacity: map.get($tokens, 'hover-opacity');
+    @include ripple-hover($tokens);
   }
 
   .pressed::after {
     // press ripple fade-in
-    opacity: map.get($tokens, 'pressed-opacity');
-    transition-duration: 105ms;
+    @include ripple-active($tokens);
   }
 }
