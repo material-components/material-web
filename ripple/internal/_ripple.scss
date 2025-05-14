@@ -21,13 +21,14 @@
   transition-duration: 105ms;
 }
 
+// controls for elements that might be triggered via a HTMLLabelElement
 @mixin controls {
   $tokens: tokens.md-comp-ripple-values();
-  :host(:hover) md-ripple {
+  :host(:hover) md-ripple::part(surface)::before {
     @include ripple-hover($tokens);
   }
 
-  :host(:active) md-ripple {
+  :host(:active) md-ripple::part(surface)::after {
     @include ripple-active($tokens);
   }
 }
