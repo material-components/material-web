@@ -80,7 +80,10 @@ export class FocusRing extends LitElement implements Attachable {
       default:
         return;
       case 'focusin':
-        this.visible = this.control?.matches(':focus-visible') ?? false;
+        // Related target is null for elements that cannot be focused.
+        // This is will prevent HTMLLabelElements to set visible to true.
+        // developer.mozilla.org/en-US/docs/Web/API/FocusEvent/relatedTarget
+        this.visible = (event.relatedTarget !== null && this.control?.matches(':focus-visible')) ?? false;
         break;
       case 'focusout':
       case 'pointerdown':
@@ -112,6 +115,6 @@ export class FocusRing extends LitElement implements Attachable {
 
 const HANDLED_BY_FOCUS_RING = Symbol('handledByFocusRing');
 
-interface FocusRingEvent extends Event {
+interface FocusRingEvent extends FocusEvent {
   [HANDLED_BY_FOCUS_RING]: true;
 }
