@@ -11,9 +11,8 @@ dirname: checkbox
 <!--*
 # Document freshness: For more information, see go/fresh-source.
 freshness: {
-  owner: 'emarquez'
   owner: 'lizmitchell'
-  reviewed: '2024-05-15'
+  reviewed: '2025-05-20'
 }
 tag: 'docType:reference'
 *-->
