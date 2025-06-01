@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: Mahir's GitHub Material Web Repo
+  description: GPT can fetch README.md or file contents from the material-web GitHub repository.
+  version: 1.0.0
+servers:
+  - url: https://api.github.com
+paths:
+  /repos/mahirkurt/material-web/readme:
+    get:
+      operationId: getReadme
+      summary: Get README.md from the repo
+      parameters: []
+      responses:
+        '200':
+          description: README content in base64
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: Base64-encoded content
+                  encoding:
+                    type: string
+  /repos/mahirkurt/material-web/contents/{filepath}:
+    get:
+      operationId: getFileByPath
+      summary: Get file content from material-web repo
+      parameters:
+        - name: filepath
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: Base64-encoded content of the file
+                  encoding:
+                    type: string
