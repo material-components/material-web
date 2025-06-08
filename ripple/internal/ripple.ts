@@ -150,13 +150,18 @@ export class Ripple extends LitElement implements Attachable {
     this.setAttribute('aria-hidden', 'true');
   }
 
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.initPressAnimation();
+  }
+
   protected override render() {
     const classes = {
       'hovered': this.hovered,
       'pressed': this.pressed,
     };
 
-    return html`<div class="surface ${classMap(classes)}"></div>`;
+    return html`<div part="surface" class="surface ${classMap(classes)}"></div>`;
   }
 
   protected override update(changedProps: PropertyValues<Ripple>) {
@@ -248,7 +253,7 @@ export class Ripple extends LitElement implements Attachable {
     this.startPressAnimation(event);
   }
 
-  private handleClick() {
+  private handleClick(event: Event) {
     // Click is a MouseEvent in Firefox and Safari, so we cannot use
     // `shouldReactToEvent`
     if (this.disabled) {
@@ -260,7 +265,8 @@ export class Ripple extends LitElement implements Attachable {
       return;
     }
 
-    if (this.state === State.INACTIVE) {
+    // prevent click event triggered by HTMLLabelElement
+    if (this.state === State.INACTIVE && event instanceof PointerEvent && event.pointerType === "") {
       // keyboard synthesized click event
       this.startPressAnimation();
       this.endPressAnimation();
@@ -340,13 +346,16 @@ export class Ripple extends LitElement implements Attachable {
     return {startPoint, endPoint};
   }
 
-  private startPressAnimation(positionEvent?: Event) {
+  private initPressAnimation() {
+    this.setPressAnimation()
+  }
+
+  private setPressAnimation(duration?: number, positionEvent?: Event) {
     if (!this.mdRoot) {
       return;
     }
 
-    this.pressed = true;
-    this.growAnimation?.cancel();
+    this.pressed = duration > 0;
     this.determineRippleSize();
     const {startPoint, endPoint} =
       this.getTranslationCoordinates(positionEvent);
@@ -366,11 +375,16 @@ export class Ripple extends LitElement implements Attachable {
       },
       {
         pseudoElement: PRESS_PSEUDO,
-        duration: PRESS_GROW_MS,
+        duration: duration,
         easing: EASING.STANDARD,
         fill: ANIMATION_FILL,
       },
     );
+  }
+
+  private startPressAnimation(positionEvent?: Event) {
+    this.growAnimation?.cancel();
+    this.setPressAnimation(PRESS_GROW_MS, positionEvent);
   }
 
   private async endPressAnimation() {
@@ -454,7 +468,7 @@ export class Ripple extends LitElement implements Attachable {
 
     switch (event.type) {
       case 'click':
-        this.handleClick();
+        this.handleClick(event);
         break;
       case 'contextmenu':
         this.handleContextmenu();
