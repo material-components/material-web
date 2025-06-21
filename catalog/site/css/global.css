@@ -125,7 +125,7 @@ nav-drawer md-list.nav md-list-item[href] {
 
 nav-drawer md-list.nav md-item [slot="headline"] {
   /* shadow root slot has overflow:hidden, it's cutting some text off */
-  padding: block 2px;
+  padding-block: 2px;
 }
 
 nav-drawer md-list.nav md-item:first-of-type {
