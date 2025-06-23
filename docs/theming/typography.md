@@ -153,8 +153,8 @@ Label     | `--md-sys-typescale-label-medium-font`
 > `--md-ref-typeface-brand` and `--md-ref-typeface-plain`, which map to each
 > typescale.
 >
-> Use `--md-sys-typescale-<scale>-font` to change the typeface that a font is
-> mapped to. This is useful for custom typefaces.
+> Use `--md-sys-typescale-<scale>-<size>-font` to change the typeface that a
+> font is mapped to. This is useful for custom typefaces.
 >
 > ```css
 > :root {
