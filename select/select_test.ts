@@ -47,7 +47,9 @@ describe('<md-outlined-select>', () => {
     const selectEl = root.querySelector('md-outlined-select')!;
     await selectEl.updateComplete;
 
-    await new SelectHarness(selectEl).clickOption(1);
+    const harness = new SelectHarness(selectEl);
+    await harness.clickAndWaitForMenu();
+    await harness.clickOption(1);
 
     expect(changed).toBeTrue();
   });
@@ -176,6 +178,33 @@ describe('<md-outlined-select>', () => {
         },
       ],
     });
+  });
+
+  it('closes select when field re-clicked', async () => {
+    render(
+        html`
+          <md-outlined-select>
+            <md-select-option selected></md-select-option>
+            <md-select-option></md-select-option>
+          </md-outlined-select>`,
+        root);
+    const selectEl = root.querySelector('md-outlined-select')!;
+    await selectEl.updateComplete;
+
+    const spanEl = selectEl.shadowRoot!.querySelector<HTMLElement>(
+      'span.select'
+    )!;
+    const menuEl = selectEl.shadowRoot!.querySelector('md-menu')!;
+
+    const harness = new SelectHarness(selectEl);
+    await harness.clickAndWaitForMenu();
+    expect(spanEl.classList.contains('open')).toBeTrue();
+    expect(menuEl.open).toBeTrue();
+
+    await harness.clickAndWaitForMenu();
+
+    expect(menuEl.open).toBeFalse();
+    expect(spanEl.classList.contains('open')).toBeFalse();
   });
 });
 
