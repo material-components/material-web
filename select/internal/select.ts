@@ -311,6 +311,11 @@ export abstract class Select extends selectBaseClass {
     this.nativeErrorText = '';
   }
 
+  /** Shows the picker. If it's already open, this is a no-op. */
+  showPicker() {
+    this.open = true;
+  }
+
   override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
