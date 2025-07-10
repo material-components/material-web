@@ -73,7 +73,7 @@
     "rollup": "^2.79.1",
     "sass": "^1.52.3",
     "sass-true": "^6.1.0",
-    "typescript": "5.6.2",
+    "typescript": "5.8.2",
     "web-test-runner-jasmine": "^0.0.6",
     "wireit": "^0.14.12"
   },
