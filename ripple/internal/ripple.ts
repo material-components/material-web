@@ -292,12 +292,17 @@ export class Ripple extends LitElement implements Attachable {
       SOFT_EDGE_MINIMUM_SIZE,
     );
 
-    const initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
+    // `?? 1` may be removed once `currentCSSZoom` is widely available.
+    const zoom = this.currentCSSZoom ?? 1;
+    const initialSize = Math.floor((maxDim * INITIAL_ORIGIN_SCALE) / zoom);
     const hypotenuse = Math.sqrt(width ** 2 + height ** 2);
     const maxRadius = hypotenuse + PADDING;
 
     this.initialSize = initialSize;
-    this.rippleScale = `${(maxRadius + softEdgeSize) / initialSize}`;
+    // The dimensions may be altered by CSS `zoom`, which needs to be
+    // compensated for in the final scale() value.
+    const maybeZoomedScale = (maxRadius + softEdgeSize) / initialSize;
+    this.rippleScale = `${maybeZoomedScale / zoom}`;
     this.rippleSize = `${initialSize}px`;
   }
 
@@ -310,15 +315,22 @@ export class Ripple extends LitElement implements Attachable {
     const documentX = scrollX + left;
     const documentY = scrollY + top;
     const {pageX, pageY} = pointerEvent;
-    return {x: pageX - documentX, y: pageY - documentY};
+    // `?? 1` may be removed once `currentCSSZoom` is widely available.
+    const zoom = this.currentCSSZoom ?? 1;
+    return {
+      x: (pageX - documentX) / zoom,
+      y: (pageY - documentY) / zoom,
+    };
   }
 
   private getTranslationCoordinates(positionEvent?: Event) {
     const {height, width} = this.getBoundingClientRect();
+    // `?? 1` may be removed once `currentCSSZoom` is widely available.
+    const zoom = this.currentCSSZoom ?? 1;
     // end in the center
     const endPoint = {
-      x: (width - this.initialSize) / 2,
-      y: (height - this.initialSize) / 2,
+      x: (width / zoom - this.initialSize) / 2,
+      y: (height / zoom - this.initialSize) / 2,
     };
 
     let startPoint;
@@ -326,8 +338,8 @@ export class Ripple extends LitElement implements Attachable {
       startPoint = this.getNormalizedPointerEventCoords(positionEvent);
     } else {
       startPoint = {
-        x: width / 2,
-        y: height / 2,
+        x: width / zoom / 2,
+        y: height / zoom / 2,
       };
     }
 
