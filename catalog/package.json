@@ -197,7 +197,7 @@
     "markdown-it-anchor": "^8.6.7",
     "slugify": "^1.6.6",
     "tiny-glob": "^0.2.9",
-    "typescript": "5.6.2",
+    "typescript": "5.8.2",
     "wireit": "^0.13.0"
   }
 }
