@@ -20,6 +20,9 @@ import {
 } from './analyze-element.js';
 import {docsToElementMapping} from './element-docs-map.js';
 import {MarkdownTable} from './markdown-tree-builder.js';
+import {generateJetBrainsWebTypes} from 'custom-element-jet-brains-integration';
+import {generateManifest} from '@lit-labs/gen-manifest';
+import {updateCemInheritance} from 'custom-elements-manifest-inheritance';
 
 interface MarkdownTableSection {
   name: string;
@@ -45,7 +48,9 @@ interface ElementTableSection {
 async function updateApiDocs() {
   const packagePath = path.resolve('.');
   // Analyzes the entire material-web repository.
-  const analyzer = createPackageAnalyzer(packagePath as AbsolutePath);
+  const analyzer = createPackageAnalyzer(packagePath as AbsolutePath, {
+    exclude: ['**/demo/**', 'testing/**', '**/harness*']
+  });
   const documentationFileNames = Object.keys(docsToElementMapping);
 
   const filesWritten: Array<Promise<void>> = [];
@@ -59,6 +64,14 @@ async function updateApiDocs() {
 
   // Wait for all the files to be written
   await Promise.all(filesWritten);
+
+  // Generate CEM manifest
+  const file = await generateManifest(analyzer.getPackage());
+  const cem = JSON.parse(file['custom-elements.json'] as string);
+  await fs.writeFile('custom-elements.json', JSON.stringify(cem, null, 2));
+  updateCemInheritance(cem);
+
+  generateJetBrainsWebTypes(cem, {packageJson: true});
 }
 
 /**
