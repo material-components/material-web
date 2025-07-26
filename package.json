@@ -61,7 +61,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@lit-labs/analyzer": "npm:@maicol07/lit-labs-analyzer@0.13.0-1",
+    "@lit-labs/analyzer": "npm:@maicol07/lit-labs-analyzer",
     "@lit-labs/gen-manifest": "npm:@maicol07/lit-labs-gen-manifest",
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
