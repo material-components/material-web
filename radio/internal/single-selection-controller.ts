@@ -84,17 +84,29 @@ export class SingleSelectionController implements ReactiveController {
       this.uncheckSiblings();
     }
 
-    // Update for the newly added host.
-    this.updateTabIndices();
+    // Update siblings after a microtask to allow other synchronous connected
+    // callbacks to settle before triggering additional Lit updates. This avoids
+    // stack overflow issues when too many elements are being rendered and
+    // connected at the same time.
+    queueMicrotask(() => {
+      // Update for the newly added host.
+      this.updateTabIndices();
+    });
   }
 
   hostDisconnected() {
     this.host.removeEventListener('keydown', this.handleKeyDown);
     this.host.removeEventListener('focusin', this.handleFocusIn);
     this.host.removeEventListener('focusout', this.handleFocusOut);
-    // Update for siblings that are still connected.
-    this.updateTabIndices();
-    this.root = null;
+    // Update siblings after a microtask to allow other synchronous disconnected
+    // callbacks to settle before triggering additional Lit updates. This avoids
+    // stack overflow issues when too many elements are being rendered and
+    // connected at the same time.
+    queueMicrotask(() => {
+      // Update for siblings that are still connected.
+      this.updateTabIndices();
+      this.root = null;
+    });
   }
 
   /**
