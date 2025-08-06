@@ -129,7 +129,6 @@ export class Ripple extends LitElement implements Attachable {
   private growAnimation?: Animation;
   private state = State.INACTIVE;
   private rippleStartEvent?: PointerEvent;
-  private checkBoundsAfterContextMenu = false;
   private readonly attachableController = new AttachableController(
     this,
     this.onControlChange.bind(this),
@@ -225,15 +224,6 @@ export class Ripple extends LitElement implements Attachable {
       return;
     }
 
-    // after a longpress contextmenu event, an extra `pointerdown` can be
-    // dispatched to the pressed element. Check that the down is within
-    // bounds of the element in this case.
-    if (this.checkBoundsAfterContextMenu && !this.inBounds(event)) {
-      return;
-    }
-
-    this.checkBoundsAfterContextMenu = false;
-
     // Wait for a hold after touch delay
     this.state = State.TOUCH_DELAY;
     await new Promise((resolve) => {
@@ -280,7 +270,6 @@ export class Ripple extends LitElement implements Attachable {
       return;
     }
 
-    this.checkBoundsAfterContextMenu = true;
     this.endPressAnimation();
   }
 
@@ -441,16 +430,6 @@ export class Ripple extends LitElement implements Attachable {
 
     const isPrimaryButton = event.buttons === 1;
     return this.isTouch(event) || isPrimaryButton;
-  }
-
-  /**
-   * Check if the event is within the bounds of the element.
-   *
-   * This is only needed for the "stuck" contextmenu longpress on Chrome.
-   */
-  private inBounds({x, y}: PointerEvent) {
-    const {top, left, bottom, right} = this.getBoundingClientRect();
-    return x >= left && x <= right && y >= top && y <= bottom;
   }
 
   private isTouch({pointerType}: PointerEvent) {
