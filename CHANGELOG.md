@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.4.0](https://github.com/material-components/material-web/compare/v2.3.0...v2.4.0) (2025-08-21)
+
+
+### Features
+
+* **button:** add disabled link support ([c3c4848](https://github.com/material-components/material-web/commit/c3c48485b152595c0e892383dc5ab38fdb1ac442))
+* **button:** add gradient support to container colors ([5bc1506](https://github.com/material-components/material-web/commit/5bc15069d136c51e912137dcba1b212a106bb1dd))
+* **catalog:** hide body if dsd-pending ([bf89645](https://github.com/material-components/material-web/commit/bf896458b0a656a40187d3fdddbc573407a4e55b))
+* **select:** add showPicker() functionality ([8808a25](https://github.com/material-components/material-web/commit/8808a25da8cb879d120c11b6961e10ef75ca5add))
+
+
+### Bug Fixes
+
+* **catalog:** hydrate CSR component pages ([0037c14](https://github.com/material-components/material-web/commit/0037c14f6ba17ae224f8377e4afcba35862c4bf4))
+* **menu:** output menu item theme values ([ca5f750](https://github.com/material-components/material-web/commit/ca5f75094b3ac2d314ccb31ec06ec653501cf801))
+* **radio:** stack overflow error when rendering many radios ([688ab3c](https://github.com/material-components/material-web/commit/688ab3cf5f12ddbff07407910b8e8e158b3282d7))
+* **ripple:** misaligned when using CSS zoom ([3072a9b](https://github.com/material-components/material-web/commit/3072a9bc286876be157e15d65b0d4877245e1acc))
+* **ripple:** remove pointerdown contextmenu bounds check for Chrome ([cd7512f](https://github.com/material-components/material-web/commit/cd7512ff90cf25ad98c6caa9842bf86d284146c7))
+
 ## [2.3.0](https://github.com/material-components/material-web/compare/v2.2.0...v2.3.0) (2025-03-26)
 
 

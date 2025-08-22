@@ -68,7 +68,11 @@ export function mixinElementInternals<T extends MixinBase<LitElement>>(
       return this[privateInternals];
     }
 
-    [privateInternals]?: ElementInternals;
+    // In preparation for ES2022, we need to declare this property to guard
+    // against the base class calling [internals] in its constructor prematurely
+    // setting this field. Without declare, once this field is defined, it would
+    // initialize to undefined and `attachInternals()` could be called again.
+    declare [privateInternals]?: ElementInternals;
   }
 
   return WithElementInternalsElement;
