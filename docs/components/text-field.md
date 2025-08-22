@@ -534,6 +534,7 @@ Token                                          | Default value
 | `select` | _None_ | `void` | Selects all the text in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select |
 | `setRangeText` | `args` | `void` |  |
 | `setSelectionRange` | `start`, `end`, `direction` | `void` | Sets the start and end positions of a selection in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange |
+| `showPicker` | _None_ | `void` | Shows the browser picker for an input element of type "date", "time", etc.<br>For a full list of supported types, see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/showPicker#browser_compatibility<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/showPicker |
 | `stepDown` | `stepDecrement` | `void` | Decrements the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown |
 | `stepUp` | `stepIncrement` | `void` | Increments the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp |
 | `reset` | _None_ | `void` | Reset the text field to its default value. |
@@ -608,6 +609,7 @@ Token                                          | Default value
 | `select` | _None_ | `void` | Selects all the text in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select |
 | `setRangeText` | `args` | `void` |  |
 | `setSelectionRange` | `start`, `end`, `direction` | `void` | Sets the start and end positions of a selection in the text field.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange |
+| `showPicker` | _None_ | `void` | Shows the browser picker for an input element of type "date", "time", etc.<br>For a full list of supported types, see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/showPicker#browser_compatibility<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/showPicker |
 | `stepDown` | `stepDecrement` | `void` | Decrements the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown |
 | `stepUp` | `stepIncrement` | `void` | Increments the value of a numeric type text field by `step` or `n` `step` number of times.<br>https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp |
 | `reset` | _None_ | `void` | Reset the text field to its default value. |
