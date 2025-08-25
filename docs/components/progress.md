@@ -379,6 +379,7 @@ Token                                          | Default value
 
 ## API
 
+
 ### MdLinearProgress <code>&lt;md-linear-progress&gt;</code>
 
 #### Properties
