@@ -148,7 +148,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
 
   override click() {
     if (!this.disabled && this.buttonElement) {
-      this.buttonElement?.click();
+      this.buttonElement.click();
     }
   }
 
