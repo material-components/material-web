@@ -74,7 +74,6 @@ export class SingleSelectionController implements ReactiveController {
   constructor(private readonly host: SingleSelectionElement) {}
 
   hostConnected() {
-    this.root = this.host.getRootNode() as ParentNode;
     this.host.addEventListener('keydown', this.handleKeyDown);
     this.host.addEventListener('focusin', this.handleFocusIn);
     this.host.addEventListener('focusout', this.handleFocusOut);
@@ -90,6 +89,7 @@ export class SingleSelectionController implements ReactiveController {
     // connected at the same time.
     queueMicrotask(() => {
       // Update for the newly added host.
+      this.root = this.host.getRootNode() as ParentNode;
       this.updateTabIndices();
     });
   }
