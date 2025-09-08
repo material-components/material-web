@@ -368,6 +368,7 @@ describe('<md-radio>', () => {
       // Connecting r1 shouldn't change anything, since it's the only one in the
       // group.
       container.appendChild(r1);
+      await env.waitForStability();
       expect(r1.checked).toBeTrue();
       expect(r2.checked).toBeTrue();
       expect(r3.checked).toBeFalse();
@@ -375,12 +376,14 @@ describe('<md-radio>', () => {
       // Appending r2 should uncheck r1, because when a new checked radio is
       // connected, it wins (this matches native input behavior).
       container.appendChild(r2);
+      await env.waitForStability();
       expect(r1.checked).toBeFalse();
       expect(r2.checked).toBeTrue();
       expect(r3.checked).toBeFalse();
 
       // Appending r3 shouldn't change anything, because it's not checked.
       container.appendChild(r3);
+      await env.waitForStability();
       expect(r1.checked).toBeFalse();
       expect(r2.checked).toBeTrue();
       expect(r3.checked).toBeFalse();
