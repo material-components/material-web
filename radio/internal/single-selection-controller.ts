@@ -74,15 +74,9 @@ export class SingleSelectionController implements ReactiveController {
   constructor(private readonly host: SingleSelectionElement) {}
 
   hostConnected() {
-    this.root = this.host.getRootNode() as ParentNode;
     this.host.addEventListener('keydown', this.handleKeyDown);
     this.host.addEventListener('focusin', this.handleFocusIn);
     this.host.addEventListener('focusout', this.handleFocusOut);
-    if (this.host.checked) {
-      // Uncheck other siblings when attached if already checked. This mimics
-      // native <input type="radio"> behavior.
-      this.uncheckSiblings();
-    }
 
     // Update siblings after a microtask to allow other synchronous connected
     // callbacks to settle before triggering additional Lit updates. This avoids
@@ -90,6 +84,13 @@ export class SingleSelectionController implements ReactiveController {
     // connected at the same time.
     queueMicrotask(() => {
       // Update for the newly added host.
+      this.root = this.host.getRootNode() as ParentNode;
+      if (this.host.checked) {
+        // Uncheck other siblings when attached if already checked. This mimics
+        // native <input type="radio"> behavior.
+        this.uncheckSiblings();
+      }
+
       this.updateTabIndices();
     });
   }
