@@ -157,7 +157,7 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
     // TODO(b/265339866): announce "button"/"link" inside of a list item. Until
     // then all are "menuitem" roles for correct announcement.
     const target = isAnchor && !!this.target ? this.target : nothing;
-    const download = isAnchor && !!this.download ? this.donwload : nothing;
+    const download = isAnchor && !!this.download ? this.download : nothing;
     const rel = isAnchor && !!this.rel ? this.rel : nothing;
     return staticHtml`
       <${tag}
