@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
     # allows triggering from the github UI
 
+permissions:
+  contents: write
+
 jobs:
   check_for_changes:
     runs-on: ubuntu-latest

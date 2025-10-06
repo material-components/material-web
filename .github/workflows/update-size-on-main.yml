@@ -5,6 +5,11 @@ on:
     branches: main
   workflow_dispatch:
     # allows triggering from the github UI
+
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   check-for-doc-changes:
     runs-on: ubuntu-latest
