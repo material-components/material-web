@@ -1,12 +1,14 @@
 import {readdirSync, readFileSync, writeFileSync} from 'node:fs';
-import path, {dirname} from 'node:path';
+import pathlib from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {COMPONENT_CUSTOM_ELEMENTS} from '../component-custom-elements.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = pathlib.dirname(__filename);
 
-let exports: {[path: string]: {import: string; types: string}} = {
+type ExportEntry = {import: string; types: string};
+
+let exports: {[path: string]: ExportEntry} = {
   './all.js': {
     import: './all.js',
     types: './all.d.ts',
@@ -22,9 +24,9 @@ Object.keys(COMPONENT_CUSTOM_ELEMENTS).forEach((component) => {
   );
 
   // add internals to the list of paths.
-  const componentDirname = component.toLocaleLowerCase();
-  const internalDir = path.resolve(
-    `${__dirname}/../../${componentDirname}/internal/`,
+  const componentName = component.toLocaleLowerCase();
+  const internalDir = pathlib.resolve(
+    `${__dirname}/../../${componentName}/internal/`,
   );
   try {
     const internals = readdirSync(internalDir, {withFileTypes: true})
@@ -36,7 +38,7 @@ Object.keys(COMPONENT_CUSTOM_ELEMENTS).forEach((component) => {
           !f.name.includes('_test') &&
           !f.name.includes('-styles'),
       )
-      .map((f) => path.join(componentDirname, 'internal', f.name));
+      .map((f) => pathlib.join(componentName, 'internal', f.name));
 
     paths.push(...internals);
   } catch {
@@ -44,21 +46,18 @@ Object.keys(COMPONENT_CUSTOM_ELEMENTS).forEach((component) => {
   }
 
   paths.forEach((filepath) => {
-    filepath = filepath.replace(/\.ts$/, '');
-    exports[`./${filepath}.js`] = {
-      import: `./${filepath}.js`,
-      types: `./${filepath}.d.ts`,
+    const path = filepath.replace(/\.ts$/, '');
+    exports[`./${path}.js`] = {
+      import: `./${path}.js`,
+      types: `./${path}.d.ts`,
     };
   });
 });
 
-const packageJson = JSON.parse(
-  readFileSync(path.resolve(__dirname, '../../package.json')).toString(),
-);
+const packageLocation = pathlib.resolve(__dirname, '../../package.json');
+
+const packageJson = JSON.parse(readFileSync(packageLocation).toString());
 
 packageJson.exports = exports;
 
-writeFileSync(
-  path.resolve(__dirname, '../../package.json'),
-  JSON.stringify(packageJson, null, 2) + '\n',
-);
+writeFileSync(packageLocation, JSON.stringify(packageJson, null, 2) + '\n');
