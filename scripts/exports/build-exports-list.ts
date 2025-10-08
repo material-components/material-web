@@ -16,7 +16,7 @@ let exports: {[path: string]: ExportEntry} = {
 };
 
 Object.keys(COMPONENT_CUSTOM_ELEMENTS).forEach((component) => {
-  let paths: string[] = [];
+  const paths: string[] = [];
   paths.push(
     ...COMPONENT_CUSTOM_ELEMENTS[
       component as keyof typeof COMPONENT_CUSTOM_ELEMENTS
@@ -38,7 +38,7 @@ Object.keys(COMPONENT_CUSTOM_ELEMENTS).forEach((component) => {
           !f.name.includes('_test') &&
           !f.name.includes('-styles'),
       )
-      .map((f) => pathlib.join(componentName, 'internal', f.name));
+      .map((f) => `${componentName}/internal/${f.name}`);
 
     paths.push(...internals);
   } catch {
@@ -54,10 +54,17 @@ Object.keys(COMPONENT_CUSTOM_ELEMENTS).forEach((component) => {
   });
 });
 
-const packageLocation = pathlib.resolve(__dirname, '../../package.json');
+const packageLocation = pathlib.resolve(
+  `${__dirname}/../../package.json`,
+);
 
-const packageJson = JSON.parse(readFileSync(packageLocation).toString());
+const packageJson = JSON.parse(
+  readFileSync(packageLocation).toString(),
+);
 
 packageJson.exports = exports;
 
-writeFileSync(packageLocation, JSON.stringify(packageJson, null, 2) + '\n');
+writeFileSync(
+  packageLocation,
+  JSON.stringify(packageJson, null, 2) + '\n',
+);
