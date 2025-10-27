@@ -8,7 +8,7 @@ order: 2
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-03-27' }
+freshness: { owner: 'lizmitchell' reviewed: '2025-05-20' }
 tag: 'docType:howTo'
 *-->
 
@@ -72,7 +72,7 @@ Neutral   | `--md-sys-color-background`
 &nbsp;    | `--md-sys-color-outline`
 &nbsp;    | `--md-sys-color-outline-variant`
 
-*\* all surface tokens use `--md-sys-on-surface` or
+*\* all surface tokens use `--md-sys-color-on-surface` or
 `--md-sys-color-on-surface-variant` for their content.*
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-sys-color.scss)

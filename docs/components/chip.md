@@ -10,7 +10,7 @@ dirname: chips
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-03-26' }
+freshness: { owner: 'lizmitchell' reviewed: '2025-05-20' }
 tag: 'docType:reference'
 *-->
 
@@ -508,8 +508,10 @@ Token                                   | Default value
 | --- | --- | --- | --- | --- |
 | `elevated` | `elevated` | `boolean` | `false` |  |
 | `href` | `href` | `string` | `''` |  |
+| `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the chip is used as a link (`href` is set). |
 | `target` | `target` | `string` | `''` |  |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
+| `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `label` | `label` | `string` | `''` | The label of the chip. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Only needed for SSR.<br>Add this attribute when a chip has a `slot="icon"` to avoid a Flash Of Unstyled Content. |
@@ -539,6 +541,7 @@ Token                                   | Default value
 | `selected` | `selected` | `boolean` | `false` |  |
 | `hasSelectedIcon` | `has-selected-icon` | `boolean` | `false` | Only needed for SSR.<br>Add this attribute when a filter chip has a `slot="selected-icon"` to avoid a Flash Of Unstyled Content. |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
+| `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `label` | `label` | `string` | `''` | The label of the chip. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Only needed for SSR.<br>Add this attribute when a chip has a `slot="icon"` to avoid a Flash Of Unstyled Content. |
@@ -572,6 +575,7 @@ Token                                   | Default value
 | `removeOnly` | `remove-only` | `boolean` | `false` |  |
 | `selected` | `selected` | `boolean` | `false` |  |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
+| `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `label` | `label` | `string` | `''` | The label of the chip. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Only needed for SSR.<br>Add this attribute when a chip has a `slot="icon"` to avoid a Flash Of Unstyled Content. |
@@ -601,8 +605,10 @@ Token                                   | Default value
 | --- | --- | --- | --- | --- |
 | `elevated` | `elevated` | `boolean` | `false` |  |
 | `href` | `href` | `string` | `''` |  |
+| `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the chip is used as a link (`href` is set). |
 | `target` | `target` | `string` | `''` |  |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
+| `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `label` | `label` | `string` | `''` | The label of the chip. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Only needed for SSR.<br>Add this attribute when a chip has a `slot="icon"` to avoid a Flash Of Unstyled Content. |

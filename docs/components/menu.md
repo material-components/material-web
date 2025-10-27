@@ -12,7 +12,7 @@ dirname: menu
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'emarquez' reviewed: '2024-03-26' }
+freshness: { owner: 'lizmitchell' reviewed: '2025-05-20' }
 tag: 'docType:reference'
 *-->
 
@@ -524,11 +524,11 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | `open` | `open` | `boolean` | `false` | Opens the menu and makes it visible. Alternative to the `.show()` and `.close()` methods |
 | `xOffset` | `x-offset` | `number` | `0` | Offsets the menu's inline alignment from the anchor by the given number in pixels. This value is direction aware and will follow the LTR / RTL direction.<br>e.g. LTR: positive -> right, negative -> left RTL: positive -> left, negative -> right |
 | `yOffset` | `y-offset` | `number` | `0` | Offsets the menu's block alignment from the anchor by the given number in pixels.<br>e.g. positive -> down, negative -> up |
-| `typeaheadDelay` | `typeahead-delay` | `number` | `200` | The max time between the keystrokes of the typeahead menu behavior before it clears the typeahead buffer. |
-| `anchorCorner` | `anchor-corner` | `string` | `Corner.END_START` | The corner of the anchor which to align the menu in the standard logical property style of <block>-<inline> e.g. `'end-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport. |
-| `menuCorner` | `menu-corner` | `string` | `Corner.START_START` | The corner of the menu which to align the anchor in the standard logical property style of <block>-<inline> e.g. `'start-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport. |
 | `noHorizontalFlip` | `no-horizontal-flip` | `boolean` | `false` | Disable the `flip` behavior that usually happens on the horizontal axis when the surface would render outside the viewport. |
 | `noVerticalFlip` | `no-vertical-flip` | `boolean` | `false` | Disable the `flip` behavior that usually happens on the vertical axis when the surface would render outside the viewport. |
+| `typeaheadDelay` | `typeahead-delay` | `number` | `200` | The max time between the keystrokes of the typeahead menu behavior before it clears the typeahead buffer. |
+| `anchorCorner` | `anchor-corner` | `string` | `Corner.END_START` | The corner of the anchor which to align the menu in the standard logical property style of <block>-<inline> e.g. `'end-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport. Use `no-horizontal-flip` or `no-vertical-flip` to force the usage of the value |
+| `menuCorner` | `menu-corner` | `string` | `Corner.START_START` | The corner of the menu which to align the anchor in the standard logical property style of <block>-<inline> e.g. `'start-start'`.<br>NOTE: This value may not be respected by the menu positioning algorithm if the menu would render outisde the viewport. Use `no-horizontal-flip` or `no-vertical-flip` to force the usage of the value |
 | `stayOpenOnOutsideClick` | `stay-open-on-outside-click` | `boolean` | `false` | Keeps the user clicks outside the menu.<br>NOTE: clicking outside may still cause focusout to close the menu so see `stayOpenOnFocusout`. |
 | `stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br>NOTE: Focusout behavior will stop propagation of the focusout event. Set this property to true to opt-out of menu's focusout handling altogether. |
 | `skipRestoreFocus` | `skip-restore-focus` | `boolean` | `false` | After closing, does not restore focus to the last focused element before the menu was opened. |

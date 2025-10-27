@@ -10,7 +10,7 @@ order: 1
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-03-27' }
+freshness: { owner: 'lizmitchell' reviewed: '2025-05-20' }
 *-->
 
 Material web, also known as Material Web Components or MWC, is a library of

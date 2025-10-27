@@ -12,7 +12,7 @@ dirname: select
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'material-web-team' reviewed: '2024-03-26' }
+freshness: { owner: 'material-web-team' reviewed: '2025-05-20' }
 tag: 'docType:reference'
 *-->
 
@@ -250,6 +250,7 @@ md-outlined-select::part(menu) {
 | `select` | `value` | `void` | Selects an option given the value of the option, and updates MdSelect's value. |
 | `selectIndex` | `index` | `void` | Selects an option given the index of the option, and updates MdSelect's value. |
 | `reset` | _None_ | `void` | Reset the select to its default value. |
+| `showPicker` | _None_ | `void` | Shows the picker. If it's already open, this is a no-op. |
 | `getUpdateComplete` | _None_ | `Promise<boolean>` |  |
 | `formResetCallback` | _None_ | `void` |  |
 | `formStateRestoreCallback` | `state` | `void` |  |
@@ -311,6 +312,7 @@ md-outlined-select::part(menu) {
 | `select` | `value` | `void` | Selects an option given the value of the option, and updates MdSelect's value. |
 | `selectIndex` | `index` | `void` | Selects an option given the index of the option, and updates MdSelect's value. |
 | `reset` | _None_ | `void` | Reset the select to its default value. |
+| `showPicker` | _None_ | `void` | Shows the picker. If it's already open, this is a no-op. |
 | `getUpdateComplete` | _None_ | `Promise<boolean>` |  |
 | `formResetCallback` | _None_ | `void` |  |
 | `formStateRestoreCallback` | `state` | `void` |  |

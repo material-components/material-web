@@ -23,7 +23,11 @@
   },
   "wireit": {
     "build:dev": {
-      "dependencies": ["build:dev:eleventy", "build:dev:ts", "build:type-check"]
+      "dependencies": [
+        "build:dev:eleventy",
+        "build:dev:ts",
+        "build:type-check"
+      ]
     },
     "build:dev:eleventy": {
       "command": "NODE_ENV=DEV eleventy",
@@ -34,21 +38,42 @@
         "eleventy.config.cjs",
         "stories"
       ],
-      "output": ["_dev"],
-      "dependencies": ["build:dev:ts", "build:copy-docs", "build:copy-stories"]
+      "output": [
+        "_dev"
+      ],
+      "dependencies": [
+        "build:dev:ts",
+        "build:copy-docs",
+        "build:copy-stories"
+      ]
     },
     "build:dev:ts": {
       "command": "NODE_ENV=DEV node esbuild.config.mjs",
-      "files": ["src", "tsconfig.json", "esbuild.config.mjs"],
-      "output": ["lib"],
-      "dependencies": ["..:build"]
+      "files": [
+        "src",
+        "tsconfig.json",
+        "esbuild.config.mjs"
+      ],
+      "output": [
+        "lib"
+      ],
+      "dependencies": [
+        "..:build"
+      ]
     },
     "build:type-check": {
       "command": "tsc -p tsconfig.json --pretty --incremental",
-      "files": ["src", "tsconfig.json"],
+      "files": [
+        "src",
+        "tsconfig.json"
+      ],
       "clean": "if-file-deleted",
-      "output": ["tsconfig.tsbuildinfo"],
-      "dependencies": ["..:build"]
+      "output": [
+        "tsconfig.tsbuildinfo"
+      ],
+      "dependencies": [
+        "..:build"
+      ]
     },
     "build:prod": {
       "dependencies": [
@@ -66,14 +91,28 @@
         "eleventy.config.cjs",
         "stories/"
       ],
-      "output": ["_prod/"],
-      "dependencies": ["build:prod:ts", "build:copy-docs", "build:copy-stories"]
+      "output": [
+        "_prod/"
+      ],
+      "dependencies": [
+        "build:prod:ts",
+        "build:copy-docs",
+        "build:copy-stories"
+      ]
     },
     "build:prod:ts": {
       "command": "NODE_ENV=PROD node esbuild.config.mjs",
-      "files": ["src", "tsconfig.json", "esbuild.config.mjs"],
-      "output": ["build"],
-      "dependencies": ["..:build"]
+      "files": [
+        "src",
+        "tsconfig.json",
+        "esbuild.config.mjs"
+      ],
+      "output": [
+        "build"
+      ],
+      "dependencies": [
+        "..:build"
+      ]
     },
     "build:copy-docs": {
       "command": "node scripts/copy-docs.mjs",
@@ -121,7 +160,10 @@
         "!node_modules",
         "!../node_modules"
       ],
-      "output": ["stories/*/**/*", "!stories/components"]
+      "output": [
+        "stories/*/**/*",
+        "!stories/components"
+      ]
     }
   },
   "license": "Apache-2.0",
@@ -132,7 +174,7 @@
     "@material/mwc-drawer": "^0.27.0",
     "@material/web": "*",
     "@preact/signals-core": "^1.3.0",
-    "lit": "^2.7.4",
+    "lit": "^2.8.0",
     "playground-elements": "^0.17.0",
     "postdoc-lib": "^1.0.3"
   },
@@ -148,14 +190,14 @@
     "clean-css": "^5.3.1",
     "eleventy-plugin-compress": "^1.0.5",
     "eleventy-plugin-nesting-toc": "^1.3.0",
-    "esbuild": "^0.17.14",
+    "esbuild": "^0.25.0",
     "esbuild-plugin-minify-html-literals": "^1.0.1",
     "html-minifier": "^4.0.0",
     "markdown-it": "^13.0.1",
     "markdown-it-anchor": "^8.6.7",
     "slugify": "^1.6.6",
     "tiny-glob": "^0.2.9",
-    "typescript": "~5.1.6",
+    "typescript": "5.8.2",
     "wireit": "^0.13.0"
   }
 }

@@ -13,7 +13,7 @@ ssrOnly: true
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-05-15' }
+freshness: { owner: 'lizmitchell' reviewed: '2025-05-20' }
 tag: 'docType:reference'
 *-->
 
@@ -254,7 +254,7 @@ customized in terms of color.
 
 Token                                           | Default value
 ----------------------------------------------- | ------------------------
-`--md-circular-progress-color`                  | `--md-sys-color-primary`
+`--md-circular-progress-active-indicator-color` | `--md-sys-color-primary`
 `--md-circular-progress-size`                   | `48px`
 `--md-circular-progress-active-indicator-width` | `8.3333` (%)
 

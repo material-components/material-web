@@ -129,7 +129,6 @@ export class Ripple extends LitElement implements Attachable {
   private growAnimation?: Animation;
   private state = State.INACTIVE;
   private rippleStartEvent?: PointerEvent;
-  private checkBoundsAfterContextMenu = false;
   private readonly attachableController = new AttachableController(
     this,
     this.onControlChange.bind(this),
@@ -225,15 +224,6 @@ export class Ripple extends LitElement implements Attachable {
       return;
     }
 
-    // after a longpress contextmenu event, an extra `pointerdown` can be
-    // dispatched to the pressed element. Check that the down is within
-    // bounds of the element in this case.
-    if (this.checkBoundsAfterContextMenu && !this.inBounds(event)) {
-      return;
-    }
-
-    this.checkBoundsAfterContextMenu = false;
-
     // Wait for a hold after touch delay
     this.state = State.TOUCH_DELAY;
     await new Promise((resolve) => {
@@ -280,7 +270,6 @@ export class Ripple extends LitElement implements Attachable {
       return;
     }
 
-    this.checkBoundsAfterContextMenu = true;
     this.endPressAnimation();
   }
 
@@ -292,12 +281,17 @@ export class Ripple extends LitElement implements Attachable {
       SOFT_EDGE_MINIMUM_SIZE,
     );
 
-    const initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
+    // `?? 1` may be removed once `currentCSSZoom` is widely available.
+    const zoom = this.currentCSSZoom ?? 1;
+    const initialSize = Math.floor((maxDim * INITIAL_ORIGIN_SCALE) / zoom);
     const hypotenuse = Math.sqrt(width ** 2 + height ** 2);
     const maxRadius = hypotenuse + PADDING;
 
     this.initialSize = initialSize;
-    this.rippleScale = `${(maxRadius + softEdgeSize) / initialSize}`;
+    // The dimensions may be altered by CSS `zoom`, which needs to be
+    // compensated for in the final scale() value.
+    const maybeZoomedScale = (maxRadius + softEdgeSize) / initialSize;
+    this.rippleScale = `${maybeZoomedScale / zoom}`;
     this.rippleSize = `${initialSize}px`;
   }
 
@@ -310,15 +304,22 @@ export class Ripple extends LitElement implements Attachable {
     const documentX = scrollX + left;
     const documentY = scrollY + top;
     const {pageX, pageY} = pointerEvent;
-    return {x: pageX - documentX, y: pageY - documentY};
+    // `?? 1` may be removed once `currentCSSZoom` is widely available.
+    const zoom = this.currentCSSZoom ?? 1;
+    return {
+      x: (pageX - documentX) / zoom,
+      y: (pageY - documentY) / zoom,
+    };
   }
 
   private getTranslationCoordinates(positionEvent?: Event) {
     const {height, width} = this.getBoundingClientRect();
+    // `?? 1` may be removed once `currentCSSZoom` is widely available.
+    const zoom = this.currentCSSZoom ?? 1;
     // end in the center
     const endPoint = {
-      x: (width - this.initialSize) / 2,
-      y: (height - this.initialSize) / 2,
+      x: (width / zoom - this.initialSize) / 2,
+      y: (height / zoom - this.initialSize) / 2,
     };
 
     let startPoint;
@@ -326,8 +327,8 @@ export class Ripple extends LitElement implements Attachable {
       startPoint = this.getNormalizedPointerEventCoords(positionEvent);
     } else {
       startPoint = {
-        x: width / 2,
-        y: height / 2,
+        x: width / zoom / 2,
+        y: height / zoom / 2,
       };
     }
 
@@ -429,16 +430,6 @@ export class Ripple extends LitElement implements Attachable {
 
     const isPrimaryButton = event.buttons === 1;
     return this.isTouch(event) || isPrimaryButton;
-  }
-
-  /**
-   * Check if the event is within the bounds of the element.
-   *
-   * This is only needed for the "stuck" contextmenu longpress on Chrome.
-   */
-  private inBounds({x, y}: PointerEvent) {
-    const {top, left, bottom, right} = this.getBoundingClientRect();
-    return x >= left && x <= right && y >= top && y <= bottom;
   }
 
   private isTouch({pointerType}: PointerEvent) {

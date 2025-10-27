@@ -4,7 +4,7 @@
 //
 
 // go/keep-sorted start
-@use './v0_192/md-sys-state';
+@use 'versions/v0_192/md-sys-state';
 // go/keep-sorted end
 
 @function values($exclude-hardcoded-values: false) {

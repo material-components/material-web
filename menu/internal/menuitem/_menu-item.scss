@@ -24,7 +24,7 @@
       @error 'Token `#{$token}` is not a supported token.';
     }
 
-    @if $value and list.index($supported-tokens, $token) == null {
+    @if $value {
       --md-menu-item-#{$token}: #{$value};
     }
   }

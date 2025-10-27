@@ -122,7 +122,7 @@
 
   .background {
     // Background color. Separate node for disabled opacity styles.
-    background-color: var(--_container-color);
+    background: var(--_container-color);
     border-radius: inherit;
     inset: 0;
     position: absolute;
@@ -145,7 +145,7 @@
   }
 
   :host(:is([disabled], [soft-disabled])) .background {
-    background-color: var(--_disabled-container-color);
+    background: var(--_disabled-container-color);
     opacity: var(--_disabled-container-opacity);
   }
 

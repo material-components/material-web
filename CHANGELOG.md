@@ -1,5 +1,46 @@
 # Changelog
 
+## [2.4.0](https://github.com/material-components/material-web/compare/v2.3.0...v2.4.0) (2025-08-21)
+
+
+### Features
+
+* **button:** add disabled link support ([c3c4848](https://github.com/material-components/material-web/commit/c3c48485b152595c0e892383dc5ab38fdb1ac442))
+* **button:** add gradient support to container colors ([5bc1506](https://github.com/material-components/material-web/commit/5bc15069d136c51e912137dcba1b212a106bb1dd))
+* **catalog:** hide body if dsd-pending ([bf89645](https://github.com/material-components/material-web/commit/bf896458b0a656a40187d3fdddbc573407a4e55b))
+* **select:** add showPicker() functionality ([8808a25](https://github.com/material-components/material-web/commit/8808a25da8cb879d120c11b6961e10ef75ca5add))
+
+
+### Bug Fixes
+
+* **catalog:** hydrate CSR component pages ([0037c14](https://github.com/material-components/material-web/commit/0037c14f6ba17ae224f8377e4afcba35862c4bf4))
+* **menu:** output menu item theme values ([ca5f750](https://github.com/material-components/material-web/commit/ca5f75094b3ac2d314ccb31ec06ec653501cf801))
+* **radio:** stack overflow error when rendering many radios ([688ab3c](https://github.com/material-components/material-web/commit/688ab3cf5f12ddbff07407910b8e8e158b3282d7))
+* **ripple:** misaligned when using CSS zoom ([3072a9b](https://github.com/material-components/material-web/commit/3072a9bc286876be157e15d65b0d4877245e1acc))
+* **ripple:** remove pointerdown contextmenu bounds check for Chrome ([cd7512f](https://github.com/material-components/material-web/commit/cd7512ff90cf25ad98c6caa9842bf86d284146c7))
+
+## [2.3.0](https://github.com/material-components/material-web/compare/v2.2.0...v2.3.0) (2025-03-26)
+
+
+### Features
+
+* **button:** add download filename support for link buttons ([4098832](https://github.com/material-components/material-web/commit/4098832b8b6fe9def9c08d551014f113e39b2546))
+* **button:** rename attribute downloadFilename to download ([8aefe19](https://github.com/material-components/material-web/commit/8aefe1983d28abcc3bc9c659ff0b328454e0547e))
+* **chip:** add download attribute to assist chip ([902a84f](https://github.com/material-components/material-web/commit/902a84fe0cc389c1d691e42ce1c95d9156a4781b))
+* **icon-button:** add download attribute ([9e84130](https://github.com/material-components/material-web/commit/9e8413080d911108fd1fb97fe8909b96926e1a24))
+* **menu:** add menu padding tokens ([767d1f1](https://github.com/material-components/material-web/commit/767d1f159e9ebcd001968bb7e8bcdf6c4ef1e537))
+* **text-field:** add showPicker method ([bad490c](https://github.com/material-components/material-web/commit/bad490c7cb05be4898d8528569776d4e75bbb8fd))
+
+
+### Bug Fixes
+
+* **catalog:** add hyphen to md-evelated-button attribute ([ac9b14a](https://github.com/material-components/material-web/commit/ac9b14a65c384d9389022f11555fb063b932ec96))
+* **iconbutton:** href will respond to touch target ([ea1134a](https://github.com/material-components/material-web/commit/ea1134a1a77c032f8b8c6c749e670fca90d8cd89))
+* **labs:** add mixinCustomStateSet() for :state() compatibility ([045fe94](https://github.com/material-components/material-web/commit/045fe94872607f67da6c18d3689bff6a541102d2))
+* **listitem:** click() from listItemRoot ([1c60e56](https://github.com/material-components/material-web/commit/1c60e56c6c1210fd5a116290271b9bc7e612fdf7))
+* **menu:** export CloseReason ([29d6763](https://github.com/material-components/material-web/commit/29d6763dc3abe4e80a6fb3ad0eaca5bb24b2d29a))
+* **select:** missing accessible label ([1bdcbd3](https://github.com/material-components/material-web/commit/1bdcbd38ab96f6a7537c36cb7d61d9e8db2144e7))
+
 ## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
 
 

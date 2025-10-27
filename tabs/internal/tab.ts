@@ -22,12 +22,6 @@ import {EASING} from '../../internal/motion/animation.js';
 import {mixinFocusable} from '../../labs/behaviors/focusable.js';
 
 /**
- * Symbol for tabs to use to animate their indicators based off another tab's
- * indicator.
- */
-const INDICATOR = Symbol('indicator');
-
-/**
  * Symbol used by the tab bar to request a tab to animate its indicator from a
  * previously selected tab.
  */
@@ -74,7 +68,7 @@ export class Tab extends tabBaseClass {
    */
   @property({type: Boolean, attribute: 'icon-only'}) iconOnly = false;
 
-  @query('.indicator') readonly [INDICATOR]!: HTMLElement | null;
+  @query('.indicator') private readonly indicator!: HTMLElement | null;
   @state() protected fullWidthIndicator = false;
   @queryAssignedNodes({flatten: true})
   private readonly assignedDefaultNodes!: Node[];
@@ -145,16 +139,16 @@ export class Tab extends tabBaseClass {
   }
 
   [ANIMATE_INDICATOR](previousTab: Tab) {
-    if (!this[INDICATOR]) {
+    if (!this.indicator) {
       return;
     }
 
-    this[INDICATOR].getAnimations().forEach((a) => {
+    this.indicator.getAnimations().forEach((a) => {
       a.cancel();
     });
     const frames = this.getKeyframes(previousTab);
     if (frames !== null) {
-      this[INDICATOR].animate(frames, {
+      this.indicator.animate(frames, {
         duration: 250,
         easing: EASING.EMPHASIZED,
       });
@@ -169,10 +163,10 @@ export class Tab extends tabBaseClass {
 
     const from: Keyframe = {};
     const fromRect =
-      previousTab[INDICATOR]?.getBoundingClientRect() ?? ({} as DOMRect);
+      previousTab.indicator?.getBoundingClientRect() ?? ({} as DOMRect);
     const fromPos = fromRect.left;
     const fromExtent = fromRect.width;
-    const toRect = this[INDICATOR]!.getBoundingClientRect();
+    const toRect = this.indicator!.getBoundingClientRect();
     const toPos = toRect.left;
     const toExtent = toRect.width;
     const scale = fromExtent / toExtent;
