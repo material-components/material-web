@@ -408,4 +408,28 @@ describe('Field', () => {
         .toBeTrue();
     });
   });
+
+  describe('label animation', () => {
+    it('should not produce NaN transforms when populated while hidden', async () => {
+      const {instance} = await setupTest({label: 'Hidden Label'});
+      instance.style.display = 'none';
+      await env.waitForStability();
+      const animateCalls: unknown[] = [];
+      spyOn(Element.prototype, 'animate').and.callFake((keyframes, options) => {
+        animateCalls.push(keyframes);
+        return new Animation();
+      });
+      const consoleErrorSpy = spyOn(console, 'error');
+      instance.populated = true;
+      await env.waitForStability();
+      for (const keyframe of animateCalls) {
+        const frames = Array.isArray(keyframe) ? keyframe : [keyframe];
+        for (const frame of frames) {
+          const transform = (frame as any)?.transform ?? '';
+          expect(transform).not.toMatch(/NaN/);
+        }
+      }
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
+    });
+  });
 });
