@@ -341,7 +341,9 @@ describe('Field', () => {
       // Test case.
       const labelValue = 'Label';
       const {instance} = await setupTest({
-        required: true, label: labelValue, noAsterisk: true
+        required: true,
+        label: labelValue,
+        noAsterisk: true,
       });
       //Assertion
       expect(instance.labelText)
@@ -406,6 +408,29 @@ describe('Field', () => {
       expect(instance.didErrorAnnounce())
         .withContext('didErrorAnnounce() after refresh')
         .toBeTrue();
+    });
+  });
+
+  describe('label animation', () => {
+    it('should not produce NaN transforms when populated while hidden', async () => {
+      const {instance} = await setupTest({label: 'Hidden Label'});
+      instance.style.display = 'none';
+      await env.waitForStability();
+
+      const floatingLabel =
+        instance.shadowRoot?.querySelector('.label.floating')!;
+      expect(floatingLabel).withContext('floating label element').toBeDefined();
+      const floatingLabelAnimateSpy = spyOn(
+        floatingLabel,
+        'animate',
+      ).and.callThrough();
+
+      instance.populated = true;
+      await env.waitForStability();
+
+      expect(floatingLabelAnimateSpy)
+        .withContext('floatingLabel.animate()')
+        .not.toHaveBeenCalled();
     });
   });
 });
