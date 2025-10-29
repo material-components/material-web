@@ -11,6 +11,28 @@
 @use '../../tokens';
 // go/keep-sorted end
 
+@mixin ripple-hover($tokens) {
+  background-color: map.get($tokens, 'hover-color');
+  opacity: map.get($tokens, 'hover-opacity');
+}
+
+@mixin ripple-active($tokens) {
+  opacity: map.get($tokens, 'pressed-opacity');
+  transition-duration: 105ms;
+}
+
+// controls for elements that might be triggered via a HTMLLabelElement
+@mixin controls {
+  $tokens: tokens.md-comp-ripple-values();
+  :host(:hover) md-ripple::part(surface)::before {
+    @include ripple-hover($tokens);
+  }
+
+  :host(:active) md-ripple::part(surface)::after {
+    @include ripple-active($tokens);
+  }
+}
+
 @mixin theme($tokens) {
   $supported-tokens: tokens.$md-comp-ripple-supported-tokens;
   @each $token, $value in $tokens {
@@ -80,13 +102,11 @@
   }
 
   .hovered::before {
-    background-color: map.get($tokens, 'hover-color');
-    opacity: map.get($tokens, 'hover-opacity');
+    @include ripple-hover($tokens);
   }
 
   .pressed::after {
     // press ripple fade-in
-    opacity: map.get($tokens, 'pressed-opacity');
-    transition-duration: 105ms;
+    @include ripple-active($tokens);
   }
 }
