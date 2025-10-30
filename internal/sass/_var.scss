@@ -9,7 +9,7 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './string-ext';
+@use '../../sass/ext/string_ext';
 // go/keep-sorted end
 
 /// Creates a custom property `var()` string.
@@ -51,7 +51,7 @@
 /// @param {String} $name - The name of the custom property.
 /// @return {String} The full valid CSS custom property variable name.
 @function create-name($name) {
-  @if string-ext.has-prefix($name, '--') {
+  @if string_ext.starts-with($name, '--') {
     @return $name;
   }
 
@@ -173,7 +173,8 @@
 /// @return {Bool} True if the value is a custom property `var()` string, or
 ///     false if not.
 @function _is-var-string($var) {
-  @return meta.type-of($var) == 'string' and string-ext.has-prefix($var, 'var(');
+  @return meta.type-of($var) == 'string' and
+    string_ext.starts-with($var, 'var(');
 }
 
 /// Parses a `var()` string into a Map with `name` and `fallback` keys. This
@@ -197,14 +198,15 @@
   }
 
   // Remove function name and parens
-  $var: string-ext.trim($var, 'var(', ')');
+  $var: string_ext.replace-start($var, 'var(', '');
+  $var: string_ext.replace-end($var, ')', '');
 
-  $name: string-ext.trim-repeating($var, ' ');
+  $name: string_ext.trim($var);
   $fallback: null;
   $comma: string.index($var, ',');
   @if $comma != null {
-    $name: string-ext.trim-repeating(string.slice($var, 1, $comma - 1), ' ');
-    $fallback: string-ext.trim-repeating(string.slice($var, $comma + 1), ' ');
+    $name: string_ext.trim(string.slice($var, 1, $comma - 1));
+    $fallback: string_ext.trim(string.slice($var, $comma + 1));
     @if _is-var-string($fallback) {
       $fallback: _parse($fallback);
       @if $fallback == null {

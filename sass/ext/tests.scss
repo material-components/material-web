@@ -3,6 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+@use 'true' as test with (
+  $catch-errors: true
+);
+
 // go/keep-sorted start
-@use './string-ext.test';
+@use 'string_ext_test';
 // go/keep-sorted end
