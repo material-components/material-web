@@ -1,0 +1,66 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Utilities for Sass type checking.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:meta';
+@use 'sass:string';
+@use 'throw';
+// go/keep-sorted end
+
+/// Returns true if the given value matches the provided type string.
+///
+/// The type string supports multiple types separated by `|`, such as
+/// `'string|null'`. Type options are any values returned by `meta.type-of()`.
+///
+/// @example scss
+///   @function is-empty($value) {
+///     @if type.matches($value, 'list|map') {
+///       @return list.length($value) == 0;
+///     }
+///     @if type.matches($value, 'string') {
+///       @return $value == '';
+///     }
+///     @return type.matches($value, 'null');
+///   }
+///
+/// @param {*} $value - The value to check the type of.
+/// @param {string} $type-string - The type to check. May be multiple types
+///     separated by `|`.
+/// @return {boolean} True if the value matches the type string.
+@function matches($value, $type-string) {
+  @if meta.type-of($type-string) != 'string' or $type-string == '' {
+    @return throw.error(
+      '$type-string must be a non-empty string',
+      $source: 'type.matches'
+    );
+  }
+  @if string.index($type-string, ' ') {
+    @return throw.error(
+      '$type-string may not contain spaces',
+      $source: 'type.matches'
+    );
+  }
+  @if string.index($type-string, 'boolean') {
+    @return throw.error(
+      'Use "bool" instead of "boolean"',
+      $source: 'type.matches'
+    );
+  }
+
+  $value-type: meta.type-of($value);
+  @if $value-type == $type-string {
+    @return true;
+  }
+
+  @each $type in string.split($type-string, '|') {
+    @if $value-type == $type {
+      @return true;
+    }
+  }
+
+  @return false;
+}

@@ -8,5 +8,8 @@
 );
 
 // go/keep-sorted start
+@use 'assert_test';
 @use 'string_ext_test';
+@use 'throw_test';
+@use 'type_test';
 // go/keep-sorted end

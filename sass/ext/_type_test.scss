@@ -1,0 +1,115 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'throw';
+@use 'type';
+// go/keep-sorted end
+
+@include test.describe('type') {
+  @include test.describe('matches()') {
+    @include test.it(
+      'returns true when the value matches a single string type'
+    ) {
+      @include test.assert-true(
+        type.matches(1, 'number'),
+        '1 should match "number" type'
+      );
+      @include test.assert-true(
+        type.matches('foo', 'string'),
+        '"foo" should match "string" type'
+      );
+      @include test.assert-true(
+        type.matches(true, 'bool'),
+        'true should match "bool" type'
+      );
+      @include test.assert-true(
+        type.matches(null, 'null'),
+        'null should match "null" type'
+      );
+      @include test.assert-true(
+        type.matches((1, 2, 3), 'list'),
+        '(1, 2, 3) should match "list" type'
+      );
+      $map: (
+        'key': 'value',
+      );
+      @include test.assert-true(
+        type.matches($map, 'map'),
+        '("key": "value") should match "map" type'
+      );
+    }
+
+    @include test.it(
+      'returns true when the value matches multiple string types'
+    ) {
+      @include test.assert-true(
+        type.matches(1, 'number|string'),
+        '1 should match "number|string" type'
+      );
+      @include test.assert-true(
+        type.matches('foo', 'number|string'),
+        '"foo" should match "number|string" type'
+      );
+      @include test.assert-true(
+        type.matches(null, 'number|string|null'),
+        'null should match "number|string|null" type'
+      );
+      @include test.assert-true(
+        type.matches((), 'list|map'),
+        '() should match "list|map" type'
+      );
+    }
+
+    @include test.it('returns false when the value does not match any types') {
+      @include test.assert-false(
+        type.matches(1, 'string'),
+        '1 should not match "string" type'
+      );
+      @include test.assert-false(
+        type.matches('foo', 'number'),
+        '"foo" should not match "number" type'
+      );
+      @include test.assert-false(
+        type.matches(1, 'list|map|null'),
+        '1 should not match "list|map|null" type'
+      );
+    }
+
+    @include test.it('throws an error when the type string is empty') {
+      @include test.assert-true(
+        throw.get-error(type.matches('foo', '')),
+        'should throw error'
+      );
+    }
+
+    @include test.it('throws an error when the type string is not a string') {
+      @include test.assert-true(
+        throw.get-error(type.matches(1, 1)),
+        'should throw error'
+      );
+    }
+
+    @include test.it('throws an error when the type string contains spaces') {
+      @include test.assert-true(
+        throw.get-error(type.matches('foo', 'number | string')),
+        'should throw error'
+      );
+    }
+
+    @include test.it('throws an error if the type string uses "boolean" instead of "bool"') {
+      @include test.assert-true(
+        throw.get-error(type.matches(true, 'boolean')),
+        'should throw error'
+      );
+      @include test.assert-true(
+        throw.get-error(type.matches(1, 'number|boolean')),
+        'should throw error'
+      );
+    }
+  }
+}
