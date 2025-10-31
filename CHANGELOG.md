@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.2](https://github.com/material-components/material-web/compare/v2.4.1...v2.4.2) (2025-10-31)
+
+
+### Bug Fixes
+
+* **field:** prevent NaN transforms when element is hidden ([590ae99](https://github.com/material-components/material-web/commit/590ae99ff77c5296258b322dd98351c7e2be20f5))
+
 ## [2.4.1](https://github.com/material-components/material-web/compare/v2.4.0...v2.4.1) (2025-10-27)
 
 
