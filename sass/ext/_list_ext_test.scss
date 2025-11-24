@@ -1,0 +1,316 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'list_ext';
+@use 'throw';
+// go/keep-sorted end
+
+@include test.describe('list_ext') {
+  @include test.describe('difference()') {
+    @include test.it('returns the difference for basic lists') {
+      @include test.assert-equal(
+        list_ext.difference((1, 2, 3), (2, 4)),
+        (1, 3)
+      );
+    }
+
+    @include test.it('returns the first list when there is no overlap') {
+      @include test.assert-equal(
+        list_ext.difference((1, 2, 3), (4, 5)),
+        (1, 2, 3)
+      );
+    }
+
+    @include test.it('returns an empty list when there is full overlap') {
+      @include test.assert-equal(list_ext.difference((1, 2, 3), (1, 2, 3)), ());
+    }
+
+    @include test.it('returns an empty list when the first list is empty') {
+      @include test.assert-equal(list_ext.difference((), (1, 2, 3)), ());
+    }
+
+    @include test.it('returns the first list when the second list is empty') {
+      @include test.assert-equal(list_ext.difference((1, 2, 3), ()), (1, 2, 3));
+    }
+
+    @include test.it(
+      'returns the difference when the first list contains null'
+    ) {
+      @include test.assert-equal(
+        list_ext.difference((1, null, 3), (2, 4)),
+        (1, null, 3)
+      );
+    }
+
+    @include test.it(
+      'returns the difference when the second list contains null'
+    ) {
+      @include test.assert-equal(
+        list_ext.difference((1, 2, 3), (null, 4)),
+        (1, 2, 3)
+      );
+    }
+
+    @include test.it('throws an error when the first list is null') {
+      // Act
+      $result: list_ext.difference(null, (1, 2, 3));
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the second list is null') {
+      // Act
+      $result: list_ext.difference((1, 2, 3), null);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the first list is a map') {
+      // Act
+      $result: list_ext.difference(
+        (
+          a: 1,
+        ),
+        (1, 2, 3)
+      );
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the second list is a map') {
+      // Act
+      $result: list_ext.difference(
+        (1, 2, 3),
+        (
+          a: 1,
+        )
+      );
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+  }
+
+  @include test.describe('are-equal()') {
+    @include test.it('returns true if lists are the same') {
+      @include test.assert-true(list_ext.are-equal((1, 2, 3), (1, 2, 3)));
+    }
+
+    @include test.it(
+      'returns true if lists have the same elements but the second list is reversed'
+    ) {
+      @include test.assert-true(list_ext.are-equal((1, 2, 3), (3, 2, 1)));
+    }
+
+    @include test.it(
+      'returns true if lists have the same elements but the first list is reversed'
+    ) {
+      @include test.assert-true(list_ext.are-equal((3, 2, 1), (1, 2, 3)));
+    }
+
+    @include test.it('returns false when the first list is empty') {
+      @include test.assert-false(list_ext.are-equal((), (1, 2, 3)));
+    }
+
+    @include test.it('returns false when the second list is empty') {
+      @include test.assert-false(list_ext.are-equal((1, 2, 3), ()));
+    }
+
+    @include test.it(
+      'returns false when the first list has more items than the second one'
+    ) {
+      @include test.assert-false(list_ext.are-equal((1, 2, 3, 4), (1, 2, 3)));
+    }
+    @include test.it(
+      'returns false when the second list has more items than the first one'
+    ) {
+      @include test.assert-false(list_ext.are-equal((1, 2, 3), (1, 2, 3, 4)));
+    }
+
+    @include test.it('throws an error when the first list is null') {
+      // Act
+      $result: list_ext.are-equal(null, (1, 2, 3));
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the second list is null') {
+      // Act
+      $result: list_ext.are-equal((1, 2, 3), null);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the first list is a map') {
+      // Act
+      $result: list_ext.are-equal(
+        (
+          a: 1,
+        ),
+        (1, 2, 3)
+      );
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the second list is a map') {
+      // Act
+      $result: list_ext.are-equal(
+        (1, 2, 3),
+        (
+          a: 1,
+        )
+      );
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+  }
+
+  @include test.describe('intersection()') {
+    @include test.it('returns the intersection for basic lists') {
+      @include test.assert-equal(
+        list_ext.intersection((1, 2, 3), (2, 3, 4)),
+        (2, 3)
+      );
+    }
+
+    @include test.it('returns an empty list when there is no overlap') {
+      @include test.assert-equal(list_ext.intersection((1, 2, 3), (4, 5)), ());
+    }
+
+    @include test.it('returns an empty list when the first list is empty') {
+      @include test.assert-equal(list_ext.intersection((), (1, 2, 3)), ());
+    }
+
+    @include test.it('returns an empty list when the second list is empty') {
+      @include test.assert-equal(list_ext.intersection((1, 2, 3), ()), ());
+    }
+
+    @include test.it(
+      'returns the inersection when the first list contains null'
+    ) {
+      @include test.assert-equal(
+        list_ext.intersection((1, null, 3), (1, 2, 4, 3)),
+        (1, 3)
+      );
+    }
+
+    @include test.it(
+      'returns the inersection when the second list contains null'
+    ) {
+      @include test.assert-equal(
+        list_ext.intersection((1, 2, 3), (1, 3, null, 4)),
+        (1, 3)
+      );
+    }
+
+    @include test.it('returns the inersection when both lists contain null') {
+      @include test.assert-equal(
+        list_ext.intersection((null, 2, 3), (3, null, 4)),
+        (null, 3)
+      );
+    }
+
+    @include test.it('throws an error when the first list is null') {
+      // Act
+      $result: list_ext.intersection(null, (1, 2, 3));
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the second list is null') {
+      // Act
+      $result: list_ext.intersection((1, 2, 3), null);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the first list is a map') {
+      // Act
+      $result: list_ext.intersection(
+        (
+          a: 1,
+        ),
+        (1, 2, 3)
+      );
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error when the second list is a map') {
+      // Act
+      $result: list_ext.intersection(
+        (1, 2, 3),
+        (
+          a: 1,
+        )
+      );
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+  }
+}

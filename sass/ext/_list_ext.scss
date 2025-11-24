@@ -1,0 +1,114 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Extensions to the go/sass:list built-in module.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'assert';
+@use 'throw';
+// go/keep-sorted end
+
+/// Returns the difference between two lists.
+///
+/// @example scss
+///   $listA: ('apple', 'banana', 'cherry', 'date');
+///   $listB: ('banana', 'cherry', 'apple');
+///   $listC: ('apple', 'banana', 'date');
+///
+///   @debug list_ext.difference($listA, $listB); // ('date')
+///   @debug list_ext.difference($listA, $listC); // ('cherry')
+///
+/// @param {list} $listA - The first list to compare.
+/// @param {list} $listB - The second list to compare.
+/// @return {list} All items in $listA that are not in $listB.
+@function difference($listA, $listB) {
+  $listA: assert.is-type($listA, 'list', $source: 'list_ext.difference');
+  $listB: assert.is-type($listB, 'list', $source: 'list_ext.difference');
+  $error: throw.get-error($listA, $listB);
+  @if $error {
+    @return $error;
+  }
+
+  $result: ();
+  @each $item in $listA {
+    @if not list.index($listB, $item) {
+      $result: list.append($result, $item, list.separator($listA));
+    }
+  }
+  @return $result;
+}
+
+/// Checks if two lists contain the same elements, regardless of their order.
+///
+/// The function iterates through each list and verifies that every element in
+/// one list is present in the other. The order of elements does not affect the
+/// result.
+///
+/// @example scss
+///   $listA: ('apple', 'banana', 'cherry');
+///   $listB: ('banana', 'cherry', 'apple');
+///   $listC: ('apple', 'banana', 'date');
+///
+///   @debug list_ext.are-equal($listA, $listB); // true
+///   @debug list_ext.are-equal($listA, $listC); // false
+///
+/// @param {list} $listA - The first list to compare.
+/// @param {list} $listB - The second list to compare.
+/// @return {boolean} `true` if the lists contain the same elements, otherwise
+///     `false`.
+@function are-equal($listA, $listB) {
+  $listA: assert.is-type($listA, 'list', $source: 'list_ext.are-equal');
+  $listB: assert.is-type($listB, 'list', $source: 'list_ext.are-equal');
+  $error: throw.get-error($listA, $listB);
+  @if $error {
+    @return $error;
+  }
+  @if list.length($listA) != list.length($listB) {
+    @return false;
+  }
+  $result: true;
+  @each $key in $listA {
+    @if not list.index($listB, $key) {
+      $result: false;
+    }
+  }
+
+  @each $key in $listB {
+    @if not list.index($listA, $key) {
+      $result: false;
+    }
+  }
+  @return $result;
+}
+
+/// Returns the intersection of two lists.
+///
+/// @example scss
+///   $listA: ('apple', 'banana', 'cherry', 'date');
+///   $listB: ('banana', 'cherry', 'apple');
+///   $listC: ('apple', 'banana', 'date');
+///
+///   @debug list_ext.intersection($listA, $listB); // ('apple', 'banana', 'cherry')
+///   @debug list_ext.intersection($listA, $listC); // ('apple', 'banana')
+///
+/// @param {list} $listA - The first list to compare.
+/// @param {list} $listB - The second list to compare.
+/// @return {list} All items in $listA that are also in $listB.
+@function intersection($listA, $listB) {
+  $listA: assert.is-type($listA, 'list', $source: 'list_ext.intersection');
+  $listB: assert.is-type($listB, 'list', $source: 'list_ext.intersection');
+  $error: throw.get-error($listA, $listB);
+  @if $error {
+    @return $error;
+  }
+  $result: ();
+  @each $item in $listA {
+    @if list.index($listB, $item) {
+      $result: list.append($result, $item, list.separator($listA));
+    }
+  }
+  @return $result;
+}

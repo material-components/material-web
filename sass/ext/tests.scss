@@ -9,6 +9,8 @@
 
 // go/keep-sorted start
 @use 'assert_test';
+@use 'list_ext_test';
+@use 'map_ext_test';
 @use 'string_ext_test';
 @use 'throw_test';
 @use 'type_test';

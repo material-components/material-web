@@ -54,7 +54,7 @@
 /// returned, otherwise an error is thrown.
 ///
 /// @example scss
-///   @function get-or-throw($map, $key) {
+///   @function get-strict($map, $key) {
 ///     @return assert.not-type(
 ///       map.get($map, $key),
 ///       'null',
