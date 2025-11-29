@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 24
           cache: npm
       - uses: google/wireit@setup-github-actions-caching/v2
 
@@ -48,7 +48,7 @@ jobs:
           git commit -am "chore: nightly publish"
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 24
           registry-url: 'https://wombat-dressing-room.appspot.com/'
       - run: npm publish --tag nightly
         env:
