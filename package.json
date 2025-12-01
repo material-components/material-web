@@ -31,6 +31,8 @@
     "build:catalog": "wireit",
     "build:scripts": "wireit",
     "update-docs": "wireit",
+    "update-docs:components": "wireit",
+    "update-docs:sass-ext": "wireit",
     "update-size": "wireit"
   },
   "type": "module",
@@ -169,6 +171,12 @@
       "clean": "if-file-deleted"
     },
     "update-docs": {
+      "dependencies": [
+        "update-docs:components",
+        "update-docs:sass-ext"
+      ]
+    },
+    "update-docs:components": {
       "command": "node scripts/analyzer/update-docs.js",
       "files": [
         "docs/components/*.md",
@@ -178,6 +186,19 @@
         "!catalog/",
         "!scripts/",
         "scripts/analyzer/update-docs.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:scripts"
+      ]
+    },
+    "update-docs:sass-ext": {
+      "command": "node scripts/update-sass-ext-docs.js --input=./sass/ext/ --output=./docs/sass/sass-ext.md",
+      "files": [
+        "docs/sass/sass-ext.md",
+        "sass/ext/_*.scss",
+        "!sass/ext/*_test.scss",
+        "scripts/update-sass-ext-docs.js"
       ],
       "output": [],
       "dependencies": [

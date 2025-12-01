@@ -32,6 +32,7 @@ export default {
         'progress',
         'radio',
         'ripple',
+        'sass-ext',
         'select',
         'slider',
         'switch',

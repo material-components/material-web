@@ -50,8 +50,8 @@
   @return throw.error($message, $source);
 }
 
-/// Asserts that the argument is a specific type. If it is, the argument is
-/// returned, otherwise an error is thrown.
+/// Asserts that the argument is not a specific type. The argument is returned
+/// if it does not match. An error is thrown if the argument matches the type.
 ///
 /// @example scss
 ///   @function get-strict($map, $key) {

@@ -46,7 +46,7 @@
 ///
 /// @example scss
 ///   $var: var(--foo);
-///   @debug var.name($var); // "foo"
+///   @debug var.name($var); // "--foo"
 ///
 /// @param {string} $var - A custom property `var()` string.
 /// @return {string} The custom property variable name.

@@ -32,10 +32,10 @@
 ///   @function mix-primary-on-surface($values) {
 ///     $primary: get-value($values, 'primary');
 ///     $surface: get-value($values, 'surface');
-///     $error: throw.get-error($primary, $secondary);
+///     $error: throw.get-error($primary, $surface);
 ///     @if $error {
 ///       // Return early to guard logic against additional errors since
-///       // $primary or $secondary may be a string instead of a color.
+///       // $primary or $surface may be a string instead of a color.
 ///       @return $error;
 ///     }
 ///
