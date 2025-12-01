@@ -1,6 +1,6 @@
 <!-- go/g3mark-in-g3doc -->
 
-# `sass/ext`
+# Sass ext
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
