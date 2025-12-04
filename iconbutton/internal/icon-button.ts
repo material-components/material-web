@@ -7,8 +7,8 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {html, LitElement, nothing} from 'lit';
+import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml} from 'lit/static-html.js';
 
@@ -144,10 +144,11 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
 
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
 
-  constructor() {
-    super();
-    if (!isServer) {
-      this.addEventListener('click', this.handleClick.bind(this));
+  @query('.button') private readonly buttonElement!: HTMLElement | null;
+
+  override click() {
+    if (!this.disabled && this.buttonElement) {
+      this.buttonElement.click();
     }
   }
 
@@ -195,7 +196,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
       <a
-        class="link"
+        class="link button"
         id="link"
         href="${this.href}"
         download="${this.download || nothing}"
@@ -210,6 +211,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
     return {
       'flip-icon': this.flipIcon,
       'selected': this.toggle && this.selected,
+      'button': !this.href
     };
   }
 
@@ -246,18 +248,6 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   override connectedCallback() {
     this.flipIcon = isRtl(this, this.flipIconInRtl);
     super.connectedCallback();
-  }
-
-  /** Handles a click on this element. */
-  private handleClick(event: MouseEvent) {
-    // If the icon button is soft-disabled, we need to explicitly prevent the
-    // click from propagating to other event listeners as well as prevent the
-    // default action.
-    if (!this.href && this.softDisabled) {
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      return;
-    }
   }
 
   /**
