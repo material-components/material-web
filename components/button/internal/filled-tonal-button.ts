@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../elevation/elevation.js';
+import '../../../elevation/elevation.js';
 
 import {html} from 'lit';
 
 import {Button} from './button.js';
 
 /**
- * An elevated button component.
+ * A filled tonal button component.
  */
-export class ElevatedButton extends Button {
+export class FilledTonalButton extends Button {
   protected override renderElevationOrOutline() {
     return html`<md-elevation part="elevation"></md-elevation>`;
   }
