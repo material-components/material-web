@@ -12,10 +12,59 @@ import {customElement} from 'lit/decorators.js';
 import {hasState, mixinCustomStateSet, toggleState} from './custom-state-set.js';
 import {mixinElementInternals} from './element-internals.js';
 
+// A more reliable test would use `forceElementInternalsPolyfill()` from
+// `element-internals-polyfill`, but our GitHub test build doesn't
+// support it since the polyfill changes global types.
+
+/* A simplified version of element-internals-polyfill CustomStateSet. */
+class PolyfilledCustomStateSet extends Set<string> {
+  constructor(private readonly ref: HTMLElement) {
+    super();
+  }
+
+  override add(state: string) {
+    if (!/^--/.test(state) || typeof state !== 'string') {
+      throw new DOMException(
+        `Failed to execute 'add' on 'CustomStateSet': The specified value ${state} must start with '--'.`,
+      );
+    }
+    const result = super.add(state);
+    this.ref.toggleAttribute(`state${state}`, true);
+    return result;
+  }
+
+  override clear() {
+    for (const [entry] of this.entries()) {
+      this.delete(entry);
+    }
+    super.clear();
+  }
+
+  override delete(state: string) {
+    const result = super.delete(state);
+    this.ref.toggleAttribute(`state${state}`, false);
+    return result;
+  }
+}
+
 @customElement('test-custom-state-set')
 class TestCustomStateSet extends mixinCustomStateSet(
   mixinElementInternals(LitElement),
-) {}
+) {
+  static testWithPolyfill = false;
+
+  override attachInternals() {
+    const internals = super.attachInternals();
+    if (TestCustomStateSet.testWithPolyfill) {
+      Object.defineProperty(internals, 'states', {
+        enumerable: true,
+        configurable: true,
+        value: new PolyfilledCustomStateSet(this),
+      });
+    }
+    return internals;
+  }
+}
 
 for (const testWithPolyfill of [false, true]) {
   const describeSuffix = testWithPolyfill
@@ -23,62 +72,8 @@ for (const testWithPolyfill of [false, true]) {
     : '';
 
   describe(`mixinCustomStateSet()${describeSuffix}`, () => {
-    const nativeAttachInternals = HTMLElement.prototype.attachInternals;
-
     beforeAll(() => {
-      if (testWithPolyfill) {
-        // A more reliable test would use `forceElementInternalsPolyfill()` from
-        // `element-internals-polyfill`, but our GitHub test build doesn't
-        // support it since the polyfill changes global types.
-
-        /* A simplified version of element-internal-polyfill CustomStateSet. */
-        class PolyfilledCustomStateSet extends Set<string> {
-          constructor(private readonly ref: HTMLElement) {
-            super();
-          }
-
-          override add(state: string) {
-            if (!/^--/.test(state) || typeof state !== 'string') {
-              throw new DOMException(
-                `Failed to execute 'add' on 'CustomStateSet': The specified value ${state} must start with '--'.`,
-              );
-            }
-            const result = super.add(state);
-            this.ref.toggleAttribute(`state${state}`, true);
-            return result;
-          }
-
-          override clear() {
-            for (const [entry] of this.entries()) {
-              this.delete(entry);
-            }
-            super.clear();
-          }
-
-          override delete(state: string) {
-            const result = super.delete(state);
-            this.ref.toggleAttribute(`state${state}`, false);
-            return result;
-          }
-        }
-
-        HTMLElement.prototype.attachInternals = function (this: HTMLElement) {
-          const internals = nativeAttachInternals.call(this);
-          Object.defineProperty(internals, 'states', {
-            enumerable: true,
-            configurable: true,
-            value: new PolyfilledCustomStateSet(this),
-          });
-
-          return internals;
-        };
-      }
-    });
-
-    afterAll(() => {
-      if (testWithPolyfill) {
-        HTMLElement.prototype.attachInternals = nativeAttachInternals;
-      }
+      TestCustomStateSet.testWithPolyfill = testWithPolyfill;
     });
 
     describe('[hasState]()', () => {
