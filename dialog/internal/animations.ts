@@ -27,6 +27,11 @@ export interface DialogAnimation {
   scrim?: DialogAnimationArgs[];
 
   /**
+   * Animations for the container slot.
+   */
+  containerSlot?: DialogAnimationArgs[];
+
+  /**
    * Animations for the container of the dialog.
    */
   container?: DialogAnimationArgs[];
@@ -62,6 +67,22 @@ export const DIALOG_DEFAULT_OPEN_ANIMATION: DialogAnimation = {
       // Scrim fade in
       [{'opacity': 0}, {'opacity': 0.32}],
       {duration: 500, easing: 'linear'},
+    ],
+  ],
+  containerSlot: [
+    [
+      // Container slot fade in
+      [{'opacity': 0}, {'opacity': 1}],
+      {duration: 50, easing: 'linear'},
+    ],
+    [
+      // Container slot grow
+      // Note: current spec says to grow from 0dp->100% and shrink from
+      // 100%->35%. We change this to 35%->100% to simplify the animation that
+      // is supposed to clip content as it grows. From 0dp it's possible to see
+      // text/actions appear before the container has fully grown.
+      [{'height': '35%'}, {'height': '100%'}],
+      {duration: 500, easing: EASING.EMPHASIZED},
     ],
   ],
   container: [
@@ -119,6 +140,21 @@ export const DIALOG_DEFAULT_CLOSE_ANIMATION: DialogAnimation = {
       // Scrim fade out
       [{'opacity': 0.32}, {'opacity': 0}],
       {duration: 150, easing: 'linear'},
+    ],
+  ],
+  containerSlot: [
+    [
+      // Container slot shrink
+      [{'height': '100%'}, {'height': '35%'}],
+      {
+        duration: 150,
+        easing: EASING.EMPHASIZED_ACCELERATE,
+      },
+    ],
+    [
+      // Container slot fade out
+      [{'opacity': '1'}, {'opacity': '0'}],
+      {delay: 100, duration: 50, easing: 'linear'},
     ],
   ],
   container: [
