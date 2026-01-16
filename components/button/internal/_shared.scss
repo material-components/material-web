@@ -7,8 +7,8 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../focus/focus-ring';
-@use '../../ripple/ripple';
+@use '../../../focus/focus-ring';
+@use '../../../ripple/ripple';
 // go/keep-sorted end
 
 @mixin styles() {

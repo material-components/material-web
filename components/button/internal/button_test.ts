@@ -9,7 +9,7 @@
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {Environment} from '../../testing/environment.js';
+import {Environment} from '../../../testing/environment.js';
 import {ButtonHarness} from '../harness.js';
 import {Button} from './button.js';
 
