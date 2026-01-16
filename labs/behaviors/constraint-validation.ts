@@ -235,7 +235,7 @@ export function mixinConstraintValidation<
       const {validity, validationMessage: nonCustomValidationMessage} =
         this[privateValidator].getValidity();
 
-      const customError = !!this[privateCustomValidationMessage];
+      const customError = !!this[privateCustomValidationMessage] || validity.customError;
       const validationMessage =
         this[privateCustomValidationMessage] || nonCustomValidationMessage;
 
