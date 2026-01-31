@@ -17,6 +17,18 @@ import {
  */
 const EVENTS = ['focusin', 'focusout', 'pointerdown'];
 
+let hadKeyboardEvent = false;
+
+window.addEventListener('keydown', (e: KeyboardEvent) => {
+  // Ignore modifier-only keys
+  if (e.metaKey || e.altKey || e.ctrlKey) return;
+  hadKeyboardEvent = true;
+}, true);
+
+window.addEventListener('pointerdown', () => {
+  hadKeyboardEvent = false;
+}, true);
+
 /**
  * A focus ring component.
  *
@@ -80,7 +92,13 @@ export class FocusRing extends LitElement implements Attachable {
       default:
         return;
       case 'focusin':
-        this.visible = this.control?.matches(':focus-visible') ?? false;
+        // Only use hadKeyboardEvent when using safari.
+        // It works around an issue.
+        this.visible =
+        (
+            (this.isSafari() && hadKeyboardEvent) ||
+            (this.control?.matches(':focus-visible') && !this.control?.matches(':hover'))
+        ) ?? false;
         break;
       case 'focusout':
       case 'pointerdown':
@@ -107,6 +125,12 @@ export class FocusRing extends LitElement implements Attachable {
       this.dispatchEvent(new Event('visibility-changed'));
     }
     super.update(changed);
+  }
+  isSafari() {
+    return (
+      /^((?!chrome|android).)*safari/i.test(navigator.userAgent) ||
+      /iPad|iPhone|iPod/.test(navigator.userAgent)
+    );
   }
 }
 
