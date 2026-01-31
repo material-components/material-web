@@ -5,6 +5,10 @@ name: Deploy to Firebase Hosting on release and manual
       - published
   workflow_dispatch:
     # allows triggering from the gihub UI
+
+permissions:
+  contents: read
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest

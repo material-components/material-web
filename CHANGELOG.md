@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.4.1](https://github.com/material-components/material-web/compare/v2.4.0...v2.4.1) (2025-10-27)
+
+
+### Bug Fixes
+
+* **radio:** also move sibling uncheck logic after root assignment ([6010e52](https://github.com/material-components/material-web/commit/6010e52c8fcd53577a8cf2cee53095033f329d2a))
+* **radio:** move root assignment to mirror hostDisconnected ([adb8d10](https://github.com/material-components/material-web/commit/adb8d104f2ebc29890b8c578e34a412e8c5c3fc2))
+* **tokens:** `@material/web/tokens/v*` moved to `@material/web/tokens/versions/v*` ([60c0cfa](https://github.com/material-components/material-web/commit/60c0cfa58ad135c189cb0fa95c5f2744499f0327))
+
 ## [2.4.0](https://github.com/material-components/material-web/compare/v2.3.0...v2.4.0) (2025-08-21)
 
 

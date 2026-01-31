@@ -4,8 +4,8 @@
 //
 
 // go/keep-sorted start
-@use './internal/validate';
-@use './v0_192/md-ref-palette';
+@use 'internal/validate';
+@use 'versions/v0_192/md-ref-palette';
 // go/keep-sorted end
 
 $supported-tokens: (

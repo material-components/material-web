@@ -7,10 +7,10 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/validate';
-@use './md-sys-color';
-@use './md-sys-shape';
-@use './md-sys-state';
+@use 'internal/validate';
+@use 'md-sys-color';
+@use 'md-sys-shape';
+@use 'md-sys-state';
 // go/keep-sorted end
 
 $supported-tokens: (

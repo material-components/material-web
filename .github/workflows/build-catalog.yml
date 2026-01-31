@@ -2,6 +2,9 @@ name: Build Catalog
 
 on: [push]
 
+permissions:
+  contents: read
+
 jobs:
   build-catalog:
     runs-on: ubuntu-latest

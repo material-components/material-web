@@ -11,7 +11,7 @@ ssrOnly: true
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2025-05-20' }
+freshness: { owner: 'lizmitchell' reviewed: '2025-11-23' }
 tag: 'docType:reference'
 *-->
 

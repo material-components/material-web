@@ -7,13 +7,13 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/shape';
-@use './internal/validate';
-@use './md-sys-color';
-@use './md-sys-shape';
-@use './md-sys-state';
-@use './md-sys-typescale';
-@use './v0_192/md-comp-outlined-segmented-button';
+@use 'internal/shape';
+@use 'internal/validate';
+@use 'md-sys-color';
+@use 'md-sys-shape';
+@use 'md-sys-state';
+@use 'md-sys-typescale';
+@use 'versions/v0_192/md-comp-outlined-segmented-button';
 // go/keep-sorted end
 
 $supported-tokens: (

@@ -5,6 +5,11 @@ name: Deploy to Firebase Hosting on PR
 on:
   pull_request:
     types: [ labeled ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   build_and_preview:
     if: github.event.label.name == 'preview-catalog' && github.event.pull_request.head.repo.full_name == github.repository

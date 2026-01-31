@@ -7,10 +7,10 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './md-sys-color';
-@use './md-sys-shape';
-@use './md-sys-typescale';
-@use './v0_192/md-comp-badge';
+@use 'md-sys-color';
+@use 'md-sys-shape';
+@use 'md-sys-typescale';
+@use 'versions/v0_192/md-comp-badge';
 // go/keep-sorted end
 
 $_default: (
