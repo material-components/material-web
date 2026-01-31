@@ -94,11 +94,12 @@ export class FocusRing extends LitElement implements Attachable {
       case 'focusin':
         // Only use hadKeyboardEvent when using safari.
         // It works around an issue.
-        this.visible =
-        (
-            (this.isSafari() && hadKeyboardEvent) ||
-            (this.control?.matches(':focus-visible') && !this.control?.matches(':hover'))
-        ) ?? false;
+        const isSafari = this.isSafari();
+        const focusVisible = this.control?.matches(':focus-visible') ?? false;
+        const hovering = this.control?.matches(':hover') ?? false;
+        this.visible = isSafari
+          ? (hadKeyboardEvent || focusVisible) && !hovering
+          : focusVisible;
         break;
       case 'focusout':
       case 'pointerdown':
