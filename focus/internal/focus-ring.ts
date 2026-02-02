@@ -97,7 +97,6 @@ export class FocusRing extends LitElement implements Attachable {
         this.visible = false;
         break;
       case 'focusout':
-      case 'pointerdown':
         this.visible = false;
         break;
     }
