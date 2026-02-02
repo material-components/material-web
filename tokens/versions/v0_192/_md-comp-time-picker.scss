@@ -36,7 +36,7 @@ $_default: (
   @return (
     'clock-dial-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
-    'clock-dial-container-size': if($exclude-hardcoded-values, null, 256px),
+    'clock-dial-container-size': if(sass($exclude-hardcoded-values): null; else: 256px),
     'clock-dial-label-text-font':
       map.get($deps, 'md-sys-typescale', 'body-large-font'),
     'clock-dial-label-text-line-height':
@@ -46,17 +46,13 @@ $_default: (
     'clock-dial-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'clock-dial-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.clock-dial.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.clock-dial.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-large-weight')
           map.get($deps, 'md-sys-typescale', 'body-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-large-font')),
     'clock-dial-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-large-weight'),
     'clock-dial-selected-label-text-color':
@@ -66,17 +62,17 @@ $_default: (
     'clock-dial-selector-center-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-full'),
     'clock-dial-selector-center-container-size':
-      if($exclude-hardcoded-values, null, 8px),
+      if(sass($exclude-hardcoded-values): null; else: 8px),
     'clock-dial-selector-handle-container-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'clock-dial-selector-handle-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-full'),
     'clock-dial-selector-handle-container-size':
-      if($exclude-hardcoded-values, null, 48px),
+      if(sass($exclude-hardcoded-values): null; else: 48px),
     'clock-dial-selector-track-container-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'clock-dial-selector-track-container-width':
-      if($exclude-hardcoded-values, null, 2px),
+      if(sass($exclude-hardcoded-values): null; else: 2px),
     'clock-dial-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
     'clock-dial-unselected-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
@@ -91,26 +87,22 @@ $_default: (
     'headline-tracking':
       map.get($deps, 'md-sys-typescale', 'label-medium-tracking'),
     'headline-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-medium-weight')
           map.get($deps, 'md-sys-typescale', 'label-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-medium-font')),
     'headline-weight': map.get($deps, 'md-sys-typescale', 'label-medium-weight'),
     'period-selector-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-small'),
     'period-selector-focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'period-selector-horizontal-container-height':
-      if($exclude-hardcoded-values, null, 38px),
+      if(sass($exclude-hardcoded-values): null; else: 38px),
     'period-selector-horizontal-container-width':
-      if($exclude-hardcoded-values, null, 216px),
+      if(sass($exclude-hardcoded-values): null; else: 216px),
     'period-selector-hover-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
     'period-selector-label-text-font':
@@ -122,21 +114,17 @@ $_default: (
     'period-selector-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'title-medium-tracking'),
     'period-selector-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.period-selector.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.period-selector.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'title-medium-weight')
           map.get($deps, 'md-sys-typescale', 'title-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'title-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'title-medium-font')),
     'period-selector-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'title-medium-weight'),
     'period-selector-outline-color': map.get($deps, 'md-sys-color', 'outline'),
-    'period-selector-outline-width': if($exclude-hardcoded-values, null, 1px),
+    'period-selector-outline-width': if(sass($exclude-hardcoded-values): null; else: 1px),
     'period-selector-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
     'period-selector-selected-container-color':
@@ -170,15 +158,15 @@ $_default: (
     'period-selector-unselected-pressed-state-layer-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'period-selector-vertical-container-height':
-      if($exclude-hardcoded-values, null, 80px),
+      if(sass($exclude-hardcoded-values): null; else: 80px),
     'period-selector-vertical-container-width':
-      if($exclude-hardcoded-values, null, 52px),
+      if(sass($exclude-hardcoded-values): null; else: 52px),
     'time-selector-24h-vertical-container-width':
-      if($exclude-hardcoded-values, null, 114px),
-    'time-selector-container-height': if($exclude-hardcoded-values, null, 80px),
+      if(sass($exclude-hardcoded-values): null; else: 114px),
+    'time-selector-container-height': if(sass($exclude-hardcoded-values): null; else: 80px),
     'time-selector-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-small'),
-    'time-selector-container-width': if($exclude-hardcoded-values, null, 96px),
+    'time-selector-container-width': if(sass($exclude-hardcoded-values): null; else: 96px),
     'time-selector-focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'time-selector-hover-state-layer-opacity':
@@ -192,17 +180,13 @@ $_default: (
     'time-selector-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'display-large-tracking'),
     'time-selector-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.time-selector.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.time-selector.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'display-large-weight')
           map.get($deps, 'md-sys-typescale', 'display-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'display-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'display-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'display-large-font')),
     'time-selector-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'display-large-weight'),
     'time-selector-pressed-state-layer-opacity':
@@ -234,17 +218,13 @@ $_default: (
     'time-selector-separator-tracking':
       map.get($deps, 'md-sys-typescale', 'display-large-tracking'),
     'time-selector-separator-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.time-selector.separator.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-picker.time-selector.separator.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'display-large-weight')
           map.get($deps, 'md-sys-typescale', 'display-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'display-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'display-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'display-large-font')),
     'time-selector-separator-weight':
       map.get($deps, 'md-sys-typescale', 'display-large-weight'),
     'time-selector-unselected-container-color':

@@ -31,13 +31,13 @@ $_default: (
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
-    'container-height': if($exclude-hardcoded-values, null, 40px),
+    'container-height': if(sass($exclude-hardcoded-values): null; else: 40px),
     'disabled-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-icon-opacity': if(sass($exclude-hardcoded-values): null; else: 0.38),
     'disabled-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-label-text-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-label-text-opacity': if(sass($exclude-hardcoded-values): null; else: 0.38),
     'disabled-outline-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-outline-opacity': if($exclude-hardcoded-values, null, 0.12),
+    'disabled-outline-opacity': if(sass($exclude-hardcoded-values): null; else: 0.12),
     'focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'hover-state-layer-opacity':
@@ -49,21 +49,17 @@ $_default: (
     'label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.outlined-segmented-button.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.outlined-segmented-button.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-large-weight')
           map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-large-font')),
     'label-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-large-weight'),
     'outline-color': map.get($deps, 'md-sys-color', 'outline'),
-    'outline-width': if($exclude-hardcoded-values, null, 1px),
+    'outline-width': if(sass($exclude-hardcoded-values): null; else: 1px),
     'pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'selected-container-color':
@@ -110,6 +106,6 @@ $_default: (
       map.get($deps, 'md-sys-color', 'on-surface'),
     'unselected-with-icon-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
-    'with-icon-icon-size': if($exclude-hardcoded-values, null, 18px)
+    'with-icon-icon-size': if(sass($exclude-hardcoded-values): null; else: 18px)
   );
 }

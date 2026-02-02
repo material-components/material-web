@@ -39,7 +39,7 @@ $_default: (
     'disabled-container-color':
       map.get($deps, 'md-sys-color', 'surface-variant'),
     'disabled-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'disabled-container-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-container-opacity': if(sass($exclude-hardcoded-values): null; else: 0.38),
     'dragged-container-elevation': map.get($deps, 'md-sys-elevation', 'level3'),
     'dragged-state-layer-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'dragged-state-layer-opacity':
@@ -53,7 +53,7 @@ $_default: (
     'hover-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
     'icon-color': map.get($deps, 'md-sys-color', 'primary'),
-    'icon-size': if($exclude-hardcoded-values, null, 24px),
+    'icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
     'pressed-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
     'pressed-state-layer-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'pressed-state-layer-opacity':

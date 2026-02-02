@@ -14,20 +14,20 @@
 
 @function values($exclude-hardcoded-values: false) {
   @return (
-    'corner-extra-large': if($exclude-hardcoded-values, null, 28px),
+    'corner-extra-large': if(sass($exclude-hardcoded-values): null; else: 28px),
     'corner-extra-large-top':
-      if($exclude-hardcoded-values, null, (28px 28px 0px 0px)),
-    'corner-extra-small': if($exclude-hardcoded-values, null, 4px),
+      if(sass($exclude-hardcoded-values): null; else: (28px 28px 0px 0px)),
+    'corner-extra-small': if(sass($exclude-hardcoded-values): null; else: 4px),
     'corner-extra-small-top':
-      if($exclude-hardcoded-values, null, (4px 4px 0px 0px)),
-    'corner-full': if($exclude-hardcoded-values, null, 9999px),
-    'corner-large': if($exclude-hardcoded-values, null, 16px),
-    'corner-large-end': if($exclude-hardcoded-values, null, (0px 16px 16px 0px)),
+      if(sass($exclude-hardcoded-values): null; else: (4px 4px 0px 0px)),
+    'corner-full': if(sass($exclude-hardcoded-values): null; else: 9999px),
+    'corner-large': if(sass($exclude-hardcoded-values): null; else: 16px),
+    'corner-large-end': if(sass($exclude-hardcoded-values): null; else: (0px 16px 16px 0px)),
     'corner-large-start':
-      if($exclude-hardcoded-values, null, (16px 0px 0px 16px)),
-    'corner-large-top': if($exclude-hardcoded-values, null, (16px 16px 0px 0px)),
-    'corner-medium': if($exclude-hardcoded-values, null, 12px),
-    'corner-none': if($exclude-hardcoded-values, null, 0px),
-    'corner-small': if($exclude-hardcoded-values, null, 8px)
+      if(sass($exclude-hardcoded-values): null; else: (16px 0px 0px 16px)),
+    'corner-large-top': if(sass($exclude-hardcoded-values): null; else: (16px 16px 0px 0px)),
+    'corner-medium': if(sass($exclude-hardcoded-values): null; else: 12px),
+    'corner-none': if(sass($exclude-hardcoded-values): null; else: 0px),
+    'corner-small': if(sass($exclude-hardcoded-values): null; else: 8px)
   );
 }

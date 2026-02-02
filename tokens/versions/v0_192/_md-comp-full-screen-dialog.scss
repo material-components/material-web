@@ -59,17 +59,13 @@ $_default: (
     'header-action-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'header-action-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.full-screen-dialog.header.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.full-screen-dialog.header.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-large-weight')
           map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-large-font')),
     'header-action-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-large-weight'),
     'header-action-pressed-label-text-color':
@@ -80,7 +76,7 @@ $_default: (
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
     'header-container-color': map.get($deps, 'md-sys-color', 'surface'),
     'header-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'header-container-height': if($exclude-hardcoded-values, null, 56px),
+    'header-container-height': if(sass($exclude-hardcoded-values): null; else: 56px),
     'header-headline-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'header-headline-font':
       map.get($deps, 'md-sys-typescale', 'title-large-font'),
@@ -91,21 +87,17 @@ $_default: (
     'header-headline-tracking':
       map.get($deps, 'md-sys-typescale', 'title-large-tracking'),
     'header-headline-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.full-screen-dialog.header.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.full-screen-dialog.header.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'title-large-weight')
           map.get($deps, 'md-sys-typescale', 'title-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'title-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'title-large-font')),
     'header-headline-weight':
       map.get($deps, 'md-sys-typescale', 'title-large-weight'),
     'header-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'header-icon-size': if($exclude-hardcoded-values, null, 24px),
+    'header-icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
     'header-on-scroll-container-color':
       map.get($deps, 'md-sys-color', 'surface-container'),
     'header-on-scroll-container-elevation':

@@ -29,27 +29,27 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'disabled-selected-handle-color': map.get($deps, 'md-sys-color', 'surface'),
-    'disabled-selected-handle-opacity': if($exclude-hardcoded-values, null, 1),
+    'disabled-selected-handle-opacity': if(sass($exclude-hardcoded-values): null; else: 1),
     'disabled-selected-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-selected-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-selected-icon-opacity': if(sass($exclude-hardcoded-values): null; else: 0.38),
     'disabled-selected-track-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-track-opacity': if($exclude-hardcoded-values, null, 0.12),
+    'disabled-track-opacity': if(sass($exclude-hardcoded-values): null; else: 0.12),
     'disabled-unselected-handle-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'disabled-unselected-handle-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'disabled-unselected-icon-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
     'disabled-unselected-icon-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'disabled-unselected-track-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
     'disabled-unselected-track-outline-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'handle-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'pressed-handle-height': if($exclude-hardcoded-values, null, 28px),
-    'pressed-handle-width': if($exclude-hardcoded-values, null, 28px),
+    'pressed-handle-height': if(sass($exclude-hardcoded-values): null; else: 28px),
+    'pressed-handle-width': if(sass($exclude-hardcoded-values): null; else: 28px),
     'selected-focus-handle-color':
       map.get($deps, 'md-sys-color', 'primary-container'),
     'selected-focus-icon-color':
@@ -60,8 +60,8 @@ $_default: (
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'selected-focus-track-color': map.get($deps, 'md-sys-color', 'primary'),
     'selected-handle-color': map.get($deps, 'md-sys-color', 'on-primary'),
-    'selected-handle-height': if($exclude-hardcoded-values, null, 24px),
-    'selected-handle-width': if($exclude-hardcoded-values, null, 24px),
+    'selected-handle-height': if(sass($exclude-hardcoded-values): null; else: 24px),
+    'selected-handle-width': if(sass($exclude-hardcoded-values): null; else: 24px),
     'selected-hover-handle-color':
       map.get($deps, 'md-sys-color', 'primary-container'),
     'selected-hover-icon-color':
@@ -73,7 +73,7 @@ $_default: (
     'selected-hover-track-color': map.get($deps, 'md-sys-color', 'primary'),
     'selected-icon-color':
       map.get($deps, 'md-sys-color', 'on-primary-container'),
-    'selected-icon-size': if($exclude-hardcoded-values, null, 16px),
+    'selected-icon-size': if(sass($exclude-hardcoded-values): null; else: 16px),
     'selected-pressed-handle-color':
       map.get($deps, 'md-sys-color', 'primary-container'),
     'selected-pressed-icon-color':
@@ -85,11 +85,11 @@ $_default: (
     'selected-pressed-track-color': map.get($deps, 'md-sys-color', 'primary'),
     'selected-track-color': map.get($deps, 'md-sys-color', 'primary'),
     'state-layer-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'state-layer-size': if($exclude-hardcoded-values, null, 40px),
-    'track-height': if($exclude-hardcoded-values, null, 32px),
-    'track-outline-width': if($exclude-hardcoded-values, null, 2px),
+    'state-layer-size': if(sass($exclude-hardcoded-values): null; else: 40px),
+    'track-height': if(sass($exclude-hardcoded-values): null; else: 32px),
+    'track-outline-width': if(sass($exclude-hardcoded-values): null; else: 2px),
     'track-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'track-width': if($exclude-hardcoded-values, null, 52px),
+    'track-width': if(sass($exclude-hardcoded-values): null; else: 52px),
     'unselected-focus-handle-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'unselected-focus-icon-color':
@@ -103,8 +103,8 @@ $_default: (
     'unselected-focus-track-outline-color':
       map.get($deps, 'md-sys-color', 'outline'),
     'unselected-handle-color': map.get($deps, 'md-sys-color', 'outline'),
-    'unselected-handle-height': if($exclude-hardcoded-values, null, 16px),
-    'unselected-handle-width': if($exclude-hardcoded-values, null, 16px),
+    'unselected-handle-height': if(sass($exclude-hardcoded-values): null; else: 16px),
+    'unselected-handle-width': if(sass($exclude-hardcoded-values): null; else: 16px),
     'unselected-hover-handle-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'unselected-hover-icon-color':
@@ -119,7 +119,7 @@ $_default: (
       map.get($deps, 'md-sys-color', 'outline'),
     'unselected-icon-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
-    'unselected-icon-size': if($exclude-hardcoded-values, null, 16px),
+    'unselected-icon-size': if(sass($exclude-hardcoded-values): null; else: 16px),
     'unselected-pressed-handle-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'unselected-pressed-icon-color':
@@ -135,7 +135,7 @@ $_default: (
     'unselected-track-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
     'unselected-track-outline-color': map.get($deps, 'md-sys-color', 'outline'),
-    'with-icon-handle-height': if($exclude-hardcoded-values, null, 24px),
-    'with-icon-handle-width': if($exclude-hardcoded-values, null, 24px)
+    'with-icon-handle-height': if(sass($exclude-hardcoded-values): null; else: 24px),
+    'with-icon-handle-width': if(sass($exclude-hardcoded-values): null; else: 24px)
   );
 }

@@ -28,24 +28,24 @@ $_default: (
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
-    'container-height': if($exclude-hardcoded-values, null, 40px),
+    'container-height': if(sass($exclude-hardcoded-values): null; else: 40px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'container-width': if($exclude-hardcoded-values, null, 40px),
+    'container-width': if(sass($exclude-hardcoded-values): null; else: 40px),
     'disabled-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-icon-opacity': if(sass($exclude-hardcoded-values): null; else: 0.38),
     'disabled-selected-container-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'disabled-selected-container-opacity':
-      if($exclude-hardcoded-values, null, 0.12),
+      if(sass($exclude-hardcoded-values): null; else: 0.12),
     'disabled-unselected-outline-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'disabled-unselected-outline-opacity':
-      if($exclude-hardcoded-values, null, 0.12),
+      if(sass($exclude-hardcoded-values): null; else: 0.12),
     'focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
     'hover-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
-    'icon-size': if($exclude-hardcoded-values, null, 24px),
+    'icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
     'pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
     'selected-container-color':
@@ -74,7 +74,7 @@ $_default: (
     'unselected-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'unselected-outline-color': map.get($deps, 'md-sys-color', 'outline'),
-    'unselected-outline-width': if($exclude-hardcoded-values, null, 1px),
+    'unselected-outline-width': if(sass($exclude-hardcoded-values): null; else: 1px),
     'unselected-pressed-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'unselected-pressed-state-layer-color':

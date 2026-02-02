@@ -23,6 +23,6 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'container-color': map.get($deps, 'md-sys-color', 'scrim'),
-    'container-opacity': if($exclude-hardcoded-values, null, 0.32)
+    'container-opacity': if(sass($exclude-hardcoded-values): null; else: 0.32)
   );
 }

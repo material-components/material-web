@@ -130,13 +130,13 @@ $_default: (
   $new-tokens: map.merge(
     shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
     (
-      'leading-space': if($exclude-hardcoded-values, null, 16px),
-      'trailing-space': if($exclude-hardcoded-values, null, 16px),
-      'icon-label-space': if($exclude-hardcoded-values, null, 8px),
+      'leading-space': if(sass($exclude-hardcoded-values): null; else: 16px),
+      'trailing-space': if(sass($exclude-hardcoded-values): null; else: 16px),
+      'icon-label-space': if(sass($exclude-hardcoded-values): null; else: 8px),
       'with-leading-icon-leading-space':
-        if($exclude-hardcoded-values, null, 8px),
+        if(sass($exclude-hardcoded-values): null; else: 8px),
       'with-trailing-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 8px),
+        if(sass($exclude-hardcoded-values): null; else: 8px),
     )
   );
 

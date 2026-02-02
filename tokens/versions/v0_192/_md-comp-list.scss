@@ -34,8 +34,8 @@ $_default: (
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
-    'divider-leading-space': if($exclude-hardcoded-values, null, 16px),
-    'divider-trailing-space': if($exclude-hardcoded-values, null, 16px),
+    'divider-leading-space': if(sass($exclude-hardcoded-values): null; else: 16px),
+    'divider-trailing-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'list-item-container-color': map.get($deps, 'md-sys-color', 'surface'),
     'list-item-container-elevation':
       map.get($deps, 'md-sys-elevation', 'level0'),
@@ -43,11 +43,11 @@ $_default: (
     'list-item-disabled-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'list-item-disabled-label-text-opacity':
-      if($exclude-hardcoded-values, null, 0.3),
+      if(sass($exclude-hardcoded-values): null; else: 0.3),
     'list-item-disabled-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'list-item-disabled-leading-icon-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'list-item-disabled-state-layer-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'list-item-disabled-state-layer-opacity':
@@ -55,7 +55,7 @@ $_default: (
     'list-item-disabled-trailing-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'list-item-disabled-trailing-icon-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'list-item-dragged-container-elevation':
       map.get($deps, 'md-sys-elevation', 'level4'),
     'list-item-dragged-label-text-color':
@@ -98,21 +98,17 @@ $_default: (
     'list-item-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'list-item-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-large-weight')
           map.get($deps, 'md-sys-typescale', 'body-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-large-font')),
     'list-item-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-large-weight'),
     'list-item-large-leading-video-height':
-      if($exclude-hardcoded-values, null, 69px),
+      if(sass($exclude-hardcoded-values): null; else: 69px),
     'list-item-leading-avatar-label-color':
       map.get($deps, 'md-sys-color', 'on-primary-container'),
     'list-item-leading-avatar-label-font':
@@ -124,37 +120,33 @@ $_default: (
     'list-item-leading-avatar-label-tracking':
       map.get($deps, 'md-sys-typescale', 'title-medium-tracking'),
     'list-item-leading-avatar-label-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.leading-avatar-label.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.leading-avatar-label.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'title-medium-weight')
           map.get($deps, 'md-sys-typescale', 'title-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'title-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'title-medium-font')),
     'list-item-leading-avatar-label-weight':
       map.get($deps, 'md-sys-typescale', 'title-medium-weight'),
     'list-item-leading-avatar-color':
       map.get($deps, 'md-sys-color', 'primary-container'),
     'list-item-leading-avatar-shape':
       map.get($deps, 'md-sys-shape', 'corner-full'),
-    'list-item-leading-avatar-size': if($exclude-hardcoded-values, null, 40px),
+    'list-item-leading-avatar-size': if(sass($exclude-hardcoded-values): null; else: 40px),
     'list-item-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'list-item-leading-icon-size': if($exclude-hardcoded-values, null, 24px),
-    'list-item-leading-image-height': if($exclude-hardcoded-values, null, 56px),
+    'list-item-leading-icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
+    'list-item-leading-image-height': if(sass($exclude-hardcoded-values): null; else: 56px),
     'list-item-leading-image-shape':
       map.get($deps, 'md-sys-shape', 'corner-none'),
-    'list-item-leading-image-width': if($exclude-hardcoded-values, null, 56px),
-    'list-item-leading-space': if($exclude-hardcoded-values, null, 16px),
+    'list-item-leading-image-width': if(sass($exclude-hardcoded-values): null; else: 56px),
+    'list-item-leading-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'list-item-leading-video-shape':
       map.get($deps, 'md-sys-shape', 'corner-none'),
-    'list-item-leading-video-width': if($exclude-hardcoded-values, null, 100px),
+    'list-item-leading-video-width': if(sass($exclude-hardcoded-values): null; else: 100px),
     'list-item-one-line-container-height':
-      if($exclude-hardcoded-values, null, 56px),
+      if(sass($exclude-hardcoded-values): null; else: 56px),
     'list-item-overline-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'list-item-overline-font':
@@ -166,17 +158,13 @@ $_default: (
     'list-item-overline-tracking':
       map.get($deps, 'md-sys-typescale', 'label-small-tracking'),
     'list-item-overline-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.overline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.overline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-small-weight')
           map.get($deps, 'md-sys-typescale', 'label-small-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-small-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-small-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-small-font')),
     'list-item-overline-weight':
       map.get($deps, 'md-sys-typescale', 'label-small-weight'),
     'list-item-pressed-label-text-color':
@@ -192,7 +180,7 @@ $_default: (
     'list-item-selected-trailing-icon-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'list-item-small-leading-video-height':
-      if($exclude-hardcoded-values, null, 56px),
+      if(sass($exclude-hardcoded-values): null; else: 56px),
     'list-item-supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'list-item-supporting-text-font':
@@ -204,25 +192,21 @@ $_default: (
     'list-item-supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-medium-tracking'),
     'list-item-supporting-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-medium-weight')
           map.get($deps, 'md-sys-typescale', 'body-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-medium-font')),
     'list-item-supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'list-item-three-line-container-height':
-      if($exclude-hardcoded-values, null, 88px),
+      if(sass($exclude-hardcoded-values): null; else: 88px),
     'list-item-trailing-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'list-item-trailing-icon-size': if($exclude-hardcoded-values, null, 24px),
-    'list-item-trailing-space': if($exclude-hardcoded-values, null, 16px),
+    'list-item-trailing-icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
+    'list-item-trailing-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'list-item-trailing-supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'list-item-trailing-supporting-text-font':
@@ -234,21 +218,17 @@ $_default: (
     'list-item-trailing-supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-small-tracking'),
     'list-item-trailing-supporting-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.trailing-supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.list.list-item.trailing-supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-small-weight')
           map.get($deps, 'md-sys-typescale', 'label-small-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-small-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-small-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-small-font')),
     'list-item-trailing-supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-small-weight'),
     'list-item-two-line-container-height':
-      if($exclude-hardcoded-values, null, 72px),
+      if(sass($exclude-hardcoded-values): null; else: 72px),
     'list-item-unselected-trailing-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface')
   );

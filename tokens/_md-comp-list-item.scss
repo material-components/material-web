@@ -136,8 +136,8 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: (
-      'top-space': if($exclude-hardcoded-values, null, 12px),
-      'bottom-space': if($exclude-hardcoded-values, null, 12px),
+      'top-space': if(sass($exclude-hardcoded-values): null; else: 12px),
+      'bottom-space': if(sass($exclude-hardcoded-values): null; else: 12px),
       'disabled-opacity':
         map.get($original-tokens, 'list-item-disabled-label-text-opacity'),
     ),

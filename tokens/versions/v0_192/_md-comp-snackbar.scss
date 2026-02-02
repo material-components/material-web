@@ -56,17 +56,13 @@ $_default: (
     'action-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'action-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.snackbar.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.snackbar.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-large-weight')
           map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-large-font')),
     'action-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-large-weight'),
     'action-pressed-label-text-color':
@@ -98,7 +94,7 @@ $_default: (
       map.get($deps, 'md-sys-color', 'inverse-on-surface'),
     'icon-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
-    'icon-size': if($exclude-hardcoded-values, null, 24px),
+    'icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
     'supporting-text-color':
       map.get($deps, 'md-sys-color', 'inverse-on-surface'),
     'supporting-text-font':
@@ -110,21 +106,17 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-medium-tracking'),
     'supporting-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.snackbar.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.snackbar.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-medium-weight')
           map.get($deps, 'md-sys-typescale', 'body-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-medium-font')),
     'supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'with-single-line-container-height':
-      if($exclude-hardcoded-values, null, 48px),
-    'with-two-lines-container-height': if($exclude-hardcoded-values, null, 68px)
+      if(sass($exclude-hardcoded-values): null; else: 48px),
+    'with-two-lines-container-height': if(sass($exclude-hardcoded-values): null; else: 68px)
   );
 }

@@ -18,12 +18,12 @@
       // Elevation levels on web should use the level number, not the dp value.
       // We can remove this if the generated tokens swap from dp to level. See
       // b/261602454.
-      'level0': if($exclude-hardcoded-values, null, 0),
-      'level1': if($exclude-hardcoded-values, null, 1),
-      'level2': if($exclude-hardcoded-values, null, 2),
-      'level3': if($exclude-hardcoded-values, null, 3),
-      'level4': if($exclude-hardcoded-values, null, 4),
-      'level5': if($exclude-hardcoded-values, null, 5)
+      'level0': if(sass($exclude-hardcoded-values): null; else: 0),
+      'level1': if(sass($exclude-hardcoded-values): null; else: 1),
+      'level2': if(sass($exclude-hardcoded-values): null; else: 2),
+      'level3': if(sass($exclude-hardcoded-values): null; else: 3),
+      'level4': if(sass($exclude-hardcoded-values): null; else: 4),
+      'level5': if(sass($exclude-hardcoded-values): null; else: 5)
     )
   );
 

@@ -82,16 +82,16 @@ $_default: (
     (
       // b/198759625 - Remove once spacing tokens are formally added
       // go/keep-sorted start
-      'leading-space': if($exclude-hardcoded-values, null, 12px),
-      'trailing-space': if($exclude-hardcoded-values, null, 12px),
+      'leading-space': if(sass($exclude-hardcoded-values): null; else: 12px),
+      'trailing-space': if(sass($exclude-hardcoded-values): null; else: 12px),
       'with-leading-icon-leading-space':
-        if($exclude-hardcoded-values, null, 12px),
+        if(sass($exclude-hardcoded-values): null; else: 12px),
       'with-leading-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 16px),
+        if(sass($exclude-hardcoded-values): null; else: 16px),
       'with-trailing-icon-leading-space':
-        if($exclude-hardcoded-values, null, 16px),
+        if(sass($exclude-hardcoded-values): null; else: 16px),
       'with-trailing-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 12px),
+        if(sass($exclude-hardcoded-values): null; else: 12px),
       // go/keep-sorted end
     )
   );

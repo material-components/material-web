@@ -52,17 +52,13 @@ $_default: (
     'action-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'action-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-large-weight')
           map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-large-font')),
     'action-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-large-weight'),
     'action-pressed-label-text-color': map.get($deps, 'md-sys-color', 'primary'),
@@ -81,17 +77,13 @@ $_default: (
     'headline-tracking':
       map.get($deps, 'md-sys-typescale', 'headline-small-tracking'),
     'headline-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'headline-small-weight')
           map.get($deps, 'md-sys-typescale', 'headline-small-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'headline-small-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'headline-small-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'headline-small-font')),
     'headline-weight':
       map.get($deps, 'md-sys-typescale', 'headline-small-weight'),
     'supporting-text-color':
@@ -105,20 +97,16 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-medium-tracking'),
     'supporting-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-medium-weight')
           map.get($deps, 'md-sys-typescale', 'body-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-medium-font')),
     'supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'with-icon-icon-color': map.get($deps, 'md-sys-color', 'secondary'),
-    'with-icon-icon-size': if($exclude-hardcoded-values, null, 24px)
+    'with-icon-icon-size': if(sass($exclude-hardcoded-values): null; else: 24px)
   );
 }

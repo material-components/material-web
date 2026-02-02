@@ -41,17 +41,13 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-small-tracking'),
     'supporting-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.plain-tooltip.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.plain-tooltip.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-small-weight')
           map.get($deps, 'md-sys-typescale', 'body-small-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-small-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-small-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-small-font')),
     'supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-small-weight')
   );

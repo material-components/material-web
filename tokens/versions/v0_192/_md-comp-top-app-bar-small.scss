@@ -33,7 +33,7 @@ $_default: (
   @return (
     'container-color': map.get($deps, 'md-sys-color', 'surface'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'container-height': if($exclude-hardcoded-values, null, 64px),
+    'container-height': if(sass($exclude-hardcoded-values): null; else: 64px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
     'headline-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'headline-font': map.get($deps, 'md-sys-typescale', 'title-large-font'),
@@ -43,25 +43,21 @@ $_default: (
     'headline-tracking':
       map.get($deps, 'md-sys-typescale', 'title-large-tracking'),
     'headline-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.top-app-bar.small.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.top-app-bar.small.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'title-large-weight')
           map.get($deps, 'md-sys-typescale', 'title-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'title-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'title-large-font')),
     'headline-weight': map.get($deps, 'md-sys-typescale', 'title-large-weight'),
     'leading-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'leading-icon-size': if($exclude-hardcoded-values, null, 24px),
+    'leading-icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
     'on-scroll-container-color':
       map.get($deps, 'md-sys-color', 'surface-container'),
     'on-scroll-container-elevation':
       map.get($deps, 'md-sys-elevation', 'level2'),
     'trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'trailing-icon-size': if($exclude-hardcoded-values, null, 24px)
+    'trailing-icon-size': if(sass($exclude-hardcoded-values): null; else: 24px)
   );
 }

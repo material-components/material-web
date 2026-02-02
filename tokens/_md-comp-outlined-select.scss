@@ -163,7 +163,7 @@ $_default: (
     $tokens,
     (
       // TODO(b/259455114): remove when focus tokens update to 3px
-      'text-field-focus-outline-width': if($exclude-hardcoded-values, null, 3px)
+      'text-field-focus-outline-width': if(sass($exclude-hardcoded-values): null; else: 3px)
     )
   );
 

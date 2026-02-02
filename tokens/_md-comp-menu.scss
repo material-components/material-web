@@ -50,8 +50,8 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: (
-      'top-space': if($exclude-hardcoded-values, null, 8px),
-      'bottom-space': if($exclude-hardcoded-values, null, 8px),
+      'top-space': if(sass($exclude-hardcoded-values): null; else: 8px),
+      'bottom-space': if(sass($exclude-hardcoded-values): null; else: 8px),
     )
   );
 

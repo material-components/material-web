@@ -124,7 +124,7 @@ $_default: (
   $new-tokens: map.merge(
     $new-tokens,
     (
-      'touch-target-size': if($exclude-hardcoded-values, null, 48px)
+      'touch-target-size': if(sass($exclude-hardcoded-values): null; else: 48px)
     )
   );
 
