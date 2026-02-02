@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -52,7 +53,7 @@ $_default: (
     'action-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'action-label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.rich-tooltip.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -82,7 +83,7 @@ $_default: (
     'subhead-tracking':
       map.get($deps, 'md-sys-typescale', 'title-small-tracking'),
     'subhead-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.rich-tooltip.subhead.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -105,7 +106,7 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-medium-tracking'),
     'supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.rich-tooltip.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */

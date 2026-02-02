@@ -19,6 +19,7 @@
 @use './md-sys-shape';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -31,20 +32,20 @@ $_default: (
     'caret-color': map.get($deps, 'md-sys-color', 'primary'),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-extra-small'),
     'disabled-input-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-input-text-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-input-text-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-label-text-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-label-text-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-leading-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-leading-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-leading-icon-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-outline-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-outline-opacity': if($exclude-hardcoded-values, null, 0.12),
-    'disabled-outline-width': if($exclude-hardcoded-values, null, 1px),
+    'disabled-outline-opacity': if-else($exclude-hardcoded-values, null, 0.12),
+    'disabled-outline-width': if-else($exclude-hardcoded-values, null, 1px),
     'disabled-supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'disabled-supporting-text-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-trailing-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-trailing-icon-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'error-focus-caret-color': map.get($deps, 'md-sys-color', 'error'),
     'error-focus-input-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'error-focus-label-text-color': map.get($deps, 'md-sys-color', 'error'),
@@ -75,7 +76,7 @@ $_default: (
     'focus-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'focus-outline-color': map.get($deps, 'md-sys-color', 'primary'),
-    'focus-outline-width': if($exclude-hardcoded-values, null, 2px),
+    'focus-outline-width': if-else($exclude-hardcoded-values, null, 2px),
     'focus-supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'focus-trailing-icon-color':
@@ -85,7 +86,7 @@ $_default: (
     'hover-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'hover-outline-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'hover-outline-width': if($exclude-hardcoded-values, null, 1px),
+    'hover-outline-width': if-else($exclude-hardcoded-values, null, 1px),
     'hover-supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'hover-trailing-icon-color':
@@ -104,7 +105,7 @@ $_default: (
     'input-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'input-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.outlined-text-field.input-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -128,7 +129,7 @@ $_default: (
     'label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.outlined-text-field.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -141,9 +142,9 @@ $_default: (
       ),
     'label-text-weight': map.get($deps, 'md-sys-typescale', 'body-large-weight'),
     'leading-icon-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'leading-icon-size': if($exclude-hardcoded-values, null, 24px),
+    'leading-icon-size': if-else($exclude-hardcoded-values, null, 24px),
     'outline-color': map.get($deps, 'md-sys-color', 'outline'),
-    'outline-width': if($exclude-hardcoded-values, null, 1px),
+    'outline-width': if-else($exclude-hardcoded-values, null, 1px),
     'supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'supporting-text-font':
@@ -155,7 +156,7 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-small-tracking'),
     'supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.outlined-text-field.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -169,6 +170,6 @@ $_default: (
     'supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-small-weight'),
     'trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'trailing-icon-size': if($exclude-hardcoded-values, null, 24px)
+    'trailing-icon-size': if-else($exclude-hardcoded-values, null, 24px)
   );
 }

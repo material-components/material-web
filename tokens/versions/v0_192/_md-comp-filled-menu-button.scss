@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -36,14 +37,14 @@ $_default: (
   @return (
     'container-color': map.get($deps, 'md-sys-color', 'primary'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'container-height': if($exclude-hardcoded-values, null, 40px),
+    'container-height': if-else($exclude-hardcoded-values, null, 40px),
     'disabled-container-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'disabled-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'disabled-container-opacity': if($exclude-hardcoded-values, null, 0.12),
+    'disabled-container-opacity': if-else($exclude-hardcoded-values, null, 0.12),
     'disabled-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-label-text-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-label-text-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-trailing-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-trailing-icon-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'focus-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
     'focus-label-text-color': map.get($deps, 'md-sys-color', 'on-primary'),
     'focus-state-layer-color': map.get($deps, 'md-sys-color', 'on-primary'),
@@ -64,7 +65,7 @@ $_default: (
     'label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.filled-menu-button.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -84,17 +85,17 @@ $_default: (
     'pressed-trailing-icon-color': map.get($deps, 'md-sys-color', 'on-primary'),
     'shape': map.get($deps, 'md-sys-shape', 'corner-full'),
     'trailing-icon-color': map.get($deps, 'md-sys-color', 'on-primary'),
-    'trailing-icon-size': if($exclude-hardcoded-values, null, 18px),
+    'trailing-icon-size': if-else($exclude-hardcoded-values, null, 18px),
     'with-icon-disabled-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'with-icon-disabled-leading-icon-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if-else($exclude-hardcoded-values, null, 0.38),
     'with-icon-focus-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-primary'),
     'with-icon-hover-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-primary'),
     'with-icon-leading-icon-color': map.get($deps, 'md-sys-color', 'on-primary'),
-    'with-icon-leading-icon-size': if($exclude-hardcoded-values, null, 18px),
+    'with-icon-leading-icon-size': if-else($exclude-hardcoded-values, null, 18px),
     'with-icon-pressed-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-primary')
   );

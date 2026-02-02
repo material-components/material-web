@@ -15,6 +15,7 @@
 @use 'sass:map';
 
 @use './md-sys-color';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -23,6 +24,6 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'container-color': map.get($deps, 'md-sys-color', 'scrim'),
-    'container-opacity': if($exclude-hardcoded-values, null, 0.32)
+    'container-opacity': if-else($exclude-hardcoded-values, null, 0.32)
   );
 }

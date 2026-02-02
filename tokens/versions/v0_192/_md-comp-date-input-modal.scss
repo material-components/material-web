@@ -21,6 +21,7 @@
 @use './md-sys-shape';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -33,11 +34,11 @@ $_default: (
   @return (
     'container-color': map.get($deps, 'md-sys-color', 'surface-container-high'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level3'),
-    'container-height': if($exclude-hardcoded-values, null, 512px),
+    'container-height': if-else($exclude-hardcoded-values, null, 512px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-extra-large'),
-    'container-width': if($exclude-hardcoded-values, null, 328px),
-    'header-container-height': if($exclude-hardcoded-values, null, 120px),
-    'header-container-width': if($exclude-hardcoded-values, null, 328px),
+    'container-width': if-else($exclude-hardcoded-values, null, 328px),
+    'header-container-height': if-else($exclude-hardcoded-values, null, 120px),
+    'header-container-width': if-else($exclude-hardcoded-values, null, 328px),
     'header-headline-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'header-headline-font':
@@ -49,7 +50,7 @@ $_default: (
     'header-headline-tracking':
       map.get($deps, 'md-sys-typescale', 'headline-large-tracking'),
     'header-headline-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-input.modal.header.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -73,7 +74,7 @@ $_default: (
     'header-supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'header-supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-input.modal.header.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */

@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -52,7 +53,7 @@ $_default: (
     'action-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'action-label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -81,7 +82,7 @@ $_default: (
     'headline-tracking':
       map.get($deps, 'md-sys-typescale', 'headline-small-tracking'),
     'headline-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -105,7 +106,7 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-medium-tracking'),
     'supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.dialog.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -119,6 +120,6 @@ $_default: (
     'supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'with-icon-icon-color': map.get($deps, 'md-sys-color', 'secondary'),
-    'with-icon-icon-size': if($exclude-hardcoded-values, null, 24px)
+    'with-icon-icon-size': if-else($exclude-hardcoded-values, null, 24px)
   );
 }

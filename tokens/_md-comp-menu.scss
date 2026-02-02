@@ -6,6 +6,7 @@
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
+@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/validate';
 @use 'md-sys-color';
@@ -50,8 +51,8 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: (
-      'top-space': if($exclude-hardcoded-values, null, 8px),
-      'bottom-space': if($exclude-hardcoded-values, null, 8px),
+      'top-space': if-else($exclude-hardcoded-values, null, 8px),
+      'bottom-space': if-else($exclude-hardcoded-values, null, 8px),
     )
   );
 

@@ -7,6 +7,7 @@
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
+@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/shape';
 @use 'internal/validate';
@@ -124,13 +125,13 @@ $_default: (
 
   $tokens: (
     // go/keep-sorted start
-    'bottom-space': if($exclude-hardcoded-values, null, 16px),
+    'bottom-space': if-else($exclude-hardcoded-values, null, 16px),
     'container-shape': map.get($text-field, 'container-shape'),
     'content-color': map.get($text-field, 'input-text-color'),
     'content-font': map.get($text-field, 'input-text-font'),
     'content-line-height': map.get($text-field, 'input-text-line-height'),
     'content-size': map.get($text-field, 'input-text-size'),
-    'content-space': if($exclude-hardcoded-values, null, 16px),
+    'content-space': if-else($exclude-hardcoded-values, null, 16px),
     'content-weight': map.get($text-field, 'input-text-weight'),
     'disabled-content-color': map.get($text-field, 'disabled-input-text-color'),
     'disabled-content-opacity':
@@ -193,7 +194,7 @@ $_default: (
       map.get($text-field, 'focus-leading-icon-color'),
     'focus-outline-color': map.get($text-field, 'focus-outline-color'),
     // TODO(b/259455114): remove when focus tokens update to 3px
-    'focus-outline-width': if($exclude-hardcoded-values, null, 3px),
+    'focus-outline-width': if-else($exclude-hardcoded-values, null, 3px),
     'focus-supporting-text-color':
       map.get($text-field, 'focus-supporting-text-color'),
     'focus-trailing-content-color':
@@ -211,7 +212,7 @@ $_default: (
     'label-text-color': map.get($text-field, 'label-text-color'),
     'label-text-font': map.get($text-field, 'label-text-font'),
     'label-text-line-height': map.get($text-field, 'label-text-line-height'),
-    'label-text-padding-bottom': if($exclude-hardcoded-values, null, 8px),
+    'label-text-padding-bottom': if-else($exclude-hardcoded-values, null, 8px),
     'label-text-populated-line-height':
       map.get($text-field, 'label-text-populated-line-height'),
     'label-text-populated-size':
@@ -219,26 +220,26 @@ $_default: (
     'label-text-size': map.get($text-field, 'label-text-size'),
     'label-text-weight': map.get($text-field, 'label-text-weight'),
     'leading-content-color': map.get($text-field, 'leading-icon-color'),
-    'leading-space': if($exclude-hardcoded-values, null, 16px),
+    'leading-space': if-else($exclude-hardcoded-values, null, 16px),
     'outline-color': map.get($text-field, 'outline-color'),
-    'outline-label-padding': if($exclude-hardcoded-values, null, 4px),
+    'outline-label-padding': if-else($exclude-hardcoded-values, null, 4px),
     'outline-width': map.get($text-field, 'outline-width'),
     'supporting-text-color': map.get($text-field, 'supporting-text-color'),
     'supporting-text-font': map.get($text-field, 'supporting-text-font'),
-    'supporting-text-leading-space': if($exclude-hardcoded-values, null, 16px),
+    'supporting-text-leading-space': if-else($exclude-hardcoded-values, null, 16px),
     'supporting-text-line-height':
       map.get($text-field, 'supporting-text-line-height'),
     'supporting-text-size': map.get($text-field, 'supporting-text-size'),
-    'supporting-text-top-space': if($exclude-hardcoded-values, null, 4px),
-    'supporting-text-trailing-space': if($exclude-hardcoded-values, null, 16px),
+    'supporting-text-top-space': if-else($exclude-hardcoded-values, null, 4px),
+    'supporting-text-trailing-space': if-else($exclude-hardcoded-values, null, 16px),
     'supporting-text-weight': map.get($text-field, 'supporting-text-weight'),
-    'top-space': if($exclude-hardcoded-values, null, 16px),
+    'top-space': if-else($exclude-hardcoded-values, null, 16px),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
-    'trailing-space': if($exclude-hardcoded-values, null, 16px),
+    'trailing-space': if-else($exclude-hardcoded-values, null, 16px),
     'with-leading-content-leading-space':
-      if($exclude-hardcoded-values, null, 12px),
+      if-else($exclude-hardcoded-values, null, 12px),
     'with-trailing-content-trailing-space':
-      if($exclude-hardcoded-values, null, 12px),
+      if-else($exclude-hardcoded-values, null, 12px),
     // go/keep-sorted end
   );
 

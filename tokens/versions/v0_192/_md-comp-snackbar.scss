@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -56,7 +57,7 @@ $_default: (
     'action-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'action-label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.snackbar.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -98,7 +99,7 @@ $_default: (
       map.get($deps, 'md-sys-color', 'inverse-on-surface'),
     'icon-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
-    'icon-size': if($exclude-hardcoded-values, null, 24px),
+    'icon-size': if-else($exclude-hardcoded-values, null, 24px),
     'supporting-text-color':
       map.get($deps, 'md-sys-color', 'inverse-on-surface'),
     'supporting-text-font':
@@ -110,7 +111,7 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-medium-tracking'),
     'supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.snackbar.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -124,7 +125,7 @@ $_default: (
     'supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'with-single-line-container-height':
-      if($exclude-hardcoded-values, null, 48px),
-    'with-two-lines-container-height': if($exclude-hardcoded-values, null, 68px)
+      if-else($exclude-hardcoded-values, null, 48px),
+    'with-two-lines-container-height': if-else($exclude-hardcoded-values, null, 68px)
   );
 }

@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -36,9 +37,9 @@ $_default: (
   @return (
     'active-indicator-color':
       map.get($deps, 'md-sys-color', 'secondary-container'),
-    'active-indicator-height': if($exclude-hardcoded-values, null, 56px),
+    'active-indicator-height': if-else($exclude-hardcoded-values, null, 56px),
     'active-indicator-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'active-indicator-width': if($exclude-hardcoded-values, null, 336px),
+    'active-indicator-width': if-else($exclude-hardcoded-values, null, 336px),
     'active-focus-icon-color':
       map.get($deps, 'md-sys-color', 'on-secondary-container'),
     'active-focus-label-text-color':
@@ -64,9 +65,9 @@ $_default: (
     'active-pressed-state-layer-color':
       map.get($deps, 'md-sys-color', 'on-secondary-container'),
     'bottom-container-shape': map.get($deps, 'md-sys-shape', 'corner-large-top'),
-    'container-height': if($exclude-hardcoded-values, null, 100%),
+    'container-height': if-else($exclude-hardcoded-values, null, 100%),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-large-end'),
-    'container-width': if($exclude-hardcoded-values, null, 360px),
+    'container-width': if-else($exclude-hardcoded-values, null, 360px),
     'focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'headline-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
@@ -77,7 +78,7 @@ $_default: (
     'headline-tracking':
       map.get($deps, 'md-sys-typescale', 'title-small-tracking'),
     'headline-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.navigation-drawer.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -91,7 +92,7 @@ $_default: (
     'headline-weight': map.get($deps, 'md-sys-typescale', 'title-small-weight'),
     'hover-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
-    'icon-size': if($exclude-hardcoded-values, null, 24px),
+    'icon-size': if-else($exclude-hardcoded-values, null, 24px),
     'inactive-focus-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'inactive-focus-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
@@ -117,7 +118,7 @@ $_default: (
     'label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.navigation-drawer.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -141,7 +142,7 @@ $_default: (
     'large-badge-label-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'large-badge-label-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.navigation-drawer.large-badge-label.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */

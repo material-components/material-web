@@ -7,6 +7,7 @@
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
+@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/shape';
 @use 'internal/validate';
@@ -146,23 +147,23 @@ $_default: (
   $new-tokens: map.merge(
     shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
     (
-      'icon-input-space': if($exclude-hardcoded-values, null, 16px),
-      'leading-space': if($exclude-hardcoded-values, null, 16px),
-      'trailing-space': if($exclude-hardcoded-values, null, 16px),
-      'top-space': if($exclude-hardcoded-values, null, 16px),
-      'bottom-space': if($exclude-hardcoded-values, null, 16px),
+      'icon-input-space': if-else($exclude-hardcoded-values, null, 16px),
+      'leading-space': if-else($exclude-hardcoded-values, null, 16px),
+      'trailing-space': if-else($exclude-hardcoded-values, null, 16px),
+      'top-space': if-else($exclude-hardcoded-values, null, 16px),
+      'bottom-space': if-else($exclude-hardcoded-values, null, 16px),
       'input-text-prefix-trailing-space':
-        if($exclude-hardcoded-values, null, 2px),
+        if-else($exclude-hardcoded-values, null, 2px),
       'input-text-suffix-leading-space':
-        if($exclude-hardcoded-values, null, 2px),
-      'with-label-top-space': if($exclude-hardcoded-values, null, 8px),
-      'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
+        if-else($exclude-hardcoded-values, null, 2px),
+      'with-label-top-space': if-else($exclude-hardcoded-values, null, 8px),
+      'with-label-bottom-space': if-else($exclude-hardcoded-values, null, 8px),
       // TODO(b/270705687): remove when focus-caret-color token added
       'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
       'with-leading-icon-leading-space':
-        if($exclude-hardcoded-values, null, 12px),
+        if-else($exclude-hardcoded-values, null, 12px),
       'with-trailing-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 12px),
+        if-else($exclude-hardcoded-values, null, 12px),
     )
   );
 
@@ -177,7 +178,7 @@ $_default: (
     $tokens,
     (
       // TODO(b/259455114): remove when focus tokens update to 3px
-      'focus-active-indicator-height': if($exclude-hardcoded-values, null, 3px)
+      'focus-active-indicator-height': if-else($exclude-hardcoded-values, null, 3px)
     )
   );
 

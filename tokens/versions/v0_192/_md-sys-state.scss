@@ -12,11 +12,12 @@
 // User-configured context group "Scheme": "Dynamic"
 //
 
+@use '../../utils' as *;
 @function values($exclude-hardcoded-values: false) {
   @return (
-    'dragged-state-layer-opacity': if($exclude-hardcoded-values, null, 0.16),
-    'focus-state-layer-opacity': if($exclude-hardcoded-values, null, 0.12),
-    'hover-state-layer-opacity': if($exclude-hardcoded-values, null, 0.08),
-    'pressed-state-layer-opacity': if($exclude-hardcoded-values, null, 0.12)
+    'dragged-state-layer-opacity': if-else($exclude-hardcoded-values, null, 0.16),
+    'focus-state-layer-opacity': if-else($exclude-hardcoded-values, null, 0.12),
+    'hover-state-layer-opacity': if-else($exclude-hardcoded-values, null, 0.08),
+    'pressed-state-layer-opacity': if-else($exclude-hardcoded-values, null, 0.12)
   );
 }

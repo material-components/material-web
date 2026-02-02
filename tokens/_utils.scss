@@ -1,0 +1,6 @@
+@function if-else($condition, $if-true, $if-false) {
+  @if $condition {
+    @return $if-true;
+  }
+  @return $if-false;
+}

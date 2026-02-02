@@ -21,6 +21,7 @@
 @use './md-sys-shape';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -36,10 +37,10 @@ $_default: (
     'divider-color': map.get($deps, 'md-sys-color', 'outline'),
     'docked-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-extra-large'),
-    'docked-header-container-height': if($exclude-hardcoded-values, null, 56px),
+    'docked-header-container-height': if-else($exclude-hardcoded-values, null, 56px),
     'full-screen-container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
     'full-screen-header-container-height':
-      if($exclude-hardcoded-values, null, 72px),
+      if-else($exclude-hardcoded-values, null, 72px),
     'header-input-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'header-input-text-font':
       map.get($deps, 'md-sys-typescale', 'body-large-font'),
@@ -50,7 +51,7 @@ $_default: (
     'header-input-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'header-input-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.search-view.header.input-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -75,7 +76,7 @@ $_default: (
     'header-supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'header-supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.search-view.header.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */

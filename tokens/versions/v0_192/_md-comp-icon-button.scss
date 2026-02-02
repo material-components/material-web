@@ -19,6 +19,7 @@
 @use './md-sys-shape';
 
 @use './md-sys-state';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -29,8 +30,8 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'disabled-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
-    'icon-size': if($exclude-hardcoded-values, null, 24px),
+    'disabled-icon-opacity': if-else($exclude-hardcoded-values, null, 0.38),
+    'icon-size': if-else($exclude-hardcoded-values, null, 24px),
     'selected-focus-icon-color': map.get($deps, 'md-sys-color', 'primary'),
     'selected-focus-state-layer-color':
       map.get($deps, 'md-sys-color', 'primary'),
@@ -47,9 +48,9 @@ $_default: (
       map.get($deps, 'md-sys-color', 'primary'),
     'selected-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
-    'state-layer-height': if($exclude-hardcoded-values, null, 40px),
+    'state-layer-height': if-else($exclude-hardcoded-values, null, 40px),
     'state-layer-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'state-layer-width': if($exclude-hardcoded-values, null, 40px),
+    'state-layer-width': if-else($exclude-hardcoded-values, null, 40px),
     'unselected-focus-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'unselected-focus-state-layer-color':

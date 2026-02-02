@@ -19,6 +19,7 @@
 @use './md-sys-elevation';
 
 @use './md-sys-shape';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -34,8 +35,8 @@ $_default: (
       map.get($deps, 'md-sys-shape', 'corner-extra-large-top'),
     'docked-drag-handle-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'docked-drag-handle-height': if($exclude-hardcoded-values, null, 4px),
-    'docked-drag-handle-width': if($exclude-hardcoded-values, null, 32px),
+    'docked-drag-handle-height': if-else($exclude-hardcoded-values, null, 4px),
+    'docked-drag-handle-width': if-else($exclude-hardcoded-values, null, 32px),
     'docked-minimized-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-none'),
     'docked-modal-container-elevation':

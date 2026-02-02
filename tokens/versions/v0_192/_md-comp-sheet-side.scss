@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -53,9 +54,9 @@ $_default: (
       map.get($deps, 'md-sys-color', 'primary'),
     'docked-action-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
-    'docked-container-height': if($exclude-hardcoded-values, null, 100%),
+    'docked-container-height': if-else($exclude-hardcoded-values, null, 100%),
     'docked-container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
-    'docked-container-width': if($exclude-hardcoded-values, null, 256px),
+    'docked-container-width': if-else($exclude-hardcoded-values, null, 256px),
     'docked-divider-color': map.get($deps, 'md-sys-color', 'outline'),
     'docked-headline-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
@@ -68,7 +69,7 @@ $_default: (
     'docked-headline-tracking':
       map.get($deps, 'md-sys-typescale', 'title-large-tracking'),
     'docked-headline-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.sheet.side.docked.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */

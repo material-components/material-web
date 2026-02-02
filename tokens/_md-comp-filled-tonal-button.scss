@@ -7,6 +7,7 @@
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
+@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/shape';
 @use 'internal/validate';
@@ -93,16 +94,16 @@ $_default: (
     (
       // b/198759625 - Remove once spacing tokens are formally added
       // go/keep-sorted start
-      'leading-space': if($exclude-hardcoded-values, null, 24px),
-      'trailing-space': if($exclude-hardcoded-values, null, 24px),
+      'leading-space': if-else($exclude-hardcoded-values, null, 24px),
+      'trailing-space': if-else($exclude-hardcoded-values, null, 24px),
       'with-leading-icon-leading-space':
-        if($exclude-hardcoded-values, null, 16px),
+        if-else($exclude-hardcoded-values, null, 16px),
       'with-leading-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 24px),
+        if-else($exclude-hardcoded-values, null, 24px),
       'with-trailing-icon-leading-space':
-        if($exclude-hardcoded-values, null, 24px),
+        if-else($exclude-hardcoded-values, null, 24px),
       'with-trailing-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 16px),
+        if-else($exclude-hardcoded-values, null, 16px),
       // go/keep-sorted end
     )
   );

@@ -21,6 +21,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -33,30 +34,30 @@ $_default: (
   @return (
     'active-indicator-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'active-indicator-height': if($exclude-hardcoded-values, null, 1px),
+    'active-indicator-height': if-else($exclude-hardcoded-values, null, 1px),
     'caret-color': map.get($deps, 'md-sys-color', 'primary'),
     'container-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-extra-small-top'),
     'disabled-active-indicator-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-active-indicator-height': if($exclude-hardcoded-values, null, 1px),
+    'disabled-active-indicator-height': if-else($exclude-hardcoded-values, null, 1px),
     'disabled-active-indicator-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-container-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-container-opacity': if($exclude-hardcoded-values, null, 0.04),
+    'disabled-container-opacity': if-else($exclude-hardcoded-values, null, 0.04),
     'disabled-input-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-input-text-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-input-text-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-label-text-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-label-text-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-leading-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-leading-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-leading-icon-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'disabled-supporting-text-opacity':
-      if($exclude-hardcoded-values, null, 0.38),
+      if-else($exclude-hardcoded-values, null, 0.38),
     'disabled-trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-trailing-icon-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-trailing-icon-opacity': if-else($exclude-hardcoded-values, null, 0.38),
     'error-active-indicator-color': map.get($deps, 'md-sys-color', 'error'),
     'error-focus-active-indicator-color':
       map.get($deps, 'md-sys-color', 'error'),
@@ -88,7 +89,7 @@ $_default: (
     'error-supporting-text-color': map.get($deps, 'md-sys-color', 'error'),
     'error-trailing-icon-color': map.get($deps, 'md-sys-color', 'error'),
     'focus-active-indicator-color': map.get($deps, 'md-sys-color', 'primary'),
-    'focus-active-indicator-height': if($exclude-hardcoded-values, null, 2px),
+    'focus-active-indicator-height': if-else($exclude-hardcoded-values, null, 2px),
     'focus-input-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'focus-label-text-color': map.get($deps, 'md-sys-color', 'primary'),
     'focus-leading-icon-color':
@@ -98,7 +99,7 @@ $_default: (
     'focus-trailing-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'hover-active-indicator-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'hover-active-indicator-height': if($exclude-hardcoded-values, null, 1px),
+    'hover-active-indicator-height': if-else($exclude-hardcoded-values, null, 1px),
     'hover-input-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'hover-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
@@ -125,7 +126,7 @@ $_default: (
     'input-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'input-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.filled-text-field.input-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -149,7 +150,7 @@ $_default: (
     'label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.filled-text-field.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -162,7 +163,7 @@ $_default: (
       ),
     'label-text-weight': map.get($deps, 'md-sys-typescale', 'body-large-weight'),
     'leading-icon-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'leading-icon-size': if($exclude-hardcoded-values, null, 24px),
+    'leading-icon-size': if-else($exclude-hardcoded-values, null, 24px),
     'supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'supporting-text-font':
@@ -174,7 +175,7 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-small-tracking'),
     'supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.filled-text-field.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -188,6 +189,6 @@ $_default: (
     'supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-small-weight'),
     'trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'trailing-icon-size': if($exclude-hardcoded-values, null, 24px)
+    'trailing-icon-size': if-else($exclude-hardcoded-values, null, 24px)
   );
 }

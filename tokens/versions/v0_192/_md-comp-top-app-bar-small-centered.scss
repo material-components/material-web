@@ -21,6 +21,7 @@
 @use './md-sys-shape';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -32,10 +33,10 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'avatar-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'avatar-size': if($exclude-hardcoded-values, null, 30px),
+    'avatar-size': if-else($exclude-hardcoded-values, null, 30px),
     'container-color': map.get($deps, 'md-sys-color', 'surface'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'container-height': if($exclude-hardcoded-values, null, 64px),
+    'container-height': if-else($exclude-hardcoded-values, null, 64px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
     'container-surface-tint-layer-color':
       map.get($deps, 'md-sys-color', 'surface-tint'),
@@ -47,7 +48,7 @@ $_default: (
     'headline-tracking':
       map.get($deps, 'md-sys-typescale', 'title-large-tracking'),
     'headline-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.top-app-bar.small.centered.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -60,12 +61,12 @@ $_default: (
       ),
     'headline-weight': map.get($deps, 'md-sys-typescale', 'title-large-weight'),
     'leading-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'leading-icon-size': if($exclude-hardcoded-values, null, 24px),
+    'leading-icon-size': if-else($exclude-hardcoded-values, null, 24px),
     'on-scroll-container-color':
       map.get($deps, 'md-sys-color', 'surface-container'),
     'on-scroll-container-elevation':
       map.get($deps, 'md-sys-elevation', 'level2'),
     'trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'trailing-icon-size': if($exclude-hardcoded-values, null, 24px)
+    'trailing-icon-size': if-else($exclude-hardcoded-values, null, 24px)
   );
 }

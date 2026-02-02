@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -35,10 +36,10 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'avatar-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'avatar-size': if($exclude-hardcoded-values, null, 30px),
+    'avatar-size': if-else($exclude-hardcoded-values, null, 30px),
     'container-color': map.get($deps, 'md-sys-color', 'surface-container-high'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level3'),
-    'container-height': if($exclude-hardcoded-values, null, 56px),
+    'container-height': if-else($exclude-hardcoded-values, null, 56px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
     'hover-state-layer-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'hover-state-layer-opacity':
@@ -53,7 +54,7 @@ $_default: (
     'input-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'input-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.search-bar.input-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -82,7 +83,7 @@ $_default: (
     'supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'supporting-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.search-bar.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */

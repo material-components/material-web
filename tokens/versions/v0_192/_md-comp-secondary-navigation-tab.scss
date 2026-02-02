@@ -23,6 +23,7 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
+@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -35,11 +36,11 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'active-indicator-color': map.get($deps, 'md-sys-color', 'primary'),
-    'active-indicator-height': if($exclude-hardcoded-values, null, 2px),
+    'active-indicator-height': if-else($exclude-hardcoded-values, null, 2px),
     'active-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'container-color': map.get($deps, 'md-sys-color', 'surface'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'container-height': if($exclude-hardcoded-values, null, 48px),
+    'container-height': if-else($exclude-hardcoded-values, null, 48px),
     'container-shadow-color': map.get($deps, 'md-sys-color', 'shadow'),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
     'focus-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
@@ -59,7 +60,7 @@ $_default: (
     'label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'title-small-tracking'),
     'label-text-type':
-      if(
+      if-else(
         $exclude-hardcoded-values,
         null,
         /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.secondary-navigation-tab.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
@@ -79,7 +80,7 @@ $_default: (
     'with-icon-active-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'with-icon-focus-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'with-icon-hover-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'with-icon-icon-size': if($exclude-hardcoded-values, null, 24px),
+    'with-icon-icon-size': if-else($exclude-hardcoded-values, null, 24px),
     'with-icon-inactive-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'with-icon-pressed-icon-color': map.get($deps, 'md-sys-color', 'on-surface')

@@ -7,6 +7,7 @@
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
+@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/validate';
 @use 'md-sys-color';
@@ -136,8 +137,8 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: (
-      'top-space': if($exclude-hardcoded-values, null, 12px),
-      'bottom-space': if($exclude-hardcoded-values, null, 12px),
+      'top-space': if-else($exclude-hardcoded-values, null, 12px),
+      'bottom-space': if-else($exclude-hardcoded-values, null, 12px),
       'disabled-opacity':
         map.get($original-tokens, 'list-item-disabled-label-text-opacity'),
     ),
