@@ -15,7 +15,6 @@
 @use 'sass:map';
 
 @use './md-sys-color';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -24,6 +23,6 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'color': map.get($deps, 'md-sys-color', 'outline-variant'),
-    'thickness': if-else($exclude-hardcoded-values, null, 1px)
+    'thickness': if(sass($exclude-hardcoded-values): null; else: 1px)
   );
 }

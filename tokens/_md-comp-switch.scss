@@ -7,7 +7,6 @@
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
-@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/shape';
 @use 'internal/validate';
@@ -125,7 +124,7 @@ $_default: (
   $new-tokens: map.merge(
     $new-tokens,
     (
-      'touch-target-size': if-else($exclude-hardcoded-values, null, 48px)
+      'touch-target-size': if(sass($exclude-hardcoded-values): null; else: 48px)
     )
   );
 

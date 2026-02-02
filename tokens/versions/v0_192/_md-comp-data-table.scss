@@ -21,7 +21,6 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -34,7 +33,7 @@ $_default: (
   @return (
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-extra-small'),
     'footer-container-color': map.get($deps, 'md-sys-color', 'surface'),
-    'footer-container-height': if-else($exclude-hardcoded-values, null, 52px),
+    'footer-container-height': if(sass($exclude-hardcoded-values): null; else: 52px),
     'footer-supporting-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'footer-supporting-text-font':
@@ -48,7 +47,7 @@ $_default: (
     'footer-supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'header-container-color': map.get($deps, 'md-sys-color', 'surface'),
-    'header-container-height': if-else($exclude-hardcoded-values, null, 56px),
+    'header-container-height': if(sass($exclude-hardcoded-values): null; else: 56px),
     'header-headline-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'header-headline-font':
@@ -65,12 +64,12 @@ $_default: (
     'header-hover-sorting-icon-button-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'outline-color': map.get($deps, 'md-sys-color', 'outline-variant'),
-    'outline-width': if-else($exclude-hardcoded-values, null, 1px),
-    'row-item-container-height': if-else($exclude-hardcoded-values, null, 52px),
+    'outline-width': if(sass($exclude-hardcoded-values): null; else: 1px),
+    'row-item-container-height': if(sass($exclude-hardcoded-values): null; else: 52px),
     'row-item-disabled-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'row-item-disabled-label-text-opacity':
-      if-else($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'row-item-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'row-item-label-text-font':
       map.get($deps, 'md-sys-typescale', 'body-medium-font'),
@@ -83,7 +82,7 @@ $_default: (
     'row-item-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-medium-weight'),
     'row-item-outline-color': map.get($deps, 'md-sys-color', 'outline-variant'),
-    'row-item-outline-width': if-else($exclude-hardcoded-values, null, 1px),
+    'row-item-outline-width': if(sass($exclude-hardcoded-values): null; else: 1px),
     'row-item-selected-container-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
     'row-item-selected-hover-state-layer-color':

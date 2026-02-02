@@ -19,7 +19,6 @@
 @use './md-sys-shape';
 
 @use './md-sys-typescale';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -41,22 +40,18 @@ $_default: (
     'large-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-small-tracking'),
     'large-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.badge.large.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.badge.large.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-small-weight')
           map.get($deps, 'md-sys-typescale', 'label-small-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-small-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-small-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-small-font')),
     'large-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-small-weight'),
     'large-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'large-size': if-else($exclude-hardcoded-values, null, 16px),
+    'large-size': if(sass($exclude-hardcoded-values): null; else: 16px),
     'shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'size': if-else($exclude-hardcoded-values, null, 6px)
+    'size': if(sass($exclude-hardcoded-values): null; else: 6px)
   );
 }

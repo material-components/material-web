@@ -21,7 +21,6 @@
 @use './md-sys-shape';
 
 @use './md-sys-state';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -34,10 +33,10 @@ $_default: (
   @return (
     'container-color': map.get($deps, 'md-sys-color', 'tertiary-container'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level3'),
-    'container-height': if-else($exclude-hardcoded-values, null, 96px),
+    'container-height': if(sass($exclude-hardcoded-values): null; else: 96px),
     'container-shadow-color': map.get($deps, 'md-sys-color', 'shadow'),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-extra-large'),
-    'container-width': if-else($exclude-hardcoded-values, null, 96px),
+    'container-width': if(sass($exclude-hardcoded-values): null; else: 96px),
     'focus-container-elevation': map.get($deps, 'md-sys-elevation', 'level3'),
     'focus-icon-color': map.get($deps, 'md-sys-color', 'on-tertiary-container'),
     'focus-state-layer-color':
@@ -51,7 +50,7 @@ $_default: (
     'hover-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
     'icon-color': map.get($deps, 'md-sys-color', 'on-tertiary-container'),
-    'icon-size': if-else($exclude-hardcoded-values, null, 36px),
+    'icon-size': if(sass($exclude-hardcoded-values): null; else: 36px),
     'lowered-container-elevation': map.get($deps, 'md-sys-elevation', 'level1'),
     'lowered-focus-container-elevation':
       map.get($deps, 'md-sys-elevation', 'level1'),

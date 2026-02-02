@@ -23,7 +23,6 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -46,23 +45,19 @@ $_default: (
     'headline-tracking':
       map.get($deps, 'md-sys-typescale', 'label-medium-tracking'),
     'headline-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-medium-weight')
           map.get($deps, 'md-sys-typescale', 'label-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-medium-font')),
     'headline-weight': map.get($deps, 'md-sys-typescale', 'label-medium-weight'),
     'period-selector-container-height':
-      if-else($exclude-hardcoded-values, null, 72px),
+      if(sass($exclude-hardcoded-values): null; else: 72px),
     'period-selector-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-small'),
-    'period-selector-container-width': if-else($exclude-hardcoded-values, null, 52px),
+    'period-selector-container-width': if(sass($exclude-hardcoded-values): null; else: 52px),
     'period-selector-focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'period-selector-hover-state-layer-opacity':
@@ -76,21 +71,17 @@ $_default: (
     'period-selector-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'title-medium-tracking'),
     'period-selector-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.period-selector.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.period-selector.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'title-medium-weight')
           map.get($deps, 'md-sys-typescale', 'title-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'title-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'title-medium-font')),
     'period-selector-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'title-medium-weight'),
     'period-selector-outline-color': map.get($deps, 'md-sys-color', 'outline'),
-    'period-selector-outline-width': if-else($exclude-hardcoded-values, null, 1px),
+    'period-selector-outline-width': if(sass($exclude-hardcoded-values): null; else: 1px),
     'period-selector-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
     'period-selector-selected-container-color':
@@ -126,11 +117,11 @@ $_default: (
     'time-input-field-container-color':
       map.get($deps, 'md-sys-color', 'surface-container-highest'),
     'time-input-field-container-height':
-      if-else($exclude-hardcoded-values, null, 72px),
+      if(sass($exclude-hardcoded-values): null; else: 72px),
     'time-input-field-container-shape':
       map.get($deps, 'md-sys-shape', 'corner-small'),
     'time-input-field-container-width':
-      if-else($exclude-hardcoded-values, null, 96px),
+      if(sass($exclude-hardcoded-values): null; else: 96px),
     'time-input-field-focus-container-color':
       map.get($deps, 'md-sys-color', 'primary-container'),
     'time-input-field-focus-label-text-color':
@@ -138,7 +129,7 @@ $_default: (
     'time-input-field-focus-outline-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'time-input-field-focus-outline-width':
-      if-else($exclude-hardcoded-values, null, 2px),
+      if(sass($exclude-hardcoded-values): null; else: 2px),
     'time-input-field-hover-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'time-input-field-hover-state-layer-color':
@@ -156,17 +147,13 @@ $_default: (
     'time-input-field-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'display-medium-tracking'),
     'time-input-field-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.time-input-field.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.time-input-field.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'display-medium-weight')
           map.get($deps, 'md-sys-typescale', 'display-medium-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'display-medium-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'display-medium-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'display-medium-font')),
     'time-input-field-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'display-medium-weight'),
     'time-input-field-separator-color':
@@ -180,17 +167,13 @@ $_default: (
     'time-input-field-separator-tracking':
       map.get($deps, 'md-sys-typescale', 'display-large-tracking'),
     'time-input-field-separator-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.time-input-field.separator.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.time-input-field.separator.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'display-large-weight')
           map.get($deps, 'md-sys-typescale', 'display-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'display-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'display-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'display-large-font')),
     'time-input-field-separator-weight':
       map.get($deps, 'md-sys-typescale', 'display-large-weight'),
     'time-input-field-supporting-text-color':
@@ -204,17 +187,13 @@ $_default: (
     'time-input-field-supporting-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-small-tracking'),
     'time-input-field-supporting-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.time-input-field.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.time-input.time-input-field.supporting-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-small-weight')
           map.get($deps, 'md-sys-typescale', 'body-small-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-small-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-small-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-small-font')),
     'time-input-field-supporting-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-small-weight')
   );

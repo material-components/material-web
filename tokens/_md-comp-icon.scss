@@ -6,7 +6,6 @@
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
-@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/validate';
 // go/keep-sorted end
@@ -21,8 +20,8 @@ $supported-tokens: (
 @function _get-new-tokens($exclude-hardcoded-values) {
   @return (
     // go/keep-sorted start
-    font: if-else($exclude-hardcoded-values, null, 'Material Symbols Outlined'),
-    size: if-else($exclude-hardcoded-values, null, 24px),
+    font: if(sass($exclude-hardcoded-values): null; else: 'Material Symbols Outlined'),
+    size: if(sass($exclude-hardcoded-values): null; else: 24px),
     // go/keep-sorted end
   );
 }

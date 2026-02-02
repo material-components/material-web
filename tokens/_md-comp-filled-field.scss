@@ -7,7 +7,6 @@
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
-@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/shape';
 @use 'internal/validate';
@@ -134,14 +133,14 @@ $_default: (
     // go/keep-sorted start
     'active-indicator-color': map.get($text-field, 'active-indicator-color'),
     'active-indicator-height': map.get($text-field, 'active-indicator-height'),
-    'bottom-space': if-else($exclude-hardcoded-values, null, 16px),
+    'bottom-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'container-color': map.get($text-field, 'container-color'),
     'container-shape': map.get($text-field, 'container-shape'),
     'content-color': map.get($text-field, 'input-text-color'),
     'content-font': map.get($text-field, 'input-text-font'),
     'content-line-height': map.get($text-field, 'input-text-line-height'),
     'content-size': map.get($text-field, 'input-text-size'),
-    'content-space': if-else($exclude-hardcoded-values, null, 16px),
+    'content-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'content-weight': map.get($text-field, 'input-text-weight'),
     'disabled-active-indicator-color':
       map.get($text-field, 'disabled-active-indicator-color'),
@@ -212,7 +211,7 @@ $_default: (
     'focus-active-indicator-color':
       map.get($text-field, 'focus-active-indicator-color'),
     // TODO(b/259455114): remove when focus tokens update to 3px
-    'focus-active-indicator-height': if-else($exclude-hardcoded-values, null, 3px),
+    'focus-active-indicator-height': if(sass($exclude-hardcoded-values): null; else: 3px),
     'focus-content-color': map.get($text-field, 'focus-input-text-color'),
     'focus-label-text-color': map.get($text-field, 'focus-label-text-color'),
     'focus-leading-content-color':
@@ -246,25 +245,25 @@ $_default: (
     'label-text-size': map.get($text-field, 'label-text-size'),
     'label-text-weight': map.get($text-field, 'label-text-weight'),
     'leading-content-color': map.get($text-field, 'leading-icon-color'),
-    'leading-space': if-else($exclude-hardcoded-values, null, 16px),
+    'leading-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'supporting-text-color': map.get($text-field, 'supporting-text-color'),
     'supporting-text-font': map.get($text-field, 'supporting-text-font'),
-    'supporting-text-leading-space': if-else($exclude-hardcoded-values, null, 16px),
+    'supporting-text-leading-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'supporting-text-line-height':
       map.get($text-field, 'supporting-text-line-height'),
     'supporting-text-size': map.get($text-field, 'supporting-text-size'),
-    'supporting-text-top-space': if-else($exclude-hardcoded-values, null, 4px),
-    'supporting-text-trailing-space': if-else($exclude-hardcoded-values, null, 16px),
+    'supporting-text-top-space': if(sass($exclude-hardcoded-values): null; else: 4px),
+    'supporting-text-trailing-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'supporting-text-weight': map.get($text-field, 'supporting-text-weight'),
-    'top-space': if-else($exclude-hardcoded-values, null, 16px),
+    'top-space': if(sass($exclude-hardcoded-values): null; else: 16px),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
-    'trailing-space': if-else($exclude-hardcoded-values, null, 16px),
-    'with-label-bottom-space': if-else($exclude-hardcoded-values, null, 8px),
-    'with-label-top-space': if-else($exclude-hardcoded-values, null, 8px),
+    'trailing-space': if(sass($exclude-hardcoded-values): null; else: 16px),
+    'with-label-bottom-space': if(sass($exclude-hardcoded-values): null; else: 8px),
+    'with-label-top-space': if(sass($exclude-hardcoded-values): null; else: 8px),
     'with-leading-content-leading-space':
-      if-else($exclude-hardcoded-values, null, 12px),
+      if(sass($exclude-hardcoded-values): null; else: 12px),
     'with-trailing-content-trailing-space':
-      if-else($exclude-hardcoded-values, null, 12px),
+      if(sass($exclude-hardcoded-values): null; else: 12px),
     // go/keep-sorted end
   );
 

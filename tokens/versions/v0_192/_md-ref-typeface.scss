@@ -12,13 +12,12 @@
 // User-configured context group "Scheme": "Dynamic"
 //
 
-@use '../../utils' as *;
 @function values($exclude-hardcoded-values: false) {
   @return (
-    'brand': if-else($exclude-hardcoded-values, null, (Roboto)),
-    'plain': if-else($exclude-hardcoded-values, null, (Roboto)),
-    'weight-bold': if-else($exclude-hardcoded-values, null, 700),
-    'weight-medium': if-else($exclude-hardcoded-values, null, 500),
-    'weight-regular': if-else($exclude-hardcoded-values, null, 400)
+    'brand': if(sass($exclude-hardcoded-values): null; else: (Roboto)),
+    'plain': if(sass($exclude-hardcoded-values): null; else: (Roboto)),
+    'weight-bold': if(sass($exclude-hardcoded-values): null; else: 700),
+    'weight-medium': if(sass($exclude-hardcoded-values): null; else: 500),
+    'weight-regular': if(sass($exclude-hardcoded-values): null; else: 400)
   );
 }

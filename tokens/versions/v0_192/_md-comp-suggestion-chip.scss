@@ -23,7 +23,6 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -35,10 +34,10 @@ $_default: (
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
-    'container-height': if-else($exclude-hardcoded-values, null, 32px),
+    'container-height': if(sass($exclude-hardcoded-values): null; else: 32px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-small'),
     'disabled-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'disabled-label-text-opacity': if-else($exclude-hardcoded-values, null, 0.38),
+    'disabled-label-text-opacity': if(sass($exclude-hardcoded-values): null; else: 0.38),
     'dragged-container-elevation': map.get($deps, 'md-sys-elevation', 'level4'),
     'dragged-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
@@ -55,7 +54,7 @@ $_default: (
     'elevated-disabled-container-elevation':
       map.get($deps, 'md-sys-elevation', 'level0'),
     'elevated-disabled-container-opacity':
-      if-else($exclude-hardcoded-values, null, 0.12),
+      if(sass($exclude-hardcoded-values): null; else: 0.12),
     'elevated-focus-container-elevation':
       map.get($deps, 'md-sys-elevation', 'level1'),
     'elevated-hover-container-elevation':
@@ -64,11 +63,11 @@ $_default: (
       map.get($deps, 'md-sys-elevation', 'level1'),
     'flat-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
     'flat-disabled-outline-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'flat-disabled-outline-opacity': if-else($exclude-hardcoded-values, null, 0.12),
+    'flat-disabled-outline-opacity': if(sass($exclude-hardcoded-values): null; else: 0.12),
     'flat-focus-outline-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'flat-outline-color': map.get($deps, 'md-sys-color', 'outline'),
-    'flat-outline-width': if-else($exclude-hardcoded-values, null, 1px),
+    'flat-outline-width': if(sass($exclude-hardcoded-values): null; else: 1px),
     'focus-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'focus-state-layer-color':
@@ -89,17 +88,13 @@ $_default: (
     'label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.suggestion-chip.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.suggestion-chip.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-large-weight')
           map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-large-font')),
     'label-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-large-weight'),
     'pressed-label-text-color':
@@ -111,7 +106,7 @@ $_default: (
     'with-leading-icon-disabled-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'with-leading-icon-disabled-leading-icon-opacity':
-      if-else($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'with-leading-icon-dragged-leading-icon-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'with-leading-icon-focus-leading-icon-color':
@@ -121,7 +116,7 @@ $_default: (
     'with-leading-icon-leading-icon-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'with-leading-icon-leading-icon-size':
-      if-else($exclude-hardcoded-values, null, 18px),
+      if(sass($exclude-hardcoded-values): null; else: 18px),
     'with-leading-icon-pressed-leading-icon-color':
       map.get($deps, 'md-sys-color', 'primary')
   );

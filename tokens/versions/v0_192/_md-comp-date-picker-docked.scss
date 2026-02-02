@@ -23,7 +23,6 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -37,12 +36,12 @@ $_default: (
   @return (
     'container-color': map.get($deps, 'md-sys-color', 'surface-container-high'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level3'),
-    'container-height': if-else($exclude-hardcoded-values, null, 456px),
+    'container-height': if(sass($exclude-hardcoded-values): null; else: 456px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-large'),
-    'container-width': if-else($exclude-hardcoded-values, null, 360px),
-    'date-container-height': if-else($exclude-hardcoded-values, null, 48px),
+    'container-width': if(sass($exclude-hardcoded-values): null; else: 360px),
+    'date-container-height': if(sass($exclude-hardcoded-values): null; else: 48px),
     'date-container-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'date-container-width': if-else($exclude-hardcoded-values, null, 48px),
+    'date-container-width': if(sass($exclude-hardcoded-values): null; else: 48px),
     'date-focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
     'date-hover-state-layer-opacity':
@@ -56,17 +55,13 @@ $_default: (
     'date-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'date-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.date.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.date.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-large-weight')
           map.get($deps, 'md-sys-typescale', 'body-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-large-font')),
     'date-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-large-weight'),
     'date-pressed-state-layer-opacity':
@@ -80,13 +75,13 @@ $_default: (
       map.get($deps, 'md-sys-color', 'on-primary'),
     'date-selected-pressed-state-layer-color':
       map.get($deps, 'md-sys-color', 'on-primary'),
-    'date-state-layer-height': if-else($exclude-hardcoded-values, null, 40px),
+    'date-state-layer-height': if(sass($exclude-hardcoded-values): null; else: 40px),
     'date-state-layer-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'date-state-layer-width': if-else($exclude-hardcoded-values, null, 40px),
+    'date-state-layer-width': if(sass($exclude-hardcoded-values): null; else: 40px),
     'date-today-container-outline-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'date-today-container-outline-width':
-      if-else($exclude-hardcoded-values, null, 1px),
+      if(sass($exclude-hardcoded-values): null; else: 1px),
     'date-today-focus-state-layer-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'date-today-hover-state-layer-color':
@@ -104,17 +99,17 @@ $_default: (
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'date-unselected-pressed-state-layer-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'header-height': if-else($exclude-hardcoded-values, null, 64px),
-    'menu-button-container-height': if-else($exclude-hardcoded-values, null, 40px),
+    'header-height': if(sass($exclude-hardcoded-values): null; else: 64px),
+    'menu-button-container-height': if(sass($exclude-hardcoded-values): null; else: 40px),
     'menu-button-container-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
     'menu-button-disabled-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'menu-button-disabled-icon-opacity':
-      if-else($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'menu-button-disabled-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'menu-button-disabled-label-text-opacity':
-      if-else($exclude-hardcoded-values, null, 0.38),
+      if(sass($exclude-hardcoded-values): null; else: 0.38),
     'menu-button-focus-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'menu-button-focus-label-text-color':
@@ -133,7 +128,7 @@ $_default: (
       map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
     'menu-button-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'menu-button-icon-size': if-else($exclude-hardcoded-values, null, 18px),
+    'menu-button-icon-size': if(sass($exclude-hardcoded-values): null; else: 18px),
     'menu-button-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'menu-button-label-text-font':
@@ -145,17 +140,13 @@ $_default: (
     'menu-button-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
     'menu-button-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.menu-button.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.menu-button.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'label-large-weight')
           map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'label-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'label-large-font')),
     'menu-button-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'label-large-weight'),
     'menu-button-pressed-icon-color':
@@ -166,7 +157,7 @@ $_default: (
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'menu-button-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
-    'menu-list-item-container-height': if-else($exclude-hardcoded-values, null, 48px),
+    'menu-list-item-container-height': if(sass($exclude-hardcoded-values): null; else: 48px),
     'menu-list-item-focus-label-text-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'menu-list-item-focus-state-layer-color':
@@ -190,17 +181,13 @@ $_default: (
     'menu-list-item-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'menu-list-item-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.menu.list-item.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.menu.list-item.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-large-weight')
           map.get($deps, 'md-sys-typescale', 'body-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-large-font')),
     'menu-list-item-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-large-weight'),
     'menu-list-item-pressed-label-text-color':
@@ -218,7 +205,7 @@ $_default: (
     'menu-list-item-selected-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'menu-list-item-selected-leading-icon-size':
-      if-else($exclude-hardcoded-values, null, 24px),
+      if(sass($exclude-hardcoded-values): null; else: 24px),
     'menu-list-item-selected-pressed-leading-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface-variant'),
     'weekdays-label-text-color': map.get($deps, 'md-sys-color', 'on-surface'),
@@ -231,17 +218,13 @@ $_default: (
     'weekdays-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'body-large-tracking'),
     'weekdays-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.weekdays.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.date-picker.docked.weekdays.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'body-large-weight')
           map.get($deps, 'md-sys-typescale', 'body-large-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'body-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'body-large-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'body-large-font')),
     'weekdays-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'body-large-weight')
   );

@@ -7,7 +7,6 @@
 @use 'sass:map';
 @use 'sass:string';
 // go/keep-sorted end
-@use 'utils' as *;
 // go/keep-sorted start
 @use 'internal/shape';
 @use 'internal/validate';
@@ -150,7 +149,7 @@ $_default: (
     // go/keep-sorted start
     // TODO(b/259455114): remove when focus tokens update to 3px
     'text-field-focus-active-indicator-height':
-      if-else($exclude-hardcoded-values, null, 3px),
+      if(sass($exclude-hardcoded-values): null; else: 3px),
     // go/keep-sorted end
   );
 }

@@ -23,7 +23,6 @@
 @use './md-sys-state';
 
 @use './md-sys-typescale';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -36,9 +35,9 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'active-indicator-color': map.get($deps, 'md-sys-color', 'primary'),
-    'active-indicator-height': if-else($exclude-hardcoded-values, null, 3px),
+    'active-indicator-height': if(sass($exclude-hardcoded-values): null; else: 3px),
     'active-indicator-shape':
-      if-else($exclude-hardcoded-values, null, (3px 3px 0px 0px)),
+      if(sass($exclude-hardcoded-values): null; else: (3px 3px 0px 0px)),
     'active-focus-state-layer-color': map.get($deps, 'md-sys-color', 'primary'),
     'active-focus-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
@@ -51,7 +50,7 @@ $_default: (
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
     'container-color': map.get($deps, 'md-sys-color', 'surface'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'container-height': if-else($exclude-hardcoded-values, null, 48px),
+    'container-height': if(sass($exclude-hardcoded-values): null; else: 48px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
     'inactive-focus-state-layer-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
@@ -66,7 +65,7 @@ $_default: (
     'inactive-pressed-state-layer-opacity':
       map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
     'with-icon-and-label-text-container-height':
-      if-else($exclude-hardcoded-values, null, 64px),
+      if(sass($exclude-hardcoded-values): null; else: 64px),
     'with-icon-active-focus-icon-color':
       map.get($deps, 'md-sys-color', 'primary'),
     'with-icon-active-hover-icon-color':
@@ -74,7 +73,7 @@ $_default: (
     'with-icon-active-icon-color': map.get($deps, 'md-sys-color', 'primary'),
     'with-icon-active-pressed-icon-color':
       map.get($deps, 'md-sys-color', 'primary'),
-    'with-icon-icon-size': if-else($exclude-hardcoded-values, null, 24px),
+    'with-icon-icon-size': if(sass($exclude-hardcoded-values): null; else: 24px),
     'with-icon-inactive-focus-icon-color':
       map.get($deps, 'md-sys-color', 'on-surface'),
     'with-icon-inactive-hover-icon-color':
@@ -108,17 +107,13 @@ $_default: (
     'with-label-text-label-text-tracking':
       map.get($deps, 'md-sys-typescale', 'title-small-tracking'),
     'with-label-text-label-text-type':
-      if-else(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.primary-navigation-tab.with-label-text.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
+      if(sass($exclude-hardcoded-values): null; else: /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.primary-navigation-tab.with-label-text.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
           map.get($deps, 'md-sys-typescale', 'title-small-weight')
           map.get($deps, 'md-sys-typescale', 'title-small-size') #{'/'} map.get(
             $deps,
             'md-sys-typescale',
             'title-small-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-small-font')
-      ),
+          ) map.get($deps, 'md-sys-typescale', 'title-small-font')),
     'with-label-text-label-text-weight':
       map.get($deps, 'md-sys-typescale', 'title-small-weight')
   );

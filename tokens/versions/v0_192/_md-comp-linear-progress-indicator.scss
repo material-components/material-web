@@ -17,7 +17,6 @@
 @use './md-sys-color';
 
 @use './md-sys-shape';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -27,7 +26,7 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'active-indicator-color': map.get($deps, 'md-sys-color', 'primary'),
-    'active-indicator-height': if-else($exclude-hardcoded-values, null, 4px),
+    'active-indicator-height': if(sass($exclude-hardcoded-values): null; else: 4px),
     'active-indicator-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
     'four-color-active-indicator-four-color':
       map.get($deps, 'md-sys-color', 'tertiary-container'),
@@ -38,7 +37,7 @@ $_default: (
     'four-color-active-indicator-two-color':
       map.get($deps, 'md-sys-color', 'primary-container'),
     'track-color': map.get($deps, 'md-sys-color', 'surface-container-highest'),
-    'track-height': if-else($exclude-hardcoded-values, null, 4px),
+    'track-height': if(sass($exclude-hardcoded-values): null; else: 4px),
     'track-shape': map.get($deps, 'md-sys-shape', 'corner-none')
   );
 }

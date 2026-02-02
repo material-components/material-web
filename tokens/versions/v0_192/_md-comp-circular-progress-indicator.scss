@@ -17,7 +17,6 @@
 @use './md-sys-color';
 
 @use './md-sys-shape';
-@use '../../utils' as *;
 
 $_default: (
   'md-sys-color': md-sys-color.values-light(),
@@ -28,7 +27,7 @@ $_default: (
   @return (
     'active-indicator-color': map.get($deps, 'md-sys-color', 'primary'),
     'active-indicator-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
-    'active-indicator-width': if-else($exclude-hardcoded-values, null, 4px),
+    'active-indicator-width': if(sass($exclude-hardcoded-values): null; else: 4px),
     'four-color-active-indicator-four-color':
       map.get($deps, 'md-sys-color', 'tertiary-container'),
     'four-color-active-indicator-one-color':
@@ -37,6 +36,6 @@ $_default: (
       map.get($deps, 'md-sys-color', 'tertiary'),
     'four-color-active-indicator-two-color':
       map.get($deps, 'md-sys-color', 'primary-container'),
-    'size': if-else($exclude-hardcoded-values, null, 48px)
+    'size': if(sass($exclude-hardcoded-values): null; else: 48px)
   );
 }

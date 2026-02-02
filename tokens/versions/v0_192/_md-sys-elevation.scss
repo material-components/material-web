@@ -12,14 +12,13 @@
 // User-configured context group "Scheme": "Dynamic"
 //
 
-@use '../../utils' as *;
 @function values($exclude-hardcoded-values: false) {
   @return (
-    'level0': if-else($exclude-hardcoded-values, null, 0),
-    'level1': if-else($exclude-hardcoded-values, null, 1),
-    'level2': if-else($exclude-hardcoded-values, null, 3),
-    'level3': if-else($exclude-hardcoded-values, null, 6),
-    'level4': if-else($exclude-hardcoded-values, null, 8),
-    'level5': if-else($exclude-hardcoded-values, null, 12)
+    'level0': if(sass($exclude-hardcoded-values): null; else: 0),
+    'level1': if(sass($exclude-hardcoded-values): null; else: 1),
+    'level2': if(sass($exclude-hardcoded-values): null; else: 3),
+    'level3': if(sass($exclude-hardcoded-values): null; else: 6),
+    'level4': if(sass($exclude-hardcoded-values): null; else: 8),
+    'level5': if(sass($exclude-hardcoded-values): null; else: 12)
   );
 }
