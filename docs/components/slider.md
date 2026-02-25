@@ -185,7 +185,7 @@ Token                              | Default value
 | `ticks` | `ticks` | `boolean` | `false` | Whether or not to show tick marks. |
 | `labeled` | `labeled` | `boolean` | `false` | Whether or not to show a value label when activated. |
 | `range` | `range` | `boolean` | `false` | Whether or not to show a value range. When false, the slider displays a slideable handle for the value property; when true, it displays slideable handles for the valueStart and valueEnd properties. |
-| `disabled` |  | `boolean` | `undefined` |  |
+| `disabled` | `disabled` | `boolean` | `undefined` |  |
 | `name` |  | `string` | `undefined` |  |
 | `nameStart` |  | `string` | `undefined` |  |
 | `nameEnd` |  | `string` | `undefined` |  |
