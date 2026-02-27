@@ -19,17 +19,15 @@ import {
   afterDispatch,
   setupDispatchHooks,
 } from '../../internal/events/dispatch-hooks.js';
-import {
-  internals,
-  mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
 import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
 
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
 // Separate variable needed for closure.
 const iconButtonBaseClass = mixinDelegatesAria(
-  mixinFormSubmitter(mixinElementInternals(LitElement)),
+  mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
 );
 
 /**
@@ -41,9 +39,6 @@ const iconButtonBaseClass = mixinDelegatesAria(
  */
 export class IconButton extends iconButtonBaseClass {
   /** @nocollapse */
-  static readonly formAssociated = true;
-
-  /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',
     delegatesFocus: true,
@@ -52,7 +47,7 @@ export class IconButton extends iconButtonBaseClass {
   /**
    * Disables the icon button and makes it non-interactive.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  declare disabled: boolean; // for jsdoc until lit-analyzer is updated
 
   /**
    * "Soft-disables" the icon button (disabled but still focusable).
@@ -104,20 +99,6 @@ export class IconButton extends iconButtonBaseClass {
    * icon is provided.
    */
   @property({type: Boolean, reflect: true}) selected = false;
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this[internals].form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this[internals].labels;
-  }
 
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
 

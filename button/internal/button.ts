@@ -16,24 +16,19 @@ import {
   dispatchActivationClick,
   isActivationClick,
 } from '../../internal/events/form-label-activation.js';
-import {
-  internals,
-  mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
 import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
 
 // Separate variable needed for closure.
 const buttonBaseClass = mixinDelegatesAria(
-  mixinFormSubmitter(mixinElementInternals(LitElement)),
+  mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
 );
 
 /**
  * A button component.
  */
 export abstract class Button extends buttonBaseClass {
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',
@@ -43,7 +38,7 @@ export abstract class Button extends buttonBaseClass {
   /**
    * Whether or not the button is disabled.
    */
-  @property({type: Boolean, reflect: true}) disabled = false;
+  declare disabled: boolean; // for jsdoc until lit-analyzer is updated
 
   /**
    * Whether or not the button is "soft-disabled" (disabled but still
@@ -88,13 +83,6 @@ export abstract class Button extends buttonBaseClass {
    */
   @property({type: Boolean, attribute: 'has-icon', reflect: true}) hasIcon =
     false;
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this[internals].form;
-  }
 
   @query('.button') private readonly buttonElement!: HTMLElement | null;
 
