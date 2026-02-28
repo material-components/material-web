@@ -56,6 +56,20 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
   @property() href = '';
 
   /**
+   * The filename to use when downloading the linked resource.
+   * If not specified, the browser will determine a filename.
+   * This is only applicable when the menu-item is used as a link (`href` is set).
+   */
+  @property() download = '';
+
+  /**
+   * The relationship between the current document and the linked resource.
+   * If not specified, no `rel` attribute will be applied.
+   * This is only applicable when the menu-item is used as a link (`href` is set).
+   */
+  @property() rel = '';
+
+  /**
    * Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is
    * set.
    */
@@ -143,6 +157,8 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
     // TODO(b/265339866): announce "button"/"link" inside of a list item. Until
     // then all are "menuitem" roles for correct announcement.
     const target = isAnchor && !!this.target ? this.target : nothing;
+    const download = isAnchor && !!this.download ? this.download : nothing;
+    const rel = isAnchor && !!this.rel ? this.rel : nothing;
     return staticHtml`
       <${tag}
         id="item"
@@ -155,6 +171,8 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         aria-haspopup=${(this as ARIAMixinStrict).ariaHasPopup || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"
         href=${this.href || nothing}
+        download=${download}
+        rel=${rel}
         target=${target}
         @click=${this.menuItemController.onClick}
         @keydown=${this.menuItemController.onKeydown}

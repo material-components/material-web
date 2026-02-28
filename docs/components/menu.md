@@ -581,6 +581,8 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | `disabled` | `disabled` | `boolean` | `false` | Disables the item and makes it non-selectable and non-interactive. |
 | `type` | `type` | `string` | `'menuitem'` | Sets the behavior and role of the menu item, defaults to "menuitem". |
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
+| `download` | `download` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `download` resource attribute. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` resource attribute. |
 | `target` | `target` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is set. |
 | `keepOpen` | `keep-open` | `boolean` | `false` | Keeps the menu open if clicked or keyboard selected. |
 | `selected` | `selected` | `boolean` | `false` | Sets the item in the selected visual state when a submenu is opened. |
