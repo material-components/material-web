@@ -1,3 +1,4 @@
+web-types.json
 node_modules
 *.js
 !web-test-runner.config.js
