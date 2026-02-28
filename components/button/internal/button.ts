@@ -4,27 +4,27 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '../../focus/md-focus-ring.js';
-import '../../ripple/ripple.js';
+import '../../../focus/md-focus-ring.js';
+import '../../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
-import {ARIAMixinStrict} from '../../internal/aria/aria.js';
-import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
+import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
+import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
 import {
   FormSubmitter,
   setupFormSubmitter,
   type FormSubmitterType,
-} from '../../internal/controller/form-submitter.js';
+} from '../../../internal/controller/form-submitter.js';
 import {
   dispatchActivationClick,
   isActivationClick,
-} from '../../internal/events/form-label-activation.js';
+} from '../../../internal/events/form-label-activation.js';
 import {
   internals,
   mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+} from '../../../labs/behaviors/element-internals.js';
 
 // Separate variable needed for closure.
 const buttonBaseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
