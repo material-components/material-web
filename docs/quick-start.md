@@ -97,7 +97,7 @@ import '@material/web/checkbox/checkbox.js';
 
 ## Usage
 
-Use the `<component-name>` tag in HTML markup. Refer to the
+Use the `<component-name>` tag in HTML markup. Refer to tha
 [component docs](components/) for more guidance on using each component.
 
 [Playground](https://lit.dev/playground/#gist=37d28012c5ec6de30809bdf4a6e26cb6)<!-- {.external} -->
