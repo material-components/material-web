@@ -21,6 +21,10 @@ import {
 } from '../../internal/controller/form-submitter.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';
 import {
+  afterDispatch,
+  setupDispatchHooks,
+} from '../../internal/events/dispatch-hooks.js';
+import {
   internals,
   mixinElementInternals,
 } from '../../labs/behaviors/element-internals.js';
@@ -146,9 +150,33 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
 
   constructor() {
     super();
-    if (!isServer) {
-      this.addEventListener('click', this.handleClick.bind(this));
-    }
+    if (isServer) return;
+    setupDispatchHooks(this, 'click');
+    this.addEventListener('click', (event) => {
+      // If the button is soft-disabled or a disabled link, we need to
+      // explicitly prevent the click from propagating to other event listeners
+      // as well as prevent the default action. This is because the underlying
+      // `<button>` or `<a>` element is not actually `:disabled`.
+      if (this.softDisabled || (this.disabled && this.href)) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return;
+      }
+
+      afterDispatch(event, () => {
+        if (!this.toggle || this.disabled || event.defaultPrevented) {
+          return;
+        }
+
+        this.selected = !this.selected;
+        this.dispatchEvent(
+          new InputEvent('input', {bubbles: true, composed: true}),
+        );
+        // Bubbles but does not compose to mimic native browser <input> & <select>
+        // Additionally, native change event is not an InputEvent.
+        this.dispatchEvent(new Event('change', {bubbles: true}));
+      });
+    });
   }
 
   protected override willUpdate() {
@@ -180,8 +208,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
         aria-expanded="${(!this.href && ariaExpanded) || nothing}"
         aria-pressed="${ariaPressedValue}"
         aria-disabled=${(!this.href && this.softDisabled) || nothing}
-        ?disabled="${!this.href && this.disabled}"
-        @click="${this.handleClickOnChild}">
+        ?disabled="${!this.href && this.disabled}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}
         ${!this.selected ? this.renderIcon() : nothing}
@@ -246,42 +273,5 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   override connectedCallback() {
     this.flipIcon = isRtl(this, this.flipIconInRtl);
     super.connectedCallback();
-  }
-
-  /** Handles a click on this element. */
-  private handleClick(event: MouseEvent) {
-    // If the icon button is soft-disabled, we need to explicitly prevent the
-    // click from propagating to other event listeners as well as prevent the
-    // default action.
-    if (!this.href && this.softDisabled) {
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      return;
-    }
-  }
-
-  /**
-   * Handles a click on the child <div> or <button> element within this
-   * element's shadow DOM.
-   */
-  private async handleClickOnChild(event: Event) {
-    // Allow the event to propagate
-    await 0;
-    if (
-      !this.toggle ||
-      this.disabled ||
-      this.softDisabled ||
-      event.defaultPrevented
-    ) {
-      return;
-    }
-
-    this.selected = !this.selected;
-    this.dispatchEvent(
-      new InputEvent('input', {bubbles: true, composed: true}),
-    );
-    // Bubbles but does not compose to mimic native browser <input> & <select>
-    // Additionally, native change event is not an InputEvent.
-    this.dispatchEvent(new Event('change', {bubbles: true}));
   }
 }
