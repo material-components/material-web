@@ -10,38 +10,35 @@ import {LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {hasState, mixinCustomStateSet, toggleState} from './custom-state-set.js';
-import {mixinElementInternals} from './element-internals.js';
+import {internals, mixinElementInternals} from './element-internals.js';
 
 // A more reliable test would use `forceElementInternalsPolyfill()` from
 // `element-internals-polyfill`, but our GitHub test build doesn't
 // support it since the polyfill changes global types.
 
 /* A simplified version of element-internals-polyfill CustomStateSet. */
-class PolyfilledCustomStateSet extends Set<string> {
-  constructor(private readonly ref: HTMLElement) {
-    super();
+class PolyfilledCustomStateSet {
+  private readonly internalSet = new Set<string>();
+
+  constructor(private readonly ref: HTMLElement) {}
+
+  has(state: string): boolean {
+    return this.internalSet.has(state);
   }
 
-  override add(state: string) {
+  add(state: string): this {
     if (!/^--/.test(state) || typeof state !== 'string') {
       throw new DOMException(
         `Failed to execute 'add' on 'CustomStateSet': The specified value ${state} must start with '--'.`,
       );
     }
-    const result = super.add(state);
+    this.internalSet.add(state);
     this.ref.toggleAttribute(`state${state}`, true);
-    return result;
+    return this;
   }
 
-  override clear() {
-    for (const [entry] of this.entries()) {
-      this.delete(entry);
-    }
-    super.clear();
-  }
-
-  override delete(state: string) {
-    const result = super.delete(state);
+  delete(state: string): boolean {
+    const result = this.internalSet.delete(state);
     this.ref.toggleAttribute(`state${state}`, false);
     return result;
   }
@@ -53,16 +50,15 @@ class TestCustomStateSet extends mixinCustomStateSet(
 ) {
   static testWithPolyfill = false;
 
-  override attachInternals() {
-    const internals = super.attachInternals();
+  constructor() {
+    super();
     if (TestCustomStateSet.testWithPolyfill) {
-      Object.defineProperty(internals, 'states', {
+      Object.defineProperty(this[internals], 'states', {
         enumerable: true,
         configurable: true,
         value: new PolyfilledCustomStateSet(this),
       });
     }
-    return internals;
   }
 }
 
