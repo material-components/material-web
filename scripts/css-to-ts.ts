@@ -28,5 +28,6 @@ fs.writeFileSync(
 // Generated stylesheet for ${cssFilePath}.
 import {css} from 'lit';
 export const styles = css\`${cssContent}\`;
+export default styles.styleSheet!;
 `,
 );
