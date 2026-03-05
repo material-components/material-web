@@ -46,7 +46,8 @@ export interface FormAssociated {
   disabled: boolean;
 
   /**
-   * Gets the current form value of a component.
+   * Gets the current form value of a component. Defaults to the component's
+   * `value` attribute.
    *
    * @return The current form value.
    */
@@ -54,7 +55,7 @@ export interface FormAssociated {
 
   /**
    * Gets the current form state of a component. Defaults to the component's
-   * `[formValue]`.
+   * `[getFormValue]()` result.
    *
    * Use this when the state of an element is different from its value, such as
    * checkboxes (internal boolean state and a user string value).
@@ -72,25 +73,26 @@ export interface FormAssociated {
   formDisabledCallback(disabled: boolean): void;
 
   /**
-   * A callback for when the form requests to reset its value. Typically, the
-   * default value that is reset is represented in the attribute of an element.
+   * An optional callback for when the form requests to reset its value.
+   * Typically, the default value that is reset is represented in the attribute
+   * of an element.
    *
    * This means the attribute used for the value should not update as the value
    * changes. For example, a checkbox should not change its default `checked`
    * attribute when selected. Ensure form values do not reflect.
    */
-  formResetCallback(): void;
+  formResetCallback?(): void;
 
   /**
-   * A callback for when the form restores the state of a component. For
-   * example, when a page is reloaded or forms are autofilled.
+   * An optional callback for when the form restores the state of a component.
+   * For example, when a page is reloaded or forms are autofilled.
    *
    * @param state The state to restore, or null to reset the form control's
    *     value.
    * @param reason The reason state was restored, either `'restore'` or
    *   `'autocomplete'`.
    */
-  formStateRestoreCallback(
+  formStateRestoreCallback?(
     state: FormRestoreState | null,
     reason: FormRestoreReason,
   ): void;
@@ -238,7 +240,9 @@ export function mixinFormAssociated<
       return this.hasAttribute('disabled');
     }
     set disabled(disabled: boolean) {
-      this.toggleAttribute('disabled', disabled);
+      // Coerce `disabled` in `Boolean()` to ensure that setting to `null` or
+      // `undefined` sets the attribute to `false`.
+      this.toggleAttribute('disabled', Boolean(disabled));
       // We don't need to call `requestUpdate()` since it's called synchronously
       // in `attributeChangedCallback()`.
     }
@@ -282,9 +286,7 @@ export function mixinFormAssociated<
     }
 
     [getFormValue](): FormValue | null {
-      // Closure does not allow abstract symbol members, so a default
-      // implementation is needed.
-      throw new Error('Implement [getFormValue]');
+      return this.getAttribute('value');
     }
 
     [getFormState](): FormValue | null {
@@ -294,13 +296,6 @@ export function mixinFormAssociated<
     formDisabledCallback(disabled: boolean) {
       this.disabled = disabled;
     }
-
-    abstract formResetCallback(): void;
-
-    abstract formStateRestoreCallback(
-      state: FormRestoreState | null,
-      reason: FormRestoreReason,
-    ): void;
   }
 
   return FormAssociatedElement;
