@@ -14,6 +14,11 @@ import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
+import {
+  FormSubmitter,
+  setupFormSubmitter,
+  type FormSubmitterType,
+} from '../../internal/controller/form-submitter.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';
 import {
   afterDispatch,
@@ -23,13 +28,12 @@ import {
   internals,
   mixinElementInternals,
 } from '../../labs/behaviors/element-internals.js';
-import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
 
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
 // Separate variable needed for closure.
 const iconButtonBaseClass = mixinDelegatesAria(
-  mixinFormSubmitter(mixinElementInternals(LitElement)),
+  mixinElementInternals(LitElement),
 );
 
 /**
@@ -39,7 +43,11 @@ const iconButtonBaseClass = mixinDelegatesAria(
  * --composed
  * @fires change {Event} Dispatched when a toggle button toggles --bubbles
  */
-export class IconButton extends iconButtonBaseClass {
+export class IconButton extends iconButtonBaseClass implements FormSubmitter {
+  static {
+    setupFormSubmitter(IconButton);
+  }
+
   /** @nocollapse */
   static readonly formAssociated = true;
 
@@ -104,6 +112,25 @@ export class IconButton extends iconButtonBaseClass {
    * icon is provided.
    */
   @property({type: Boolean, reflect: true}) selected = false;
+
+  /**
+   * The default behavior of the button. May be "button", "reset", or "submit"
+   * (default).
+   */
+  @property() type: FormSubmitterType = 'submit';
+
+  /**
+   * The value added to a form with the button's name when the button submits a
+   * form.
+   */
+  @property({reflect: true}) value = '';
+
+  get name() {
+    return this.getAttribute('name') ?? '';
+  }
+  set name(name: string) {
+    this.setAttribute('name', name);
+  }
 
   /**
    * The associated form element with which this element's value will submit.

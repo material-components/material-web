@@ -7,12 +7,12 @@
 // import 'jasmine'; (google3-only)
 
 import {html, LitElement} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 
 import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {Environment} from '../../testing/environment.js';
 import {Harness} from '../../testing/harness.js';
-import {mixinFormSubmitter} from './form-submitter.js';
+import {FormSubmitterType, setupFormSubmitter} from './form-submitter.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,10 +21,16 @@ declare global {
 }
 
 @customElement('test-form-submitter-button')
-class FormSubmitterButton extends mixinFormSubmitter(
-  mixinElementInternals(LitElement),
-) {
+class FormSubmitterButton extends mixinElementInternals(LitElement) {
+  static {
+    setupFormSubmitter(FormSubmitterButton);
+  }
+
   static formAssociated = true;
+
+  type: FormSubmitterType = 'submit';
+  @property({reflect: true}) name = '';
+  value = '';
 }
 
 describe('setupFormSubmitter()', () => {
