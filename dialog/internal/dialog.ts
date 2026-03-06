@@ -266,7 +266,7 @@ export class Dialog extends dialogBaseClass {
 
   protected override render() {
     const scrollable =
-      this.open && !(this.isAtScrollTop && this.isAtScrollBottom);
+      !this.isOpening && this.open && !(this.isAtScrollTop && this.isAtScrollBottom);
     const classes = {
       'has-headline': this.hasHeadline,
       'has-actions': this.hasActions,
