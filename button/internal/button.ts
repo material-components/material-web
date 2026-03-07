@@ -8,7 +8,7 @@ import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing} from 'lit';
-import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
@@ -17,10 +17,6 @@ import {
   setupFormSubmitter,
   type FormSubmitterType,
 } from '../../internal/controller/form-submitter.js';
-import {
-  dispatchActivationClick,
-  isActivationClick,
-} from '../../internal/events/form-label-activation.js';
 import {
   internals,
   mixinElementInternals,
@@ -121,24 +117,23 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
     return this[internals].form;
   }
 
-  @query('.button') private readonly buttonElement!: HTMLElement | null;
-
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
 
   constructor() {
     super();
-    if (!isServer) {
-      this.addEventListener('click', this.handleClick.bind(this));
-    }
-  }
-
-  override focus() {
-    this.buttonElement?.focus();
-  }
-
-  override blur() {
-    this.buttonElement?.blur();
+    if (isServer) return;
+    this.addEventListener('click', (event) => {
+      // If the button is soft-disabled or a disabled link, we need to
+      // explicitly prevent the click from propagating to other event listeners
+      // as well as prevent the default action. This is because the underlying
+      // `<button>` or `<a>` element is not actually `:disabled`.
+      if (this.softDisabled || (this.disabled && this.href)) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return;
+      }
+    });
   }
 
   protected override render() {
@@ -209,23 +204,6 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       <span class="label"><slot></slot></span>
       ${this.trailingIcon ? icon : nothing}
     `;
-  }
-
-  private handleClick(event: MouseEvent) {
-    // If the button is soft-disabled or a disabled link, we need to explicitly
-    // prevent the click from propagating to other event listeners as well as
-    // prevent the default action.
-    if (this.softDisabled || (this.disabled && this.href)) {
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      return;
-    }
-
-    if (!isActivationClick(event) || !this.buttonElement) {
-      return;
-    }
-    this.focus();
-    dispatchActivationClick(this.buttonElement);
   }
 
   private handleSlotChange() {
