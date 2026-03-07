@@ -154,6 +154,15 @@ export function setupDispatchHooks(
         // Re-dispatch the event. We can't reuse `redispatchEvent()` since we
         // need to add the hooks to the copy before it's dispatched.
         isRedispatching = true;
+        const composedPathIncludesAnchor = event
+          .composedPath()
+          .some((el) => (el as Partial<HTMLElement>)?.matches?.('a'));
+        if (event.type === 'click' && composedPathIncludesAnchor) {
+          // For legacy reasons, synthetic click events dispatching on
+          // HTMLAnchorElement will trigger link behavior. Prevent this since
+          // we will dispatch a copy of the same click event.
+          event.preventDefault();
+        }
         const dispatched = event.composedPath()[0].dispatchEvent(eventCopy);
         isRedispatching = false;
         if (!dispatched) {
