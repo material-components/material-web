@@ -39,6 +39,21 @@ describe('dispatch hooks', () => {
         .withContext('element.addEventListener')
         .toHaveBeenCalledTimes(3);
     });
+
+    it('triggers internal event listeners when a composed element is the source of the event', () => {
+      const shadowRoot = element.attachShadow({mode: 'open'});
+      const composedElement = document.createElement('button');
+      shadowRoot.appendChild(composedElement);
+      const innerClickListener = jasmine.createSpy('innerClickListener');
+      composedElement.addEventListener('click', innerClickListener);
+
+      setupDispatchHooks(element, 'click');
+      composedElement.click();
+
+      expect(innerClickListener)
+        .withContext('innerClickListener')
+        .toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('afterDispatch()', () => {

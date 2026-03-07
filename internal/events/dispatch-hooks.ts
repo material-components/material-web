@@ -154,7 +154,7 @@ export function setupDispatchHooks(
         // Re-dispatch the event. We can't reuse `redispatchEvent()` since we
         // need to add the hooks to the copy before it's dispatched.
         isRedispatching = true;
-        const dispatched = element.dispatchEvent(eventCopy);
+        const dispatched = event.composedPath()[0].dispatchEvent(eventCopy);
         isRedispatching = false;
         if (!dispatched) {
           event.preventDefault();

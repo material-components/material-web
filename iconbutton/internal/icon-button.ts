@@ -267,8 +267,9 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
 
   private renderRipple() {
     const isRippleDisabled = !this.href && (this.disabled || this.softDisabled);
+    // TODO(b/310046938): use the same id for both elements
     return html`<md-ripple
-      .control=${this}
+      for=${this.href ? 'link' : nothing}
       ?disabled="${isRippleDisabled}"></md-ripple>`;
   }
 
