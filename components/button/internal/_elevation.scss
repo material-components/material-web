@@ -7,8 +7,8 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../elevation/elevation';
-@use '../../tokens';
+@use '../../../elevation/elevation';
+@use '../../../tokens';
 // go/keep-sorted end
 
 $_md-sys-motion: tokens.md-sys-motion-values();
