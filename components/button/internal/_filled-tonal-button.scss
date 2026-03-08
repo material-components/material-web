@@ -8,7 +8,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use '../../tokens';
+@use '../../../tokens';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
