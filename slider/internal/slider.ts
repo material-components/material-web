@@ -365,7 +365,7 @@ export class Slider extends sliderBaseClass {
       value: this.renderValueEnd,
       ariaLabel: this.renderAriaLabelEnd,
       ariaValueText: this.renderAriaValueTextEnd,
-      ariaMin: this.range ? this.valueStart ?? this.min : this.min,
+      ariaMin: this.range ? (this.valueStart ?? this.min) : this.min,
       ariaMax: this.max,
     };
 
