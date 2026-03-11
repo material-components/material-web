@@ -36,6 +36,7 @@
   :host {
     border-radius: map.get($tokens, 'container-shape');
     display: flex;
+    gap: 16px;
 
     @include ripple.theme(
       (
@@ -78,6 +79,7 @@
     border-radius: inherit;
     display: flex;
     flex: 1;
+    gap: inherit;
     max-width: inherit;
     min-width: inherit;
     outline: none;
@@ -110,6 +112,7 @@
     padding-bottom: map.get($tokens, 'bottom-space');
     padding-inline-start: map.get($tokens, 'leading-space');
     padding-inline-end: map.get($tokens, 'trailing-space');
+    gap: inherit;
   }
 
   md-item[multiline] {
