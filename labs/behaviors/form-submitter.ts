@@ -39,7 +39,7 @@ export interface FormSubmitter {
    * - reset: The element resets the form.
    * - button: The element does nothing.
    */
-  type: FormSubmitterType;
+  type: string;
 
   /**
    * The HTML name to use in form submission. When combined with a `value`, the
@@ -77,7 +77,7 @@ export function mixinFormSubmitter<
   T extends MixinBase<LitElement & WithElementInternals>,
 >(base: T): MixinReturn<T, FormSubmitter> {
   abstract class FormSubmitterElement extends base implements FormSubmitter {
-    @property() type: FormSubmitterType = 'submit';
+    @property() type = 'submit';
     @property({reflect: true}) value = '';
 
     // Name attribute must reflect synchronously for form integration.
