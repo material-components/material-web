@@ -732,9 +732,11 @@ export abstract class Select extends selectBaseClass {
     selectedOptions.forEach(([option]) => {
       if (item !== option) {
         option.selected = false;
+        option.tabIndex = -1;
       }
     });
     item.selected = true;
+    item.tabIndex = 0;
 
     return this.updateValueAndDisplayText();
   }

@@ -52,6 +52,101 @@ describe('<md-outlined-select>', () => {
     expect(changed).toBeTrue();
   });
 
+  it('typeahead selects an option', async () => {
+    let changed = false;
+    render(
+      html` <md-outlined-select
+        @change=${() => {
+          changed = true;
+        }}>
+        <md-select-option
+          value="apple"
+          typeahead-text="apple"></md-select-option>
+        <md-select-option
+          value="banana"
+          typeahead-text="banana"></md-select-option>
+      </md-outlined-select>`,
+      root,
+    );
+    const selectEl = root.querySelector('md-outlined-select')!;
+    await selectEl.updateComplete;
+
+    const harness = new SelectHarness(selectEl);
+    await harness.focusWithKeyboard();
+    await harness.keypress('b');
+    await selectEl.updateComplete;
+
+    expect(selectEl.value).withContext('value after typeahead').toBe('banana');
+    expect(changed).withContext('option changed').toBeTrue();
+  });
+
+  it('typeahead with no matching option does not change selected option', async () => {
+    let changed = false;
+    render(
+      html` <md-outlined-select
+        @change=${() => {
+          changed = true;
+        }}>
+        <md-select-option
+          value="apple"
+          typeahead-text="apple"
+          selected></md-select-option>
+        <md-select-option
+          value="banana"
+          typeahead-text="banana"></md-select-option>
+      </md-outlined-select>`,
+      root,
+    );
+    const selectEl = root.querySelector('md-outlined-select')!;
+    await selectEl.updateComplete;
+
+    const harness = new SelectHarness(selectEl);
+    await harness.focusWithKeyboard();
+    await harness.keypress('z');
+    await selectEl.updateComplete;
+
+    expect(selectEl.value)
+      .withContext('value after non-matching typeahead keypress')
+      .toBe('apple');
+    expect(changed).withContext('did not change').toBeFalse();
+  });
+
+  it('clicking an option with mouse and then typeahead with no matching option does not change the selected option', async () => {
+    render(
+      html` <md-outlined-select>
+        <md-select-option
+          value="apple"
+          typeahead-text="apple"
+          selected></md-select-option>
+        <md-select-option
+          value="banana"
+          typeahead-text="banana"></md-select-option>
+      </md-outlined-select>`,
+      root,
+    );
+    const selectEl = root.querySelector('md-outlined-select')!;
+    await selectEl.updateComplete;
+
+    // Open menu to click an option
+    const harness = new SelectHarness(selectEl);
+    await harness.clickWithMouse();
+    await selectEl.updateComplete; // wait for menu to open
+
+    await harness.clickOption(1);
+    expect(selectEl.value)
+      .withContext('value after clicking option')
+      .toBe('banana');
+
+    await harness.keypress('z');
+    await selectEl.updateComplete;
+
+    expect(selectEl.value)
+      .withContext(
+        'value after non-matching typeahead keypress stays the same (banana)',
+      )
+      .toBe('banana');
+  });
+
   describe('forms', () => {
     createFormTests({
       queryControl: (root) => root.querySelector('md-outlined-select'),
