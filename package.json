@@ -35,6 +35,7 @@
     "update-docs:sass-ext": "wireit",
     "update-size": "wireit"
   },
+  "customElement": "custom-elements.json",
   "type": "module",
   "files": [
     "**/*.js",
@@ -43,6 +44,8 @@
     "**/*.scss",
     "**/*.css",
     "**/*.css.map",
+    "custom-elements.json",
+    "web-types.json",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
@@ -54,15 +57,14 @@
     "testing/harness.{js,js.map,d.ts}",
     "testing/transform-pseudo-classes.{js,js.map,d.ts}"
   ],
-  "workspaces": [
-    "catalog"
-  ],
+  "workspaces": ["catalog"],
   "dependencies": {
     "lit": "^2.8.0 || ^3.0.0",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@lit-labs/analyzer": "^0.12.1",
+    "@lit-labs/analyzer": "npm:@maicol07/lit-labs-analyzer",
+    "@lit-labs/gen-manifest": "npm:@maicol07/lit-labs-gen-manifest",
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
@@ -70,6 +72,8 @@
     "@types/node": "^24.10.1",
     "@web/test-runner": "^0.18.2",
     "@web/test-runner-playwright": "^0.11.0",
+    "custom-element-jet-brains-integration": "^1.6.2",
+    "custom-elements-manifest-inheritance": "^1.1.1",
     "element-internals-polyfill": "^1.3.12",
     "jasmine": "^4.5.0",
     "playwright": "^1.49.0",
@@ -82,9 +86,7 @@
   },
   "wireit": {
     "build": {
-      "dependencies": [
-        "build:ts"
-      ]
+      "dependencies": ["build:ts"]
     },
     "build:ts": {
       "command": "tsc --pretty",
@@ -108,51 +110,27 @@
         "!scripts/"
       ],
       "clean": "if-file-deleted",
-      "dependencies": [
-        "build:css-to-ts"
-      ]
+      "dependencies": ["build:css-to-ts"]
     },
     "build:css-to-ts": {
       "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*-styles.css' -print | xargs -L1 node scripts/css-to-ts.js",
-      "files": [
-        "**/*-styles.css",
-        "!catalog/"
-      ],
-      "output": [
-        "**/*-styles.ts",
-        "!catalog/"
-      ],
-      "dependencies": [
-        "build:scripts",
-        "build:sass"
-      ]
+      "files": ["**/*-styles.css", "!catalog/"],
+      "output": ["**/*-styles.ts", "!catalog/"],
+      "dependencies": ["build:scripts", "build:sass"]
     },
     "build:sass": {
       "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
-      "files": [
-        "**/*.scss",
-        "!catalog/"
-      ],
-      "output": [
-        "**/*.css",
-        "**/*.css.map",
-        "!catalog/"
-      ]
+      "files": ["**/*.scss", "!catalog/"],
+      "output": ["**/*.css", "**/*.css.map", "!catalog/"]
     },
     "test": {
       "command": "wtr",
-      "dependencies": [
-        "build:ts"
-      ],
-      "files": [
-        "web-test-runner.config.js"
-      ],
+      "dependencies": ["build:ts"],
+      "files": ["web-test-runner.config.js"],
       "output": []
     },
     "build:catalog": {
-      "dependencies": [
-        "./catalog:build:prod"
-      ]
+      "dependencies": ["./catalog:build:prod"]
     },
     "build:scripts": {
       "command": "tsc -b scripts/tsconfig.json --pretty",
@@ -187,10 +165,8 @@
         "!scripts/",
         "scripts/analyzer/update-docs.js"
       ],
-      "output": [],
-      "dependencies": [
-        "build:scripts"
-      ]
+      "output": ["custom-elements.json", "web-types.json"],
+      "dependencies": ["build:scripts"]
     },
     "update-docs:sass-ext": {
       "command": "node scripts/update-sass-ext-docs.js --input=./sass/ext/ --output=./docs/sass/sass-ext.md",
@@ -207,10 +183,8 @@
     },
     "update-size": {
       "command": "node scripts/size/update-size.js",
-      "dependencies": [
-        "build:scripts",
-        "build"
-      ]
+      "dependencies": ["build:scripts", "build"]
     }
-  }
+  },
+  "web-types": "./web-types.json"
 }
