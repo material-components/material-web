@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.5.0](https://github.com/material-components/material-web/compare/v2.4.1...v2.5.0) (2026-04-02)
+
+
+### Features
+
+* export CSSStyleSheet as default from CSSResult-in-js files ([1cbfc75](https://github.com/material-components/material-web/commit/1cbfc757e98e075a3759260b3d9f5107a714db2d))
+* **labs:** change form-submitter to a behavior mixin ([5a9f7da](https://github.com/material-components/material-web/commit/5a9f7da562446f5e628d29fdc83490113103310e))
+* **labs:** change form-submitter to a behavior mixin ([4142a69](https://github.com/material-components/material-web/commit/4142a697caf4d57b4c99ee568b74081cb8edf210))
+* **list,menu:** support styling `gap` on items ([3302730](https://github.com/material-components/material-web/commit/3302730ae75bef2fb89c53f2d1c866ce034089e8))
+* **sass-ext:** add `@material/web/sass/ext` helper utilities ([dd87fd2](https://github.com/material-components/material-web/commit/dd87fd2117e46b524625c929d4c0ea8d0097b542))
+
+
+### Bug Fixes
+
+* **button,iconbutton:** use form-associated mixin behavior ([082faad](https://github.com/material-components/material-web/commit/082faad915fb4ded0c151ca6546027fa7f37c616))
+* **field:** prevent NaN transforms when element is hidden ([590ae99](https://github.com/material-components/material-web/commit/590ae99ff77c5296258b322dd98351c7e2be20f5))
+* **iconbutton:** use event dispatch hooks for toggle clicks ([9538d26](https://github.com/material-components/material-web/commit/9538d26d86f997274b52606c10402c480f64637d))
+* **select:** stale tabindex caused incorrect typeahead value changes ([e16e2f6](https://github.com/material-components/material-web/commit/e16e2f6c5e18aaa4d8ef35e5a385b6748be85b78)), closes [#5913](https://github.com/material-components/material-web/issues/5913)
+* **slider:** prevent internal selection and a frozen knob. ([46fc0ea](https://github.com/material-components/material-web/commit/46fc0ead2f66a3cadb6d3c00f4e62065e0d2d632))
+* **tokens:** add expressive token versions ([9779099](https://github.com/material-components/material-web/commit/977909925e484fcfefae74a5babf70c996d6c656))
+* **tokens:** add readme for the `@material/web/tokens/versions` folder ([a7ba471](https://github.com/material-components/material-web/commit/a7ba471a627b03b0849682b1301bc4c5474baba7))
+
+
+### Reverts
+
+* "feat(labs): change form-submitter to a behavior mixin" ([38724b9](https://github.com/material-components/material-web/commit/38724b9070301bf725db7b45c9cba0898c657549))
+
 ## [2.4.1](https://github.com/material-components/material-web/compare/v2.4.0...v2.4.1) (2025-10-27)
 
 
