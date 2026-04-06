@@ -113,6 +113,27 @@
       ]
     },
     "build:css-to-ts": {
+      "dependencies": [
+        "build:css-to-ts:cssresult",
+        "build:css-to-ts:styles"
+      ]
+    },
+    "build:css-to-ts:cssresult": {
+      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs -L1 node scripts/css-to-ts.js --suffix=.cssresult",
+      "files": [
+        "**/*.css",
+        "!catalog/"
+      ],
+      "output": [
+        "**/*.cssresult.ts",
+        "!catalog/"
+      ],
+      "dependencies": [
+        "build:scripts",
+        "build:sass"
+      ]
+    },
+    "build:css-to-ts:styles": {
       "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*-styles.css' -print | xargs -L1 node scripts/css-to-ts.js",
       "files": [
         "**/*-styles.css",
