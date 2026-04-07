@@ -1,0 +1,62 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@property --md-icon-font {
+  syntax: '<string>#';
+  inherits: true;
+  initial-value: 'Material Symbols';
+}
+@property --md-icon-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: currentColor;
+}
+@property --md-icon-size {
+  syntax: '<length-percentage>';
+  inherits: true;
+  initial-value: 24px;
+}
+@property --md-icon-opsz {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 24;
+}
+@property --md-icon-wght {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 400;
+}
+@property --md-icon-fill {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+@property --md-icon-grad {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer md.sys.icon {
+  .md-icon {
+    display: inline-flex;
+    place-items: center;
+    place-content: center;
+    overflow: hidden;
+    color: var(--md-icon-color);
+    fill: var(--md-icon-color);
+    aspect-ratio: 1;
+    min-width: var(--md-icon-size);
+    max-width: var(--md-icon-size);
+    font-size: var(--md-icon-size);
+    font-family: var(--md-icon-font);
+    font-variation-settings:
+      'opsz' var(--md-icon-opsz),
+      'wght' var(--md-icon-wght),
+      'FILL' var(--md-icon-fill),
+      'GRAD' var(--md-icon-grad);
+    -webkit-font-smoothing: antialiased;
+  }
+}

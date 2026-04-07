@@ -1,0 +1,80 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use 'sass:meta';
+@use '../../../../../sass/ext/map_ext';
+@use '../../../../../tokens/versions/latest/sass/md-ref-typeface';
+@use '../../../../../tokens/versions/latest/sass/md-sys-typescale';
+@use '../../../../../tokens/versions/latest/sass/md-sys-typescale-meta';
+// go/keep-sorted end
+
+@mixin emit-custom-properties(
+  $typescale-vars: meta.module-variables(md-sys-typescale),
+  $typescale-meta: meta.module-variables(md-sys-typescale-meta),
+  $typeface-vars:
+    map.merge(
+      meta.module-variables(md-ref-typeface),
+      (
+        'plain': (
+          'Roboto Flex',
+          'Roboto',
+          'Noto Sans',
+          system-ui,
+          sans-serif,
+        ),
+        'brand': var(--md-ref-typeface-plain),
+      )
+    )
+) {
+  --md-ref-typeface-brand: #{map_ext.get-strict($typeface-vars, 'brand')};
+  --md-ref-typeface-plain: #{map_ext.get-strict($typeface-vars, 'plain')};
+  --md-ref-typeface-weight-regular: #{map_ext.get-strict(
+      $typeface-vars,
+      'weight-regular'
+    )};
+  --md-ref-typeface-weight-medium: #{map_ext.get-strict(
+      $typeface-vars,
+      'weight-medium'
+    )};
+  --md-ref-typeface-weight-bold: #{map_ext.get-strict(
+      $typeface-vars,
+      'weight-bold'
+    )};
+
+  $scales: ('label', 'body', 'title', 'headline', 'display');
+  $sizes: (
+    'small': 'sm',
+    'medium': 'md',
+    'large': 'lg',
+  );
+
+  @each $scale in $scales {
+    @each $long-size, $short-size in $sizes {
+      $typescale: '#{$scale}-#{$long-size}';
+      $weight: map_ext.get-strict(
+        $typescale-meta,
+        '#{$typescale}-weight--resolved'
+      );
+      $size: map_ext.get-strict($typescale-vars, '#{$typescale}-size');
+      $line-height: map_ext.get-strict(
+        $typescale-vars,
+        '#{$typescale}-line-height'
+      );
+      $font: map_ext.get-strict(
+        $typescale-meta,
+        '#{$typescale}-font--resolved'
+      );
+      $tracking: map_ext.get-strict($typescale-vars, '#{$typescale}-tracking');
+
+      --md-sys-typescale-#{$scale}-#{$short-size}: #{$weight}
+        #{$size} /
+        #{$line-height}
+        #{$font};
+      --md-sys-typescale-#{$scale}-#{$short-size}-tracking: #{$tracking};
+    }
+  }
+}

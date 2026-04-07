@@ -1,0 +1,35 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use '../../../../tokens/versions/latest/sass' as tokens;
+// go/keep-sorted end
+
+@layer md.sys.motion {
+  :root {
+    --md-sys-motion-easing-standard: #{tokens.$md-sys-motion--easing-standard};
+    --md-sys-motion-easing-standard-accelerate: #{tokens.$md-sys-motion--easing-standard-accelerate};
+    --md-sys-motion-easing-standard-decelerate: #{tokens.$md-sys-motion--easing-standard-decelerate};
+    --md-sys-motion-easing-emphasized: #{tokens.$md-sys-motion--easing-emphasized};
+    --md-sys-motion-easing-emphasized-accelerate: #{tokens.$md-sys-motion--easing-emphasized-accelerate};
+    --md-sys-motion-easing-emphasized-decelerate: #{tokens.$md-sys-motion--easing-emphasized-decelerate};
+    --md-sys-motion-duration-short1: #{tokens.$md-sys-motion--duration-short1};
+    --md-sys-motion-duration-short2: #{tokens.$md-sys-motion--duration-short2};
+    --md-sys-motion-duration-short3: #{tokens.$md-sys-motion--duration-short3};
+    --md-sys-motion-duration-short4: #{tokens.$md-sys-motion--duration-short4};
+    --md-sys-motion-duration-medium1: #{tokens.$md-sys-motion--duration-medium1};
+    --md-sys-motion-duration-medium2: #{tokens.$md-sys-motion--duration-medium2};
+    --md-sys-motion-duration-medium3: #{tokens.$md-sys-motion--duration-medium3};
+    --md-sys-motion-duration-medium4: #{tokens.$md-sys-motion--duration-medium4};
+    --md-sys-motion-duration-long1: #{tokens.$md-sys-motion--duration-long1};
+    --md-sys-motion-duration-long2: #{tokens.$md-sys-motion--duration-long2};
+    --md-sys-motion-duration-long3: #{tokens.$md-sys-motion--duration-long3};
+    --md-sys-motion-duration-long4: #{tokens.$md-sys-motion--duration-long4};
+    --md-sys-motion-duration-extra-long1: #{tokens.$md-sys-motion--duration-extra-long1};
+    --md-sys-motion-duration-extra-long2: #{tokens.$md-sys-motion--duration-extra-long2};
+    --md-sys-motion-duration-extra-long3: #{tokens.$md-sys-motion--duration-extra-long3};
+    --md-sys-motion-duration-extra-long4: #{tokens.$md-sys-motion--duration-extra-long4};
+  }
+}

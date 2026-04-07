@@ -5,6 +5,7 @@ node_modules
 *.css
 *.cssresult.ts
 *-styles.ts
+!adopt-styles.ts
 tokens/versions/**/*-meta.scss
 *.map
 *.d.ts

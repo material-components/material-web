@@ -1,0 +1,15 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'internal/color-tokens';
+// go/keep-sorted end
+
+@layer md.sys.color {
+  :root {
+    color-scheme: light dark;
+    @include color-tokens.emit-custom-properties;
+  }
+}

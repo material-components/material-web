@@ -93,6 +93,7 @@
         "**/*.ts",
         "!**/*.d.ts",
         "!**/*-styles.ts",
+        "**/adopt-styles.ts",
         "!catalog/",
         "!scripts/"
       ],
@@ -141,6 +142,7 @@
       ],
       "output": [
         "**/*-styles.ts",
+        "!**/adopt-styles.ts",
         "!catalog/"
       ],
       "dependencies": [
@@ -192,8 +194,7 @@
       "files": [
         "scripts/tsconfig.json",
         "scripts/**/*.ts",
-        "!**/*.d.ts",
-        "!**/*-styles.ts"
+        "!**/*.d.ts"
       ],
       "output": [
         "scripts/.tsbuildinfo",
