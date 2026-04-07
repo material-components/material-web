@@ -65,6 +65,7 @@ $supported-tokens: (
   'error-leading-icon-color',
   'error-supporting-text-color',
   'error-trailing-icon-color',
+  'field-sizing',
   'focus-active-indicator-color',
   'focus-active-indicator-height',
   'focus-caret-color',
@@ -157,6 +158,7 @@ $_default: (
         if($exclude-hardcoded-values, null, 2px),
       'with-label-top-space': if($exclude-hardcoded-values, null, 8px),
       'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
+      'field-sizing': if($exclude-hardcoded-values, null, fixed),
       // TODO(b/270705687): remove when focus-caret-color token added
       'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
       'with-leading-icon-leading-space':

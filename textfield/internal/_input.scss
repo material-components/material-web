@@ -18,6 +18,7 @@
 
   .input {
     caret-color: var(--_caret-color);
+    field-sizing: var(--_field-sizing);
     // remove extra height added by horizontal scrollbars
     overflow-x: hidden;
     text-align: inherit;

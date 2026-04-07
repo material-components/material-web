@@ -57,6 +57,7 @@ $supported-tokens: (
   'error-outline-color',
   'error-supporting-text-color',
   'error-trailing-icon-color',
+  'field-sizing',
   'focus-caret-color',
   'focus-input-text-color',
   'focus-label-text-color',
@@ -144,6 +145,7 @@ $_default: (
         if($exclude-hardcoded-values, null, 2px),
       'input-text-suffix-leading-space':
         if($exclude-hardcoded-values, null, 2px),
+      'field-sizing': if($exclude-hardcoded-values, null, fixed),
       // TODO(b/270705687): remove when focus-caret-color token added
       'focus-caret-color': map.get($deps, 'md-sys-color', 'primary'),
       'with-leading-icon-leading-space':
