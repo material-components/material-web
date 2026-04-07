@@ -158,7 +158,19 @@
         "**/*.css",
         "**/*.css.map",
         "!catalog/"
+      ],
+      "dependencies": [
+        "build:sass:generate"
       ]
+    },
+    "build:sass:generate": {
+      "command": "find tokens/versions/ -type f -name '_md-*.scss' ! -name '*-meta.scss' -print0 | xargs -0 node scripts/generate-sass-token-meta.js",
+      "files": [
+        "tokens/versions/**/_md-*.scss",
+        "!tokens/versions/**/*-meta.scss"
+      ],
+      "output": ["tokens/versions/**/*-meta.scss"],
+      "dependencies": ["build:scripts"]
     },
     "test": {
       "command": "wtr",
