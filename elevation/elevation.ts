@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Elevation} from './internal/elevation.js';
-import {styles} from './internal/elevation-styles.js';
+import {styles} from './internal/elevation-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
