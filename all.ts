@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import 'test'; // github-only
+// import 'other-test'; // google3-only
+
 /**
  * @fileoverview A convenience bundle import that includes all components.
  *
