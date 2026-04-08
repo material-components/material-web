@@ -48,26 +48,11 @@ export function adoptStyles(
   if (!owner) return;
 
   styles = Array.isArray(styles) ? styles : [styles];
-  const isCSSResult = (style: CSSResultOrNative): style is CSSResult =>
-    'styleSheet' in style;
   const stylesheets: CSSStyleSheet[] = styles.map((cssResultOrNative) =>
     isCSSResult(cssResultOrNative)
       ? cssResultOrNative.styleSheet!
       : cssResultOrNative,
   );
-
-  const adopt = (
-    node: DocumentOrShadowRoot | Node | null,
-    stylesheets: CSSStyleSheet[],
-  ): node is DocumentOrShadowRoot => {
-    if (node && 'adoptedStyleSheets' in node) {
-      node.adoptedStyleSheets = Array.from(
-        new Set([...node.adoptedStyleSheets, ...stylesheets]),
-      );
-      return true;
-    }
-    return false;
-  };
 
   if (adopt(owner, stylesheets)) {
     // Styles adopted directly on the owner document or shadow root.
@@ -78,4 +63,21 @@ export function adoptStyles(
   // shadow root, if present.
   adopt(owner.ownerDocument, stylesheets);
   adopt(owner.getRootNode(), stylesheets);
+}
+
+function adopt(
+  node: DocumentOrShadowRoot | Node | null,
+  stylesheets: CSSStyleSheet[],
+): node is DocumentOrShadowRoot {
+  if (node && 'adoptedStyleSheets' in node) {
+    node.adoptedStyleSheets = Array.from(
+      new Set([...node.adoptedStyleSheets, ...stylesheets]),
+    );
+    return true;
+  }
+  return false;
+}
+
+function isCSSResult(style: CSSResultOrNative): style is CSSResult {
+  return 'styleSheet' in style;
 }
