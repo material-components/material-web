@@ -1,0 +1,192 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --container-color: transparent;
+  --container-height: auto;
+  --container-elevation: var(--md-sys-elevation-shadow-0);
+  --container-shape: calc(var(--container-height) / 2);
+  --outline-width: 0;
+  --outline-color: transparent;
+  --icon-label-space: 8px;
+  --icon-color: currentColor;
+  --icon-size: 20px;
+  --label-text: var(--md-sys-typescale-label-lg);
+  --label-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+  --label-text-color: currentColor;
+  --leading-space: 0;
+  --state-layer-color: transparent;
+  --trailing-space: 0;
+}
+
+@mixin selected {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin square {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin selected-square {
+  --container-shape: calc(var(--container-height) / 2);
+}
+
+@mixin pressed {
+  --container-shape: var(--md-sys-shape-corner-sm);
+}
+
+@mixin filled {
+  --container-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-on-primary);
+  --label-text-color: var(--md-sys-color-on-primary);
+}
+
+@mixin filled-unselected {
+  --container-color: var(--md-sys-color-surface-container);
+  --icon-color: var(--md-sys-color-on-surface-variant);
+  --label-text-color: var(--md-sys-color-on-surface-variant);
+}
+
+@mixin filled-selected {
+  --container-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-on-primary);
+  --label-text-color: var(--md-sys-color-on-primary);
+}
+
+@mixin elevated {
+  --container-color: var(--md-sys-color-surface-container-low);
+  --container-elevation: var(--md-sys-elevation-shadow-1);
+  --icon-color: var(--md-sys-color-primary);
+  --label-text-color: var(--md-sys-color-primary);
+}
+
+@mixin elevated-selected {
+  --container-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-on-primary);
+  --label-text-color: var(--md-sys-color-on-primary);
+}
+
+@mixin tonal {
+  --container-color: var(--md-sys-color-secondary-container);
+  --icon-color: var(--md-sys-color-on-secondary-container);
+  --label-text-color: var(--md-sys-color-on-secondary-container);
+}
+
+@mixin tonal-selected {
+  --container-color: var(--md-sys-color-secondary);
+  --icon-color: var(--md-sys-color-on-secondary);
+  --label-text-color: var(--md-sys-color-on-secondary);
+}
+
+@mixin outlined {
+  --icon-color: var(--md-sys-color-on-surface-variant);
+  --label-text-color: var(--md-sys-color-on-surface-variant);
+  --outline-color: var(--md-sys-color-outline-variant);
+  --outline-width: 1px;
+}
+
+@mixin outlined-lg {
+  --outline-width: 2px;
+}
+
+@mixin outlined-xl {
+  --outline-width: 3px;
+}
+
+@mixin outlined-selected {
+  --container-color: var(--md-sys-color-inverse-surface);
+  --icon-color: var(--md-sys-color-inverse-on-surface);
+  --label-text-color: var(--md-sys-color-inverse-on-surface);
+}
+
+@mixin text {
+  --label-text-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-primary);
+  --state-layer-color: var(--md-sys-color-primary);
+}
+
+@mixin xs {
+  --container-height: 32px;
+  --leading-space: 12px;
+  --trailing-space: 12px;
+}
+
+@mixin sm {
+  --container-height: 40px;
+  --leading-space: 16px;
+  --trailing-space: 16px;
+}
+
+@mixin md {
+  --container-height: 56px;
+  --leading-space: 24px;
+  --trailing-space: 24px;
+  --icon-size: 24px;
+  --label-text: var(--md-sys-typescale-title-md);
+  --label-text-tracking: var(--md-sys-typescale-title-md-tracking);
+}
+
+@mixin md-selected {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin md-square {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin md-pressed {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin lg {
+  --container-height: 96px;
+  --icon-label-space: 12px;
+  --icon-size: 32px;
+  --leading-space: 48px;
+  --trailing-space: 48px;
+  --label-text: var(--md-sys-typescale-headline-sm);
+  --label-text-tracking: var(--md-sys-typescale-headline-sm-tracking);
+}
+
+@mixin lg-selected {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin lg-square {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin lg-pressed {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin xl {
+  --container-height: 136px;
+  --icon-label-space: 16px;
+  --icon-size: 40px;
+  --leading-space: 64px;
+  --trailing-space: 64px;
+  --label-text: var(--md-sys-typescale-headline-lg);
+  --label-text-tracking: var(--md-sys-typescale-headline-lg-tracking);
+}
+
+@mixin xl-selected {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin xl-square {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin xl-pressed {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin disabled {
+  --container-color: hsl(from var(--md-sys-color-on-surface) h s l / 10%);
+  --container-elevation: var(--md-sys-elevation-shadow-0);
+  --icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --label-text-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+}
