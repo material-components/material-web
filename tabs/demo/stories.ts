@@ -12,7 +12,7 @@ import '@material/web/tabs/tabs.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {MdTabs} from '@material/web/tabs/tabs.js';
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.cssresult.js';
 import {css, html, nothing} from 'lit';
 import {ref} from 'lit/directives/ref.js';
 
