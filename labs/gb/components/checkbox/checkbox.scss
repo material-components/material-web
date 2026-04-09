@@ -1,0 +1,105 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'checkbox-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
+@layer md.comp.checkbox {
+  .checkbox {
+    & {
+      @include checkbox-tokens.root;
+    }
+
+    &:is(:hover, .hover) {
+      @include checkbox-tokens.hovered;
+    }
+
+    &:is(:focus-within, .focus) {
+      @include checkbox-tokens.focused;
+    }
+
+    &:is(:active, .active) {
+      @include checkbox-tokens.pressed;
+    }
+
+    &:is(:checked, .checked, :indeterminate, .indeterminate) {
+      @include checkbox-tokens.selected;
+
+      &:where(:hover, .hover) {
+        @include checkbox-tokens.selected-hovered;
+      }
+
+      &:where(:active, .active) {
+        @include checkbox-tokens.selected-pressed;
+      }
+    }
+
+    &:is(:invalid, .invalid) {
+      @include checkbox-tokens.error;
+
+      &:where(:checked, .checked, :indeterminate, .indeterminate) {
+        @include checkbox-tokens.error-selected;
+      }
+    }
+
+    &:is(:disabled, .disabled) {
+      @include checkbox-tokens.disabled;
+
+      &:where(:checked, .checked, :indeterminate, .indeterminate) {
+        @include checkbox-tokens.disabled-selected;
+      }
+    }
+
+    & {
+      appearance: none;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background-image: none;
+      outline: none;
+
+      &::before {
+        content: '';
+        box-sizing: border-box;
+        width: var(--container-size);
+        height: var(--container-size);
+        background: var(--container-color);
+        border-radius: var(--container-shape);
+        border: var(--outline-width) solid var(--outline-color);
+        color: var(--icon-color);
+        font-family: var(--md-icon-font);
+        font-size: var(--icon-size);
+        line-height: 1;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        aspect-ratio: 1;
+        background-image: var(--ripple);
+        color: var(--state-layer-color);
+        width: var(--state-layer-size);
+        border-radius: var(--state-layer-shape);
+        outline: var(--focus-ring-outline);
+        outline-offset: var(--focus-ring-offset);
+        transition: var(--ripple-transition);
+        animation: var(--ripple-animation), var(--focus-ring-animation);
+      }
+
+      &:is(:checked, .checked)::before {
+        content: 'check';
+      }
+
+      &:is(:indeterminate, .indeterminate)::before {
+        content: 'remove';
+      }
+    }
+  }
+}

@@ -87,9 +87,16 @@
       ]
     },
     "build:ts": {
+      "dependencies": [
+        "build:ts:main",
+        "build:ts:labs-gb"
+      ]
+    },
+    "build:ts:main": {
       "command": "tsc --pretty",
       "files": [
         "tsconfig.json",
+        "tsconfig.base.json",
         "**/*.ts",
         "!**/*.d.ts",
         "!**/*-styles.ts",
@@ -107,6 +114,25 @@
         "!types/",
         "!catalog/",
         "!scripts/"
+      ],
+      "clean": "if-file-deleted",
+      "dependencies": [
+        "build:css-to-ts"
+      ]
+    },
+    "build:ts:labs-gb": {
+      "command": "tsc --pretty -p labs/gb/tsconfig.json",
+      "files": [
+        "tsconfig.base.json",
+        "labs/gb/tsconfig.json",
+        "labs/gb/**/*.ts",
+        "!labs/gb/**/*.d.ts"
+      ],
+      "output": [
+        ".tsbuildinfo",
+        "labs/gb/**/*.js",
+        "labs/gb/**/*.js.map",
+        "labs/gb/**/*.d.ts"
       ],
       "clean": "if-file-deleted",
       "dependencies": [

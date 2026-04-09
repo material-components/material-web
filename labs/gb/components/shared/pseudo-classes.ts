@@ -17,8 +17,11 @@
  */
 export const PSEUDO_CLASSES = {
   active: 'active',
+  checked: 'checked',
   disabled: 'disabled',
   focus: 'focus',
   focusVisible: 'focus-visible',
   hover: 'hover',
+  indeterminate: 'indeterminate',
+  invalid: 'invalid',
 };

@@ -1,0 +1,64 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --container-color: transparent;
+  --container-shape: 2px;
+  --container-size: 18px;
+  --icon-color: transparent;
+  --icon-size: 18px;
+  --outline-color: var(--md-sys-color-on-surface-variant);
+  --outline-width: 2px;
+  --state-layer-color: var(--md-sys-color-on-surface);
+  --state-layer-shape: 50%;
+  --state-layer-size: 40px;
+}
+
+@mixin hovered {
+  --state-layer-color: var(--md-sys-color-on-surface);
+  --outline-color: var(--md-sys-color-on-surface);
+}
+
+@mixin focused {
+  --outline-color: var(--md-sys-color-on-surface);
+}
+
+@mixin pressed {
+  --state-layer-color: var(--md-sys-color-primary);
+  --outline-color: var(--md-sys-color-on-surface);
+}
+
+@mixin selected {
+  --outline-width: 0;
+  --container-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-on-primary);
+}
+
+@mixin selected-hovered {
+  --state-layer-color: var(--md-sys-color-primary);
+}
+
+@mixin selected-pressed {
+  --state-layer-color: var(--md-sys-color-on-surface);
+}
+
+@mixin error {
+  --state-layer-color: var(--md-sys-color-error);
+  --outline-color: var(--md-sys-color-error);
+}
+
+@mixin error-selected {
+  --container-color: var(--md-sys-color-error);
+  --icon-color: var(--md-sys-color-on-error);
+}
+
+@mixin disabled {
+  --outline-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+}
+
+@mixin disabled-selected {
+  --container-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --icon-color: var(--md-sys-color-surface);
+}
