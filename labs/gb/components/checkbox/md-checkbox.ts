@@ -114,7 +114,14 @@ export class Checkbox extends baseClass {
 
   @query('input', true)
   private readonly input!: HTMLInputElement | null;
-  private dirty = false;
+  /**
+   * Mimics the behavior of <input> dirty checkedness, where the `checked`
+   * attribute only updates the checked state if the checkbox has not been
+   * interacted with.
+   *
+   * @see https://html.spec.whatwg.org/multipage/input.html#concept-input-checked-dirty-flag
+   */
+  private dirtyCheckedness = false;
 
   protected override render() {
     // Needed for closure conformance
@@ -137,7 +144,7 @@ export class Checkbox extends baseClass {
   }
 
   private handleInput(event: Event) {
-    this.dirty = true;
+    this.dirtyCheckedness = true;
     const target = event.target as HTMLInputElement;
     this.checked = target.checked;
     this.indeterminate = target.indeterminate;
@@ -145,7 +152,7 @@ export class Checkbox extends baseClass {
   }
 
   private handleChange(event: Event) {
-    this.dirty = true;
+    this.dirtyCheckedness = true;
     // <input> 'change' event is not composed, re-dispatch it.
     redispatchEvent(this, event);
   }
@@ -155,7 +162,7 @@ export class Checkbox extends baseClass {
     oldValue: string | null,
     newValue: string | null,
   ) {
-    if (name === 'checked' && this.dirty) {
+    if (name === 'checked' && this.dirtyCheckedness) {
       // The 'checked' attribute does not update checkboxes that have been
       // interacted with.
       return;
@@ -173,7 +180,7 @@ export class Checkbox extends baseClass {
   }
 
   override formResetCallback() {
-    this.dirty = false;
+    this.dirtyCheckedness = false;
     this.checked = this.defaultChecked;
   }
 

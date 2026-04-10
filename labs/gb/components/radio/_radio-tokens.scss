@@ -1,0 +1,37 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --icon-color: var(--md-sys-color-on-surface-variant);
+  --icon-size: 20px;
+  --state-layer-color: var(--md-sys-color-on-surface);
+  --state-layer-shape: 50%;
+  --state-layer-size: 40px;
+}
+
+@mixin hovered {
+  --icon-color: var(--md-sys-color-on-surface);
+}
+
+@mixin focused {
+  --icon-color: var(--md-sys-color-on-surface);
+}
+
+@mixin pressed {
+  --state-layer-color: var(--md-sys-color-primary);
+}
+
+@mixin selected {
+  --icon-color: var(--md-sys-color-primary);
+  --state-layer-color: var(--md-sys-color-primary);
+}
+
+@mixin selected-pressed {
+  --state-layer-color: var(--md-sys-color-on-surface);
+}
+
+@mixin disabled {
+  --icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+}

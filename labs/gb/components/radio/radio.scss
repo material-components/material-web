@@ -1,0 +1,75 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'radio-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
+@layer md.comp.radio {
+  .radio {
+    & {
+      @include radio-tokens.root;
+
+      &:where(:hover, .hover) {
+        @include radio-tokens.hovered;
+      }
+      &:where(:focus-within, .focus) {
+        @include radio-tokens.focused;
+      }
+      &:where(:active, .active) {
+        @include radio-tokens.pressed;
+      }
+    }
+    &:is(:checked, .checked) {
+      @include radio-tokens.selected;
+
+      &:where(:active, .active) {
+        @include radio-tokens.selected-pressed;
+      }
+    }
+    &:is(:disabled, .disabled) {
+      @include radio-tokens.disabled;
+    }
+
+    & {
+      appearance: none;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background-image: none;
+      outline: none;
+
+      &::before {
+        content: 'radio_button_unchecked';
+        color: var(--icon-color);
+        font-family: var(--md-icon-font);
+        font-size: var(--icon-size);
+        line-height: 1;
+        width: var(--icon-size);
+        aspect-ratio: 1;
+      }
+      &:is(:checked, .checked)::before {
+        content: 'radio_button_checked';
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        aspect-ratio: 1;
+        background-image: var(--ripple);
+        color: var(--state-layer-color);
+        width: var(--state-layer-size);
+        border-radius: var(--state-layer-shape);
+        outline: var(--focus-ring-outline);
+        outline-offset: var(--focus-ring-offset);
+        transition: var(--ripple-transition);
+        animation: var(--ripple-animation), var(--focus-ring-animation);
+      }
+    }
+  }
+}
