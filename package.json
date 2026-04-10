@@ -1,6 +1,6 @@
 {
   "name": "@material/web",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "publishConfig": {
     "access": "public"
   },
@@ -174,8 +174,12 @@
         "tokens/versions/**/_md-*.scss",
         "!tokens/versions/**/*-meta.scss"
       ],
-      "output": ["tokens/versions/**/*-meta.scss"],
-      "dependencies": ["build:scripts"]
+      "output": [
+        "tokens/versions/**/*-meta.scss"
+      ],
+      "dependencies": [
+        "build:scripts"
+      ]
     },
     "test": {
       "command": "wtr",
