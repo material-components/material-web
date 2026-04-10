@@ -10,8 +10,12 @@ import {
   setupRipple,
 } from '@material/web/labs/gb/components/ripple/ripple.js';
 import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {AttributePart} from 'lit';
-import {Directive, directive, DirectiveParameters} from 'lit/directive.js';
+import {
+  AsyncDirective,
+  AttributePart,
+  directive,
+  DirectiveParameters,
+} from 'lit/async-directive.js';
 import {classMap, type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Checkbox classes. */
@@ -92,7 +96,7 @@ export interface CheckboxDirectiveState extends CheckboxClassesState {
   classes?: ClassInfo;
 }
 
-class CheckboxDirective extends Directive {
+class CheckboxDirective extends AsyncDirective {
   private element?: HTMLElement;
   private cleanup?: AbortController;
 
@@ -107,14 +111,24 @@ class CheckboxDirective extends Directive {
     {element}: AttributePart,
     [state]: DirectiveParameters<this>,
   ) {
-    if (element !== this.element) {
+    if (this.isConnected && element !== this.element) {
       this.element = element as HTMLElement;
-      this.cleanup?.abort();
-      this.cleanup = new AbortController();
-      setupCheckbox(this.element, {signal: this.cleanup.signal});
+      this.disconnected();
+      this.reconnected();
     }
 
     return this.render(state);
+  }
+
+  protected override disconnected() {
+    this.cleanup?.abort();
+  }
+
+  protected override reconnected() {
+    if (this.element) {
+      this.cleanup = new AbortController();
+      setupCheckbox(this.element, {signal: this.cleanup.signal});
+    }
   }
 }
 
