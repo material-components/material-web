@@ -174,7 +174,7 @@ class ButtonDirective extends Directive {
   private element?: HTMLElement;
   private cleanup?: AbortController;
 
-  render(state: ButtonDirectiveState) {
+  render(state: ButtonDirectiveState = {}) {
     return classMap({
       ...(state.classes || {}),
       ...buttonClasses(state),

@@ -96,7 +96,7 @@ class CheckboxDirective extends Directive {
   private element?: HTMLElement;
   private cleanup?: AbortController;
 
-  render(state: CheckboxDirectiveState) {
+  render(state: CheckboxDirectiveState = {}) {
     return classMap({
       ...(state.classes || {}),
       ...checkboxClasses(state),
