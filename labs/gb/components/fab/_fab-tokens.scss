@@ -1,0 +1,84 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --container-color: transparent;
+  --container-elevation: var(--md-sys-elevation-shadow-3);
+  --container-height: 56px;
+  --container-shape: var(--md-sys-shape-corner-lg);
+  --icon-color: currentColor;
+  --icon-label-space: 12px;
+  --icon-size: 24px;
+  --label-text: var(--md-sys-typescale-label-lg);
+  --label-text-color: currentColor;
+  --label-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+  --leading-space: 16px;
+  --trailing-space: 16px;
+}
+
+@mixin hovered {
+  --container-elevation: var(--md-sys-elevation-shadow-4);
+}
+
+@mixin pressed {
+  --container-elevation: var(--md-sys-elevation-shadow-3);
+}
+
+@mixin primary-container {
+  --container-color: var(--md-sys-color-primary-container);
+  --icon-color: var(--md-sys-color-on-primary-container);
+  --label-text-color: var(--md-sys-color-on-primary-container);
+}
+
+@mixin primary {
+  --container-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-on-primary);
+  --label-text-color: var(--md-sys-color-on-primary);
+}
+
+@mixin secondary-container {
+  --container-color: var(--md-sys-color-secondary-container);
+  --icon-color: var(--md-sys-color-on-secondary-container);
+  --label-text-color: var(--md-sys-color-on-secondary-container);
+}
+
+@mixin secondary {
+  --container-color: var(--md-sys-color-secondary);
+  --icon-color: var(--md-sys-color-on-secondary);
+  --label-text-color: var(--md-sys-color-on-secondary);
+}
+
+@mixin tertiary-container {
+  --container-color: var(--md-sys-color-tertiary-container);
+  --icon-color: var(--md-sys-color-on-tertiary-container);
+  --label-text-color: var(--md-sys-color-on-tertiary-container);
+}
+
+@mixin tertiary {
+  --container-color: var(--md-sys-color-tertiary);
+  --icon-color: var(--md-sys-color-on-tertiary);
+  --label-text-color: var(--md-sys-color-on-tertiary);
+}
+
+@mixin md {
+  --container-height: 80px;
+  --container-shape: var(--md-sys-shape-corner-lg-increased);
+  --icon-size: 28px;
+  --label-text: var(--md-sys-typescale-title-lg);
+  --label-text-tracking: var(--md-sys-typescale-title-lg-tracking);
+  --leading-space: 26px;
+  --trailing-space: 26px;
+}
+
+@mixin lg {
+  --container-height: 96px;
+  --container-shape: var(--md-sys-shape-corner-xl);
+  --icon-label-space: 16px;
+  --icon-size: 36px;
+  --label-text: var(--md-sys-typescale-headline-sm);
+  --label-text-tracking: var(--md-sys-typescale-headline-sm-tracking);
+  --leading-space: 28px;
+  --trailing-space: 28px;
+}
