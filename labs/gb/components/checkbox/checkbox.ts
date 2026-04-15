@@ -100,7 +100,7 @@ class CheckboxDirective extends AsyncDirective {
   private element?: HTMLElement;
   private cleanup?: AbortController;
 
-  render(state: CheckboxDirectiveState) {
+  render(state: CheckboxDirectiveState = {}) {
     return classMap({
       ...(state.classes || {}),
       ...checkboxClasses(state),

@@ -178,7 +178,7 @@ class ButtonDirective extends AsyncDirective {
   private element?: HTMLElement;
   private cleanup?: AbortController;
 
-  render(state: ButtonDirectiveState) {
+  render(state: ButtonDirectiveState = {}) {
     return classMap({
       ...(state.classes || {}),
       ...buttonClasses(state),
