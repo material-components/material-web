@@ -5,7 +5,10 @@
  */
 
 import {createElementDirective} from '@material/web/labs/gb/components/shared/directives.js';
-import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
+import {
+  PSEUDO_CLASSES,
+  isDisabled,
+} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Ripple classes. */
@@ -87,7 +90,7 @@ export function setupRipple(
   ripple.addEventListener(
     'pointerdown',
     (event: PointerEvent): void => {
-      if (ripple.matches(':disabled,.disabled')) return;
+      if (isDisabled(ripple)) return;
 
       // Set ripple position to the pointer position.
       const rect = ripple.getBoundingClientRect();

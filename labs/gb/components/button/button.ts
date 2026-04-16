@@ -14,7 +14,10 @@ import {
   setupRipple,
 } from '@material/web/labs/gb/components/ripple/ripple.js';
 import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
-import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
+import {
+  isDisabled,
+  PSEUDO_CLASSES,
+} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Button color configuration types. */
@@ -132,9 +135,7 @@ export function setupButton(
       // event listeners as well as prevent the default action. This is because
       // the underlying element may not actually be `:disabled`, such as an
       // anchor tag or a soft-disabled button.
-      if (
-        button.matches(`.${BUTTON_CLASSES.disabled},[aria-disabled="true"]`)
-      ) {
+      if (isDisabled(button)) {
         event.stopImmediatePropagation();
         event.preventDefault();
         return;
