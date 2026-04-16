@@ -14,15 +14,6 @@
     &:is(.btn-selected, [aria-pressed='true']) {
       @include button-tokens.selected;
     }
-    &.btn-square {
-      @include button-tokens.square;
-    }
-    &:is(.btn-selected, [aria-pressed='true']):where(.btn-square) {
-      @include button-tokens.selected-square;
-    }
-    &:is(:active, .active):where(:not(:disabled, .disabled)) {
-      @include button-tokens.pressed;
-    }
     &.btn-filled {
       @include button-tokens.filled;
       &:where(.btn-unselected, [aria-pressed='false']) {
@@ -70,23 +61,11 @@
       &:where(.btn-selected, [aria-pressed='true']) {
         @include button-tokens.md-selected;
       }
-      &:where(.btn-square) {
-        @include button-tokens.md-square;
-      }
-      &:where(:is(:active, .active):not(:disabled, .disabled)) {
-        @include button-tokens.md-pressed;
-      }
     }
     &.btn-lg {
       @include button-tokens.lg;
       &:where(.btn-selected, [aria-pressed='true']) {
         @include button-tokens.lg-selected;
-      }
-      &:where(.btn-square) {
-        @include button-tokens.lg-square;
-      }
-      &:where(:is(:active, .active):not(:disabled, .disabled)) {
-        @include button-tokens.lg-pressed;
       }
     }
     &.btn-xl {
@@ -94,11 +73,32 @@
       &:where(.btn-selected, [aria-pressed='true']) {
         @include button-tokens.xl-selected;
       }
-      &:where(.btn-square) {
-        @include button-tokens.xl-square;
+    }
+    &.btn-square {
+      @include button-tokens.square;
+      &:where(.btn-md) {
+        @include button-tokens.square-md;
       }
-      &:where(:is(:active, .active):not(:disabled, .disabled)) {
-        @include button-tokens.xl-pressed;
+      &:where(.btn-lg) {
+        @include button-tokens.square-lg;
+      }
+      &:where(.btn-xl) {
+        @include button-tokens.square-xl;
+      }
+      &:where(.btn-selected, [aria-pressed='true']) {
+        @include button-tokens.square-selected;
+      }
+    }
+    &:is(:active, .active):where(:not(:disabled, .disabled)) {
+      @include button-tokens.pressed;
+      &:where(.btn-md) {
+        @include button-tokens.pressed-md;
+      }
+      &:where(.btn-lg) {
+        @include button-tokens.pressed-lg;
+      }
+      &:where(.btn-xl) {
+        @include button-tokens.pressed-xl;
       }
     }
     &:is(:disabled, .disabled) {

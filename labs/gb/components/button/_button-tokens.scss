@@ -25,18 +25,6 @@
   --container-shape: var(--md-sys-shape-corner-md);
 }
 
-@mixin square {
-  --container-shape: var(--md-sys-shape-corner-md);
-}
-
-@mixin selected-square {
-  --container-shape: calc(var(--container-height) / 2);
-}
-
-@mixin pressed {
-  --container-shape: var(--md-sys-shape-corner-sm);
-}
-
 @mixin filled {
   --container-color: var(--md-sys-color-primary);
   --icon-color: var(--md-sys-color-on-primary);
@@ -132,14 +120,6 @@
   --container-shape: var(--md-sys-shape-corner-lg);
 }
 
-@mixin md-square {
-  --container-shape: var(--md-sys-shape-corner-lg);
-}
-
-@mixin md-pressed {
-  --container-shape: var(--md-sys-shape-corner-md);
-}
-
 @mixin lg {
   --container-height: 96px;
   --icon-label-space: 12px;
@@ -152,14 +132,6 @@
 
 @mixin lg-selected {
   --container-shape: var(--md-sys-shape-corner-xl);
-}
-
-@mixin lg-square {
-  --container-shape: var(--md-sys-shape-corner-xl);
-}
-
-@mixin lg-pressed {
-  --container-shape: var(--md-sys-shape-corner-lg);
 }
 
 @mixin xl {
@@ -176,11 +148,39 @@
   --container-shape: var(--md-sys-shape-corner-xl);
 }
 
-@mixin xl-square {
+@mixin square {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin square-md {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin square-lg {
   --container-shape: var(--md-sys-shape-corner-xl);
 }
 
-@mixin xl-pressed {
+@mixin square-xl {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin square-selected {
+  --container-shape: calc(var(--container-height) / 2);
+}
+
+@mixin pressed {
+  --container-shape: var(--md-sys-shape-corner-sm);
+}
+
+@mixin pressed-md {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin pressed-lg {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin pressed-xl {
   --container-shape: var(--md-sys-shape-corner-lg);
 }
 
