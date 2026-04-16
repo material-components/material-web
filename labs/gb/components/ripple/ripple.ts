@@ -87,39 +87,45 @@ export function setupRipple(
   }
 
   let minimumPressTimeoutId: number | undefined;
+  const activateRipple = () => {
+    // If the ripple is already active, restart the current press animation.
+    if (ripple.classList.contains(RIPPLE_CLASSES.active)) {
+      const pressAnimation = ripple
+        .getAnimations()
+        .find(
+          (animation) =>
+            (animation as Partial<CSSAnimation>).animationName ===
+            'ripple-press',
+        );
+      pressAnimation?.cancel();
+      pressAnimation?.play();
+    }
+
+    // Emulate the `:active` class for a minimum press duration to show the
+    // ripple effect on short clicks.
+    ripple.classList.add(RIPPLE_CLASSES.active);
+    clearTimeout(minimumPressTimeoutId);
+    minimumPressTimeoutId = setTimeout(() => {
+      ripple.classList.remove(RIPPLE_CLASSES.active);
+    }, MINIMUM_PRESS_MS);
+  };
+
+  // Return true if the ripple is disabled, or if the ripple class has been
+  // removed. This allows components to disable and re-enable ripple behavior.
+  const isRippleDisabled = () =>
+    isDisabled(ripple) || !ripple.matches(`.${RIPPLE_CLASSES.ripple}`);
+
   ripple.addEventListener(
     'pointerdown',
     (event: PointerEvent): void => {
-      if (isDisabled(ripple)) return;
-
+      if (isRippleDisabled()) return;
       // Set ripple position to the pointer position.
       const rect = ripple.getBoundingClientRect();
       const x = (event.clientX - rect.x) / rect.width;
       const y = (event.clientY - rect.y) / rect.height;
       ripple.style.setProperty('--ripple-x', `${x * 100}%`);
       ripple.style.setProperty('--ripple-y', `${y * 100}%`);
-
-      // If another pointerdown is received while the ripple is active, restart
-      // the active press animation.
-      if (ripple.classList.contains(RIPPLE_CLASSES.active)) {
-        const pressAnimation = ripple
-          .getAnimations()
-          .find(
-            (animation) =>
-              (animation as Partial<CSSAnimation>).animationName ===
-              'ripple-press',
-          );
-        pressAnimation?.cancel();
-        pressAnimation?.play();
-      }
-
-      // Emulate the `:active` class for a minimum press duration to show the
-      // ripple effect on short clicks.
-      ripple.classList.add(RIPPLE_CLASSES.active);
-      clearTimeout(minimumPressTimeoutId);
-      minimumPressTimeoutId = setTimeout(() => {
-        ripple.classList.remove(RIPPLE_CLASSES.active);
-      }, MINIMUM_PRESS_MS);
+      activateRipple();
     },
     opts,
   );
@@ -130,6 +136,18 @@ export function setupRipple(
       // Reset ripple pointer position when a key is pressed.
       ripple.style.removeProperty('--ripple-x');
       ripple.style.removeProperty('--ripple-y');
+    },
+    opts,
+  );
+
+  ripple.addEventListener(
+    'click',
+    (event) => {
+      // A UIEvent.detail click count of 0 indicates the click was not triggered
+      // by a pointer. Show the ripple press effect for these clicks as well.
+      if (event.detail === 0 && !isRippleDisabled()) {
+        activateRipple();
+      }
     },
     opts,
   );
