@@ -1,0 +1,202 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --container-color: transparent;
+  --container-height: auto;
+  --container-shape: calc(var(--container-height) / 2);
+  --icon-color: currentColor;
+  --icon-size: 24px;
+  --outline-color: transparent;
+  --outline-width: 1px;
+  --leading-space: 0;
+  --trailing-space: 0;
+}
+
+@mixin selected {
+  --container-shape: var(--md-sys-shape-corner-md);
+  --icon-color: var(--md-sys-color-primary);
+}
+
+@mixin filled {
+  --container-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-on-primary);
+}
+
+@mixin filled-unselected {
+  --container-color: var(--md-sys-color-surface-container);
+  --icon-color: var(--md-sys-color-on-surface-variant);
+}
+
+@mixin filled-selected {
+  --container-color: var(--md-sys-color-primary);
+  --icon-color: var(--md-sys-color-on-primary);
+}
+
+@mixin tonal {
+  --container-color: var(--md-sys-color-secondary-container);
+  --icon-color: var(--md-sys-color-on-secondary-container);
+}
+
+@mixin tonal-selected {
+  --container-color: var(--md-sys-color-secondary);
+  --icon-color: var(--md-sys-color-on-secondary);
+}
+
+@mixin outlined {
+  --icon-color: var(--md-sys-color-on-surface-variant);
+  --outline-color: var(--md-sys-color-outline-variant);
+}
+
+@mixin outlined-selected {
+  --container-color: var(--md-sys-color-inverse-surface);
+  --icon-color: var(--md-sys-color-inverse-on-surface);
+}
+
+@mixin standard {
+  --icon-color: var(--md-sys-color-on-surface-variant);
+}
+
+@mixin standard-selected {
+  --icon-color: var(--md-sys-color-primary);
+}
+
+@mixin xs {
+  --container-height: 32px;
+  --icon-size: 20px;
+  --leading-space: 6px;
+  --trailing-space: 6px;
+}
+
+@mixin xs-narrow {
+  --leading-space: 4px;
+  --trailing-space: 4px;
+}
+
+@mixin xs-wide {
+  --leading-space: 10px;
+  --trailing-space: 10px;
+}
+
+@mixin sm {
+  --container-height: 40px;
+  --leading-space: 8px;
+  --trailing-space: 8px;
+}
+
+@mixin sm-narrow {
+  --leading-space: 4px;
+  --trailing-space: 4px;
+}
+
+@mixin sm-wide {
+  --leading-space: 14px;
+  --trailing-space: 14px;
+}
+
+@mixin md {
+  --container-height: 56px;
+  --leading-space: 16px;
+  --trailing-space: 16px;
+}
+
+@mixin md-narrow {
+  --leading-space: 12px;
+  --trailing-space: 12px;
+}
+
+@mixin md-wide {
+  --leading-space: 24px;
+  --trailing-space: 24px;
+}
+
+@mixin md-selected {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin lg {
+  --container-height: 96px;
+  --icon-size: 32px;
+  --leading-space: 32px;
+  --trailing-space: 32px;
+}
+
+@mixin lg-narrow {
+  --leading-space: 16px;
+  --trailing-space: 16px;
+}
+
+@mixin lg-wide {
+  --leading-space: 48px;
+  --outline-width: 2px;
+  --trailing-space: 48px;
+}
+
+@mixin lg-selected {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin xl {
+  --container-height: 136px;
+  --icon-size: 40px;
+  --leading-space: 48px;
+  --outline-width: 3px;
+  --trailing-space: 48px;
+}
+
+@mixin xl-narrow {
+  --leading-space: 32px;
+  --trailing-space: 32px;
+}
+
+@mixin xl-wide {
+  --leading-space: 72px;
+  --trailing-space: 72px;
+}
+
+@mixin xl-selected {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin square {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin square-md {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin square-lg {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin square-xl {
+  --container-shape: var(--md-sys-shape-corner-xl);
+}
+
+@mixin square-selected {
+  --container-shape: calc(var(--container-height) / 2);
+}
+
+@mixin pressed {
+  --container-shape: var(--md-sys-shape-corner-sm);
+}
+
+@mixin pressed-md {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin pressed-lg {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin pressed-xl {
+  --container-shape: var(--md-sys-shape-corner-lg);
+}
+
+@mixin disabled {
+  --container-color: hsl(from var(--md-sys-color-on-surface) h s l / 10%);
+  --icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+}
