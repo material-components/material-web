@@ -5,9 +5,9 @@
  */
 
 import {FOCUS_RING_CLASSES} from '@material/web/labs/gb/components/focus/focus-ring.js';
+import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
 import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {Directive, directive} from 'lit/directive.js';
-import {classMap, type ClassInfo} from 'lit/directives/class-map.js';
+import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Card color configuration types. */
 export type CardColor = 'elevated' | 'filled' | 'outlined';
@@ -69,21 +69,6 @@ export function cardClasses({
   };
 }
 
-/** The state provided to the `card()` directive. */
-export interface CardDirectiveState extends CardClassesState {
-  /** Additional classes to apply to the element. */
-  classes?: ClassInfo;
-}
-
-class CardDirective extends Directive {
-  render(state: CardDirectiveState = {}) {
-    return classMap({
-      ...(state.classes || {}),
-      ...cardClasses(state),
-    });
-  }
-}
-
 /**
  * A Lit directive that adds card styling and functionality to its element.
  *
@@ -96,4 +81,6 @@ class CardDirective extends Directive {
  * `
  * ```
  */
-export const card = directive(CardDirective);
+export const card = createClassMapDirective({
+  getClasses: cardClasses,
+});

@@ -9,14 +9,9 @@ import {
   rippleClasses,
   setupRipple,
 } from '@material/web/labs/gb/components/ripple/ripple.js';
+import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
 import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {
-  AsyncDirective,
-  AttributePart,
-  directive,
-  DirectiveParameters,
-} from 'lit/async-directive.js';
-import {classMap, type ClassInfo} from 'lit/directives/class-map.js';
+import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Fab color configuration types. */
 export type FabColor =
@@ -118,48 +113,6 @@ export function setupFab(
   setupRipple(fab, opts);
 }
 
-/** The state provided to the `fab()` directive. */
-export interface FabDirectiveState extends FabClassesState {
-  /** Additional classes to apply to the element. */
-  classes?: ClassInfo;
-}
-
-class FabDirective extends AsyncDirective {
-  private element?: HTMLElement;
-  private cleanup?: AbortController;
-
-  render(state: FabDirectiveState = {}) {
-    return classMap({
-      ...(state.classes || {}),
-      ...fabClasses(state),
-    });
-  }
-
-  override update(
-    {element}: AttributePart,
-    [state]: DirectiveParameters<this>,
-  ) {
-    if (this.isConnected && element !== this.element) {
-      this.element = element as HTMLElement;
-      this.disconnected();
-      this.reconnected();
-    }
-
-    return this.render(state);
-  }
-
-  protected override disconnected() {
-    this.cleanup?.abort();
-  }
-
-  protected override reconnected() {
-    if (this.element) {
-      this.cleanup = new AbortController();
-      setupFab(this.element, {signal: this.cleanup.signal});
-    }
-  }
-}
-
 /**
  * A Lit directive that adds fab styling and functionality to its element.
  *
@@ -177,4 +130,7 @@ class FabDirective extends AsyncDirective {
  * `;
  * ```
  */
-export const fab = directive(FabDirective);
+export const fab = createClassMapDirective({
+  getClasses: fabClasses,
+  setupElement: setupFab,
+});

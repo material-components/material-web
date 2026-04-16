@@ -13,14 +13,9 @@ import {
   rippleClasses,
   setupRipple,
 } from '@material/web/labs/gb/components/ripple/ripple.js';
+import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
 import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {
-  AsyncDirective,
-  AttributePart,
-  directive,
-  DirectiveParameters,
-} from 'lit/async-directive.js';
-import {classMap, type ClassInfo} from 'lit/directives/class-map.js';
+import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Button color configuration types. */
 export type ButtonColor = 'filled' | 'elevated' | 'tonal' | 'outlined' | 'text';
@@ -168,48 +163,6 @@ export function setupButton(
   );
 }
 
-/** The state provided to the `button()` directive. */
-export interface ButtonDirectiveState extends ButtonClassesState {
-  /** Additional classes to apply to the element. */
-  classes?: ClassInfo;
-}
-
-class ButtonDirective extends AsyncDirective {
-  private element?: HTMLElement;
-  private cleanup?: AbortController;
-
-  render(state: ButtonDirectiveState = {}) {
-    return classMap({
-      ...(state.classes || {}),
-      ...buttonClasses(state),
-    });
-  }
-
-  override update(
-    {element}: AttributePart,
-    [state]: DirectiveParameters<this>,
-  ) {
-    if (this.isConnected && element !== this.element) {
-      this.element = element as HTMLElement;
-      this.disconnected();
-      this.reconnected();
-    }
-
-    return this.render(state);
-  }
-
-  protected override disconnected() {
-    this.cleanup?.abort();
-  }
-
-  protected override reconnected() {
-    if (this.element) {
-      this.cleanup = new AbortController();
-      setupButton(this.element, {signal: this.cleanup.signal});
-    }
-  }
-}
-
 /**
  * A Lit directive that adds button styling and functionality to its element.
  *
@@ -218,4 +171,7 @@ class ButtonDirective extends AsyncDirective {
  * html`<button class="${button({color: 'filled'})}">Filled</button>`;
  * ```
  */
-export const button = directive(ButtonDirective);
+export const button = createClassMapDirective({
+  getClasses: buttonClasses,
+  setupElement: setupButton,
+});

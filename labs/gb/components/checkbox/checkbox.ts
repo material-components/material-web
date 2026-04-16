@@ -9,14 +9,9 @@ import {
   rippleClasses,
   setupRipple,
 } from '@material/web/labs/gb/components/ripple/ripple.js';
+import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
 import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {
-  AsyncDirective,
-  AttributePart,
-  directive,
-  DirectiveParameters,
-} from 'lit/async-directive.js';
-import {classMap, type ClassInfo} from 'lit/directives/class-map.js';
+import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Checkbox classes. */
 export const CHECKBOX_CLASSES = {
@@ -90,48 +85,6 @@ export function setupCheckbox(
   setupRipple(checkbox, opts);
 }
 
-/** The state provided to the `checkbox()` directive. */
-export interface CheckboxDirectiveState extends CheckboxClassesState {
-  /** Additional classes to apply to the element. */
-  classes?: ClassInfo;
-}
-
-class CheckboxDirective extends AsyncDirective {
-  private element?: HTMLElement;
-  private cleanup?: AbortController;
-
-  render(state: CheckboxDirectiveState = {}) {
-    return classMap({
-      ...(state.classes || {}),
-      ...checkboxClasses(state),
-    });
-  }
-
-  override update(
-    {element}: AttributePart,
-    [state]: DirectiveParameters<this>,
-  ) {
-    if (this.isConnected && element !== this.element) {
-      this.element = element as HTMLElement;
-      this.disconnected();
-      this.reconnected();
-    }
-
-    return this.render(state);
-  }
-
-  protected override disconnected() {
-    this.cleanup?.abort();
-  }
-
-  protected override reconnected() {
-    if (this.element) {
-      this.cleanup = new AbortController();
-      setupCheckbox(this.element, {signal: this.cleanup.signal});
-    }
-  }
-}
-
 /**
  * A Lit directive that adds checkbox styling and functionality to its element.
  *
@@ -140,4 +93,7 @@ class CheckboxDirective extends AsyncDirective {
  * html`<input type="checkbox" class="${checkbox()}">`;
  * ```
  */
-export const checkbox = directive(CheckboxDirective);
+export const checkbox = createClassMapDirective({
+  getClasses: checkboxClasses,
+  setupElement: setupCheckbox,
+});

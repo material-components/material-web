@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Directive, directive} from 'lit/directive.js';
-import {classMap, type ClassInfo} from 'lit/directives/class-map.js';
+import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
+import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Divider classes. */
 export const DIVIDER_CLASSES = {
@@ -34,21 +34,6 @@ export function dividerClasses({
   };
 }
 
-/** The state provided to the `divider()` directive. */
-export interface DividerDirectiveState extends DividerClassesState {
-  /** Additional classes to apply to the element. */
-  classes?: ClassInfo;
-}
-
-class DividerDirective extends Directive {
-  render(state: DividerDirectiveState = {}) {
-    return classMap({
-      ...(state.classes || {}),
-      ...dividerClasses(state),
-    });
-  }
-}
-
 /**
  * A Lit directive that adds divider styling to its element.
  *
@@ -69,4 +54,6 @@ class DividerDirective extends Directive {
  * `;
  * ```
  */
-export const divider = directive(DividerDirective);
+export const divider = createClassMapDirective({
+  getClasses: dividerClasses,
+});

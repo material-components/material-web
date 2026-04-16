@@ -9,14 +9,9 @@ import {
   rippleClasses,
   setupRipple,
 } from '@material/web/labs/gb/components/ripple/ripple.js';
+import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
 import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {
-  AttributePart,
-  Directive,
-  directive,
-  DirectiveParameters,
-} from 'lit/async-directive.js';
-import {classMap, type ClassInfo} from 'lit/directives/class-map.js';
+import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Radio classes. */
 export const RADIO_CLASSES = {
@@ -80,38 +75,6 @@ export function setupRadio(
   setupRipple(radio, opts);
 }
 
-/** The state provided to the `radio()` directive. */
-export interface RadioDirectiveState extends RadioClassesState {
-  /** Additional classes to apply to the element. */
-  classes?: ClassInfo;
-}
-
-class RadioDirective extends Directive {
-  private element?: HTMLElement;
-  private cleanup?: AbortController;
-
-  render(state: RadioDirectiveState = {}) {
-    return classMap({
-      ...(state.classes || {}),
-      ...radioClasses(state),
-    });
-  }
-
-  override update(
-    {element}: AttributePart,
-    [state]: DirectiveParameters<this>,
-  ) {
-    if (element !== this.element) {
-      this.element = element as HTMLElement;
-      this.cleanup?.abort();
-      this.cleanup = new AbortController();
-      setupRadio(this.element, {signal: this.cleanup.signal});
-    }
-
-    return this.render(state);
-  }
-}
-
 /**
  * A Lit directive that adds radio styling and functionality to its element.
  *
@@ -124,4 +87,7 @@ class RadioDirective extends Directive {
  * `;
  * ```
  */
-export const radio = directive(RadioDirective);
+export const radio = createClassMapDirective({
+  getClasses: radioClasses,
+  setupElement: setupRadio,
+});

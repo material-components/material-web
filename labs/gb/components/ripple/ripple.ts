@@ -4,15 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {createElementDirective} from '@material/web/labs/gb/components/shared/directives.js';
 import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {noChange} from 'lit';
-import {
-  Directive,
-  directive,
-  ElementPart,
-  PartInfo,
-  PartType,
-} from 'lit/directive.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Ripple classes. */
@@ -139,28 +132,6 @@ export function setupRipple(
   );
 }
 
-class RippleDirective extends Directive {
-  private element?: HTMLElement;
-  private cleanup?: AbortController;
-
-  constructor(partInfo: PartInfo) {
-    super(partInfo);
-    if (partInfo.type !== PartType.ELEMENT) {
-      throw new Error('The `ripple` directive must be used on an element');
-    }
-  }
-  render() {}
-  override update({element}: ElementPart) {
-    if (this.element !== element) {
-      this.element = element as HTMLElement;
-      this.cleanup?.abort();
-      this.cleanup = new AbortController();
-      setupRipple(this.element, {signal: this.cleanup.signal});
-    }
-    return noChange;
-  }
-}
-
 /**
  * A Lit directive that adds updates the position of a ripple to match pointer
  * interactions. Use with the `.ripple` class.
@@ -197,4 +168,4 @@ class RippleDirective extends Directive {
  * `;
  * ```
  */
-export const ripple = directive(RippleDirective);
+export const ripple = createElementDirective(setupRipple);
