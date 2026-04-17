@@ -44,18 +44,17 @@
       height: 48px;
       background-image: none;
       outline: none;
+      --icon: 'radio_button_unchecked';
 
       &::before {
-        content: 'radio_button_unchecked';
+        content: var(--icon);
         color: var(--icon-color);
-        font-family: var(--md-icon-font);
-        font-size: var(--icon-size);
-        line-height: 1;
+        font: var(--icon-size) / 1 var(--md-icon-font);
         width: var(--icon-size);
         aspect-ratio: 1;
       }
       &:is(:checked, .checked)::before {
-        content: 'radio_button_checked';
+        --icon: 'radio_button_checked';
       }
       &::after {
         content: '';
