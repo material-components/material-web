@@ -426,6 +426,16 @@ export abstract class Menu extends LitElement {
       return;
     }
 
+    // Blur any focused descendant before hiding from assistive technology.
+    // When focus moves to another window/tab, the browser blocks setting
+    // aria-hidden on an element whose descendant still holds focus, which
+    // produces a console warning. Moving focus to the body first prevents it.
+    // See https://github.com/material-components/material-web/issues/5760
+    const focused = document.activeElement;
+    if (focused instanceof HTMLElement && this.contains(focused)) {
+      focused.blur();
+    }
+
     this.setAttribute('aria-hidden', 'true');
   }
 
