@@ -1,0 +1,128 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --container-color: var(--md-sys-color-surface-container-low);
+  --container-elevation: var(--md-sys-elevation-shadow-2);
+  --container-shape: var(--md-sys-shape-corner-lg);
+  --gap: 2px;
+  --group-padding: 2px;
+  --group-shape: var(--md-sys-shape-corner-sm);
+  --section-label-text-color: var(--md-sys-color-on-surface-variant);
+}
+
+@mixin inactive {
+  --container-shape: var(--md-sys-shape-corner-sm);
+}
+
+@mixin active {
+  --container-shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin vibrant {
+  --container-color: var(--md-sys-color-tertiary-container);
+}
+
+@mixin item {
+  --between-space: 12px;
+  --bottom-space: 8px;
+  --container-color: transparent;
+  --height: 44px;
+  --inner-corner-corner-size: none;
+  --label-text-color: var(--md-sys-color-on-surface);
+  --label-text: var(--md-sys-typescale-label-lg);
+  --label-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+  --leading-icon-color: var(--md-sys-color-on-surface-variant);
+  --leading-icon-size: 20px;
+  --leading-space: 16px;
+  --shape: var(--md-sys-shape-corner-xs);
+  --supporting-text-color: var(--md-sys-color-on-surface-variant);
+  --supporting-text: var(--md-sys-typescale-body-sm);
+  --supporting-text-tracking: var(--md-sys-typescale-body-sm-tracking);
+  --top-space: 8px;
+  --trailing-icon-color: var(--md-sys-color-on-surface-variant);
+  --trailing-icon-size: 20px;
+  --trailing-space: 16px;
+  --trailing-supporting-text-color: var(--md-sys-color-on-surface-variant);
+  --trailing-supporting-text: var(--md-sys-typescale-label-lg);
+  --trailing-supporting-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+}
+
+@mixin item-first-child {
+  --inner-corner-corner-size: var(--md-sys-shape-corner-xs);
+  --shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin item-last-child {
+  --inner-corner-corner-size: var(--md-sys-shape-corner-xs);
+  --shape: var(--md-sys-shape-corner-md);
+}
+
+@mixin item-vibrant {
+  --label-text-color: var(--md-sys-color-on-tertiary-container);
+  --leading-icon-color: var(--md-sys-color-on-tertiary-container);
+  --supporting-text-color: var(--md-sys-color-on-tertiary-container);
+  --trailing-icon-color: var(--md-sys-color-on-tertiary-container);
+  --trailing-supporting-text-color: var(--md-sys-color-on-tertiary-container);
+}
+
+@mixin item-vibrant-hovered {
+  --leading-icon-color: var(--md-sys-color-tertiary);
+  --trailing-icon-color: var(--md-sys-color-tertiary);
+}
+
+@mixin item-vibrant-focused {
+  --leading-icon-color: var(--md-sys-color-tertiary);
+  --trailing-icon-color: var(--md-sys-color-tertiary);
+}
+
+@mixin item-vibrant-pressed {
+  --leading-icon-color: var(--md-sys-color-tertiary);
+  --trailing-icon-color: var(--md-sys-color-tertiary);
+}
+
+@mixin item-selected {
+  --container-color: var(--md-sys-color-tertiary-container);
+  --label-text-color: var(--md-sys-color-on-tertiary-container);
+  --leading-icon-color: var(--md-sys-color-on-tertiary-container);
+  --shape: var(--md-sys-shape-corner-md);
+  --supporting-text-color: var(--md-sys-color-on-tertiary-container);
+  --trailing-icon-color: var(--md-sys-color-on-tertiary-container);
+  --trailing-supporting-text-color: var(--md-sys-color-on-tertiary-container);
+}
+
+@mixin item-selected-vibrant {
+  --container-color: var(--md-sys-color-tertiary);
+  --label-text-color: var(--md-sys-color-on-tertiary);
+  --leading-icon-color: var(--md-sys-color-on-tertiary);
+  --supporting-text-color: var(--md-sys-color-on-tertiary);
+  --trailing-icon-color: var(--md-sys-color-on-tertiary);
+  --trailing-supporting-text-color: var(--md-sys-color-on-tertiary);
+}
+
+@mixin item-disabled {
+  --label-text-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --leading-icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --supporting-text-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --trailing-icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --trailing-supporting-text-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+}
+
+@mixin item-disabled-vibrant {
+  --label-text-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --leading-icon-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --supporting-text-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --trailing-icon-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --trailing-supporting-text-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+}
+
+@mixin item-disabled-selected {
+  --container-color: hsl(from var(--md-sys-color-tertiary-container) h s l / 38%);
+  --label-text-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --leading-icon-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --supporting-text-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --trailing-icon-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+  --trailing-supporting-text-color: hsl(from var(--md-sys-color-on-tertiary-container) h s l / 38%);
+}
