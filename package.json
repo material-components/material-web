@@ -58,6 +58,7 @@
     "catalog"
   ],
   "dependencies": {
+    "@lit/context": "^1.1.6",
     "lit": "^2.8.0 || ^3.0.0",
     "tslib": "^2.4.0"
   },
@@ -76,7 +77,7 @@
     "rollup": "^2.79.1",
     "sass": "^1.93.2",
     "sass-true": "^6.1.0",
-    "typescript": "5.8.2",
+    "typescript": "5.9.2",
     "web-test-runner-jasmine": "^0.0.6",
     "wireit": "^0.14.12"
   },
@@ -174,8 +175,12 @@
         "tokens/versions/**/_md-*.scss",
         "!tokens/versions/**/*-meta.scss"
       ],
-      "output": ["tokens/versions/**/*-meta.scss"],
-      "dependencies": ["build:scripts"]
+      "output": [
+        "tokens/versions/**/*-meta.scss"
+      ],
+      "dependencies": [
+        "build:scripts"
+      ]
     },
     "test": {
       "command": "wtr",
