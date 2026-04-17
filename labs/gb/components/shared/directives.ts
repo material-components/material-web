@@ -88,10 +88,9 @@ export function createClassMapDirective<State = {}>(
   return directive(
     class ComponentClassMapDirective extends SetupElementDirective {
       render(params?: State & AdditionalClasses) {
-        const {classes, ...state} = params || {};
         return classMap({
-          ...(classes || {}),
-          ...options.getClasses(state as State),
+          ...(params?.classes || {}),
+          ...options.getClasses(params),
         });
       }
 
