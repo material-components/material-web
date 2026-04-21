@@ -28,12 +28,9 @@ import {SingleSelectionController} from '@material/web/radio/internal/single-sel
 import {css, CSSResultOrNative, html, isServer, LitElement} from 'lit';
 import {customElement, property, query, state} from 'lit/decorators.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
-// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
-// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
-import radioStyles from './radio.css' with {type: 'css'}; // github-only
-// import {styles as radioStyles} from './radio.cssresult.js'; // google3-only
+import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
+import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
+import radioStyles from './radio.cssresult.js';
 
 import {radio} from './radio.js';
 

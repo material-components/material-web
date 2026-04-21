@@ -13,12 +13,9 @@ import {mixinFormSubmitter} from '@material/web/labs/behaviors/form-submitter.js
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
-// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
-// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
-import buttonStyles from './button.css' with {type: 'css'}; // github-only
-// import buttonStyles from './button.cssresult.js'; // google3-only
+import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
+import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
+import buttonStyles from './button.cssresult.js';
 
 import {button} from './button.js';
 

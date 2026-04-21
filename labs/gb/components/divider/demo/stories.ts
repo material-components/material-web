@@ -10,7 +10,7 @@ import {MaterialStoryInit} from './material-collection.js';
 import {divider} from '@material/web/labs/gb/components/divider/divider.js';
 import {styles as dividerStyles} from '@material/web/labs/gb/components/divider/divider.cssresult.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
+import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for divider stories. */

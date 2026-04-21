@@ -12,8 +12,7 @@ import {CardColor} from '@material/web/labs/gb/components/card/card.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
 import {css, html, nothing} from 'lit';
 
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.css' with {type: 'css'}; // github-only
-// import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js'; // google3-only
+import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
 
 /** Knob types for card stories. */
 export interface StoryKnobs {

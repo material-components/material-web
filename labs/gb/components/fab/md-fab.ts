@@ -7,12 +7,9 @@
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
-// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
-// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
-import fabStyles from './fab.css' with {type: 'css'}; // github-only
-// import {styles as fabStyles} from './fab.cssresult.js'; // google3-only
+import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
+import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
+import fabStyles from './fab.cssresult.js';
 
 import {fab, type FabColor, type FabSize} from './fab.js';
 

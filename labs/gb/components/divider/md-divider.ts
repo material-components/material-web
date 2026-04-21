@@ -7,8 +7,7 @@
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import dividerStyles from './divider.css' with {type: 'css'}; // github-only
-// import {styles as dividerStyles} from './divider.cssresult.js'; // google3-only
+import dividerStyles from './divider.cssresult.js';
 
 import {divider} from './divider.js';
 

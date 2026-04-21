@@ -17,7 +17,7 @@ import {styles as focusRingStyles} from '@material/web/labs/gb/components/focus/
 import {styles as menuStyles} from '@material/web/labs/gb/components/menu/menu.cssresult.js';
 import {styles as rippleStyles} from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
+import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for menu stories. */
