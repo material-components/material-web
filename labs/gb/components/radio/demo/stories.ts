@@ -10,7 +10,8 @@ import {MaterialStoryInit} from './material-collection.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
 import {css, html} from 'lit';
 
-import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.css' with {type: 'css'}; // github-only
+// import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js'; // google3-only
 
 /** Knob types for radio stories. */
 export interface StoryKnobs {

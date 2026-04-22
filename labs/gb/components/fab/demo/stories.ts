@@ -10,7 +10,7 @@ import '@material/web/labs/gb/components/fab/md-fab.js';
 import {MaterialStoryInit} from './material-collection.js';
 import {FabColor, FabSize} from '@material/web/labs/gb/components/fab/fab.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
 import {css, html, nothing} from 'lit';
 
 /** Knob types for fab stories. */

@@ -28,9 +28,12 @@ import {hasSlotted} from '@material/web/labs/gb/components/shared/has-slotted.js
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
-import switchStyles from './switch.cssresult.js';
+import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
+// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
+import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
+// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
+import switchStyles from './switch.css' with {type: 'css'}; // github-only
+// import switchStyles from './switch.cssresult.js'; // google3-only
 
 import {switchToggle} from './switch.js';
 

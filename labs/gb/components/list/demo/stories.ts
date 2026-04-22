@@ -16,7 +16,7 @@ import {styles as listStyles} from '@material/web/labs/gb/components/list/list.c
 import {styles as radioStyles} from '@material/web/labs/gb/components/radio/radio.cssresult.js';
 import {styles as rippleStyles} from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for list stories. */

@@ -13,7 +13,8 @@ import {mixinFocusable} from '@material/web/labs/behaviors/focusable.js';
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import menuStyles from './menu.cssresult.js';
+import menuStyles from './menu.css' with {type: 'css'}; // github-only
+// import {styles as menuStyles} from './menu.cssresult.js'; // google3-only
 
 import {menu, MENU_COLORS, menuContext, type MenuColor} from './menu.js';
 

@@ -12,7 +12,7 @@ import {
   ButtonSize,
 } from '@material/web/labs/gb/components/button/button.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
 import {html, nothing} from 'lit';
 
 /** Knob types for button stories. */

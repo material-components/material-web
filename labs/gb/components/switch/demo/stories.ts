@@ -9,7 +9,7 @@ import '@material/web/labs/gb/components/switch/md-switch.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import m3Styles from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
 import {css, html, nothing} from 'lit';
 
 /** Knob types for switch stories. */

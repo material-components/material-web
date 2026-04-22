@@ -21,9 +21,12 @@ import {hasSlotted} from '@material/web/labs/gb/components/shared/has-slotted.js
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
-import menuStyles from './menu.cssresult.js';
+import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
+// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
+import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
+// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
+import menuStyles from './menu.css' with {type: 'css'}; // github-only
+// import {styles as menuStyles} from './menu.cssresult.js'; // google3-only
 
 import {
   menuContext,

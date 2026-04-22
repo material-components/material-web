@@ -22,9 +22,12 @@ import {CheckboxValidator} from '@material/web/labs/behaviors/validators/checkbo
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
-import checkboxStyles from './checkbox.cssresult.js';
+import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
+// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
+import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
+// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
+import checkboxStyles from './checkbox.css' with {type: 'css'}; // github-only
+// import checkboxStyles from './checkbox.cssresult.js'; // google3-only
 
 import {checkbox} from './checkbox.js';
 
