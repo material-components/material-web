@@ -78,6 +78,8 @@ export function setupRipple(
           initialValue: value,
         });
       }
+    } catch {
+      // Ignore errors if the properties are already registered.
     } finally {
       ripplePropertiesRegistered = true;
     }
