@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
+import {createClassMapDirective} from '../shared/directives.js';
 
 /** Divider classes. */
 export const DIVIDER_CLASSES = {

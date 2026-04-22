@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
+import {PSEUDO_CLASSES} from '../shared/pseudo-classes.js';
 
 /** Focus ring type configuration types. */
 export type FocusRingType = 'outer' | 'inner';

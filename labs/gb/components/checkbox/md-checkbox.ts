@@ -4,28 +4,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ARIAMixinStrict} from '@material/web/internal/aria/aria.js';
-import {mixinDelegatesAria} from '@material/web/internal/aria/delegate.js';
-import {redispatchEvent} from '@material/web/internal/events/redispatch-event.js';
+import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
+import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
+import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
+import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
 import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
-} from '@material/web/labs/behaviors/constraint-validation.js';
-import {mixinElementInternals} from '@material/web/labs/behaviors/element-internals.js';
+} from '../../../behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../../behaviors/element-internals.js';
 import {
   getFormState,
   getFormValue,
   mixinFormAssociated,
-} from '@material/web/labs/behaviors/form-associated.js';
-import {CheckboxValidator} from '@material/web/labs/behaviors/validators/checkbox-validator.js';
-import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+} from '../../../behaviors/form-associated.js';
+import {CheckboxValidator} from '../../../behaviors/validators/checkbox-validator.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
-// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
-// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
+import focusRingStyles from '../focus/focus-ring.css' with {type: 'css'}; // github-only
+// import focusRingStyles from '../focus/focus-ring.cssresult.js'; // google3-only
+import rippleStyles from '../ripple/ripple.css' with {type: 'css'}; // github-only
+// import rippleStyles from '../ripple/ripple.cssresult.js'; // google3-only
 import checkboxStyles from './checkbox.css' with {type: 'css'}; // github-only
 // import checkboxStyles from './checkbox.cssresult.js'; // google3-only
 

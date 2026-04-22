@@ -4,34 +4,34 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {css, CSSResultOrNative, html, isServer, LitElement} from 'lit';
+import {customElement, property, query, state} from 'lit/decorators.js';
 import {
   afterDispatch,
   setupDispatchHooks,
-} from '@material/web/internal/events/dispatch-hooks.js';
+} from '../../../../internal/events/dispatch-hooks.js';
+import {SingleSelectionController} from '../../../../radio/internal/single-selection-controller.js';
 import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
-} from '@material/web/labs/behaviors/constraint-validation.js';
+} from '../../../behaviors/constraint-validation.js';
 import {
   internals,
   mixinElementInternals,
-} from '@material/web/labs/behaviors/element-internals.js';
-import {mixinFocusable} from '@material/web/labs/behaviors/focusable.js';
+} from '../../../behaviors/element-internals.js';
+import {mixinFocusable} from '../../../behaviors/focusable.js';
 import {
   getFormState,
   getFormValue,
   mixinFormAssociated,
-} from '@material/web/labs/behaviors/form-associated.js';
-import {RadioValidator} from '@material/web/labs/behaviors/validators/radio-validator.js';
-import {SingleSelectionController} from '@material/web/radio/internal/single-selection-controller.js';
-import {css, CSSResultOrNative, html, isServer, LitElement} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+} from '../../../behaviors/form-associated.js';
+import {RadioValidator} from '../../../behaviors/validators/radio-validator.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
-// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
-// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
+import focusRingStyles from '../focus/focus-ring.css' with {type: 'css'}; // github-only
+// import focusRingStyles from '../focus/focus-ring.cssresult.js'; // google3-only
+import rippleStyles from '../ripple/ripple.css' with {type: 'css'}; // github-only
+// import rippleStyles from '../ripple/ripple.cssresult.js'; // google3-only
 import radioStyles from './radio.css' with {type: 'css'}; // github-only
 // import {styles as radioStyles} from './radio.cssresult.js'; // google3-only
 

@@ -5,13 +5,13 @@
  */
 
 import {ContextProvider} from '@lit/context';
+import {css, CSSResultOrNative, html, LitElement} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {
   internals,
   mixinElementInternals,
-} from '@material/web/labs/behaviors/element-internals.js';
-import {mixinFocusable} from '@material/web/labs/behaviors/focusable.js';
-import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+} from '../../../behaviors/element-internals.js';
+import {mixinFocusable} from '../../../behaviors/focusable.js';
 
 import menuStyles from './menu.css' with {type: 'css'}; // github-only
 // import {styles as menuStyles} from './menu.cssresult.js'; // google3-only

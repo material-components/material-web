@@ -6,8 +6,8 @@
 
 // import 'jasmine'; (google3-only)
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html} from 'lit';
+import {Environment} from '../../../../testing/environment.js';
 import {isDisabled} from './pseudo-classes.js';
 
 describe('pseudo-classes', () => {

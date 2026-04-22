@@ -4,14 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {FOCUS_RING_CLASSES} from '@material/web/labs/gb/components/focus/focus-ring.js';
-import {
-  RIPPLE_CLASSES,
-  setupRipple,
-} from '@material/web/labs/gb/components/ripple/ripple.js';
-import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
-import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
+import {FOCUS_RING_CLASSES} from '../focus/focus-ring.js';
+import {RIPPLE_CLASSES, setupRipple} from '../ripple/ripple.js';
+import {createClassMapDirective} from '../shared/directives.js';
+import {PSEUDO_CLASSES} from '../shared/pseudo-classes.js';
 
 /** List classes. */
 export const LIST_CLASSES = {

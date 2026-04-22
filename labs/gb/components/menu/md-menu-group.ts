@@ -5,12 +5,12 @@
  */
 
 import {consume, provide} from '@lit/context';
+import {css, CSSResultOrNative, html, LitElement} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {
   internals,
   mixinElementInternals,
-} from '@material/web/labs/behaviors/element-internals.js';
-import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+} from '../../../behaviors/element-internals.js';
 
 import {
   menuContext,

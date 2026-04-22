@@ -4,12 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {createElementDirective} from '@material/web/labs/gb/components/shared/directives.js';
-import {
-  PSEUDO_CLASSES,
-  isDisabled,
-} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
+import {createElementDirective} from '../shared/directives.js';
+import {PSEUDO_CLASSES, isDisabled} from '../shared/pseudo-classes.js';
 
 /** Ripple classes. */
 export const RIPPLE_CLASSES = {

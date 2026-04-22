@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {ARIAMixinStrict} from '@material/web/internal/aria/aria.js';
-import {mixinDelegatesAria} from '@material/web/internal/aria/delegate.js';
-import {ripple} from '@material/web/labs/gb/components/ripple/ripple.js';
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
+import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
+import {ripple} from '../ripple/ripple.js';
 
-import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.css' with {type: 'css'}; // github-only
-// import focusRingStyles from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js'; // google3-only
-import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.css' with {type: 'css'}; // github-only
-// import rippleStyles from '@material/web/labs/gb/components/ripple/ripple.cssresult.js'; // google3-only
+import focusRingStyles from '../focus/focus-ring.css' with {type: 'css'}; // github-only
+// import focusRingStyles from '../focus/focus-ring.cssresult.js'; // google3-only
+import rippleStyles from '../ripple/ripple.css' with {type: 'css'}; // github-only
+// import rippleStyles from '../ripple/ripple.cssresult.js'; // google3-only
 import cardStyles from './card.css' with {type: 'css'}; // github-only
 // import cardStyles from './card.cssresult.js'; // google3-only
 

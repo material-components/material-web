@@ -5,17 +5,11 @@
  */
 
 import {createContext} from '@lit/context';
-import {
-  FOCUS_RING_TYPES,
-  focusRingClasses,
-} from '@material/web/labs/gb/components/focus/focus-ring.js';
-import {
-  rippleClasses,
-  setupRipple,
-} from '@material/web/labs/gb/components/ripple/ripple.js';
-import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
-import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
+import {FOCUS_RING_TYPES, focusRingClasses} from '../focus/focus-ring.js';
+import {rippleClasses, setupRipple} from '../ripple/ripple.js';
+import {createClassMapDirective} from '../shared/directives.js';
+import {PSEUDO_CLASSES} from '../shared/pseudo-classes.js';
 
 /** Menu context provided to menu items. */
 export interface MenuContext {

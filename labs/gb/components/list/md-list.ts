@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {css, CSSResultOrNative, html, LitElement} from 'lit';
+import {customElement, property} from 'lit/decorators.js';
 import {
   internals,
   mixinElementInternals,
-} from '@material/web/labs/behaviors/element-internals.js';
-import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+} from '../../../behaviors/element-internals.js';
 
 import listStyles from './list.css' with {type: 'css'}; // github-only
 // import {styles as listStyles} from './list.cssresult.js'; // google3-only

@@ -6,8 +6,8 @@
 
 // import 'jasmine'; (google3-only)
 
-import {Environment} from '@material/web/testing/environment.js';
 import {html, render} from 'lit';
+import {Environment} from '../../../../testing/environment.js';
 
 import {hasSlotted} from './has-slotted.js';
 
