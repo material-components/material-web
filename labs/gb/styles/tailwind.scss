@@ -135,7 +135,7 @@
   --shadow-2xl: initial; // Material does not have a 2xl shadow.
 
   // Space
-  --spacing: 8px;
+  --spacing: var(--md-sys-space-unit);
 
   // Breakpoints
   --breakpoint-sm: 600px; // medium
