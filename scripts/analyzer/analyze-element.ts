@@ -12,9 +12,10 @@ import {
   LitElementDeclaration,
   LitElementExport,
   Module,
+  Reference,
 } from '@lit-labs/analyzer/package-analyzer.js';
 import * as path from 'path';
-import type ts from 'typescript';
+import ts from 'typescript';
 
 /**
  * Represents a module that exports a custom element and links its superclasses
@@ -145,6 +146,8 @@ export function analyzeElementApi(
     events,
   };
 
+  let nextSuperClass: MdModuleInfo | undefined = undefined;
+
   // If there is no superclass or we've gotten to the LitElement superclass,
   // we're done. Stop analyzing. Otherwise, analyze the superclass.
   if (superclass !== undefined && superclass.name !== 'LitElement') {
@@ -154,13 +157,23 @@ export function analyzeElementApi(
       elementEntrypoint,
       path.relative(elementEntrypoint, superClassLocation),
     );
-    const superClassModule = analyzeElementApi(
-      analyzer,
-      absolutePath,
-      superclass.name,
-    );
-    elementDocModule.superClass = superClassModule;
+    nextSuperClass = analyzeElementApi(analyzer, absolutePath, superclass.name);
   }
+
+  // Analyze and include any mixins in the superClass chain
+  for (const mixinRef of customElementModule.heritage.mixins) {
+    const mixinModule = analyzeMixin(
+      mixinRef,
+      elementModule,
+      elementEntrypoint,
+      nextSuperClass,
+    );
+    if (mixinModule) {
+      nextSuperClass = mixinModule;
+    }
+  }
+
+  elementDocModule.superClass = nextSuperClass;
 
   return elementDocModule;
 }
@@ -168,7 +181,114 @@ export function analyzeElementApi(
 /**
  * These are fields we do not want to expose on the API docs.
  */
-const FIELDS_TO_IGNORE = new Set(['isListItem', 'isMenuItem']);
+const FIELDS_TO_IGNORE = new Set([
+  'isListItem',
+  'isMenuItem',
+  'getAttribute',
+  'removeAttribute',
+  'tabIndex',
+  'formAssociatedCallback',
+  'formDisabledCallback',
+  'requestUpdate',
+]);
+
+/**
+ * Analyzes a mixin from the custom element's heritage chain and returns info
+ * about its fields, methods, and events.
+ */
+export function analyzeMixin(
+  mixinRef: Reference,
+  elementModule: Module,
+  elementEntrypoint: string,
+  nextSuperClass?: MdModuleInfo,
+): MdModuleInfo | undefined {
+  const mixinModel = mixinRef.dereference();
+  if (!mixinModel) return undefined;
+
+  const mixinClass = mixinModel.isMixinDeclaration()
+    ? mixinModel.classDeclaration
+    : mixinModel.isClassDeclaration()
+      ? mixinModel
+      : null;
+
+  if (!mixinClass) return undefined;
+
+  const interfaceNames: string[] = [];
+  const classNode = mixinClass.node as ts.ClassLikeDeclaration;
+  if (classNode.heritageClauses) {
+    for (const clause of classNode.heritageClauses) {
+      if (
+        clause.token === ts.SyntaxKind.ImplementsKeyword ||
+        clause.getText().includes('implements')
+      ) {
+        for (const type of clause.types) {
+          interfaceNames.push(type.expression.getText());
+        }
+      }
+    }
+  }
+
+  const memberDocs = new Map<string, string>();
+  const sourceFile = classNode.getSourceFile();
+  ts.forEachChild(sourceFile, (child) => {
+    const isMixinInterface =
+      ts.isInterfaceDeclaration(child) &&
+      interfaceNames.includes(child.name.text);
+    if (!isMixinInterface) return;
+
+    const propertiesAndMethods = child.members.filter(
+      (member) =>
+        ts.isPropertySignature(member) || ts.isMethodSignature(member),
+    );
+    for (const member of propertiesAndMethods) {
+      const name = member.name.getText();
+      const jsDocs = ts.getJSDocCommentsAndTags(member).filter(ts.isJSDoc);
+      const comment = jsDocs.reduce(
+        (prev, jsDoc) => `${prev}${jsDoc.comment}`,
+        '',
+      );
+      if (comment) {
+        memberDocs.set(name, comment);
+      }
+    }
+  });
+
+  let {
+    properties: mixinProperties,
+    reactiveProperties: mixinReactiveProperties,
+  } = analyzeFields(mixinClass, elementModule);
+  let mixinMethods = analyzeMethods(mixinClass);
+
+  mixinProperties = mixinProperties.filter(
+    (prop) => !FIELDS_TO_IGNORE.has(prop.name),
+  );
+  mixinReactiveProperties = mixinReactiveProperties.filter(
+    (prop) => !FIELDS_TO_IGNORE.has(prop.name),
+  );
+  mixinMethods = mixinMethods.filter(
+    (method) => !FIELDS_TO_IGNORE.has(method.name),
+  );
+
+  for (const prop of [
+    ...mixinProperties,
+    ...mixinReactiveProperties,
+    ...mixinMethods,
+  ]) {
+    if (!prop.description) {
+      prop.description = makeMarkdownFriendly(memberDocs.get(prop.name));
+    }
+  }
+
+  return {
+    className: mixinRef.name,
+    classPath: mixinRef.module || elementEntrypoint,
+    properties: mixinProperties,
+    reactiveProperties: mixinReactiveProperties,
+    methods: mixinMethods,
+    events: [],
+    superClass: nextSuperClass,
+  };
+}
 
 /**
  * Analyzes the fields of a LitElement class and returns information about the

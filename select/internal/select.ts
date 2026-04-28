@@ -822,10 +822,6 @@ export abstract class Select extends selectBaseClass {
     return this.error ? this.errorText : this.nativeErrorText;
   }
 
-  // Writable mixin properties for lit-html binding, needed for lit-analyzer
-  declare disabled: boolean;
-  declare name: string;
-
   override [getFormValue]() {
     return this.value;
   }

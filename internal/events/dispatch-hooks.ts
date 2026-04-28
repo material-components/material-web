@@ -77,7 +77,7 @@ export function afterDispatch(event: Event, callback: () => void) {
     throw new Error(`'${event.type}' event needs setupDispatchHooks().`);
   }
 
-  hooks.addEventListener('after', callback);
+  hooks.addEventListener('after', callback, {once: true});
 }
 
 /**
@@ -122,55 +122,58 @@ export function setupDispatchHooks(
 
   for (const eventType of eventTypes) {
     // Don't register multiple dispatch hook listeners. A second registration
-    // would lead to the second listener re-dispatching a re-dispatched event,
-    // which can cause an infinite loop inside the other one.
+    // would lead to the second listener calling `afterDispatch()` hooks twice.
     if (typesAlreadySetUp.has(eventType)) {
       continue;
     }
 
-    // When we re-dispatch the event, it's going to immediately trigger this
-    // listener again. Use a flag to ignore it.
-    let isRedispatching = false;
     element.addEventListener(
       eventType,
       (event: Event) => {
-        if (isRedispatching) {
-          return;
-        }
-
-        // Do not let the event propagate to any other listener (not just
-        // bubbling listeners with `stopPropagation()`).
-        event.stopImmediatePropagation();
-        // Make a copy.
-        const eventCopy = Reflect.construct(event.constructor, [
-          event.type,
-          event,
-        ]);
-
         // Add hooks onto the event.
         const hooks = new EventTarget();
-        (eventCopy as EventWithDispatchHooks)[dispatchHooks] = hooks;
+        (event as EventWithDispatchHooks)[dispatchHooks] = hooks;
 
-        // Re-dispatch the event. We can't reuse `redispatchEvent()` since we
-        // need to add the hooks to the copy before it's dispatched.
-        isRedispatching = true;
-        const composedPathIncludesAnchor = event
-          .composedPath()
-          .some((el) => (el as Partial<HTMLElement>)?.matches?.('a'));
-        if (event.type === 'click' && composedPathIncludesAnchor) {
-          // For legacy reasons, synthetic click events dispatching on
-          // HTMLAnchorElement will trigger link behavior. Prevent this since
-          // we will dispatch a copy of the same click event.
-          event.preventDefault();
-        }
-        const dispatched = event.composedPath()[0].dispatchEvent(eventCopy);
-        isRedispatching = false;
-        if (!dispatched) {
-          event.preventDefault();
+        const cleanupLastNodeListener = new AbortController();
+        const callAfterDispatch = () => {
+          cleanupLastNodeListener.abort();
+          hooks.dispatchEvent(new Event('after'));
+        };
+
+        const patchStopPropagation = (
+          superMethod: Event['stopPropagation'],
+        ) => {
+          return function (this: Event) {
+            superMethod.call(this);
+            // Synchronously call afterDispatch() hooks when interrupted.
+            callAfterDispatch();
+          };
+        };
+
+        event.stopPropagation = patchStopPropagation(event.stopPropagation);
+        event.stopImmediatePropagation = patchStopPropagation(
+          event.stopImmediatePropagation,
+        );
+
+        // Add an event listener to detect the end of the event's propagation.
+        const composedPath = event.composedPath();
+        let lastNodeForEvent: EventTarget;
+        if (event.composed && event.bubbles) {
+          lastNodeForEvent = composedPath[composedPath.length - 1];
+        } else if (!event.bubbles) {
+          lastNodeForEvent = composedPath[0];
+        } else {
+          lastNodeForEvent = (composedPath[0] as Element).getRootNode();
         }
 
-        // Synchronously call afterDispatch() hooks.
-        hooks.dispatchEvent(new Event('after'));
+        lastNodeForEvent.addEventListener(
+          eventType,
+          () => {
+            // Synchronously call afterDispatch() hooks.
+            callAfterDispatch();
+          },
+          {once: true, signal: cleanupLastNodeListener.signal},
+        );
       },
       {
         // Ensure this listener runs before other listeners.

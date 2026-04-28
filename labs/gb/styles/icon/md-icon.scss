@@ -40,7 +40,8 @@
 }
 
 @layer md.sys.icon {
-  .md-icon {
+  .md-icon,
+  :host(.md-icon) {
     display: inline-flex;
     place-items: center;
     place-content: center;

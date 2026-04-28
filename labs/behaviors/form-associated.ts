@@ -12,17 +12,6 @@ import {MixinBase, MixinReturn} from './mixin.js';
 
 /**
  * A form-associated element.
- *
- * IMPORTANT: Requires declares for lit-analyzer
- * @example
- * ```ts
- * const base = mixinFormAssociated(mixinElementInternals(LitElement));
- * class MyControl extends base {
- *   // Writable mixin properties for lit-html binding, needed for lit-analyzer
- *   declare disabled: boolean;
- *   declare name: string;
- * }
- * ```
  */
 export interface FormAssociated {
   /**
@@ -185,17 +174,6 @@ export const getFormState = Symbol('getFormState');
  *   override formStateRestoreCallback(state: string) {
  *     this.checked = Boolean(state);
  *   }
- * }
- * ```
- *
- * IMPORTANT: Requires declares for lit-analyzer
- * @example
- * ```ts
- * const base = mixinFormAssociated(mixinElementInternals(LitElement));
- * class MyControl extends base {
- *   // Writable mixin properties for lit-html binding, needed for lit-analyzer
- *   declare disabled: boolean;
- *   declare name: string;
  * }
  * ```
  *

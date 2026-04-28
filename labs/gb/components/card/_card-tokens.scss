@@ -1,0 +1,54 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --container-color: transparent;
+  --container-elevation: var(--md-sys-elevation-shadow-0);
+  --container-shape: var(--md-sys-shape-corner-md);
+  --outline-color: transparent;
+  --outline-width: 0;
+  --state-layer-color: var(--md-sys-color-on-surface);
+}
+
+@mixin hover {
+  --container-elevation: var(--md-sys-elevation-shadow-1);
+}
+
+@mixin filled {
+  --container-color: var(--md-sys-color-surface-container-highest);
+}
+
+@mixin filled-disabled {
+  --container-color: hsl(
+    from var(--md-sys-color-surface-container-highest) h s l / 38%
+  );
+}
+
+@mixin outlined {
+  --container-color: var(--md-sys-color-surface);
+  --outline-color: var(--md-sys-color-outline-variant);
+  --outline-width: 1px;
+}
+
+@mixin outlined-focus {
+  --outline-color: var(--md-sys-color-on-surface);
+}
+
+@mixin outlined-disabled {
+  --outline-color: hsl(from var(--md-sys-color-outline) h s l / 12%);
+}
+
+@mixin elevated {
+  --container-color: var(--md-sys-color-surface-container-low);
+  --container-elevation: var(--md-sys-elevation-shadow-1);
+}
+
+@mixin elevated-hover {
+  --container-elevation: var(--md-sys-elevation-shadow-2);
+}
+
+@mixin elevated-disabled {
+  --container-color: hsl(from var(--md-sys-color-surface) h s l / 38%);
+}

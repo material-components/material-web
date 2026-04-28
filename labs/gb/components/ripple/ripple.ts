@@ -4,16 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {PSEUDO_CLASSES} from '@material/web/labs/gb/components/shared/pseudo-classes.js';
-import {noChange} from 'lit';
-import {
-  Directive,
-  directive,
-  ElementPart,
-  PartInfo,
-  PartType,
-} from 'lit/directive.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
+import {createElementDirective} from '../shared/directives.js';
+import {PSEUDO_CLASSES, isDisabled} from '../shared/pseudo-classes.js';
 
 /** Ripple classes. */
 export const RIPPLE_CLASSES = {
@@ -85,45 +78,53 @@ export function setupRipple(
           initialValue: value,
         });
       }
+    } catch {
+      // Ignore errors if the properties are already registered.
     } finally {
       ripplePropertiesRegistered = true;
     }
   }
 
   let minimumPressTimeoutId: number | undefined;
+  const activateRipple = () => {
+    // If the ripple is already active, restart the current press animation.
+    if (ripple.classList.contains(RIPPLE_CLASSES.active)) {
+      const pressAnimation = ripple
+        .getAnimations()
+        .find(
+          (animation) =>
+            (animation as Partial<CSSAnimation>).animationName ===
+            'ripple-press',
+        );
+      pressAnimation?.cancel();
+      pressAnimation?.play();
+    }
+
+    // Emulate the `:active` class for a minimum press duration to show the
+    // ripple effect on short clicks.
+    ripple.classList.add(RIPPLE_CLASSES.active);
+    clearTimeout(minimumPressTimeoutId);
+    minimumPressTimeoutId = setTimeout(() => {
+      ripple.classList.remove(RIPPLE_CLASSES.active);
+    }, MINIMUM_PRESS_MS);
+  };
+
+  // Return true if the ripple is disabled, or if the ripple class has been
+  // removed. This allows components to disable and re-enable ripple behavior.
+  const isRippleDisabled = () =>
+    isDisabled(ripple) || !ripple.matches(`.${RIPPLE_CLASSES.ripple}`);
+
   ripple.addEventListener(
     'pointerdown',
     (event: PointerEvent): void => {
-      if (ripple.matches(':disabled,.disabled')) return;
-
+      if (isRippleDisabled()) return;
       // Set ripple position to the pointer position.
       const rect = ripple.getBoundingClientRect();
       const x = (event.clientX - rect.x) / rect.width;
       const y = (event.clientY - rect.y) / rect.height;
       ripple.style.setProperty('--ripple-x', `${x * 100}%`);
       ripple.style.setProperty('--ripple-y', `${y * 100}%`);
-
-      // If another pointerdown is received while the ripple is active, restart
-      // the active press animation.
-      if (ripple.classList.contains(RIPPLE_CLASSES.active)) {
-        const pressAnimation = ripple
-          .getAnimations()
-          .find(
-            (animation) =>
-              (animation as Partial<CSSAnimation>).animationName ===
-              'ripple-press',
-          );
-        pressAnimation?.cancel();
-        pressAnimation?.play();
-      }
-
-      // Emulate the `:active` class for a minimum press duration to show the
-      // ripple effect on short clicks.
-      ripple.classList.add(RIPPLE_CLASSES.active);
-      clearTimeout(minimumPressTimeoutId);
-      minimumPressTimeoutId = setTimeout(() => {
-        ripple.classList.remove(RIPPLE_CLASSES.active);
-      }, MINIMUM_PRESS_MS);
+      activateRipple();
     },
     opts,
   );
@@ -137,28 +138,18 @@ export function setupRipple(
     },
     opts,
   );
-}
 
-class RippleDirective extends Directive {
-  private element?: HTMLElement;
-  private cleanup?: AbortController;
-
-  constructor(partInfo: PartInfo) {
-    super(partInfo);
-    if (partInfo.type !== PartType.ELEMENT) {
-      throw new Error('The `ripple` directive must be used on an element');
-    }
-  }
-  render() {}
-  override update({element}: ElementPart) {
-    if (this.element !== element) {
-      this.element = element as HTMLElement;
-      this.cleanup?.abort();
-      this.cleanup = new AbortController();
-      setupRipple(this.element, {signal: this.cleanup.signal});
-    }
-    return noChange;
-  }
+  ripple.addEventListener(
+    'click',
+    (event) => {
+      // A UIEvent.detail click count of 0 indicates the click was not triggered
+      // by a pointer. Show the ripple press effect for these clicks as well.
+      if (event.detail === 0 && !isRippleDisabled()) {
+        activateRipple();
+      }
+    },
+    opts,
+  );
 }
 
 /**
@@ -197,4 +188,4 @@ class RippleDirective extends Directive {
  * `;
  * ```
  */
-export const ripple = directive(RippleDirective);
+export const ripple = createElementDirective(setupRipple);
