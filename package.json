@@ -63,7 +63,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@lit-labs/analyzer": "^0.12.1",
+    "@lit-labs/analyzer": "^0.14.0",
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
