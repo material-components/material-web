@@ -1,0 +1,152 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable scss/at-rule-no-unknown -- Uses TailwindCSS at-rules.
+
+// Cascade `md` layer between `base` reset styles and `utilities` for overrides.
+@layer theme, base, md, components, utilities;
+@theme inline {
+  // Color
+  #{'--color-*'}: initial; // Do not use Tailwind's default color utilities.
+  --color-primary: var(--md-sys-color-primary);
+  --color-on-primary: var(--md-sys-color-on-primary);
+  --color-primary-container: var(--md-sys-color-primary-container);
+  --color-on-primary-container: var(--md-sys-color-on-primary-container);
+  --color-primary-fixed: var(--md-sys-color-primary-fixed);
+  --color-primary-fixed-dim: var(--md-sys-color-primary-fixed-dim);
+  --color-on-primary-fixed: var(--md-sys-color-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(
+    --md-sys-color-on-primary-fixed-variant
+  );
+  --color-secondary: var(--md-sys-color-secondary);
+  --color-on-secondary: var(--md-sys-color-on-secondary);
+  --color-secondary-container: var(--md-sys-color-secondary-container);
+  --color-on-secondary-container: var(--md-sys-color-on-secondary-container);
+  --color-secondary-fixed: var(--md-sys-color-secondary-fixed);
+  --color-secondary-fixed-dim: var(--md-sys-color-secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--md-sys-color-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(
+    --md-sys-color-on-secondary-fixed-variant
+  );
+  --color-tertiary: var(--md-sys-color-tertiary);
+  --color-on-tertiary: var(--md-sys-color-on-tertiary);
+  --color-tertiary-container: var(--md-sys-color-tertiary-container);
+  --color-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
+  --color-tertiary-fixed: var(--md-sys-color-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--md-sys-color-tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--md-sys-color-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(
+    --md-sys-color-on-tertiary-fixed-variant
+  );
+  --color-error: var(--md-sys-color-error);
+  --color-on-error: var(--md-sys-color-on-error);
+  --color-error-container: var(--md-sys-color-error-container);
+  --color-on-error-container: var(--md-sys-color-on-error-container);
+  --color-surface: var(--md-sys-color-surface);
+  --color-surface-dim: var(--md-sys-color-surface-dim);
+  --color-surface-bright: var(--md-sys-color-surface-bright);
+  --color-surface-container-lowest: var(
+    --md-sys-color-surface-container-lowest
+  );
+  --color-surface-container-low: var(--md-sys-color-surface-container-low);
+  --color-surface-container: var(--md-sys-color-surface-container);
+  --color-surface-container-high: var(--md-sys-color-surface-container-high);
+  --color-surface-container-highest: var(
+    --md-sys-color-surface-container-highest
+  );
+  --color-on-surface: var(--md-sys-color-on-surface);
+  --color-on-surface-variant: var(--md-sys-color-on-surface-variant);
+  --color-outline: var(--md-sys-color-outline);
+  --color-outline-variant: var(--md-sys-color-outline-variant);
+  --color-inverse-surface: var(--md-sys-color-inverse-surface);
+  --color-inverse-on-surface: var(--md-sys-color-inverse-on-surface);
+  --color-inverse-primary: var(--md-sys-color-inverse-primary);
+  --color-scrim: var(--md-sys-color-scrim);
+  --color-shadow: var(--md-sys-color-shadow);
+
+  // Typography
+  #{'--font-*'}: initial; // Do not use Tailwind's default font utilities.
+  --font-brand: var(--md-ref-typeface-brand);
+  --font-plain: var(--md-ref-typeface-plain);
+  #{'--text-*'}: initial; // Do not use Tailwind's default text utilities.
+  #{'--tracking-*'}: initial;
+  #{'--leading-*'}: initial;
+  // Use the `typescale-<name>-<size>` utility to apply typography tokens.
+  --typescale-label-sm: var(--md-sys-typescale-label-sm);
+  --typescale-label-sm-tracking: var(--md-sys-typescale-label-sm-tracking);
+  --typescale-label-md: var(--md-sys-typescale-label-md);
+  --typescale-label-md-tracking: var(--md-sys-typescale-label-md-tracking);
+  --typescale-label-lg: var(--md-sys-typescale-label-lg);
+  --typescale-label-lg-tracking: var(--md-sys-typescale-label-lg-tracking);
+  --typescale-body-sm: var(--md-sys-typescale-body-sm);
+  --typescale-body-sm-tracking: var(--md-sys-typescale-body-sm-tracking);
+  --typescale-body-md: var(--md-sys-typescale-body-md);
+  --typescale-body-md-tracking: var(--md-sys-typescale-body-md-tracking);
+  --typescale-body-lg: var(--md-sys-typescale-body-lg);
+  --typescale-body-lg-tracking: var(--md-sys-typescale-body-lg-tracking);
+  --typescale-title-sm: var(--md-sys-typescale-title-sm);
+  --typescale-title-sm-tracking: var(--md-sys-typescale-title-sm-tracking);
+  --typescale-title-md: var(--md-sys-typescale-title-md);
+  --typescale-title-md-tracking: var(--md-sys-typescale-title-md-tracking);
+  --typescale-title-lg: var(--md-sys-typescale-title-lg);
+  --typescale-title-lg-tracking: var(--md-sys-typescale-title-lg-tracking);
+  --typescale-headline-sm: var(--md-sys-typescale-headline-sm);
+  --typescale-headline-sm-tracking: var(
+    --md-sys-typescale-headline-sm-tracking
+  );
+  --typescale-headline-md: var(--md-sys-typescale-headline-md);
+  --typescale-headline-md-tracking: var(
+    --md-sys-typescale-headline-md-tracking
+  );
+  --typescale-headline-lg: var(--md-sys-typescale-headline-lg);
+  --typescale-headline-lg-tracking: var(
+    --md-sys-typescale-headline-lg-tracking
+  );
+  --typescale-display-sm: var(--md-sys-typescale-display-sm);
+  --typescale-display-sm-tracking: var(--md-sys-typescale-display-sm-tracking);
+  --typescale-display-md: var(--md-sys-typescale-display-md);
+  --typescale-display-md-tracking: var(--md-sys-typescale-display-md-tracking);
+  --typescale-display-lg: var(--md-sys-typescale-display-lg);
+  --typescale-display-lg-tracking: var(--md-sys-typescale-display-lg-tracking);
+  #{'--font-weight-*'}: initial; // Material supports a limited set of font weights.
+  --font-weight-normal: var(--md-ref-typeface-weight-regular);
+  --font-weight-medium: var(--md-ref-typeface-weight-medium);
+  --font-weight-bold: var(--md-ref-typeface-weight-bold);
+
+  // Shape
+  --radius-xs: var(--md-sys-shape-corner-xs);
+  --radius-sm: var(--md-sys-shape-corner-sm);
+  --radius-md: var(--md-sys-shape-corner-md);
+  --radius-lg: var(--md-sys-shape-corner-lg);
+  --radius-xl: var(--md-sys-shape-corner-lg-increased);
+  --radius-2xl: var(--md-sys-shape-corner-xl);
+  --radius-3xl: var(--md-sys-shape-corner-xl-increased);
+  --radius-4xl: var(--md-sys-shape-corner-xxl);
+
+  // Elevation
+  --shadow-2xs: initial; // Material does not have a 2xs shadow.
+  --shadow-xs: var(--md-sys-elevation-shadow-1);
+  --shadow-sm: var(--md-sys-elevation-shadow-2);
+  --shadow-md: var(--md-sys-elevation-shadow-3);
+  --shadow-lg: var(--md-sys-elevation-shadow-4);
+  --shadow-xl: var(--md-sys-elevation-shadow-5);
+  --shadow-2xl: initial; // Material does not have a 2xl shadow.
+
+  // Space
+  --spacing: 8px;
+
+  // Breakpoints
+  --breakpoint-sm: 600px; // medium
+  --breakpoint-md: 840px; // expanded
+  --breakpoint-lg: 1200px; // large
+  --breakpoint-xl: 1600px; // extra-large
+  --breakpoint-2xl: initial; // Material does not have a 2xl breakpoint.
+}
+
+// Use the `typescale-<name>-<size>` utility to apply typography tokens.
+@utility typescale-* {
+  font: #{'--value(--typescale-*)'};
+  letter-spacing: #{'--value(--typescale-*-tracking)'};
+}
