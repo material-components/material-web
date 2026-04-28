@@ -101,6 +101,7 @@
         "**/*.ts",
         "!**/*.d.ts",
         "!**/*.cssresult.ts",
+        "!labs/gb/**",
         "!catalog/",
         "!scripts/"
       ],
@@ -112,6 +113,7 @@
         "!web-test-runner.config.js",
         "!commitlint.config.js",
         "!types/",
+        "!labs/gb/**",
         "!catalog/",
         "!scripts/"
       ],
@@ -149,6 +151,7 @@
         "**/*.cssresult.ts",
         "!catalog/"
       ],
+      "clean": "if-file-deleted",
       "dependencies": [
         "build:scripts",
         "build:sass"
