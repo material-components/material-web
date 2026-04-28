@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/icon/icon.js';
 import '@material/web/labs/gb/components/fab/md-fab.js';
+import '@material/web/labs/gb/styles/icon/md-icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {FabColor, FabSize} from '@material/web/labs/gb/components/fab/fab.js';
