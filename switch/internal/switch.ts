@@ -219,10 +219,6 @@ export class Switch extends switchBaseClass {
     redispatchEvent(this, event);
   }
 
-  // Writable mixin properties for lit-html binding, needed for lit-analyzer
-  declare disabled: boolean;
-  declare name: string;
-
   override [getFormValue]() {
     return this.selected ? this.value : null;
   }

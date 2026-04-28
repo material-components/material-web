@@ -45,11 +45,6 @@ export class IconButton extends iconButtonBaseClass {
   };
 
   /**
-   * Disables the icon button and makes it non-interactive.
-   */
-  declare disabled: boolean; // for jsdoc until lit-analyzer is updated
-
-  /**
    * "Soft-disables" the icon button (disabled but still focusable).
    *
    * Use this when an icon button needs increased visibility when disabled. See

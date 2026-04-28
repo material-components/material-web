@@ -36,11 +36,6 @@ export abstract class Button extends buttonBaseClass {
   };
 
   /**
-   * Whether or not the button is disabled.
-   */
-  declare disabled: boolean; // for jsdoc until lit-analyzer is updated
-
-  /**
    * Whether or not the button is "soft-disabled" (disabled but still
    * focusable).
    *
