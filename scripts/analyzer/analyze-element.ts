@@ -78,7 +78,6 @@ export interface MdMethodParameterInfo {
   default?: string;
 }
 
-
 /**
  * Analyzes a material design custom element and its superclass chain and
  * formats the data into a Module info object that describes the Material web
@@ -232,24 +231,24 @@ export function analyzeMixin(
   const memberDocs = new Map<string, string>();
   const sourceFile = classNode.getSourceFile();
   ts.forEachChild(sourceFile, (child) => {
-    if (
+    const isMixinInterface =
       ts.isInterfaceDeclaration(child) &&
-      interfaceNames.includes(child.name.text)
-    ) {
-      for (const member of child.members) {
-        if (ts.isPropertySignature(member) || ts.isMethodSignature(member)) {
-          const name = member.name.getText();
-          const jsDocs = (member as any).jsDoc || [];
-          const comment = jsDocs.length > 0 ? jsDocs[0].comment : '';
-          if (comment) {
-            memberDocs.set(
-              name,
-              typeof comment === 'string'
-                ? comment
-                : comment.map((c: any) => c.text).join(''),
-            );
-          }
-        }
+      interfaceNames.includes(child.name.text);
+    if (!isMixinInterface) return;
+
+    const propertiesAndMethods = child.members.filter(
+      (member) =>
+        ts.isPropertySignature(member) || ts.isMethodSignature(member),
+    );
+    for (const member of propertiesAndMethods) {
+      const name = member.name.getText();
+      const jsDocs = ts.getJSDocCommentsAndTags(member).filter(ts.isJSDoc);
+      const comment = jsDocs.reduce(
+        (prev, jsDoc) => `${prev}${jsDoc.comment}`,
+        '',
+      );
+      if (comment) {
+        memberDocs.set(name, comment);
       }
     }
   });
