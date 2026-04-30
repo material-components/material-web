@@ -8,17 +8,17 @@
 // Source template: formats/sassvars/contextualtokenset.scss.tmpl
 
 // Design system: Google Material 3
-// Version: 34.0.21
+// Version: 34.1.16
 // Configured context tags:
 //   audience: 3p
-//   font: static
+//   font: variable
 //   platform: web
 // Output format: sass_vars
 
 /// md.ref.typeface.brand (Brand)
-$brand: Roboto;
+$brand: 'Roboto Flex';
 /// md.ref.typeface.plain (Plain)
-$plain: Roboto;
+$plain: 'Roboto Flex';
 /// md.ref.typeface.weight-bold (Weight)
 $weight-bold: 700;
 /// md.ref.typeface.weight-medium (Weight)
