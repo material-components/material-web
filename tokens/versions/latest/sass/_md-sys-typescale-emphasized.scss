@@ -8,10 +8,10 @@
 // Source template: formats/sassvars/contextualtokenset.scss.tmpl
 
 // Design system: Google Material 3
-// Version: 34.0.21
+// Version: 34.1.16
 // Configured context tags:
 //   audience: 3p
-//   font: static
+//   font: variable
 //   platform: web
 // Output format: sass_vars
 
@@ -36,7 +36,7 @@ $body-large-size: 1rem;
 /// md.sys.typescale.emphasized.body-large.slnt (Emphasized Body styles / Emphasized Body Large)
 $body-large-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.body-large.tracking (Emphasized Body styles / Emphasized Body Large)
-$body-large-tracking: 0.03125rem;
+$body-large-tracking: 0;
 /// md.sys.typescale.emphasized.body-large.wdth (Emphasized Body styles / Emphasized Body Large)
 $body-large-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.body-large.wght (Emphasized Body styles / Emphasized Body Large)
@@ -60,7 +60,7 @@ $body-medium-size: 0.875rem;
 /// md.sys.typescale.emphasized.body-medium.slnt (Emphasized Body styles / Emphasized Body Medium)
 $body-medium-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.body-medium.tracking (Emphasized Body styles / Emphasized Body Medium)
-$body-medium-tracking: 0.015625rem;
+$body-medium-tracking: 0rem;
 /// md.sys.typescale.emphasized.body-medium.wdth (Emphasized Body styles / Emphasized Body Medium)
 $body-medium-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.body-medium.wght (Emphasized Body styles / Emphasized Body Medium)
@@ -84,7 +84,7 @@ $body-small-size: 0.75rem;
 /// md.sys.typescale.emphasized.body-small.slnt (Emphasized Body styles / Emphasized Body Small)
 $body-small-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.body-small.tracking (Emphasized Body styles / Emphasized Body Small)
-$body-small-tracking: 0.025rem;
+$body-small-tracking: 0rem;
 /// md.sys.typescale.emphasized.body-small.wdth (Emphasized Body styles / Emphasized Body Small)
 $body-small-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.body-small.wght (Emphasized Body styles / Emphasized Body Small)
@@ -108,7 +108,7 @@ $display-large-size: 3.5625rem;
 /// md.sys.typescale.emphasized.display-large.slnt (Emphasized Display styles / Emphasized Display Large)
 $display-large-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.display-large.tracking (Emphasized Display styles / Emphasized Display Large)
-$display-large-tracking: -0.015625rem;
+$display-large-tracking: 0rem;
 /// md.sys.typescale.emphasized.display-large.wdth (Emphasized Display styles / Emphasized Display Large)
 $display-large-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.display-large.wght (Emphasized Display styles / Emphasized Display Large)
@@ -198,7 +198,7 @@ $headline-medium-line-height: 2.25rem;
 /// md.sys.typescale.emphasized.headline-medium.opsz (Emphasized Headline styles / Emphasized Headline Medium)
 $headline-medium-opsz: 'opsz' 28;
 /// md.sys.typescale.emphasized.headline-medium.rond (Emphasized Headline styles / Emphasized Headline Medium)
-$headline-medium-rond: 'ROND' 0;
+$headline-medium-rond: 'ROND' 100;
 /// md.sys.typescale.emphasized.headline-medium.size (Emphasized Headline styles / Emphasized Headline Medium)
 $headline-medium-size: 1.75rem;
 /// md.sys.typescale.emphasized.headline-medium.slnt (Emphasized Headline styles / Emphasized Headline Medium)
@@ -252,7 +252,7 @@ $label-large-size: 0.875rem;
 /// md.sys.typescale.emphasized.label-large.slnt (Emphasized Label styles / Emphasized Label Large)
 $label-large-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.label-large.tracking (Emphasized Label styles / Emphasized Label Large)
-$label-large-tracking: 0.00625rem;
+$label-large-tracking: 0rem;
 /// md.sys.typescale.emphasized.label-large.wdth (Emphasized Label styles / Emphasized Label Large)
 $label-large-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.label-large.wght (Emphasized Label styles / Emphasized Label Large)
@@ -276,7 +276,7 @@ $label-medium-size: 0.75rem;
 /// md.sys.typescale.emphasized.label-medium.slnt (Emphasized Label styles / Emphasized Label Medium)
 $label-medium-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.label-medium.tracking (Emphasized Label styles / Emphasized Label Medium)
-$label-medium-tracking: 0.03125rem;
+$label-medium-tracking: 0rem;
 /// md.sys.typescale.emphasized.label-medium.wdth (Emphasized Label styles / Emphasized Label Medium)
 $label-medium-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.label-medium.wght (Emphasized Label styles / Emphasized Label Medium)
@@ -300,7 +300,7 @@ $label-small-size: 0.6875rem;
 /// md.sys.typescale.emphasized.label-small.slnt (Emphasized Label styles / Emphasized Label Small)
 $label-small-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.label-small.tracking (Emphasized Label styles / Emphasized Label Small)
-$label-small-tracking: 0.03125rem;
+$label-small-tracking: 0rem;
 /// md.sys.typescale.emphasized.label-small.wdth (Emphasized Label styles / Emphasized Label Small)
 $label-small-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.label-small.wght (Emphasized Label styles / Emphasized Label Small)
@@ -348,7 +348,7 @@ $title-medium-size: 1rem;
 /// md.sys.typescale.emphasized.title-medium.slnt (Emphasized Title styles / Emphasized Title Medium)
 $title-medium-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.title-medium.tracking (Emphasized Title styles / Emphasized Title Medium)
-$title-medium-tracking: 0.009375rem;
+$title-medium-tracking: 0rem;
 /// md.sys.typescale.emphasized.title-medium.wdth (Emphasized Title styles / Emphasized Title Medium)
 $title-medium-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.title-medium.wght (Emphasized Title styles / Emphasized Title Medium)
@@ -372,7 +372,7 @@ $title-small-size: 0.875rem;
 /// md.sys.typescale.emphasized.title-small.slnt (Emphasized Title styles / Emphasized Title Small)
 $title-small-slnt: 'slnt' 0;
 /// md.sys.typescale.emphasized.title-small.tracking (Emphasized Title styles / Emphasized Title Small)
-$title-small-tracking: 0.00625rem;
+$title-small-tracking: 0rem;
 /// md.sys.typescale.emphasized.title-small.wdth (Emphasized Title styles / Emphasized Title Small)
 $title-small-wdth: 'wdth' 100;
 /// md.sys.typescale.emphasized.title-small.wght (Emphasized Title styles / Emphasized Title Small)
@@ -444,6 +444,9 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $body-large-weight;
   letter-spacing: $body-large-tracking;
   line-height: $body-large-line-height;
+  font-variation-settings: $body-large-crsv, $body-large-fill, $body-large-grad,
+    $body-large-hexp, $body-large-opsz, $body-large-rond, $body-large-slnt,
+    $body-large-wdth, $body-large-wght;
 }
 /// md.sys.typescale.emphasized.body-medium (Emphasized Body styles / Emphasized Body Medium)
 @mixin body-medium {
@@ -452,6 +455,9 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $body-medium-weight;
   letter-spacing: $body-medium-tracking;
   line-height: $body-medium-line-height;
+  font-variation-settings: $body-medium-crsv, $body-medium-fill,
+    $body-medium-grad, $body-medium-hexp, $body-medium-opsz, $body-medium-rond,
+    $body-medium-slnt, $body-medium-wdth, $body-medium-wght;
 }
 /// md.sys.typescale.emphasized.body-small (Emphasized Body styles / Emphasized Body Small)
 @mixin body-small {
@@ -460,6 +466,9 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $body-small-weight;
   letter-spacing: $body-small-tracking;
   line-height: $body-small-line-height;
+  font-variation-settings: $body-small-crsv, $body-small-fill, $body-small-grad,
+    $body-small-hexp, $body-small-opsz, $body-small-rond, $body-small-slnt,
+    $body-small-wdth, $body-small-wght;
 }
 /// md.sys.typescale.emphasized.display-large (Emphasized Display styles / Emphasized Display Large)
 @mixin display-large {
@@ -468,6 +477,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $display-large-weight;
   letter-spacing: $display-large-tracking;
   line-height: $display-large-line-height;
+  font-variation-settings: $display-large-crsv, $display-large-fill,
+    $display-large-grad, $display-large-hexp, $display-large-opsz,
+    $display-large-rond, $display-large-slnt, $display-large-wdth,
+    $display-large-wght;
 }
 /// md.sys.typescale.emphasized.display-medium (Emphasized Display styles / Emphasized Display Medium)
 @mixin display-medium {
@@ -476,6 +489,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $display-medium-weight;
   letter-spacing: $display-medium-tracking;
   line-height: $display-medium-line-height;
+  font-variation-settings: $display-medium-crsv, $display-medium-fill,
+    $display-medium-grad, $display-medium-hexp, $display-medium-opsz,
+    $display-medium-rond, $display-medium-slnt, $display-medium-wdth,
+    $display-medium-wght;
 }
 /// md.sys.typescale.emphasized.display-small (Emphasized Display styles / Emphasized Display Small)
 @mixin display-small {
@@ -484,6 +501,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $display-small-weight;
   letter-spacing: $display-small-tracking;
   line-height: $display-small-line-height;
+  font-variation-settings: $display-small-crsv, $display-small-fill,
+    $display-small-grad, $display-small-hexp, $display-small-opsz,
+    $display-small-rond, $display-small-slnt, $display-small-wdth,
+    $display-small-wght;
 }
 /// md.sys.typescale.emphasized.headline-large (Emphasized Headline styles / Emphasized Headline Large)
 @mixin headline-large {
@@ -492,6 +513,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $headline-large-weight;
   letter-spacing: $headline-large-tracking;
   line-height: $headline-large-line-height;
+  font-variation-settings: $headline-large-crsv, $headline-large-fill,
+    $headline-large-grad, $headline-large-hexp, $headline-large-opsz,
+    $headline-large-rond, $headline-large-slnt, $headline-large-wdth,
+    $headline-large-wght;
 }
 /// md.sys.typescale.emphasized.headline-medium (Emphasized Headline styles / Emphasized Headline Medium)
 @mixin headline-medium {
@@ -500,6 +525,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $headline-medium-weight;
   letter-spacing: $headline-medium-tracking;
   line-height: $headline-medium-line-height;
+  font-variation-settings: $headline-medium-crsv, $headline-medium-fill,
+    $headline-medium-grad, $headline-medium-hexp, $headline-medium-opsz,
+    $headline-medium-rond, $headline-medium-slnt, $headline-medium-wdth,
+    $headline-medium-wght;
 }
 /// md.sys.typescale.emphasized.headline-small (Emphasized Headline styles / Emphasized Headline Small)
 @mixin headline-small {
@@ -508,6 +537,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $headline-small-weight;
   letter-spacing: $headline-small-tracking;
   line-height: $headline-small-line-height;
+  font-variation-settings: $headline-small-crsv, $headline-small-fill,
+    $headline-small-grad, $headline-small-hexp, $headline-small-opsz,
+    $headline-small-rond, $headline-small-slnt, $headline-small-wdth,
+    $headline-small-wght;
 }
 /// md.sys.typescale.emphasized.label-large (Emphasized Label styles / Emphasized Label Large)
 @mixin label-large {
@@ -516,6 +549,9 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $label-large-weight;
   letter-spacing: $label-large-tracking;
   line-height: $label-large-line-height;
+  font-variation-settings: $label-large-crsv, $label-large-fill,
+    $label-large-grad, $label-large-hexp, $label-large-opsz, $label-large-rond,
+    $label-large-slnt, $label-large-wdth, $label-large-wght;
 }
 /// md.sys.typescale.emphasized.label-medium (Emphasized Label styles / Emphasized Label Medium)
 @mixin label-medium {
@@ -524,6 +560,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $label-medium-weight;
   letter-spacing: $label-medium-tracking;
   line-height: $label-medium-line-height;
+  font-variation-settings: $label-medium-crsv, $label-medium-fill,
+    $label-medium-grad, $label-medium-hexp, $label-medium-opsz,
+    $label-medium-rond, $label-medium-slnt, $label-medium-wdth,
+    $label-medium-wght;
 }
 /// md.sys.typescale.emphasized.label-small (Emphasized Label styles / Emphasized Label Small)
 @mixin label-small {
@@ -532,6 +572,9 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $label-small-weight;
   letter-spacing: $label-small-tracking;
   line-height: $label-small-line-height;
+  font-variation-settings: $label-small-crsv, $label-small-fill,
+    $label-small-grad, $label-small-hexp, $label-small-opsz, $label-small-rond,
+    $label-small-slnt, $label-small-wdth, $label-small-wght;
 }
 /// md.sys.typescale.emphasized.title-large (Emphasized Title styles / Emphasized Title Large)
 @mixin title-large {
@@ -540,6 +583,9 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $title-large-weight;
   letter-spacing: $title-large-tracking;
   line-height: $title-large-line-height;
+  font-variation-settings: $title-large-crsv, $title-large-fill,
+    $title-large-grad, $title-large-hexp, $title-large-opsz, $title-large-rond,
+    $title-large-slnt, $title-large-wdth, $title-large-wght;
 }
 /// md.sys.typescale.emphasized.title-medium (Emphasized Title styles / Emphasized Title Medium)
 @mixin title-medium {
@@ -548,6 +594,10 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $title-medium-weight;
   letter-spacing: $title-medium-tracking;
   line-height: $title-medium-line-height;
+  font-variation-settings: $title-medium-crsv, $title-medium-fill,
+    $title-medium-grad, $title-medium-hexp, $title-medium-opsz,
+    $title-medium-rond, $title-medium-slnt, $title-medium-wdth,
+    $title-medium-wght;
 }
 /// md.sys.typescale.emphasized.title-small (Emphasized Title styles / Emphasized Title Small)
 @mixin title-small {
@@ -556,4 +606,7 @@ $title-small-weight: md-ref-typeface.$weight-bold;
   font-weight: $title-small-weight;
   letter-spacing: $title-small-tracking;
   line-height: $title-small-line-height;
+  font-variation-settings: $title-small-crsv, $title-small-fill,
+    $title-small-grad, $title-small-hexp, $title-small-opsz, $title-small-rond,
+    $title-small-slnt, $title-small-wdth, $title-small-wght;
 }
