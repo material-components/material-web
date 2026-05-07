@@ -7,6 +7,11 @@
 
 // Cascade `md` layer between `base` reset styles and `utilities` for overrides.
 @layer theme, base, md, components, utilities;
+// Non-inline theme to preserve Tailwind's default 4px spacing convention.
+@theme {
+  --spacing: calc(var(--md-sys-space-unit) / 2);
+}
+// Inline theme to replace Tailwind's default custom properties.
 @theme inline {
   // Color
   #{'--color-*'}: initial; // Do not use Tailwind's default color utilities.
@@ -221,7 +226,24 @@
   --shadow-2xl: initial; // Material does not have a 2xl shadow.
 
   // Space
-  --spacing: var(--md-sys-space-unit);
+  --spacing-s0: var(--md-sys-space-0);
+  --spacing-s25: var(--md-sys-space-25);
+  --spacing-s50: var(--md-sys-space-50);
+  --spacing-s75: var(--md-sys-space-75);
+  --spacing-s100: var(--md-sys-space-100);
+  --spacing-s125: var(--md-sys-space-125);
+  --spacing-s150: var(--md-sys-space-150);
+  --spacing-s175: var(--md-sys-space-175);
+  --spacing-s200: var(--md-sys-space-200);
+  --spacing-s250: var(--md-sys-space-250);
+  --spacing-s300: var(--md-sys-space-300);
+  --spacing-s400: var(--md-sys-space-400);
+  --spacing-s450: var(--md-sys-space-450);
+  --spacing-s500: var(--md-sys-space-500);
+  --spacing-s600: var(--md-sys-space-600);
+  --spacing-s700: var(--md-sys-space-700);
+  --spacing-s800: var(--md-sys-space-800);
+  --spacing-s900: var(--md-sys-space-900);
 
   // Breakpoints
   --breakpoint-sm: 600px; // medium
@@ -241,6 +263,83 @@
   font: #{'--value(--typescale-emphasized-*)'};
   letter-spacing: #{'--value(--typescale-*-tracking)'};
   font-variation-settings: #{'--value(--typescale-emphasized-*-axes)'};
+}
+
+// Add Material spacing utilities for padding, margin, and gap.
+@utility p-* {
+  padding: #{'--value(--spacing-*)'};
+}
+@utility px-* {
+  padding-inline: #{'--value(--spacing-*)'};
+}
+@utility py-* {
+  padding-block: #{'--value(--spacing-*)'};
+}
+@utility pl-* {
+  padding-inline-start: #{'--value(--spacing-*)'};
+}
+@utility ps-* {
+  padding-inline-start: #{'--value(--spacing-*)'};
+}
+@utility pe-* {
+  padding-inline-end: #{'--value(--spacing-*)'};
+}
+@utility pr-* {
+  padding-inline-end: #{'--value(--spacing-*)'};
+}
+@utility pt-* {
+  padding-block-start: #{'--value(--spacing-*)'};
+}
+@utility pbs-* {
+  padding-block-start: #{'--value(--spacing-*)'};
+}
+@utility pb-* {
+  padding-block-end: #{'--value(--spacing-*)'};
+}
+@utility pbe-* {
+  padding-block-end: #{'--value(--spacing-*)'};
+}
+@utility m-* {
+  margin: #{'--value(--spacing-*)'};
+}
+@utility mx-* {
+  margin-inline: #{'--value(--spacing-*)'};
+}
+@utility my-* {
+  margin-block: #{'--value(--spacing-*)'};
+}
+@utility ml-* {
+  margin-inline-start: #{'--value(--spacing-*)'};
+}
+@utility ms-* {
+  margin-inline-start: #{'--value(--spacing-*)'};
+}
+@utility me-* {
+  margin-inline-end: #{'--value(--spacing-*)'};
+}
+@utility mr-* {
+  margin-inline-end: #{'--value(--spacing-*)'};
+}
+@utility mt-* {
+  margin-block-start: #{'--value(--spacing-*)'};
+}
+@utility mbs-* {
+  margin-block-start: #{'--value(--spacing-*)'};
+}
+@utility mb-* {
+  margin-block-end: #{'--value(--spacing-*)'};
+}
+@utility mbe-* {
+  margin-block-end: #{'--value(--spacing-*)'};
+}
+@utility gap-* {
+  gap: #{'--value(--spacing-*)'};
+}
+@utility gap-x-* {
+  column-gap: #{'--value(--spacing-*)'};
+}
+@utility gap-y-* {
+  row-gap: #{'--value(--spacing-*)'};
 }
 
 // Override Tailwind's default `display: list-item` utility, which clashes
