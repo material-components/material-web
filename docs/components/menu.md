@@ -634,7 +634,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
 | --- | --- | --- | --- | --- |
 | `deactivate-items` | `Event` | Yes | Yes | Requests the parent menu to deselect other items when a submenu opens. |
-| `request-activation` | `Event` | Yes | Yes | Requests the parent to make the slotted item focusable and focus the item. |
+| `request-activation` | `Event` | Yes | Yes | Requests the parent to make the slotted item focusable and focus the item. Used internally for menu keyboard navigation; most applications do not need to listen for this event. It is exposed for authors building their own menu-item replacements, or for advanced cases where you want to call `preventDefault`/`stopPropagation` on it to override default focus handling. |
 | `deactivate-typeahead` | `Event` | Yes | Yes | Requests the parent menu to deactivate the typeahead functionality when a submenu opens. |
 | `activate-typeahead` | `Event` | Yes | Yes | Requests the parent menu to activate the typeahead functionality when a submenu closes. |
 
