@@ -10,7 +10,7 @@ order: 3
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2025-11-23' }
+freshness: { owner: 'sanjeev' reviewed: '2025-11-23' }
 tag: 'docType:howTo'
 *-->
 
@@ -29,7 +29,7 @@ writing legible and beautiful.
 
 <!-- go/md-ref-typeface -->
 
-A [typeface](https://m3.material.io/styles/typography/fonts)<!-- {.external} --> is a
+A [typeface](https://fonts.google.com/noto/specimen/Noto+Sans)<!-- {.external} --> is a
 `font-family`. In Material there are plain and brand typefaces.
 
 Each typeface has normal, medium, and bold styles (defaults to `400`, `500`, and
@@ -47,8 +47,8 @@ Tokens follow the naming convention `--md-ref-typeface-<token>`.
 
 Typeface | Token
 -------- | -------------------------
-Brand    | `--md-ref-typeface-brand`
-Plain    | `--md-ref-typeface-plain`
+Brand    | `--htd-ref-typeface-brand`
+Plain    | `--htd-ref-typeface-plain`
 
 *   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-ref-typeface.scss)
     <!-- {.external} -->
@@ -57,7 +57,7 @@ Plain    | `--md-ref-typeface-plain`
 @import url('https://fonts.googleapis.com/css2?family=Open%20Sans:wght@400;500;700&display=swap');
 
 :root {
-  --md-ref-typeface-brand: 'Open Sans';
+  --md-ref-typeface-brand: 'Noto Sans';
   --md-ref-typeface-plain: system-ui;
 }
 ```
