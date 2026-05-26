@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {createClassMapDirective} from '@material/web/labs/gb/components/shared/directives.js';
+import {createClassMapDirective} from '../shared/directives.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
 
 /** Split Button color configuration types. */
