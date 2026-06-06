@@ -32,12 +32,11 @@ body.dw{background:radial-gradient(at 20% 20%,#C9B8FF 0,transparent 45%),radial-
 .bbar{width:200px;height:4px;border-radius:2px;background:rgba(208,188,255,.2);overflow:hidden}
 .bbar>i{display:block;height:100%;width:0;background:#D0BCFF;border-radius:2px;animation:bf 2.4s ease forwards}
 @keyframes bf{to{width:100%}}
-#lock{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;backdrop-filter:blur(6px);z-index:5000}
+#lock{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;background:radial-gradient(at 30% 30%,rgba(103,80,164,.6),transparent 60%),radial-gradient(at 80% 70%,rgba(30,58,138,.7),transparent 60%),#0f0e17;backdrop-filter:blur(20px);z-index:5000}
 #lockClock{font-size:96px;font-weight:300;letter-spacing:-2px}
 #lockDate{font-size:20px;font-weight:400;margin-bottom:60px}
 .av{width:88px;height:88px;border-radius:50%;background:var(--md-pri);color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:500;margin-bottom:8px}
-#unlockBtn{margin-top:8px;padding:10px 32px;border:none;border-radius:100px;background:#D0BCFF;color:#381E72;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit}
-#unlockBtn:hover{background:#E9DDFF}
+#unlockBtn{margin-top:8px}
 #menubar{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--md-surf-con);color:var(--md-on-surf);font-size:13px;font-weight:500;z-index:4000;border-bottom:1px solid var(--md-out-var)}
 .ml,.mr{display:flex;align-items:center;gap:2px}
 .mi{padding:6px 12px;border-radius:100px;white-space:nowrap;cursor:default;font-size:13px;font-weight:500;transition:background .15s}
@@ -184,15 +183,12 @@ body.dark .bc{color:var(--md-on-surf)}
 .bob-typing span:nth-child(2){animation-delay:.18s}.bob-typing span:nth-child(3){animation-delay:.36s}
 @keyframes btp{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 .bob-bar{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--md-out-var);background:var(--md-surf-con)}
-.bob-bar input{flex:1;border:2px solid var(--md-out-var);border-radius:100px;padding:10px 18px;font-size:14px;background:var(--md-surf-con-hi);outline:none;font-family:inherit;user-select:text;-webkit-user-select:text;color:var(--md-on-surf);transition:border-color .2s}
-.bob-bar input:focus{border-color:var(--md-pri)}
-.bob-bar input::placeholder{color:var(--md-on-surf-var)}
-.bob-send{width:40px;height:40px;border-radius:100px;border:none;background:var(--md-pri);color:var(--md-on-pri);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.bob-bar md-outlined-text-field{flex:1;--md-outlined-text-field-container-shape:28px;--md-outlined-text-field-outline-color:var(--md-out-var);--md-outlined-text-field-focus-outline-color:var(--md-pri)}
 /* custom cursor */
 *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M4 1.5l12 8-6.5 1.8L7 18.5z' fill='white' stroke='%23222' stroke-width='1' stroke-linejoin='round'/%3E%3C/svg%3E") 3 1,auto!important}
-button,input,textarea,.dk,.dot,.mi,.row,.ff,.wo2,.bh-link,.cb,.store-get,.sw,.fs .row,.ss .row,.pb{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M4 1.5l12 8-6.5 1.8L7 18.5z' fill='white' stroke='%23222' stroke-width='1' stroke-linejoin='round'/%3E%3C/svg%3E") 3 1,pointer!important}
+button,input,textarea,.dk,.dot,.mi,.row,.ff,.wo2,.bh-link,.cb,.store-get,.sw,.fs .row,.ss .row,.pb,md-filled-button,md-text-button,md-outlined-button,md-filled-icon-button,md-icon-button,md-switch{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M4 1.5l12 8-6.5 1.8L7 18.5z' fill='white' stroke='%23222' stroke-width='1' stroke-linejoin='round'/%3E%3C/svg%3E") 3 1,pointer!important}
 @keyframes spin{to{transform:rotate(360deg)}}
-body.dark{--md-pri:#D0BCFF;--md-on-pri:#381E72;--md-pri-con:#4F378B;--md-on-pri-con:#EADDFF;--md-sec:#CCC2DC;--md-on-sec:#332D41;--md-sec-con:#4A4458;--md-on-sec-con:#E8DEF8;--md-surf:#141218;--md-surf-con:#211F26;--md-surf-con-hi:#2B2930;--md-surf-con-hiest:#36343B;--md-on-surf:#E6E1E5;--md-on-surf-var:#CAC4D0;--md-out:#938F99;--md-out-var:#49454F;--md-err:#F2B8B5;--text:var(--md-on-surf)}
+body.dark{--md-pri:#D0BCFF;--md-on-pri:#381E72;--md-pri-con:#4F378B;--md-on-pri-con:#EADDFF;--md-sec:#CCC2DC;--md-on-sec:#332D41;--md-sec-con:#4A4458;--md-on-sec-con:#E8DEF8;--md-surf:#141218;--md-surf-con:#211F26;--md-surf-con-hi:#2B2930;--md-surf-con-hiest:#36343B;--md-on-surf:#E6E1E5;--md-on-surf-var:#CAC4D0;--md-out:#938F99;--md-out-var:#49454F;--md-err:#F2B8B5;--text:var(--md-on-surf);--md-sys-color-primary:#D0BCFF;--md-sys-color-on-primary:#381E72;--md-sys-color-primary-container:#4F378B;--md-sys-color-on-primary-container:#EADDFF;--md-sys-color-secondary:#CCC2DC;--md-sys-color-on-secondary:#332D41;--md-sys-color-secondary-container:#4A4458;--md-sys-color-on-secondary-container:#E8DEF8;--md-sys-color-surface:#141218;--md-sys-color-on-surface:#E6E1E5;--md-sys-color-outline:#938F99}
 body.dark.dw{background:radial-gradient(at 20% 20%,#1F1B33 0,transparent 45%),radial-gradient(at 80% 10%,#1A1F38 0,transparent 45%),radial-gradient(at 75% 80%,#0F1830 0,transparent 45%),radial-gradient(at 10% 85%,#201533 0,transparent 45%),linear-gradient(135deg,#0D1117,#181825);background-attachment:fixed}
 body.dark .bhome{background:var(--md-surf)}
 body.dark .notes textarea{background:var(--md-surf-con)}
@@ -210,19 +206,14 @@ body.dark .notes textarea{background:var(--md-surf-con)}
  .win{left:0!important;top:56px!important;width:100vw!important;height:calc(100vh - 128px)!important;border-radius:0!important;min-width:unset!important}
 }
 /* ── Material Web component integration ── */
-md-filled-button{--md-filled-button-container-color:var(--md-pri);--md-filled-button-label-text-color:var(--md-on-pri);--md-filled-button-container-shape:100px;font-family:"Roboto",sans-serif}
-md-filled-button.danger{--md-filled-button-container-color:#ff3b30;--md-filled-button-label-text-color:#fff}
-md-text-button{--md-text-button-label-text-color:var(--md-pri);font-family:"Roboto",sans-serif}
-md-outlined-text-field{--md-outlined-text-field-outline-color:var(--md-out);--md-outlined-text-field-focus-outline-color:var(--md-pri);--md-outlined-text-field-input-text-color:var(--md-on-surf);font-family:"Roboto",sans-serif;width:100%}
-md-outlined-text-field[type="password"]{letter-spacing:.1em}
-md-switch{--md-switch-selected-track-color:var(--md-pri);--md-switch-selected-handle-color:#fff;flex-shrink:0}
-md-filled-icon-button{--md-filled-icon-button-container-color:var(--md-pri);--md-filled-icon-button-icon-color:var(--md-on-pri)}
-md-ripple{border-radius:inherit}
-.bob-bar md-outlined-text-field{--md-outlined-text-field-container-shape:100px;flex:1}
-body.dark md-outlined-text-field{--md-outlined-text-field-input-text-color:#E6E1E5;--md-outlined-text-field-outline-color:#938F99}
-body.dark md-filled-button{--md-filled-button-container-color:#D0BCFF;--md-filled-button-label-text-color:#381E72}
-body.dark md-switch{--md-switch-selected-track-color:#D0BCFF;--md-switch-selected-handle-color:#381E72}
-#unlockBtn{margin-top:8px;--md-filled-button-container-color:#D0BCFF;--md-filled-button-label-text-color:#381E72;--md-filled-button-container-shape:100px;font-size:15px;font-weight:500}
+md-filled-button{--md-filled-button-container-color:var(--md-sys-color-primary,var(--md-pri));--md-filled-button-label-text-color:var(--md-sys-color-on-primary,var(--md-on-pri));--md-filled-button-container-shape:100px;font-family:"Roboto",sans-serif}
+md-filled-button.danger{--md-filled-button-container-color:#B3261E;--md-filled-button-label-text-color:#fff}
+md-text-button{font-family:"Roboto",sans-serif}
+md-outlined-text-field{--md-outlined-text-field-outline-color:var(--md-out);--md-outlined-text-field-focus-outline-color:var(--md-pri);--md-outlined-text-field-input-text-color:var(--md-on-surf);--md-outlined-text-field-label-text-color:var(--md-on-surf-var);font-family:"Roboto",sans-serif;width:100%}
+md-switch{flex-shrink:0;align-self:center}
+md-filled-icon-button{--md-filled-icon-button-container-color:var(--md-pri);--md-filled-icon-button-icon-color:var(--md-on-pri);flex-shrink:0}
+md-ripple{border-radius:inherit;--md-ripple-hover-color:rgba(103,80,164,.08);--md-ripple-pressed-color:rgba(103,80,164,.12)}
+#unlockBtn{margin-top:8px;--md-filled-button-container-color:#D0BCFF;--md-filled-button-label-text-color:#381E72;--md-filled-button-container-shape:100px;--md-filled-button-label-text-size:15px;--md-filled-button-label-text-weight:500}
 .material-symbols-outlined{font-family:"Material Symbols Outlined";font-size:20px;line-height:1;font-weight:normal;font-style:normal;display:inline-flex;user-select:none}
 @media(max-width:200px){
  #menubar{display:none}
@@ -235,7 +226,14 @@ body.dark md-switch{--md-switch-selected-track-color:#D0BCFF;--md-switch-selecte
 }
 </style></head>
 <body class="dw">
-<div id="boot"><div class="bootlogo"><div class="ngmark big" style="background:#fff"></div></div><div class="bbar"><i></i></div></div>
+<div id="boot">
+  <div class="bootlogo">
+    <div class="ngmark big"><svg viewBox="0 0 24 24"><path d="M3 9c2.5-2.5 5.5-2.5 8 0s5.5 2.5 8 0M3 15c2.5-2.5 5.5-2.5 8 0s5.5 2.5 8 0"/></svg></div>
+    <span class="ngword">ROS — Niagara Glass</span>
+  </div>
+  <div class="bbar"><i></i></div>
+  <div class="ngbadge" style="position:static;transform:none"><span class="ngmark sm"><svg viewBox="0 0 24 24"><path d="M3 9c2.5-2.5 5.5-2.5 8 0s5.5 2.5 8 0M3 15c2.5-2.5 5.5-2.5 8 0s5.5 2.5 8 0"/></svg></span>Material Design 3</div>
+</div>
 <div id="lock" class="hidden"><div id="lockClock">9:41</div><div id="lockDate"></div><div class="av" id="lockAv">R</div><div id="lockName">ROS User</div><md-filled-button id="unlockBtn" data-i18n="signin">Sign In</md-filled-button><div class="ngbadge"><span class="ngmark sm"><svg viewBox="0 0 24 24"><path d="M3 9c2.5-2.5 5.5-2.5 8 0s5.5 2.5 8 0M3 15c2.5-2.5 5.5-2.5 8 0s5.5 2.5 8 0"/></svg></span>Niagara Glass</div></div>
 <div id="desktop" class="hidden">
 <canvas id="stars" style="position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0;transition:opacity .8s"></canvas>
@@ -338,7 +336,8 @@ function applyLang(lng){
   document.documentElement.dir=lng==="he"?"rtl":"ltr";
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.dataset.i18n;
-    if(el.tagName==="INPUT")el.placeholder=t(k);else el.textContent=t(k)});
+    const tag=el.localName;
+    if(tag==="input"||tag.includes("text-field"))el.placeholder=t(k);else el.textContent=t(k)});
   const AN={finder:t("finder"),notes:t("notes"),settings:t("settings"),calculator:t("calculator"),
     browser:t("browser"),appstore:t("appstore"),terminal:t("terminal"),photos:t("photos"),
     about:t("about"),bob:t("bob"),camera:t("camera"),phone:t("phone"),clock:t("clock"),
@@ -900,13 +899,12 @@ setTimeout(()=>{l.classList.add("hidden");$("#desktop").classList.remove("hidden
 $("#unlockBtn").onclick=unlock;$("#lock").ondblclick=unlock;
 
 // ---- theme ----
-function setTheme(d){document.body.classList.toggle("dark",d);$("#theme").innerHTML=d?`<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`:`<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>`;
-// sync md-switch elements
-document.querySelectorAll("md-switch[data-sw]").forEach(s=>s.selected=d);
-document.querySelectorAll(".sw[data-sw]").forEach(s=>s.classList.toggle("on",d));
-// sync MD color tokens for dark mode
-document.documentElement.style.setProperty("--md-sys-color-primary",d?"#D0BCFF":"#6750A4");
-document.documentElement.style.setProperty("--md-sys-color-on-primary",d?"#381E72":"#fff");}
+function setTheme(d){
+  document.body.classList.toggle("dark",d);
+  localStorage.setItem("ros_theme",d?"dark":"light");
+  $("#theme").innerHTML=d?`<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`:`<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>`;
+  document.querySelectorAll("md-switch[data-sw]").forEach(s=>s.selected=d);
+}
 
 // ---- window manager ----
 let z=200,curWin=null;const W={};
@@ -1047,6 +1045,8 @@ $("#theme").onclick=()=>setTheme(!document.body.classList.contains("dark"));
 applyName(getUserName());
 // restore accent color
 (()=>{const ac=localStorage.getItem("ros_accent");if(ac)document.documentElement.style.setProperty("--accent",ac)})();
+// restore theme
+(()=>{const th=localStorage.getItem("ros_theme");if(th==="dark")setTheme(true)})();
 // restore saved wallpaper
 (()=>{const t=localStorage.getItem("ros_wall_type"),v=localStorage.getItem("ros_wall");if(!t||!v||t==="starfield"){initStarfield();return}if(t==="image"){setWallImg(v)}else{const cvs=document.getElementById("stars");if(cvs)cvs.style.opacity=0;document.body.classList.remove("dw");document.body.style.background=v;document.body.style.backgroundAttachment="scroll"}})();
 applyLang(curLang);initBattery();
