@@ -10,6 +10,7 @@ tokens/versions/**/*-meta.scss
 !types/*.d.ts
 .wireit/
 *.tsbuildinfo
+custom-elements.json
 
 !catalog/**/*.css
 catalog/_dev

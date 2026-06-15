@@ -27,6 +27,7 @@
     "build:ts": "wireit",
     "build:css-to-ts": "wireit",
     "build:sass": "wireit",
+    "build:manifest": "wireit",
     "test": "wireit",
     "build:catalog": "wireit",
     "build:scripts": "wireit",
@@ -36,6 +37,7 @@
     "update-size": "wireit"
   },
   "type": "module",
+  "customElements": "custom-elements.json",
   "files": [
     "**/*.js",
     "**/*.js.map",
@@ -43,6 +45,7 @@
     "**/*.scss",
     "**/*.css",
     "**/*.css.map",
+    "custom-elements.json",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
@@ -64,6 +67,8 @@
   },
   "devDependencies": {
     "@lit-labs/analyzer": "^0.14.0",
+    "@lit-labs/gen-manifest": "^0.3.6",
+    "@lit-labs/gen-utils": "^0.3.4",
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
@@ -84,7 +89,8 @@
   "wireit": {
     "build": {
       "dependencies": [
-        "build:ts"
+        "build:ts",
+        "build:manifest"
       ]
     },
     "build:ts": {
@@ -180,6 +186,18 @@
       ],
       "output": [
         "tokens/versions/**/*-meta.scss"
+      ],
+      "dependencies": [
+        "build:scripts"
+      ]
+    },
+    "build:manifest": {
+      "command": "node scripts/generate-manifest.js",
+      "files": [
+        "**/*.ts"
+      ],
+      "output": [
+        "custom-elements.json"
       ],
       "dependencies": [
         "build:scripts"
