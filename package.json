@@ -45,6 +45,7 @@
     "**/*.scss",
     "**/*.css",
     "**/*.css.map",
+    "custom-elements.json",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
