@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Analyzer, type AbsolutePath } from '@lit-labs/analyzer';
-import type { Package as Manifest } from 'custom-elements-manifest';
-import ts from 'typescript';
+import {Analyzer, type AbsolutePath} from '@lit-labs/analyzer';
+import {generateManifest} from '@lit-labs/gen-manifest';
+import {writeFileTree} from '@lit-labs/gen-utils/lib/file-utils';
+import type {Package as Manifest} from 'custom-elements-manifest';
 import * as path from 'path';
-import { generateManifest } from '@lit-labs/gen-manifest';
-import { writeFileTree } from '@lit-labs/gen-utils/lib/file-utils.js';
+import ts from 'typescript';
 
 const ROOT = process.cwd() as AbsolutePath;
 
