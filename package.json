@@ -27,14 +27,14 @@
     "build:ts": "wireit",
     "build:css-to-ts": "wireit",
     "build:sass": "wireit",
+    "build:manifest": "wireit",
     "test": "wireit",
     "build:catalog": "wireit",
     "build:scripts": "wireit",
     "update-docs": "wireit",
     "update-docs:components": "wireit",
     "update-docs:sass-ext": "wireit",
-    "update-size": "wireit",
-    "cem": "wireit"
+    "update-size": "wireit"
   },
   "type": "module",
   "customElements": "custom-elements.json",
@@ -89,7 +89,8 @@
   "wireit": {
     "build": {
       "dependencies": [
-        "build:ts"
+        "build:ts",
+        "build:manifest"
       ]
     },
     "build:ts": {
@@ -190,6 +191,18 @@
         "build:scripts"
       ]
     },
+    "build:manifest": {
+      "command": "node scripts/generate-manifest.js",
+      "files": [
+        "**/*.ts"
+      ],
+      "output": [
+        "custom-elements.json"
+      ],
+      "dependencies": [
+        "build:scripts"
+      ]
+    },
     "test": {
       "command": "wtr",
       "dependencies": [
@@ -260,18 +273,6 @@
       "dependencies": [
         "build:scripts",
         "build"
-      ]
-    },
-    "cem": {
-      "command": "node scripts/generate-manifest.js",
-      "files": [
-        "**/*.ts"
-      ],
-      "output": [
-        "custom-elements.json"
-      ],
-      "dependencies": [
-        "build:scripts"
       ]
     }
   }
