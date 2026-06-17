@@ -200,7 +200,8 @@
         "custom-elements.json"
       ],
       "dependencies": [
-        "build:scripts"
+        "build:scripts",
+        "build:ts"
       ]
     },
     "test": {
