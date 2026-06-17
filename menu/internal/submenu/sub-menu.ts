@@ -40,8 +40,8 @@ import {Corner} from '../menu.js';
  * @fires activate-typeahead {Event} Requests the parent menu to activate the
  * typeahead functionality when a submenu closes. --bubbles --composed
  *
- * @slot item - The item slot.
- * @slot menu - The menu slot.
+ * @slot item - The menu items associated with the submenu.
+ * @slot menu - The menu associated with the submenu.
  */
 export class SubMenu extends LitElement {
   /**

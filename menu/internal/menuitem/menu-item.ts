@@ -33,13 +33,13 @@ const menuItemBaseClass = mixinDelegatesAria(LitElement);
  * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
  * Closes the encapsulating menu on closable interaction. --bubbles --composed
  *
- * @slot start - The start slot.
- * @slot end - The end slot.
- * @slot - The default slot.
- * @slot overline - The overline slot.
- * @slot headline - The headline slot.
- * @slot supporting-text - The supporting-text slot.
- * @slot trailing-supporting-text - The trailing-supporting-text slot.
+ * @slot start - The content to display at the start of the component.
+ * @slot end - The content to display at the end of the component.
+ * @slot - The label or main content of the component.
+ * @slot overline - The overline text of the component.
+ * @slot headline - The main headline or title of the component.
+ * @slot supporting-text - The supporting text of the component.
+ * @slot trailing-supporting-text - The trailing supporting text of the component.
  */
 export class MenuItemEl extends menuItemBaseClass implements MenuItem {
   /** @nocollapse */

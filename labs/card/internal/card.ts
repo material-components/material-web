@@ -11,7 +11,7 @@ import {html, LitElement} from 'lit';
 /**
  * A card component.
  *
- * @slot - The default slot.
+ * @slot - The label or main content of the component.
  */
 export class Card extends LitElement {
   protected override render() {

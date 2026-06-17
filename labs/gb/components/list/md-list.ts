@@ -30,9 +30,6 @@ const baseClass = mixinElementInternals(LitElement);
  * A Material Design list component.
  */
 @customElement('md-list')
-/**
- * @slot - The default slot.
- */
 export class List extends baseClass {
   static override styles: CSSResultOrNative[] = [
     listStyles,

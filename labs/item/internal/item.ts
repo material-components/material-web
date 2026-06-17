@@ -10,14 +10,14 @@ import {property, queryAll} from 'lit/decorators.js';
 /**
  * An item layout component.
  *
- * @slot container - The container slot.
- * @slot start - The start slot.
- * @slot overline - The overline slot.
- * @slot - The default slot.
- * @slot headline - The headline slot.
- * @slot supporting-text - The supporting-text slot.
- * @slot trailing-supporting-text - The trailing-supporting-text slot.
- * @slot end - The end slot.
+ * @slot container - The container for the component.
+ * @slot start - The content to display at the start of the component.
+ * @slot overline - The overline text of the component.
+ * @slot - The label or main content of the component.
+ * @slot headline - The main headline or title of the component.
+ * @slot supporting-text - The supporting text of the component.
+ * @slot trailing-supporting-text - The trailing supporting text of the component.
+ * @slot end - The content to display at the end of the component.
  */
 export class Item extends LitElement {
   /**

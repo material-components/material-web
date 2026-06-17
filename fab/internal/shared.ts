@@ -25,7 +25,7 @@ const fabBaseClass = mixinDelegatesAria(LitElement);
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 /**
- * @slot icon - The icon slot.
+ * @slot icon - The icon to display in the component.
  */
 export abstract class SharedFab extends fabBaseClass {
   /** @nocollapse */

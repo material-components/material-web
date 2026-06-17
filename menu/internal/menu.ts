@@ -85,7 +85,7 @@ function getFocusedElement(
  * @fires closing {Event} Fired before the closing animation begins
  * @fires closed {Event} Fired once the menu is closed, after any animations
  *
- * @slot - The default slot.
+ * @slot - The label or main content of the component.
  */
 export abstract class Menu extends LitElement {
   @query('.menu') private readonly surfaceEl!: HTMLElement | null;

@@ -37,8 +37,8 @@ const iconButtonBaseClass = mixinDelegatesAria(
  * --composed
  * @fires change {Event} Dispatched when a toggle button toggles --bubbles
  *
- * @slot - The default slot.
- * @slot selected - The selected slot.
+ * @slot - The label or main content of the component.
+ * @slot selected - The element to display when selected.
  */
 export class IconButton extends iconButtonBaseClass {
   /** @nocollapse */

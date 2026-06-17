@@ -47,8 +47,8 @@ const switchBaseClass = mixinDelegatesAria(
  * @fires change {Event} Fired whenever `selected` changes due to user
  * interaction (bubbles).
  *
- * @slot on-icon - The on-icon slot.
- * @slot off-icon - The off-icon slot.
+ * @slot on-icon - The icon to display when the switch is on.
+ * @slot off-icon - The icon to display when the switch is off.
  */
 export class Switch extends switchBaseClass {
   /** @nocollapse */

@@ -24,7 +24,7 @@ const segmentedButtonSetBaseClass = mixinDelegatesAria(LitElement);
  * `setButtonSelected` or the `toggleSelection` methods as well as on user
  * interaction. --bubbles --composed
  *
- * @slot - The default slot.
+ * @slot - The label or main content of the component.
  */
 export class SegmentedButtonSet extends segmentedButtonSetBaseClass {
   @property({type: Boolean}) multiselect = false;

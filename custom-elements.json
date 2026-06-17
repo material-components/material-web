@@ -1495,11 +1495,11 @@
           "slots": [
             {
               "name": "icon",
-              "description": "The icon slot."
+              "description": "The icon to display in the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -3469,7 +3469,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -3963,11 +3963,11 @@
           "slots": [
             {
               "name": "icon",
-              "description": "The icon slot."
+              "description": "The icon to display in the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -4376,7 +4376,7 @@
           "slots": [
             {
               "name": "selected-icon",
-              "description": "The selected-icon slot."
+              "description": "The icon to display when the component is selected."
             }
           ]
         }
@@ -6732,19 +6732,19 @@
           "slots": [
             {
               "name": "icon",
-              "description": "The icon slot."
+              "description": "The icon to display in the component."
             },
             {
               "name": "headline",
-              "description": "The headline slot."
+              "description": "The main headline or title of the component."
             },
             {
               "name": "content",
-              "description": "The content slot."
+              "description": "The main body content of the component."
             },
             {
               "name": "actions",
-              "description": "The actions slot."
+              "description": "The actions or buttons associated with the component."
             }
           ]
         },
@@ -7850,7 +7850,7 @@
           "slots": [
             {
               "name": "icon",
-              "description": "The icon slot."
+              "description": "The icon to display in the component."
             }
           ]
         }
@@ -8685,23 +8685,23 @@
           "slots": [
             {
               "name": "container",
-              "description": "The container slot."
+              "description": "The container for the component."
             },
             {
               "name": "start",
-              "description": "The start slot."
+              "description": "The content to display at the start of the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             },
             {
               "name": "end",
-              "description": "The end slot."
+              "description": "The content to display at the end of the component."
             },
             {
               "name": "aria-describedby",
-              "description": "The aria-describedby slot."
+              "description": "The elements to use for ARIA describedby."
             }
           ]
         }
@@ -9663,7 +9663,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -10595,11 +10595,11 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             },
             {
               "name": "selected",
-              "description": "The selected slot."
+              "description": "The element to display when selected."
             }
           ]
         }
@@ -14160,7 +14160,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -14578,35 +14578,35 @@
           "slots": [
             {
               "name": "container",
-              "description": "The container slot."
+              "description": "The container for the component."
             },
             {
               "name": "start",
-              "description": "The start slot."
+              "description": "The content to display at the start of the component."
             },
             {
               "name": "overline",
-              "description": "The overline slot."
+              "description": "The overline text of the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             },
             {
               "name": "headline",
-              "description": "The headline slot."
+              "description": "The main headline or title of the component."
             },
             {
               "name": "supporting-text",
-              "description": "The supporting-text slot."
+              "description": "The supporting text of the component."
             },
             {
               "name": "trailing-supporting-text",
-              "description": "The trailing-supporting-text slot."
+              "description": "The trailing supporting text of the component."
             },
             {
               "name": "end",
-              "description": "The end slot."
+              "description": "The content to display at the end of the component."
             }
           ]
         },
@@ -15313,7 +15313,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -15721,7 +15721,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -15955,7 +15955,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -16528,11 +16528,11 @@
           "slots": [
             {
               "name": "inactive-icon",
-              "description": "The inactive-icon slot."
+              "description": "The icon to display when the component is inactive."
             },
             {
               "name": "active-icon",
-              "description": "The active-icon slot."
+              "description": "The icon to display when the component is active."
             }
           ]
         }
@@ -17092,7 +17092,7 @@
           "slots": [
             {
               "name": "icon",
-              "description": "The icon slot."
+              "description": "The icon to display in the component."
             }
           ]
         }
@@ -17592,7 +17592,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -19852,31 +19852,31 @@
           "slots": [
             {
               "name": "start",
-              "description": "The start slot."
+              "description": "The content to display at the start of the component."
             },
             {
               "name": "end",
-              "description": "The end slot."
+              "description": "The content to display at the end of the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             },
             {
               "name": "overline",
-              "description": "The overline slot."
+              "description": "The overline text of the component."
             },
             {
               "name": "headline",
-              "description": "The headline slot."
+              "description": "The main headline or title of the component."
             },
             {
               "name": "supporting-text",
-              "description": "The supporting-text slot."
+              "description": "The supporting text of the component."
             },
             {
               "name": "trailing-supporting-text",
-              "description": "The trailing-supporting-text slot."
+              "description": "The trailing supporting text of the component."
             }
           ]
         }
@@ -21811,7 +21811,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -23393,31 +23393,31 @@
           "slots": [
             {
               "name": "start",
-              "description": "The start slot."
+              "description": "The content to display at the start of the component."
             },
             {
               "name": "end",
-              "description": "The end slot."
+              "description": "The content to display at the end of the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             },
             {
               "name": "overline",
-              "description": "The overline slot."
+              "description": "The overline text of the component."
             },
             {
               "name": "headline",
-              "description": "The headline slot."
+              "description": "The main headline or title of the component."
             },
             {
               "name": "supporting-text",
-              "description": "The supporting-text slot."
+              "description": "The supporting text of the component."
             },
             {
               "name": "trailing-supporting-text",
-              "description": "The trailing-supporting-text slot."
+              "description": "The trailing supporting text of the component."
             }
           ]
         }
@@ -24026,11 +24026,11 @@
           "slots": [
             {
               "name": "item",
-              "description": "The item slot."
+              "description": "The menu items associated with the submenu."
             },
             {
               "name": "menu",
-              "description": "The menu slot."
+              "description": "The menu associated with the submenu."
             }
           ]
         }
@@ -28585,15 +28585,15 @@
           "slots": [
             {
               "name": "leading-icon",
-              "description": "The leading-icon slot."
+              "description": "The icon to display at the start of the component."
             },
             {
               "name": "trailing-icon",
-              "description": "The trailing-icon slot."
+              "description": "The icon to display at the end of the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         }
@@ -29183,31 +29183,31 @@
           "slots": [
             {
               "name": "start",
-              "description": "The start slot."
+              "description": "The content to display at the start of the component."
             },
             {
               "name": "end",
-              "description": "The end slot."
+              "description": "The content to display at the end of the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             },
             {
               "name": "overline",
-              "description": "The overline slot."
+              "description": "The overline text of the component."
             },
             {
               "name": "headline",
-              "description": "The headline slot."
+              "description": "The main headline or title of the component."
             },
             {
               "name": "supporting-text",
-              "description": "The supporting-text slot."
+              "description": "The supporting text of the component."
             },
             {
               "name": "trailing-supporting-text",
-              "description": "The trailing-supporting-text slot."
+              "description": "The trailing supporting text of the component."
             }
           ]
         }
@@ -32013,11 +32013,11 @@
           "slots": [
             {
               "name": "on-icon",
-              "description": "The on-icon slot."
+              "description": "The icon to display when the switch is on."
             },
             {
               "name": "off-icon",
-              "description": "The off-icon slot."
+              "description": "The icon to display when the switch is off."
             }
           ]
         }
@@ -33190,11 +33190,11 @@
           "slots": [
             {
               "name": "icon",
-              "description": "The icon slot."
+              "description": "The icon to display in the component."
             },
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         },
@@ -33659,7 +33659,7 @@
           "slots": [
             {
               "name": "-",
-              "description": "The default slot."
+              "description": "The label or main content of the component."
             }
           ]
         },
@@ -39443,15 +39443,15 @@
           "slots": [
             {
               "name": "container",
-              "description": "The container slot."
+              "description": "The container for the component."
             },
             {
               "name": "leading-icon",
-              "description": "The leading-icon slot."
+              "description": "The icon to display at the start of the component."
             },
             {
               "name": "trailing-icon",
-              "description": "The trailing-icon slot."
+              "description": "The icon to display at the end of the component."
             }
           ]
         }
