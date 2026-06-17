@@ -71,6 +71,10 @@ const selectBaseClass = mixinDelegatesAria(
  * @fires closing {Event} Fired when the select's menu is about to close.
  * @fires closed {Event} Fired when the select's menu has finished animations
  * and closed.
+ *
+ * @slot leading-icon - The leading-icon slot.
+ * @slot trailing-icon - The trailing-icon slot.
+ * @slot - The default slot.
  */
 export abstract class Select extends selectBaseClass {
   /** @nocollapse */

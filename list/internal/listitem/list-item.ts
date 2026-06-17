@@ -34,6 +34,14 @@ const listItemBaseClass = mixinDelegatesAria(LitElement);
  * applications do not need to listen for this event. It is exposed for
  * authors building their own list-item replacements or wrapping items in a
  * custom controller. --bubbles --composed
+ *
+ * @slot start - The start slot.
+ * @slot end - The end slot.
+ * @slot - The default slot.
+ * @slot overline - The overline slot.
+ * @slot headline - The headline slot.
+ * @slot supporting-text - The supporting-text slot.
+ * @slot trailing-supporting-text - The trailing-supporting-text slot.
  */
 export class ListItemEl extends listItemBaseClass implements ListItem {
   /** @nocollapse */

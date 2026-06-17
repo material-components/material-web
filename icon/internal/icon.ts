@@ -8,6 +8,8 @@ import {html, LitElement} from 'lit';
 
 /**
  * An icon element.
+ *
+ * @slot - The default slot.
  */
 export class Icon extends LitElement {
   protected override render() {

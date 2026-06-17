@@ -11,6 +11,8 @@ import {Chip} from './chip.js';
 
 /**
  * A chip set component.
+ *
+ * @slot - The default slot.
  */
 export class ChipSet extends LitElement {
   get chips() {

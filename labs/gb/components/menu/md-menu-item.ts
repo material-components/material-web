@@ -46,6 +46,13 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
  * A Material Design menu item component.
  */
 @customElement('md-menu-item')
+/**
+ * @slot leading - The leading slot.
+ * @slot - The default slot.
+ * @slot supporting-text - The supporting-text slot.
+ * @slot trailing-text - The trailing-text slot.
+ * @slot trailing - The trailing slot.
+ */
 export class MenuItem extends baseClass {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,

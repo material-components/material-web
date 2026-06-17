@@ -32,6 +32,9 @@ const baseClass = mixinElementInternals(LitElement);
  * A Material Design menu group component.
  */
 @customElement('md-menu-group')
+/**
+ * @slot - The default slot.
+ */
 export class MenuGroup extends baseClass {
   static override styles: CSSResultOrNative[] = [
     css`

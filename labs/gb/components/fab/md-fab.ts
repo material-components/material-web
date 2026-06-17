@@ -27,6 +27,9 @@ declare global {
  * A Material Design fab component.
  */
 @customElement('md-fab')
+/**
+ * @slot - The default slot.
+ */
 export class Fab extends LitElement {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,

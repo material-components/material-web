@@ -76,6 +76,15 @@ declare global {
  * @suppress {visibility}
  */
 @customElement('md-item')
+/**
+ * @slot - The default slot.
+ * @slot overline - The overline slot.
+ * @slot headline - The headline slot.
+ * @slot supporting-text - The supporting-text slot.
+ * @slot trailing-supporting-text - The trailing-supporting-text slot.
+ * @slot start - The start slot.
+ * @slot end - The end slot.
+ */
 export class MdItem extends Item {
   static override styles: CSSResultOrNative[] = [styles];
 }

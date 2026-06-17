@@ -25,6 +25,8 @@ const navigationBarBaseClass = mixinDelegatesAria(LitElement);
  *
  * @fires navigation-bar-activated {CustomEvent<tab: NavigationTab, activeIndex: number>}
  * Dispatched whenever the `activeIndex` changes. --bubbles --composed
+ *
+ * @slot - The default slot.
  */
 export class NavigationBar
   extends navigationBarBaseClass

@@ -24,6 +24,9 @@ export type FabSize = 'medium' | 'small' | 'large';
 const fabBaseClass = mixinDelegatesAria(LitElement);
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * @slot icon - The icon slot.
+ */
 export abstract class SharedFab extends fabBaseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

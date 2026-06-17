@@ -10,6 +10,8 @@ import {html, LitElement} from 'lit';
 
 /**
  * A card component.
+ *
+ * @slot - The default slot.
  */
 export class Card extends LitElement {
   protected override render() {

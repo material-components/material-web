@@ -39,6 +39,9 @@ const baseClass = mixinDelegatesAria(
  * A Material Design icon button component.
  */
 @customElement('md-icon-button')
+/**
+ * @slot - The default slot.
+ */
 export class IconButton extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

@@ -9,6 +9,15 @@ import {property, queryAll} from 'lit/decorators.js';
 
 /**
  * An item layout component.
+ *
+ * @slot container - The container slot.
+ * @slot start - The start slot.
+ * @slot overline - The overline slot.
+ * @slot - The default slot.
+ * @slot headline - The headline slot.
+ * @slot supporting-text - The supporting-text slot.
+ * @slot trailing-supporting-text - The trailing-supporting-text slot.
+ * @slot end - The end slot.
  */
 export class Item extends LitElement {
   /**

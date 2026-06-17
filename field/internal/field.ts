@@ -19,6 +19,12 @@ import {EASING} from '../../internal/motion/animation.js';
 
 /**
  * A field component.
+ *
+ * @slot container - The container slot.
+ * @slot start - The start slot.
+ * @slot - The default slot.
+ * @slot end - The end slot.
+ * @slot aria-describedby - The aria-describedby slot.
  */
 export class Field extends LitElement {
   @property({type: Boolean}) disabled = false;

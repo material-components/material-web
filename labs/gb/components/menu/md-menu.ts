@@ -32,6 +32,9 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
  * A Material Design menu component.
  */
 @customElement('md-menu')
+/**
+ * @slot - The default slot.
+ */
 export class Menu extends baseClass {
   static override styles: CSSResultOrNative[] = [menuStyles, css``];
 

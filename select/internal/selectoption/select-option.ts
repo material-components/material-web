@@ -60,6 +60,14 @@ const selectOptionBaseClass = mixinDelegatesAria(LitElement);
  * `true`. --bubbles --composed
  * @fires request-deselection {Event} Requests the parent md-select to deselect
  * this element when `selected` changed to `false`. --bubbles --composed
+ *
+ * @slot start - The start slot.
+ * @slot end - The end slot.
+ * @slot - The default slot.
+ * @slot overline - The overline slot.
+ * @slot headline - The headline slot.
+ * @slot supporting-text - The supporting-text slot.
+ * @slot trailing-supporting-text - The trailing-supporting-text slot.
  */
 export class SelectOptionEl
   extends selectOptionBaseClass

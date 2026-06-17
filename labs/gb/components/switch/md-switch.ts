@@ -55,6 +55,10 @@ const baseClass = mixinDelegatesAria(
  * A Material Design switch component.
  */
 @customElement('md-switch')
+/**
+ * @slot off-icon - The off-icon slot.
+ * @slot on-icon - The on-icon slot.
+ */
 export class Switch extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

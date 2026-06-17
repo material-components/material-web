@@ -28,6 +28,9 @@ const navigationTabBaseClass = mixinDelegatesAria(LitElement);
  * --composed
  * @fires navigation-tab-interaction {CustomEvent<{state: MdNavigationTab}>}
  * Dispatched when the navigation tab has been clicked. --bubbles --composed
+ *
+ * @slot inactive-icon - The inactive-icon slot.
+ * @slot active-icon - The active-icon slot.
  */
 export class NavigationTab
   extends navigationTabBaseClass
