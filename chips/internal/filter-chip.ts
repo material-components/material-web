@@ -19,7 +19,6 @@ import {renderRemoveButton} from './trailing-icons.js';
  * A filter chip component.
  *
  * @fires remove {Event} Dispatched when the remove button is clicked.
- *
  * @slot selected-icon - The icon to display when the component is selected.
  */
 export class FilterChip extends MultiActionChip {

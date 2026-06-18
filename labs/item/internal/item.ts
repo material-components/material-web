@@ -9,7 +9,6 @@ import {property, queryAll} from 'lit/decorators.js';
 
 /**
  * An item layout component.
- *
  * @slot container - The container for the component.
  * @slot start - The content to display at the start of the component.
  * @slot overline - The overline text of the component.

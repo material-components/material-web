@@ -19,7 +19,6 @@ import {EASING} from '../../internal/motion/animation.js';
 
 /**
  * A field component.
- *
  * @slot container - The container for the component.
  * @slot start - The content to display at the start of the component.
  * @slot - The label or main content of the component.

@@ -53,6 +53,9 @@ const baseClass = mixinDelegatesAria(
 
 /**
  * A Material Design switch component.
+ *
+ * @slot off-icon - The icon to display when the switch is off.
+ * @slot on-icon - The icon to display when the switch is on.
  */
 @customElement('md-switch')
 export class Switch extends baseClass {

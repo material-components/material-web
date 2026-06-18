@@ -34,7 +34,6 @@ const listItemBaseClass = mixinDelegatesAria(LitElement);
  * applications do not need to listen for this event. It is exposed for
  * authors building their own list-item replacements or wrapping items in a
  * custom controller. --bubbles --composed
- *
  * @slot start - The content to display at the start of the component.
  * @slot end - The content to display at the end of the component.
  * @slot - The label or main content of the component.

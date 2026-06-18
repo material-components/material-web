@@ -46,7 +46,6 @@ const switchBaseClass = mixinDelegatesAria(
  * interaction (bubbles and composed).
  * @fires change {Event} Fired whenever `selected` changes due to user
  * interaction (bubbles).
- *
  * @slot on-icon - The icon to display when the switch is on.
  * @slot off-icon - The icon to display when the switch is off.
  */

@@ -44,6 +44,12 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
 
 /**
  * A Material Design menu item component.
+ *
+ * @slot leading - The content to display at the start of the component.
+ * @slot - The label or main content of the component.
+ * @slot supporting-text - The supporting text of the component.
+ * @slot trailing-text - The trailing text of the component.
+ * @slot trailing - The content to display at the end of the component.
  */
 @customElement('md-menu-item')
 export class MenuItem extends baseClass {

@@ -8,7 +8,6 @@ import {html, LitElement} from 'lit';
 
 /**
  * An icon element.
- *
  * @slot - The label or main content of the component.
  */
 export class Icon extends LitElement {

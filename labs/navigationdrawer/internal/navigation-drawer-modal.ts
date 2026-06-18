@@ -19,7 +19,6 @@ const navigationDrawerModalBaseClass = mixinDelegatesAria(LitElement);
  *
  * @fires navigation-drawer-changed {CustomEvent<{opened: boolean}>}
  * Dispatched whenever the drawer opens or closes --bubbles --composed
- *
  * @slot - The label or main content of the component.
  */
 export class NavigationDrawerModal extends navigationDrawerModalBaseClass {

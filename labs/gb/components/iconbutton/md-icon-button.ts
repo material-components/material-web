@@ -37,6 +37,8 @@ const baseClass = mixinDelegatesAria(
 
 /**
  * A Material Design icon button component.
+ *
+ * @slot - The label or main content of the component.
  */
 @customElement('md-icon-button')
 export class IconButton extends baseClass {

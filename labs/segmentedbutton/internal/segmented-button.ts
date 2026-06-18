@@ -25,7 +25,6 @@ const segmentedButtonBaseClass = mixinDelegatesAria(LitElement);
  *
  * @fires segmented-button-interaction {Event} Dispatched whenever a button is
  * clicked. --bubbles --composed
- *
  * @slot icon - The icon to display in the component.
  */
 export class SegmentedButton extends segmentedButtonBaseClass {

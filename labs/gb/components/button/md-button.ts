@@ -46,6 +46,9 @@ const baseClass = mixinDelegatesAria(
 
 /**
  * A Material Design button.
+ *
+ * @slot container - The container for the component.
+ * @slot - The label of the button.
  */
 @customElement('md-button')
 export class Button extends baseClass {

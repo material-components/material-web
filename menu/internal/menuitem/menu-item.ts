@@ -32,7 +32,6 @@ const menuItemBaseClass = mixinDelegatesAria(LitElement);
 /**
  * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
  * Closes the encapsulating menu on closable interaction. --bubbles --composed
- *
  * @slot start - The content to display at the start of the component.
  * @slot end - The content to display at the end of the component.
  * @slot - The label or main content of the component.

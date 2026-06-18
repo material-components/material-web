@@ -20,7 +20,6 @@ const chipBaseClass = mixinDelegatesAria(LitElement);
  * A chip component.
  *
  * @fires update-focus {Event} Dispatched when `disabled` is toggled. --bubbles
- *
  * @slot icon - The icon to display in the component.
  * @slot - The label or main content of the component.
  */

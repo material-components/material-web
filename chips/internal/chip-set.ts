@@ -11,7 +11,6 @@ import {Chip} from './chip.js';
 
 /**
  * A chip set component.
- *
  * @slot - The label or main content of the component.
  */
 export class ChipSet extends LitElement {

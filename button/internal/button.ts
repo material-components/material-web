@@ -27,7 +27,6 @@ const buttonBaseClass = mixinDelegatesAria(
 
 /**
  * A button component.
- *
  * @slot icon - The icon to display in the component.
  * @slot - The label or main content of the component.
  */

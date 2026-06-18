@@ -60,7 +60,6 @@ const selectOptionBaseClass = mixinDelegatesAria(LitElement);
  * `true`. --bubbles --composed
  * @fires request-deselection {Event} Requests the parent md-select to deselect
  * this element when `selected` changed to `false`. --bubbles --composed
- *
  * @slot start - The content to display at the start of the component.
  * @slot end - The content to display at the end of the component.
  * @slot - The label or main content of the component.

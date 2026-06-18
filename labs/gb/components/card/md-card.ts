@@ -39,6 +39,9 @@ const baseClass = mixinDelegatesAria(LitElement);
 
 /**
  * A Material Design card.
+ *
+ * @slot container - The container for the component.
+ * @slot - The main content of the component.
  */
 @customElement('md-card')
 export class Card extends baseClass {

@@ -71,7 +71,6 @@ const selectBaseClass = mixinDelegatesAria(
  * @fires closing {Event} Fired when the select's menu is about to close.
  * @fires closed {Event} Fired when the select's menu has finished animations
  * and closed.
- *
  * @slot leading-icon - The icon to display at the start of the component.
  * @slot trailing-icon - The icon to display at the end of the component.
  * @slot - The label or main content of the component.

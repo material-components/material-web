@@ -36,7 +36,6 @@ const iconButtonBaseClass = mixinDelegatesAria(
  * @fires input {InputEvent} Dispatched when a toggle button toggles --bubbles
  * --composed
  * @fires change {Event} Dispatched when a toggle button toggles --bubbles
- *
  * @slot - The label or main content of the component.
  * @slot selected - The element to display when selected.
  */

@@ -30,6 +30,8 @@ const baseClass = mixinElementInternals(LitElement);
 
 /**
  * A Material Design menu group component.
+ *
+ * @slot - The label or main content of the component.
  */
 @customElement('md-menu-group')
 export class MenuGroup extends baseClass {
