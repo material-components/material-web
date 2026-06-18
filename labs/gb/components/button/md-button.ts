@@ -47,7 +47,7 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design button.
  *
- * @slot container - The container for the component.
+ * @slot container - The container for the button, typically used for custom styling or states.
  * @slot - The label of the button.
  */
 @customElement('md-button')

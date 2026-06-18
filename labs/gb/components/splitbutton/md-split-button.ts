@@ -33,9 +33,9 @@ declare global {
 /**
  * A Material Design split button component.
  *
- * @slot leading - The content to display at the start of the component.
- * @slot trailing - The content to display at the end of the component.
- * @slot - The label of the button.
+ * @slot leading - The main action content of the split button.
+ * @slot trailing - The trailing action content of the split button.
+ * @slot - The label of the split button.
  */
 @customElement('md-split-button')
 export class SplitButton extends LitElement {

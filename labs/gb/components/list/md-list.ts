@@ -29,7 +29,7 @@ const baseClass = mixinElementInternals(LitElement);
 /**
  * A Material Design list component.
  *
- * @slot - The label or main content of the component.
+ * @slot - The list items to display within the list.
  */
 @customElement('md-list')
 export class List extends baseClass {

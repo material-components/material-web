@@ -31,7 +31,7 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
 /**
  * A Material Design menu component.
  *
- * @slot - The label or main content of the component.
+ * @slot - The menu items to display within the menu.
  */
 @customElement('md-menu')
 export class Menu extends baseClass {

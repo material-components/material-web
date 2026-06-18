@@ -36,13 +36,13 @@ const baseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
 /**
  * A Material Design list item component.
  *
- * @slot avatar - The avatar to display in the component.
- * @slot leading - The content to display at the start of the component.
- * @slot overline - The overline text of the component.
- * @slot - The label or main content of the component.
- * @slot supporting-text - The supporting text of the component.
- * @slot trailing-text - The trailing text of the component.
- * @slot trailing - The content to display at the end of the component.
+ * @slot avatar - The avatar to display in the list item.
+ * @slot leading - The content to display at the start of the list item.
+ * @slot overline - The overline text displayed above the headline.
+ * @slot - The main content of the list item.
+ * @slot supporting-text - The supporting text displayed below the headline.
+ * @slot trailing-text - The trailing text of the list item.
+ * @slot trailing - The content to display at the end of the list item.
  */
 @customElement('md-list-item')
 export class ListItem extends baseClass {
