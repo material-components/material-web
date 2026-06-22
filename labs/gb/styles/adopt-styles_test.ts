@@ -34,6 +34,40 @@ describe('adoptStyles()', () => {
       .toContain(sheet);
   });
 
+  it('should not duplicate stylesheets if already adopted', () => {
+    adoptStyles(document, sheet);
+    adoptStyles(document, sheet);
+
+    expect(document.adoptedStyleSheets)
+      .withContext('document.adoptedStyleSheets')
+      .toHaveSize(1);
+  });
+
+  it('should only adopt new stylesheets when given an array that includes adopted sheets', () => {
+    const alreadyAdopted = new CSSStyleSheet();
+    adoptStyles(document, alreadyAdopted);
+    adoptStyles(document, [sheet, alreadyAdopted]);
+
+    expect(document.adoptedStyleSheets)
+      .withContext('document.adoptedStyleSheets')
+      .toHaveSize(2);
+  });
+
+  it('should not mutate adoptedStyleSheets if the sheets are already adopted', () => {
+    adoptStyles(document, sheet);
+    const previousAdoptedStyleSheets = document.adoptedStyleSheets;
+    const previousSize = previousAdoptedStyleSheets.length;
+
+    adoptStyles(document, sheet);
+
+    expect(document.adoptedStyleSheets)
+      .withContext('document.adoptedStyleSheets')
+      .toBe(previousAdoptedStyleSheets);
+    expect(document.adoptedStyleSheets)
+      .withContext('document.adoptedStyleSheets')
+      .toHaveSize(previousSize);
+  });
+
   it("should adopt to an Element's document", () => {
     const element = document.createElement('div');
     adoptStyles(element, sheet);

@@ -68,8 +68,15 @@ function adopt(
   stylesheets: CSSStyleSheet[],
 ): node is DocumentOrShadowRoot {
   if (node && 'adoptedStyleSheets' in node) {
+    const unadopted = stylesheets.filter(
+      (stylesheet) => !node.adoptedStyleSheets.includes(stylesheet),
+    );
+    if (!unadopted.length) {
+      // All styles are already adopted.
+      return true;
+    }
     node.adoptedStyleSheets = Array.from(
-      new Set([...node.adoptedStyleSheets, ...stylesheets]),
+      new Set([...node.adoptedStyleSheets, ...unadopted]),
     );
     return true;
   }
