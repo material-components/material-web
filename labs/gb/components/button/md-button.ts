@@ -73,6 +73,7 @@ export class Button extends baseClass {
       }
       .btn.btn-hide-outline {
         --outline-color: transparent;
+        --container-elevation: var(--md-sys-elevation-shadow-0);
       }
       slot[name='container'] {
         display: block;
