@@ -26,7 +26,7 @@ import {listItem} from './list.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design list item component. */
-    'md-list-item': ListItem;
+    'md-gb-list-item': ListItem;
   }
 }
 
@@ -36,7 +36,7 @@ const baseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
 /**
  * A Material Design list item component.
  */
-@customElement('md-list-item')
+@customElement('md-gb-list-item')
 export class ListItem extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions = {

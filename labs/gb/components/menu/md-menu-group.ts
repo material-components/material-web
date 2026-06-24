@@ -21,7 +21,7 @@ import {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-menu-group': MenuGroup;
+    'md-gb-menu-group': MenuGroup;
   }
 }
 
@@ -31,7 +31,7 @@ const baseClass = mixinElementInternals(LitElement);
 /**
  * A Material Design menu group component.
  */
-@customElement('md-menu-group')
+@customElement('md-gb-menu-group')
 export class MenuGroup extends baseClass {
   static override styles: CSSResultOrNative[] = [
     css`

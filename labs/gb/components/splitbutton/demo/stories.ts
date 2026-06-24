@@ -38,7 +38,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-split-button
+      <md-gb-split-button
         color=${knobs.color || nothing}
         size=${knobs.size || nothing}>
         <button slot="leading">Label</button>
@@ -47,11 +47,11 @@ const playground: MaterialStoryInit<StoryKnobs> = {
           aria-label="More actions"
           popovertarget="menu-2">
         </button>
-        <md-menu id="menu-2">
-          <md-menu-item>Option 1</md-menu-item>
-          <md-menu-item>Option 2</md-menu-item>
-        </md-menu>
-      </md-split-button>
+        <md-gb-menu id="menu-2">
+          <md-gb-menu-item>Option 1</md-gb-menu-item>
+          <md-gb-menu-item>Option 2</md-gb-menu-item>
+        </md-gb-menu>
+      </md-gb-split-button>
     `;
   },
 };

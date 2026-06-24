@@ -15,14 +15,14 @@ import iconStyles from './md-icon.css' with {type: 'css'}; // github-only
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design icon component. */
-    'md-icon': Icon;
+    'md-gb-icon': Icon;
   }
 }
 
 /**
  * A Material Design icon component.
  */
-@customElement('md-icon')
+@customElement('md-gb-icon')
 export class Icon extends IconBase {
   static override styles: CSSResultOrNative[] = [iconStyles];
 

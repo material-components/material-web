@@ -15,14 +15,14 @@ import {divider} from './divider.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design divider component. */
-    'md-divider': Divider;
+    'md-gb-divider': Divider;
   }
 }
 
 /**
  * A Material Design divider component.
  */
-@customElement('md-divider')
+@customElement('md-gb-divider')
 export class Divider extends LitElement {
   static override styles: CSSResultOrNative[] = [
     dividerStyles,

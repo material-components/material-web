@@ -33,14 +33,14 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   name: 'Playground',
   render(knobs) {
     return html`
-      <md-switch .selected=${knobs.selected} ?disabled=${knobs.disabled}>
+      <md-gb-switch .selected=${knobs.selected} ?disabled=${knobs.disabled}>
         ${knobs.offIcon
-          ? html`<md-icon slot="off-icon">${knobs.offIcon}</md-icon>`
+          ? html`<md-gb-icon slot="off-icon">${knobs.offIcon}</md-gb-icon>`
           : nothing}
         ${knobs.onIcon
-          ? html`<md-icon slot="on-icon">${knobs.onIcon}</md-icon>`
+          ? html`<md-gb-icon slot="on-icon">${knobs.onIcon}</md-gb-icon>`
           : nothing}
-      </md-switch>
+      </md-gb-switch>
     `;
   },
 };
@@ -48,20 +48,20 @@ const playground: MaterialStoryInit<StoryKnobs> = {
 const withIcons: MaterialStoryInit<StoryKnobs> = {
   name: 'With icons',
   styles: css`
-    md-switch.css-icons::part(switch) {
+    md-gb-switch.css-icons::part(switch) {
       --icon: 'close';
     }
-    md-switch.css-icons:state(selected)::part(switch) {
+    md-gb-switch.css-icons:state(selected)::part(switch) {
       --icon: 'check';
     }
   `,
   render(knobs) {
     return html`
-      <md-switch
+      <md-gb-switch
         class="css-icons"
         .selected=${knobs.selected}
         ?disabled=${knobs.disabled}>
-      </md-switch>
+      </md-gb-switch>
     `;
   },
 };

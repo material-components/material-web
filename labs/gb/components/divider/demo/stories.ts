@@ -40,13 +40,13 @@ const playground: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="column">
         <div>Vertical</div>
-        <md-divider></md-divider>
+        <md-gb-divider></md-gb-divider>
         <div>Items</div>
       </div>
 
       <div class="row">
         <div>Horizontal</div>
-        <md-divider vertical></md-divider>
+        <md-gb-divider vertical></md-gb-divider>
         <div>Items</div>
       </div>
     `;

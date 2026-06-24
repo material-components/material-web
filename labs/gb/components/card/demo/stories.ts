@@ -73,12 +73,12 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-card
+      <md-gb-card
         color=${knobs.color || nothing}
         ?disabled=${knobs.disabled}
         ?interactive=${knobs.interactive}>
         <div class="content">Card content</div>
-      </md-card>
+      </md-gb-card>
     `;
   },
 };
@@ -89,24 +89,24 @@ const colors: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="row">
-        <md-card
+        <md-gb-card
           color="elevated"
           ?disabled=${knobs.disabled}
           ?interactive=${knobs.interactive}>
           <div class="content">Card content</div>
-        </md-card>
-        <md-card
+        </md-gb-card>
+        <md-gb-card
           color="filled"
           ?disabled=${knobs.disabled}
           ?interactive=${knobs.interactive}>
           <div class="content">Card content</div>
-        </md-card>
-        <md-card
+        </md-gb-card>
+        <md-gb-card
           color="outlined"
           ?disabled=${knobs.disabled}
           ?interactive=${knobs.interactive}>
           <div class="content">Card content</div>
-        </md-card>
+        </md-gb-card>
       </div>
     `;
   },
@@ -117,7 +117,7 @@ const layouts: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-card
+      <md-gb-card
         class="layout-card"
         color=${knobs.color || 'elevated'}
         ?disabled=${knobs.disabled}
@@ -130,11 +130,11 @@ const layouts: MaterialStoryInit<StoryKnobs> = {
             through supporting text here.
           </p>
           <div class="actions">
-            <md-button color="outlined">Action</md-button>
-            <md-button color="filled">Action</md-button>
+            <md-gb-button color="outlined">Action</md-gb-button>
+            <md-gb-button color="filled">Action</md-gb-button>
           </div>
         </div>
-      </md-card>
+      </md-gb-card>
     `;
   },
 };

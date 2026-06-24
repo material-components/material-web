@@ -26,14 +26,14 @@ import {
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design split button component. */
-    'md-split-button': SplitButton;
+    'md-gb-split-button': SplitButton;
   }
 }
 
 /**
  * A Material Design split button component.
  */
-@customElement('md-split-button')
+@customElement('md-gb-split-button')
 export class SplitButton extends LitElement {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,
