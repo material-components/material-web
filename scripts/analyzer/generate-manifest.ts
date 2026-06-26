@@ -10,7 +10,7 @@ import {
 } from '@lit-labs/analyzer/package-analyzer.js';
 import {generateManifest} from '@lit-labs/gen-manifest';
 import {writeFileTree} from '@lit-labs/gen-utils/lib/file-utils.js';
-import type {Package as Manifest} from 'custom-elements-manifest';
+import type {Package as Manifest, Module} from 'custom-elements-manifest';
 import * as path from 'path';
 
 const ROOT = process.cwd() as AbsolutePath;
@@ -30,9 +30,22 @@ for (const module of gbManifest.modules) {
     combinedModules.push(module);
   }
 }
+function includedModules(module: Module) {
+  const isTestFile =
+    module.path.includes('_test') ||
+    module.path.includes('test/') ||
+    module.path.includes('testing/');
+  // Include all non-test files.
+  if (!isTestFile) return true;
+  // Only include these test files.
+  return (
+    module.path.includes('harness') ||
+    module.path.includes('transform-pseudo-classes')
+  );
+}
 const manifest = {
   ...mainManifest,
-  modules: combinedModules,
+  modules: combinedModules.filter(includedModules),
 };
 
 await writeFileTree(ROOT, {
