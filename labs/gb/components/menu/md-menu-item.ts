@@ -35,7 +35,7 @@ import {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-menu-item': MenuItem;
+    'md-gb-menu-item': MenuItem;
   }
 }
 
@@ -45,7 +45,7 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
 /**
  * A Material Design menu item component.
  */
-@customElement('md-menu-item')
+@customElement('md-gb-menu-item')
 export class MenuItem extends baseClass {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,

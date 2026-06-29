@@ -192,7 +192,7 @@
       ]
     },
     "build:manifest": {
-      "command": "node scripts/generate-manifest.js",
+      "command": "node scripts/analyzer/generate-manifest.js",
       "files": [
         "**/*.ts"
       ],

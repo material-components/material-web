@@ -42,7 +42,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   name: 'Playground',
   render(knobs) {
     return html`
-      <md-icon-button
+      <md-gb-icon-button
         color=${knobs.color || nothing}
         size=${knobs.size || nothing}
         width=${knobs.width || nothing}
@@ -50,8 +50,8 @@ const playground: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
     `;
   },
 };
@@ -60,7 +60,7 @@ const colors: MaterialStoryInit<StoryKnobs> = {
   name: 'Colors',
   render(knobs) {
     return html`
-      <md-icon-button
+      <md-gb-icon-button
         color="filled"
         size=${knobs.size || nothing}
         width=${knobs.width || nothing}
@@ -68,9 +68,9 @@ const colors: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         color="tonal"
         size=${knobs.size || nothing}
         width=${knobs.width || nothing}
@@ -78,9 +78,9 @@ const colors: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         color="outlined"
         size=${knobs.size || nothing}
         width=${knobs.width || nothing}
@@ -88,9 +88,9 @@ const colors: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         color="standard"
         size=${knobs.size || nothing}
         width=${knobs.width || nothing}
@@ -98,8 +98,8 @@ const colors: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
     `;
   },
 };
@@ -108,7 +108,7 @@ const sizes: MaterialStoryInit<StoryKnobs> = {
   name: 'Sizes',
   render(knobs) {
     return html`
-      <md-icon-button
+      <md-gb-icon-button
         size="xs"
         color=${knobs.color || nothing}
         width=${knobs.width || nothing}
@@ -116,9 +116,9 @@ const sizes: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         size="sm"
         color=${knobs.color || nothing}
         width=${knobs.width || nothing}
@@ -126,9 +126,9 @@ const sizes: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         size="md"
         color=${knobs.color || nothing}
         width=${knobs.width || nothing}
@@ -136,9 +136,9 @@ const sizes: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         size="lg"
         color=${knobs.color || nothing}
         width=${knobs.width || nothing}
@@ -146,9 +146,9 @@ const sizes: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         size="xl"
         color=${knobs.color || nothing}
         width=${knobs.width || nothing}
@@ -156,8 +156,8 @@ const sizes: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
     `;
   },
 };
@@ -166,7 +166,7 @@ const widths: MaterialStoryInit<StoryKnobs> = {
   name: 'Widths',
   render(knobs) {
     return html`
-      <md-icon-button
+      <md-gb-icon-button
         width="narrow"
         color=${knobs.color || nothing}
         size=${knobs.size || nothing}
@@ -174,18 +174,18 @@ const widths: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         color=${knobs.color || nothing}
         size=${knobs.size || nothing}
         ?square=${knobs.square}
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
-      <md-icon-button
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
+      <md-gb-icon-button
         width="wide"
         color=${knobs.color || nothing}
         size=${knobs.size || nothing}
@@ -193,8 +193,8 @@ const widths: MaterialStoryInit<StoryKnobs> = {
         ?disabled=${knobs.disabled}
         ?soft-disabled=${knobs.softDisabled}
         type=${knobs.toggle ? 'toggle' : nothing}>
-        <md-icon>${knobs.icon}</md-icon>
-      </md-icon-button>
+        <md-gb-icon>${knobs.icon}</md-gb-icon>
+      </md-gb-icon-button>
     `;
   },
 };

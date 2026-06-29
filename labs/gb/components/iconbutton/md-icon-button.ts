@@ -27,7 +27,7 @@ import {iconButton} from './icon-button.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design icon button component. */
-    'md-icon-button': IconButton;
+    'md-gb-icon-button': IconButton;
   }
 }
 
@@ -38,7 +38,7 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design icon button component.
  */
-@customElement('md-icon-button')
+@customElement('md-gb-icon-button')
 export class IconButton extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

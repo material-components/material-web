@@ -59,41 +59,41 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="container" style="width: 360px;">
-        <md-list ?segmented=${knobs.segmented}>
-          <md-list-item ?static=${knobs.nonInteractive}>
+        <md-gb-list ?segmented=${knobs.segmented}>
+          <md-gb-list-item ?static=${knobs.nonInteractive}>
             Basic Item
-          </md-list-item>
-          <md-list-item ?static=${knobs.nonInteractive}>
-            <md-icon slot="leading">star</md-icon>
+          </md-gb-list-item>
+          <md-gb-list-item ?static=${knobs.nonInteractive}>
+            <md-gb-icon slot="leading">star</md-gb-icon>
             With Leading Icon
-          </md-list-item>
-          <md-list-item ?static=${knobs.nonInteractive}>
+          </md-gb-list-item>
+          <md-gb-list-item ?static=${knobs.nonInteractive}>
             <span slot="avatar">A</span>
             With Avatar & Supporting Text
             <span slot="supporting-text">Supporting text goes here</span>
-          </md-list-item>
-          <md-list-item
+          </md-gb-list-item>
+          <md-gb-list-item
             ?static=${knobs.nonInteractive}
             style="align-items: start;">
-            <md-icon slot="leading">image</md-icon>
+            <md-gb-icon slot="leading">image</md-gb-icon>
             <span slot="overline">Overline text</span>
             Complex Item
             <span slot="supporting-text">
               With overline, support text, and two icons
             </span>
             <span slot="trailing-text">100+</span>
-            <md-icon slot="trailing">chevron_right</md-icon>
-          </md-list-item>
-          <md-list-item ?static=${knobs.nonInteractive} checked>
-            <md-icon slot="leading">check</md-icon>
+            <md-gb-icon slot="trailing">chevron_right</md-gb-icon>
+          </md-gb-list-item>
+          <md-gb-list-item ?static=${knobs.nonInteractive} checked>
+            <md-gb-icon slot="leading">check</md-gb-icon>
             Selected Item
-          </md-list-item>
-          <md-list-item ?static=${knobs.nonInteractive} disabled>
-            <md-icon slot="leading">block</md-icon>
+          </md-gb-list-item>
+          <md-gb-list-item ?static=${knobs.nonInteractive} disabled>
+            <md-gb-icon slot="leading">block</md-gb-icon>
             Disabled Item
             <span slot="supporting-text">This item is disabled</span>
-          </md-list-item>
-        </md-list>
+          </md-gb-list-item>
+        </md-gb-list>
       </div>
     `;
   },
@@ -105,28 +105,28 @@ const staticList: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="container" style="width: 360px;">
-        <md-list ?segmented=${knobs.segmented}>
-          <md-list-item static>
-            <md-icon slot="leading">developer_board</md-icon>
+        <md-gb-list ?segmented=${knobs.segmented}>
+          <md-gb-list-item static>
+            <md-gb-icon slot="leading">developer_board</md-gb-icon>
             The first computer (ENIAC)
             <span slot="trailing-text">Feb 14, 1946</span>
-          </md-list-item>
-          <md-list-item static>
-            <md-icon slot="leading">satellite_alt</md-icon>
+          </md-gb-list-item>
+          <md-gb-list-item static>
+            <md-gb-icon slot="leading">satellite_alt</md-gb-icon>
             Sputnik launched into space
             <span slot="trailing-text">Oct 4, 1957</span>
-          </md-list-item>
-          <md-list-item static>
-            <md-icon slot="leading">rocket_launch</md-icon>
+          </md-gb-list-item>
+          <md-gb-list-item static>
+            <md-gb-icon slot="leading">rocket_launch</md-gb-icon>
             The Apollo 11 moon landing
             <span slot="trailing-text">Jul 20, 1969</span>
-          </md-list-item>
-          <md-list-item static>
-            <md-icon slot="leading">moon_stars</md-icon>
+          </md-gb-list-item>
+          <md-gb-list-item static>
+            <md-gb-icon slot="leading">moon_stars</md-gb-icon>
             Artemis 2 crewed lunar flyby
             <span slot="trailing-text">Apr 1, 2026</span>
-          </md-list-item>
-        </md-list>
+          </md-gb-list-item>
+        </md-gb-list>
       </div>
     `;
   },
@@ -148,30 +148,30 @@ const singleAction: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="container" style="width: 360px;">
-        <md-list ?segmented=${knobs.segmented}>
-          <md-list-item>
+        <md-gb-list ?segmented=${knobs.segmented}>
+          <md-gb-list-item>
             <div class="img" slot="avatar"></div>
             Festivals
             <span slot="supporting-text">Food, music, arts, community...</span>
             <span slot="trailing-text">May 8</span>
-          </md-list-item>
-          <md-list-item>
+          </md-gb-list-item>
+          <md-gb-list-item>
             <div class="img" slot="avatar"></div>
             Arts
             <span slot="supporting-text">
               Literature, games, music, physical...
             </span>
             <span slot="trailing-text">May 8</span>
-          </md-list-item>
-          <md-list-item>
+          </md-gb-list-item>
+          <md-gb-list-item>
             <div class="img" slot="avatar"></div>
             Family & friends
             <span slot="supporting-text">
               The relationships that bring and bind...
             </span>
             <span slot="trailing-text">May 8</span>
-          </md-list-item>
-        </md-list>
+          </md-gb-list-item>
+        </md-gb-list>
       </div>
     `;
   },

@@ -33,12 +33,12 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   name: 'Playground',
   render(knobs) {
     return html`
-      <md-checkbox></md-checkbox>
-      <md-checkbox checked></md-checkbox>
-      <md-checkbox
+      <md-gb-checkbox></md-gb-checkbox>
+      <md-gb-checkbox checked></md-gb-checkbox>
+      <md-gb-checkbox
         .checked=${knobs.checked}
         .indeterminate=${knobs.indeterminate}
-        .error=${knobs.error}></md-checkbox>
+        .error=${knobs.error}></md-gb-checkbox>
     `;
   },
 };

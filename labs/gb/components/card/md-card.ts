@@ -30,7 +30,7 @@ import {type CardColor, card} from './card.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design card component. */
-    'md-card': Card;
+    'md-gb-card': Card;
   }
 }
 
@@ -40,7 +40,7 @@ const baseClass = mixinDelegatesAria(LitElement);
 /**
  * A Material Design card.
  */
-@customElement('md-card')
+@customElement('md-gb-card')
 export class Card extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

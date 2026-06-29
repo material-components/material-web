@@ -40,7 +40,7 @@ import {switchToggle} from './switch.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design switch component. */
-    'md-switch': Switch;
+    'md-gb-switch': Switch;
   }
 }
 
@@ -54,7 +54,7 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design switch component.
  */
-@customElement('md-switch')
+@customElement('md-gb-switch')
 export class Switch extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

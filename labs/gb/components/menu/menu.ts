@@ -70,7 +70,7 @@ export function setupMenu(
   menu: HTMLElement,
   opts?: {signal?: AbortSignal},
 ): void {
-  // TODO: add event listeners from <md-menu>
+  // TODO: add event listeners from <md-gb-menu>
 }
 
 /**

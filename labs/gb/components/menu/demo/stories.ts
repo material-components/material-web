@@ -50,26 +50,26 @@ const playground: MaterialStoryInit<StoryKnobs> = {
       <button popovertarget="menu" class=${button({color: 'filled'})}>
         Open Menu
       </button>
-      <md-menu id="menu" color=${knobs.vibrant ? 'vibrant' : 'standard'}>
-        <md-menu-item>Standard Item 1</md-menu-item>
-        <md-menu-item>
+      <md-gb-menu id="menu" color=${knobs.vibrant ? 'vibrant' : 'standard'}>
+        <md-gb-menu-item>Standard Item 1</md-gb-menu-item>
+        <md-gb-menu-item>
           Standard Item 2
           <span slot="supporting-text">Supporting text</span>
-        </md-menu-item>
-        <md-menu-item disabled>Standard Item 3</md-menu-item>
+        </md-gb-menu-item>
+        <md-gb-menu-item disabled>Standard Item 3</md-gb-menu-item>
         <hr class=${divider()} />
-        <md-menu-group checkable="single">
-          <md-menu-item checked>Radio 1</md-menu-item>
-          <md-menu-item>Radio 2</md-menu-item>
-          <md-menu-item disabled>Radio 3</md-menu-item>
-        </md-menu-group>
+        <md-gb-menu-group checkable="single">
+          <md-gb-menu-item checked>Radio 1</md-gb-menu-item>
+          <md-gb-menu-item>Radio 2</md-gb-menu-item>
+          <md-gb-menu-item disabled>Radio 3</md-gb-menu-item>
+        </md-gb-menu-group>
         <hr class=${divider()} />
-        <md-menu-group checkable="multiple">
-          <md-menu-item checked>Checkbox 1</md-menu-item>
-          <md-menu-item>Checkbox 2</md-menu-item>
-          <md-menu-item disabled checked>Checkbox 3</md-menu-item>
-        </md-menu-group>
-      </md-menu>
+        <md-gb-menu-group checkable="multiple">
+          <md-gb-menu-item checked>Checkbox 1</md-gb-menu-item>
+          <md-gb-menu-item>Checkbox 2</md-gb-menu-item>
+          <md-gb-menu-item disabled checked>Checkbox 3</md-gb-menu-item>
+        </md-gb-menu-group>
+      </md-gb-menu>
     `;
   },
 };

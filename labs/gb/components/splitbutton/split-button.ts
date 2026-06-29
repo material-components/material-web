@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {createClassMapDirective} from '../shared/directives.js';
 import {type ClassInfo} from 'lit/directives/class-map.js';
+import {createClassMapDirective} from '../shared/directives.js';
 
 /** Split Button color configuration types. */
 export type SplitButtonColor = 'filled' | 'elevated' | 'tonal' | 'outlined';
@@ -51,10 +51,10 @@ export function splitButtonClasses({
  *   <div class="${splitButton()}">
  *     <button class="${button({color: 'filled'})}">Label</button>
  *     <button class="${button({color: 'filled'})}" popovertarget="menu"></button>
- *     <md-menu id="menu">
- *       <md-menu-item>Option 1</md-menu-item>
- *       <md-menu-item>Option 2</md-menu-item>
- *     </md-menu>
+ *     <md-gb-menu id="menu">
+ *       <md-gb-menu-item>Option 1</md-gb-menu-item>
+ *       <md-gb-menu-item>Option 2</md-gb-menu-item>
+ *     </md-gb-menu>
  *   </div>
  * `;
  * ```

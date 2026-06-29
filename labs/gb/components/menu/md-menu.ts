@@ -21,7 +21,7 @@ import {menu, MENU_COLORS, menuContext, type MenuColor} from './menu.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design menu component. */
-    'md-menu': Menu;
+    'md-gb-menu': Menu;
   }
 }
 
@@ -31,7 +31,7 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
 /**
  * A Material Design menu component.
  */
-@customElement('md-menu')
+@customElement('md-gb-menu')
 export class Menu extends baseClass {
   static override styles: CSSResultOrNative[] = [menuStyles, css``];
 

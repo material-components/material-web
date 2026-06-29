@@ -19,7 +19,7 @@ import {list} from './list.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design list component. */
-    'md-list': List;
+    'md-gb-list': List;
   }
 }
 
@@ -29,7 +29,7 @@ const baseClass = mixinElementInternals(LitElement);
 /**
  * A Material Design list component.
  */
-@customElement('md-list')
+@customElement('md-gb-list')
 export class List extends baseClass {
   static override styles: CSSResultOrNative[] = [
     listStyles,

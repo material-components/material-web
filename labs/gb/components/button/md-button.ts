@@ -35,7 +35,7 @@ import {button} from './button.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design button. */
-    'md-button': Button;
+    'md-gb-button': Button;
   }
 }
 
@@ -47,7 +47,7 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design button.
  */
-@customElement('md-button')
+@customElement('md-gb-button')
 export class Button extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
@@ -73,6 +73,7 @@ export class Button extends baseClass {
       }
       .btn.btn-hide-outline {
         --outline-color: transparent;
+        --container-elevation: var(--md-sys-elevation-shadow-0);
       }
       slot[name='container'] {
         display: block;

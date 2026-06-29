@@ -40,7 +40,7 @@ import {radio} from './radio.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design radio component. */
-    'md-radio': Radio;
+    'md-gb-radio': Radio;
   }
 }
 
@@ -52,7 +52,7 @@ const radioBaseClass = mixinConstraintValidation(
 /**
  * A Material Design radio component.
  */
-@customElement('md-radio')
+@customElement('md-gb-radio')
 export class Radio extends radioBaseClass {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,

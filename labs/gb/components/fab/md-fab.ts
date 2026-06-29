@@ -19,14 +19,14 @@ import {fab, type FabColor, type FabSize} from './fab.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design fab component. */
-    'md-fab': Fab;
+    'md-gb-fab': Fab;
   }
 }
 
 /**
  * A Material Design fab component.
  */
-@customElement('md-fab')
+@customElement('md-gb-fab')
 export class Fab extends LitElement {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,

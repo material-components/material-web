@@ -4,12 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {Analyzer, type AbsolutePath} from '@lit-labs/analyzer';
+import {
+  createPackageAnalyzer,
+  type AbsolutePath,
+} from '@lit-labs/analyzer/package-analyzer.js';
 import {generateManifest} from '@lit-labs/gen-manifest';
 import {writeFileTree} from '@lit-labs/gen-utils/lib/file-utils.js';
-import type {Package as Manifest} from 'custom-elements-manifest';
+import type {Package as Manifest, Module} from 'custom-elements-manifest';
 import * as path from 'path';
-import ts from 'typescript';
 
 const ROOT = process.cwd() as AbsolutePath;
 
@@ -28,9 +30,22 @@ for (const module of gbManifest.modules) {
     combinedModules.push(module);
   }
 }
+function includedModules(module: Module) {
+  const isTestFile =
+    module.path.includes('_test') ||
+    module.path.includes('test/') ||
+    module.path.includes('testing/');
+  // Include all non-test files.
+  if (!isTestFile) return true;
+  // Only include these test files.
+  return (
+    module.path.includes('harness') ||
+    module.path.includes('transform-pseudo-classes')
+  );
+}
 const manifest = {
   ...mainManifest,
-  modules: combinedModules,
+  modules: combinedModules.filter(includedModules),
 };
 
 await writeFileTree(ROOT, {
@@ -39,39 +54,7 @@ await writeFileTree(ROOT, {
 console.log('Generated custom-elements.json');
 
 async function generateManifestFromTsconfig(basePath: AbsolutePath) {
-  // Create TS program
-  const formatHost: ts.FormatDiagnosticsHost = {
-    getCanonicalFileName: (fileName) => fileName,
-    getCurrentDirectory: () => ts.sys.getCurrentDirectory(),
-    getNewLine: () => ts.sys.newLine,
-  };
-  const tsconfigPath = ts.findConfigFile(basePath, ts.sys.fileExists);
-  const configFile = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
-  if (configFile.error) {
-    throw new Error(ts.formatDiagnostic(configFile.error, formatHost));
-  }
-  const parsedConfig = ts.parseJsonConfigFileContent(
-    configFile.config,
-    ts.sys,
-    basePath,
-  );
-  if (parsedConfig.errors.length) {
-    throw new Error(ts.formatDiagnostics(parsedConfig.errors, formatHost));
-  }
-  const program = ts.createProgram({
-    rootNames: parsedConfig.fileNames,
-    options: parsedConfig.options,
-    host: ts.createCompilerHost(parsedConfig.options, true),
-  });
-
-  // Run Lit analyzer
-  const analyzer = new Analyzer({
-    typescript: ts,
-    getProgram: () => program,
-    fs: ts.sys,
-    path,
-    basePath,
-  });
+  const analyzer = createPackageAnalyzer(basePath);
   const pkg = analyzer.getPackage();
   const files = await generateManifest(pkg);
   const manifestContent = files['custom-elements.json'];

@@ -34,7 +34,7 @@ import {checkbox} from './checkbox.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design checkbox component. */
-    'md-checkbox': Checkbox;
+    'md-gb-checkbox': Checkbox;
   }
 }
 
@@ -48,7 +48,7 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design checkbox component.
  */
-@customElement('md-checkbox')
+@customElement('md-gb-checkbox')
 export class Checkbox extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

@@ -31,9 +31,9 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   name: 'Playground',
   render(knobs) {
     return html`
-      <md-radio name="group" ?disabled=${knobs.disabled}></md-radio>
-      <md-radio name="group" ?disabled=${knobs.disabled}></md-radio>
-      <md-radio name="group" ?disabled=${knobs.disabled}></md-radio>
+      <md-gb-radio name="group" ?disabled=${knobs.disabled}></md-gb-radio>
+      <md-gb-radio name="group" ?disabled=${knobs.disabled}></md-gb-radio>
+      <md-gb-radio name="group" ?disabled=${knobs.disabled}></md-gb-radio>
     `;
   },
 };
