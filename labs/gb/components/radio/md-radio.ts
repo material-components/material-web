@@ -51,6 +51,15 @@ const radioBaseClass = mixinConstraintValidation(
 
 /**
  * A Material Design radio component.
+ *
+ * @fires {InputEvent} input - Fired when the radio is checked (but not unchecked). --bubbles --composed
+ * @fires {Event} change - Fired when the radio is checked (but not unchecked). --bubbles
+ * @csspart radio - The radio's root element.
+ * @cssprop --icon-color
+ * @cssprop --icon-size
+ * @cssprop --state-layer-color
+ * @cssprop --state-layer-shape
+ * @cssprop --state-layer-size
  */
 @customElement('md-gb-radio')
 export class Radio extends radioBaseClass {

@@ -4,6 +4,7 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --container-color: transparent;
   --container-shape: 2px;
   --container-size: 18px;
@@ -14,6 +15,7 @@
   --state-layer-color: var(--md-sys-color-on-surface);
   --state-layer-shape: 50%;
   --state-layer-size: 40px;
+  // LINT.ThenChange(md-checkbox.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin hovered {

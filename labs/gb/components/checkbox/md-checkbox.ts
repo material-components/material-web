@@ -47,6 +47,20 @@ const baseClass = mixinDelegatesAria(
 
 /**
  * A Material Design checkbox component.
+ *
+ * @fires {InputEvent} input - Fired when the checkbox is checked or unchecked. --bubbles --composed
+ * @fires {Event} change - Fired when the checkbox is checked or unchecked. --bubbles
+ * @csspart checkbox - The checkbox's root element.
+ * @cssprop --container-color
+ * @cssprop --container-shape
+ * @cssprop --container-size
+ * @cssprop --icon-color
+ * @cssprop --icon-size
+ * @cssprop --outline-color
+ * @cssprop --outline-width
+ * @cssprop --state-layer-color
+ * @cssprop --state-layer-shape
+ * @cssprop --state-layer-size
  */
 @customElement('md-gb-checkbox')
 export class Checkbox extends baseClass {
