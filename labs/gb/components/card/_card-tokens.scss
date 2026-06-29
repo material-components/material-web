@@ -4,12 +4,14 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --container-color: transparent;
   --container-elevation: var(--md-sys-elevation-shadow-0);
   --container-shape: var(--md-sys-shape-corner-md);
   --outline-color: transparent;
   --outline-width: 0;
   --state-layer-color: var(--md-sys-color-on-surface);
+  // LINT.ThenChange(md-card.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin hover {

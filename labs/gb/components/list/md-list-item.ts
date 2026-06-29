@@ -35,6 +35,45 @@ const baseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
 
 /**
  * A Material Design list item component.
+ *
+ * @slot - Used to display the item's primary label.
+ * @slot avatar - Used to display a circular avatar before the item's content.
+ * @slot leading - Used to display icons and content before the item's main content.
+ * @slot overline - Used to display overline text above the main label.
+ * @slot supporting-text - Used to display supporting text below the main label.
+ * @slot trailing-text - Used to display metadata or text after the item's main content.
+ * @slot trailing - Used to display icons and content after the item's main content.
+ * @csspart list-item - The list item's root element.
+ * @cssprop --container-height
+ * @cssprop --container-color
+ * @cssprop --container-shape
+ * @cssprop --label-text-color
+ * @cssprop --label-text
+ * @cssprop --label-text-tracking
+ * @cssprop --leading-space
+ * @cssprop --trailing-space
+ * @cssprop --between-space
+ * @cssprop --top-space
+ * @cssprop --bottom-space
+ * @cssprop --avatar-size
+ * @cssprop --avatar-shape
+ * @cssprop --avatar-color
+ * @cssprop --avatar-label
+ * @cssprop --avatar-label-tracking
+ * @cssprop --avatar-label-color
+ * @cssprop --leading-icon-color
+ * @cssprop --leading-icon-size
+ * @cssprop --trailing-icon-color
+ * @cssprop --trailing-icon-size
+ * @cssprop --overline
+ * @cssprop --overline-tracking
+ * @cssprop --overline-color
+ * @cssprop --supporting-text
+ * @cssprop --supporting-text-tracking
+ * @cssprop --supporting-text-color
+ * @cssprop --trailing-supporting-text
+ * @cssprop --trailing-supporting-text-tracking
+ * @cssprop --trailing-supporting-text-color
  */
 @customElement('md-gb-list-item')
 export class ListItem extends baseClass {

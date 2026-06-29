@@ -30,6 +30,8 @@ const baseClass = mixinElementInternals(LitElement);
 
 /**
  * A Material Design menu group component.
+ *
+ * @slot - Used to display the menu group's items.
  */
 @customElement('md-gb-menu-group')
 export class MenuGroup extends baseClass {
@@ -65,6 +67,8 @@ export class MenuGroup extends baseClass {
   constructor() {
     super();
     this[internals].role = 'none';
+    // TODO: single-select items should not be allowed to uncheck themselves.
+    // A single change event should be emitted from the group instead.
     this.addEventListener('change', (event: Event) => {
       if (this.checkable === 'single') {
         const composedPath = event.composedPath();

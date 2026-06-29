@@ -4,8 +4,10 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --container-shape: var(--md-sys-shape-corner-lg);
   --gap: 0;
+  // LINT.ThenChange(md-list.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin segmented {
@@ -13,6 +15,7 @@
 }
 
 @mixin item {
+  // LINT.IfChange
   --container-height: 56px;
   --container-color: transparent;
   --container-shape: var(--md-sys-shape-corner-xs);
@@ -45,6 +48,7 @@
     --md-sys-typescale-label-sm-tracking
   );
   --trailing-supporting-text-color: var(--md-sys-color-on-surface-variant);
+  // LINT.ThenChange(md-list-item.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin item-segmented {

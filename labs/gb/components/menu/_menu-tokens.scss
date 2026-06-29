@@ -4,6 +4,7 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --container-color: var(--md-sys-color-surface-container-low);
   --container-elevation: var(--md-sys-elevation-shadow-2);
   --container-shape: var(--md-sys-shape-corner-lg);
@@ -11,6 +12,7 @@
   --group-padding: 2px;
   --group-shape: var(--md-sys-shape-corner-sm);
   --section-label-text-color: var(--md-sys-color-on-surface-variant);
+  // LINT.ThenChange(md-menu.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin inactive {
@@ -26,6 +28,7 @@
 }
 
 @mixin item {
+  // LINT.IfChange
   --between-space: 12px;
   --bottom-space: 8px;
   --container-color: transparent;
@@ -48,6 +51,7 @@
   --trailing-supporting-text-color: var(--md-sys-color-on-surface-variant);
   --trailing-supporting-text: var(--md-sys-typescale-label-lg);
   --trailing-supporting-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+  // LINT.ThenChange(md-menu-item.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin item-first-child {

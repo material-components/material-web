@@ -30,6 +30,16 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
 
 /**
  * A Material Design menu component.
+ *
+ * @slot - Used to display the menu's items.
+ * @csspart menu - The menu's root element.
+ * @cssprop --container-color
+ * @cssprop --container-elevation
+ * @cssprop --container-shape
+ * @cssprop --gap
+ * @cssprop --group-padding
+ * @cssprop --group-shape
+ * @cssprop --section-label-text-color
  */
 @customElement('md-gb-menu')
 export class Menu extends baseClass {

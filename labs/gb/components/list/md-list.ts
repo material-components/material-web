@@ -28,6 +28,11 @@ const baseClass = mixinElementInternals(LitElement);
 
 /**
  * A Material Design list component.
+ *
+ * @slot - Used to display list items.
+ * @csspart list - The list's root element.
+ * @cssprop --container-shape
+ * @cssprop --gap
  */
 @customElement('md-gb-list')
 export class List extends baseClass {

@@ -44,6 +44,37 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
 
 /**
  * A Material Design menu item component.
+ *
+ * @slot - Used to display the item's primary label.
+ * @slot leading - Used to display icons and content before the item's main content.
+ * @slot supporting-text - Used to display supporting text below the main label.
+ * @slot trailing-text - Used to display metadata or text after the item's main content.
+ * @slot trailing - Used to display icons and content after the item's main content.
+ * @fires {Event} change - Fired when a checkbox or menu item is checked or unchecked. --bubbles
+ * @fires {InputEvent} input - Fired when a checkbox or menu item is checked or unchecked. --bubbles --composed
+ * @csspart menu-item - The menu item's root element.
+ * @cssprop --between-space
+ * @cssprop --bottom-space
+ * @cssprop --container-color
+ * @cssprop --height
+ * @cssprop --inner-corner-corner-size
+ * @cssprop --label-text-color
+ * @cssprop --label-text
+ * @cssprop --label-text-tracking
+ * @cssprop --leading-icon-color
+ * @cssprop --leading-icon-size
+ * @cssprop --leading-space
+ * @cssprop --shape
+ * @cssprop --supporting-text-color
+ * @cssprop --supporting-text
+ * @cssprop --supporting-text-tracking
+ * @cssprop --top-space
+ * @cssprop --trailing-icon-color
+ * @cssprop --trailing-icon-size
+ * @cssprop --trailing-space
+ * @cssprop --trailing-supporting-text-color
+ * @cssprop --trailing-supporting-text
+ * @cssprop --trailing-supporting-text-tracking
  */
 @customElement('md-gb-menu-item')
 export class MenuItem extends baseClass {
@@ -102,6 +133,7 @@ export class MenuItem extends baseClass {
       afterDispatch(e, () => {
         if (e.defaultPrevented) return;
         if (this.checkable) {
+          // TODO: radio menu items should not be allowed to uncheck themselves.
           this.checked = !wasChecked;
           this.dispatchEvent(new Event('change', {bubbles: true}));
           this.dispatchEvent(

@@ -39,6 +39,17 @@ const baseClass = mixinDelegatesAria(LitElement);
 
 /**
  * A Material Design card.
+ *
+ * @slot - Used to display the card's content. Note: add padding to content, not the host <md-gb-card> element.
+ * @slot container - Used to set a custom background container for the card.
+ * @csspart card - The card's root element.
+ * @csspart card-btn - The card's main action button, when interactive.
+ * @cssprop --container-color
+ * @cssprop --container-elevation
+ * @cssprop --container-shape
+ * @cssprop --outline-color
+ * @cssprop --outline-width
+ * @cssprop --state-layer-color
  */
 @customElement('md-gb-card')
 export class Card extends baseClass {

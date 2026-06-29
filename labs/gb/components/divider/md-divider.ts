@@ -21,6 +21,10 @@ declare global {
 
 /**
  * A Material Design divider component.
+ *
+ * @csspart divider - The divider element.
+ * @cssprop --color
+ * @cssprop --thickness
  */
 @customElement('md-gb-divider')
 export class Divider extends LitElement {
