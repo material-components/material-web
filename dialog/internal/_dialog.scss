@@ -78,7 +78,8 @@
     opacity: 32%;
     pointer-events: none;
     position: fixed;
-    z-index: 1;
+    // Keep the scrim above component internals such as selected tabs.
+    z-index: 2;
   }
 
   :host([open]) .scrim {
