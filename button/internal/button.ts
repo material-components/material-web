@@ -27,6 +27,8 @@ const buttonBaseClass = mixinDelegatesAria(
 
 /**
  * A button component.
+ * @slot icon - The icon to display within the button.
+ * @slot - The label of the button.
  */
 export abstract class Button extends buttonBaseClass {
   /** @nocollapse */

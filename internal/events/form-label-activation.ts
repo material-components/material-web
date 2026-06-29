@@ -22,7 +22,6 @@
  *     this.dispatchActivationClick(this.buttonElement);
  *   }
  * }
- *
  */
 export function dispatchActivationClick(element: HTMLElement) {
   const event = new MouseEvent('click', {bubbles: true});
@@ -56,7 +55,6 @@ export function dispatchActivationClick(element: HTMLElement) {
  *     this.dispatchActivationClick(this.buttonElement);
  *   }
  * }
- *
  */
 export function isActivationClick(event: Event) {
   // Event must start at the event target.

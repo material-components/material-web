@@ -84,6 +84,7 @@ function getFocusedElement(
  * @fires opened {Event} Fired once the menu is open, after any animations
  * @fires closing {Event} Fired before the closing animation begins
  * @fires closed {Event} Fired once the menu is closed, after any animations
+ * @slot - The label or main content of the component.
  */
 export abstract class Menu extends LitElement {
   @query('.menu') private readonly surfaceEl!: HTMLElement | null;

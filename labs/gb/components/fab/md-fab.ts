@@ -25,6 +25,8 @@ declare global {
 
 /**
  * A Material Design fab component.
+ *
+ * @slot - The label of the FAB.
  */
 @customElement('md-gb-fab')
 export class Fab extends LitElement {

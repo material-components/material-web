@@ -34,6 +34,7 @@ import {ANIMATE_INDICATOR, Tab} from './tab.js';
  *   }
  * });
  *
+ * @slot - The label or main content of the component.
  */
 export class Tabs extends LitElement {
   /**

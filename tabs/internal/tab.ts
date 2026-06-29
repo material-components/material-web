@@ -32,6 +32,8 @@ const tabBaseClass = mixinFocusable(LitElement);
 
 /**
  * Tab component.
+ * @slot icon - The icon to display in the component.
+ * @slot - The label or main content of the component.
  */
 export class Tab extends tabBaseClass {
   /**

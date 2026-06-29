@@ -33,6 +33,10 @@ const dialogBaseClass = mixinDelegatesAria(LitElement);
  * @fires closed {Event} Dispatched when the dialog has closed after any animations.
  * @fires cancel {Event} Dispatched when the dialog has been canceled by clicking
  * on the scrim or pressing Escape.
+ * @slot icon - The icon to display in the component.
+ * @slot headline - The main headline or title of the component.
+ * @slot content - The main body content of the component.
+ * @slot actions - The actions or buttons associated with the component.
  */
 export class Dialog extends dialogBaseClass {
   // We do not use `delegatesFocus: true` due to a Chromium bug with
