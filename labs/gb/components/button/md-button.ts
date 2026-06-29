@@ -46,6 +46,27 @@ const baseClass = mixinDelegatesAria(
 
 /**
  * A Material Design button.
+ *
+ * @slot - Used to display a label and optional icon.
+ * @slot container - Used to set a custom background container for the button.
+ * @fires {InputEvent} input - Fired when a toggle button is selected or unselected. --bubbles --composed
+ * @fires {Event} change - Fired when a toggle button is selected or unselected. --bubbles
+ * @csspart btn - The button's root element.
+ * @cssprop --container-color
+ * @cssprop --container-height
+ * @cssprop --container-elevation
+ * @cssprop --container-shape
+ * @cssprop --outline-width
+ * @cssprop --outline-color
+ * @cssprop --icon-label-space
+ * @cssprop --icon-color
+ * @cssprop --icon-size
+ * @cssprop --label-text
+ * @cssprop --label-text-tracking
+ * @cssprop --label-text-color
+ * @cssprop --leading-space
+ * @cssprop --state-layer-color
+ * @cssprop --trailing-space
  */
 @customElement('md-gb-button')
 export class Button extends baseClass {

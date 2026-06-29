@@ -4,15 +4,19 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --between-space: 2px;
+  // LINT.ThenChange(md-split-button.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin button {
+  // LINT.IfChange
   --icon-size: 0;
   --inner-corner-size: 0;
   --outer-corner-size: calc(var(--container-height) / 2);
   --leading-space: 0;
   --trailing-space: 0;
+  // LINT.ThenChange(md-split-button.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin button-xs {

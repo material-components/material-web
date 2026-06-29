@@ -4,6 +4,7 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --container-color: transparent;
   --container-height: auto;
   --container-elevation: var(--md-sys-elevation-shadow-0);
@@ -19,6 +20,7 @@
   --leading-space: 0;
   --state-layer-color: transparent;
   --trailing-space: 0;
+  // LINT.ThenChange(md-button.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin selected {

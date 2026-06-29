@@ -4,6 +4,7 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --container-color: transparent;
   --container-height: auto;
   --container-shape: calc(var(--container-height) / 2);
@@ -13,6 +14,7 @@
   --outline-width: 1px;
   --leading-space: 0;
   --trailing-space: 0;
+  // LINT.ThenChange(md-icon-button.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin selected {

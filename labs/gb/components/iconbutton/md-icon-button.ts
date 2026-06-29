@@ -37,6 +37,20 @@ const baseClass = mixinDelegatesAria(
 
 /**
  * A Material Design icon button component.
+ *
+ * @slot - Used to display an icon.
+ * @fires {InputEvent} input - Fired when a toggle icon button is selected or unselected. --bubbles --composed
+ * @fires {Event} change - Fired when a toggle button is selected or unselected. --bubbles
+ * @csspart icon-btn - The icon button's root element.
+ * @cssprop --container-color
+ * @cssprop --container-height
+ * @cssprop --container-shape
+ * @cssprop --icon-color
+ * @cssprop --icon-size
+ * @cssprop --outline-color
+ * @cssprop --outline-width
+ * @cssprop --leading-space
+ * @cssprop --trailing-space
  */
 @customElement('md-gb-icon-button')
 export class IconButton extends baseClass {

@@ -25,6 +25,21 @@ declare global {
 
 /**
  * A Material Design fab component.
+ *
+ * @slot - Used to display an icon and optional label.
+ * @csspart fab - The FAB's root element.
+ * @cssprop --container-color
+ * @cssprop --container-elevation
+ * @cssprop --container-height
+ * @cssprop --container-shape
+ * @cssprop --icon-color
+ * @cssprop --icon-label-space
+ * @cssprop --icon-size
+ * @cssprop --label-text
+ * @cssprop --label-text-color
+ * @cssprop --label-text-tracking
+ * @cssprop --leading-space
+ * @cssprop --trailing-space
  */
 @customElement('md-gb-fab')
 export class Fab extends LitElement {

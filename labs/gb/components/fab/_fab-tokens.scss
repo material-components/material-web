@@ -4,6 +4,7 @@
 //
 
 @mixin root {
+  // LINT.IfChange
   --container-color: transparent;
   --container-elevation: var(--md-sys-elevation-shadow-3);
   --container-height: 56px;
@@ -16,6 +17,7 @@
   --label-text-tracking: var(--md-sys-typescale-label-lg-tracking);
   --leading-space: 16px;
   --trailing-space: 16px;
+  // LINT.ThenChange(md-fab.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
 @mixin hovered {
