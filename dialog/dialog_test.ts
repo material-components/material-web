@@ -9,6 +9,9 @@ import {html} from 'lit';
 import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
+import '../tabs/primary-tab.js';
+import '../tabs/tabs.js';
+
 import {MdDialog} from './dialog.js';
 import {DialogHarness} from './harness.js';
 
@@ -41,6 +44,11 @@ describe('<md-dialog>', () => {
       throw new Error('Failed to query rendered <dialog>');
     }
 
+    const scrimElement = dialog.shadowRoot?.querySelector<HTMLElement>('.scrim');
+    if (!scrimElement) {
+      throw new Error('Failed to query rendered scrim.');
+    }
+
     const contentElement = root.querySelector<HTMLElement>('[slot=content]');
     if (!contentElement) {
       throw new Error('Failed to query rendered content.');
@@ -51,7 +59,14 @@ describe('<md-dialog>', () => {
       throw new Error('Failed to query rendered autofocus element.');
     }
 
-    return {harness, root, dialogElement, contentElement, focusElement};
+    return {
+      harness,
+      root,
+      dialogElement,
+      scrimElement,
+      contentElement,
+      focusElement,
+    };
   }
 
   describe('.styles', () => {
@@ -79,6 +94,27 @@ describe('<md-dialog>', () => {
       expect(dialogElement.open).toBeTrue();
       await harness.element.close();
       expect(dialogElement.open).toBeFalse();
+    });
+
+    it('renders scrim with selected tabs isolated', async () => {
+      const {harness, root, scrimElement} = await setupTest();
+      const tabs = document.createElement('md-tabs');
+      const selectedTab = document.createElement('md-primary-tab');
+      const otherTab = document.createElement('md-primary-tab');
+      selectedTab.textContent = 'A';
+      otherTab.textContent = 'B';
+      tabs.append(selectedTab, otherTab);
+      root.append(tabs);
+      await env.waitForStability();
+
+      await harness.element.show();
+      const scrimZIndex = Number(getComputedStyle(scrimElement).zIndex);
+      const tabsIsolation = getComputedStyle(tabs).isolation;
+      const selectedTabZIndex = Number(getComputedStyle(selectedTab).zIndex);
+      expect(selectedTab.active).withContext('selected tab active').toBeTrue();
+      expect(scrimZIndex).withContext('scrim z-index').toBe(1);
+      expect(selectedTabZIndex).withContext('selected tab z-index').toBe(1);
+      expect(tabsIsolation).withContext('tabs isolate child z-index').toBe('isolate');
     });
 
     it('fires open/close events', async () => {
