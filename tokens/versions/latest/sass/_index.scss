@@ -8,10 +8,10 @@
 // Source template: formats/sassvars/index.scss.tmpl
 
 // Design system: Google Material 3
-// Version: 34.0.21
+// Version: 34.1.16
 // Configured context tags:
 //   audience: 3p
-//   font: static
+//   font: variable
 //   platform: web
 // Output format: sass_vars
 
@@ -235,6 +235,7 @@
 @forward 'md-sys-elevation' as md-sys-elevation--*;
 @forward 'md-sys-motion' as md-sys-motion--*;
 @forward 'md-sys-shape' as md-sys-shape--*;
+@forward 'md-sys-space' as md-sys-space--*;
 @forward 'md-sys-state' as md-sys-state--*;
 @forward 'md-sys-state-focus-indicator' as md-sys-state-focus-indicator--*;
 @forward 'md-sys-typescale' as md-sys-typescale--*;
