@@ -96,7 +96,7 @@ describe('<md-dialog>', () => {
       expect(dialogElement.open).toBeFalse();
     });
 
-    it('renders scrim above selected tabs', async () => {
+    it('renders scrim with selected tabs isolated', async () => {
       const {harness, root, scrimElement} = await setupTest();
       const tabs = document.createElement('md-tabs');
       const selectedTab = document.createElement('md-primary-tab');
@@ -109,11 +109,12 @@ describe('<md-dialog>', () => {
 
       await harness.element.show();
       const scrimZIndex = Number(getComputedStyle(scrimElement).zIndex);
+      const tabsIsolation = getComputedStyle(tabs).isolation;
       const selectedTabZIndex = Number(getComputedStyle(selectedTab).zIndex);
       expect(selectedTab.active).withContext('selected tab active').toBeTrue();
-      expect(scrimZIndex)
-        .withContext('scrim above selected tab')
-        .toBeGreaterThan(selectedTabZIndex);
+      expect(scrimZIndex).withContext('scrim z-index').toBe(1);
+      expect(selectedTabZIndex).withContext('selected tab z-index').toBe(1);
+      expect(tabsIsolation).withContext('tabs isolate child z-index').toBe('isolate');
     });
 
     it('fires open/close events', async () => {
