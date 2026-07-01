@@ -20,6 +20,9 @@ export class SelectHarness extends Harness<Select> {
   protected getField() {
     return this.element.renderRoot.querySelector('.field') as Field;
   }
+  protected getMenu() {
+    return this.element.renderRoot.querySelector('md-menu')!;
+  }
   /**
    * Shows the menu and returns the first list item element.
    */
@@ -46,6 +49,18 @@ export class SelectHarness extends Harness<Select> {
   async click() {
     const field = await this.getField();
     field.click();
+  }
+
+  async clickAndWaitForMenu() {
+    const menu = this.getMenu();
+    const menuOpen = menu.open === true;
+    const waitForMenu = new Promise<void>((resolve) => {
+      menu.addEventListener(menuOpen ? 'closed' : 'opened', () => {
+        resolve();
+      }, {once: true});
+    });
+    await this.click();
+    await waitForMenu;
   }
 
   async clickOption(index: number) {
