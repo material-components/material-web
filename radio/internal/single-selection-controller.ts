@@ -236,8 +236,11 @@ export class SingleSelectionController implements ReactiveController {
       nextSibling.checked = true;
       nextSibling.tabIndex = 0;
       nextSibling.focus();
-      // Fire a change event since the change is triggered by a user action.
-      // This matches native <input type="radio"> behavior.
+      // Fire an input event first, then a change event since both are triggered
+      // by a user action. This matches native <input type="radio"> behavior.
+      nextSibling.dispatchEvent(
+        new InputEvent('input', {bubbles: true, composed: true}),
+      );
       nextSibling.dispatchEvent(new Event('change', {bubbles: true}));
 
       break;
