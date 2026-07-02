@@ -602,6 +602,37 @@ describe('TextField', () => {
   });
 
   describe('forms', () => {
+    async function setupFormSubmitTest(
+      template = html`<md-test-text-field></md-test-text-field>`,
+    ) {
+      const root = env.render(html`<form>${template}</form>`);
+      const form = root.querySelector('form');
+      if (!form) {
+        throw new Error('Could not query rendered <form>.');
+      }
+
+      const testElement = root.querySelector('md-test-text-field');
+      if (!testElement) {
+        throw new Error('Could not query rendered <md-test-text-field>.');
+      }
+
+      await env.waitForStability();
+
+      return {
+        form,
+        testElement,
+        harness: new TextFieldHarness(testElement),
+      };
+    }
+
+    function createSubmitListener() {
+      return jasmine.createSpy('submitListener').and.callFake(
+        (event: SubmitEvent) => {
+          event.preventDefault();
+        },
+      );
+    }
+
     createFormTests({
       queryControl: (root) => root.querySelector('md-test-text-field'),
       valueTests: [
@@ -691,6 +722,75 @@ describe('TextField', () => {
           },
         },
       ],
+    });
+
+    it('should submit form on Enter', async () => {
+      const {form, harness} = await setupFormSubmitTest(
+        html`<md-test-text-field
+          name="input"
+          value="Value"></md-test-text-field>`,
+      );
+      const submitListener = createSubmitListener();
+      form.addEventListener('submit', submitListener);
+
+      await harness.keypress('Enter');
+      await env.waitForStability();
+
+      expect(submitListener).toHaveBeenCalledTimes(1);
+      const formData = new FormData(form);
+      expect(formData.get('input')).toBe('Value');
+    });
+
+    it('should not submit form on Enter when keydown is canceled', async () => {
+      const {form, testElement, harness} = await setupFormSubmitTest(
+        html`<md-test-text-field name="input"></md-test-text-field>`,
+      );
+      const submitListener = createSubmitListener();
+      form.addEventListener('submit', submitListener);
+      testElement.addEventListener(
+        'keydown',
+        (event) => {
+          event.preventDefault();
+        },
+        {once: true},
+      );
+
+      await harness.keypress('Enter');
+      await env.waitForStability();
+
+      expect(submitListener).not.toHaveBeenCalled();
+    });
+
+    it('should not submit form on Enter for textareas', async () => {
+      const {form, harness} = await setupFormSubmitTest(
+        html`<md-test-text-field type="textarea"></md-test-text-field>`,
+      );
+      const submitListener = createSubmitListener();
+      form.addEventListener('submit', submitListener);
+
+      await harness.keypress('Enter');
+      await env.waitForStability();
+
+      expect(submitListener).not.toHaveBeenCalled();
+    });
+
+    it('should not submit form on Enter from slotted trailing content', async () => {
+      const {form, testElement} = await setupFormSubmitTest(
+        html`<md-test-text-field name="input"></md-test-text-field>`,
+      );
+      render(html`<button slot="trailing-icon">Search</button>`, testElement);
+      const button = testElement.querySelector('button');
+      if (!button) {
+        throw new Error('Could not query rendered trailing button.');
+      }
+
+      const submitListener = createSubmitListener();
+      form.addEventListener('submit', submitListener);
+
+      await new Harness(button).keypress('Enter');
+      await env.waitForStability();
+
+      expect(submitListener).not.toHaveBeenCalled();
     });
   });
 });
