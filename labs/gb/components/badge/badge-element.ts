@@ -5,22 +5,14 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
+import {state} from 'lit/decorators.js';
 import {badge} from './badge.js';
 import {styles as badgeStyles} from './badge.cssresult.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design badge component. */
-    'md-gb-badge': Badge;
-  }
-}
-
 /**
- * A Material Design badge component.
+ * A Material Design badge component class without custom element registration.
  */
-@customElement('md-gb-badge')
-export class Badge extends LitElement {
+export class BadgeElement extends LitElement {
   static override styles: CSSResultOrNative[] = [
     badgeStyles,
     css`
