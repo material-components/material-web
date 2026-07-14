@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/labs/gb/components/menu/md-menu.js';
-import '@material/web/labs/gb/components/menu/md-menu-group.js';
-import '@material/web/labs/gb/components/menu/md-menu-item.js';
+import '@material/web/labs/gb/components/menu/md-gb-menu.js';
+import '@material/web/labs/gb/components/menu/md-gb-menu-group.js';
+import '@material/web/labs/gb/components/menu/md-gb-menu-item.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {button} from '@material/web/labs/gb/components/button/button.js';

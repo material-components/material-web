@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, isServer, LitElement} from 'lit';
-import {customElement, property, query, state} from 'lit/decorators.js';
+import {property, query, state} from 'lit/decorators.js';
 import {
   afterDispatch,
   setupDispatchHooks,
@@ -37,13 +37,6 @@ import radioStyles from './radio.css' with {type: 'css'}; // github-only
 
 import {radio} from './radio.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design radio component. */
-    'md-gb-radio': Radio;
-  }
-}
-
 // Separate variable needed for closure.
 const radioBaseClass = mixinConstraintValidation(
   mixinFormAssociated(mixinElementInternals(mixinFocusable(LitElement))),
@@ -61,8 +54,7 @@ const radioBaseClass = mixinConstraintValidation(
  * @cssprop --state-layer-shape
  * @cssprop --state-layer-size
  */
-@customElement('md-gb-radio')
-export class Radio extends radioBaseClass {
+export class RadioElement extends radioBaseClass {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,
     rippleStyles,
@@ -219,7 +211,10 @@ export class Radio extends radioBaseClass {
         return [this];
       }
 
-      return this.selectionController.controls as [Radio, ...Radio[]];
+      return this.selectionController.controls as [
+        RadioElement,
+        ...RadioElement[],
+      ];
     });
   }
 

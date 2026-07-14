@@ -6,7 +6,7 @@
 
 import {consume} from '@lit/context';
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {property, state} from 'lit/decorators.js';
 import {
   afterDispatch,
   setupDispatchHooks,
@@ -32,12 +32,6 @@ import {
   menuItemCheckable,
   type MenuItemCheckable,
 } from './menu.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'md-gb-menu-item': MenuItem;
-  }
-}
 
 // Separate variable needed for closure.
 const baseClass = mixinElementInternals(mixinFocusable(LitElement));
@@ -76,8 +70,7 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
  * @cssprop --trailing-supporting-text
  * @cssprop --trailing-supporting-text-tracking
  */
-@customElement('md-gb-menu-item')
-export class MenuItem extends baseClass {
+export class MenuItemElement extends baseClass {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,
     rippleStyles,

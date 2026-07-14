@@ -6,7 +6,7 @@
 
 import {consume, provide} from '@lit/context';
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {
   internals,
   mixinElementInternals,
@@ -19,12 +19,6 @@ import {
   type MenuItemCheckable,
 } from './menu.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'md-gb-menu-group': MenuGroup;
-  }
-}
-
 // Separate variable needed for closure.
 const baseClass = mixinElementInternals(LitElement);
 
@@ -33,8 +27,7 @@ const baseClass = mixinElementInternals(LitElement);
  *
  * @slot - Used to display the menu group's items.
  */
-@customElement('md-gb-menu-group')
-export class MenuGroup extends baseClass {
+export class MenuGroupElement extends baseClass {
   static override styles: CSSResultOrNative[] = [
     css`
       :host {

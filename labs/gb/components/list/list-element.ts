@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {
   internals,
   mixinElementInternals,
@@ -15,13 +15,6 @@ import listStyles from './list.css' with {type: 'css'}; // github-only
 // import {styles as listStyles} from './list.cssresult.js'; // google3-only
 
 import {list} from './list.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design list component. */
-    'md-gb-list': List;
-  }
-}
 
 // Separate variable needed for closure.
 const baseClass = mixinElementInternals(LitElement);
@@ -34,8 +27,7 @@ const baseClass = mixinElementInternals(LitElement);
  * @cssprop --container-shape
  * @cssprop --gap
  */
-@customElement('md-gb-list')
-export class List extends baseClass {
+export class ListElement extends baseClass {
   static override styles: CSSResultOrNative[] = [
     listStyles,
     css`

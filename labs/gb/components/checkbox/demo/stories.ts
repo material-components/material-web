@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/labs/gb/components/checkbox/md-checkbox.js';
+import '@material/web/labs/gb/components/checkbox/md-gb-checkbox.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';

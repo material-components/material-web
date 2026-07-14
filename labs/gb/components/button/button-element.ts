@@ -12,7 +12,7 @@ import {
   nothing,
   PropertyValues,
 } from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {property, state} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
@@ -31,13 +31,6 @@ import buttonStyles from './button.css' with {type: 'css'}; // github-only
 // import buttonStyles from './button.cssresult.js'; // google3-only
 
 import {button} from './button.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design button. */
-    'md-gb-button': Button;
-  }
-}
 
 // Separate variable needed for closure.
 const baseClass = mixinDelegatesAria(
@@ -68,8 +61,7 @@ const baseClass = mixinDelegatesAria(
  * @cssprop --state-layer-color
  * @cssprop --trailing-space
  */
-@customElement('md-gb-button')
-export class Button extends baseClass {
+export class ButtonElement extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',

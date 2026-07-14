@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
@@ -37,13 +37,6 @@ import switchStyles from './switch.css' with {type: 'css'}; // github-only
 
 import {switchToggle} from './switch.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design switch component. */
-    'md-gb-switch': Switch;
-  }
-}
-
 // Separate variable needed for closure.
 const baseClass = mixinDelegatesAria(
   mixinConstraintValidation(
@@ -72,8 +65,7 @@ const baseClass = mixinDelegatesAria(
  * @cssprop --track-outline-width
  * @cssprop --track-width
  */
-@customElement('md-gb-switch')
-export class Switch extends baseClass {
+export class SwitchElement extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',

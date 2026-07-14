@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/labs/gb/components/button/md-button.js';
-import '@material/web/labs/gb/components/card/md-card.js';
+import '@material/web/labs/gb/components/button/md-gb-button.js';
+import '@material/web/labs/gb/components/card/md-gb-card.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {CardColor} from '@material/web/labs/gb/components/card/card.js';

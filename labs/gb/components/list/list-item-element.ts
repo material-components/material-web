@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {
@@ -22,13 +22,6 @@ import listStyles from './list.css' with {type: 'css'}; // github-only
 // import {styles as listStyles} from './list.cssresult.js'; // google3-only
 
 import {listItem} from './list.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design list item component. */
-    'md-gb-list-item': ListItem;
-  }
-}
 
 // Separate variable needed for closure.
 const baseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
@@ -75,8 +68,7 @@ const baseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
  * @cssprop --trailing-supporting-text-tracking
  * @cssprop --trailing-supporting-text-color
  */
-@customElement('md-gb-list-item')
-export class ListItem extends baseClass {
+export class ListItemElement extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,

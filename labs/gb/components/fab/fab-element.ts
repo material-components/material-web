@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 
 import focusRingStyles from '../focus/focus-ring.css' with {type: 'css'}; // github-only
 // import focusRingStyles from '../focus/focus-ring.cssresult.js'; // google3-only
@@ -15,13 +15,6 @@ import fabStyles from './fab.css' with {type: 'css'}; // github-only
 // import {styles as fabStyles} from './fab.cssresult.js'; // google3-only
 
 import {fab, type FabColor, type FabSize} from './fab.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design fab component. */
-    'md-gb-fab': Fab;
-  }
-}
 
 /**
  * A Material Design fab component.
@@ -41,8 +34,7 @@ declare global {
  * @cssprop --leading-space
  * @cssprop --trailing-space
  */
-@customElement('md-gb-fab')
-export class Fab extends LitElement {
+export class FabElement extends LitElement {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,
     rippleStyles,

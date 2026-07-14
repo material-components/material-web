@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {button} from '../button/button.js';
 
 import focusRingStyles from '../focus/focus-ring.css' with {type: 'css'}; // github-only
@@ -23,13 +23,6 @@ import {
   type SplitButtonSize,
 } from './split-button.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design split button component. */
-    'md-gb-split-button': SplitButton;
-  }
-}
-
 /**
  * A Material Design split button component.
  *
@@ -46,8 +39,7 @@ declare global {
  * @cssprop --leading-space
  * @cssprop --trailing-space
  */
-@customElement('md-gb-split-button')
-export class SplitButton extends LitElement {
+export class SplitButtonElement extends LitElement {
   static override styles: CSSResultOrNative[] = [
     focusRingStyles,
     rippleStyles,

@@ -6,7 +6,7 @@
 
 import {ContextProvider} from '@lit/context';
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {
   internals,
   mixinElementInternals,
@@ -17,13 +17,6 @@ import menuStyles from './menu.css' with {type: 'css'}; // github-only
 // import {styles as menuStyles} from './menu.cssresult.js'; // google3-only
 
 import {menu, MENU_COLORS, menuContext, type MenuColor} from './menu.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design menu component. */
-    'md-gb-menu': Menu;
-  }
-}
 
 // Separate variable needed for closure.
 const baseClass = mixinElementInternals(mixinFocusable(LitElement));
@@ -41,8 +34,7 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
  * @cssprop --group-shape
  * @cssprop --section-label-text-color
  */
-@customElement('md-gb-menu')
-export class Menu extends baseClass {
+export class MenuElement extends baseClass {
   static override styles: CSSResultOrNative[] = [menuStyles, css``];
 
   @property() color: MenuColor = MENU_COLORS.standard;

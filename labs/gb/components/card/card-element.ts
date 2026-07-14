@@ -12,7 +12,7 @@ import {
   nothing,
   PropertyValues,
 } from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {property, state} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {ripple} from '../ripple/ripple.js';
@@ -26,13 +26,6 @@ import cardStyles from './card.css' with {type: 'css'}; // github-only
 // import cardStyles from './card.cssresult.js'; // google3-only
 
 import {type CardColor, card} from './card.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design card component. */
-    'md-gb-card': Card;
-  }
-}
 
 // Separate variable needed for closure.
 const baseClass = mixinDelegatesAria(LitElement);
@@ -51,8 +44,7 @@ const baseClass = mixinDelegatesAria(LitElement);
  * @cssprop --outline-width
  * @cssprop --state-layer-color
  */
-@customElement('md-gb-card')
-export class Card extends baseClass {
+export class CardElement extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',

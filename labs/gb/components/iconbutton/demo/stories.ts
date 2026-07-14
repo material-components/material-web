@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/labs/gb/components/iconbutton/md-icon-button.js';
-import '@material/web/labs/gb/styles/icon/md-icon.js';
+import '@material/web/labs/gb/components/iconbutton/md-gb-icon-button.js';
+import '@material/web/labs/gb/styles/icon/md-gb-icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {

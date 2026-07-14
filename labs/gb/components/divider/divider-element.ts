@@ -5,19 +5,12 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 
 import dividerStyles from './divider.css' with {type: 'css'}; // github-only
 // import {styles as dividerStyles} from './divider.cssresult.js'; // google3-only
 
 import {divider} from './divider.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design divider component. */
-    'md-gb-divider': Divider;
-  }
-}
 
 /**
  * A Material Design divider component.
@@ -26,8 +19,7 @@ declare global {
  * @cssprop --color
  * @cssprop --thickness
  */
-@customElement('md-gb-divider')
-export class Divider extends LitElement {
+export class DividerElement extends LitElement {
   static override styles: CSSResultOrNative[] = [
     dividerStyles,
     css`

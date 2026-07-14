@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/labs/gb/components/badge/md-badge.js';
+import '@material/web/labs/gb/components/badge/md-gb-badge.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
@@ -35,7 +35,8 @@ const anchored: MaterialStoryInit<StoryKnobs> = {
   name: 'Anchored',
   render() {
     return html`
-      <div style="display: flex; gap: 32px; align-items: center; padding: 16px;">
+      <div
+        style="display: flex; gap: 32px; align-items: center; padding: 16px;">
         <!-- Small badge (dot) -->
         <div style="display: inline-block;">
           <div

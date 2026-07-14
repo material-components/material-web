@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {property} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
@@ -23,13 +23,6 @@ import type {
   IconButtonWidth,
 } from './icon-button.js';
 import {iconButton} from './icon-button.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design icon button component. */
-    'md-gb-icon-button': IconButton;
-  }
-}
 
 const baseClass = mixinDelegatesAria(
   mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
@@ -52,8 +45,7 @@ const baseClass = mixinDelegatesAria(
  * @cssprop --leading-space
  * @cssprop --trailing-space
  */
-@customElement('md-gb-icon-button')
-export class IconButton extends baseClass {
+export class IconButtonElement extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',

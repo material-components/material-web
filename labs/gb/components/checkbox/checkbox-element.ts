@@ -5,7 +5,7 @@
  */
 
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators.js';
+import {property, query} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
@@ -31,13 +31,6 @@ import checkboxStyles from './checkbox.css' with {type: 'css'}; // github-only
 
 import {checkbox} from './checkbox.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design checkbox component. */
-    'md-gb-checkbox': Checkbox;
-  }
-}
-
 // Separate variable needed for closure.
 const baseClass = mixinDelegatesAria(
   mixinConstraintValidation(
@@ -62,8 +55,7 @@ const baseClass = mixinDelegatesAria(
  * @cssprop --state-layer-shape
  * @cssprop --state-layer-size
  */
-@customElement('md-gb-checkbox')
-export class Checkbox extends baseClass {
+export class CheckboxElement extends baseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',

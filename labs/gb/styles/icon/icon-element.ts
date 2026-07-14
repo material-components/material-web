@@ -5,25 +5,16 @@
  */
 
 import {type CSSResultOrNative} from 'lit';
-import {customElement} from 'lit/decorators.js';
 import {Icon as IconBase} from '../../../../icon/internal/icon.js';
 import {adoptStyles} from '../adopt-styles.js';
 
 import iconStyles from './md-icon.css' with {type: 'css'}; // github-only
 // import iconStyles from './md-icon.cssresult.js'; // google3-only
 
-declare global {
-  interface HTMLElementTagNameMap {
-    /** A Material Design icon component. */
-    'md-gb-icon': Icon;
-  }
-}
-
 /**
  * A Material Design icon component.
  */
-@customElement('md-gb-icon')
-export class Icon extends IconBase {
+export class IconElement extends IconBase {
   static override styles: CSSResultOrNative[] = [iconStyles];
 
   override connectedCallback() {

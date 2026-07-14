@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import '@material/web/labs/gb/components/divider/md-divider.js';
+import '@material/web/labs/gb/components/divider/md-gb-divider.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {divider} from '@material/web/labs/gb/components/divider/divider.js';
