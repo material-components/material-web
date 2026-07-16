@@ -8,8 +8,8 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {PrimaryTab} from './internal/primary-tab.js';
-import {styles as primaryStyles} from './internal/primary-tab-styles.js';
-import {styles as sharedStyles} from './internal/tab-styles.js';
+import {styles as primaryStyles} from './internal/primary-tab-styles.cssresult.js';
+import {styles as sharedStyles} from './internal/tab-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {

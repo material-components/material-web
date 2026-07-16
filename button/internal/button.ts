@@ -13,43 +13,27 @@ import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
-  FormSubmitter,
-  setupFormSubmitter,
-  type FormSubmitterType,
-} from '../../internal/controller/form-submitter.js';
-import {
   dispatchActivationClick,
   isActivationClick,
 } from '../../internal/events/form-label-activation.js';
-import {
-  internals,
-  mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
+import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
 
 // Separate variable needed for closure.
-const buttonBaseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
+const buttonBaseClass = mixinDelegatesAria(
+  mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
+);
 
 /**
  * A button component.
  */
-export abstract class Button extends buttonBaseClass implements FormSubmitter {
-  static {
-    setupFormSubmitter(Button);
-  }
-
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
+export abstract class Button extends buttonBaseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',
     delegatesFocus: true,
   };
-
-  /**
-   * Whether or not the button is disabled.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * Whether or not the button is "soft-disabled" (disabled but still
@@ -94,32 +78,6 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
    */
   @property({type: Boolean, attribute: 'has-icon', reflect: true}) hasIcon =
     false;
-
-  /**
-   * The default behavior of the button. May be "button", "reset", or "submit"
-   * (default).
-   */
-  @property() type: FormSubmitterType = 'submit';
-
-  /**
-   * The value added to a form with the button's name when the button submits a
-   * form.
-   */
-  @property({reflect: true}) value = '';
-
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this[internals].form;
-  }
 
   @query('.button') private readonly buttonElement!: HTMLElement | null;
 

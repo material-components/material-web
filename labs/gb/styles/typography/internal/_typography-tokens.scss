@@ -1,0 +1,149 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../../../../sass/ext/map_ext';
+@use '../../../../../tokens/versions/latest/sass/md-ref-typeface';
+@use '../../../../../tokens/versions/latest/sass/md-sys-typescale';
+@use '../../../../../tokens/versions/latest/sass/md-sys-typescale-emphasized';
+@use '../../../../../tokens/versions/latest/sass/md-sys-typescale-emphasized-meta';
+@use '../../../../../tokens/versions/latest/sass/md-sys-typescale-meta';
+// go/keep-sorted end
+
+@mixin emit-custom-properties(
+  $typescale-vars: meta.module-variables(md-sys-typescale),
+  $typescale-meta: meta.module-variables(md-sys-typescale-meta),
+  $typescale-emphasized-vars: meta.module-variables(md-sys-typescale-emphasized),
+  $typescale-emphasized-meta:
+    meta.module-variables(md-sys-typescale-emphasized-meta),
+  $typeface-vars:
+    map.merge(
+      meta.module-variables(md-ref-typeface),
+      (
+        'plain': (
+          'Roboto Flex',
+          'Roboto',
+          'Noto Sans',
+          system-ui,
+          sans-serif,
+        ),
+        'brand': var(--md-ref-typeface-plain),
+      )
+    )
+) {
+  --md-ref-typeface-brand: #{map_ext.get-strict($typeface-vars, 'brand')};
+  --md-ref-typeface-plain: #{map_ext.get-strict($typeface-vars, 'plain')};
+  --md-ref-typeface-weight-regular: #{map_ext.get-strict(
+      $typeface-vars,
+      'weight-regular'
+    )};
+  --md-ref-typeface-weight-medium: #{map_ext.get-strict(
+      $typeface-vars,
+      'weight-medium'
+    )};
+  --md-ref-typeface-weight-bold: #{map_ext.get-strict(
+      $typeface-vars,
+      'weight-bold'
+    )};
+
+  $scales: ('label', 'body', 'title', 'headline', 'display');
+  $sizes: (
+    'small': 'sm',
+    'medium': 'md',
+    'large': 'lg',
+  );
+
+  @each $scale in $scales {
+    @each $long-size, $short-size in $sizes {
+      $typescale: '#{$scale}-#{$long-size}';
+
+      $font: _font($typescale, $typescale-vars, $typescale-meta);
+      $tracking: map_ext.get-strict($typescale-vars, '#{$typescale}-tracking');
+      $axes: _axes($typescale, $typescale-vars);
+      $emphasized-font: _font(
+        $typescale,
+        $typescale-emphasized-vars,
+        $typescale-emphasized-meta
+      );
+      $emphasized-axes: _axes-emphasized(
+        $typescale,
+        $typescale-emphasized-vars
+      );
+
+      --md-sys-typescale-#{$scale}-#{$short-size}: #{$font};
+      --md-sys-typescale-#{$scale}-#{$short-size}-tracking: #{$tracking};
+      --md-sys-typescale-#{$scale}-#{$short-size}-axes: #{$axes};
+      --md-sys-typescale-emphasized-#{$scale}-#{$short-size}: #{$emphasized-font};
+      --md-sys-typescale-emphasized-#{$scale}-#{$short-size}-axes: #{$emphasized-axes};
+    }
+  }
+}
+
+/// Returns the `font` shorthand for a typescale from the provided token and
+/// metadata variable maps.
+@function _font($typescale, $vars, $meta) {
+  $weight: map_ext.get-strict($meta, '#{$typescale}-weight--resolved');
+  $size: map_ext.get-strict($vars, '#{$typescale}-size');
+  $line-height: map_ext.get-strict($vars, '#{$typescale}-line-height');
+  $family: map_ext.get-strict($meta, '#{$typescale}-font--resolved');
+  @return #{$weight} #{$size} / #{$line-height} #{$family};
+}
+
+/// Returns the `font-variation-settings` value for a typescale from the
+/// provided token variable map. Returns `normal` if no axes are changed from
+/// their default values.
+@function _axes($typescale, $vars) {
+  $axes: ();
+  $axes: _append-axis($axes, map_ext.get-strict($vars, '#{$typescale}-rond'));
+  $axes: _append-axis($axes, map_ext.get-strict($vars, '#{$typescale}-grad'));
+  @if list.length($axes) == 0 {
+    @return normal;
+  }
+  @return $axes;
+}
+
+// TODO: Remove this function once emphasized tokens are fixed to use `'ROND' 100`
+@function _axes-emphasized($typescale, $vars) {
+  $axes: ();
+  $axes: _append-axis($axes, ('ROND' 100));
+  $axes: _append-axis($axes, map_ext.get-strict($vars, '#{$typescale}-grad'));
+  @return $axes;
+}
+
+/// Appends a font axis to a list if it is not the default value for the axis.
+@function _append-axis($axes, $axis) {
+  // Not all axes from Carbon are supported in gBreeze.
+  // - 'opsz': use `font-size`
+  // - 'slnt': use `font-style`
+  // - 'wdth': use `font-stretch`/`font-width`
+  // - 'wght': use `font-weight`
+  $default-axes: (
+    'ROND': 0,
+    'GRAD': 0,
+    // These axes are unused in Material, but included for Carbon completeness.
+    'CRSV': 0,
+    'FILL': 0,
+    'HEXP': 0,
+  );
+  $axis-tag: list.nth($axis, 1);
+  $axis-value: list.nth($axis, 2);
+  @if not map.has-key($default-axes, $axis-tag) {
+    // Do not append unsupported axes.
+    @return $axes;
+  }
+  @if map.get($default-axes, $axis-tag) == $axis-value {
+    // Do not append axes with default values.
+    @return $axes;
+  }
+
+  // Manually add quotes since Sass removes them for custom property values,
+  // even with string.quote().
+  $axis: '"#{$axis-tag}" #{$axis-value}';
+  @return list.append($axes, $axis, $separator: comma);
+}

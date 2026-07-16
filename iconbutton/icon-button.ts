@@ -8,8 +8,8 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {IconButton} from './internal/icon-button.js';
-import {styles as sharedStyles} from './internal/shared-styles.js';
-import {styles} from './internal/standard-styles.js';
+import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
+import {styles} from './internal/standard-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -1,0 +1,139 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  // LINT.IfChange
+  --between-space: 2px;
+  // LINT.ThenChange(md-split-button.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin button {
+  // LINT.IfChange
+  --icon-size: 0;
+  --inner-corner-size: 0;
+  --outer-corner-size: calc(var(--container-height) / 2);
+  --leading-space: 0;
+  --trailing-space: 0;
+  // LINT.ThenChange(md-split-button.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin button-xs {
+  --icon-size: 22px;
+  --inner-corner-size: var(--md-sys-shape-corner-xs);
+}
+
+@mixin button-xs-leading {
+  --leading-space: 12px;
+  --trailing-space: 10px;
+}
+
+@mixin button-xs-trailing {
+  --leading-space: 13px;
+  --trailing-space: 13px;
+}
+
+@mixin button-xs-hovered {
+  --inner-corner-size: var(--md-sys-shape-corner-sm);
+}
+
+@mixin button-xs-pressed {
+  --inner-corner-size: var(--md-sys-shape-corner-sm);
+}
+
+@mixin button-sm {
+  --icon-size: 22px;
+  --inner-corner-size: var(--md-sys-shape-corner-xs);
+}
+
+@mixin button-sm-leading {
+  --leading-space: 16px;
+  --trailing-space: 12px;
+}
+
+@mixin button-sm-trailing {
+  --leading-space: 13px;
+  --trailing-space: 13px;
+}
+
+@mixin button-sm-hovered {
+  --inner-corner-size: var(--md-sys-shape-corner-md);
+}
+
+@mixin button-sm-pressed {
+  --inner-corner-size: var(--md-sys-shape-corner-md);
+}
+
+@mixin button-md {
+  --icon-size: 26px;
+  --inner-corner-size: var(--md-sys-shape-corner-xs);
+}
+
+@mixin button-md-leading {
+  --leading-space: 24px;
+  --trailing-space: 24px;
+}
+
+@mixin button-md-trailing {
+  --leading-space: 15px;
+  --trailing-space: 15px;
+}
+
+@mixin button-md-hovered {
+  --inner-corner-size: var(--md-sys-shape-corner-md);
+}
+
+@mixin button-md-pressed {
+  --inner-corner-size: var(--md-sys-shape-corner-md);
+}
+
+@mixin button-lg {
+  --icon-size: 38px;
+  --inner-corner-size: var(--md-sys-shape-corner-sm);
+}
+
+@mixin button-lg-leading {
+  --leading-space: 48px;
+  --trailing-space: 48px;
+}
+
+@mixin button-lg-trailing {
+  --leading-space: 29px;
+  --trailing-space: 29px;
+}
+
+@mixin button-lg-hovered {
+  --inner-corner-size: var(--md-sys-shape-corner-lg-increased);
+}
+
+@mixin button-lg-pressed {
+  --inner-corner-size: var(--md-sys-shape-corner-lg-increased);
+}
+
+@mixin button-xl {
+  --icon-size: 50px;
+  --inner-corner-size: var(--md-sys-shape-corner-md);
+}
+
+@mixin button-xl-leading {
+  --leading-space: 64px;
+  --trailing-space: 64px;
+}
+
+@mixin button-xl-trailing {
+  --leading-space: 43px;
+  --trailing-space: 43px;
+}
+
+@mixin button-xl-hovered {
+  --inner-corner-size: var(--md-sys-shape-corner-lg-increased);
+}
+
+@mixin button-xl-pressed {
+  --inner-corner-size: var(--md-sys-shape-corner-lg-increased);
+}
+
+@mixin button-trailing-selected {
+  --inner-corner-size: calc(var(--container-height) / 2);
+}

@@ -1,0 +1,74 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'card-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
+@layer md.comp.card {
+  .card {
+    & {
+      @include card-tokens.root;
+    }
+
+    &:is(:hover, .hover):where(:has(.card-btn:not(:disabled, .disabled))) {
+      @include card-tokens.hover;
+    }
+
+    &.card-filled {
+      @include card-tokens.filled;
+
+      &:where(:disabled, .disabled) {
+        @include card-tokens.filled-disabled;
+      }
+    }
+
+    &.card-outlined {
+      @include card-tokens.outlined;
+
+      &:where(:focus-within, .focus) {
+        @include card-tokens.outlined-focus;
+      }
+
+      &:where(:disabled, .disabled) {
+        @include card-tokens.outlined-disabled;
+      }
+    }
+
+    &.card-elevated {
+      @include card-tokens.elevated;
+
+      &:is(:hover, .hover):where(:has(.card-btn:not(:disabled, .disabled))) {
+        @include card-tokens.elevated-hover;
+      }
+
+      &:where(:disabled, .disabled) {
+        @include card-tokens.elevated-disabled;
+      }
+    }
+
+    & {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--container-color);
+      border-radius: var(--container-shape);
+      box-shadow: var(--container-elevation);
+      border: var(--outline-width) solid var(--outline-color);
+    }
+
+    .card-btn {
+      appearance: none;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      position: absolute;
+      inset: 0;
+      color: var(--state-layer-color);
+    }
+  }
+}

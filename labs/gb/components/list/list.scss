@@ -1,0 +1,212 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use '../checkbox/checkbox-tokens';
+@use '../radio/radio-tokens';
+@use 'list-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.checkbox, md.comp.radio;
+@layer md.comp.list {
+  .list {
+    & {
+      @include list-tokens.root;
+    }
+
+    &.list-segmented {
+      @include list-tokens.segmented;
+      --list-segmented: true;
+    }
+
+    & {
+      display: flex;
+      flex-direction: column;
+      margin: unset;
+      padding: unset;
+      list-style: none;
+      gap: var(--gap);
+      border-radius: var(--container-shape);
+    }
+
+    > :first-child:not(slot),
+    ::slotted(:first-child) {
+      border-start-start-radius: inherit;
+      border-start-end-radius: inherit;
+      --first-child: true;
+    }
+
+    > :last-child:not(slot),
+    ::slotted(:last-child) {
+      border-end-start-radius: inherit;
+      border-end-end-radius: inherit;
+      --last-child: true;
+    }
+
+    slot {
+      border-radius: inherit;
+    }
+  }
+
+  .list-select {
+    &,
+    &::picker(select) {
+      // stylelint-disable-next-line scss/declaration-property-value-no-unknown --
+      // Uses customizable select
+      appearance: base-select;
+    }
+
+    border: none;
+    background: none;
+    height: fit-content;
+  }
+
+  .list-item {
+    & {
+      @include list-tokens.item;
+
+      @container style(--list-segmented: true) {
+        @include list-tokens.item-segmented;
+      }
+    }
+
+    &:where(:not(.list-item-static)) {
+      &:is(:hover, .hover) {
+        @include list-tokens.item-hovered;
+      }
+
+      &:is(:focus-within, .focus) {
+        @include list-tokens.item-focused;
+      }
+
+      &:is(:active, .active) {
+        @include list-tokens.item-pressed;
+      }
+    }
+
+    &:is(:checked, .checked) {
+      @include list-tokens.item-selected;
+    }
+
+    &:is(:disabled, .disabled) {
+      @include list-tokens.item-disabled;
+    }
+
+    & {
+      display: flex;
+      align-items: center;
+      gap: var(--between-space);
+      box-sizing: border-box;
+      min-height: var(--container-height);
+      border-radius: var(--container-shape);
+      background-color: var(--container-color);
+      padding-inline: var(--leading-space) var(--trailing-space);
+      padding-block: var(--top-space) var(--bottom-space);
+      color: var(--label-text-color);
+      font: var(--label-text);
+      letter-spacing: var(--label-text-tracking);
+      appearance: none;
+      border: none;
+      text-align: unset;
+      text-decoration: unset;
+      width: stretch;
+    }
+
+    @container style(--first-child: true) {
+      border-start-start-radius: inherit;
+      border-start-end-radius: inherit;
+    }
+
+    @container style(--last-child: true) {
+      border-end-start-radius: inherit;
+      border-end-end-radius: inherit;
+    }
+
+    &:not(:disabled, .disabled, .list-item-static) {
+      cursor: pointer;
+    }
+
+    .list-item-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .list-item-leading,
+    .list-item-trailing {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 28px;
+    }
+
+    .list-item-leading {
+      --md-icon-color: var(--leading-icon-color);
+      --md-icon-size: var(--leading-icon-size);
+    }
+
+    .list-item-trailing {
+      --md-icon-color: var(--trailing-icon-color);
+      --md-icon-size: var(--trailing-icon-size);
+    }
+
+    .list-item-overline {
+      font: var(--overline);
+      letter-spacing: var(--overline-tracking);
+      color: var(--overline-color);
+    }
+
+    .list-item-supporting-text {
+      font: var(--supporting-text);
+      letter-spacing: var(--supporting-text-tracking);
+      color: var(--supporting-text-color);
+    }
+
+    .list-item-trailing-text {
+      font: var(--trailing-supporting-text);
+      letter-spacing: var(--trailing-supporting-text-tracking);
+      color: var(--trailing-supporting-text-color);
+    }
+
+    .list-item-avatar {
+      display: grid;
+      place-items: center;
+      background-color: var(--avatar-color);
+      border-radius: var(--avatar-shape);
+      aspect-ratio: 1;
+      width: var(--avatar-size);
+      font: var(--avatar-label);
+      letter-spacing: var(--avatar-label-tracking);
+      color: var(--avatar-label-color);
+    }
+
+    &::checkmark {
+      font: var(--leading-icon-size) var(--md-icon-font);
+      color: var(--leading-icon-color);
+      content: 'check';
+    }
+
+    &:has(.list-item-radio, .list-item-checkbox)::checkmark {
+      display: none;
+    }
+
+    .list-item-radio,
+    .list-item-checkbox {
+      width: min-content;
+      height: min-content;
+      --ripple: none;
+      --focus-ring-outline: none;
+    }
+
+    &:is(:checked, .checked) .list-item-radio {
+      @include radio-tokens.selected;
+      --icon: 'radio_button_checked';
+    }
+
+    &:is(:checked, .checked) .list-item-checkbox {
+      @include checkbox-tokens.selected;
+    }
+  }
+}

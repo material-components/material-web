@@ -30,7 +30,10 @@ const listItemBaseClass = mixinDelegatesAria(LitElement);
 
 /**
  * @fires request-activation {Event} Requests the list to set `tabindex=0` on
- * the item and focus it. --bubbles --composed
+ * the item and focus it. Used internally for list keyboard navigation; most
+ * applications do not need to listen for this event. It is exposed for
+ * authors building their own list-item replacements or wrapping items in a
+ * custom controller. --bubbles --composed
  */
 export class ListItemEl extends listItemBaseClass implements ListItem {
   /** @nocollapse */

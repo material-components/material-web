@@ -1,0 +1,349 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// stylelint-disable scss/at-rule-no-unknown -- Uses TailwindCSS at-rules.
+
+// Cascade `md` layer between `base` reset styles and `utilities` for overrides.
+@layer theme, base, md, components, utilities;
+// Non-inline theme to preserve Tailwind's default 4px spacing convention.
+@theme {
+  --spacing: calc(var(--md-sys-space-unit) / 2);
+}
+// Inline theme to replace Tailwind's default custom properties.
+@theme inline {
+  // Color
+  #{'--color-*'}: initial; // Do not use Tailwind's default color utilities.
+  --color-primary: var(--md-sys-color-primary);
+  --color-on-primary: var(--md-sys-color-on-primary);
+  --color-primary-container: var(--md-sys-color-primary-container);
+  --color-on-primary-container: var(--md-sys-color-on-primary-container);
+  --color-primary-fixed: var(--md-sys-color-primary-fixed);
+  --color-primary-fixed-dim: var(--md-sys-color-primary-fixed-dim);
+  --color-on-primary-fixed: var(--md-sys-color-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(
+    --md-sys-color-on-primary-fixed-variant
+  );
+  --color-secondary: var(--md-sys-color-secondary);
+  --color-on-secondary: var(--md-sys-color-on-secondary);
+  --color-secondary-container: var(--md-sys-color-secondary-container);
+  --color-on-secondary-container: var(--md-sys-color-on-secondary-container);
+  --color-secondary-fixed: var(--md-sys-color-secondary-fixed);
+  --color-secondary-fixed-dim: var(--md-sys-color-secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--md-sys-color-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(
+    --md-sys-color-on-secondary-fixed-variant
+  );
+  --color-tertiary: var(--md-sys-color-tertiary);
+  --color-on-tertiary: var(--md-sys-color-on-tertiary);
+  --color-tertiary-container: var(--md-sys-color-tertiary-container);
+  --color-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
+  --color-tertiary-fixed: var(--md-sys-color-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--md-sys-color-tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--md-sys-color-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(
+    --md-sys-color-on-tertiary-fixed-variant
+  );
+  --color-error: var(--md-sys-color-error);
+  --color-on-error: var(--md-sys-color-on-error);
+  --color-error-container: var(--md-sys-color-error-container);
+  --color-on-error-container: var(--md-sys-color-on-error-container);
+  --color-surface: var(--md-sys-color-surface);
+  --color-surface-dim: var(--md-sys-color-surface-dim);
+  --color-surface-bright: var(--md-sys-color-surface-bright);
+  --color-surface-container-lowest: var(
+    --md-sys-color-surface-container-lowest
+  );
+  --color-surface-container-low: var(--md-sys-color-surface-container-low);
+  --color-surface-container: var(--md-sys-color-surface-container);
+  --color-surface-container-high: var(--md-sys-color-surface-container-high);
+  --color-surface-container-highest: var(
+    --md-sys-color-surface-container-highest
+  );
+  --color-on-surface: var(--md-sys-color-on-surface);
+  --color-on-surface-variant: var(--md-sys-color-on-surface-variant);
+  --color-outline: var(--md-sys-color-outline);
+  --color-outline-variant: var(--md-sys-color-outline-variant);
+  --color-inverse-surface: var(--md-sys-color-inverse-surface);
+  --color-inverse-on-surface: var(--md-sys-color-inverse-on-surface);
+  --color-inverse-primary: var(--md-sys-color-inverse-primary);
+  --color-scrim: var(--md-sys-color-scrim);
+  --color-shadow: var(--md-sys-color-shadow);
+
+  // Typography
+  #{'--font-*'}: initial; // Do not use Tailwind's default font utilities.
+  --font-brand: var(--md-ref-typeface-brand);
+  --font-plain: var(--md-ref-typeface-plain);
+  --font-weight-normal: var(--md-ref-typeface-weight-regular);
+  --font-weight-medium: var(--md-ref-typeface-weight-medium);
+  --font-weight-bold: var(--md-ref-typeface-weight-bold);
+  #{'--text-*'}: initial; // Do not use Tailwind's default text utilities.
+  #{'--tracking-*'}: initial;
+  #{'--leading-*'}: initial;
+  // Use the `typescale-<name>-<size>` utility to apply typography tokens.
+  --typescale-label-sm: var(--md-sys-typescale-label-sm);
+  --typescale-label-sm-tracking: var(--md-sys-typescale-label-sm-tracking);
+  --typescale-label-sm-axes: var(--md-sys-typescale-label-sm-axes);
+  --typescale-label-md: var(--md-sys-typescale-label-md);
+  --typescale-label-md-tracking: var(--md-sys-typescale-label-md-tracking);
+  --typescale-label-md-axes: var(--md-sys-typescale-label-md-axes);
+  --typescale-label-lg: var(--md-sys-typescale-label-lg);
+  --typescale-label-lg-tracking: var(--md-sys-typescale-label-lg-tracking);
+  --typescale-label-lg-axes: var(--md-sys-typescale-label-lg-axes);
+  --typescale-body-sm: var(--md-sys-typescale-body-sm);
+  --typescale-body-sm-tracking: var(--md-sys-typescale-body-sm-tracking);
+  --typescale-body-sm-axes: var(--md-sys-typescale-body-sm-axes);
+  --typescale-body-md: var(--md-sys-typescale-body-md);
+  --typescale-body-md-tracking: var(--md-sys-typescale-body-md-tracking);
+  --typescale-body-md-axes: var(--md-sys-typescale-body-md-axes);
+  --typescale-body-lg: var(--md-sys-typescale-body-lg);
+  --typescale-body-lg-tracking: var(--md-sys-typescale-body-lg-tracking);
+  --typescale-body-lg-axes: var(--md-sys-typescale-body-lg-axes);
+  --typescale-title-sm: var(--md-sys-typescale-title-sm);
+  --typescale-title-sm-tracking: var(--md-sys-typescale-title-sm-tracking);
+  --typescale-title-sm-axes: var(--md-sys-typescale-title-sm-axes);
+  --typescale-title-md: var(--md-sys-typescale-title-md);
+  --typescale-title-md-tracking: var(--md-sys-typescale-title-md-tracking);
+  --typescale-title-md-axes: var(--md-sys-typescale-title-md-axes);
+  --typescale-title-lg: var(--md-sys-typescale-title-lg);
+  --typescale-title-lg-tracking: var(--md-sys-typescale-title-lg-tracking);
+  --typescale-title-lg-axes: var(--md-sys-typescale-title-lg-axes);
+  --typescale-headline-sm: var(--md-sys-typescale-headline-sm);
+  --typescale-headline-sm-tracking: var(
+    --md-sys-typescale-headline-sm-tracking
+  );
+  --typescale-headline-sm-axes: var(--md-sys-typescale-headline-sm-axes);
+  --typescale-headline-md: var(--md-sys-typescale-headline-md);
+  --typescale-headline-md-tracking: var(
+    --md-sys-typescale-headline-md-tracking
+  );
+  --typescale-headline-md-axes: var(--md-sys-typescale-headline-md-axes);
+  --typescale-headline-lg: var(--md-sys-typescale-headline-lg);
+  --typescale-headline-lg-tracking: var(
+    --md-sys-typescale-headline-lg-tracking
+  );
+  --typescale-headline-lg-axes: var(--md-sys-typescale-headline-lg-axes);
+  --typescale-display-sm: var(--md-sys-typescale-display-sm);
+  --typescale-display-sm-tracking: var(--md-sys-typescale-display-sm-tracking);
+  --typescale-display-sm-axes: var(--md-sys-typescale-display-sm-axes);
+  --typescale-display-md: var(--md-sys-typescale-display-md);
+  --typescale-display-md-tracking: var(--md-sys-typescale-display-md-tracking);
+  --typescale-display-md-axes: var(--md-sys-typescale-display-md-axes);
+  --typescale-display-lg: var(--md-sys-typescale-display-lg);
+  --typescale-display-lg-tracking: var(--md-sys-typescale-display-lg-tracking);
+  --typescale-display-lg-axes: var(--md-sys-typescale-display-lg-axes);
+  --typescale-emphasized-label-sm: var(--md-sys-typescale-emphasized-label-sm);
+  --typescale-emphasized-label-sm-axes: var(
+    --md-sys-typescale-emphasized-label-sm-axes
+  );
+  --typescale-emphasized-label-md: var(--md-sys-typescale-emphasized-label-md);
+  --typescale-emphasized-label-md-axes: var(
+    --md-sys-typescale-emphasized-label-md-axes
+  );
+  --typescale-emphasized-label-lg: var(--md-sys-typescale-emphasized-label-lg);
+  --typescale-emphasized-label-lg-axes: var(
+    --md-sys-typescale-emphasized-label-lg-axes
+  );
+  --typescale-emphasized-body-sm: var(--md-sys-typescale-emphasized-body-sm);
+  --typescale-emphasized-body-sm-axes: var(
+    --md-sys-typescale-emphasized-body-sm-axes
+  );
+  --typescale-emphasized-body-md: var(--md-sys-typescale-emphasized-body-md);
+  --typescale-emphasized-body-md-axes: var(
+    --md-sys-typescale-emphasized-body-md-axes
+  );
+  --typescale-emphasized-body-lg: var(--md-sys-typescale-emphasized-body-lg);
+  --typescale-emphasized-body-lg-axes: var(
+    --md-sys-typescale-emphasized-body-lg-axes
+  );
+  --typescale-emphasized-title-sm: var(--md-sys-typescale-emphasized-title-sm);
+  --typescale-emphasized-title-sm-axes: var(
+    --md-sys-typescale-emphasized-title-sm-axes
+  );
+  --typescale-emphasized-title-md: var(--md-sys-typescale-emphasized-title-md);
+  --typescale-emphasized-title-md-axes: var(
+    --md-sys-typescale-emphasized-title-md-axes
+  );
+  --typescale-emphasized-title-lg: var(--md-sys-typescale-emphasized-title-lg);
+  --typescale-emphasized-title-lg-axes: var(
+    --md-sys-typescale-emphasized-title-lg-axes
+  );
+  --typescale-emphasized-headline-sm: var(
+    --md-sys-typescale-emphasized-headline-sm
+  );
+  --typescale-emphasized-headline-sm-axes: var(
+    --md-sys-typescale-emphasized-headline-sm-axes
+  );
+  --typescale-emphasized-headline-md: var(
+    --md-sys-typescale-emphasized-headline-md
+  );
+  --typescale-emphasized-headline-md-axes: var(
+    --md-sys-typescale-emphasized-headline-md-axes
+  );
+  --typescale-emphasized-headline-lg: var(
+    --md-sys-typescale-emphasized-headline-lg
+  );
+  --typescale-emphasized-headline-lg-axes: var(
+    --md-sys-typescale-emphasized-headline-lg-axes
+  );
+  --typescale-emphasized-display-sm: var(
+    --md-sys-typescale-emphasized-display-sm
+  );
+  --typescale-emphasized-display-sm-axes: var(
+    --md-sys-typescale-emphasized-display-sm-axes
+  );
+  --typescale-emphasized-display-md: var(
+    --md-sys-typescale-emphasized-display-md
+  );
+  --typescale-emphasized-display-md-axes: var(
+    --md-sys-typescale-emphasized-display-md-axes
+  );
+  --typescale-emphasized-display-lg: var(
+    --md-sys-typescale-emphasized-display-lg
+  );
+  --typescale-emphasized-display-lg-axes: var(
+    --md-sys-typescale-emphasized-display-lg-axes
+  );
+
+  // Shape
+  --radius-xs: var(--md-sys-shape-corner-xs);
+  --radius-sm: var(--md-sys-shape-corner-sm);
+  --radius-md: var(--md-sys-shape-corner-md);
+  --radius-lg: var(--md-sys-shape-corner-lg);
+  --radius-xl: var(--md-sys-shape-corner-lg-increased);
+  --radius-2xl: var(--md-sys-shape-corner-xl);
+  --radius-3xl: var(--md-sys-shape-corner-xl-increased);
+  --radius-4xl: var(--md-sys-shape-corner-xxl);
+
+  // Elevation
+  --shadow-2xs: initial; // Material does not have a 2xs shadow.
+  --shadow-xs: var(--md-sys-elevation-shadow-1);
+  --shadow-sm: var(--md-sys-elevation-shadow-2);
+  --shadow-md: var(--md-sys-elevation-shadow-3);
+  --shadow-lg: var(--md-sys-elevation-shadow-4);
+  --shadow-xl: var(--md-sys-elevation-shadow-5);
+  --shadow-2xl: initial; // Material does not have a 2xl shadow.
+
+  // Space
+  --spacing-s0: var(--md-sys-space-0);
+  --spacing-s25: var(--md-sys-space-25);
+  --spacing-s50: var(--md-sys-space-50);
+  --spacing-s75: var(--md-sys-space-75);
+  --spacing-s100: var(--md-sys-space-100);
+  --spacing-s125: var(--md-sys-space-125);
+  --spacing-s150: var(--md-sys-space-150);
+  --spacing-s175: var(--md-sys-space-175);
+  --spacing-s200: var(--md-sys-space-200);
+  --spacing-s250: var(--md-sys-space-250);
+  --spacing-s300: var(--md-sys-space-300);
+  --spacing-s400: var(--md-sys-space-400);
+  --spacing-s450: var(--md-sys-space-450);
+  --spacing-s500: var(--md-sys-space-500);
+  --spacing-s600: var(--md-sys-space-600);
+  --spacing-s700: var(--md-sys-space-700);
+  --spacing-s800: var(--md-sys-space-800);
+  --spacing-s900: var(--md-sys-space-900);
+
+  // Breakpoints
+  --breakpoint-sm: 600px; // medium
+  --breakpoint-md: 840px; // expanded
+  --breakpoint-lg: 1200px; // large
+  --breakpoint-xl: 1600px; // extra-large
+  --breakpoint-2xl: initial; // Material does not have a 2xl breakpoint.
+}
+
+// Use the `typescale-<name>-<size>` utility to apply typography tokens.
+@utility typescale-* {
+  font: #{'--value(--typescale-*)'};
+  letter-spacing: #{'--value(--typescale-*-tracking)'};
+  font-variation-settings: #{'--value(--typescale-*-axes)'};
+}
+@utility typescale-emphasized-* {
+  font: #{'--value(--typescale-emphasized-*)'};
+  letter-spacing: #{'--value(--typescale-*-tracking)'};
+  font-variation-settings: #{'--value(--typescale-emphasized-*-axes)'};
+}
+
+// Add Material spacing utilities for padding, margin, and gap.
+@utility p-* {
+  padding: #{'--value(--spacing-*)'};
+}
+@utility px-* {
+  padding-inline: #{'--value(--spacing-*)'};
+}
+@utility py-* {
+  padding-block: #{'--value(--spacing-*)'};
+}
+@utility pl-* {
+  padding-inline-start: #{'--value(--spacing-*)'};
+}
+@utility ps-* {
+  padding-inline-start: #{'--value(--spacing-*)'};
+}
+@utility pe-* {
+  padding-inline-end: #{'--value(--spacing-*)'};
+}
+@utility pr-* {
+  padding-inline-end: #{'--value(--spacing-*)'};
+}
+@utility pt-* {
+  padding-block-start: #{'--value(--spacing-*)'};
+}
+@utility pbs-* {
+  padding-block-start: #{'--value(--spacing-*)'};
+}
+@utility pb-* {
+  padding-block-end: #{'--value(--spacing-*)'};
+}
+@utility pbe-* {
+  padding-block-end: #{'--value(--spacing-*)'};
+}
+@utility m-* {
+  margin: #{'--value(--spacing-*)'};
+}
+@utility mx-* {
+  margin-inline: #{'--value(--spacing-*)'};
+}
+@utility my-* {
+  margin-block: #{'--value(--spacing-*)'};
+}
+@utility ml-* {
+  margin-inline-start: #{'--value(--spacing-*)'};
+}
+@utility ms-* {
+  margin-inline-start: #{'--value(--spacing-*)'};
+}
+@utility me-* {
+  margin-inline-end: #{'--value(--spacing-*)'};
+}
+@utility mr-* {
+  margin-inline-end: #{'--value(--spacing-*)'};
+}
+@utility mt-* {
+  margin-block-start: #{'--value(--spacing-*)'};
+}
+@utility mbs-* {
+  margin-block-start: #{'--value(--spacing-*)'};
+}
+@utility mb-* {
+  margin-block-end: #{'--value(--spacing-*)'};
+}
+@utility mbe-* {
+  margin-block-end: #{'--value(--spacing-*)'};
+}
+@utility gap-* {
+  gap: #{'--value(--spacing-*)'};
+}
+@utility gap-x-* {
+  column-gap: #{'--value(--spacing-*)'};
+}
+@utility gap-y-* {
+  row-gap: #{'--value(--spacing-*)'};
+}
+
+// Override Tailwind's default `display: list-item` utility, which clashes
+// with the `.list-item` component class.
+@utility list-item {
+  display: flex;
+}

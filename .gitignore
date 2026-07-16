@@ -3,12 +3,14 @@ node_modules
 !web-test-runner.config.js
 !commitlint.config.js
 *.css
-*-styles.ts
+*.cssresult.ts
+tokens/versions/**/*-meta.scss
 *.map
 *.d.ts
 !types/*.d.ts
 .wireit/
 *.tsbuildinfo
+custom-elements.json
 
 !catalog/**/*.css
 catalog/_dev

@@ -725,10 +725,6 @@ export class Slider extends sliderBaseClass {
     this.finishAction(event);
   }
 
-  // Writable mixin properties for lit-html binding, needed for lit-analyzer
-  declare disabled: boolean;
-  declare name: string;
-
   override [getFormValue]() {
     if (this.range) {
       const data = new FormData();

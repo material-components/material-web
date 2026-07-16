@@ -217,27 +217,20 @@ describe('mixinFormAssociated()', () => {
   });
 
   describe('[getFormValue]()', () => {
-    it('should throw an error if not implemented', () => {
-      expect(() => {
-        @customElement('test-bad-form-associated')
-        class TestBadFormAssociated extends mixinFormAssociated(
-          mixinElementInternals(LitElement),
-        ) {
-          override requestUpdate(
-            ...args: Parameters<LitElement['requestUpdate']>
-          ) {
-            // Suppress errors that will occur async when the element is
-            // initialized. This is harder to test in jasmine, so we explicitly
-            // call the getFormValue function to test the error.
-            try {
-              super.requestUpdate(...args);
-            } catch {}
-          }
-        }
+    it('should return the value attribute by default', () => {
+      @customElement('test-default-value-form-associated')
+      class TestDefaultValueFormAssociated extends mixinFormAssociated(
+        mixinElementInternals(LitElement),
+      ) {}
 
-        const element = new TestBadFormAssociated();
-        element[getFormValue]();
-      }).toThrowError(/getFormValue/);
+      const element = new TestDefaultValueFormAssociated();
+      expect(element[getFormValue]())
+        .withContext('[getFormValue]() return with no value attribute')
+        .toBeNull();
+      element.setAttribute('value', 'value');
+      expect(element[getFormValue]())
+        .withContext('[getFormValue]() return with value attribute')
+        .toBe('value');
     });
 
     it('should not add form data without a name', () => {
