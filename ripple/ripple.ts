@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Ripple} from './internal/ripple.js';
-import {styles} from './internal/ripple-styles.js';
+import {styles} from './internal/ripple-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {

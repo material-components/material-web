@@ -1,0 +1,153 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'icon-button-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
+@layer md.comp.icon-btn {
+  .icon-btn {
+    & {
+      @include icon-button-tokens.root;
+    }
+    &:is(.icon-btn-selected, [aria-pressed='true']) {
+      @include icon-button-tokens.selected;
+    }
+    &.icon-btn-filled {
+      @include icon-button-tokens.filled;
+      &:where(.icon-btn-unselected, [aria-pressed='false']) {
+        @include icon-button-tokens.filled-unselected;
+      }
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.filled-selected;
+      }
+    }
+    &.icon-btn-tonal {
+      @include icon-button-tokens.tonal;
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.tonal-selected;
+      }
+    }
+    &.icon-btn-outlined {
+      @include icon-button-tokens.outlined;
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.outlined-selected;
+      }
+    }
+    &.icon-btn-standard {
+      @include icon-button-tokens.standard;
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.standard-selected;
+      }
+    }
+    &.icon-btn-xs {
+      @include icon-button-tokens.xs;
+      &:where(.icon-btn-narrow) {
+        @include icon-button-tokens.xs-narrow;
+      }
+      &:where(.icon-btn-wide) {
+        @include icon-button-tokens.xs-wide;
+      }
+    }
+    &.icon-btn-sm {
+      @include icon-button-tokens.sm;
+      &:where(.icon-btn-narrow) {
+        @include icon-button-tokens.sm-narrow;
+      }
+      &:where(.icon-btn-wide) {
+        @include icon-button-tokens.sm-wide;
+      }
+    }
+    &.icon-btn-md {
+      @include icon-button-tokens.md;
+      &:where(.icon-btn-narrow) {
+        @include icon-button-tokens.md-narrow;
+      }
+      &:where(.icon-btn-wide) {
+        @include icon-button-tokens.md-wide;
+      }
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.md-selected;
+      }
+    }
+    &.icon-btn-lg {
+      @include icon-button-tokens.lg;
+      &:where(.icon-btn-narrow) {
+        @include icon-button-tokens.lg-narrow;
+      }
+      &:where(.icon-btn-wide) {
+        @include icon-button-tokens.lg-wide;
+      }
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.lg-selected;
+      }
+    }
+    &.icon-btn-xl {
+      @include icon-button-tokens.xl;
+      &:where(.icon-btn-narrow) {
+        @include icon-button-tokens.xl-narrow;
+      }
+      &:where(.icon-btn-wide) {
+        @include icon-button-tokens.xl-wide;
+      }
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.xl-selected;
+      }
+    }
+    &.icon-btn-square {
+      @include icon-button-tokens.square;
+      &:where(.icon-btn-md) {
+        @include icon-button-tokens.square-md;
+      }
+      &:where(.icon-btn-lg) {
+        @include icon-button-tokens.square-lg;
+      }
+      &:where(.icon-btn-xl) {
+        @include icon-button-tokens.square-xl;
+      }
+      &:where(.icon-btn-selected, [aria-pressed='true']) {
+        @include icon-button-tokens.square-selected;
+      }
+    }
+    &:is(:active, .active):where(:not(:disabled, .disabled)) {
+      @include icon-button-tokens.pressed;
+      &:where(.icon-btn-md) {
+        @include icon-button-tokens.pressed-md;
+      }
+      &:where(.icon-btn-lg) {
+        @include icon-button-tokens.pressed-lg;
+      }
+      &:where(.icon-btn-xl) {
+        @include icon-button-tokens.pressed-xl;
+      }
+    }
+    &:is(:disabled, .disabled) {
+      @include icon-button-tokens.disabled;
+    }
+
+    & {
+      display: inline-grid;
+      place-items: center;
+      background-color: var(--container-color);
+      border: var(--outline-width) solid var(--outline-color);
+      border-radius: var(--container-shape);
+      height: var(--container-height);
+      color: var(--icon-color);
+      transition:
+        border-radius 350ms cubic-bezier(0.42, 1.67, 0.21, 0.9),
+        var(--ripple-transition);
+      --md-icon-size: var(--icon-size);
+    }
+
+    &:not(.icon-btn-narrow, .icon-btn-wide) {
+      aspect-ratio: 1;
+    }
+
+    &:is(.icon-btn-narrow, .icon-btn-wide) {
+      padding-inline: var(--leading-space) var(--trailing-space);
+    }
+  }
+}

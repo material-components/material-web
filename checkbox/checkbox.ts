@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Checkbox} from './internal/checkbox.js';
-import {styles} from './internal/checkbox-styles.js';
+import {styles} from './internal/checkbox-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {

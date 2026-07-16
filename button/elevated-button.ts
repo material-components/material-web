@@ -8,9 +8,9 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {ElevatedButton} from './internal/elevated-button.js';
-import {styles as elevatedStyles} from './internal/elevated-styles.js';
-import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.js';
-import {styles as sharedStyles} from './internal/shared-styles.js';
+import {styles as elevatedStyles} from './internal/elevated-styles.cssresult.js';
+import {styles as sharedElevationStyles} from './internal/shared-elevation-styles.cssresult.js';
+import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {

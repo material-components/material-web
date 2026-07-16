@@ -7,7 +7,7 @@
 import {html, LitElement} from 'lit';
 
 /**
- * TODO(b/265336902): add docs
+ * An icon element.
  */
 export class Icon extends LitElement {
   protected override render() {

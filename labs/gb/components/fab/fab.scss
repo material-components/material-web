@@ -1,0 +1,77 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'fab-tokens';
+// go/keep-sorted end
+
+// TODO: add any md.comp dependencies (e.g. md.comp.ripple)
+@layer md.sys, md.comp.dependencies;
+@layer md.comp.fab {
+  .fab {
+    & {
+      @include fab-tokens.root;
+    }
+
+    &:is(:hover, .hover) {
+      @include fab-tokens.hovered;
+    }
+
+    &:is(:active, .active) {
+      @include fab-tokens.pressed;
+    }
+
+    &.fab-primary-container {
+      @include fab-tokens.primary-container;
+    }
+
+    &.fab-primary {
+      @include fab-tokens.primary;
+    }
+
+    &.fab-secondary-container {
+      @include fab-tokens.secondary-container;
+    }
+
+    &.fab-secondary {
+      @include fab-tokens.secondary;
+    }
+
+    &.fab-tertiary-container {
+      @include fab-tokens.tertiary-container;
+    }
+
+    &.fab-tertiary {
+      @include fab-tokens.tertiary;
+    }
+
+    &.fab-md {
+      @include fab-tokens.md;
+    }
+
+    &.fab-lg {
+      @include fab-tokens.lg;
+    }
+
+    & {
+      appearance: none;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--icon-label-space);
+      height: var(--container-height);
+      background-color: var(--container-color);
+      border-radius: var(--container-shape);
+      box-shadow: var(--container-elevation);
+      color: var(--label-text-color);
+      font: var(--label-text);
+      letter-spacing: var(--label-text-tracking);
+      padding-inline: var(--leading-space) var(--trailing-space);
+      animation: var(--ripple-animation), var(--focus-ring-animation);
+      --md-icon-color: var(--icon-color);
+      --md-icon-size: var(--icon-size);
+    }
+  }
+}

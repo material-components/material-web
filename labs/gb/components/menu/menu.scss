@@ -1,0 +1,171 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'menu-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.divider;
+@layer md.comp.menu {
+  .menu {
+    & {
+      @include menu-tokens.root;
+    }
+    &.menu-vibrant {
+      @include menu-tokens.vibrant;
+      --menu-vibrant: true;
+    }
+
+    & {
+      flex-direction: column;
+      box-shadow: var(--container-elevation);
+      border-radius: var(--container-shape);
+      background-color: var(--container-color);
+      padding-block: var(--group-padding);
+    }
+
+    &:popover-open,
+    &.menu-host {
+      display: flex;
+    }
+
+    &:popover-open,
+    :host(:popover-open):has(&.menu-host) {
+      position-area: end span-end;
+      border: none;
+    }
+
+    :host(:popover-open):has(&.menu-host) {
+      overflow: visible;
+      background: none;
+      padding: 0;
+    }
+
+    &.menu-host {
+      overflow: auto;
+    }
+
+    .divider,
+    ::slotted(.divider) {
+      margin: 8px 16px;
+    }
+  }
+
+  .menu-item {
+    & {
+      @include menu-tokens.item;
+    }
+    &:first-child {
+      @include menu-tokens.item-first-child;
+    }
+    &:last-child {
+      @include menu-tokens.item-last-child;
+    }
+    @container style(--menu-vibrant: true) {
+      & {
+        @include menu-tokens.item-vibrant;
+      }
+      &:where(:hover, .hover) {
+        @include menu-tokens.item-vibrant-hovered;
+      }
+      &:where(:focus-within, .focus) {
+        @include menu-tokens.item-vibrant-focused;
+      }
+      &:where(:active, .active) {
+        @include menu-tokens.item-vibrant-pressed;
+      }
+    }
+
+    &:is(:checked, .checked) {
+      @include menu-tokens.item-selected;
+      @container style(--menu-vibrant: true) {
+        @include menu-tokens.item-selected-vibrant;
+      }
+    }
+
+    &:is(:disabled, .disabled) {
+      @include menu-tokens.item-disabled;
+      @container style(--menu-vibrant: true) {
+        @include menu-tokens.item-disabled-vibrant;
+      }
+      &:where(:checked, .checked) {
+        @include menu-tokens.item-disabled-selected;
+      }
+    }
+
+    & {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      align-items: center;
+      user-select: none;
+      box-sizing: border-box;
+      gap: var(--between-space);
+      min-height: calc(var(--height) + 4px);
+      border-radius: var(--shape);
+      padding-block: var(--top-space) var(--bottom-space);
+      padding-inline: var(--leading-space) var(--trailing-space);
+      background-image: none;
+      outline: none;
+      color: var(--label-text-color);
+      font: var(--label-text);
+      letter-spacing: var(--label-text-tracking);
+    }
+
+    &::before {
+      display: flex;
+      content: '';
+      position: absolute;
+      inset: 2px 4px;
+      z-index: -1;
+      border-radius: inherit;
+      background-color: var(--container-color);
+      background-image: var(--ripple);
+      animation: var(--ripple-animation), var(--focus-ring-animation);
+      transition: var(--ripple-transition);
+      outline: var(--focus-ring-outline);
+      outline-offset: var(--focus-ring-offset);
+    }
+
+    &:not(:disabled, .disabled) {
+      cursor: pointer;
+    }
+
+    .menu-item-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .menu-item-supporting-text {
+      color: var(--supporting-text-color);
+      font: var(--supporting-text);
+      letter-spacing: var(--supporting-text-tracking);
+    }
+
+    .menu-item-trailing-text {
+      color: var(--trailing-supporting-text-color);
+      font: var(--trailing-supporting-text);
+      letter-spacing: var(--trailing-supporting-text-tracking);
+    }
+
+    .menu-item-leading,
+    .menu-item-trailing {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .menu-item-leading {
+      --md-icon-color: var(--leading-icon-color);
+      --md-icon-size: var(--leading-icon-size);
+    }
+
+    .menu-item-trailing {
+      --md-icon-color: var(--trailing-icon-color);
+      --md-icon-size: var(--trailing-icon-size);
+    }
+  }
+}

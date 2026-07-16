@@ -7,7 +7,7 @@
   .touch {
     position: absolute;
     top: 50%;
-    height: 48px;
+    height: max(48px, 100%);
     left: 0;
     right: 0;
     transform: translateY(-50%);

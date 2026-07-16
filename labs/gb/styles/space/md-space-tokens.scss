@@ -1,0 +1,28 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@layer md.sys.space {
+  :root {
+    --md-sys-space-unit: 8px;
+    --md-sys-space-0: calc(var(--md-sys-space-unit) * 0);
+    --md-sys-space-25: calc(var(--md-sys-space-unit) * 0.25);
+    --md-sys-space-50: calc(var(--md-sys-space-unit) * 0.5);
+    --md-sys-space-75: calc(var(--md-sys-space-unit) * 0.75);
+    --md-sys-space-100: var(--md-sys-space-unit);
+    --md-sys-space-125: calc(var(--md-sys-space-unit) * 1.25);
+    --md-sys-space-150: calc(var(--md-sys-space-unit) * 1.5);
+    --md-sys-space-175: calc(var(--md-sys-space-unit) * 1.75);
+    --md-sys-space-200: calc(var(--md-sys-space-unit) * 2);
+    --md-sys-space-250: calc(var(--md-sys-space-unit) * 2.5);
+    --md-sys-space-300: calc(var(--md-sys-space-unit) * 3);
+    --md-sys-space-400: calc(var(--md-sys-space-unit) * 4);
+    --md-sys-space-450: calc(var(--md-sys-space-unit) * 4.5);
+    --md-sys-space-500: calc(var(--md-sys-space-unit) * 5);
+    --md-sys-space-600: calc(var(--md-sys-space-unit) * 6);
+    --md-sys-space-700: calc(var(--md-sys-space-unit) * 7);
+    --md-sys-space-800: calc(var(--md-sys-space-unit) * 8);
+    --md-sys-space-900: calc(var(--md-sys-space-unit) * 9);
+  }
+}

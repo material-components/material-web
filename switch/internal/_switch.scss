@@ -78,6 +78,7 @@
     // Input is also touch target
     input {
       appearance: none;
+      background: none; // Needed for Firefox v150+
       height: max(100%, map.get($tokens, 'touch-target-size'));
       outline: none;
       margin: 0;

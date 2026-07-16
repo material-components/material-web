@@ -1,6 +1,6 @@
 {
   "name": "@material/web",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "publishConfig": {
     "access": "public"
   },
@@ -27,6 +27,7 @@
     "build:ts": "wireit",
     "build:css-to-ts": "wireit",
     "build:sass": "wireit",
+    "build:manifest": "wireit",
     "test": "wireit",
     "build:catalog": "wireit",
     "build:scripts": "wireit",
@@ -36,6 +37,7 @@
     "update-size": "wireit"
   },
   "type": "module",
+  "customElements": "custom-elements.json",
   "files": [
     "**/*.js",
     "**/*.js.map",
@@ -43,6 +45,7 @@
     "**/*.scss",
     "**/*.css",
     "**/*.css.map",
+    "custom-elements.json",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
@@ -58,14 +61,17 @@
     "catalog"
   ],
   "dependencies": {
+    "@lit/context": "^1.1.6",
     "lit": "^2.8.0 || ^3.0.0",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@lit-labs/analyzer": "^0.12.1",
+    "@lit-labs/analyzer": "^0.14.0",
+    "@lit-labs/gen-manifest": "^0.3.6",
+    "@lit-labs/gen-utils": "^0.3.4",
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.0",
     "@types/jasmine": "^4.0.3",
     "@types/node": "^24.10.1",
     "@web/test-runner": "^0.18.2",
@@ -76,23 +82,32 @@
     "rollup": "^2.79.1",
     "sass": "^1.93.2",
     "sass-true": "^6.1.0",
-    "typescript": "5.8.2",
+    "typescript": "5.9.2",
     "web-test-runner-jasmine": "^0.0.6",
     "wireit": "^0.14.12"
   },
   "wireit": {
     "build": {
       "dependencies": [
-        "build:ts"
+        "build:ts",
+        "build:manifest"
       ]
     },
     "build:ts": {
+      "dependencies": [
+        "build:ts:main",
+        "build:ts:labs-gb"
+      ]
+    },
+    "build:ts:main": {
       "command": "tsc --pretty",
       "files": [
         "tsconfig.json",
+        "tsconfig.base.json",
         "**/*.ts",
         "!**/*.d.ts",
-        "!**/*-styles.ts",
+        "!**/*.cssresult.ts",
+        "!labs/gb/**",
         "!catalog/",
         "!scripts/"
       ],
@@ -104,6 +119,7 @@
         "!web-test-runner.config.js",
         "!commitlint.config.js",
         "!types/",
+        "!labs/gb/**",
         "!catalog/",
         "!scripts/"
       ],
@@ -112,16 +128,36 @@
         "build:css-to-ts"
       ]
     },
-    "build:css-to-ts": {
-      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*-styles.css' -print | xargs -L1 node scripts/css-to-ts.js",
+    "build:ts:labs-gb": {
+      "command": "tsc --pretty -p labs/gb/tsconfig.json",
       "files": [
-        "**/*-styles.css",
+        "tsconfig.base.json",
+        "labs/gb/tsconfig.json",
+        "labs/gb/**/*.ts",
+        "!labs/gb/**/*.d.ts"
+      ],
+      "output": [
+        ".tsbuildinfo",
+        "labs/gb/**/*.js",
+        "labs/gb/**/*.js.map",
+        "labs/gb/**/*.d.ts"
+      ],
+      "clean": "if-file-deleted",
+      "dependencies": [
+        "build:css-to-ts"
+      ]
+    },
+    "build:css-to-ts": {
+      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs -L1 node scripts/css-to-ts.js --suffix=.cssresult",
+      "files": [
+        "**/*.css",
         "!catalog/"
       ],
       "output": [
-        "**/*-styles.ts",
+        "**/*.cssresult.ts",
         "!catalog/"
       ],
+      "clean": "if-file-deleted",
       "dependencies": [
         "build:scripts",
         "build:sass"
@@ -137,6 +173,35 @@
         "**/*.css",
         "**/*.css.map",
         "!catalog/"
+      ],
+      "dependencies": [
+        "build:sass:generate"
+      ]
+    },
+    "build:sass:generate": {
+      "command": "find tokens/versions/ -type f -name '_md-*.scss' ! -name '*-meta.scss' -print0 | xargs -0 node scripts/generate-sass-token-meta.js",
+      "files": [
+        "tokens/versions/**/_md-*.scss",
+        "!tokens/versions/**/*-meta.scss"
+      ],
+      "output": [
+        "tokens/versions/**/*-meta.scss"
+      ],
+      "dependencies": [
+        "build:scripts"
+      ]
+    },
+    "build:manifest": {
+      "command": "node scripts/analyzer/generate-manifest.js",
+      "files": [
+        "**/*.ts"
+      ],
+      "output": [
+        "custom-elements.json"
+      ],
+      "dependencies": [
+        "build:scripts",
+        "build:ts"
       ]
     },
     "test": {
@@ -159,8 +224,7 @@
       "files": [
         "scripts/tsconfig.json",
         "scripts/**/*.ts",
-        "!**/*.d.ts",
-        "!**/*-styles.ts"
+        "!**/*.d.ts"
       ],
       "output": [
         "scripts/.tsbuildinfo",
@@ -182,7 +246,7 @@
         "docs/components/*.md",
         "**/*.ts",
         "!**/*.d.ts",
-        "!**/*-styles.ts",
+        "!**/*.cssresult.ts",
         "!catalog/",
         "!scripts/",
         "scripts/analyzer/update-docs.js"

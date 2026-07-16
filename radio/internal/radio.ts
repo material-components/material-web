@@ -161,10 +161,6 @@ export class Radio extends radioBaseClass {
     this.click();
   }
 
-  // Writable mixin properties for lit-html binding, needed for lit-analyzer
-  declare disabled: boolean;
-  declare name: string;
-
   override [getFormValue]() {
     return this.checked ? this.value : null;
   }

@@ -7,9 +7,9 @@
 import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {styles as forcedColorsStyles} from './internal/forced-colors-styles.js';
+import {styles as forcedColorsStyles} from './internal/forced-colors-styles.cssresult.js';
 import {Slider} from './internal/slider.js';
-import {styles} from './internal/slider-styles.js';
+import {styles} from './internal/slider-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
