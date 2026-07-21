@@ -1,0 +1,97 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'chip-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
+@layer md.comp.chip {
+  .chip {
+    @include chip-tokens.root;
+    &.chip-elevated {
+      @include chip-tokens.elevated;
+    }
+    &.chip-filled {
+      @include chip-tokens.filled;
+    }
+    &.chip-tonal {
+      @include chip-tokens.tonal;
+    }
+    &.chip-outlined {
+      @include chip-tokens.outlined;
+    }
+    &:is(.chip-selected, [aria-pressed='true']) {
+      @include chip-tokens.selected;
+    }
+    &.chip-filter {
+      @include chip-tokens.filter;
+    }
+    &.chip-input {
+      @include chip-tokens.input;
+    }
+    &.chip-with-leading-icon {
+      @include chip-tokens.with-leading-icon;
+    }
+    &.chip-with-trailing-icon {
+      @include chip-tokens.with-trailing-icon;
+    }
+    &.chip-with-avatar {
+      @include chip-tokens.with-avatar;
+    }
+    &:is(:disabled, .disabled, [aria-disabled='true']) {
+      @include chip-tokens.disabled;
+    }
+
+    & {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--height);
+      gap: var(--gap-horizontal);
+      padding-inline: var(--padding-leading) var(--padding-trailing);
+      padding-block: var(--padding-top) var(--padding-bottom);
+      border: var(--outline-width) solid var(--outline-color);
+      border-radius: var(--shape);
+      box-shadow: var(--container-elevation);
+      background-color: var(--container-color);
+      color: var(--label-text-color);
+      font: var(--label-text);
+      box-sizing: border-box;
+      user-select: none;
+      white-space: nowrap;
+      --md-icon-color: var(--leading-icon-color);
+      --md-icon-size: var(--leading-icon-size);
+    }
+    &:not(:disabled, .disabled, [aria-disabled='true']) {
+      cursor: pointer;
+    }
+
+    .chip-action,
+    .chip-remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--gap-horizontal);
+      background: transparent;
+      border: none;
+      outline: none;
+      color: inherit;
+      font: inherit;
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      cursor: inherit;
+    }
+    .chip-remove {
+      border-radius: 50%;
+      aspect-ratio: 1;
+      margin-inline-start: 4px;
+      outline: var(--focus-ring-outline);
+      --md-icon-color: var(--trailing-icon-color);
+      --md-icon-size: var(--trailing-icon-size);
+    }
+  }
+}
