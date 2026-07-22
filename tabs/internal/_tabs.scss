@@ -10,6 +10,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    isolation: isolate;
     overflow: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
