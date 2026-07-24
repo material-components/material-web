@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.6.0](https://github.com/material-components/material-web/compare/v2.5.0...v2.6.0) (2026-07-24)
+
+
+### Features
+
+* **labs:** add appbar utility classes to component ([69bdcde](https://github.com/material-components/material-web/commit/69bdcde346337472e5eef71b4b01ffd56d43dab1))
+* **labs:** add aria tab elements ([70e259d](https://github.com/material-components/material-web/commit/70e259d464f627a21c7831cb4e871e0061bc0644))
+* **labs:** add chips utility classes to component ([efaa189](https://github.com/material-components/material-web/commit/efaa1896c366ab8edf7f4bafb15876932ebd45b1))
+
 ## [2.5.0](https://github.com/material-components/material-web/compare/v2.4.1...v2.5.0) (2026-07-14)
 
 
