@@ -6,18 +6,13 @@
 
 /// <reference types="../../../types/popover.d.ts" />
 
-import {ContextProvider, createContext} from '@lit/context';
 import {CSSResultOrNative, LitElement, css, html} from 'lit';
 import {property} from 'lit/decorators.js';
 import {
   internals,
   mixinElementInternals,
 } from '../../behaviors/element-internals.js';
-
-/** The `<md-aria-menulist>` that should own descendant `<md-aria-menuitem>`s. */
-export const ancestorMenulistContext = createContext<AriaMenulistElement>(
-  Symbol('ancestorMenulistContext'),
-);
+import {sharedSlottedContentStyles} from './shared-slotted-content.js';
 
 // `focus` is defined on `HTMLElement` and `SVGElement` directly, not `Element`.
 interface MaybeFocusableElement extends Element {
@@ -31,6 +26,7 @@ const baseClass = mixinElementInternals(LitElement);
  */
 export class AriaMenulistElement extends baseClass {
   static override styles: CSSResultOrNative[] = [
+    sharedSlottedContentStyles,
     css`
       /* Unset UA |[popover]| styles. */
       @layer {
@@ -76,38 +72,6 @@ export class AriaMenulistElement extends baseClass {
       :host(:not(:popover-open)) {
         display: none;
       }
-
-      ::slotted(md-aria-menuitem) {
-        display: flex;
-        align-items: center;
-        user-select: none;
-        min-inline-size: 24px;
-        min-block-size: max(24px, 1lh);
-        font-weight: inherit;
-        gap: 0.5em;
-        padding-inline: 0.5em;
-      }
-
-      ::slotted(md-aria-menuitem:state(enabled):hover) {
-        background-color: color-mix(in lab, currentColor 10%, transparent);
-      }
-
-      ::slotted(md-aria-menuitem:state(disabled)) {
-        color: color-mix(in lab, currentColor 50%, transparent);
-      }
-
-      ::slotted(hr) {
-        color: inherit;
-        margin-inline: 0px;
-        border: none;
-        border-block-start: 1px solid currentColor;
-        border-image: none;
-      }
-
-      ::slotted(a:any-link),
-      ::slotted(img[usemap]) {
-        display: none;
-      }
     `,
   ];
 
@@ -119,11 +83,6 @@ export class AriaMenulistElement extends baseClass {
 
   constructor() {
     super();
-
-    const provider = new ContextProvider(this, {
-      context: ancestorMenulistContext,
-    });
-    provider.setValue(this);
 
     this[internals].role = 'menu';
     this[internals].ariaOrientation = 'vertical';
