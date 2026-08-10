@@ -1,0 +1,70 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  // LINT.IfChange
+  --button-container-color: var(--md-sys-color-surface-container);
+  --container-color: var(--md-sys-color-surface-container);
+  --container-elevation: var(--md-sys-elevation-shadow-3);
+  --container-leading-space: var(--md-sys-space-100);
+  --container-shape: var(--md-sys-shape-corner-full);
+  --container-spacing: var(--md-sys-space-50);
+  --container-trailing-space: var(--md-sys-space-100);
+  --docked-container-elevation: var(--md-sys-elevation-shadow-0);
+  --docked-container-height: 64px;
+  --docked-container-leading-space: var(--md-sys-space-200);
+  --docked-container-max-spacing: 32px;
+  --docked-container-min-spacing: 4px;
+  --docked-container-shape: var(--md-sys-shape-corner-none);
+  --docked-container-trailing-space: var(--md-sys-space-200);
+  --horizontal-container-height: 64px;
+  --icon-color: var(--md-sys-color-on-surface-variant);
+  --label-text-color: var(--md-sys-color-on-surface-variant);
+  --min-button-size: 40px;
+  --motion-duration: var(--md-sys-motion-duration-short4);
+  --motion-easing: var(--md-sys-motion-easing-emphasized);
+  --selected-button-container-color: var(--md-sys-color-secondary-container);
+  --selected-icon-color: var(--md-sys-color-on-secondary-container);
+  --selected-label-text-color: var(--md-sys-color-on-secondary-container);
+  --separator-color: var(--md-sys-color-outline-variant);
+  --separator-height: 24px;
+  --separator-margin: 4px;
+  --separator-width: 1px;
+  --vertical-container-width: 64px;
+  // LINT.ThenChange(toolbar-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin standard {
+  --button-container-color: var(--md-sys-color-surface-container);
+  --container-color: var(--md-sys-color-surface-container);
+  --icon-color: var(--md-sys-color-on-surface-variant);
+  --label-text-color: var(--md-sys-color-on-surface-variant);
+  --selected-button-container-color: var(--md-sys-color-secondary-container);
+  --selected-icon-color: var(--md-sys-color-on-secondary-container);
+  --selected-label-text-color: var(--md-sys-color-on-secondary-container);
+}
+
+@mixin vibrant {
+  --button-container-color: var(--md-sys-color-primary-container);
+  --container-color: var(--md-sys-color-primary-container);
+  --icon-color: var(--md-sys-color-on-primary-container);
+  --label-text-color: var(--md-sys-color-on-primary-container);
+  --selected-button-container-color: var(--md-sys-color-surface-container);
+  --selected-icon-color: var(--md-sys-color-on-surface);
+  --selected-label-text-color: var(--md-sys-color-on-surface);
+}
+
+@mixin docked {
+  --container-elevation: var(--docked-container-elevation);
+  --container-leading-space: var(--docked-container-leading-space);
+  --container-shape: var(--docked-container-shape);
+  --container-spacing: clamp(
+    var(--docked-container-min-spacing),
+    4vw,
+    var(--docked-container-max-spacing)
+  );
+  --container-trailing-space: var(--docked-container-trailing-space);
+  --horizontal-container-height: var(--docked-container-height);
+}
