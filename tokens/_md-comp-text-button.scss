@@ -51,8 +51,7 @@ $supported-tokens: (
   'with-leading-icon-leading-space',
   'with-leading-icon-trailing-space',
   'with-trailing-icon-leading-space',
-  'with-trailing-icon-trailing-space',
-  // go/keep-sorted end
+  'with-trailing-icon-trailing-space' // go/keep-sorted end
 );
 
 $unsupported-tokens: (
@@ -60,8 +59,7 @@ $unsupported-tokens: (
   'focus-state-layer-color',
   'focus-state-layer-opacity',
   'label-text-tracking',
-  'label-text-type',
-  // go/keep-sorted end
+  'label-text-type' // go/keep-sorted end
 );
 
 $_default: (
@@ -82,16 +80,20 @@ $_default: (
     (
       // b/198759625 - Remove once spacing tokens are formally added
       // go/keep-sorted start
-      'leading-space': if($exclude-hardcoded-values, null, 12px),
-      'trailing-space': if($exclude-hardcoded-values, null, 12px),
-      'with-leading-icon-leading-space':
-        if($exclude-hardcoded-values, null, 12px),
-      'with-leading-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 16px),
-      'with-trailing-icon-leading-space':
-        if($exclude-hardcoded-values, null, 16px),
-      'with-trailing-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 12px),
+      'leading-space': if(not sass($exclude-hardcoded-values): 12px),
+      'trailing-space': if(not sass($exclude-hardcoded-values): 12px),
+      'with-leading-icon-leading-space': if(
+          not sass($exclude-hardcoded-values): 12px
+        ),
+      'with-leading-icon-trailing-space': if(
+          not sass($exclude-hardcoded-values): 16px
+        ),
+      'with-trailing-icon-leading-space': if(
+          not sass($exclude-hardcoded-values): 16px
+        ),
+      'with-trailing-icon-trailing-space': if(
+          not sass($exclude-hardcoded-values): 12px
+        ),
       // go/keep-sorted end
     )
   );

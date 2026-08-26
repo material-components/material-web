@@ -21,8 +21,7 @@ $supported-tokens: (
   'container-elevation',
   'container-shadow-color',
   'container-shape',
-  'top-space',
-  // go/keep-sorted end
+  'top-space' // go/keep-sorted end
 );
 
 $unsupported-tokens: (
@@ -30,8 +29,7 @@ $unsupported-tokens: (
   'list-item-selected-container-color',
   'list-item-selected-label-text-color',
   'list-item-selected-with-leading-icon-trailing-icon-color',
-  'menu-list-item-with-leading-icon-icon-color',
-  // go/keep-sorted end
+  'menu-list-item-with-leading-icon-icon-color' // go/keep-sorted end
 );
 
 $_default: (
@@ -50,8 +48,8 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: (
-      'top-space': if($exclude-hardcoded-values, null, 8px),
-      'bottom-space': if($exclude-hardcoded-values, null, 8px),
+      'top-space': if(not sass($exclude-hardcoded-values): 8px),
+      'bottom-space': if(not sass($exclude-hardcoded-values): 8px),
     )
   );
 
