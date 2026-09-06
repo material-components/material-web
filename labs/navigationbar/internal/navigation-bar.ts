@@ -30,6 +30,12 @@ export class NavigationBar
   extends navigationBarBaseClass
   implements NavigationBarState
 {
+  /**
+   * The direction used for keyboard navigation. Navigation bars are
+   * horizontal; navigation rails override this to be vertical.
+   */
+  protected navigationDirection: 'horizontal' | 'vertical' = 'horizontal';
+
   @property({type: Number, attribute: 'active-index'}) activeIndex = 0;
 
   @property({type: Boolean, attribute: 'hide-inactive-labels'})
@@ -128,8 +134,19 @@ export class NavigationBar
       return;
     }
 
-    const toNextTab =
-      (key === 'ArrowRight' && !isRTL) || (key === 'ArrowLeft' && isRTL);
+    const nextKey =
+      this.navigationDirection === 'vertical'
+        ? 'ArrowDown'
+        : isRTL
+          ? 'ArrowLeft'
+          : 'ArrowRight';
+    const previousKey =
+      this.navigationDirection === 'vertical'
+        ? 'ArrowUp'
+        : isRTL
+          ? 'ArrowRight'
+          : 'ArrowLeft';
+    const toNextTab = key === nextKey;
     if (toNextTab && focusedTabIndex === maxIndex) {
       this.tabs[0].focus();
       return;
@@ -139,8 +156,7 @@ export class NavigationBar
       return;
     }
 
-    const toPreviousTab =
-      (key === 'ArrowLeft' && !isRTL) || (key === 'ArrowRight' && isRTL);
+    const toPreviousTab = key === previousKey;
     if (toPreviousTab && focusedTabIndex === 0) {
       this.tabs[maxIndex].focus();
       return;

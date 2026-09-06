@@ -1,0 +1,30 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use '../../navigationbar/internal/_navigation-bar.scss' as navigation-bar;
+
+@mixin theme($tokens) {
+  @include navigation-bar.theme($tokens);
+}
+
+@mixin styles() {
+  @include navigation-bar.styles();
+
+  :host {
+    height: 100%;
+    width: auto;
+  }
+
+  .md3-navigation-bar {
+    flex-direction: column;
+    height: 100%;
+    width: var(--md-navigation-rail-width, 80px);
+  }
+
+  .md3-navigation-bar__tabs-slot-container {
+    flex-direction: column;
+    height: 100%;
+  }
+}
