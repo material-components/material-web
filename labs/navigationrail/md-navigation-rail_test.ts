@@ -4,10 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {Environment} from '../../testing/environment.js';
 import {MdNavigationTab} from '../navigationtab/navigation-tab.js';
 
 import {MdNavigationRail} from './navigation-rail.js';
@@ -25,24 +23,26 @@ declare global {
 }
 
 describe('md-navigation-rail', () => {
-  const env = new Environment();
-
   async function setup() {
-    const element = env
-      .render(html`
-        <md-test-navigation-rail>
-          <md-test-navigation-rail-tab
-            label="One"
-          ></md-test-navigation-rail-tab>
-          <md-test-navigation-rail-tab
-            label="Two"
-          ></md-test-navigation-rail-tab>
-        </md-test-navigation-rail>
-      `)
-      .querySelector('md-test-navigation-rail')!;
-    await env.waitForStability();
+    const element = document.createElement(
+      'md-test-navigation-rail',
+    ) as TestMdNavigationRail;
+    for (const label of ['One', 'Two']) {
+      const tab = document.createElement(
+        'md-test-navigation-rail-tab',
+      ) as TestMdNavigationRailTab;
+      tab.label = label;
+      element.append(tab);
+    }
+    document.body.append(element);
+    await element.updateComplete;
+    await Promise.all(element.tabs.map((tab) => tab.updateComplete));
     return element;
   }
+
+  afterEach(() => {
+    document.querySelector('md-test-navigation-rail')?.remove();
+  });
 
   it('initializes as a navigation rail with the first tab active', async () => {
     const element = await setup();
@@ -65,7 +65,6 @@ describe('md-navigation-rail', () => {
   it('activates a selected tab when clicked', async () => {
     const element = await setup();
     element.tabs[1].handleClick();
-    await env.waitForStability();
     expect(element.activeIndex).toBe(1);
   });
 });
