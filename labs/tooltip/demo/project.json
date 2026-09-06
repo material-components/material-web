@@ -1,0 +1,9 @@
+{
+  "extends": "/assets/stories/base.json",
+  "files": {
+    "demo.ts": {
+      "hidden": true
+    },
+    "stories.ts": {}
+  }
+}

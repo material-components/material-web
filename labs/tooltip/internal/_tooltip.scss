@@ -1,0 +1,62 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin theme($tokens: ()) {
+  @each $token, $value in $tokens {
+    @if $value {
+      --md-tooltip-#{$token}: #{$value};
+    }
+  }
+}
+
+@mixin styles() {
+  :host {
+    display: inline-block;
+    position: relative;
+  }
+
+  [role='tooltip'] {
+    background: var(--md-sys-color-inverse-surface, #322f35);
+    border-radius: var(--md-sys-shape-corner-extra-small, 4px);
+    box-sizing: border-box;
+    color: var(--md-sys-color-inverse-on-surface, #f5eff7);
+    font: var(--md-sys-typescale-body-small, 0.75rem / 1rem sans-serif);
+    max-width: min(320px, calc(100vw - 32px));
+    padding: 8px;
+    pointer-events: none;
+    position: absolute;
+    white-space: normal;
+    width: max-content;
+    z-index: 1;
+  }
+
+  [role='tooltip'][hidden] {
+    display: none;
+  }
+
+  :host([placement='top']) [role='tooltip'] {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  :host([placement='bottom']) [role='tooltip'] {
+    left: 50%;
+    top: calc(100% + 8px);
+    transform: translateX(-50%);
+  }
+
+  :host([placement='start']) [role='tooltip'] {
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  :host([placement='end']) [role='tooltip'] {
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
