@@ -10,7 +10,6 @@ import {customElement} from 'lit/decorators.js';
 import {Environment} from '../../testing/environment.js';
 import {MdNavigationTab} from '../navigationtab/navigation-tab.js';
 
-import {NavigationRailHarness} from './harness.js';
 import {MdNavigationRail} from './navigation-rail.js';
 
 @customElement('md-test-navigation-rail')
@@ -42,31 +41,31 @@ describe('md-navigation-rail', () => {
       `)
       .querySelector('md-test-navigation-rail')!;
     await env.waitForStability();
-    return new NavigationRailHarness(element);
+    return element;
   }
 
   it('initializes as a navigation rail with the first tab active', async () => {
-    const harness = await setup();
-    expect(harness.element).toBeInstanceOf(MdNavigationRail);
-    expect(harness.element.activeIndex).toBe(0);
-    expect(harness.element.tabs[0].active).toBeTrue();
+    const element = await setup();
+    expect(element).toBeInstanceOf(MdNavigationRail);
+    expect(element.activeIndex).toBe(0);
+    expect(element.tabs[0].active).toBeTrue();
   });
 
   it('moves focus vertically with arrow keys', async () => {
-    const harness = await setup();
-    const firstTab = harness.element.tabs[0];
-    const secondTab = harness.element.tabs[1];
+    const element = await setup();
+    const firstTab = element.tabs[0];
+    const secondTab = element.tabs[1];
     firstTab.focus();
-    harness.element.dispatchEvent(
-      new KeyboardEvent('keydown', {key: 'ArrowDown'}),
-    );
+    element
+      .shadowRoot!.querySelector('.md3-navigation-bar')!
+      .dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowDown'}));
     expect(document.activeElement).toBe(secondTab.buttonElement);
   });
 
   it('activates a selected tab when clicked', async () => {
-    const harness = await setup();
-    harness.element.tabs[1].handleClick();
+    const element = await setup();
+    element.tabs[1].handleClick();
     await env.waitForStability();
-    expect(harness.element.activeIndex).toBe(1);
+    expect(element.activeIndex).toBe(1);
   });
 });
