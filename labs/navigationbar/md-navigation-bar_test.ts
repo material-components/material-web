@@ -13,7 +13,15 @@ import {NavigationTabHarness} from '../navigationtab/harness.js';
 import {MdNavigationTab} from '../navigationtab/navigation-tab.js';
 
 import {NavigationBarHarness} from './harness.js';
+import {NavigationRail} from '../navigationrail/internal/navigation-rail.js';
 import {MdNavigationBar} from './navigation-bar.js';
+
+@customElement('md-test-navigation-rail-direction')
+class TestNavigationRail extends NavigationRail {
+  get direction() {
+    return this.navigationDirection;
+  }
+}
 
 @customElement('md-test-navigation-bar')
 class TestMdNavigationBar extends MdNavigationBar {}
@@ -44,7 +52,8 @@ const navBarWithNavTabsElement = (propsInit: Partial<NavigationBarProps>) => {
     <md-test-navigation-bar
       .activeIndex="${propsInit.activeIndex ?? 0}"
       .hideInactiveLabels="${propsInit.hideInactiveLabels === true}"
-      aria-label="${ifDefined(propsInit.ariaLabel)}">
+      aria-label="${ifDefined(propsInit.ariaLabel)}"
+    >
       <md-test-navigation-bar-tab label="One"></md-test-navigation-bar-tab>
       <md-test-navigation-bar-tab label="Two"></md-test-navigation-bar-tab>
     </md-test-navigation-bar>
@@ -53,10 +62,12 @@ const navBarWithNavTabsElement = (propsInit: Partial<NavigationBarProps>) => {
 
 // The following is a Navbar with the tabs being out of sync with the bar.
 const navBarWithIncorrectTabsElement = html` <md-test-navigation-bar
-  activeIndex="0">
+  activeIndex="0"
+>
   <md-test-navigation-bar-tab
     label="One"
-    hideInactiveLabel></md-test-navigation-bar-tab>
+    hideInactiveLabel
+  ></md-test-navigation-bar-tab>
   <md-test-navigation-bar-tab label="One" active></md-test-navigation-bar-tab>
 </md-test-navigation-bar>`;
 
@@ -88,6 +99,15 @@ describe('md-navigation-bar', () => {
       expect(harness.element.activeIndex).toEqual(0);
       expect(harness.element.hideInactiveLabels).toBeFalse();
       expect(navBarBase.getAttribute('aria-label')).toEqual(null);
+    });
+
+    describe('NavigationRail keyboard direction', () => {
+      it('uses vertical arrow keys', () => {
+        const rail = document.createElement(
+          'md-test-navigation-rail-direction',
+        ) as TestNavigationRail;
+        expect(rail.direction).toBe('vertical');
+      });
     });
   });
 
