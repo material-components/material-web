@@ -4,12 +4,12 @@
 //
 
 // go/keep-sorted start
-@use './md-sys-color';
-@use './md-sys-elevation';
-@use './md-sys-shape';
-@use './md-sys-state';
-@use './md-sys-typescale';
-@use './v0_192/md-comp-full-screen-dialog';
+@use 'md-sys-color';
+@use 'md-sys-elevation';
+@use 'md-sys-shape';
+@use 'md-sys-state';
+@use 'md-sys-typescale';
+@use 'versions/v0_192/md-comp-full-screen-dialog';
 // go/keep-sorted end
 
 $_default: (

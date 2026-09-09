@@ -1,0 +1,121 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:string';
+@use 'assert';
+@use 'throw';
+// go/keep-sorted end
+
+@include test.describe('assert') {
+  // Value types
+  $number: 1;
+  $string: 'a-string';
+  $color: red;
+  $bool: true;
+  $null: null;
+  $list: ('list', 'of', 'values');
+  $map: (
+    'map': 'value',
+  );
+
+  @include test.describe('is-type()') {
+    @include test.it('returns the argument when it matches a single type') {
+      @include test.assert-equal(assert.is-type($number, 'number'), $number);
+      @include test.assert-equal(assert.is-type($string, 'string'), $string);
+      @include test.assert-equal(assert.is-type($bool, 'bool'), $bool);
+      @include test.assert-equal(assert.is-type($null, 'null'), $null);
+      @include test.assert-equal(assert.is-type($list, 'list'), $list);
+      @include test.assert-equal(assert.is-type($map, 'map'), $map);
+    }
+
+    @include test.it(
+      'returns the argument when it matches one of multiple types'
+    ) {
+      @include test.assert-equal(
+        assert.is-type($number, 'number|string'),
+        $number
+      );
+      @include test.assert-equal(
+        assert.is-type($string, 'number|string'),
+        $string
+      );
+      @include test.assert-equal(assert.is-type($null, 'list|map|null'), $null);
+      @include test.assert-equal(assert.is-type($list, 'list|map|null'), $list);
+      @include test.assert-equal(assert.is-type($map, 'list|map|null'), $map);
+    }
+
+    @include test.it('throws an error when it does not match the type') {
+      @include test.assert-true(
+        throw.get-error(assert.is-type($number, 'string')),
+        'number should not match "string" type'
+      );
+      @include test.assert-true(
+        throw.get-error(assert.is-type($string, 'number')),
+        'string should not match "number" type'
+      );
+      @include test.assert-true(
+        throw.get-error(assert.is-type($null, 'list|map')),
+        'null should not match "list|map" type'
+      );
+    }
+  }
+
+  @include test.describe('not-type()') {
+    @include test.it(
+      'returns the argument when it does not match a single type'
+    ) {
+      @include test.assert-equal(assert.not-type($number, 'string'), $number);
+      @include test.assert-equal(assert.not-type($string, 'number'), $string);
+      @include test.assert-equal(assert.not-type($bool, 'string'), $bool);
+      @include test.assert-equal(assert.not-type($null, 'string'), $null);
+      @include test.assert-equal(assert.not-type($list, 'string'), $list);
+      @include test.assert-equal(assert.not-type($map, 'string'), $map);
+    }
+
+    @include test.it(
+      'returns the argument when it does not match one of multiple types'
+    ) {
+      @include test.assert-equal(
+        assert.not-type($number, 'string|map'),
+        $number
+      );
+      @include test.assert-equal(
+        assert.not-type($string, 'number|map'),
+        $string
+      );
+      @include test.assert-equal(assert.not-type($null, 'list|map'), $null);
+    }
+
+    @include test.it('throws an error when it matches the type') {
+      @include test.assert-true(
+        throw.get-error(assert.not-type($number, 'number')),
+        'number should match "number" type and throw'
+      );
+      @include test.assert-true(
+        throw.get-error(assert.not-type($string, 'string')),
+        'string should match "string" type and throw'
+      );
+      @include test.assert-true(
+        throw.get-error(assert.not-type($null, 'null')),
+        'null should match "null" type and throw'
+      );
+      @include test.assert-true(
+        throw.get-error(assert.not-type($number, 'number|string')),
+        'number should match "number|string" type and throw'
+      );
+      @include test.assert-true(
+        throw.get-error(assert.not-type($string, 'number|string')),
+        'string should match "number|string" type and throw'
+      );
+      @include test.assert-true(
+        throw.get-error(assert.not-type($null, 'list|map|null')),
+        'null should match "list|map|null" type and throw'
+      );
+    }
+  }
+}

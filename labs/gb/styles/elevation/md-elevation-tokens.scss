@@ -1,0 +1,25 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@layer md.sys.elevation {
+  :root {
+    --md-sys-elevation-shadow-0: none;
+    --md-sys-elevation-shadow-1:
+      0 1px 2px 0 hsl(from var(--md-sys-color-shadow) h s l / 0.3),
+      0 1px 3px 1px hsl(from var(--md-sys-color-shadow) h s l / 0.15);
+    --md-sys-elevation-shadow-2:
+      0 1px 2px 0 hsl(from var(--md-sys-color-shadow) h s l / 0.3),
+      0 2px 6px 2px hsl(from var(--md-sys-color-shadow) h s l / 0.15);
+    --md-sys-elevation-shadow-3:
+      0 1px 3px 0 hsl(from var(--md-sys-color-shadow) h s l / 0.3),
+      0 4px 8px 3px hsl(from var(--md-sys-color-shadow) h s l / 0.15);
+    --md-sys-elevation-shadow-4:
+      0 2px 3px 0 hsl(from var(--md-sys-color-shadow) h s l / 0.3),
+      0 6px 10px 4px hsl(from var(--md-sys-color-shadow) h s l / 0.15);
+    --md-sys-elevation-shadow-5:
+      0 4px 4px 0 hsl(from var(--md-sys-color-shadow) h s l / 0.3),
+      0 8px 12px 6px hsl(from var(--md-sys-color-shadow) h s l / 0.15);
+  }
+}

@@ -1,0 +1,153 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Extensions to the go/sass:string built-in module.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'sass:string';
+// go/keep-sorted end
+
+/// Checks if a string starts with a given prefix.
+///
+/// @example scss
+///   @debug string_ext.starts-with('var(--foo)', 'var('); // true
+///
+/// @param {string} $string - The string to test.
+/// @param {string} $prefix - The prefix to check.
+/// @return {boolean} True if the string starts with the given prefix.
+@function starts-with($string, $prefix) {
+  @return string.slice($string, 1, string.length($prefix)) == $prefix;
+}
+
+/// Checks if a string ends with a given suffix.
+///
+/// @example scss
+///   @debug string_ext.ends-with('var(--foo)', ')'); // true
+///
+/// @param {string} $string - The string to test.
+/// @param {string} $suffix - The suffix to check.
+/// @return {boolean} True if the string ends with the given suffix.
+@function ends-with($string, $suffix) {
+  @return string.slice($string, -1 * string.length($suffix)) == $suffix;
+}
+
+/// Trims leading whitespace from the start of a string.
+///
+/// @example scss
+///   @debug string_ext.trim-start('  foo bar  '); // "foo bar  "
+///
+/// @param {string} $string - The string to trim.
+/// @return {string} The string with whitespace trimmed from the start.
+@function trim-start($string) {
+  @while starts-with($string, ' ') {
+    $string: replace-start($string, ' ', '');
+  }
+
+  @return $string;
+}
+
+/// Trims trailing whitespace from the end of a string.
+///
+/// @example scss
+///   @debug string_ext.trim-end('  foo bar  '); // "  foo bar"
+///
+/// @param {string} $string - The string to trim.
+/// @return {string} The string with trailing whitespace trimmed from the end.
+@function trim-end($string) {
+  @while ends-with($string, ' ') {
+    $string: replace-end($string, ' ', '');
+  }
+
+  @return $string;
+}
+
+/// Trims leading and trailing whitespace from a string.
+///
+/// @example scss
+///   @debug string_ext.trim('  foo bar  '); // "foo bar"
+///
+/// @param {string} $string - The string to trim.
+/// @return {string} The string with leading and trailing whitespace trimmed.
+@function trim($string) {
+  @return trim-start(trim-end($string));
+}
+
+/// Returns a new string with the first match of a pattern replaced by a given
+/// string.
+///
+/// @example scss
+///   @debug string_ext.replace('foo bar baz', 'bar', 'quux'); // "foo quux baz"
+///
+/// @param {string} $string - The string to be searched.
+/// @param {string} $pattern - The pattern to search for.
+/// @param {string} $replacement - The value to replace the pattern.
+/// @return {string} The string with the first match of pattern replaced by the
+///     replacement or the initial string itself.
+@function replace($string, $pattern, $replacement) {
+  $pattern-index: string.index($string, $pattern);
+  @if not $pattern-index {
+    @return $string;
+  }
+
+  $before: string.slice($string, 1, $pattern-index - 1);
+  $after: string.slice($string, string.length($pattern) + $pattern-index);
+
+  @return $before + $replacement + $after;
+}
+
+/// Returns a new string with all matches of a pattern replaced by a given
+/// string.
+///
+/// @example scss
+///   @debug string_ext.replace-all('foo bar baz', 'ba', 'qua'); // "foo quar quaz"
+///
+/// @param {string} $string - The string to be searched.
+/// @param {string} $pattern - The pattern to search for.
+/// @param {string} $replacement - The value to replace the pattern.
+/// @return {string} The string with all matches of pattern replaced by the
+///     replacement or the initial string itself.
+@function replace-all($string, $pattern, $replacement) {
+  @while string.index($string, $pattern) {
+    $string: replace($string, $pattern, $replacement);
+  }
+
+  @return $string;
+}
+
+/// Returns a new string that replaces a prefix at the start of the string.
+///
+/// @example scss
+///   @debug string_ext.replace-start('var(--foo)', 'var(', ''); // "--foo)"
+///
+/// @param {string} $string - The string to be searched.
+/// @param {string} $prefix - The prefix string to replace.
+/// @param {string} $replacement - The value to replace the prefix.
+/// @return {string} The string with the prefix replaced.
+@function replace-start($string, $prefix, $replacement) {
+  @if starts-with($string, $prefix) {
+    $string: $replacement + string.slice($string, string.length($prefix) + 1);
+  }
+
+  @return $string;
+}
+
+/// Returns a new string that replaces a suffix at the end of the string.
+///
+/// @example scss
+///   @debug string_ext.replace-end('var(--foo)', ')', ''); // "var(--foo"
+///
+/// @param {string} $string - The string to be searched.
+/// @param {string} $suffix - The suffix string to replace.
+/// @param {string} $replacement - The value to replace the suffix.
+/// @return {string} The string with the suffix trimmed from the end.
+@function replace-end($string, $suffix, $replacement) {
+  @if ends-with($string, $suffix) {
+    $string: string.slice($string, 1, -1 * string.length($suffix) - 1) +
+      $replacement;
+  }
+
+  @return $string;
+}

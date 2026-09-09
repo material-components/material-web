@@ -14,22 +14,20 @@ import {literal, html as staticHtml} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
-import {
-  FormSubmitter,
-  setupFormSubmitter,
-  type FormSubmitterType,
-} from '../../internal/controller/form-submitter.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';
 import {
-  internals,
-  mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+  afterDispatch,
+  setupDispatchHooks,
+} from '../../internal/events/dispatch-hooks.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
+import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
 
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
 // Separate variable needed for closure.
 const iconButtonBaseClass = mixinDelegatesAria(
-  mixinElementInternals(LitElement),
+  mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
 );
 
 /**
@@ -39,24 +37,12 @@ const iconButtonBaseClass = mixinDelegatesAria(
  * --composed
  * @fires change {Event} Dispatched when a toggle button toggles --bubbles
  */
-export class IconButton extends iconButtonBaseClass implements FormSubmitter {
-  static {
-    setupFormSubmitter(IconButton);
-  }
-
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
+export class IconButton extends iconButtonBaseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',
     delegatesFocus: true,
   };
-
-  /**
-   * Disables the icon button and makes it non-interactive.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * "Soft-disables" the icon button (disabled but still focusable).
@@ -109,46 +95,40 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
    */
   @property({type: Boolean, reflect: true}) selected = false;
 
-  /**
-   * The default behavior of the button. May be "button", "reset", or "submit"
-   * (default).
-   */
-  @property() type: FormSubmitterType = 'submit';
-
-  /**
-   * The value added to a form with the button's name when the button submits a
-   * form.
-   */
-  @property({reflect: true}) value = '';
-
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this[internals].form;
-  }
-
-  /**
-   * The labels this element is associated with.
-   */
-  get labels() {
-    return this[internals].labels;
-  }
-
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
 
   constructor() {
     super();
-    if (!isServer) {
-      this.addEventListener('click', this.handleClick.bind(this));
-    }
+    if (isServer) return;
+    setupDispatchHooks(this, 'click');
+    this.addEventListener('click', (event) => {
+      // If the button is soft-disabled or a disabled link, we need to
+      // explicitly prevent the click from propagating to other event listeners
+      // as well as prevent the default action. This is because the underlying
+      // `<button>` or `<a>` element is not actually `:disabled`.
+      if (this.softDisabled || (this.disabled && this.href)) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return;
+      }
+
+      // Save current selected state to toggle, since an external event listener
+      // may also change the selected state on click.
+      const wasSelected = this.selected;
+      afterDispatch(event, () => {
+        if (!this.toggle || this.disabled || event.defaultPrevented) {
+          return;
+        }
+
+        this.selected = !wasSelected;
+        this.dispatchEvent(
+          new InputEvent('input', {bubbles: true, composed: true}),
+        );
+        // Bubbles but does not compose to mimic native browser <input> & <select>
+        // Additionally, native change event is not an InputEvent.
+        this.dispatchEvent(new Event('change', {bubbles: true}));
+      });
+    });
   }
 
   protected override willUpdate() {
@@ -180,8 +160,7 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
         aria-expanded="${(!this.href && ariaExpanded) || nothing}"
         aria-pressed="${ariaPressedValue}"
         aria-disabled=${(!this.href && this.softDisabled) || nothing}
-        ?disabled="${!this.href && this.disabled}"
-        @click="${this.handleClickOnChild}">
+        ?disabled="${!this.href && this.disabled}">
         ${this.renderFocusRing()}
         ${this.renderRipple()}
         ${!this.selected ? this.renderIcon() : nothing}
@@ -246,42 +225,5 @@ export class IconButton extends iconButtonBaseClass implements FormSubmitter {
   override connectedCallback() {
     this.flipIcon = isRtl(this, this.flipIconInRtl);
     super.connectedCallback();
-  }
-
-  /** Handles a click on this element. */
-  private handleClick(event: MouseEvent) {
-    // If the icon button is soft-disabled, we need to explicitly prevent the
-    // click from propagating to other event listeners as well as prevent the
-    // default action.
-    if (!this.href && this.softDisabled) {
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      return;
-    }
-  }
-
-  /**
-   * Handles a click on the child <div> or <button> element within this
-   * element's shadow DOM.
-   */
-  private async handleClickOnChild(event: Event) {
-    // Allow the event to propagate
-    await 0;
-    if (
-      !this.toggle ||
-      this.disabled ||
-      this.softDisabled ||
-      event.defaultPrevented
-    ) {
-      return;
-    }
-
-    this.selected = !this.selected;
-    this.dispatchEvent(
-      new InputEvent('input', {bubbles: true, composed: true}),
-    );
-    // Bubbles but does not compose to mimic native browser <input> & <select>
-    // Additionally, native change event is not an InputEvent.
-    this.dispatchEvent(new Event('change', {bubbles: true}));
   }
 }

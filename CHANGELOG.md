@@ -1,5 +1,106 @@
 # Changelog
 
+## [2.5.0](https://github.com/material-components/material-web/compare/v2.4.1...v2.5.0) (2026-07-14)
+
+
+### Features
+
+* add custom-elements.json manifest ([68d3b89](https://github.com/material-components/material-web/commit/68d3b89a4b4b4ce5002e74a129b1a77b49350200))
+* export CSSStyleSheet as default from CSSResult-in-js files ([1cbfc75](https://github.com/material-components/material-web/commit/1cbfc757e98e075a3759260b3d9f5107a714db2d))
+* **labs:** add badge utility classes to component ([b4af72e](https://github.com/material-components/material-web/commit/b4af72e91e510fd495f15b6accb14117a9d0b27d))
+* **labs:** add card utility class component ([0c8986c](https://github.com/material-components/material-web/commit/0c8986cbb567d406ac3540a9a914d22d89b22628))
+* **labs:** add checkbox utility class component ([81807b2](https://github.com/material-components/material-web/commit/81807b2339da7e6d867a8a1d511dda5882b395ae))
+* **labs:** add container slot support for card ([ed72d96](https://github.com/material-components/material-web/commit/ed72d96f2ef592a252e4be246eaed904edeba079))
+* **labs:** add container slot support for expressive button ([d59dd9d](https://github.com/material-components/material-web/commit/d59dd9d90be5c159d3236d6d0b1f6ff7c20c64d6))
+* **labs:** add divider utility class component ([593705e](https://github.com/material-components/material-web/commit/593705e49722093b5a3d5439c2c8507116fc636e))
+* **labs:** add expressive button utility class component ([b39e13e](https://github.com/material-components/material-web/commit/b39e13e8afc0cd2975d792bca16992a0b567916d))
+* **labs:** add expressive fab utility class component ([c86e3a2](https://github.com/material-components/material-web/commit/c86e3a26188fbb28b8f45bb2ea25a8a2a676dbbd))
+* **labs:** add expressive icon component ([b8cba86](https://github.com/material-components/material-web/commit/b8cba8650aba2ab1828d1ee46d5499dfa06e630c))
+* **labs:** add expressive list utility class component ([33d8df2](https://github.com/material-components/material-web/commit/33d8df2507a906faa92a24ee5114ee9c9031bd8e))
+* **labs:** add expressive menu utility class component ([95dd57c](https://github.com/material-components/material-web/commit/95dd57cd533acae4288353e879f6affe832dafb9))
+* **labs:** add expressive split button ([3758f46](https://github.com/material-components/material-web/commit/3758f46ba64e8f3e9d5dd49b76c03db941975e90))
+* **labs:** add expressive system stylesheets ([7baa861](https://github.com/material-components/material-web/commit/7baa8612711a2486384792e882bfe0a57e84b188))
+* **labs:** add icon button utility class component ([3400f36](https://github.com/material-components/material-web/commit/3400f363c035e394bab45739adbb7bb7a60d6eeb))
+* **labs:** add Material for Tailwind theme stylesheet ([917e080](https://github.com/material-components/material-web/commit/917e080915381093dd4590627e4134884d008e82))
+* **labs:** add radio utility class component ([d37988b](https://github.com/material-components/material-web/commit/d37988b466618d6e8544233b452042ae2a5b5653))
+* **labs:** add spacing system stylesheet ([026f39d](https://github.com/material-components/material-web/commit/026f39dbd234cae1034153053b8d2a4ec772198b))
+* **labs:** add switch utility class component ([f6c1871](https://github.com/material-components/material-web/commit/f6c1871b9dfa983afa761061d0c252ea038bfb75))
+* **labs:** change form-submitter to a behavior mixin ([5a9f7da](https://github.com/material-components/material-web/commit/5a9f7da562446f5e628d29fdc83490113103310e))
+* **labs:** change form-submitter to a behavior mixin ([4142a69](https://github.com/material-components/material-web/commit/4142a697caf4d57b4c99ee568b74081cb8edf210))
+* **labs:** remove elevation from button when its outline is hidden ([bbdba3b](https://github.com/material-components/material-web/commit/bbdba3b2ac2cf89c1e94660bc8126947cbe5adfa))
+* **list,menu:** support styling `gap` on items ([3302730](https://github.com/material-components/material-web/commit/3302730ae75bef2fb89c53f2d1c866ce034089e8))
+* **sass-ext:** add `@material/web/sass/ext` helper utilities ([dd87fd2](https://github.com/material-components/material-web/commit/dd87fd2117e46b524625c929d4c0ea8d0097b542))
+
+
+### Bug Fixes
+
+* **button,iconbutton:** use form-associated mixin behavior ([082faad](https://github.com/material-components/material-web/commit/082faad915fb4ded0c151ca6546027fa7f37c616))
+* **button:** touch target not covering tall container height ([fd17013](https://github.com/material-components/material-web/commit/fd1701356220fca2580923a092d6d1ff540ba1b4))
+* **field:** prevent NaN transforms when element is hidden ([590ae99](https://github.com/material-components/material-web/commit/590ae99ff77c5296258b322dd98351c7e2be20f5))
+* **iconbutton:** use event dispatch hooks for toggle clicks ([9538d26](https://github.com/material-components/material-web/commit/9538d26d86f997274b52606c10402c480f64637d))
+* **labs:** `<md-icon>` not working when `md-icon.css` not imported ([f7fd08c](https://github.com/material-components/material-web/commit/f7fd08c8dfc6e98b9c6aac0669ace38655a0d68a))
+* remove internal `*-styles.js` generated files ([7bf4a7e](https://github.com/material-components/material-web/commit/7bf4a7ece5b44692fe7f17b42d0f4809df739b00))
+* **select:** stale tabindex caused incorrect typeahead value changes ([e16e2f6](https://github.com/material-components/material-web/commit/e16e2f6c5e18aaa4d8ef35e5a385b6748be85b78)), closes [#5913](https://github.com/material-components/material-web/issues/5913)
+* **slider:** prevent internal selection and a frozen knob. ([46fc0ea](https://github.com/material-components/material-web/commit/46fc0ead2f66a3cadb6d3c00f4e62065e0d2d632))
+* **switch:** gray overlay when disabled on Firefox v150 ([3b431c9](https://github.com/material-components/material-web/commit/3b431c9b99fc8da55c9bc32c7fbafd0fa0defe23))
+* **tokens:** add expressive token versions ([9779099](https://github.com/material-components/material-web/commit/977909925e484fcfefae74a5babf70c996d6c656))
+* **tokens:** add readme for the `@material/web/tokens/versions` folder ([a7ba471](https://github.com/material-components/material-web/commit/a7ba471a627b03b0849682b1301bc4c5474baba7))
+
+
+### Reverts
+
+* "feat(labs): change form-submitter to a behavior mixin" ([38724b9](https://github.com/material-components/material-web/commit/38724b9070301bf725db7b45c9cba0898c657549))
+
+## [2.4.1](https://github.com/material-components/material-web/compare/v2.4.0...v2.4.1) (2025-10-27)
+
+
+### Bug Fixes
+
+* **radio:** also move sibling uncheck logic after root assignment ([6010e52](https://github.com/material-components/material-web/commit/6010e52c8fcd53577a8cf2cee53095033f329d2a))
+* **radio:** move root assignment to mirror hostDisconnected ([adb8d10](https://github.com/material-components/material-web/commit/adb8d104f2ebc29890b8c578e34a412e8c5c3fc2))
+* **tokens:** `@material/web/tokens/v*` moved to `@material/web/tokens/versions/v*` ([60c0cfa](https://github.com/material-components/material-web/commit/60c0cfa58ad135c189cb0fa95c5f2744499f0327))
+
+## [2.4.0](https://github.com/material-components/material-web/compare/v2.3.0...v2.4.0) (2025-08-21)
+
+
+### Features
+
+* **button:** add disabled link support ([c3c4848](https://github.com/material-components/material-web/commit/c3c48485b152595c0e892383dc5ab38fdb1ac442))
+* **button:** add gradient support to container colors ([5bc1506](https://github.com/material-components/material-web/commit/5bc15069d136c51e912137dcba1b212a106bb1dd))
+* **catalog:** hide body if dsd-pending ([bf89645](https://github.com/material-components/material-web/commit/bf896458b0a656a40187d3fdddbc573407a4e55b))
+* **select:** add showPicker() functionality ([8808a25](https://github.com/material-components/material-web/commit/8808a25da8cb879d120c11b6961e10ef75ca5add))
+
+
+### Bug Fixes
+
+* **catalog:** hydrate CSR component pages ([0037c14](https://github.com/material-components/material-web/commit/0037c14f6ba17ae224f8377e4afcba35862c4bf4))
+* **menu:** output menu item theme values ([ca5f750](https://github.com/material-components/material-web/commit/ca5f75094b3ac2d314ccb31ec06ec653501cf801))
+* **radio:** stack overflow error when rendering many radios ([688ab3c](https://github.com/material-components/material-web/commit/688ab3cf5f12ddbff07407910b8e8e158b3282d7))
+* **ripple:** misaligned when using CSS zoom ([3072a9b](https://github.com/material-components/material-web/commit/3072a9bc286876be157e15d65b0d4877245e1acc))
+* **ripple:** remove pointerdown contextmenu bounds check for Chrome ([cd7512f](https://github.com/material-components/material-web/commit/cd7512ff90cf25ad98c6caa9842bf86d284146c7))
+
+## [2.3.0](https://github.com/material-components/material-web/compare/v2.2.0...v2.3.0) (2025-03-26)
+
+
+### Features
+
+* **button:** add download filename support for link buttons ([4098832](https://github.com/material-components/material-web/commit/4098832b8b6fe9def9c08d551014f113e39b2546))
+* **button:** rename attribute downloadFilename to download ([8aefe19](https://github.com/material-components/material-web/commit/8aefe1983d28abcc3bc9c659ff0b328454e0547e))
+* **chip:** add download attribute to assist chip ([902a84f](https://github.com/material-components/material-web/commit/902a84fe0cc389c1d691e42ce1c95d9156a4781b))
+* **icon-button:** add download attribute ([9e84130](https://github.com/material-components/material-web/commit/9e8413080d911108fd1fb97fe8909b96926e1a24))
+* **menu:** add menu padding tokens ([767d1f1](https://github.com/material-components/material-web/commit/767d1f159e9ebcd001968bb7e8bcdf6c4ef1e537))
+* **text-field:** add showPicker method ([bad490c](https://github.com/material-components/material-web/commit/bad490c7cb05be4898d8528569776d4e75bbb8fd))
+
+
+### Bug Fixes
+
+* **catalog:** add hyphen to md-evelated-button attribute ([ac9b14a](https://github.com/material-components/material-web/commit/ac9b14a65c384d9389022f11555fb063b932ec96))
+* **iconbutton:** href will respond to touch target ([ea1134a](https://github.com/material-components/material-web/commit/ea1134a1a77c032f8b8c6c749e670fca90d8cd89))
+* **labs:** add mixinCustomStateSet() for :state() compatibility ([045fe94](https://github.com/material-components/material-web/commit/045fe94872607f67da6c18d3689bff6a541102d2))
+* **listitem:** click() from listItemRoot ([1c60e56](https://github.com/material-components/material-web/commit/1c60e56c6c1210fd5a116290271b9bc7e612fdf7))
+* **menu:** export CloseReason ([29d6763](https://github.com/material-components/material-web/commit/29d6763dc3abe4e80a6fb3ad0eaca5bb24b2d29a))
+* **select:** missing accessible label ([1bdcbd3](https://github.com/material-components/material-web/commit/1bdcbd38ab96f6a7537c36cb7d61d9e8db2144e7))
+
 ## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
 
 

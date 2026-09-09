@@ -1,0 +1,23 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use '../../../../tokens/versions/latest/sass' as tokens;
+// go/keep-sorted end
+
+@layer md.sys.shape {
+  :root {
+    --md-sys-shape-corner-none: #{tokens.$md-sys-shape--corner-none};
+    --md-sys-shape-corner-xs: #{tokens.$md-sys-shape--corner-extra-small};
+    --md-sys-shape-corner-sm: #{tokens.$md-sys-shape--corner-small};
+    --md-sys-shape-corner-md: #{tokens.$md-sys-shape--corner-medium};
+    --md-sys-shape-corner-lg: #{tokens.$md-sys-shape--corner-large};
+    --md-sys-shape-corner-lg-increased: #{tokens.$md-sys-shape--corner-large-increased};
+    --md-sys-shape-corner-xl: #{tokens.$md-sys-shape--corner-extra-large};
+    --md-sys-shape-corner-xl-increased: #{tokens.$md-sys-shape--corner-extra-large-increased};
+    --md-sys-shape-corner-xxl: #{tokens.$md-sys-shape--corner-extra-extra-large};
+    --md-sys-shape-corner-full: 50cqmin;
+  }
+}

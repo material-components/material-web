@@ -1,0 +1,49 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'badge-tokens';
+// go/keep-sorted end
+
+@layer md.sys;
+@layer md.comp.badge {
+  .badge {
+    & {
+      @include badge-tokens.root;
+    }
+
+    & {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--container-color);
+      border-radius: var(--shape);
+      height: var(--size);
+      width: var(--size);
+      box-sizing: border-box;
+
+      slot {
+        display: none;
+      }
+    }
+
+    // Large badge (with text)
+    &.badge-large {
+      @include badge-tokens.large;
+      width: auto;
+      min-width: var(--size);
+      padding: 0 4px;
+
+      color: var(--label-text-color);
+      font: var(--label-text);
+      letter-spacing: var(--label-text-tracking);
+      font-variation-settings: var(--label-text-axes);
+
+      slot {
+        display: contents;
+      }
+    }
+  }
+}

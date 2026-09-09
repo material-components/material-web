@@ -7,7 +7,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/validate';
+@use 'internal/validate';
 // go/keep-sorted end
 
 $supported-tokens: (

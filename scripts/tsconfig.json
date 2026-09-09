@@ -5,7 +5,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2022",
     "module": "ES2022",
-    "skipLibCheck": true
+    "moduleResolution": "node"
   },
   "exclude": [
     "catalog",

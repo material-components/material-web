@@ -1,0 +1,82 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Utility assert functions that throw errors.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:meta';
+@use 'throw';
+@use 'type';
+// go/keep-sorted end
+
+/// Asserts that the argument is a specific type. If it is, the argument is
+/// returned, otherwise an error is thrown.
+///
+/// @example scss
+///   @mixin multiply($a, $b) {
+///     $a: assert.is-type($a, 'number');
+///     $b: assert.is-type($b, 'number');
+///     @return $a * $b;
+///   }
+///
+///   @function is-empty($value) {
+///     $value: assert.is-type(
+///       $value,
+///       'list|map|null',
+///       $message: '$value must be a list, map, or null',
+///       $source: 'is-empty'
+///     );
+///     @return $value and list.length($value) == 0;
+///   }
+///
+/// @param {*} $arg - The argument to check.
+/// @param {string} $type - The string type to assert the argument matches.
+///     Multiple types may be separated by '|'.
+/// @param {string} $message - Optional custom error message.
+/// @param {string} $source - Optional source of the error message.
+/// @return {*} The argument if it matches the type string.
+/// @throw Error if the argument does not match the type string.
+@function is-type(
+  $arg,
+  $type,
+  $message: 'Argument must be type #{meta.inspect($type)}. $arg: #{meta.inspect($arg)}',
+  $source: 'assert.is-type'
+) {
+  @if type.matches($arg, $type) {
+    @return $arg;
+  }
+  @return throw.error($message, $source);
+}
+
+/// Asserts that the argument is not a specific type. The argument is returned
+/// if it does not match. An error is thrown if the argument matches the type.
+///
+/// @example scss
+///   @function get-strict($map, $key) {
+///     @return assert.not-type(
+///       map.get($map, $key),
+///       'null',
+///       $message: 'Key must be in the map'
+///     );
+///   }
+///
+/// @param {*} $arg - The argument to check.
+/// @param {string} $type - The string type to assert the argument does not
+///     match. Multiple types may be separated by '|'.
+/// @param {string} $message - Optional custom error message.
+/// @param {string} $source - Optional source of the error message.
+/// @return {*} The argument if it does not match the type string.
+/// @throw Error if the argument matches the type string.
+@function not-type(
+  $arg,
+  $type,
+  $message: 'Argument may not be type #{meta.inspect($type)}. $arg: #{meta.inspect($arg)}',
+  $source: 'assert.not-type'
+) {
+  @if type.matches($arg, $type) {
+    @return throw.error($message, $source);
+  }
+  @return $arg;
+}

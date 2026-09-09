@@ -2,21 +2,5 @@
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-//
-// !!! THIS FILE WAS AUTOMATICALLY GENERATED !!!
-// !!! DO NOT MODIFY IT BY HAND !!!
-// Design system display name: Google Material 3
-// Design system version: v0.192
-// User-configured context group "Audience": "3P"
-// User-configured context group "Platform": "Web"
-// User-configured context group "Scheme": "Dynamic"
-//
 
-@function values($exclude-hardcoded-values: false) {
-  @return (
-    'dragged-state-layer-opacity': if($exclude-hardcoded-values, null, 0.16),
-    'focus-state-layer-opacity': if($exclude-hardcoded-values, null, 0.12),
-    'hover-state-layer-opacity': if($exclude-hardcoded-values, null, 0.08),
-    'pressed-state-layer-opacity': if($exclude-hardcoded-values, null, 0.12)
-  );
-}
+@forward '../versions/v0_192/md-sys-state';

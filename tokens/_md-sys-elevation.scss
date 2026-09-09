@@ -7,7 +7,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './v0_192/md-sys-elevation';
+@use 'versions/v0_192/md-sys-elevation';
 // go/keep-sorted end
 
 @function values($exclude-hardcoded-values: false) {

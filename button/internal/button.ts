@@ -13,43 +13,27 @@ import {property, query, queryAssignedElements} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {
-  FormSubmitter,
-  setupFormSubmitter,
-  type FormSubmitterType,
-} from '../../internal/controller/form-submitter.js';
-import {
   dispatchActivationClick,
   isActivationClick,
 } from '../../internal/events/form-label-activation.js';
-import {
-  internals,
-  mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
+import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
+import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
 
 // Separate variable needed for closure.
-const buttonBaseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
+const buttonBaseClass = mixinDelegatesAria(
+  mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
+);
 
 /**
  * A button component.
  */
-export abstract class Button extends buttonBaseClass implements FormSubmitter {
-  static {
-    setupFormSubmitter(Button);
-  }
-
-  /** @nocollapse */
-  static readonly formAssociated = true;
-
+export abstract class Button extends buttonBaseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',
     delegatesFocus: true,
   };
-
-  /**
-   * Whether or not the button is disabled.
-   */
-  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * Whether or not the button is "soft-disabled" (disabled but still
@@ -95,32 +79,6 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   @property({type: Boolean, attribute: 'has-icon', reflect: true}) hasIcon =
     false;
 
-  /**
-   * The default behavior of the button. May be "button", "reset", or "submit"
-   * (default).
-   */
-  @property() type: FormSubmitterType = 'submit';
-
-  /**
-   * The value added to a form with the button's name when the button submits a
-   * form.
-   */
-  @property({reflect: true}) value = '';
-
-  get name() {
-    return this.getAttribute('name') ?? '';
-  }
-  set name(name: string) {
-    this.setAttribute('name', name);
-  }
-
-  /**
-   * The associated form element with which this element's value will submit.
-   */
-  get form() {
-    return this[internals].form;
-  }
-
   @query('.button') private readonly buttonElement!: HTMLElement | null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
@@ -142,8 +100,7 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   }
 
   protected override render() {
-    // Link buttons may not be disabled
-    const isRippleDisabled = !this.href && (this.disabled || this.softDisabled);
+    const isRippleDisabled = this.disabled || this.softDisabled;
     const buttonOrLink = this.href ? this.renderLink() : this.renderButton();
     // TODO(b/310046938): due to a limitation in focus ring/ripple, we can't use
     // the same ID for different elements, so we change the ID instead.
@@ -190,6 +147,8 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}"
+      aria-disabled=${this.disabled || this.softDisabled || nothing}
+      tabindex="${this.disabled && !this.softDisabled ? -1 : nothing}"
       href=${this.href}
       download=${this.download || nothing}
       target=${this.target || nothing}
@@ -211,10 +170,10 @@ export abstract class Button extends buttonBaseClass implements FormSubmitter {
   }
 
   private handleClick(event: MouseEvent) {
-    // If the button is soft-disabled, we need to explicitly prevent the click
-    // from propagating to other event listeners as well as prevent the default
-    // action.
-    if (!this.href && this.softDisabled) {
+    // If the button is soft-disabled or a disabled link, we need to explicitly
+    // prevent the click from propagating to other event listeners as well as
+    // prevent the default action.
+    if (this.softDisabled || (this.disabled && this.href)) {
       event.stopImmediatePropagation();
       event.preventDefault();
       return;

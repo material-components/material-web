@@ -4,7 +4,7 @@
 //
 
 // go/keep-sorted start
-@use './v0_192/md-sys-motion';
+@use 'versions/v0_192/md-sys-motion';
 // go/keep-sorted end
 
 @function values($exclude-hardcoded-values: false) {

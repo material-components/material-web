@@ -1,0 +1,91 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use '../../../../tokens/versions/latest/sass/md-sys-state-focus-indicator';
+// go/keep-sorted end
+
+@layer md.sys;
+@layer md.comp.focus-ring {
+  .focus-ring-outer,
+  .focus-ring-inner {
+    --focus-ring-outline: none;
+    --focus-ring-offset: 0;
+    --focus-ring-animation: none;
+
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-offset);
+    animation: var(--focus-ring-animation), var(--ripple-animation, none);
+  }
+
+  // Focus rings support the following DOM use cases:
+  // 1. Focus ring and interactive element are the same.
+  // 2. Focus ring is a parent of a child interactive `.focus-ring-target`.
+  // 3. Focus ring is a child of a parent interactive `.focus-ring-target`.
+  // 4. Focus ring has `.focus-ring-host` and is a within an interactive shadow DOM host.
+  //
+  // Pseudo class emulation is only needed for the focus ring element, not for
+  // the target or host elements.
+
+  .focus-ring-outer {
+    &:is(:focus-visible, .focus-visible),
+    &:has(.focus-ring-target:focus-visible),
+    .focus-ring-target:focus-visible &,
+    :host(:focus-visible) &.focus-ring-host {
+      --focus-ring-outline: #{md-sys-state-focus-indicator.$thickness} solid var(--md-sys-color-secondary);
+      --focus-ring-offset: #{md-sys-state-focus-indicator.$outer-offset};
+      --focus-ring-animation: focus-ring-outer-grow 150ms
+          cubic-bezier(0.2, 0, 0, 1),
+        focus-ring-outer-shrink 450ms 150ms cubic-bezier(0.2, 0, 0, 1);
+    }
+  }
+
+  .focus-ring-inner {
+    &:is(:focus-visible, .focus-visible),
+    &:has(.focus-ring-target:focus-visible),
+    .focus-ring-target:focus-visible &,
+    :host(:focus-visible) &.focus-ring-host {
+      --focus-ring-outline: #{md-sys-state-focus-indicator.$thickness} solid var(--md-sys-color-secondary);
+      --focus-ring-offset: #{md-sys-state-focus-indicator.$inner-offset};
+      --focus-ring-animation: focus-ring-inner-grow 150ms
+          cubic-bezier(0.2, 0, 0, 1),
+        focus-ring-inner-shrink 450ms 150ms cubic-bezier(0.2, 0, 0, 1);
+    }
+  }
+
+  @keyframes focus-ring-outer-grow {
+    from {
+      outline-width: 0;
+    }
+
+    to {
+      outline-width: 8px;
+    }
+  }
+
+  @keyframes focus-ring-outer-shrink {
+    from {
+      outline-width: 8px;
+    }
+  }
+
+  @keyframes focus-ring-inner-grow {
+    from {
+      outline-width: 0;
+      outline-offset: 0;
+    }
+    to {
+      outline-width: 8px;
+      outline-offset: -8px;
+    }
+  }
+
+  @keyframes focus-ring-inner-shrink {
+    from {
+      outline-width: 8px;
+      outline-offset: -8px;
+    }
+  }
+}

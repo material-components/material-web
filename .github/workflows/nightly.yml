@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
     # allows triggering from the github UI
 
+permissions:
+  contents: write
+
 jobs:
   check_for_changes:
     runs-on: ubuntu-latest
@@ -30,7 +33,7 @@ jobs:
         with:
           node-version: 18
           cache: npm
-      - uses: google/wireit@setup-github-actions-caching/v1
+      - uses: google/wireit@setup-github-actions-caching/v2
 
       - run: npm ci
       - run: npm run build

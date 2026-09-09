@@ -1,0 +1,95 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:meta';
+@use '../../../../../sass/ext/map_ext';
+@use '../../../../../tokens/versions/latest/sass/md-ref-palette';
+@use '../../../../../tokens/versions/latest/sass/md-sys-color';
+@use '../../../../../tokens/versions/latest/sass/md-sys-color-meta';
+@use '../../../../../tokens/versions/latest/sass/md-sys-color__dark';
+@use '../../../../../tokens/versions/latest/sass/md-sys-color__dark-meta';
+// go/keep-sorted end
+
+@mixin emit-custom-properties(
+  $light-vars: meta.module-variables(md-sys-color),
+  $light-meta: meta.module-variables(md-sys-color-meta),
+  $dark-vars: meta.module-variables(md-sys-color__dark),
+  $dark-meta: meta.module-variables(md-sys-color__dark-meta),
+  $include-palette: false,
+  $palette-vars: meta.module-variables(md-ref-palette),
+) {
+  $color-tokens: (
+    'primary',
+    'on-primary',
+    'primary-container',
+    'on-primary-container',
+    'primary-fixed',
+    'primary-fixed-dim',
+    'on-primary-fixed',
+    'on-primary-fixed-variant',
+    'secondary',
+    'on-secondary',
+    'secondary-container',
+    'on-secondary-container',
+    'secondary-fixed',
+    'secondary-fixed-dim',
+    'on-secondary-fixed',
+    'on-secondary-fixed-variant',
+    'tertiary',
+    'on-tertiary',
+    'tertiary-container',
+    'on-tertiary-container',
+    'tertiary-fixed',
+    'tertiary-fixed-dim',
+    'on-tertiary-fixed',
+    'on-tertiary-fixed-variant',
+    'error',
+    'on-error',
+    'error-container',
+    'on-error-container',
+    'surface',
+    'surface-dim',
+    'surface-bright',
+    'surface-container-lowest',
+    'surface-container-low',
+    'surface-container',
+    'surface-container-high',
+    'surface-container-highest',
+    'on-surface',
+    'on-surface-variant',
+    'outline',
+    'outline-variant',
+    'inverse-surface',
+    'inverse-on-surface',
+    'inverse-primary',
+    'scrim',
+    'shadow',
+  );
+
+  @each $name in $color-tokens {
+    $light: map_ext.get-strict($light-vars, $name);
+    $dark: map_ext.get-strict($dark-vars, $name);
+
+    @if $include-palette {
+      // Change value to reference palette variables.
+      $light: map_ext.get-strict($light-meta, '#{$name}--resolved');
+      $dark: map_ext.get-strict($dark-meta, '#{$name}--resolved');
+    }
+
+    $value: $light;
+    @if $light != $dark {
+      $value: light-dark($light, $dark);
+    }
+
+    --md-sys-color-#{$name}: #{$value};
+  }
+
+  @if $include-palette {
+    @each $name, $value in $palette-vars {
+      --md-ref-palette-#{$name}: #{$value};
+    }
+  }
+}

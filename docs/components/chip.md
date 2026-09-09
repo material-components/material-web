@@ -10,7 +10,7 @@ dirname: chips
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2024-03-26' }
+freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
 tag: 'docType:reference'
 *-->
 
@@ -508,7 +508,8 @@ Token                                   | Default value
 | --- | --- | --- | --- | --- |
 | `elevated` | `elevated` | `boolean` | `false` |  |
 | `href` | `href` | `string` | `''` |  |
-| `target` | `target` | `string` | `''` |  |
+| `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the chip is used as a link (`href` is set). |
+| `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` |  |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
 | `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
@@ -570,7 +571,7 @@ Token                                   | Default value
 | --- | --- | --- | --- | --- |
 | `avatar` | `avatar` | `boolean` | `false` |  |
 | `href` | `href` | `string` | `''` |  |
-| `target` | `target` | `string` | `''` |  |
+| `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` |  |
 | `removeOnly` | `remove-only` | `boolean` | `false` |  |
 | `selected` | `selected` | `boolean` | `false` |  |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
@@ -604,7 +605,8 @@ Token                                   | Default value
 | --- | --- | --- | --- | --- |
 | `elevated` | `elevated` | `boolean` | `false` |  |
 | `href` | `href` | `string` | `''` |  |
-| `target` | `target` | `string` | `''` |  |
+| `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the chip is used as a link (`href` is set). |
+| `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` |  |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
 | `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |

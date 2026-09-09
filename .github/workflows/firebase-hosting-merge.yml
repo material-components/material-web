@@ -5,6 +5,10 @@ name: Deploy to Firebase Hosting on release and manual
       - published
   workflow_dispatch:
     # allows triggering from the gihub UI
+
+permissions:
+  contents: read
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -14,7 +18,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - uses: google/wireit@setup-github-actions-caching/v1
+      - uses: google/wireit@setup-github-actions-caching/v2
       - run: npm ci
       - run: 'npm run build:catalog'
       - uses: FirebaseExtended/action-hosting-deploy@v0

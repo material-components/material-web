@@ -8,23 +8,23 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/shape';
-@use './internal/validate';
-@use './md-sys-color';
-@use './md-sys-elevation';
-@use './md-sys-shape';
-@use './md-sys-state';
-@use './md-sys-typescale';
-@use './v0_192/md-comp-extended-fab-primary';
-@use './v0_192/md-comp-extended-fab-secondary';
-@use './v0_192/md-comp-extended-fab-surface';
-@use './v0_192/md-comp-extended-fab-tertiary';
-@use './v0_192/md-comp-fab-primary';
-@use './v0_192/md-comp-fab-secondary';
-@use './v0_192/md-comp-fab-surface';
-@use './v0_192/md-comp-fab-surface-large';
-@use './v0_192/md-comp-fab-surface-small';
-@use './v0_192/md-comp-fab-tertiary';
+@use 'internal/shape';
+@use 'internal/validate';
+@use 'md-sys-color';
+@use 'md-sys-elevation';
+@use 'md-sys-shape';
+@use 'md-sys-state';
+@use 'md-sys-typescale';
+@use 'versions/v0_192/md-comp-extended-fab-primary';
+@use 'versions/v0_192/md-comp-extended-fab-secondary';
+@use 'versions/v0_192/md-comp-extended-fab-surface';
+@use 'versions/v0_192/md-comp-extended-fab-tertiary';
+@use 'versions/v0_192/md-comp-fab-primary';
+@use 'versions/v0_192/md-comp-fab-secondary';
+@use 'versions/v0_192/md-comp-fab-surface';
+@use 'versions/v0_192/md-comp-fab-surface-large';
+@use 'versions/v0_192/md-comp-fab-surface-small';
+@use 'versions/v0_192/md-comp-fab-tertiary';
 // go/keep-sorted end
 
 $supported-tokens: (

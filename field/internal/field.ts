@@ -276,6 +276,11 @@ export class Field extends LitElement {
       return;
     }
 
+    const keyframes = this.getLabelKeyframes();
+    if (!keyframes.length) {
+      return;
+    }
+
     this.isAnimating = true;
     this.labelAnimation?.cancel();
 
@@ -291,10 +296,10 @@ export class Field extends LitElement {
     // Re-calculating the animation each time will prevent any visual glitches
     // from appearing.
     // TODO(b/241113345): use animation tokens
-    this.labelAnimation = this.floatingLabelEl?.animate(
-      this.getLabelKeyframes(),
-      {duration: 150, easing: EASING.STANDARD},
-    );
+    this.labelAnimation = this.floatingLabelEl?.animate(keyframes, {
+      duration: 150,
+      easing: EASING.STANDARD,
+    });
 
     this.labelAnimation?.addEventListener('finish', () => {
       // At the end of the animation, update the visible label.
@@ -320,6 +325,10 @@ export class Field extends LitElement {
     } = restingLabelEl.getBoundingClientRect();
     const floatingScrollWidth = floatingLabelEl.scrollWidth;
     const restingScrollWidth = restingLabelEl.scrollWidth;
+    // If either label has no dimensions (e.g., display: none), skip animation
+    if (floatingScrollWidth === 0 || restingScrollWidth === 0) {
+      return [];
+    }
     // Scale by width ratio instead of font size since letter-spacing will scale
     // incorrectly. Using the width we can better approximate the adjusted
     // scale and compensate for tracking and overflow.

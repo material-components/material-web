@@ -33,6 +33,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
     />
+    <!-- dsd-pending hides body until the polyfill has run on browsers that do not support DSD -->
+    <style>
+      body[dsd-pending] {
+        display: none;
+      }
+    </style>
     <!-- If JS is disabled just show the contents without the polyfill -->
     <noscript
       ><style>
@@ -44,7 +50,6 @@
     <!-- Allows sub-templates to insert into the head -->
     {% block head %}{% endblock %}
   </head>
-  <!-- dsd-pending hides body until the polyfill has run on browsers that do not support DSD -->
   <body dsd-pending>
     <!-- Inlines the declarative shadow dom polyfill for FF since it's performance sensitive -->
     {% inlinejs "ssr-utils/dsd-polyfill.js" %}

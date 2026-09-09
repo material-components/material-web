@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "declaration": true,
+    "declarationMap": false,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUnusedLocals": true,
+    "paths": {
+      "@material/web/*": ["./*"]
+    },
+    "sourceMap": true,
+    "inlineSources": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "target": "es2021",
+    "types": ["lit", "jasmine"]
+  }
+}

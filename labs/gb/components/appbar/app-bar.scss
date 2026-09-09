@@ -1,0 +1,167 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'app-bar-tokens';
+// go/keep-sorted end
+
+@layer md.sys;
+@layer md.comp.app-bar {
+  // Component tokens
+  .app-bar {
+    @include app-bar-tokens.root;
+  }
+  .app-bar-md {
+    @include app-bar-tokens.medium;
+  }
+  .app-bar-lg {
+    @include app-bar-tokens.large;
+  }
+  .app-bar-with-subtitle {
+    @include app-bar-tokens.with-subtitle;
+  }
+  .app-bar-with-subtitle.app-bar-lg {
+    @include app-bar-tokens.with-subtitle-large;
+  }
+  .app-bar-search {
+    @include app-bar-tokens.search;
+  }
+  .app-bar-scrolled {
+    @include app-bar-tokens.on-scroll;
+  }
+  .app-bar-scrolled.app-bar-search {
+    @include app-bar-tokens.on-scroll-search;
+  }
+
+  // Component styles
+  .app-bar {
+    box-sizing: border-box;
+    display: flex;
+    position: relative;
+    width: 100%;
+    min-height: var(--container-height);
+    background-color: var(--container-color);
+    border-radius: var(--container-shape);
+    box-shadow: var(--container-elevation);
+    color: var(--title-color);
+    transition:
+      background-color 200ms ease,
+      box-shadow 200ms ease,
+      min-height 200ms ease;
+    padding-inline: var(--leading-space) var(--trailing-space);
+  }
+
+  // Small and Search layouts (single row)
+  .app-bar-sm,
+  .app-bar-search {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  // Medium and Large layouts (two rows)
+  .app-bar-md,
+  .app-bar-lg {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+
+    .app-bar-top-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      width: 100%;
+    }
+
+    .app-bar-bottom-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 24px;
+      padding-inline: 12px;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+  }
+
+  // Slot containers
+  .app-bar-leading,
+  .app-bar-trailing {
+    display: flex;
+    align-items: center;
+    gap: var(--icon-button-space);
+    flex-shrink: 0;
+  }
+
+  .app-bar-leading {
+    color: var(--leading-icon-color);
+  }
+
+  .app-bar-trailing {
+    color: var(--trailing-icon-color);
+  }
+
+  .app-bar-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .app-bar-sm .app-bar-title-wrapper {
+    margin-inline: 4px;
+  }
+
+  .app-bar-title {
+    margin: 0;
+    font: var(--title);
+    font-variation-settings: var(--title-axes);
+    letter-spacing: var(--title-tracking);
+    color: var(--title-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    ::slotted(*) {
+      margin: 0;
+      font: inherit;
+      font-variation-settings: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+    }
+  }
+
+  .app-bar-subtitle {
+    margin: 0;
+    margin-top: 2px;
+    font: var(--subtitle);
+    font-variation-settings: var(--subtitle-axes);
+    letter-spacing: var(--subtitle-tracking);
+    color: var(--subtitle-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    ::slotted(*) {
+      margin: 0;
+      font: inherit;
+      font-variation-settings: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+    }
+  }
+
+  .app-bar-search-container {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    min-width: 0;
+    margin-inline: 8px;
+  }
+}

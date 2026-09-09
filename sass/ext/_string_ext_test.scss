@@ -1,0 +1,166 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'sass:meta';
+@use 'string_ext';
+// go/keep-sorted end
+
+@include test.describe('string_ext') {
+  @include test.describe('starts-with()') {
+    @include test.it('should return true if the string has the prefix') {
+      @include test.assert-true(string_ext.starts-with('foo', 'f'));
+    }
+
+    @include test.it(
+      'should return false if the string does not have the prefix'
+    ) {
+      @include test.assert-false(string_ext.starts-with('foo', 'b'));
+    }
+  }
+
+  @include test.describe('ends-with()') {
+    @include test.it('should return true if the string has the suffix') {
+      @include test.assert-true(string_ext.ends-with('foo', 'o'));
+    }
+
+    @include test.it(
+      'should return false if the string does not have the suffix'
+    ) {
+      @include test.assert-false(string_ext.ends-with('foo', 'b'));
+    }
+  }
+
+  @include test.describe('trim-start()') {
+    @include test.it(
+      'should return the string with leading whitespace removed'
+    ) {
+      @include test.assert-equal(string_ext.trim-start('  foo'), 'foo');
+    }
+
+    @include test.it('should do nothing if there is no leading whitespace') {
+      @include test.assert-equal(string_ext.trim-start('foo'), 'foo');
+    }
+  }
+
+  @include test.describe('trim-end()') {
+    @include test.it(
+      'should return the string with trailing whitespace removed'
+    ) {
+      @include test.assert-equal(string_ext.trim-end('bar  '), 'bar');
+    }
+
+    @include test.it('should do nothing if there is no trailing whitespace') {
+      @include test.assert-equal(string_ext.trim-end('bar'), 'bar');
+    }
+  }
+
+  @include test.describe('trim()') {
+    @include test.it('should trim leading and trailing whitespace') {
+      @include test.assert-equal(string_ext.trim('  foo bar  '), 'foo bar');
+    }
+  }
+
+  @include test.describe('replace()') {
+    @include test.it('should replace a pattern') {
+      @include test.assert-equal(
+        string_ext.replace('foo bar baz', 'foo', 'quux'),
+        'quux bar baz'
+      );
+
+      @include test.assert-equal(
+        string_ext.replace('foo bar baz', 'bar', 'quux'),
+        'foo quux baz'
+      );
+
+      @include test.assert-equal(
+        string_ext.replace('foo bar baz', 'baz', 'quux'),
+        'foo bar quux'
+      );
+    }
+
+    @include test.it('should return the string if pattern does not match') {
+      @include test.assert-equal(
+        string_ext.replace('foo bar baz', 'quux', 'womp'),
+        'foo bar baz'
+      );
+    }
+
+    @include test.it('replaces only first match') {
+      @include test.assert-equal(
+        string_ext.replace('womp womp', 'womp', 'doo'),
+        'doo womp'
+      );
+    }
+  }
+
+  @include test.describe('replace-all()') {
+    @include test.it('should replace a single pattern') {
+      @include test.assert-equal(
+        string_ext.replace-all('foo bar baz', 'foo', 'quux'),
+        'quux bar baz'
+      );
+
+      @include test.assert-equal(
+        string_ext.replace-all('foo bar baz', 'bar', 'quux'),
+        'foo quux baz'
+      );
+
+      @include test.assert-equal(
+        string_ext.replace-all('foo bar baz', 'baz', 'quux'),
+        'foo bar quux'
+      );
+    }
+
+    @include test.it('should return the string if pattern does not match') {
+      @include test.assert-equal(
+        string_ext.replace-all('foo bar baz', 'quux', 'womp'),
+        'foo bar baz'
+      );
+    }
+
+    @include test.it('replaces multiple matches') {
+      @include test.assert-equal(
+        string_ext.replace-all('womp womp', 'womp', 'doo'),
+        'doo doo'
+      );
+    }
+  }
+
+  @include test.describe('replace-start()') {
+    @include test.it('should replace the prefix of a string') {
+      @include test.assert-equal(
+        string_ext.replace-start('babar', 'ba', 'foo'),
+        'foobar'
+      );
+    }
+
+    @include test.it('should return the string if prefix does not match') {
+      @include test.assert-equal(
+        string_ext.replace-start('foo', 'bar', 'baz'),
+        'foo'
+      );
+    }
+  }
+
+  @include test.describe('replace-end()') {
+    @include test.it('should replace the suffix of a string') {
+      @include test.assert-equal(
+        string_ext.replace-end('foobar', 'bar', 'foo'),
+        'foofoo'
+      );
+    }
+
+    @include test.it('should return the string if suffix does not match') {
+      @include test.assert-equal(
+        string_ext.replace-end('foo', 'bar', 'baz'),
+        'foo'
+      );
+    }
+  }
+}

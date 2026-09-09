@@ -1,0 +1,222 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Extensions to the go/sass:map built-in module.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'assert';
+@use 'throw';
+@use 'type';
+// go/keep-sorted end
+
+/// The same as `map.get()` but throws an error if the key is not found.
+///
+/// This is useful over `map.get()` when using Sass maps like records, where
+/// the key is expected to exist.
+///
+/// @example scss
+///   $map: (
+///     'name': 'foo',
+///     'value': blue,
+///   );
+///
+///   @debug map_ext.get-strict($map, 'name'); // 'foo'
+///   @debug map_ext.get-strict($map, 'bar'); // ERROR: Key "bar" expected but not found in $map: ('name': 'foo', 'value': blue)
+///
+/// @param {map} $map - The map to retrieve the value from.
+/// @param {string} $key - The key of the value to retrieve.
+/// @param {list} $keys - Additional keys to retrieve deeply nested values.
+/// @return {*} The value at the given key.
+/// @throw Error if the key does not exist in the map.
+@function get-strict($map, $key, $keys...) {
+  $map: assert.is-type($map, 'map', $source: 'map_ext.get-strict');
+  @if throw.get-error($map) {
+    @return $map;
+  }
+  @if not map.has-key($map, $key, $keys...) {
+    @return throw.error(
+      'Key #{$key} expected but not found in $map: #{meta.inspect($map)}',
+      $source: 'map.get-strict'
+    );
+  }
+
+  @return map.get($map, $key, $keys...);
+}
+
+/// Splits a Map and returns a List pair with two new Maps: the first with the
+/// provided keys and the second without.
+///
+/// @example scss
+///   $map: (
+///     'focus': blue,
+///     'focus-within': blue,
+///     'hover': teal,
+///     'active': green,
+///   );
+///
+///   $pair: map_ext.split($map, ('focus', 'focus-within'));
+///
+///   $map-with-focus-keys: list.nth($pair, 1);
+///   @debug $map-with-focus-keys; // ('focus': blue, 'focus-within': blue)
+///
+///   $map-with-remaining-keys: list.nth($pair, 2);
+///   @debug $map-with-remaining-keys; // ('hover': teal, 'active': green)
+///
+/// @param {map} $map - The Map to split.
+/// @param {list} $keys - List of keys to split the Map by.
+/// @return {list} A List pair with two new Maps: the first with the keys
+///     provided, and the second with the remaining keys.
+@function split($map, $keys) {
+  @if type.matches($keys, 'string') {
+    // A list with a single string `('key')` collapses to a single string type
+    // at build time. We can force it to be a list using a list API method.
+    // Ex:
+    // map_ext.split($map, ('key')) is the same as
+    // map_ext.split($map, 'key')
+    $keys: list.append((), $keys);
+  }
+
+  // In Sass, `()` counts as both a map and a list, and always reports its type
+  // as a list. If we're given an empty map-list, we don't need to throw a type
+  // error.
+  $map: assert.is-type($map, 'map|list', $source: 'map_ext.split');
+  $keys: assert.is-type($keys, 'list', $source: 'map_ext.split');
+  $error: throw.get-error($map, $keys);
+  @if not $error and list.length($keys) == 0 {
+    $error: throw.error(
+      'List of keys to split by are empty',
+      $source: 'map_ext.split'
+    );
+  }
+  @if $error {
+    @return $error;
+  }
+
+  // In Sass, `()` is an empty list. We can force Sass to use map types by
+  // creating the map with map APIs. This ensures that even if a map is empty,
+  // `meta.type-of()` will report it as a map.
+  $map-with-keys: map.merge((), ());
+  $map-without-keys: map.merge((), ());
+  @each $key, $value in $map {
+    $has-key: list.index($keys, $key) != null;
+    @if $has-key {
+      $map-with-keys: map.set($map-with-keys, $key, $value);
+    } @else {
+      $map-without-keys: map.set($map-without-keys, $key, $value);
+    }
+  }
+
+  @return ($map-with-keys, $map-without-keys);
+}
+
+/// Splits a Map and returns a new Map that only includes the provided keys.
+///
+/// @example scss
+///   $map: (
+///     'focus': blue,
+///     'focus-within': blue,
+///     'hover': teal,
+///     'active': green,
+///   );
+///
+///   $map-with-focus-keys: map_ext.pick($map, ('focus', 'focus-within'));
+///   @debug $map-with-focus-keys; // ('focus': blue, 'focus-within': blue)
+///
+/// @param {map} $map - The Map to split.
+/// @param {list} $keys - List of keys to include in the new Map.
+/// @return {map} Map with only the keys provided.
+@function pick($map, $keys) {
+  $result: split($map, $keys);
+  @if throw.get-error($result) {
+    @return $result;
+  }
+  @return list.nth($result, 1);
+}
+
+/// Splits a Map and returns a new Map that excludes the provided keys.
+///
+/// @example scss
+///   $map: (
+///     'focus': blue,
+///     'focus-within': blue,
+///     'hover': teal,
+///     'active': green,
+///   );
+///
+///   $map-without-focus-keys: map_ext.omit($map, ('focus', 'focus-within'));
+///   @debug $map-without-focus-keys; // ('hover': teal, 'active': green)
+///
+/// @param {map} $map - The Map to split.
+/// @param {list} $keys - List of keys to exclude from the new Map.
+/// @return {map} Map without the keys provided.
+@function omit($map, $keys) {
+  $result: split($map, $keys);
+  @if throw.get-error($result) {
+    @return $result;
+  }
+  @return list.nth($result, 2);
+}
+
+/// Returns the given map with any matching keys renamed according to the
+/// provided Map of keys to rename.
+///
+/// @example scss
+///   $map: ('foo': red);
+///
+///   $new-map: map_ext.rename-keys($map, ('foo': 'bar'));
+///   @debug $new-map; // ('bar': red)
+///
+/// @param {map} $map - The map to rename keys within.
+/// @param {map} $keys-to-rename - A map of keys and their new names.
+/// @return {map} The map with any matching keys renamed.
+@function rename-keys($map, $keys-to-rename) {
+  $new-map: omit($map, map.keys($keys-to-rename));
+  @if throw.get-error($new-map) {
+    @return $new-map;
+  }
+
+  @each $old-key-name, $new-key-name in $keys-to-rename {
+    @if map.has-key($map, $old-key-name) {
+      $new-map: map.set($new-map, $new-key-name, map.get($map, $old-key-name));
+    }
+  }
+
+  @return $new-map;
+}
+
+/// Returns a list of keys where $mapB diverges from $mapA.
+/// Divergence occurs when:
+///   1. A key exists in $mapB but not in $mapA.
+///   2. A key exists in both maps but with different values.
+///
+/// @example scss
+///   $mapA: ('foo': red, 'bar': yellow, 'baz': 10);
+///   $mapB: ('foo': red, 'bar': green,  'baz': 10, 'fooBar': blue);
+///
+///   $differences: map_ext.difference($mapA, $mapB);
+///   @debug $differences; // ('bar', 'fooBar')
+///
+/// @param {map} $mapA - The reference map.
+/// @param {map} $mapB - The map to compare against the reference.
+/// @return {list} A list of keys where $mapB diverges from $mapA.
+@function difference($mapA, $mapB) {
+  $mapA: assert.is-type($mapA, 'map', $source: 'map_ext.difference');
+  $mapB: assert.is-type($mapB, 'map', $source: 'map_ext.difference');
+  $error: throw.get-error($mapA, $mapB);
+  @if $error {
+    @return $error;
+  }
+  $differences: ();
+  @each $key, $value in $mapB {
+    @if not map.has-key($mapA, $key) or map.get($mapA, $key) != $value {
+      $differences: list.append($differences, $key);
+    }
+  }
+
+  @return $differences;
+}

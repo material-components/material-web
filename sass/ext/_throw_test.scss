@@ -1,0 +1,67 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'throw';
+// go/keep-sorted end
+
+@include test.describe('throw') {
+  @include test.describe('get-error()') {
+    @include test.it('returns the string if the value is an error string') {
+      $error: throw.error('test error message');
+      @include test.assert-equal(throw.get-error($error), $error);
+    }
+
+    @include test.it('returns null for non-error strings') {
+      @include test.assert-false(
+        throw.get-error('not an error'),
+        'get-error("not an error") should return null for non-error strings'
+      );
+    }
+
+    @include test.it('returns null for other values') {
+      @include test.assert-false(
+        throw.get-error(1),
+        'get-error(1) should return null'
+      );
+      @include test.assert-false(
+        throw.get-error(true),
+        'get-error(true) should return null'
+      );
+      @include test.assert-false(
+        throw.get-error(null),
+        'get-error(null) should return null'
+      );
+      @include test.assert-false(
+        throw.get-error(()),
+        'get-error(()) should return null'
+      );
+    }
+
+    @include test.it(
+      'returns the first error if multiple values are provided'
+    ) {
+      $error: throw.error('test error message');
+      @include test.assert-equal(
+        throw.get-error(
+          'not an error',
+          'still not an error',
+          $error,
+          'not an error either'
+        ),
+        $error
+      );
+    }
+
+    @include test.it('returns null if multiple non-error values are provided') {
+      @include test.assert-false(
+        throw.get-error('not an error', 'still not an error'),
+        'get-error("not an error", "still not an error") should return null'
+      );
+    }
+  }
+}

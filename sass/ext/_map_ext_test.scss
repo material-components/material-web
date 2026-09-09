@@ -1,0 +1,713 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'map_ext';
+@use 'throw';
+// go/keep-sorted end
+
+@include test.describe('map_ext') {
+  @include test.describe('get-strict()') {
+    @include test.it('returns the value of the key when it exists in the map') {
+      // Arrange
+      $map: (
+        'foo': blue,
+        'bar': red,
+      );
+
+      // Act
+      $result: map_ext.get-strict($map, 'bar');
+
+      // Assert
+      @include test.assert-equal(
+        $result,
+        red,
+        $description: "returns the value of map key 'bar': `red`"
+      );
+    }
+
+    @include test.it('throws an error when the key does not exist in the map') {
+      // Arrange
+      $map: (
+        'foo': blue,
+      );
+
+      // Act
+      $result: map_ext.get-strict($map, 'does-not-exist');
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error if the map is null') {
+      // Arrange
+      $map: null;
+
+      // Act
+      $result: map_ext.get-strict($map, 'foo');
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error if the map is empty') {
+      // Arrange
+      $map: ();
+
+      // Act
+      $result: map_ext.get-strict($map, 'foo');
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it(
+      'returns the value if the key is present and the value is null'
+    ) {
+      // Arrange
+      $map: (
+        'foo': null,
+      );
+
+      // Act
+      $result: map_ext.get-strict($map, 'foo');
+
+      // Assert
+      @include test.assert-equal(
+        $result,
+        null,
+        $description: "returns the value of map key 'foo', `null`"
+      );
+    }
+
+    // See go/gm3-wiz-token-upgrade-css-keyname-issue
+    @include test.it(
+      'throws an error when using unquoted strings that are also CSS color types'
+    ) {
+      // Arrange
+      $map: (
+        'white': #fff,
+      );
+
+      // Act
+      $result: map_ext.get-strict($map, white);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+  }
+
+  @include test.describe('split()') {
+    @include test.it('returns a list with two map pairs') {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: ('foo');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+
+      // Assert
+      @include test.assert-equal(
+        meta.type-of($result),
+        'list',
+        $description: 'result is type of list'
+      );
+      @include test.assert-equal(
+        list.length($result),
+        2,
+        $description: 'result list has two items'
+      );
+      @include test.assert-equal(
+        meta.type-of(list.nth($result, 1)),
+        'map',
+        $description: 'the first item is a map'
+      );
+      @include test.assert-equal(
+        meta.type-of(list.nth($result, 2)),
+        'map',
+        $description: 'the second item is a map'
+      );
+    }
+
+    @include test.it('the first map only includes provided keys (one key)') {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: ('foo');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+      $first-map: list.nth($result, 1);
+
+      // Assert
+      @include test.assert-equal(
+        $first-map,
+        (
+          'foo': blue,
+        ),
+        $description: 'the first map only includes the single provided key'
+      );
+    }
+
+    @include test.it(
+      'the first map only includes provided keys (multiple keys)'
+    ) {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: ('foo', 'bar');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+      $first-map: list.nth($result, 1);
+
+      // Assert
+      @include test.assert-equal(
+        $first-map,
+        (
+          'foo': blue,
+          'bar': red,
+        ),
+        $description: 'the first map only includes the two provided keys'
+      );
+    }
+
+    @include test.it('the first map is empty if provided keys are not found') {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: ('does-not-exist');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+      $first-map: list.nth($result, 1);
+
+      // Assert
+      @include test.assert-equal(
+        $first-map,
+        (),
+        $description: 'the first map is empty if provided keys are not found'
+      );
+    }
+
+    @include test.it('the second map only includes remaining keys') {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: ('foo');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+      $second-map: list.nth($result, 2);
+
+      // Assert
+      @include test.assert-equal(
+        $second-map,
+        (
+          'bar': red,
+          'baz': green,
+        ),
+        $description: 'the second map only includes remaining keys'
+      );
+    }
+
+    @include test.it('the second map is empty if there are no remaining keys') {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: ('foo', 'bar', 'baz');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+      $second-map: list.nth($result, 2);
+
+      // Assert
+      @include test.assert-equal(
+        $second-map,
+        (),
+        $description: 'the second map is empty if there are no remaining keys'
+      );
+    }
+
+    @include test.it('throws an error if the map is null') {
+      // Arrange
+      $map-to-split: null;
+      $keys-to-split-by: ('foo');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error if no keys are provided') {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: ();
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('throws an error if keys are null') {
+      // Arrange
+      $map-to-split: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-split-by: null;
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($result),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+
+    @include test.it('returns two empty maps if given an empty map') {
+      // Arrange
+      $map-to-split: ();
+      $keys-to-split-by: ('foo');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+
+      // Assert
+      @include test.assert-equal(
+        list.nth($result, 1),
+        (),
+        $description: 'the first item is an empty map'
+      );
+      @include test.assert-equal(
+        list.nth($result, 2),
+        (),
+        $description: 'the second item is an empty map'
+      );
+    }
+
+    @include test.it('ensures that empty maps report as type of map') {
+      // Arrange
+      $map-to-split: ();
+      $keys-to-split-by: ('foo');
+
+      // Act
+      $result: map_ext.split($map-to-split, $keys-to-split-by);
+
+      // Assert
+      @include test.assert-equal(
+        meta.type-of(list.nth($result, 1)),
+        'map',
+        $description: 'type-of first empty map result is a map'
+      );
+      @include test.assert-equal(
+        meta.type-of(list.nth($result, 2)),
+        'map',
+        $description: 'type-of second empty map result is a map'
+      );
+    }
+  }
+
+  @include test.describe('pick()') {
+    @include test.it('returns a map with the provided keys included') {
+      // Arrange
+      $map: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-pick: ('foo', 'bar');
+
+      // Act
+      $result: map_ext.pick($map, $keys-to-pick);
+
+      // Assert
+      @include test.assert-equal(
+        $result,
+        (
+          'foo': blue,
+          'bar': red,
+        ),
+        $description: 'the result is a map only including the keys to pick'
+      );
+    }
+  }
+
+  @include test.describe('omit()') {
+    @include test.it('returns a map with the provided keys excluded') {
+      // Arrange
+      $map: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-omit: ('foo', 'bar');
+
+      // Act
+      $result: map_ext.omit($map, $keys-to-omit);
+
+      // Assert
+      @include test.assert-equal(
+        $result,
+        (
+          'baz': green,
+        ),
+        $description: 'the result is a map excluding the keys to omit'
+      );
+    }
+  }
+
+  @include test.describe('rename-keys()') {
+    @include test.it('renames the keys in a map') {
+      // Arrange
+      $map: (
+        'foo': blue,
+        'bar': red,
+        'baz': green,
+      );
+      $keys-to-rename: (
+        'foo': 'foo-renamed',
+        'bar': 'bar-renamed',
+      );
+
+      // Act
+      $result: map_ext.rename-keys($map, $keys-to-rename);
+
+      // Assert
+      @include test.assert-equal(
+        $result,
+        (
+          'foo-renamed': blue,
+          'bar-renamed': red,
+          'baz': green,
+        ),
+        $description:
+          'the result is a map with keys renamed according to the key rename map'
+      );
+    }
+  }
+
+  @include test.describe('difference()') {
+    @include test.it(
+      'a key exists in mapB but not in mapA and a key exists in both maps but with different values'
+    ) {
+      // Arrange
+      $mapA: (
+        'foo': red,
+        'baz': green,
+      );
+      $mapB: (
+        'foo': red,
+        'bar': blue,
+        'baz': yellow,
+      );
+
+      // Act
+      $difference: map_ext.difference($mapA, $mapB);
+
+      // Assert
+      @include test.assert-equal($difference, ('bar' 'baz'));
+    }
+
+    @include test.it('a key exists in mapB but not in mapA') {
+      // Arrange
+      $mapA: (
+        'foo': red,
+      );
+      $mapB: (
+        'foo': red,
+        'bar': blue,
+      );
+
+      // Act
+      $difference: map_ext.difference($mapA, $mapB);
+
+      // Assert
+      @include test.assert-equal($difference, list.append((), 'bar'));
+    }
+
+    @include test.it('a key exists in both maps but with different values') {
+      // Arrange
+      $mapA: (
+        'foo': red,
+        'bar': green,
+      );
+      $mapB: (
+        'foo': yellow,
+        'bar': green,
+      );
+
+      // Act
+      $difference: map_ext.difference($mapA, $mapB);
+
+      // Assert
+      @include test.assert-equal($difference, list.append((), 'foo'));
+    }
+
+    @include test.it('trhwos an error if mapA is null') {
+      // Arrange
+      $mapA: null;
+      $mapB: (
+        'foo': red,
+        'bar': green,
+      );
+
+      // Act
+      $difference: map_ext.difference($mapA, $mapB);
+
+      // Assert
+      @include test.assert-true(
+        throw.get-error($difference),
+        $description:
+          'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+      );
+    }
+  }
+
+  @include test.it('throws an error if mapB is null') {
+    // Arrange
+    $mapA: (
+      'foo': red,
+      'bar': yellow,
+    );
+    $mapB: null;
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-true(
+      throw.get-error($difference),
+      $description:
+        'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+    );
+  }
+
+  @include test.it('throws an error if both maps are null') {
+    // Arrange
+    $mapA: null;
+    $mapB: null;
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-true(
+      throw.get-error($difference),
+      $description:
+        'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+    );
+  }
+
+  @include test.it('returns all keys in mapB if mapA is empty') {
+    // Arrange
+    $mapA: map.merge((), ());
+    $mapB: (
+      'foo': red,
+    );
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-equal($difference, list.append((), 'foo'));
+  }
+
+  @include test.it('returns an empty list if mapB is empty') {
+    // Arrange
+    $mapA: (
+      'foo': red,
+      'bar': yellow,
+    );
+    $mapB: map.merge((), ());
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-equal($difference, ());
+  }
+
+  @include test.it('returns an empty list if both maps are empty') {
+    // Arrange
+    $mapA: map.merge((), ());
+    $mapB: map.merge((), ());
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-equal($difference, ());
+  }
+
+  @include test.it('throws an error if mapA is a list') {
+    // Arrange
+    $mapA: ('foo', 'bar');
+    $mapB: (
+      'foo': red,
+      'bar': green,
+    );
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-true(
+      throw.get-error($difference),
+      $description:
+        'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+    );
+  }
+
+  @include test.it('throws an error if mapB is a list') {
+    // Arrange
+    $mapA: (
+      'foo': red,
+      'bar': yellow,
+    );
+    $mapB: ('foo', 'bar');
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-true(
+      throw.get-error($difference),
+      $description:
+        'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+    );
+  }
+
+  @include test.it('throws an error if both maps are lists') {
+    // Arrange
+    $mapA: ('foo', 'bar');
+    $mapB: ('foo', 'bar');
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-true(
+      throw.get-error($difference),
+      $description:
+        'an error is thrown (returned as a string "ERROR: <msg>" during tests)'
+    );
+  }
+
+  @include test.it('returns an empty list if mapA and mapB are equal maps') {
+    // Arrange
+    $mapA: (
+      'foo': red,
+      'bar': yellow,
+    );
+    $mapB: (
+      'foo': red,
+      'bar': yellow,
+    );
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-equal($difference, ());
+  }
+
+  @include test.it('if a key exists in mapA but not mapB, gets ignored') {
+    // Arrange
+    $mapA: (
+      'foo': red,
+      'bar': yellow,
+    );
+    $mapB: (
+      'foo': red,
+    );
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-equal($difference, ());
+  }
+
+  @include test.it(
+    'Detects key with differing quotation (string vs. unquoted)'
+  ) {
+    // Arrange
+    $mapA: (
+      'foo': red,
+      'bar': yellow,
+    );
+    $mapB: (
+      'foo': red,
+      'bar': 'green',
+    );
+
+    // Act
+    $difference: map_ext.difference($mapA, $mapB);
+
+    // Assert
+    @include test.assert-equal($difference, list.append((), 'bar'));
+  }
+}

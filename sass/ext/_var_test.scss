@@ -1,0 +1,161 @@
+//
+// Copyright 2021 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@use 'true' as test;
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'sass:meta';
+@use 'throw';
+@use 'var';
+// go/keep-sorted end
+
+@include test.describe('var') {
+  @include test.describe('create()') {
+    @include test.it('should create a var()') {
+      @include test.assert-equal(var.create('--foo'), var(--foo));
+    }
+
+    @include test.it('should create a var() with a fallback') {
+      @include test.assert-equal(var.create('--foo', blue), var(--foo, blue));
+    }
+
+    @include test.it('should create a var() with a var() fallback') {
+      @include test.assert-equal(
+        var.create('--foo', var.create('--bar')),
+        var(--foo, var(--bar))
+      );
+    }
+
+    @include test.it('should create a var() with a deep var() fallback') {
+      @include test.assert-equal(
+        var.create('--foo', var.create('--bar', blue)),
+        var(--foo, var(--bar, blue))
+      );
+    }
+
+    @include test.it('should throw if name does not start with --') {
+      @include test.assert-true(
+        throw.get-error(var.create('foo')),
+        'var.create("foo") should throw'
+      );
+    }
+  }
+
+  @include test.describe('name()') {
+    @include test.it('should return the name of a var()') {
+      @include test.assert-equal(var.name(var(--foo)), '--foo');
+    }
+
+    @include test.it('should return the name of a var() with a fallback') {
+      @include test.assert-equal(var.name(var(--foo, blue)), '--foo');
+    }
+  }
+
+  @include test.describe('fallback()') {
+    @include test.it('should return null if there is no fallback') {
+      @include test.assert-equal(var.fallback(var(--foo)), null);
+    }
+
+    @include test.it('should return the fallback of a var() as a string') {
+      @include test.assert-equal(var.fallback(var(--foo, blue)), 'blue');
+    }
+
+    @include test.it('should return a var() fallback as a string') {
+      @include test.assert-equal(
+        var.fallback(var(--foo, var(--bar))),
+        'var(--bar)'
+      );
+    }
+
+    @include test.it('should return a deep var() fallback as a string') {
+      @include test.assert-equal(
+        var.fallback(var(--foo, var(--bar, blue))),
+        'var(--bar, blue)'
+      );
+    }
+  }
+
+  @include test.describe('deep-fallback()') {
+    @include test.it('should return null if there is no fallback') {
+      @include test.assert-equal(var.deep-fallback(var(--foo)), null);
+    }
+
+    @include test.it('should return the fallback of a var() as a string') {
+      @include test.assert-equal(var.deep-fallback(var(--foo, blue)), 'blue');
+    }
+
+    @include test.it('should return the deep fallback of a var() as a string') {
+      @include test.assert-equal(
+        var.deep-fallback(var(--foo, var(--bar, blue))),
+        'blue'
+      );
+    }
+  }
+
+  @include test.describe('set-fallback()') {
+    @include test.it('should set a fallback') {
+      @include test.assert-equal(
+        var.set-fallback(var(--foo), 'blue'),
+        var(--foo, blue)
+      );
+    }
+
+    @include test.it('should replace a fallback') {
+      @include test.assert-equal(
+        var.set-fallback(var(--foo, blue), red),
+        var(--foo, red)
+      );
+    }
+
+    @include test.it('should replace a var() fallback') {
+      @include test.assert-equal(
+        var.set-fallback(var(--foo, var(--bar)), 'blue'),
+        var(--foo, blue)
+      );
+    }
+  }
+
+  @include test.describe('deep-set-fallback()') {
+    @include test.it('should set a fallback') {
+      @include test.assert-equal(
+        var.deep-set-fallback(var(--foo), 'blue'),
+        var(--foo, blue)
+      );
+    }
+
+    @include test.it('should replace a fallback') {
+      @include test.assert-equal(
+        var.deep-set-fallback(var(--foo, blue), 'red'),
+        var(--foo, red)
+      );
+    }
+
+    @include test.it('should replace a deep fallback') {
+      @include test.assert-equal(
+        var.deep-set-fallback(var(--foo, var(--bar, blue)), 'red'),
+        var(--foo, var(--bar, red))
+      );
+    }
+  }
+
+  @include test.describe('is-var()') {
+    @include test.it('should return true for var()') {
+      @include test.assert-true(var.is-var(var(--foo)));
+    }
+
+    @include test.it('should return true for var() with fallback') {
+      @include test.assert-true(var.is-var(var(--foo, blue)));
+    }
+
+    @include test.it('should return true for var() with var() fallback') {
+      @include test.assert-true(var.is-var(var(--foo, var(--bar))));
+    }
+
+    @include test.it('should return false for non-var()') {
+      @include test.assert-false(var.is-var('foo'));
+    }
+  }
+}

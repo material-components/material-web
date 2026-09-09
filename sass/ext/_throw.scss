@@ -1,0 +1,83 @@
+//
+// Copyright 2025 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Utilities for `sass-true` errors, to support testing error behavior.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:meta';
+@use 'sass:string';
+// go/keep-sorted end
+
+@forward 'true' show error;
+
+/// Returns false if none of the given values are error strings, or returns an
+/// error string if any value has an error.
+///
+/// This is used to support testing error behavior with `sass-true`, since
+/// `@error` messages cannot be caught at build time.
+///
+/// @example scss
+///   // A function that may return an "ERROR:" string in a test.
+///   @function get-value($map, $key) {
+///     @if meta.type-of($map) != 'map' {
+///       // Identical to `@error 'ERROR: Arg is not a map'` outside of tests.
+///       @return throw.error('Arg is not a map');
+///     }
+///     @return map.get($map, $key);
+///   }
+///
+///   // A function that needs to handle potential errors from other functions.
+///   @function mix-primary-on-surface($values) {
+///     $primary: get-value($values, 'primary');
+///     $surface: get-value($values, 'surface');
+///     $error: throw.get-error($primary, $surface);
+///     @if $error {
+///       // Return early to guard logic against additional errors since
+///       // $primary or $surface may be a string instead of a color.
+///       @return $error;
+///     }
+///
+///     @return color.mix($primary, $surface, 10%);
+///   }
+///
+/// Note: `throw.error()` and `throw.get-error()` are only useful when testing
+/// error behavior using `sass-true`. If you are not testing a function, use
+/// `@error` instead.
+///
+/// @example scss
+///   // In a `sass-true` test, `throw.get-error()` can be used to assert that
+///   // an error is thrown.
+///   @use 'true' as test with ($catch-errors: true);
+///
+///   @include test.describe('module.get-value()') {
+///     @include test.it('throws an error if the value is not a map') {
+///       $result: module.get-value('not a map', 'primary');
+///       @include test.assert-truthy(throw.get-error($result), '$result is an error');
+///     }
+///   }
+///
+/// @param {*} $error - The value to check.
+/// @param {list} $errors - Additional values to check. Useful for checking
+///     multiple errors at the same time.
+/// @return {string|boolean} The error string if any value is an error, or false
+///     otherwise.
+@function get-error($error, $errors...) {
+  @if _is-error($error) {
+    @return $error;
+  }
+
+  @each $additional-error in $errors {
+    @if _is-error($additional-error) {
+      @return $additional-error;
+    }
+  }
+
+  @return false;
+}
+
+@function _is-error($error) {
+  @return (meta.type-of($error) == 'string') and
+    (string.index($error, 'ERROR') == 1);
+}

@@ -2,6 +2,9 @@ name: Build Catalog
 
 on: [push]
 
+permissions:
+  contents: read
+
 jobs:
   build-catalog:
     runs-on: ubuntu-latest
@@ -11,7 +14,7 @@ jobs:
         with:
           node-version: 18
           cache: npm
-      - uses: google/wireit@setup-github-actions-caching/v1
+      - uses: google/wireit@setup-github-actions-caching/v2
 
       - run: npm ci
       - run: npm run build:catalog

@@ -311,6 +311,11 @@ export abstract class Select extends selectBaseClass {
     this.nativeErrorText = '';
   }
 
+  /** Shows the picker. If it's already open, this is a no-op. */
+  showPicker() {
+    this.open = true;
+  }
+
   override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
@@ -727,9 +732,11 @@ export abstract class Select extends selectBaseClass {
     selectedOptions.forEach(([option]) => {
       if (item !== option) {
         option.selected = false;
+        option.tabIndex = -1;
       }
     });
     item.selected = true;
+    item.tabIndex = 0;
 
     return this.updateValueAndDisplayText();
   }
@@ -814,10 +821,6 @@ export abstract class Select extends selectBaseClass {
   private getErrorText() {
     return this.error ? this.errorText : this.nativeErrorText;
   }
-
-  // Writable mixin properties for lit-html binding, needed for lit-analyzer
-  declare disabled: boolean;
-  declare name: string;
 
   override [getFormValue]() {
     return this.value;

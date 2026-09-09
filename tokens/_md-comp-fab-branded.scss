@@ -8,16 +8,16 @@
 @use 'sass:string';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/shape';
-@use './internal/validate';
-@use './md-sys-color';
-@use './md-sys-elevation';
-@use './md-sys-shape';
-@use './md-sys-state';
-@use './md-sys-typescale';
-@use './v0_192/md-comp-extended-fab-branded';
-@use './v0_192/md-comp-fab-branded';
-@use './v0_192/md-comp-fab-branded-large';
+@use 'internal/shape';
+@use 'internal/validate';
+@use 'md-sys-color';
+@use 'md-sys-elevation';
+@use 'md-sys-shape';
+@use 'md-sys-state';
+@use 'md-sys-typescale';
+@use 'versions/v0_192/md-comp-extended-fab-branded';
+@use 'versions/v0_192/md-comp-fab-branded';
+@use 'versions/v0_192/md-comp-fab-branded-large';
 // go/keep-sorted end
 
 $supported-tokens: (

@@ -371,7 +371,7 @@ export class Dialog extends dialogBaseClass {
   private handleSubmit(event: SubmitEvent) {
     const form = event.target as HTMLFormElement;
     const {submitter} = event;
-    if (form.method !== 'dialog' || !submitter) {
+    if (form.getAttribute('method') !== 'dialog' || !submitter) {
       return;
     }
 

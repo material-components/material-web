@@ -12,7 +12,7 @@ dirname: fab
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'emarquez' reviewed: '2024-03-27' }
+freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
 tag: 'docType:reference'
 *-->
 
@@ -487,8 +487,8 @@ Add with a different theme applied](images/fab/theming-branded.webp)
 
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
-| `variant` | `variant` | `string` | `'surface'` | The FAB color variant to render. |
-| `size` | `size` | `string` | `'medium'` | The size of the FAB.<br>NOTE: Branded FABs cannot be sized to `small`, and Extended FABs do not have different sizes. |
+| `variant` | `variant` | `FabVariant` | `'surface'` | The FAB color variant to render. |
+| `size` | `size` | `FabSize` | `'medium'` | The size of the FAB.<br>NOTE: Branded FABs cannot be sized to `small`, and Extended FABs do not have different sizes. |
 | `label` | `label` | `string` | `''` | The text to display on the FAB. |
 | `lowered` | `lowered` | `boolean` | `false` | Lowers the FAB's elevation. |
 
@@ -502,8 +502,8 @@ Add with a different theme applied](images/fab/theming-branded.webp)
 
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
-| `variant` | `variant` | `string` | `'surface'` | The FAB color variant to render. |
-| `size` | `size` | `string` | `'medium'` | The size of the FAB.<br>NOTE: Branded FABs cannot be sized to `small`, and Extended FABs do not have different sizes. |
+| `variant` | `variant` | `FabVariant` | `'surface'` | The FAB color variant to render. |
+| `size` | `size` | `FabSize` | `'medium'` | The size of the FAB.<br>NOTE: Branded FABs cannot be sized to `small`, and Extended FABs do not have different sizes. |
 | `label` | `label` | `string` | `''` | The text to display on the FAB. |
 | `lowered` | `lowered` | `boolean` | `false` | Lowers the FAB's elevation. |
 

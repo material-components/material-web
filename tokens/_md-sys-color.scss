@@ -7,9 +7,9 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/validate';
-@use './md-ref-palette';
-@use './v0_192/md-sys-color';
+@use 'internal/validate';
+@use 'md-ref-palette';
+@use 'versions/v0_192/md-sys-color';
 // go/keep-sorted end
 
 $supported-tokens: (

@@ -1,0 +1,31 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'divider-tokens';
+// go/keep-sorted end
+
+@layer md.sys;
+@layer md.comp.divider {
+  .divider {
+    & {
+      @include divider-tokens.root;
+
+      box-sizing: border-box;
+      border: none;
+      margin: unset; // Remove <hr> margins
+    }
+
+    &:not(.divider-vertical) {
+      border-bottom: var(--thickness) solid var(--color);
+      width: 100%;
+    }
+
+    &.divider-vertical {
+      border-inline-end: var(--thickness) solid var(--color);
+      min-height: 100%;
+    }
+  }
+}

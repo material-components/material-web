@@ -1,0 +1,164 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'split-button-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.button;
+@layer md.comp.split-button {
+  .split-btn {
+    @include split-button-tokens.root;
+
+    .btn {
+      @include split-button-tokens.button;
+    }
+
+    .btn-xs {
+      @include split-button-tokens.button-xs;
+
+      &:where(:nth-child(1 of .btn)) {
+        @include split-button-tokens.button-xs-leading;
+      }
+
+      &:where(:nth-last-child(1 of .btn)) {
+        @include split-button-tokens.button-xs-trailing;
+      }
+
+      &:where(:hover, .hover) {
+        @include split-button-tokens.button-xs-hovered;
+      }
+
+      &:where(:active, .active) {
+        @include split-button-tokens.button-xs-pressed;
+      }
+    }
+
+    .btn-sm {
+      @include split-button-tokens.button-sm;
+
+      &:where(:nth-child(1 of .btn)) {
+        @include split-button-tokens.button-sm-leading;
+      }
+
+      &:where(:nth-last-child(1 of .btn)) {
+        @include split-button-tokens.button-sm-trailing;
+      }
+
+      &:where(:hover, .hover) {
+        @include split-button-tokens.button-sm-hovered;
+      }
+
+      &:where(:active, .active) {
+        @include split-button-tokens.button-sm-pressed;
+      }
+    }
+
+    .btn-md {
+      @include split-button-tokens.button-md;
+
+      &:where(:nth-child(1 of .btn)) {
+        @include split-button-tokens.button-md-leading;
+      }
+
+      &:where(:nth-last-child(1 of .btn)) {
+        @include split-button-tokens.button-md-trailing;
+      }
+
+      &:where(:hover, .hover) {
+        @include split-button-tokens.button-md-hovered;
+      }
+
+      &:where(:active, .active) {
+        @include split-button-tokens.button-md-pressed;
+      }
+    }
+
+    .btn-lg {
+      @include split-button-tokens.button-lg;
+
+      &:where(:nth-child(1 of .btn)) {
+        @include split-button-tokens.button-lg-leading;
+      }
+
+      &:where(:nth-last-child(1 of .btn)) {
+        @include split-button-tokens.button-lg-trailing;
+      }
+
+      &:where(:hover, .hover) {
+        @include split-button-tokens.button-lg-hovered;
+      }
+
+      &:where(:active, .active) {
+        @include split-button-tokens.button-lg-pressed;
+      }
+    }
+
+    .btn-xl {
+      @include split-button-tokens.button-xl;
+
+      &:where(:nth-child(1 of .btn)) {
+        @include split-button-tokens.button-xl-leading;
+      }
+
+      &:where(:nth-last-child(1 of .btn)) {
+        @include split-button-tokens.button-xl-trailing;
+      }
+
+      &:where(:hover, .hover) {
+        @include split-button-tokens.button-xl-hovered;
+      }
+
+      &:where(:active, .active) {
+        @include split-button-tokens.button-xl-pressed;
+      }
+    }
+
+    &:is(.split-btn-selected, :has(:popover-open)) {
+      :nth-last-child(1 of .btn) {
+        @include split-button-tokens.button-trailing-selected;
+      }
+    }
+  }
+
+  .split-btn {
+    & {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--between-space);
+    }
+
+    :nth-child(1 of .btn) {
+      border-start-start-radius: var(--outer-corner-size);
+      border-end-start-radius: var(--outer-corner-size);
+      border-start-end-radius: var(--inner-corner-size);
+      border-end-end-radius: var(--inner-corner-size);
+    }
+
+    :nth-last-child(1 of .btn) {
+      border-start-start-radius: var(--inner-corner-size);
+      border-end-start-radius: var(--inner-corner-size);
+      border-start-end-radius: var(--outer-corner-size);
+      border-end-end-radius: var(--outer-corner-size);
+
+      &::before {
+        content: 'arrow_drop_down';
+        font: var(--md-icon-size) var(--md-icon-font);
+        display: flex;
+        align-items: center;
+        aspect-ratio: 1;
+        width: var(--md-icon-size);
+        overflow: hidden;
+      }
+    }
+
+    &:is(.split-btn-selected, :has(:popover-open))
+      :nth-last-child(1 of .btn)::before {
+      transform: rotate(180deg);
+      transition: transform var(--md-sys-motion-duration-short4)
+        var(--md-sys-motion-easing-standard);
+    }
+  }
+}

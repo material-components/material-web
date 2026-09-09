@@ -30,7 +30,11 @@ import {Corner} from '../menu.js';
  * @fires deactivate-items {Event} Requests the parent menu to deselect other
  * items when a submenu opens. --bubbles --composed
  * @fires request-activation {Event} Requests the parent to make the slotted item
- * focusable and focus the item. --bubbles --composed
+ * focusable and focus the item. Used internally for menu keyboard navigation;
+ * most applications do not need to listen for this event. It is exposed for
+ * authors building their own menu-item replacements, or for advanced cases
+ * where you want to call `preventDefault`/`stopPropagation` on it to override
+ * default focus handling. --bubbles --composed
  * @fires deactivate-typeahead {Event} Requests the parent menu to deactivate
  * the typeahead functionality when a submenu opens. --bubbles --composed
  * @fires activate-typeahead {Event} Requests the parent menu to activate the

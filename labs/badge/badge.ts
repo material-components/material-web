@@ -8,7 +8,7 @@ import {CSSResultOrNative} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import {Badge} from './internal/badge.js';
-import {styles} from './internal/badge-styles.js';
+import {styles} from './internal/badge-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {

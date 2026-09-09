@@ -7,8 +7,8 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
-@use './internal/validate';
-@use './v0_192/md-sys-shape';
+@use 'internal/validate';
+@use 'versions/v0_192/md-sys-shape';
 // go/keep-sorted end
 
 $supported-tokens: (
