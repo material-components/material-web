@@ -32,6 +32,9 @@ function applyTheme(theme: string) {
  * Apply the theme every time a postdoc pessage is received.
  */
 const onMessage = (e: MessageEvent<string>) => {
+  if (e.origin !== window.location.origin) {
+    return;
+  }
   applyTheme(e.data);
 };
 
