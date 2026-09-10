@@ -64,7 +64,9 @@ export class SingleSelectionController implements ReactiveController {
     // Cast as unknown since there is not enough information for typescript to
     // know that there is always at least one element (the host).
     return Array.from(
-      this.root.querySelectorAll<SingleSelectionElement>(`[name="${name}"]`),
+      this.root.querySelectorAll<SingleSelectionElement>(
+        `[name="${CSS.escape(name)}"]`,
+      ),
     ) as unknown as [SingleSelectionElement, ...SingleSelectionElement[]];
   }
 
@@ -198,6 +200,9 @@ export class SingleSelectionController implements ReactiveController {
     const forwards = isRtl ? isLeft || isDown : isRight || isDown;
 
     const hostIndex = siblings.indexOf(this.host);
+    if (hostIndex === -1) {
+      return;
+    }
     let nextIndex = forwards ? hostIndex + 1 : hostIndex - 1;
     // Search for the next sibling that is not disabled to select.
     // If we return to the host index, there is nothing to select.

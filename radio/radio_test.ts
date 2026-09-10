@@ -198,6 +198,33 @@ describe('<md-radio>', () => {
         .withContext('unrelated radio checked')
         .toBeFalse();
     });
+
+    it('terminates safely when dispatching an arrow keydown on a disconnected radio', async () => {
+      const radio = document.createElement('md-radio');
+      radio.name = 'a';
+      expect(() => {
+        radio.dispatchEvent(
+          new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
+        );
+      }).not.toThrow();
+
+      const {harnesses} = await setupTest(radioGroup);
+      const [r1] = harnesses;
+      const controller = (
+        r1.element as unknown as {
+          selectionController: {handleKeyDown: (e: KeyboardEvent) => void};
+        }
+      ).selectionController;
+      r1.element.remove();
+      expect(() => {
+        r1.element.dispatchEvent(
+          new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
+        );
+        controller.handleKeyDown(
+          new KeyboardEvent('keydown', {key: 'ArrowRight'}),
+        );
+      }).not.toThrow();
+    });
   });
 
   describe('manages selection groups', () => {
@@ -420,6 +447,27 @@ describe('<md-radio>', () => {
       a2.checked = false;
       expect(a1.checked).toBeFalse();
       expect(a2.checked).toBeFalse();
+    });
+
+    it('escapes special characters in name attribute', async () => {
+      const hostileName = 'a"], [disabled="';
+      const template = html`
+        <md-radio id="r1" name=${hostileName}></md-radio>
+        <md-radio id="r2" name=${hostileName}></md-radio>
+        <md-radio id="r3" disabled></md-radio>
+      `;
+      const {harnesses} = await setupTest(template);
+      const [r1, r2, r3] = harnesses;
+
+      await r1.clickWithMouse();
+      expect(r1.element.checked).toBeTrue();
+      expect(r2.element.checked).toBeFalse();
+      expect(r3.element.checked).toBeFalse();
+
+      await r2.clickWithMouse();
+      expect(r1.element.checked).toBeFalse();
+      expect(r2.element.checked).toBeTrue();
+      expect(r3.element.checked).toBeFalse();
     });
   });
 
