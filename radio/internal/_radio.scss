@@ -33,6 +33,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 @mixin styles() {
   $tokens: tokens.md-comp-radio-values();
 
+  @include ripple.controls;
+
   @layer {
     :host {
       display: inline-flex;
