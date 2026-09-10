@@ -92,7 +92,9 @@ export abstract class Chip extends chipBaseClass {
   constructor() {
     super();
     if (!isServer) {
-      this.addEventListener('click', this.handleClick.bind(this));
+      this.addEventListener('click', this.handleClick.bind(this), {
+        capture: true,
+      });
     }
   }
 

@@ -161,7 +161,7 @@ export function setupIconButton(
         iconButton.dispatchEvent(new Event('change', {bubbles: true}));
       });
     },
-    opts,
+    {...opts, capture: true},
   );
 }
 

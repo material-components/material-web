@@ -121,6 +121,21 @@ describe('icon button tests', () => {
       expect(clickListener).not.toHaveBeenCalled();
     });
 
+    it('should not execute pre-bound click listeners when soft-disabled', async () => {
+      const button = document.createElement('md-icon-button');
+      let clicked = false;
+      button.addEventListener('click', () => {
+        clicked = true;
+      });
+      button.softDisabled = true;
+      env.render(html`${button}`);
+      await env.waitForStability();
+
+      button.click();
+
+      expect(clicked).toBeFalse();
+    });
+
     it(
       'setting `ariaLabel` updates the aria-label attribute on the native ' +
         'button element',

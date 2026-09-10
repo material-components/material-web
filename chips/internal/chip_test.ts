@@ -42,4 +42,19 @@ describe('Chip', () => {
     await env.waitForStability();
     expect(updateFocusListener).toHaveBeenCalled();
   });
+
+  it('should not execute pre-bound click listeners when soft-disabled', async () => {
+    const chip = document.createElement('test-chip') as TestChip;
+    let clicked = false;
+    chip.addEventListener('click', () => {
+      clicked = true;
+    });
+    chip.softDisabled = true;
+    env.render(html`${chip}`);
+    await env.waitForStability();
+
+    chip.click();
+
+    expect(clicked).toBeFalse();
+  });
 });

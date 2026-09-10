@@ -14,4 +14,19 @@ describe('<md-filled-button>', () => {
   describe('.styles', () => {
     createTokenTests(MdFilledButton.styles);
   });
+
+  it('should not execute pre-bound click listeners when soft-disabled', () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const button = document.createElement('md-filled-button');
+    let clicked = false;
+    button.addEventListener('click', () => {
+      clicked = true;
+    });
+    button.softDisabled = true;
+    container.appendChild(button);
+    button.click();
+    expect(clicked).toBeFalse();
+    container.remove();
+  });
 });

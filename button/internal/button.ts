@@ -87,7 +87,9 @@ export abstract class Button extends buttonBaseClass {
   constructor() {
     super();
     if (!isServer) {
-      this.addEventListener('click', this.handleClick.bind(this));
+      this.addEventListener('click', this.handleClick.bind(this), {
+        capture: true,
+      });
     }
   }
 

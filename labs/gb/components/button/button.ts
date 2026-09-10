@@ -154,7 +154,7 @@ export function setupButton(
         button.dispatchEvent(new Event('change', {bubbles: true}));
       });
     },
-    opts,
+    {...opts, capture: true},
   );
 }
 

@@ -85,4 +85,19 @@ describe('Button', () => {
     // Assert
     expect(clickListener).not.toHaveBeenCalled();
   });
+
+  it('should not execute pre-bound click listeners when soft-disabled', async () => {
+    const button = document.createElement('test-button') as TestButton;
+    let clicked = false;
+    button.addEventListener('click', () => {
+      clicked = true;
+    });
+    button.softDisabled = true;
+    env.render(html`${button}`);
+    await env.waitForStability();
+
+    button.click();
+
+    expect(clicked).toBeFalse();
+  });
 });

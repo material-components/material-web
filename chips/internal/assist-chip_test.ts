@@ -102,4 +102,19 @@ describe('Assist chip', () => {
     // Assert
     expect(clickListener).not.toHaveBeenCalled();
   });
+
+  it('should not execute pre-bound click listeners when soft-disabled', async () => {
+    const chip = document.createElement('test-assist-chip') as AssistChip;
+    let clicked = false;
+    chip.addEventListener('click', () => {
+      clicked = true;
+    });
+    chip.softDisabled = true;
+    env.render(html`${chip}`);
+    await env.waitForStability();
+
+    chip.click();
+
+    expect(clicked).toBeFalse();
+  });
 });

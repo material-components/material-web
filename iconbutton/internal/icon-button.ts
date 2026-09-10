@@ -101,34 +101,38 @@ export class IconButton extends iconButtonBaseClass {
     super();
     if (isServer) return;
     setupDispatchHooks(this, 'click');
-    this.addEventListener('click', (event) => {
-      // If the button is soft-disabled or a disabled link, we need to
-      // explicitly prevent the click from propagating to other event listeners
-      // as well as prevent the default action. This is because the underlying
-      // `<button>` or `<a>` element is not actually `:disabled`.
-      if (this.softDisabled || (this.disabled && this.href)) {
-        event.stopImmediatePropagation();
-        event.preventDefault();
-        return;
-      }
-
-      // Save current selected state to toggle, since an external event listener
-      // may also change the selected state on click.
-      const wasSelected = this.selected;
-      afterDispatch(event, () => {
-        if (!this.toggle || this.disabled || event.defaultPrevented) {
+    this.addEventListener(
+      'click',
+      (event) => {
+        // If the button is soft-disabled or a disabled link, we need to
+        // explicitly prevent the click from propagating to other event listeners
+        // as well as prevent the default action. This is because the underlying
+        // `<button>` or `<a>` element is not actually `:disabled`.
+        if (this.softDisabled || (this.disabled && this.href)) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
           return;
         }
 
-        this.selected = !wasSelected;
-        this.dispatchEvent(
-          new InputEvent('input', {bubbles: true, composed: true}),
-        );
-        // Bubbles but does not compose to mimic native browser <input> & <select>
-        // Additionally, native change event is not an InputEvent.
-        this.dispatchEvent(new Event('change', {bubbles: true}));
-      });
-    });
+        // Save current selected state to toggle, since an external event listener
+        // may also change the selected state on click.
+        const wasSelected = this.selected;
+        afterDispatch(event, () => {
+          if (!this.toggle || this.disabled || event.defaultPrevented) {
+            return;
+          }
+
+          this.selected = !wasSelected;
+          this.dispatchEvent(
+            new InputEvent('input', {bubbles: true, composed: true}),
+          );
+          // Bubbles but does not compose to mimic native browser <input> & <select>
+          // Additionally, native change event is not an InputEvent.
+          this.dispatchEvent(new Event('change', {bubbles: true}));
+        });
+      },
+      {capture: true},
+    );
   }
 
   protected override willUpdate() {

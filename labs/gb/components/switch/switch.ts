@@ -82,7 +82,11 @@ export function setupSwitch(
   switchEl.addEventListener(
     'click',
     (event) => {
-      if (isDisabled(switchEl)) return;
+      if (isDisabled(switchEl)) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return;
+      }
       const wasChecked = switchEl.ariaChecked === 'true';
       switchEl.ariaChecked = String(!wasChecked);
       afterDispatch(event, () => {
@@ -98,7 +102,7 @@ export function setupSwitch(
         switchEl.dispatchEvent(new Event('change', {bubbles: true}));
       });
     },
-    opts,
+    {...opts, capture: true},
   );
 }
 

@@ -139,7 +139,7 @@ export function setupChip(
         chip.dispatchEvent(new Event('change', {bubbles: true}));
       });
     },
-    opts,
+    {...opts, capture: true},
   );
 }
 
