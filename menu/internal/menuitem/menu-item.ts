@@ -62,6 +62,18 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
   @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
   /**
+   * Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is
+   * set.
+   */
+  @property() rel = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when
+   * `href` is set.
+   */
+  @property() referrerPolicy = '';
+
+  /**
    * Keeps the menu open if clicked or keyboard selected.
    */
   @property({type: Boolean, attribute: 'keep-open'}) keepOpen = false;
@@ -156,6 +168,8 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         class="list-item ${classMap(this.getRenderClasses())}"
         href=${this.href || nothing}
         target=${target}
+        rel=${(isAnchor && this.rel) || nothing}
+        referrerpolicy=${(isAnchor && this.referrerPolicy) || nothing}
         @click=${this.menuItemController.onClick}
         @keydown=${this.menuItemController.onKeydown}
       >${content}</${tag}>

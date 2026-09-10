@@ -65,6 +65,18 @@ export abstract class Button extends buttonBaseClass {
   @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
   /**
+   * Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is
+   * set.
+   */
+  @property() rel = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when
+   * `href` is set.
+   */
+  @property() referrerPolicy = '';
+
+  /**
    * Whether to render the icon at the inline end of the label rather than the
    * inline start.
    *
@@ -154,6 +166,8 @@ export abstract class Button extends buttonBaseClass {
       href=${this.href}
       download=${this.download || nothing}
       target=${this.target || nothing}
+      rel=${this.rel || nothing}
+      referrerpolicy=${this.referrerPolicy || nothing}
       >${this.renderContent()}
     </a>`;
   }

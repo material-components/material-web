@@ -70,6 +70,18 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
    */
   @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is
+   * set.
+   */
+  @property() rel = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when
+   * `href` is set.
+   */
+  @property() referrerPolicy = '';
+
   @query('.list-item') protected readonly listItemRoot!: HTMLElement | null;
 
   private get isDisabled() {
@@ -135,6 +147,8 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
         class="list-item ${classMap(this.getRenderClasses())}"
         href=${this.href || nothing}
         target=${target}
+        rel=${(isAnchor && this.rel) || nothing}
+        referrerpolicy=${(isAnchor && this.referrerPolicy) || nothing}
         @focus=${this.onFocus}
       >${content}</${tag}>
     `;

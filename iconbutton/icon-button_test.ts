@@ -287,6 +287,54 @@ describe('icon button tests', () => {
         .withContext('selected after prevent default click')
         .toBeFalse();
     });
+
+    describe('link rel and referrerpolicy', () => {
+      it('omits rel and referrerpolicy when unset', async () => {
+        const {element} = await setUpTest('link');
+        const anchor = element.shadowRoot!.querySelector('a')!;
+        expect(anchor.hasAttribute('rel')).toBeFalse();
+        expect(anchor.hasAttribute('referrerpolicy')).toBeFalse();
+      });
+
+      it('does not default rel when target="_blank"', async () => {
+        const {element} = await setUpTest('link');
+        element.target = '_blank';
+        await element.updateComplete;
+
+        const anchor = element.shadowRoot!.querySelector('a')!;
+        expect(anchor.hasAttribute('rel')).toBeFalse();
+      });
+
+      it('propagates rel and referrerpolicy to the anchor tag', async () => {
+        const {element} = await setUpTest('link');
+        element.rel = 'noopener noreferrer';
+        element.referrerPolicy = 'no-referrer';
+        await element.updateComplete;
+
+        const anchor = element.shadowRoot!.querySelector('a')!;
+        expect(anchor.getAttribute('rel')).toBe('noopener noreferrer');
+        expect(anchor.getAttribute('referrerpolicy')).toBe('no-referrer');
+      });
+
+      it('reflects rel and referrerpolicy attributes to properties and anchor', async () => {
+        const {element} = await setUpTest('link');
+        element.setAttribute('rel', 'noreferrer');
+        element.setAttribute(
+          'referrerpolicy',
+          'strict-origin-when-cross-origin',
+        );
+        await element.updateComplete;
+
+        expect(element.rel).toBe('noreferrer');
+        expect(element.referrerPolicy).toBe('strict-origin-when-cross-origin');
+
+        const anchor = element.shadowRoot!.querySelector('a')!;
+        expect(anchor.getAttribute('rel')).toBe('noreferrer');
+        expect(anchor.getAttribute('referrerpolicy')).toBe(
+          'strict-origin-when-cross-origin',
+        );
+      });
+    });
   });
 
   async function setUpTest(type: string) {

@@ -135,6 +135,18 @@ export class IconButtonElement extends baseClass {
    */
   @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is
+   * set.
+   */
+  @property() rel = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when
+   * `href` is set.
+   */
+  @property() referrerPolicy = '';
+
   protected override render() {
     const classes = iconButton({
       color: this.color,
@@ -152,6 +164,8 @@ export class IconButtonElement extends baseClass {
         href=${this.href}
         download=${this.download || nothing}
         target=${this.target || nothing}
+        rel=${this.rel || nothing}
+        referrerpolicy=${this.referrerPolicy || nothing}
         aria-label=${ariaLabel || nothing}
         aria-haspopup=${ariaHasPopup || nothing}
         aria-expanded=${ariaExpanded || nothing}

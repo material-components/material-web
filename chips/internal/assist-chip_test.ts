@@ -59,6 +59,55 @@ describe('Assist chip', () => {
         .withContext('should not have any disabled styling or behavior')
         .toBeNull();
     });
+
+    it('omits rel and referrerpolicy when unset', async () => {
+      const chip = await setupTest();
+      chip.href = 'https://example.com';
+      await chip.updateComplete;
+
+      const anchor = chip.renderRoot.querySelector('a')!;
+      expect(anchor.hasAttribute('rel')).toBeFalse();
+      expect(anchor.hasAttribute('referrerpolicy')).toBeFalse();
+    });
+
+    it('does not default rel when target="_blank"', async () => {
+      const chip = await setupTest();
+      chip.href = 'https://example.com';
+      chip.target = '_blank';
+      await chip.updateComplete;
+
+      const anchor = chip.renderRoot.querySelector('a')!;
+      expect(anchor.hasAttribute('rel')).toBeFalse();
+    });
+
+    it('propagates rel and referrerpolicy to the anchor tag', async () => {
+      const chip = await setupTest();
+      chip.href = 'https://example.com';
+      chip.rel = 'noopener noreferrer';
+      chip.referrerPolicy = 'no-referrer';
+      await chip.updateComplete;
+
+      const anchor = chip.renderRoot.querySelector('a')!;
+      expect(anchor.getAttribute('rel')).toBe('noopener noreferrer');
+      expect(anchor.getAttribute('referrerpolicy')).toBe('no-referrer');
+    });
+
+    it('reflects rel and referrerpolicy attributes to properties and anchor', async () => {
+      const chip = await setupTest();
+      chip.setAttribute('href', 'https://example.com');
+      chip.setAttribute('rel', 'noreferrer');
+      chip.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      await chip.updateComplete;
+
+      expect(chip.rel).toBe('noreferrer');
+      expect(chip.referrerPolicy).toBe('strict-origin-when-cross-origin');
+
+      const anchor = chip.renderRoot.querySelector('a')!;
+      expect(anchor.getAttribute('rel')).toBe('noreferrer');
+      expect(anchor.getAttribute('referrerpolicy')).toBe(
+        'strict-origin-when-cross-origin',
+      );
+    });
   });
 
   it('should use aria-disabled when soft-disabled', async () => {

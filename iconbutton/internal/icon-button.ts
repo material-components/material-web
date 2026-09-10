@@ -78,6 +78,18 @@ export class IconButton extends iconButtonBaseClass {
   @property() target: LinkTarget | '' = '';
 
   /**
+   * Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is
+   * set.
+   */
+  @property() rel = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when
+   * `href` is set.
+   */
+  @property() referrerPolicy = '';
+
+  /**
    * The `aria-label` of the button when the button is toggleable and selected.
    */
   @property({attribute: 'aria-label-selected'}) ariaLabelSelected = '';
@@ -183,6 +195,8 @@ export class IconButton extends iconButtonBaseClass {
         href="${this.href}"
         download="${this.download || nothing}"
         target="${this.target || nothing}"
+        rel=${this.rel || nothing}
+        referrerpolicy=${this.referrerPolicy || nothing}
         aria-label="${ariaLabel || nothing}">
         ${this.renderTouchTarget()}
       </a>

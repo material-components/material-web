@@ -100,4 +100,55 @@ describe('Button', () => {
 
     expect(clicked).toBeFalse();
   });
+
+  describe('links', () => {
+    it('omits rel and referrerpolicy when unset', async () => {
+      const {button} = await setupTest();
+      button.href = 'https://example.com';
+      await env.waitForStability();
+
+      const link = button.renderRoot.querySelector('a')!;
+      expect(link.hasAttribute('rel')).toBeFalse();
+      expect(link.hasAttribute('referrerpolicy')).toBeFalse();
+    });
+
+    it('does not default rel when target="_blank"', async () => {
+      const {button} = await setupTest();
+      button.href = 'https://example.com';
+      button.target = '_blank';
+      await env.waitForStability();
+
+      const link = button.renderRoot.querySelector('a')!;
+      expect(link.hasAttribute('rel')).toBeFalse();
+    });
+
+    it('propagates rel and referrerpolicy to the anchor tag', async () => {
+      const {button} = await setupTest();
+      button.href = 'https://example.com';
+      button.rel = 'noopener noreferrer';
+      button.referrerPolicy = 'no-referrer';
+      await env.waitForStability();
+
+      const link = button.renderRoot.querySelector('a')!;
+      expect(link.getAttribute('rel')).toBe('noopener noreferrer');
+      expect(link.getAttribute('referrerpolicy')).toBe('no-referrer');
+    });
+
+    it('reflects rel and referrerpolicy attributes to properties and anchor', async () => {
+      const {button} = await setupTest();
+      button.setAttribute('href', 'https://example.com');
+      button.setAttribute('rel', 'noreferrer');
+      button.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      await env.waitForStability();
+
+      expect(button.rel).toBe('noreferrer');
+      expect(button.referrerPolicy).toBe('strict-origin-when-cross-origin');
+
+      const link = button.renderRoot.querySelector('a')!;
+      expect(link.getAttribute('rel')).toBe('noreferrer');
+      expect(link.getAttribute('referrerpolicy')).toBe(
+        'strict-origin-when-cross-origin',
+      );
+    });
+  });
 });

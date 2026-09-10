@@ -94,6 +94,18 @@ export class ChipElement extends LitElement {
   /** Where to display the linked `href` URL for a link chip. */
   @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
 
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is
+   * set.
+   */
+  @property() rel = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when
+   * `href` is set.
+   */
+  @property() referrerPolicy = '';
+
   @state() private hasLeadingIcon = false;
   @state() private hasAvatar = false;
   @state() private hasRemoveIcon = false;
@@ -122,6 +134,8 @@ export class ChipElement extends LitElement {
         href=${this.href}
         target=${(this.target as '_blank' | '_parent' | '_self' | '_top') ||
         nothing}
+        rel=${this.rel || nothing}
+        referrerpolicy=${this.referrerPolicy || nothing}
         aria-disabled=${this.disabled || this.softDisabled ? 'true' : nothing}
         tabindex=${this.disabled && !this.softDisabled ? -1 : nothing}>
         ${this.renderContent(withLeadingIcon, isFilterSelected)}
@@ -134,7 +148,9 @@ export class ChipElement extends LitElement {
         class="${chipClasses}"
         role="row"
         aria-pressed=${this.type === 'filter' || this.type === 'toggle'
-          ? (this.selected ? 'true' : 'false')
+          ? this.selected
+            ? 'true'
+            : 'false'
           : nothing}
         @change=${this.handleChange}>
         <button
@@ -155,7 +171,9 @@ export class ChipElement extends LitElement {
       ?disabled=${this.disabled}
       aria-disabled=${this.softDisabled ? 'true' : nothing}
       aria-pressed=${this.type === 'filter' || this.type === 'toggle'
-        ? (this.selected ? 'true' : 'false')
+        ? this.selected
+          ? 'true'
+          : 'false'
         : nothing}
       @change=${this.handleChange}>
       ${this.renderContent(withLeadingIcon, isFilterSelected)}
@@ -190,9 +208,7 @@ export class ChipElement extends LitElement {
       ?disabled=${this.disabled}
       aria-disabled=${this.softDisabled ? 'true' : nothing}
       @click=${this.handleRemove}>
-      <slot
-        name="remove-icon"
-        @slotchange=${this.handleRemoveIconSlotChange}
+      <slot name="remove-icon" @slotchange=${this.handleRemoveIconSlotChange}
         >✕</slot
       >
     </button>`;
@@ -202,7 +218,9 @@ export class ChipElement extends LitElement {
     const slot = event.target as HTMLSlotElement;
     const elements = slot.assignedElements({flatten: true});
     this.hasLeadingIcon = elements.length > 0;
-    this.hasAvatar = elements.some((el) => el.classList.contains('chip-avatar'));
+    this.hasAvatar = elements.some((el) =>
+      el.classList.contains('chip-avatar'),
+    );
   }
 
   private handleRemoveIconSlotChange(event: Event) {

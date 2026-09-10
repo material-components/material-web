@@ -21,6 +21,17 @@ export class InputChip extends MultiActionChip {
   @property({type: Boolean}) avatar = false;
   @property() href = '';
   @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is
+   * set.
+   */
+  @property() rel = '';
+
+  /**
+   * Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when
+   * `href` is set.
+   */
+  @property() referrerPolicy = '';
   @property({type: Boolean, attribute: 'remove-only'}) removeOnly = false;
   @property({type: Boolean, reflect: true}) selected = false;
 
@@ -76,6 +87,8 @@ export class InputChip extends MultiActionChip {
           aria-label=${ariaLabel || nothing}
           href=${this.href}
           target=${this.target || nothing}
+          rel=${this.rel || nothing}
+          referrerpolicy=${this.referrerPolicy || nothing}
           >${content}</a
         >
       `;
