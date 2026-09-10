@@ -25,11 +25,15 @@ if (!cssFilePath) {
 
 const tsFilePath =
   positionals[1] || cssFilePath.replace('.css', `${values.suffix || ''}.ts`);
-const cssContent = fs
+const rawCssContent = fs
   .readFileSync(cssFilePath, {encoding: 'utf8'})
   // Remove source map comments since the css is embedded.
   // "/*# sourceMappingURL=checkbox-styles.css.map */"
   .replace(/\/\*#\ sourceMappingURL=[^\*]+ \*\//, '');
+const cssContent = rawCssContent
+  .replace(/\\/g, '\\\\')
+  .replace(/`/g, '\\`')
+  .replace(/\$\{/g, '\\${');
 
 fs.writeFileSync(
   tsFilePath,
