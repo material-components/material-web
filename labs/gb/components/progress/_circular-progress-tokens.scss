@@ -1,0 +1,11 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  --active-indicator-color: var(--md-sys-color-primary);
+  --active-indicator-thickness: 4px;
+  --track-color: var(--md-sys-color-secondary-container);
+  --size: 48px;
+}
