@@ -139,6 +139,14 @@ export class ListController<Item extends ListItem> {
   }
 
   /**
+   * Retrieves the first activated item of the array of items regarding
+   * controller's configuration.
+   */
+  get activeItem() {
+    return getActiveItem(this.items, this.isActivatable);
+  }
+
+  /**
    * Handles keyboard navigation. Should be bound to the node that will act as
    * the List.
    */
