@@ -201,7 +201,8 @@
         "**/*.ts"
       ],
       "output": [
-        "custom-elements.json"
+        "custom-elements.json",
+        "web-types.json"
       ],
       "dependencies": [
         "build:scripts",
