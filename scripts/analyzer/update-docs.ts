@@ -64,14 +64,6 @@ async function updateApiDocs() {
 
   // Wait for all the files to be written
   await Promise.all(filesWritten);
-
-  // Generate CEM manifest
-  const file = await generateManifest(analyzer.getPackage());
-  const cem = JSON.parse(file['custom-elements.json'] as string);
-  await fs.writeFile('custom-elements.json', JSON.stringify(cem, null, 2));
-  updateCemInheritance(cem);
-
-  generateJetBrainsWebTypes(cem, {packageJson: true});
 }
 
 /**
