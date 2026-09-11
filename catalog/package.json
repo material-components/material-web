@@ -179,7 +179,7 @@
     "postdoc-lib": "^1.0.3"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy": "^3.1.6",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@lit-labs/eleventy-plugin-lit": "^1.0.0",
     "@lit-labs/motion": "^1.0.3",
