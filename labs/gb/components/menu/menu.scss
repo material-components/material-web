@@ -33,18 +33,40 @@
 
     &:popover-open,
     :host(:popover-open):has(&.menu-host) {
-      position-area: end span-end;
       border: none;
+      max-height: calc(100vh - 100px);
+      position-area: end span-end;
     }
 
     :host(:popover-open):has(&.menu-host) {
-      overflow: visible;
       background: none;
+      max-height: calc(100vh - 100px);
+      overflow: visible;
       padding: 0;
     }
 
     &.menu-host {
+      max-height: inherit;
       overflow: auto;
+      scrollbar-color: var(--md-sys-color-outline-variant) transparent;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--md-sys-color-outline-variant);
+        border-radius: 9999px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--md-sys-color-outline);
+      }
     }
 
     .divider,
