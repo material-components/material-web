@@ -8,6 +8,7 @@ import {html, nothing} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {safeHref} from '../../internal/directives/safe-href.js';
 
 import {MultiActionChip} from './multi-action-chip.js';
 import {renderRemoveButton} from './trailing-icons.js';
@@ -85,7 +86,7 @@ export class InputChip extends MultiActionChip {
           class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
-          href=${this.href}
+          href=${safeHref(this.href)}
           target=${this.target || nothing}
           rel=${this.rel || nothing}
           referrerpolicy=${this.referrerPolicy || nothing}

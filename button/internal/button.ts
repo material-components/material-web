@@ -12,6 +12,7 @@ import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
+import {safeHref} from '../../internal/directives/safe-href.js';
 import {
   dispatchActivationClick,
   isActivationClick,
@@ -163,7 +164,7 @@ export abstract class Button extends buttonBaseClass {
       aria-expanded="${ariaExpanded || nothing}"
       aria-disabled=${this.disabled || this.softDisabled || nothing}
       tabindex="${this.disabled && !this.softDisabled ? -1 : nothing}"
-      href=${this.href}
+      href=${safeHref(this.href)}
       download=${this.download || nothing}
       target=${this.target || nothing}
       rel=${this.rel || nothing}

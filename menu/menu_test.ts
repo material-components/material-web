@@ -116,6 +116,19 @@ describe('<md-menu-item>', () => {
     createTokenTests(MdMenuItem.styles);
   });
 
+  describe('href', () => {
+    it('sanitizes javascript: URLs in href', async () => {
+      const item = new MdMenuItem();
+      item.href = 'javascript:alert(1)';
+      document.body.appendChild(item);
+      await item.updateComplete;
+
+      const anchor = item.renderRoot.querySelector('a')!;
+      expect(anchor.getAttribute('href')).toBeNull();
+      item.remove();
+    });
+  });
+
   describe('rel and referrerpolicy', () => {
     it('omits rel and referrerpolicy when unset', async () => {
       const item = new MdMenuItem();

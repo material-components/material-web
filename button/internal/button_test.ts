@@ -86,6 +86,15 @@ describe('Button', () => {
     expect(clickListener).not.toHaveBeenCalled();
   });
 
+  it('sanitizes javascript: URLs in href', async () => {
+    const {button} = await setupTest();
+    button.href = 'javascript:alert(1)';
+    await env.waitForStability();
+
+    const anchor = button.renderRoot.querySelector('a')!;
+    expect(anchor.getAttribute('href')).toBeNull();
+  });
+
   it('should not execute pre-bound click listeners when soft-disabled', async () => {
     const button = document.createElement('test-button') as TestButton;
     let clicked = false;

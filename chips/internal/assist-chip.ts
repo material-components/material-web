@@ -10,6 +10,7 @@ import {html, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
+import {safeHref} from '../../internal/directives/safe-href.js';
 
 import {Chip} from './chip.js';
 
@@ -65,7 +66,7 @@ export class AssistChip extends Chip {
           class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
-          href=${this.href}
+          href=${safeHref(this.href)}
           download=${this.download || nothing}
           target=${this.target || nothing}
           rel=${this.rel || nothing}

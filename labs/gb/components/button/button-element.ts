@@ -25,6 +25,7 @@ import focusRingStyles from '../focus/focus-ring.css' with {type: 'css'}; // git
 import rippleStyles from '../ripple/ripple.css' with {type: 'css'}; // github-only
 // import rippleStyles from '../ripple/ripple.cssresult.js'; // google3-only
 
+import {safeHref} from '../../../../internal/directives/safe-href.js';
 import {hasSlotted} from '../shared/has-slotted.js';
 
 import buttonStyles from './button.css' with {type: 'css'}; // github-only
@@ -260,7 +261,7 @@ export class ButtonElement extends baseClass {
       return html`<a
         part="btn"
         class=${classes}
-        href=${this.href}
+        href=${safeHref(this.href)}
         download=${this.download || nothing}
         target=${this.target || nothing}
         rel=${this.rel || nothing}

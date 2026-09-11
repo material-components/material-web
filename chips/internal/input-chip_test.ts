@@ -108,6 +108,15 @@ describe('Input chip', () => {
         'strict-origin-when-cross-origin',
       );
     });
+
+    it('sanitizes javascript: URLs in href', async () => {
+      const chip = await setupTest();
+      chip.href = 'javascript:alert(1)';
+      await chip.updateComplete;
+
+      const anchor = chip.renderRoot.querySelector('a')!;
+      expect(anchor.getAttribute('href')).toBeNull();
+    });
   });
 
   it('should use aria-disabled when soft-disabled', async () => {

@@ -288,6 +288,15 @@ describe('icon button tests', () => {
         .toBeFalse();
     });
 
+    it('sanitizes javascript: URLs in href', async () => {
+      const {element} = await setUpTest('link');
+      element.href = 'javascript:alert(1)';
+      await element.updateComplete;
+
+      const anchor = element.shadowRoot!.querySelector('a')!;
+      expect(anchor.getAttribute('href')).toBeNull();
+    });
+
     describe('link rel and referrerpolicy', () => {
       it('omits rel and referrerpolicy when unset', async () => {
         const {element} = await setUpTest('link');

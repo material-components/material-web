@@ -15,6 +15,7 @@ import {literal, html as staticHtml} from 'lit/static-html.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {isRtl} from '../../internal/controller/is-rtl.js';
+import {safeHref} from '../../internal/directives/safe-href.js';
 import {
   afterDispatch,
   setupDispatchHooks,
@@ -192,7 +193,7 @@ export class IconButton extends iconButtonBaseClass {
       <a
         class="link"
         id="link"
-        href="${this.href}"
+        href=${safeHref(this.href)}
         download="${this.download || nothing}"
         target="${this.target || nothing}"
         rel=${this.rel || nothing}

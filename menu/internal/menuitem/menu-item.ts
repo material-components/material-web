@@ -20,6 +20,7 @@ import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
 
 import {ARIAMixinStrict} from '../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../internal/aria/delegate.js';
+import {safeHref} from '../../../internal/directives/safe-href.js';
 import {
   MenuItem,
   MenuItemController,
@@ -166,7 +167,7 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
         aria-haspopup=${(this as ARIAMixinStrict).ariaHasPopup || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"
-        href=${this.href || nothing}
+        href=${safeHref(this.href)}
         target=${target}
         rel=${(isAnchor && this.rel) || nothing}
         referrerpolicy=${(isAnchor && this.referrerPolicy) || nothing}

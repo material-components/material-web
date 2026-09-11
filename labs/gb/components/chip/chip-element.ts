@@ -6,6 +6,7 @@
 
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {property, state} from 'lit/decorators.js';
+import {safeHref} from '../../../../internal/directives/safe-href.js';
 import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
 import focusRingStyles from '../focus/focus-ring.cssresult.js';
 import rippleStyles from '../ripple/ripple.cssresult.js';
@@ -131,7 +132,7 @@ export class ChipElement extends LitElement {
       return html`<a
         part="chip"
         class="${chipClasses}"
-        href=${this.href}
+        href=${safeHref(this.href)}
         target=${(this.target as '_blank' | '_parent' | '_self' | '_top') ||
         nothing}
         rel=${this.rel || nothing}

@@ -8,6 +8,7 @@ import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
+import {safeHref} from '../../../../internal/directives/safe-href.js';
 import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
 import {mixinElementInternals} from '../../../behaviors/element-internals.js';
 import {mixinFormAssociated} from '../../../behaviors/form-associated.js';
@@ -161,7 +162,7 @@ export class IconButtonElement extends baseClass {
       return html`<a
         part="icon-btn"
         class=${classes}
-        href=${this.href}
+        href=${safeHref(this.href)}
         download=${this.download || nothing}
         target=${this.target || nothing}
         rel=${this.rel || nothing}
