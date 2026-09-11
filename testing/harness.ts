@@ -15,9 +15,8 @@ import {
  *
  * @template H The harness type.
  */
-export type HarnessElement<H extends Harness> = H extends Harness<infer E>
-  ? ElementWithHarness<E, H>
-  : never;
+export type HarnessElement<H extends Harness> =
+  H extends Harness<infer E> ? ElementWithHarness<E, H> : never;
 
 /**
  * Harnesses will attach themselves to their element for convenience.
@@ -898,6 +897,9 @@ export class Harness<E extends HTMLElement = HTMLElement> {
     };
 
     const superMatches = this.element.matches;
+    // TODO: go/ts60upgrade - Fix after TS 6.0 upgrade.
+    //   TS2322: Type '(selector: string) => boolean' is not assignable to type '...'.
+    // @ts-ignore
     element.matches = (selector: string) => {
       return superMatches.call(element, getSelector(selector));
     };
