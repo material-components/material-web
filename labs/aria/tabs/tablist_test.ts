@@ -14,7 +14,6 @@ import {html} from 'lit';
 import {Environment} from '../../../testing/environment.js';
 import {hasState} from '../../behaviors/custom-state-set.js';
 import {internals} from '../../behaviors/element-internals.js';
-import {AriaTabElement} from './tab.js';
 
 describe('md-aria-tablist', () => {
   const env = new Environment();
@@ -46,10 +45,20 @@ describe('md-aria-tablist', () => {
   }
 
   describe('ARIA roles and internals', () => {
+    it('can be instantiated via document.createElement without throwing', () => {
+      expect(() => document.createElement('md-aria-tablist')).not.toThrow();
+    });
+
     it('sets element role to "tablist"', async () => {
       const {tablist} = await setupTest();
 
       expect(tablist[internals].role).toBe('tablist');
+    });
+
+    it('defaults focusgroup attribute to "tablist inline"', async () => {
+      const {tablist} = await setupTest();
+
+      expect(tablist.getAttribute('focusgroup')).toBe('tablist inline');
     });
   });
 
@@ -64,13 +73,6 @@ describe('md-aria-tablist', () => {
       expect(tabs[1].selected).toBeFalse();
       expect(tabs[1][internals].ariaSelected).toBe('false');
       expect(tabs[1][hasState]('selected')).toBeFalse();
-    });
-
-    it('configures roving tabIndex for selected and unselected tabs on initialization', async () => {
-      const {tabs} = await setupTest();
-
-      expect(tabs[0].tabIndex).toBe(0);
-      expect(tabs[1].tabIndex).toBe(-1);
     });
 
     it('shows only the active tabpanel on initialization', async () => {
@@ -221,6 +223,35 @@ describe('md-aria-tablist', () => {
       const {tablist} = await setupTest();
 
       expect(tablist.orientation).toBe('horizontal');
+      expect(tablist[internals].ariaOrientation).toBe('horizontal');
+    });
+
+    it('updates ariaOrientation, orientation attribute, and focusgroup attribute when orientation is dynamically updated', async () => {
+      const {tablist} = await setupTest();
+
+      tablist.orientation = 'vertical';
+      await env.waitForStability();
+
+      expect(tablist.orientation).toBe('vertical');
+      expect(tablist.getAttribute('orientation')).toBe('vertical');
+      expect(tablist[internals].ariaOrientation).toBe('vertical');
+      expect(tablist.getAttribute('focusgroup')).toBe('tablist block');
+
+      tablist.orientation = 'horizontal';
+      await env.waitForStability();
+
+      expect(tablist.orientation).toBe('horizontal');
+      expect(tablist.getAttribute('orientation')).toBe('horizontal');
+      expect(tablist[internals].ariaOrientation).toBe('horizontal');
+      expect(tablist.getAttribute('focusgroup')).toBe('tablist inline');
+
+      tablist.setAttribute('orientation', 'vertical');
+      await env.waitForStability();
+
+      expect(tablist.orientation).toBe('vertical');
+      expect(tablist.getAttribute('orientation')).toBe('vertical');
+      expect(tablist[internals].ariaOrientation).toBe('vertical');
+      expect(tablist.getAttribute('focusgroup')).toBe('tablist block');
     });
   });
 
@@ -273,7 +304,7 @@ describe('md-aria-tablist', () => {
       expect(event.target).toBe(tablist);
     });
 
-    it('dispatches "change" event on tablist when tab selection changes via keydown in automatic selection mode', async () => {
+    it('dispatches "change" event on tablist when tab selection changes via focus in automatic selection mode', async () => {
       const {tablist, tabs} = await setupTest(html`
         <md-aria-tablist autoSelect>
           <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
@@ -285,10 +316,7 @@ describe('md-aria-tablist', () => {
       const changeListener = jasmine.createSpy('changeListener');
       tablist.addEventListener('change', changeListener);
 
-      tabs[0].focus();
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
+      tabs[1].focus();
       await env.waitForStability();
 
       expect(changeListener).toHaveBeenCalledTimes(1);
@@ -317,9 +345,9 @@ describe('md-aria-tablist', () => {
     });
   });
 
-  describe('Keyboard navigation - Automatic activation (autoSelect = true)', () => {
-    it('selects next tab on ArrowRight key press in automatic selection mode', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
+  describe('Focus activation - Automatic activation (autoSelect = true)', () => {
+    it('selects tab on focus in automatic selection mode', async () => {
+      const {tabs, panels} = await setupTest(html`
         <md-aria-tablist autoSelect>
           <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
           <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
@@ -331,376 +359,29 @@ describe('md-aria-tablist', () => {
           Panel 3
         </md-aria-tabpanel>
       `);
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
+      tabs[1].focus();
       await env.waitForStability();
 
       expect(tabs[1].selected).toBeTrue();
       expect(panels[1].hidden).toBeFalse();
-    });
-
-    it('selects previous tab on ArrowLeft key press in automatic selection mode', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist autoSelect .selectedTabIndex=${1}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-          <md-aria-tab id="tabthree" tabpanel="panelthree">Tab 3</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-        <md-aria-tabpanel id="panelthree" tab="tabthree">
-          Panel 3
-        </md-aria-tabpanel>
-      `);
-      tabs[1].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-      expect(panels[0].hidden).toBeFalse();
-    });
-
-    it('wraps to last tab on ArrowLeft from first tab in automatic selection mode', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist autoSelect>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-          <md-aria-tab id="tabthree" tabpanel="panelthree">Tab 3</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-        <md-aria-tabpanel id="panelthree" tab="tabthree">
-          Panel 3
-        </md-aria-tabpanel>
-      `);
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[2].selected).toBeTrue();
-      expect(panels[2].hidden).toBeFalse();
-    });
-
-    it('wraps to first tab on ArrowRight from last tab in automatic selection mode', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist autoSelect .selectedTabIndex=${2}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-          <md-aria-tab id="tabthree" tabpanel="panelthree">Tab 3</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-        <md-aria-tabpanel id="panelthree" tab="tabthree">
-          Panel 3
-        </md-aria-tabpanel>
-      `);
-      tabs[2].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-      expect(panels[0].hidden).toBeFalse();
-    });
-
-    it('selects last tab on End key press', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist autoSelect>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-          <md-aria-tab id="tabthree" tabpanel="panelthree">Tab 3</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-        <md-aria-tabpanel id="panelthree" tab="tabthree">
-          Panel 3
-        </md-aria-tabpanel>
-      `);
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'End', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[2].selected).toBeTrue();
-      expect(panels[2].hidden).toBeFalse();
-    });
-
-    it('selects first tab on Home key press', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist autoSelect .selectedTabIndex=${2}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-          <md-aria-tab id="tabthree" tabpanel="panelthree">Tab 3</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-        <md-aria-tabpanel id="panelthree" tab="tabthree">
-          Panel 3
-        </md-aria-tabpanel>
-      `);
-      tabs[2].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'Home', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-      expect(panels[0].hidden).toBeFalse();
-    });
-
-    it('selects next tab on ArrowDown key press in vertical orientation', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist autoSelect orientation="vertical">
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowDown', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[1].selected).toBeTrue();
-      expect(panels[1].hidden).toBeFalse();
-    });
-
-    it('selects previous tab on ArrowUp key press in vertical orientation', async () => {
-      const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist
-          autoSelect
-          orientation="vertical"
-          .selectedTabIndex=${1}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[1].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowUp', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-      expect(panels[0].hidden).toBeFalse();
-    });
-
-    it('ignores ArrowDown key press in horizontal orientation', async () => {
-      const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist autoSelect orientation="horizontal">
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowDown', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-      expect(tabs[1].selected).toBeFalse();
-    });
-
-    it('moves forward on ArrowLeft in RTL layout', async () => {
-      const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist autoSelect style="direction: rtl;">
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[1].selected).toBeTrue();
-    });
-
-    it('moves backward on ArrowRight in RTL layout', async () => {
-      const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist
-          autoSelect
-          style="direction: rtl;"
-          .selectedTabIndex=${1}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[1].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-    });
-
-    it('moves forward on ArrowDown in vertical RTL layout', async () => {
-      const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist
-          autoSelect
-          orientation="vertical"
-          style="direction: rtl;">
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowDown', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[1].selected).toBeTrue();
-    });
-
-    it('moves backward on ArrowUp in vertical RTL layout', async () => {
-      const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist
-          autoSelect
-          orientation="vertical"
-          style="direction: rtl;"
-          .selectedTabIndex=${1}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[1].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowUp', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-    });
-
-    it('ignores navigation keydown when event default is prevented', async () => {
-      const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist autoSelect>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-      `);
-      tabs[0].focus();
-
-      const event = new KeyboardEvent('keydown', {
-        key: 'ArrowRight',
-        bubbles: true,
-        cancelable: true,
-      });
-      event.preventDefault();
-      tablist.dispatchEvent(event);
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-      expect(tabs[1].selected).toBeFalse();
-    });
-
-    it('does not navigate on arrow key press if tablist contains only one tab', async () => {
-      const {root} = await setupTest(html`
-        <md-aria-tablist autoSelect>
-          <md-aria-tab id="tabone">Tab 1</md-aria-tab>
-        </md-aria-tablist>
-      `);
-      const tablist = root.querySelector('md-aria-tablist')!;
-      const tabs = tablist.tabs as AriaTabElement[];
-
-      tabs[0].focus();
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[0].selected).toBeTrue();
-    });
-
-    it('focuses first tab on ArrowRight when no tab is focused', async () => {
-      const {tablist, tabs} = await setupTest();
-      (document.activeElement as HTMLElement | null)?.blur();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(document.activeElement).toBe(tabs[0]);
-    });
-
-    it('focuses last tab on ArrowLeft when no tab is focused', async () => {
-      const {tablist, tabs} = await setupTest();
-      (document.activeElement as HTMLElement | null)?.blur();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowLeft', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(document.activeElement).toBe(tabs[tabs.length - 1]);
     });
   });
 
-  describe('Keyboard navigation - Manual activation (autoSelect = false)', () => {
-    it('moves focus without changing tab selection on arrow key press in manual selection mode', async () => {
-      const {tablist, tabs, panels} = await setupTest();
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
+  describe('Focus activation - Manual activation (autoSelect = false)', () => {
+    it('does not change selection when tab is focused in manual selection mode', async () => {
+      const {tabs, panels} = await setupTest();
+      tabs[1].focus();
       await env.waitForStability();
 
       expect(tabs[0].selected).toBeTrue();
       expect(tabs[1].selected).toBeFalse();
       expect(panels[0].hidden).toBeFalse();
       expect(panels[1].hidden).toBeTrue();
-      expect(tabs[1].tabIndex).toBe(0);
     });
 
     it('selects focused tab when Enter key is pressed', async () => {
-      const {tablist, tabs, panels} = await setupTest();
-      tabs[0].focus();
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
+      const {tabs, panels} = await setupTest();
+      tabs[1].focus();
       await env.waitForStability();
 
       tabs[1].dispatchEvent(
@@ -715,11 +396,8 @@ describe('md-aria-tablist', () => {
     });
 
     it('selects focused tab when Space key is pressed', async () => {
-      const {tablist, tabs, panels} = await setupTest();
-      tabs[0].focus();
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
+      const {tabs, panels} = await setupTest();
+      tabs[1].focus();
       await env.waitForStability();
 
       tabs[1].dispatchEvent(
@@ -730,27 +408,6 @@ describe('md-aria-tablist', () => {
       expect(tabs[0].selected).toBeFalse();
       expect(tabs[1].selected).toBeTrue();
       expect(panels[1].hidden).toBeFalse();
-    });
-  });
-
-  describe('Focusout behavior', () => {
-    it('restores roving tabIndex to selected tab on focusout', async () => {
-      const {tablist, tabs} = await setupTest();
-      tabs[0].focus();
-
-      tablist.dispatchEvent(
-        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
-      );
-      await env.waitForStability();
-
-      expect(tabs[1].tabIndex).toBe(0);
-      expect(tabs[0].tabIndex).toBe(-1);
-
-      tabs[1].blur();
-      await env.waitForStability();
-
-      expect(tabs[0].tabIndex).toBe(0);
-      expect(tabs[1].tabIndex).toBe(-1);
     });
   });
 
