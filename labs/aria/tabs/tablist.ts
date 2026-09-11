@@ -113,18 +113,8 @@ export class AriaTablistElement extends baseClass {
   /**
    * Orientation of the tablist ('horizontal' or 'vertical').
    */
-  @property({type: String, reflect: true, noAccessor: true})
-  get orientation(): 'horizontal' | 'vertical' {
-    return (this[internals].ariaOrientation || 'horizontal') as
-      | 'horizontal'
-      | 'vertical';
-  }
-  set orientation(value: 'horizontal' | 'vertical') {
-    const oldValue = this.orientation;
-    const isVertical = value === 'vertical';
-    this[internals].ariaOrientation = isVertical ? 'vertical' : 'horizontal';
-    this.requestUpdate('orientation', oldValue);
-  }
+  @property({reflect: true}) orientation: 'horizontal' | 'vertical' =
+    'horizontal';
 
   @query('slot:not([name])')
   private readonly slotElement!: HTMLSlotElement | null;
@@ -133,7 +123,6 @@ export class AriaTablistElement extends baseClass {
     super();
     if (isServer) return;
     this[internals].role = 'tablist';
-    this[internals].ariaOrientation = 'horizontal';
     setupDispatchHooks(this, 'click', 'focusin');
     this.addEventListener('click', this.handleClick.bind(this));
     this.addEventListener('focusin', this.handleFocusin.bind(this));
@@ -141,10 +130,15 @@ export class AriaTablistElement extends baseClass {
 
   protected override updated(changedProperties: PropertyValues<this>) {
     super.updated(changedProperties);
-    if (changedProperties.has('orientation')) {
+    if (
+      changedProperties.has('orientation') ||
+      !this.hasAttribute('focusgroup')
+    ) {
+      const isVertical = this.orientation === 'vertical';
+      this[internals].ariaOrientation = isVertical ? 'vertical' : 'horizontal';
       this.setAttribute(
         'focusgroup',
-        `tablist ${this.orientation === 'vertical' ? 'block' : 'inline'}`,
+        `tablist ${isVertical ? 'block' : 'inline'}`,
       );
     }
   }
@@ -243,12 +237,11 @@ interface AriaTabLike extends HTMLElement {
   tabpanelElement: Element | null;
 }
 
-function isAriaTabLike(element: Element): element is AriaTabLike {
-  const candidate = element as unknown as Record<string, unknown>;
-  return (
-    typeof candidate === 'object' &&
-    candidate !== null &&
-    'selected' in candidate &&
-    'tabpanelElement' in candidate
+function isAriaTabLike(element: unknown): element is AriaTabLike {
+  return Boolean(
+    element &&
+      typeof element === 'object' &&
+      'selected' in element &&
+      'tabpanelElement' in element,
   );
 }
