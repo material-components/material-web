@@ -15,6 +15,8 @@ import {styles as chipStyles} from './chip.cssresult.js';
 /**
  * A Material Design Expressive Chip component (`md-gb-chip`).
  *
+ * @customElement md-gb-chip
+ *
  * @slot - Used to display the chip label text.
  * @slot icon - Used to display an optional leading icon, checkmark, or avatar.
  * @slot remove-icon - Used to display the trailing remove button icon when `removable="true"`.

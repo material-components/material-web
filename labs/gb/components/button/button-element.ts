@@ -40,6 +40,8 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design button.
  *
+ * @customElement md-gb-button
+ *
  * @slot - Used to display a label and optional icon.
  * @slot container - Used to set a custom background container for the button.
  * @fires {InputEvent} input - Fired when a toggle button is selected or unselected. --bubbles --composed

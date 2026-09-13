@@ -13,6 +13,8 @@ import iconStyles from './md-icon.css' with {type: 'css'}; // github-only
 
 /**
  * A Material Design icon component.
+ *
+ * @customElement md-gb-icon
  */
 export class IconElement extends IconBase {
   /** @nocollapse */

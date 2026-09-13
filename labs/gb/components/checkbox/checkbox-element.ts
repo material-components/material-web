@@ -41,6 +41,8 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design checkbox component.
  *
+ * @customElement md-gb-checkbox
+ *
  * @fires {InputEvent} input - Fired when the checkbox is checked or unchecked. --bubbles --composed
  * @fires {Event} change - Fired when the checkbox is checked or unchecked. --bubbles
  * @csspart checkbox - The checkbox's root element.
