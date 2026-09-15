@@ -18,5 +18,8 @@ interface HTMLElement {
 }
 
 interface ToggleEvent {
+  // TODO: go/ts60upgrade - Fix after TS 6.0 upgrade.
+  //   TS2687: All declarations of 'source' must have identical modifiers.
+  // @ts-ignore
   source: Element | null;
 }
