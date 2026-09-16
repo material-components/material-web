@@ -1,0 +1,61 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+
+@mixin styles() {
+  .host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
+  slot {
+    width: 100%;
+    height: 100%;
+  }
+
+  :host([variant='expanded']) {
+    flex-direction: row;
+  }
+
+  :host([variant='expanded']) slot[name='supporting'] {
+    max-width: var(--md-supporting-pane-width, 360px);
+    margin-left: 24px;
+  }
+
+  :host([variant='expanded'][left]) slot[name='supporting'] {
+    margin-right: 24px;
+  }
+
+  :host([variant='medium']) slot,
+  :host([variant='compact']) slot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+
+  :host([variant='medium']) slot:not([name='supporting']) {
+    // max-height: calc(100% - (100% / 3));
+    bottom: calc(100% - (100% / 3));
+  }
+
+  :host([variant='medium']) slot[name='supporting'] {
+    top: calc(100% / 3);
+  }
+
+  :host([variant='compact']) slot:not([name='supporting']) {
+    bottom: calc(100% / 2);
+  }
+
+  :host([variant='compact']) slot[name='supporting'] {
+    top: calc(100% / 2);
+  }
+}
