@@ -183,6 +183,21 @@ describe('<md-radio>', () => {
       expect(changeHandler).toHaveBeenCalledTimes(1);
     });
 
+    it('dispatched an input event on user navigation', async () => {
+      const {harnesses, root} = await setupTest(radioGroupPreSelected);
+      const inputHandler = jasmine.createSpy('inputHandler');
+      root.addEventListener('input', inputHandler);
+      const [, a2] = harnesses;
+      expect(a2.element.checked)
+        .withContext('default checked radio')
+        .toBeTrue();
+
+      await simulateKeyDown(a2.element, 'ArrowRight');
+
+      expect(inputHandler).toHaveBeenCalledTimes(1);
+      expect(inputHandler).toHaveBeenCalledWith(jasmine.any(InputEvent));
+    });
+
     it('Using arrow right on the last radio should select the first radio in that group', async () => {
       const {harnesses} = await setupTest(radioGroupPreSelected);
       const [a1, a2, a3, b1] = harnesses;
