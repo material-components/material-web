@@ -6,6 +6,7 @@
 
 // import 'jasmine'; (google3-only)
 
+import './md-aria-fieldset.js';
 import './md-aria-menuitem.js';
 import './md-aria-menulist.js';
 
@@ -31,6 +32,24 @@ function expectDisabled(menuitem: AriaMenuitemElement) {
   expect(menuitem.matches(':state(disabled)')).toBeTrue();
 }
 
+function expectChecked(menuitem: AriaMenuitemElement) {
+  expect(menuitem.checked).toBeTrue();
+  expect(menuitem[internals].ariaChecked).toBe('true');
+  expect(menuitem.matches(':state(checked)')).toBeTrue();
+}
+
+function expectNotChecked(menuitem: AriaMenuitemElement) {
+  expect(menuitem.checked).toBeFalse();
+  expect(menuitem[internals].ariaChecked).toBe('false');
+  expect(menuitem.matches(':state(checked)')).toBeFalse();
+}
+
+function expectNotCheckable(menuitem: AriaMenuitemElement) {
+  expect(menuitem.checked).toBeFalse();
+  expect(menuitem[internals].ariaChecked).toBe(null);
+  expect(menuitem.matches(':state(checked)')).toBeFalse();
+}
+
 describe('md-aria-menuitem', () => {
   const env = new Environment();
 
@@ -52,12 +71,13 @@ describe('md-aria-menuitem', () => {
       expect(menuitem[internals].role).toBe('menuitem');
     });
 
-    it('sets initial custom state to enabled and not disabled', async () => {
+    it('sets initial custom state to enabled, not disabled, and not checkable', async () => {
       const {menuitem} = await setUpTest();
 
       await env.waitForStability();
 
       expectEnabled(menuitem);
+      expectNotCheckable(menuitem);
     });
   });
 
@@ -215,6 +235,139 @@ describe('md-aria-menuitem', () => {
       await env.waitForStability();
 
       expect(menulist.matches(':popover-open')).toBeTrue();
+    });
+  });
+
+  describe('Checkedness behavior', () => {
+    async function setUpCheckednessTest() {
+      const {root} = await setUpTest(html`
+        <md-aria-menulist>
+          <md-aria-fieldset checkable="multiple">
+            <md-aria-menuitem>Item 1</md-aria-menuitem>
+          </md-aria-fieldset>
+        </md-aria-menulist>
+      `);
+      const menulist = root.querySelector('md-aria-menulist')!;
+      const fieldset = root.querySelector('md-aria-fieldset')!;
+      const menuitem = root.querySelector('md-aria-menuitem')!;
+
+      menulist.showPopover();
+      await env.waitForStability();
+
+      return {menulist, fieldset, menuitem};
+    }
+
+    it('has role "menuitemcheckbox" in multiple-checkable fieldsets', async () => {
+      const {menuitem} = await setUpCheckednessTest();
+
+      expect(menuitem[internals].role).toEqual('menuitemcheckbox');
+    });
+
+    it('has role "menuitemradio" in single-checkable fieldsets', async () => {
+      const {fieldset, menuitem} = await setUpCheckednessTest();
+
+      fieldset.checkable = 'single';
+      await env.waitForStability();
+
+      expect(menuitem[internals].role).toEqual('menuitemradio');
+    });
+
+    it('becomes checked when clicked', async () => {
+      const {menuitem} = await setUpCheckednessTest();
+
+      expectNotChecked(menuitem);
+
+      menuitem.click();
+      await env.waitForStability();
+
+      expectChecked(menuitem);
+    });
+
+    it('does not become checked when clicked if disabled', async () => {
+      const {menuitem} = await setUpCheckednessTest();
+
+      expectNotChecked(menuitem);
+
+      menuitem.disabled = true;
+      await env.waitForStability();
+      menuitem.click();
+      await env.waitForStability();
+
+      expectNotChecked(menuitem);
+    });
+
+    it('does not become checked when the fieldset is not checkable', async () => {
+      const {fieldset, menuitem} = await setUpCheckednessTest();
+
+      expectNotChecked(menuitem);
+
+      fieldset.checkable = null;
+      await env.waitForStability();
+
+      expectNotCheckable(menuitem);
+
+      menuitem.click();
+      await env.waitForStability();
+
+      expectNotCheckable(menuitem);
+    });
+
+    it('items with `defaultchecked` are checked by default', async () => {
+      const {root} = await setUpTest(html`
+        <md-aria-menulist>
+          <md-aria-fieldset checkable="single">
+            <md-aria-menuitem defaultchecked
+              >Default checked item</md-aria-menuitem
+            >
+            <md-aria-menuitem>Other item</md-aria-menuitem>
+          </md-aria-fieldset>
+        </md-aria-menulist>
+      `);
+      const menulist = root.querySelector('md-aria-menulist')!;
+      const menuitems = Array.from(root.querySelectorAll('md-aria-menuitem')!);
+
+      menulist.showPopover();
+      await env.waitForStability();
+
+      expect(menuitems.map((x) => x.checked)).toEqual([true, false]);
+    });
+
+    it('the last item in a single-checkable fieldset with `defaultchecked` is checked by default', async () => {
+      const {root} = await setUpTest(html`
+        <md-aria-menulist>
+          <md-aria-fieldset checkable="single">
+            <md-aria-menuitem defaultchecked>Item 1</md-aria-menuitem>
+            <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
+            <md-aria-menuitem defaultchecked>Item 3</md-aria-menuitem>
+          </md-aria-fieldset>
+        </md-aria-menulist>
+      `);
+      const menulist = root.querySelector('md-aria-menulist')!;
+      const menuitems = Array.from(root.querySelectorAll('md-aria-menuitem')!);
+
+      menulist.showPopover();
+      await env.waitForStability();
+
+      expect(menuitems.map((x) => x.checked)).toEqual([false, false, true]);
+    });
+
+    it('multiple items in a muliple-checkable fieldset with `defaultchecked` are checked by default', async () => {
+      const {root} = await setUpTest(html`
+        <md-aria-menulist>
+          <md-aria-fieldset checkable="multiple">
+            <md-aria-menuitem defaultchecked>Item 1</md-aria-menuitem>
+            <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
+            <md-aria-menuitem defaultchecked>Item 3</md-aria-menuitem>
+          </md-aria-fieldset>
+        </md-aria-menulist>
+      `);
+      const menulist = root.querySelector('md-aria-menulist')!;
+      const menuitems = Array.from(root.querySelectorAll('md-aria-menuitem')!);
+
+      menulist.showPopover();
+      await env.waitForStability();
+
+      expect(menuitems.map((x) => x.checked)).toEqual([true, true, true]);
     });
   });
 });
