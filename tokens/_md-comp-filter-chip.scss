@@ -92,8 +92,7 @@ $supported-tokens: (
   'trailing-icon-color',
   'trailing-space',
   'with-leading-icon-leading-space',
-  'with-trailing-icon-trailing-space',
-  // go/keep-sorted end
+  'with-trailing-icon-trailing-space' // go/keep-sorted end
 );
 
 $unsupported-tokens: (
@@ -121,8 +120,7 @@ $unsupported-tokens: (
   'selected-focus-state-layer-color',
   'selected-focus-state-layer-opacity',
   'selected-hover-container-elevation',
-  'selected-pressed-container-elevation',
-  // go/keep-sorted end
+  'selected-pressed-container-elevation' // go/keep-sorted end
 );
 
 $_default: (
@@ -142,13 +140,15 @@ $_default: (
   $new-tokens: map.merge(
     shape.get-new-logical-shape-tokens($tokens, 'container-shape'),
     (
-      'leading-space': if($exclude-hardcoded-values, null, 16px),
-      'trailing-space': if($exclude-hardcoded-values, null, 16px),
-      'icon-label-space': if($exclude-hardcoded-values, null, 8px),
-      'with-leading-icon-leading-space':
-        if($exclude-hardcoded-values, null, 8px),
-      'with-trailing-icon-trailing-space':
-        if($exclude-hardcoded-values, null, 8px),
+      'leading-space': if(not sass($exclude-hardcoded-values): 16px),
+      'trailing-space': if(not sass($exclude-hardcoded-values): 16px),
+      'icon-label-space': if(not sass($exclude-hardcoded-values): 8px),
+      'with-leading-icon-leading-space': if(
+          not sass($exclude-hardcoded-values): 8px
+        ),
+      'with-trailing-icon-trailing-space': if(
+          not sass($exclude-hardcoded-values): 8px
+        ),
     )
   );
 
