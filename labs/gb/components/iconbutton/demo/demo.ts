@@ -32,7 +32,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
   [
     new Knob('icon', {
       ui: textInput(),
-      defaultValue: 'add',
+      defaultValue: 'favorite',
     }),
     new Knob('color', {
       ui: selectDropdown<IconButtonColor>({

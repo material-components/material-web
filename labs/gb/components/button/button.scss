@@ -9,6 +9,18 @@
 
 @layer md.sys, md.comp.ripple, md.comp.focus-ring;
 @layer md.comp.button {
+  :host {
+    --md-icon-fill: 1;
+  }
+
+  :host([type='toggle']:not([selected])) {
+    --md-icon-fill: 0;
+  }
+
+  :host([type='toggle'][selected]) {
+    --md-icon-fill: 1;
+  }
+
   .btn {
     @include button-tokens.root;
     &:where(.btn-unselected, [aria-pressed='false']) {
