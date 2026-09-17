@@ -39,6 +39,8 @@ const baseClass = mixinElementInternals(mixinFocusable(LitElement));
 /**
  * A Material Design menu item component.
  *
+ * @customElement md-gb-menu-item
+ *
  * @slot - Used to display the item's primary label.
  * @slot leading - Used to display icons and content before the item's main content.
  * @slot supporting-text - Used to display supporting text below the main label.

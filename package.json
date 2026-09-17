@@ -46,6 +46,7 @@
     "**/*.css",
     "**/*.css.map",
     "custom-elements.json",
+    "web-types.json",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
@@ -77,6 +78,8 @@
     "@types/node": "^24.10.1",
     "@web/test-runner": "^0.18.2",
     "@web/test-runner-playwright": "^0.11.0",
+    "custom-element-jet-brains-integration": "^1.6.2",
+    "custom-elements-manifest-inheritance": "^1.1.1",
     "element-internals-polyfill": "^1.3.12",
     "jasmine": "^4.5.0",
     "playwright": "^1.49.0",
@@ -198,7 +201,8 @@
         "**/*.ts"
       ],
       "output": [
-        "custom-elements.json"
+        "custom-elements.json",
+        "web-types.json"
       ],
       "dependencies": [
         "build:scripts",
@@ -277,5 +281,6 @@
         "build"
       ]
     }
-  }
+  },
+  "web-types": "./web-types.json"
 }
