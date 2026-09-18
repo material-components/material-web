@@ -149,6 +149,8 @@ $_checkmark-bottom-left: 7px, -14px;
 
   // Ripple
 
+  @include ripple.controls;
+
   md-ripple {
     border-radius: map.get($tokens, 'state-layer-shape');
     height: map.get($tokens, 'state-layer-size');
