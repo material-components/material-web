@@ -13,15 +13,28 @@ import {
   materialInitsToStoryInits,
   setUpDemo,
 } from './material-collection.js';
-import {boolInput, Knob, selectDropdown} from './index.js';
+import {
+  ButtonColor,
+  ButtonSize,
+} from '@material/web/labs/gb/components/button/button.js';
+import {
+  boolInput,
+  Knob,
+  selectDropdown,
+  textInput,
+} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';
 
 const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
   'Button',
   [
+    new Knob('icon', {
+      ui: textInput(),
+      defaultValue: 'favorite',
+    }),
     new Knob('color', {
-      ui: selectDropdown({
+      ui: selectDropdown<ButtonColor>({
         options: [
           {value: 'filled', label: 'Filled'},
           {value: 'elevated', label: 'Elevated'},
@@ -32,7 +45,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       }),
     }),
     new Knob('size', {
-      ui: selectDropdown({
+      ui: selectDropdown<ButtonSize>({
         options: [
           {value: 'xs', label: 'X-Small'},
           {value: 'sm', label: 'Small'},
