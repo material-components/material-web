@@ -37,7 +37,6 @@ const styles = css`
 `;
 
 const standard: MaterialStoryInit<StoryKnobs> = {
-  name: 'Floating action buttons',
   styles: [labelStyles, styles],
   render({icon, label, lowered, size}) {
     return html`
