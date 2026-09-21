@@ -69,6 +69,7 @@
       font: var(--label-text);
       letter-spacing: var(--label-text-tracking);
       font-variation-settings: var(--label-text-axes);
+      -webkit-font-smoothing: antialiased;
       padding-inline: var(--leading-space) var(--trailing-space);
       animation: var(--ripple-animation), var(--focus-ring-animation);
       --md-icon-color: var(--icon-color);

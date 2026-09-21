@@ -113,6 +113,7 @@
       font: var(--label-text);
       letter-spacing: var(--label-text-tracking);
       font-variation-settings: var(--label-text-axes);
+      -webkit-font-smoothing: antialiased;
     }
 
     &::before {

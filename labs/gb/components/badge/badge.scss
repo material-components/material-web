@@ -23,6 +23,7 @@
       height: var(--size);
       width: var(--size);
       box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
 
       slot {
         display: none;

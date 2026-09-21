@@ -61,6 +61,7 @@
       font: var(--label-text);
       letter-spacing: var(--label-text-tracking);
       font-variation-settings: var(--label-text-axes);
+      -webkit-font-smoothing: antialiased;
       box-sizing: border-box;
       user-select: none;
       white-space: nowrap;

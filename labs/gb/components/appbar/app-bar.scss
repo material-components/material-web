@@ -46,6 +46,7 @@
     border-radius: var(--container-shape);
     box-shadow: var(--container-elevation);
     color: var(--title-color);
+    -webkit-font-smoothing: antialiased;
     transition:
       background-color 200ms ease,
       box-shadow 200ms ease,

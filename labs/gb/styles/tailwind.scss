@@ -258,11 +258,13 @@
   font: #{'--value(--typescale-*)'};
   letter-spacing: #{'--value(--typescale-*-tracking)'};
   font-variation-settings: #{'--value(--typescale-*-axes)'};
+  -webkit-font-smoothing: antialiased;
 }
 @utility typescale-emphasized-* {
   font: #{'--value(--typescale-emphasized-*)'};
   letter-spacing: #{'--value(--typescale-*-tracking)'};
   font-variation-settings: #{'--value(--typescale-emphasized-*-axes)'};
+  -webkit-font-smoothing: antialiased;
 }
 
 // Add Material spacing utilities for padding, margin, and gap.
