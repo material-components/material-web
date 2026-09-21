@@ -78,9 +78,19 @@ export class ButtonElement extends baseClass {
     buttonStyles,
     css`
       :host {
+        --md-icon-fill: 1;
         display: inline-flex;
         isolation: isolate;
       }
+
+      :host([type='toggle']:not([selected])) {
+        --md-icon-fill: 0;
+      }
+
+      :host([type='toggle'][selected]) {
+        --md-icon-fill: 1;
+      }
+
       .btn {
         flex: 1;
         position: relative;
@@ -136,7 +146,7 @@ export class ButtonElement extends baseClass {
    * - "toggle": A toggle button using the `selected` property.
    * - "link": An anchor link (`<a>`). Type is always "link" when `href` is set.
    */
-  @property({noAccessor: true})
+  @property({noAccessor: true, reflect: true})
   override get type(): string {
     return this.href ? 'link' : super.type;
   }
@@ -160,8 +170,10 @@ export class ButtonElement extends baseClass {
 
   /**
    * Whether or not the button is selected, when `type="toggle"`.
+   *
+   * TODO: replace reflected `[selected]` with `:state(selected)`
    */
-  @property({type: Boolean}) selected = false;
+  @property({type: Boolean, reflect: true}) selected = false;
 
   /**
    * The URL that the link button points to.
@@ -248,6 +260,7 @@ export class ButtonElement extends baseClass {
       color: this.color,
       size: this.size,
       square: this.square,
+      selected: this.type === 'toggle' ? this.selected : undefined,
       // Emulate `:disabled` when soft-disabled
       disabled: this.softDisabled,
       classes: {
