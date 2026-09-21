@@ -1,0 +1,75 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  // LINT.IfChange
+  --container-color: var(--md-sys-color-surface-container);
+  --container-elevation: var(--md-sys-elevation-shadow-2);
+  --container-height: 64px;
+  --container-shadow-color: var(--md-sys-color-shadow);
+  --container-shape: var(--md-sys-shape-corner-none);
+  --item-active-focused-state-layer-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-active-focused-state-layer-opacity: 0.1;
+  --item-active-hovered-state-layer-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-active-hovered-state-layer-opacity: 0.08;
+  --item-active-icon-color: var(--md-sys-color-on-secondary-container);
+  --item-active-indicator-color: var(--md-sys-color-secondary-container);
+  --item-active-indicator-height: 32px;
+  --item-active-indicator-icon-label-space: 4px;
+  --item-active-indicator-leading-space: 16px;
+  --item-active-indicator-shape: var(--md-sys-shape-corner-full);
+  --item-active-indicator-trailing-space: 16px;
+  --item-active-indicator-width: 56px;
+  --item-active-label-text-color: var(--md-sys-color-secondary);
+  --item-active-pressed-state-layer-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-active-pressed-state-layer-opacity: 0.1;
+  --item-between-space: var(--md-sys-space-0);
+  --item-container-between-space: 6px;
+  --item-icon-size: 24px;
+  --item-inactive-focused-state-layer-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-inactive-focused-state-layer-opacity: 0.1;
+  --item-inactive-hovered-state-layer-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-inactive-hovered-state-layer-opacity: 0.08;
+  --item-inactive-icon-color: var(--md-sys-color-on-surface-variant);
+  --item-inactive-label-text-color: var(--md-sys-color-on-surface-variant);
+  --item-inactive-pressed-state-layer-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-inactive-pressed-state-layer-opacity: 0.1;
+  --item-label-text: var(--md-sys-typescale-label-md);
+  --item-label-text-axes: var(--md-sys-typescale-label-md-axes);
+  --item-label-text-tracking: var(--md-sys-typescale-label-md-tracking);
+  --motion-duration: var(--md-sys-motion-duration-short4);
+  --motion-easing: var(--md-sys-motion-easing-emphasized);
+  // LINT.ThenChange(nav-bar-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin item-vertical {
+  --item-active-indicator-height: 32px;
+  --item-active-indicator-icon-label-space: 4px;
+  --item-active-indicator-width: 56px;
+  --item-active-label-text-color: var(--md-sys-color-secondary);
+  --item-container-between-space: 6px;
+}
+
+@mixin item-horizontal {
+  --item-active-indicator-height: 40px;
+  --item-active-indicator-icon-label-space: 8px;
+  --item-active-indicator-leading-space: 16px;
+  --item-active-indicator-trailing-space: 16px;
+  --item-active-indicator-width: auto;
+  // Use on-secondary-container for accessibility contrast inside the pill.
+  --item-active-label-text-color: var(--md-sys-color-on-secondary-container);
+}
