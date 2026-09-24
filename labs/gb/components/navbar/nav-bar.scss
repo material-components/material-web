@@ -1,0 +1,364 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'nav-bar-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
+
+@layer md.comp.nav-bar {
+  :host(md-gb-nav-bar),
+  :host(md-gb-navigation-bar) {
+    @include nav-bar-tokens.root;
+
+    --nav-bar: true;
+    display: flex;
+    width: 100%;
+  }
+
+  :host(md-gb-nav-bar[item-layout='horizontal']),
+  :host(md-gb-navigation-bar[item-layout='horizontal']) {
+    @include nav-bar-tokens.item-horizontal;
+  }
+
+  :host(md-gb-nav-bar[item-layout='vertical']),
+  :host(md-gb-navigation-bar[item-layout='vertical']) {
+    @include nav-bar-tokens.item-vertical;
+  }
+
+  :host(md-gb-nav-bar-item),
+  :host(md-gb-navigation-bar-item) {
+    @include nav-bar-tokens.root;
+
+    display: flex;
+    flex: 1 1 0;
+    min-width: 48px;
+  }
+
+  :host(md-gb-nav-bar-item[item-layout='horizontal']),
+  :host(md-gb-navigation-bar-item[item-layout='horizontal']) {
+    @include nav-bar-tokens.item-horizontal;
+  }
+
+  :host(md-gb-nav-bar-item[item-layout='vertical']),
+  :host(md-gb-navigation-bar-item[item-layout='vertical']) {
+    @include nav-bar-tokens.item-vertical;
+  }
+
+  md-gb-nav-bar,
+  md-gb-navigation-bar {
+    @include nav-bar-tokens.root;
+
+    --nav-bar: true;
+    display: flex;
+    width: 100%;
+
+    &[item-layout='horizontal'] {
+      @include nav-bar-tokens.item-horizontal;
+    }
+
+    &[item-layout='vertical'] {
+      @include nav-bar-tokens.item-vertical;
+    }
+  }
+
+  .nav-bar {
+    @include nav-bar-tokens.root;
+
+    --md-elevation-shadow-color: var(--container-shadow-color);
+    --nav-bar: true;
+    align-items: stretch;
+    background-color: var(--container-color);
+    border: none;
+    border-radius: var(--container-shape);
+    box-shadow: var(--container-elevation);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    gap: var(--item-between-space);
+    height: var(--container-height);
+    isolation: isolate;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    transition: all var(--motion-duration) var(--motion-easing);
+    user-select: none;
+    width: 100%;
+
+    > :focus-within,
+    ::slotted(:focus-within) {
+      z-index: 1;
+    }
+
+    &.nav-bar-horizontal {
+      @include nav-bar-tokens.item-horizontal;
+    }
+
+    &.nav-bar-vertical {
+      @include nav-bar-tokens.item-vertical;
+    }
+  }
+
+  .nav-bar-item {
+    @include nav-bar-tokens.root;
+
+    --md-icon-color: var(--item-inactive-icon-color);
+    --md-icon-fill: 0;
+    --md-icon-size: var(--item-icon-size);
+    --ripple-color: var(--item-inactive-pressed-state-layer-color);
+    --state-layer-color: var(--item-inactive-hovered-state-layer-color);
+    --state-layer-opacity: 0;
+    align-items: center;
+    appearance: none;
+    background: transparent;
+    background-image: none;
+    border: none;
+    box-sizing: border-box;
+    color: var(--item-inactive-label-text-color);
+    cursor: pointer;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    font: var(--item-label-text);
+    font-variation-settings: var(--item-label-text-axes);
+    height: 100%;
+    justify-content: center;
+    letter-spacing: var(--item-label-text-tracking);
+    margin: 0;
+    min-width: 48px;
+    outline: none;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+    transition: all var(--motion-duration) var(--motion-easing);
+    user-select: none;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      --ripple-color: var(--item-inactive-hovered-state-layer-color);
+      --state-layer-color: var(--item-inactive-hovered-state-layer-color);
+      --state-layer-opacity: var(--item-inactive-hovered-state-layer-opacity);
+    }
+
+    &:focus-visible {
+      --ripple-color: var(--item-inactive-focused-state-layer-color);
+      --state-layer-color: var(--item-inactive-focused-state-layer-color);
+      --state-layer-opacity: var(--item-inactive-focused-state-layer-opacity);
+    }
+
+    &:active {
+      --ripple-color: var(--item-inactive-pressed-state-layer-color);
+      --state-layer-color: var(--item-inactive-pressed-state-layer-color);
+      --state-layer-opacity: var(--item-inactive-pressed-state-layer-opacity);
+    }
+
+    &:disabled,
+    &[disabled] {
+      cursor: default;
+      opacity: 0.38;
+      pointer-events: none;
+    }
+  }
+
+  .nav-bar-item-content {
+    align-items: center;
+    border-radius: var(--item-active-indicator-shape);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--item-active-indicator-icon-label-space);
+    justify-content: center;
+    padding-block: var(--item-container-between-space);
+    position: relative;
+    transition: all var(--motion-duration) var(--motion-easing);
+  }
+
+  .nav-bar-item-icon-container {
+    align-items: center;
+    background-color: transparent;
+    border-radius: var(--item-active-indicator-shape);
+    color: var(--item-inactive-icon-color);
+    display: flex;
+    height: var(--item-active-indicator-height);
+    isolation: isolate;
+    justify-content: center;
+    position: relative;
+    transition: all var(--motion-duration) var(--motion-easing);
+    width: var(--item-active-indicator-width);
+
+    &::before {
+      background-color: var(--item-active-indicator-color);
+      border-radius: var(--item-active-indicator-shape);
+      content: '';
+      inset: 0;
+      opacity: 0;
+      position: absolute;
+      transform: scaleX(0.5);
+      transition: all var(--motion-duration) var(--motion-easing);
+      z-index: -2;
+    }
+
+    &::after {
+      background-color: var(--state-layer-color);
+      border-radius: var(--item-active-indicator-shape);
+      content: '';
+      inset: 0;
+      opacity: var(--state-layer-opacity);
+      pointer-events: none;
+      position: absolute;
+      transition: all var(--motion-duration) var(--motion-easing);
+      z-index: -1;
+    }
+  }
+
+  .nav-bar-item-icon {
+    align-items: center;
+    display: inline-flex;
+    height: var(--item-icon-size);
+    justify-content: center;
+    position: relative;
+    transition: all var(--motion-duration) var(--motion-easing);
+    width: var(--item-icon-size);
+  }
+
+  .nav-bar-item-label {
+    color: var(--item-inactive-label-text-color);
+    font: var(--item-label-text);
+    font-variation-settings: var(--item-label-text-axes);
+    letter-spacing: var(--item-label-text-tracking);
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    transition: all var(--motion-duration) var(--motion-easing);
+    white-space: nowrap;
+  }
+
+  .nav-bar-item-badge {
+    align-items: center;
+    background-color: var(--md-sys-color-error);
+    border-radius: var(--md-sys-shape-corner-full);
+    box-sizing: border-box;
+    color: var(--md-sys-color-on-error);
+    display: inline-flex;
+    font: var(--md-sys-typescale-label-sm);
+    height: 16px;
+    inset-block-start: -4px;
+    inset-inline-start: calc(50% + 2px);
+    justify-content: center;
+    min-width: 16px;
+    padding-inline: 4px;
+    pointer-events: none;
+    position: absolute;
+    transition: all var(--motion-duration) var(--motion-easing);
+    z-index: 2;
+  }
+
+  .nav-bar-item-badge-dot {
+    height: 6px;
+    inset-block-start: 0;
+    inset-inline-start: calc(50% + 6px);
+    min-width: 6px;
+    padding-inline: 0;
+    width: 6px;
+  }
+
+  .nav-bar-item:is(.nav-bar-item-active, [aria-selected='true']) {
+    --md-icon-color: var(--item-active-icon-color);
+    --md-icon-fill: 1;
+    --ripple-color: var(--item-active-pressed-state-layer-color);
+    --state-layer-color: var(--item-active-hovered-state-layer-color);
+    color: var(--item-active-label-text-color);
+
+    &:hover {
+      --ripple-color: var(--item-active-hovered-state-layer-color);
+      --state-layer-color: var(--item-active-hovered-state-layer-color);
+      --state-layer-opacity: var(--item-active-hovered-state-layer-opacity);
+    }
+
+    &:focus-visible {
+      --ripple-color: var(--item-active-focused-state-layer-color);
+      --state-layer-color: var(--item-active-focused-state-layer-color);
+      --state-layer-opacity: var(--item-active-focused-state-layer-opacity);
+    }
+
+    &:active {
+      --ripple-color: var(--item-active-pressed-state-layer-color);
+      --state-layer-color: var(--item-active-pressed-state-layer-color);
+      --state-layer-opacity: var(--item-active-pressed-state-layer-opacity);
+    }
+
+    .nav-bar-item-icon-container {
+      color: var(--item-active-icon-color);
+
+      &::before {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+    }
+
+    .nav-bar-item-label {
+      color: var(--item-active-label-text-color);
+    }
+  }
+
+  .nav-bar-item-horizontal {
+    @include nav-bar-tokens.item-horizontal;
+
+    .nav-bar-item-content {
+      display: inline-flex;
+      flex-direction: row;
+      gap: var(--item-active-indicator-icon-label-space);
+      height: var(--item-active-indicator-height);
+      isolation: isolate;
+      padding-block: 0;
+      padding-inline: var(--item-active-indicator-leading-space)
+        var(--item-active-indicator-trailing-space);
+
+      &::before {
+        background-color: var(--item-active-indicator-color);
+        border-radius: var(--item-active-indicator-shape);
+        content: '';
+        inset: 0;
+        opacity: 0;
+        position: absolute;
+        transform: scaleX(0.6);
+        transition: all var(--motion-duration) var(--motion-easing);
+        z-index: -2;
+      }
+
+      &::after {
+        background-color: var(--state-layer-color);
+        border-radius: var(--item-active-indicator-shape);
+        content: '';
+        inset: 0;
+        opacity: var(--state-layer-opacity);
+        pointer-events: none;
+        position: absolute;
+        transition: all var(--motion-duration) var(--motion-easing);
+        z-index: -1;
+      }
+    }
+
+    .nav-bar-item-icon-container {
+      height: var(--item-icon-size);
+      width: var(--item-icon-size);
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+
+    &:is(.nav-bar-item-active, [aria-selected='true']) {
+      .nav-bar-item-content::before {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+    }
+  }
+}
