@@ -1,0 +1,301 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'tabs-tokens';
+// go/keep-sorted end
+
+// Selection has three authoring forms. `:state(selected)` is the arm that fires
+// in element mode: AriaTabElement's setter writes `internals.ariaSelected`,
+// which is an AOM property and never produces an attribute. The attribute arm
+// serves hand-authored light DOM. `.active` means PRESSED in this component and
+// is never used for selection.
+$selected: ':is(.selected, [aria-selected="true"], :state(selected))';
+
+// A tab stacks its icon above its label when it has both. Every gb icon host
+// carries `.md-icon` — IconElement.connectedCallback adds it
+// (styles/icon/icon-element.ts:25) — so the structure can be read directly and
+// no `.tab-icon` class is needed. Primary tabs with icon + label are always
+// stacked and secondary tabs are always inline, so structure is sufficient and
+// no modifier class is required.
+$stacked: ':has(> .md-icon):has(> :is(.tab-label, [slot="label"]))';
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.badge;
+@layer md.comp.tabs {
+  .tabs {
+    @include tabs-tokens.root;
+
+    &.tabs-secondary {
+      @include tabs-tokens.secondary;
+      // Published for `.tab` to read with a style query, so "secondary never
+      // stacks" needs no `.tabs-secondary .tab` descendant selector. Same
+      // idiom as `--list-segmented` in list.scss:21.
+      --tabs-secondary: true;
+    }
+
+    display: flex;
+    // Horizontal only, always. `orientation="vertical"` on md-gb-tabs is an
+    // anti-pattern; the API is not blocked, but it must produce no visual
+    // difference, so there is deliberately no `[orientation='vertical']`
+    // rule anywhere in this file. Stating the direction rather than relying
+    // on the initial value makes that intentional.
+    flex-direction: row;
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--container-color);
+    border-radius: var(--container-shape);
+
+    // The divider is INSIDE the declared height: 48dp = 47dp of tab + 1dp of
+    // divider (spec image A row 2: indicator y356-358, divider y359; Figma
+    // 44:44391 sits at y=47 of 48). `.tab` supplies the 47dp/63dp, so a
+    // stacked bar reaches 64dp by growing to fit its tabs. The container
+    // cannot detect a stacked tab itself: `:has()` may not be nested inside
+    // `:has()`, so `.tabs:has(> .tab:has(…))` is not a valid selector.
+    min-block-size: var(--container-height);
+    border-block-end: var(--divider-thickness) solid var(--divider-color);
+
+    // Every bar scrolls once it overflows; there is no `.tabs-scrollable`.
+    // The flex items' automatic minimum size floors each tab at min-content,
+    // which is what produces the overflow in the first place.
+    overflow-inline: auto;
+    overflow-block: hidden;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+
+    // Anchor names are tree-scoped, not element-scoped. Without this, every
+    // `.tabs` in the tree publishes the same three names and the last one in
+    // tree order wins for all of them — measured: with several bars on a
+    // page, every indicator resolved against the last bar's selected tab.
+    anchor-scope: --tab, --tab-content-start, --tab-content-end;
+  }
+
+  .tab {
+    // Deliberately no `@include tabs-tokens.root`: the tab reads the
+    // container's custom properties by inheritance, which is what lets
+    // `.tabs-secondary` retint every tab without a descendant selector.
+    display: flex;
+    // Containing block for the `::before` focus ring and out-of-flow `.tab-badge`.
+    position: relative;
+    anchor-scope: --tab-icon;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    gap: var(--icon-label-space);
+    box-sizing: border-box;
+    min-block-size: calc(var(--container-height) - var(--divider-thickness));
+    padding-inline: var(--leading-space) var(--trailing-space);
+    padding-block: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    scroll-margin-inline: var(--tab-scroll-margin, var(--leading-space, 16px));
+    // No two-line labels and no truncation.
+    white-space: nowrap;
+    // The label box is floored at 24dp (see the `min-inline-size` rule below),
+    // so a shorter label would otherwise sit against the leading edge of its
+    // own box instead of under the centre of the indicator.
+    text-align: center;
+    color: var(--label-text-color);
+    font: var(--label-text);
+    letter-spacing: var(--label-text-tracking);
+    font-variation-settings: var(--label-text-axes);
+    // The focus ring is painted by `::before`, not by this element — see §7.
+    // `md.comp.tabs` is declared after `md.comp.focus-ring`, so this beats the
+    // primitive's own `outline: var(--focus-ring-outline)` without specificity
+    // games.
+    outline: none;
+    // Icons are unclassed children; the root sets their metrics (chip.scss:67).
+    --md-icon-color: var(--icon-color);
+    --md-icon-size: var(--icon-size);
+  }
+
+  .tab#{$stacked} {
+    // Secondary never stacks, so the whole block is gated on the variant flag
+    // the container publishes rather than on a `.tabs-secondary .tab` selector.
+    // Raising `--container-height` here raises this tab's own min-block-size to
+    // 63dp; the bar then grows to 64dp to contain it.
+    @container not style(--tabs-secondary: true) {
+      @include tabs-tokens.with-icon-and-label-text;
+      flex-direction: column;
+      gap: var(--stacked-icon-label-space);
+    }
+  }
+
+  .tab:has(> .md-icon) {
+    @container not style(--tabs-secondary: true) {
+      > .md-icon {
+        anchor-name: --tab-icon;
+      }
+
+      > .tab-badge {
+        position: absolute;
+        position-anchor: --tab-icon;
+        inset-block-start: anchor(start);
+        inset-inline-start: calc(anchor(end) - var(--icon-badge-inset));
+        margin-inline-start: 0;
+      }
+    }
+  }
+
+  // The indicator hugs the tab's content, and design's minimum applies to the
+  // CONTENT container, not to the painted bar: a 24dp container with 2dp of
+  // indicator padding per side renders a 20dp bar. An icon already has this
+  // floor (md-icon.scss:52 sets `min-width: var(--md-icon-size)` = 24dp); a
+  // label does not, so it gets one here. Scoped under `.tab` because a bare
+  // `[slot="label"]` would match any element on the page.
+  .tab > :is(.tab-label, [slot='label']) {
+    min-inline-size: var(--active-indicator-min-length);
+  }
+
+  // The inline gap is 8dp icon-to-label but 4dp label-to-badge (spec image A
+  // row 4 annotates both). A single `gap` cannot express two values, so the
+  // badge pulls back by the difference. Tabs does not style `.badge` itself;
+  // this is an opt-in positioning class the author adds alongside it, as
+  // `<span class="badge tab-badge">`.
+  .tab-badge {
+    margin-inline-start: calc(var(--badge-space) - var(--icon-label-space));
+  }
+
+  .tab#{$selected} {
+    @include tabs-tokens.selected;
+    anchor-name: --tab;
+
+    @container style(--tabs-secondary: true) {
+      @include tabs-tokens.secondary-selected;
+    }
+  }
+
+  // Spec gives inactive tabs on-surface colours on hover/focus/pressed. The
+  // secondary-* state mixins resolve to exactly the same two declarations as the
+  // primary ones, so one rule each covers both variants.
+  .tab:is(:hover, .hover):not(#{$selected}) {
+    @include tabs-tokens.hover;
+  }
+  .tab:is(:focus-visible, .focus):not(#{$selected}) {
+    @include tabs-tokens.focus;
+  }
+  .tab:is(:active, .active):not(#{$selected}) {
+    @include tabs-tokens.pressed;
+  }
+
+  // FOCUS RING. Painted on a pseudo-element rather than on `.tab` itself for
+  // two reasons the gb primitive cannot cover (§7): the ring has a 12dp radius
+  // while the state layer must stay square and full-bleed, and the selected
+  // ring is asymmetric while `outline-offset` is a single scalar. Thickness,
+  // colour, visibility and the grow/shrink animation still come from the
+  // primitive through its inherited custom properties, so there is one source
+  // of truth for all of those.
+  .tab::before {
+    content: '';
+    position: absolute;
+    inset: var(--focus-indicator-inset);
+    border-radius: var(--focus-indicator-shape);
+    outline: var(--focus-ring-outline);
+    // md.sys.state.focus-indicator.inner-offset is -3px, i.e. exactly minus the
+    // stroke thickness, which is what draws the stroke inside the ring frame
+    // the way Figma does (frame 3..44, stroke 41..44) instead of outside it
+    // (44..47, overlapping toward the divider).
+    outline-offset: var(--focus-ring-offset);
+    animation: var(--focus-ring-animation, none);
+    pointer-events: none;
+  }
+
+  // A selected tab's ring stops short of the indicator. The mechanic is a
+  // HEIGHT SHRINK, not a translation: the top inset stays 3dp in every state
+  // and only the bottom edge moves. Both Figma values preserve the same 5dp of
+  // optical clearance above the indicator (3+5=8 primary, 2+5=7 secondary), so
+  // one generative rule covers both variants. Measured: 8px and 7px.
+  .tab#{$selected}::before {
+    inset-block-end: calc(
+      var(--active-indicator-height) + var(--focus-indicator-clearance)
+    );
+  }
+
+  // The primary indicator hugs the tab's CONTENT, which is narrower than the
+  // tab: tabs are equal fractions of the bar (image A annotates 1/4 and 1/2)
+  // and their content is centred inside them. `anchor()` resolves against an
+  // element's border box, so the content extent has to be published by the
+  // content: the first child opens it, the last child closes it.
+  //
+  // NOTE: This assumes child elements are in visual order (icon, label, badge).
+  // In raw HTML, light-DOM child order must match visual order. In `<md-gb-tab>`,
+  // named slots pin the flat-tree render order to `<slot>` (icon),
+  // `<slot name="label">`, and `<slot name="badge">`.
+  .tab#{$selected}:not(:has(> .md-icon)) > :first-child {
+    anchor-name: --tab-content-start;
+  }
+  .tab#{$selected}:not(:has(> .md-icon)) > :last-child {
+    anchor-name: --tab-content-end;
+  }
+
+  // `anchor-name` is one property, so a lone child matched by both rules above
+  // would keep only the last declaration and lose the start anchor — measured:
+  // the indicator collapsed to 0px wide for every single-child tab.
+  .tab#{$selected}:not(:has(> .md-icon)) > :only-child {
+    anchor-name: --tab-content-start, --tab-content-end;
+  }
+
+  .tab#{$selected}:not(#{$stacked}) > .md-icon {
+    anchor-name: --tab-icon, --tab-content-start, --tab-content-end;
+  }
+
+  // A stacked tab puts the icon on its own row, so the label alone defines the
+  // inline extent: image A row 1 has label ink 139-180 and indicator 140-179,
+  // with the 24dp icon above it uncovered.
+  .tab#{$selected}#{$stacked} > :is(.tab-label, [slot='label']) {
+    anchor-name: --tab-content-start, --tab-content-end;
+  }
+
+  // The shadow-side `<slot name="label" class="tab-label">` must not generate a
+  // box. In the baseline light DOM the label is a `.tab-label` span assigned to
+  // the DEFAULT slot, which would leave the named slot empty and still
+  // consuming a flex `gap`. With `display: contents` the label box is the
+  // author's own element in both authoring forms — which is also the only tree
+  // whose `anchor-name` `.tabs::after` can see.
+  slot.tab-label {
+    display: contents;
+  }
+
+  .tabs::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    block-size: var(--active-indicator-height);
+    background-color: var(--active-indicator-color);
+    border-radius: var(--active-indicator-shape);
+
+    // 2dp inset per side. There is no clamp here: the minimum is enforced on
+    // the content box (the `min-inline-size` rule above), which keeps the
+    // floor, the centring and the 2dp padding in one consistent model.
+    inset-inline: calc(
+        anchor(--tab-content-start start) + var(--active-indicator-inset)
+      )
+      calc(anchor(--tab-content-end end) + var(--active-indicator-inset));
+
+    transition: inset var(--md-sys-motion-duration-medium1)
+      var(--md-sys-motion-easing-emphasized);
+  }
+
+  // Secondary spans the whole tab (image A rows 3-4: x=121..300 is the entire
+  // first tab of two) and has square corners (Figma 44:44191 carries no radius;
+  // `secondary` overrides `--active-indicator-shape` to 0).
+  .tabs-secondary::after {
+    inset-inline: anchor(--tab start) anchor(--tab end);
+  }
+
+  // With nothing selected the `anchor()` references are invalid at
+  // computed-value time and the bar collapses to zero width. Saying so out loud
+  // is cheaper than relying on that.
+  .tabs:not(:has(> .tab#{$selected}))::after {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tabs::after {
+      transition: none;
+    }
+  }
+}

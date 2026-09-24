@@ -70,9 +70,14 @@ export class AriaTabElement extends baseClass {
     return this[internals].ariaSelected === 'true';
   }
   set selected(value: boolean) {
+    const oldValue = this.selected;
     value = Boolean(value); // coerce for safety
     this[internals].ariaSelected = String(value);
     this[toggleState]('selected', value);
+    // Request update manually for Lit 2 compatibility, where user-defined
+    // accessors are not automatically wrapped by createProperty().
+    // May be removed once Lit 2 is no longer supported.
+    this.requestUpdate('selected', oldValue);
   }
 
   constructor() {
