@@ -26,6 +26,8 @@ import {
 /**
  * A Material Design split button component.
  *
+ * @customElement md-gb-split-button
+ *
  * @slot leading - Requires a `<button>` for the main action.
  * @slot trailing - Requires a `<button>` for the menu action. Use `popovertarget` to display a menu.
  * @slot - Used to render the trailing button's popover menu.
