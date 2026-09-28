@@ -7,8 +7,19 @@
 // import 'jasmine'; (google3-only)
 
 import {html} from 'lit';
-import {Environment} from '../../../../testing/environment.js';
+
+import {Environment} from '../../testing/environment.js';
+
 import {isDisabled} from './pseudo-classes.js';
+
+class DisabledCustomElement extends HTMLElement {
+  constructor() {
+    super();
+    this.attachInternals().states.add('disabled');
+  }
+}
+
+customElements.define('test-disabled-state', DisabledCustomElement);
 
 describe('pseudo-classes', () => {
   const env = new Environment();
@@ -21,6 +32,13 @@ describe('pseudo-classes', () => {
 
     it('returns true for elements with :disabled pseudo-class', () => {
       const root = env.render(html`<button disabled></button>`);
+      expect(isDisabled(root.firstElementChild!)).toBeTrue();
+    });
+
+    it('returns true for elements with :state(disabled) pseudo-class', () => {
+      const root = env.render(
+        html`<test-disabled-state></test-disabled-state>`,
+      );
       expect(isDisabled(root.firstElementChild!)).toBeTrue();
     });
 

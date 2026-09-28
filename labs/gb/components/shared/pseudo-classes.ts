@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+export {isDisabled} from '../../../aria/pseudo-classes.js';
+
 /**
  * Cross-component classes for emulating pseudo-classes.
  *
@@ -25,13 +27,3 @@ export const PSEUDO_CLASSES = {
   indeterminate: 'indeterminate',
   invalid: 'invalid',
 };
-
-/**
- * Returns whether the element is disabled.
- *
- * @param element The element to check.
- * @return true if the element is disabled.
- */
-export function isDisabled(element: Element): boolean {
-  return element.matches('.disabled,:disabled,[disabled],[aria-disabled=true]');
-}
