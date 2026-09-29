@@ -1,0 +1,661 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'slider-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.focus-ring;
+@layer md.comp.slider {
+  :host {
+    // Declared on :host (not .slider) so an ancestor cannot leak a value in,
+    // while an author rule on the host element can still override it.
+    --icon-color: var(--md-sys-color-on-surface-variant);
+    --icon-color-active: var(--md-sys-color-on-primary);
+    --state-layer-size: 40px;
+    display: inline-flex;
+    vertical-align: middle;
+    inline-size: 280px;
+  }
+
+  :host(:is(:active, .active):not(:is(:disabled, [disabled], .disabled))) {
+    cursor: grabbing;
+  }
+
+  :host(:is(:disabled, [disabled], .disabled)) {
+    cursor: default;
+  }
+
+  :host([orientation='vertical']) {
+    block-size: 280px;
+    inline-size: auto;
+  }
+
+  .slider {
+    @include slider-tokens.root; // 23 tokens, matching every sibling gb component
+    --_icon-color: var(--icon-color, var(--md-sys-color-on-surface-variant));
+    --_icon-color-active: var(
+      --icon-color-active,
+      var(--md-sys-color-on-primary)
+    );
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+    min-inline-size: 120px;
+    block-size: var(--handle-height);
+    // Note: touch-action: none is deliberately maintained in both horizontal
+    // and vertical orientations to prevent off-axis gestures from scrolling.
+    touch-action: none;
+
+    --_slider-travel: calc(100% - var(--handle-width));
+    --_slider-gap: calc(
+      var(--active-handle-leading-space) + var(--handle-width) / 2
+    );
+    --_slider-origin-split: 3px;
+  }
+
+  .slider.slider-vertical {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    max-inline-size: 100%;
+
+    .slider-label {
+      writing-mode: horizontal-tb;
+      direction: ltr;
+      inset-block-end: auto;
+      right: calc(100% + var(--value-indicator-bottom-space));
+    }
+  }
+
+  :host([size='xs']) .slider,
+  .slider[size='xs'] {
+    @include slider-tokens.xsmall;
+  }
+
+  :host(:is([size='sm'], [size='s'])) .slider,
+  .slider:is([size='sm'], [size='s']) {
+    @include slider-tokens.small;
+  }
+
+  :host(:is([size='md'], [size='m'])) .slider,
+  .slider:is([size='md'], [size='m']) {
+    @include slider-tokens.medium;
+  }
+
+  :host(:is([size='lg'], [size='l'])) .slider,
+  .slider:is([size='lg'], [size='l']) {
+    @include slider-tokens.large;
+  }
+
+  :host([size='xl']) .slider,
+  .slider[size='xl'] {
+    @include slider-tokens.xlarge;
+  }
+
+  :host(:is(:disabled, [disabled], .disabled)) .slider,
+  .slider:is(.disabled, :has(input:disabled)) {
+    @include slider-tokens.disabled;
+  }
+
+  // Track boxes
+  .slider-track {
+    position: absolute;
+    inset-inline: 0;
+    block-size: var(--track-height);
+    margin-block: auto;
+    pointer-events: none;
+  }
+
+  // Note: Boundary stops are inset by an additional 4px from track ends.
+  // Tick indicators remain value-aligned (offset by var(--handle-width) / 2).
+  .slider-boundary-stop {
+    position: absolute;
+    inset-block: 0;
+    margin-block: auto;
+    inline-size: var(--stop-indicator-size);
+    block-size: var(--stop-indicator-size);
+    border-radius: 50%;
+    background-color: var(--stop-indicator-color);
+    pointer-events: none;
+
+    &.slider-start {
+      inset-inline-start: calc(
+        var(--handle-width) / 2 - var(--stop-indicator-size) / 2 + 4px
+      );
+    }
+
+    &.slider-end {
+      inset-inline-end: calc(
+        var(--handle-width) / 2 - var(--stop-indicator-size) / 2 + 4px
+      );
+    }
+
+    &.slider-selected {
+      opacity: 0;
+    }
+  }
+
+  // Inset icon (standard horizontal slider only).
+  // Sourced from Android M3E Slider.md:101-107.
+  // Note: Android clips per-track-box so an icon straddling the boundary is
+  // bicoloured; our single-element version switches colour at the crossover instead.
+  // This is a deliberate simplification.
+  .slider-icon {
+    position: absolute;
+    inset-block: 0;
+    margin-block: auto;
+    // LINT.IfChange(icon_padding)
+    inset-inline-start: 10px;
+    // LINT.ThenChange(slider.ts:icon_padding)
+    inline-size: 24px;
+    block-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    --md-icon-color: var(--_icon-color);
+    --md-icon-size: 24px;
+    color: var(--_icon-color);
+    fill: currentColor;
+    font-size: 24px;
+
+    &.slider-over-active {
+      --md-icon-color: var(--_icon-color-active);
+      color: var(--_icon-color-active);
+    }
+  }
+
+  .slider:not(.disabled) .slider-icon {
+    z-index: 1;
+  }
+
+  .slider-icon,
+  ::slotted([slot='icon']) {
+    pointer-events: none;
+  }
+
+  ::slotted([slot='icon']) {
+    pointer-events: none;
+    --md-icon-color: inherit;
+    --md-icon-size: 24px;
+    color: inherit;
+    fill: currentColor;
+    font-size: 24px;
+    inline-size: 24px;
+    block-size: 24px;
+  }
+
+  .slider-track-box {
+    position: absolute;
+    inset-inline: 0;
+    block-size: 100%;
+    transition: clip-path 80ms ease;
+  }
+
+  .slider-inactive-lead {
+    background-color: var(--inactive-track-color);
+    --_inactive-lead-end: calc(
+      (
+          (
+              var(--handle-width) / 2 + var(--_slider-travel) *
+                var(--__inactive-lead-end-fraction, 0)
+            ) - var(--_slider-gap) *
+            var(--__inactive-lead-gap, 0) - var(--_slider-origin-split) *
+            var(--__origin-lead-gap, 0)
+        ) *
+        var(--__has-inactive-lead, 0)
+    );
+    clip-path: inset(
+      0 calc(100% - var(--_inactive-lead-end)) 0 0 round var(--track-shape)
+        var(--active-track-inner-corner-size)
+        var(--active-track-inner-corner-size) var(--track-shape)
+    );
+  }
+  .slider:not(.slider-vertical) .slider-inactive-lead:dir(rtl) {
+    clip-path: inset(
+      0 0 0 calc(100% - var(--_inactive-lead-end)) round
+        var(--active-track-inner-corner-size) var(--track-shape)
+        var(--track-shape) var(--active-track-inner-corner-size)
+    );
+  }
+
+  .slider.slider-vertical .slider-inactive-lead,
+  .slider.slider-vertical:dir(rtl) .slider-inactive-lead {
+    clip-path: inset(
+      calc(100% - var(--_inactive-lead-end)) 0 0 0 round
+        var(--active-track-inner-corner-size)
+        var(--active-track-inner-corner-size) var(--track-shape)
+        var(--track-shape)
+    );
+  }
+
+  .slider-track-box.slider-active {
+    background-color: var(--active-track-color);
+    --_active-start: calc(
+      (
+          (
+              var(--handle-width) / 2 + var(--_slider-travel) *
+                var(--__active-start-fraction, 0)
+            ) +
+            var(--_slider-gap) * var(--__active-start-gap, 0) +
+            var(--_slider-origin-split) * var(--__origin-lead-gap, 0)
+        ) *
+        (1 - var(--__active-start-at-edge, 0))
+    );
+    --_active-end: calc(
+      (
+          var(--handle-width) / 2 + var(--_slider-travel) *
+            var(--__active-end-fraction, 0)
+        ) - var(--_slider-gap) *
+        var(--__active-end-gap, 1) - var(--_slider-origin-split) *
+        var(--__origin-trail-gap, 0)
+    );
+    --_active-round-start: calc(
+      var(--track-shape) * var(--__active-start-at-edge, 0) +
+        var(--active-track-inner-corner-size) *
+        (1 - var(--__active-start-at-edge, 0))
+    );
+    --_active-round-end: var(--active-track-inner-corner-size);
+
+    clip-path: inset(
+      0 calc(100% - var(--_active-end)) 0 var(--_active-start) round
+        var(--_active-round-start) var(--_active-round-end)
+        var(--_active-round-end) var(--_active-round-start)
+    );
+  }
+  .slider:not(.slider-vertical) .slider-track-box.slider-active:dir(rtl) {
+    clip-path: inset(
+      0 var(--_active-start) 0 calc(100% - var(--_active-end)) round
+        var(--_active-round-end) var(--_active-round-start)
+        var(--_active-round-start) var(--_active-round-end)
+    );
+  }
+
+  .slider.slider-vertical .slider-track-box.slider-active,
+  .slider.slider-vertical:dir(rtl) .slider-track-box.slider-active {
+    clip-path: inset(
+      calc(100% - var(--_active-end)) 0 var(--_active-start) 0 round
+        var(--_active-round-end) var(--_active-round-end)
+        var(--_active-round-start) var(--_active-round-start)
+    );
+  }
+
+  .slider-inactive-trail {
+    background-color: var(--inactive-track-color);
+    --_inactive-trail-start: calc(
+      (
+          var(--handle-width) / 2 + var(--_slider-travel) *
+            var(--__inactive-trail-start-fraction, 0)
+        ) +
+        var(--_slider-gap) * var(--__inactive-trail-gap, 1) +
+        var(--_slider-origin-split) * var(--__origin-trail-gap, 0)
+    );
+    clip-path: inset(
+      0 0 0 var(--_inactive-trail-start) round
+        var(--active-track-inner-corner-size)
+        var(--inactive-track-shape-trailing, var(--track-shape))
+        var(--inactive-track-shape-trailing, var(--track-shape))
+        var(--active-track-inner-corner-size)
+    );
+  }
+  .slider:not(.slider-vertical) .slider-inactive-trail:dir(rtl) {
+    clip-path: inset(
+      0 var(--_inactive-trail-start) 0 0 round
+        var(--inactive-track-shape-trailing, var(--track-shape))
+        var(--active-track-inner-corner-size)
+        var(--active-track-inner-corner-size)
+        var(--inactive-track-shape-trailing, var(--track-shape))
+    );
+  }
+
+  .slider.slider-vertical .slider-inactive-trail,
+  .slider.slider-vertical:dir(rtl) .slider-inactive-trail {
+    clip-path: inset(
+      0 0 var(--_inactive-trail-start) 0 round
+        var(--inactive-track-shape-trailing, var(--track-shape))
+        var(--inactive-track-shape-trailing, var(--track-shape))
+        var(--active-track-inner-corner-size)
+        var(--active-track-inner-corner-size)
+    );
+  }
+
+  // Native inputs
+  input {
+    opacity: 0;
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    background: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    position: absolute;
+    inset-inline: 0;
+    block-size: 100%;
+    inline-size: 100%;
+    cursor: pointer;
+    touch-action: none;
+  }
+
+  .slider:has(.slider-handle.hover) input:not(:disabled) {
+    cursor: grab;
+  }
+
+  .slider:has(.slider-handle.active) input:not(:disabled),
+  .slider:has(input:active) input:not(:disabled) {
+    cursor: grabbing;
+  }
+
+  input:disabled {
+    cursor: default;
+  }
+
+  input::-webkit-slider-runnable-track {
+    background: transparent;
+    block-size: 100%;
+  }
+
+  input::-moz-range-track {
+    background: transparent;
+    block-size: 100%;
+  }
+
+  input::-webkit-slider-thumb {
+    appearance: none;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+    inline-size: var(--handle-width);
+    block-size: var(--handle-height);
+    cursor: inherit;
+  }
+
+  input::-moz-range-thumb {
+    appearance: none;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+    inline-size: var(--handle-width);
+    block-size: var(--handle-height);
+    opacity: 0;
+    transform: scaleX(0);
+    z-index: 2;
+    cursor: inherit;
+  }
+
+  // Range inputs split
+  $_clip-to-start: calc(
+    var(--handle-width) / 2 + var(--_slider-travel) *
+      (
+        var(--__start-fraction, 0) +
+          (var(--__end-fraction, 0) - var(--__start-fraction, 0)) / 2
+      )
+  );
+  $_clip-to-end: calc(100% - $_clip-to-start);
+
+  .slider.slider-ranged input.slider-start {
+    clip-path: inset(0 #{$_clip-to-end} 0 0);
+  }
+  .slider.slider-ranged input.slider-end {
+    clip-path: inset(0 0 0 #{$_clip-to-start});
+  }
+  .slider.slider-ranged.slider-vertical input.slider-start {
+    clip-path: inset(#{$_clip-to-end} 0 0 0);
+  }
+  .slider.slider-ranged.slider-vertical input.slider-end {
+    clip-path: inset(0 0 #{$_clip-to-start} 0);
+  }
+
+  .slider.slider-ranged:not(.slider-vertical) input.slider-start:dir(rtl) {
+    clip-path: inset(0 0 0 #{$_clip-to-end});
+  }
+  .slider.slider-ranged:not(.slider-vertical) input.slider-end:dir(rtl) {
+    clip-path: inset(0 #{$_clip-to-start} 0 0);
+  }
+
+  // Handles
+  .slider-handles {
+    position: absolute;
+    inset-inline: 0;
+    block-size: 100%;
+    pointer-events: none;
+  }
+
+  .slider-handle {
+    position: absolute;
+    inline-size: var(--handle-width);
+    block-size: var(--handle-height);
+    inset-block: 0;
+    margin-block: auto;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    isolation: isolate;
+  }
+
+  .slider-handle.slider-on-top {
+    z-index: 1;
+  }
+
+  .slider-handle.slider-on-top.slider-is-overlapping {
+    .slider-label {
+      outline: var(--with-overlap-handle-outline-width) solid
+        var(--with-overlap-handle-outline-color);
+    }
+  }
+
+  // Note: :not(.active) also fires for keyboard .active, so an overlapping focused handle
+  // loses and regains its ring on keydown/keyup. This is known and intended to be revisited.
+  .slider-handle.slider-on-top.slider-is-overlapping:not(
+      .slider-is-coincident
+    ):not(.active)
+    .slider-handle-nub {
+    border-style: solid;
+    border-width: var(--with-overlap-handle-outline-width);
+    border-color: var(--with-overlap-handle-outline-color);
+  }
+
+  .slider-handle.slider-start {
+    inset-inline-start: calc(
+      var(--_slider-travel) * var(--__start-fraction, 0)
+    );
+  }
+
+  .slider-handle.slider-end {
+    inset-inline-start: calc(var(--_slider-travel) * var(--__end-fraction, 0));
+  }
+
+  .slider-handle-nub {
+    box-sizing: border-box;
+    position: relative;
+    outline: none;
+    inline-size: var(--_handle-nub-width, var(--handle-width));
+    block-size: 100%;
+    border-radius: var(--handle-shape);
+    background: var(--handle-color);
+    transition: inline-size var(--md-sys-motion-duration-short2)
+      var(--md-sys-motion-easing-standard);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline: -6px;
+      inset-block: calc(-1 * var(--focus-ring-offset, 2px));
+      border-radius: 2px;
+      outline: var(--focus-ring-outline);
+      outline-offset: 0;
+      animation: var(--focus-ring-animation, none);
+      pointer-events: none;
+    }
+  }
+
+  :host(:active) .slider:not(.slider-ranged) .slider-handle-nub,
+  :host(.active) .slider-handle.slider-end .slider-handle-nub,
+  .slider-handle:is(.focus-visible, .active) .slider-handle-nub,
+  input.slider-end:focus-visible
+    ~ .slider-handles
+    .slider-handle.slider-end
+    .slider-handle-nub,
+  input.slider-start:focus-visible
+    ~ .slider-handles
+    .slider-handle.slider-start
+    .slider-handle-nub,
+  input.slider-end:active
+    ~ .slider-handles:not(:has(.slider-handle.active))
+    .slider-handle.slider-end
+    .slider-handle-nub,
+  input.slider-start:active
+    ~ .slider-handles:not(:has(.slider-handle.active))
+    .slider-handle.slider-start
+    .slider-handle-nub {
+    --_handle-nub-width: var(--focus-handle-width);
+  }
+
+  input.slider-end:focus-visible
+    ~ .slider-handles
+    .slider-handle.slider-end
+    .slider-handle-nub,
+  input.slider-start:focus-visible
+    ~ .slider-handles
+    .slider-handle.slider-start
+    .slider-handle-nub {
+    --focus-ring-outline: 3px solid var(--md-sys-color-secondary);
+    --focus-ring-offset: 2px;
+    --focus-ring-animation:
+      focus-ring-outer-grow 150ms cubic-bezier(0.2, 0, 0, 1),
+      focus-ring-outer-shrink 450ms 150ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider-handle-nub {
+      transition-duration: 0s;
+    }
+  }
+
+  // Value indicator (label)
+  .slider-label {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset-block-end: calc(100% + var(--value-indicator-bottom-space));
+    min-inline-size: var(--value-indicator-width, 48px);
+    inline-size: max-content;
+    block-size: auto;
+    padding-block: 12px;
+    padding-inline: 16px;
+    border-radius: 100px;
+    background: var(--value-indicator-color);
+    color: var(--value-indicator-label-text-color);
+    font-family: var(
+      --md-sys-typescale-label-large-font,
+      var(--md-ref-typeface-plain, Roboto, sans-serif)
+    );
+    font-size: var(--md-sys-typescale-label-large-size, 14px);
+    line-height: var(--md-sys-typescale-label-large-line-height, 20px);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking, 0.1px);
+    font-weight: var(--md-sys-typescale-label-large-weight, 500);
+    opacity: 0;
+    transform: scale(0.8);
+    transform-origin: center bottom;
+    transition:
+      opacity var(--md-sys-motion-duration-short2, 100ms)
+        var(--md-sys-motion-easing-emphasized, cubic-bezier(0.2, 0, 0, 1)),
+      transform var(--md-sys-motion-duration-short2, 100ms)
+        var(--md-sys-motion-easing-emphasized, cubic-bezier(0.2, 0, 0, 1));
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .slider-label-content {
+    z-index: 1;
+  }
+
+  :host(.hover) .slider-handle.slider-end .slider-label,
+  :host(.active) .slider-handle.slider-end .slider-label,
+  .slider-handle:is(.hover, .active, .focus-visible) .slider-label,
+  input.slider-end:focus-visible
+    ~ .slider-handles
+    .slider-handle.slider-end
+    .slider-label,
+  input.slider-start:focus-visible
+    ~ .slider-handles
+    .slider-handle.slider-start
+    .slider-label {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider-label {
+      transition-duration: 0s;
+    }
+  }
+
+  // Stop indicators
+  .slider-track-box.slider-ticks {
+    --_stop-scale: min(var(--__tick-count, 0), 1);
+    --_stop-indicator-radius: calc(
+      var(--stop-indicator-size) / 2 * var(--_stop-scale)
+    );
+    --_stop-pitch: calc(
+      (100% - var(--handle-width) - 8px) / max(var(--__tick-count, 1), 1)
+    );
+    --_stop-indicator-offset: calc(var(--handle-width) / 2 + 4px);
+    background-image: radial-gradient(
+      circle at var(--_stop-indicator-offset) center,
+      var(--_stop-indicator-current-color) 0 var(--_stop-indicator-radius),
+      transparent var(--_stop-indicator-radius)
+    );
+    background-size: var(--_stop-pitch) 100%;
+  }
+  .slider.slider-vertical .slider-track-box.slider-ticks {
+    background-image: radial-gradient(
+      circle at center var(--_stop-indicator-offset),
+      var(--_stop-indicator-current-color) 0 var(--_stop-indicator-radius),
+      transparent var(--_stop-indicator-radius)
+    );
+    background-size: 100% var(--_stop-pitch);
+  }
+  .slider-inactive-lead,
+  .slider-inactive-trail {
+    --_stop-indicator-current-color: var(--stop-indicator-color);
+  }
+  .slider-track-box.slider-active {
+    --_stop-indicator-current-color: var(--stop-indicator-color-selected);
+  }
+
+  // Forced colors
+  @media (forced-colors: active) {
+    .slider {
+      --active-track-color: Highlight;
+      --handle-color: Highlight;
+      --inactive-track-color: ButtonBorder;
+      --stop-indicator-color: ButtonText;
+      --stop-indicator-color-selected: Canvas;
+    }
+    .slider:is(.disabled, :has(input:disabled)) {
+      --active-track-color: GrayText;
+      --handle-color: GrayText;
+      --inactive-track-color: GrayText;
+    }
+    .slider-inactive-lead,
+    .slider-inactive-trail,
+    .slider-track-box.slider-active,
+    .slider-handle-nub,
+    .slider-boundary-stop {
+      forced-color-adjust: none;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .slider {
+      --state-layer-size: 48px;
+    }
+  }
+}

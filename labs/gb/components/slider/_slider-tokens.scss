@@ -1,0 +1,82 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  // LINT.IfChange
+  --active-track-color: var(--md-sys-color-primary);
+  --inactive-track-color: var(--md-sys-color-secondary-container);
+  --handle-color: var(--md-sys-color-primary);
+  --handle-shape: var(--md-sys-shape-corner-full);
+  --handle-width: 4px;
+  --focus-handle-width: 2px;
+  --handle-height: 44px;
+  --active-handle-leading-space: 6px;
+  --active-track-inner-corner-size: 2px;
+  --stop-indicator-color: var(--md-sys-color-on-secondary-container);
+  --stop-indicator-color-selected: var(--md-sys-color-on-primary);
+  --stop-indicator-size: 4px;
+  --stop-indicator-min-spacing: 8px;
+  --track-height: 16px;
+  --track-shape: 8px;
+  --inactive-track-shape-trailing: 8px;
+  --value-indicator-color: var(--md-sys-color-inverse-surface);
+  --value-indicator-label-text-color: var(--md-sys-color-inverse-on-surface);
+  --value-indicator-bottom-space: 4px;
+  --value-indicator-width: 48px;
+  // Hit-slop size used for input pointer bounds checking.
+  // Note: inherit is intentional here. It allows
+  // the handle to inherit --state-layer-size from :host (40px) or coarse media
+  // query (48px) defined in slider.scss. Do not replace with a fallback.
+  --state-layer-size: inherit;
+  --with-overlap-handle-outline-color: var(--md-sys-color-surface);
+  --with-overlap-handle-outline-width: 1px;
+  // LINT.ThenChange(slider-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+// Note: Do not add color properties to size mixins; their specificity (0,3,0) would outrank @mixin disabled (0,2,1).
+@mixin xsmall {
+  --handle-height: 44px;
+  --track-height: 16px;
+  --track-shape: 8px;
+  --inactive-track-shape-trailing: 8px;
+}
+
+@mixin small {
+  --handle-height: 44px;
+  --track-height: 24px;
+  --track-shape: 8px;
+  --inactive-track-shape-trailing: 8px;
+}
+
+@mixin medium {
+  --handle-height: 52px;
+  --track-height: 40px;
+  --track-shape: 12px;
+  --inactive-track-shape-trailing: 12px;
+}
+
+@mixin large {
+  --handle-height: 68px;
+  --track-height: 56px;
+  --track-shape: 16px;
+  --inactive-track-shape-trailing: 16px;
+}
+
+@mixin xlarge {
+  --handle-height: 108px;
+  --track-height: 96px;
+  --track-shape: 28px;
+  --inactive-track-shape-trailing: 28px;
+}
+
+@mixin disabled {
+  --handle-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --active-track-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --inactive-track-color: hsl(from var(--md-sys-color-on-surface) h s l / 12%);
+  --stop-indicator-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --stop-indicator-color-selected: hsl(
+    from var(--md-sys-color-inverse-on-surface) h s l / 38%
+  );
+}
