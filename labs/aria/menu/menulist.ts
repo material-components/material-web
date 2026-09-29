@@ -6,7 +6,7 @@
 
 /// <reference types="../../../types/popover.d.ts" />
 
-import {CSSResultOrNative, LitElement, css, html} from 'lit';
+import {CSSResultOrNative, LitElement, PropertyValues, css, html} from 'lit';
 import {property} from 'lit/decorators.js';
 import {
   internals,
@@ -79,15 +79,20 @@ export class AriaMenulistElement extends baseClass {
   @property({reflect: true})
   override popover = 'auto';
 
-  @property({reflect: true})
-  focusGroup = 'menu';
-
   constructor() {
     super();
     this[internals].role = 'menu';
     this[internals].ariaOrientation = 'vertical';
     this.addEventListener('toggle', this.handleToggle.bind(this));
     this.addEventListener('focusout', this.handleFocusout.bind(this));
+  }
+
+  protected override updated(changedProperties: PropertyValues<this>) {
+    super.updated(changedProperties);
+
+    if (!this.hasAttribute('focusgroup')) {
+      this.setAttribute('focusgroup', 'menu');
+    }
   }
 
   override render() {

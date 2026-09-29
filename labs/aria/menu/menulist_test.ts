@@ -76,10 +76,9 @@ describe('md-aria-menulist', () => {
       expect(menulist.getAttribute('popover')).toBe('auto');
     });
 
-    it('defaults focusgroup attribute and property to "menu"', async () => {
+    it('defaults focusgroup attribute to "menu"', async () => {
       const {menulist} = await setUpTest();
 
-      expect(menulist.focusGroup).toBe('menu');
       expect(menulist.getAttribute('focusgroup')).toBe('menu');
     });
   });
