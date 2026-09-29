@@ -1,0 +1,123 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  // LINT.IfChange
+  --between-space: 8px;
+  --pressed-item-width-multiplier: 1.15;
+  --motion-spring-fast-spatial: linear(
+    0,
+    0.099,
+    0.317,
+    0.561,
+    0.775,
+    0.934,
+    1.034,
+    1.083,
+    1.095,
+    1.084,
+    1.063,
+    1.04,
+    1.02,
+    1.005,
+    0.996,
+    0.992,
+    0.991,
+    0.992,
+    0.994,
+    0.996,
+    1
+  );
+  --motion-spring-fast-spatial-duration: 350ms;
+  --inner-corner-size: var(--md-sys-shape-corner-sm);
+  --pressed-inner-corner-size: var(--md-sys-shape-corner-xs);
+  --outer-corner-size: calc(var(--container-height) / 2);
+  --outer-corner-square-size: var(--md-sys-shape-corner-sm);
+  // LINT.ThenChange(button-group-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin standard-xs {
+  --between-space: 18px;
+}
+
+@mixin standard-sm {
+  --between-space: 12px;
+}
+
+@mixin standard-md {
+  --between-space: 8px;
+}
+
+@mixin standard-lg {
+  --between-space: 8px;
+}
+
+@mixin standard-xl {
+  --between-space: 8px;
+}
+
+@mixin connected {
+  --between-space: 2px;
+}
+
+@mixin inner-corner-xs {
+  // Design override of GM3 v35: inner corners for XS are 4px (corner-xs)
+  --inner-corner-size: var(--md-sys-shape-corner-xs);
+  --pressed-inner-corner-size: var(--md-sys-shape-corner-xs);
+}
+
+@mixin inner-corner-sm {
+  --inner-corner-size: var(--md-sys-shape-corner-sm);
+  --pressed-inner-corner-size: var(--md-sys-shape-corner-xs);
+}
+
+@mixin inner-corner-md {
+  --inner-corner-size: var(--md-sys-shape-corner-sm);
+  --pressed-inner-corner-size: var(--md-sys-shape-corner-xs);
+}
+
+@mixin inner-corner-lg {
+  --inner-corner-size: var(--md-sys-shape-corner-lg);
+  --pressed-inner-corner-size: var(--md-sys-shape-corner-md);
+}
+
+@mixin inner-corner-xl {
+  --inner-corner-size: var(--md-sys-shape-corner-lg-increased);
+  --pressed-inner-corner-size: var(--md-sys-shape-corner-lg);
+}
+
+@mixin outer-corner-round {
+  --outer-corner-size: calc(var(--container-height) / 2);
+}
+
+@mixin outer-corner-square-xs {
+  // Design override of GM3 v35: outer corner square XS is 4px (corner-xs)
+  --outer-corner-square-size: var(--md-sys-shape-corner-xs);
+  --outer-corner-size: var(--md-sys-shape-corner-xs);
+}
+
+@mixin outer-corner-square-sm {
+  // Design override of GM3 v35: outer corner square SM is 8px (corner-sm)
+  --outer-corner-square-size: var(--md-sys-shape-corner-sm);
+  --outer-corner-size: var(--md-sys-shape-corner-sm);
+}
+
+@mixin outer-corner-square-md {
+  // Design override of GM3 v35: outer corner square MD is 8px (corner-sm)
+  --outer-corner-square-size: var(--md-sys-shape-corner-sm);
+  --outer-corner-size: var(--md-sys-shape-corner-sm);
+}
+
+@mixin outer-corner-square-lg {
+  // Design override of GM3 v35: outer corner square LG is 16px (corner-lg)
+  --outer-corner-square-size: var(--md-sys-shape-corner-lg);
+  --outer-corner-size: var(--md-sys-shape-corner-lg);
+}
+
+@mixin outer-corner-square-xl {
+  // Design override of GM3 v35: outer corner square XL is 20px (corner-lg-increased)
+  --outer-corner-square-size: var(--md-sys-shape-corner-lg-increased);
+  --outer-corner-size: var(--md-sys-shape-corner-lg-increased);
+}

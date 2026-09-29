@@ -1,0 +1,282 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'button-group-tokens';
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.button;
+
+@layer md.comp.button-group {
+  .btn-group {
+    @include button-group-tokens.root;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--between-space);
+    overflow: visible;
+    interpolate-size: allow-keywords;
+  }
+
+  // Prevent button labels from wrapping when transitions undershoot
+  .btn-group > .btn,
+  .btn-group > * {
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-inline-size: max-content;
+  }
+
+  // Variant layout: standard (default)
+  .btn-group-standard,
+  .btn-group:not(.btn-group-connected) {
+    flex-wrap: wrap;
+    @include button-group-tokens.standard-sm;
+
+    &:has(> :is([size='xs'], .btn-xs)) {
+      @include button-group-tokens.standard-xs;
+    }
+
+    &:has(> :is([size='sm'], .btn-sm)) {
+      @include button-group-tokens.standard-sm;
+    }
+
+    &:has(> :is([size='md'], .btn-md)) {
+      @include button-group-tokens.standard-md;
+    }
+
+    &:has(> :is([size='lg'], .btn-lg)) {
+      @include button-group-tokens.standard-lg;
+    }
+
+    &:has(> :is([size='xl'], .btn-xl)) {
+      @include button-group-tokens.standard-xl;
+    }
+  }
+
+  // Connected variant layout and gaps
+  .btn-group-connected {
+    flex-wrap: nowrap;
+    @include button-group-tokens.connected;
+    @include button-group-tokens.inner-corner-sm;
+    @include button-group-tokens.outer-corner-round;
+
+    &:has(> :is([size='xs'], .btn-xs)) {
+      @include button-group-tokens.inner-corner-xs;
+    }
+
+    &:has(> :is([size='sm'], .btn-sm)) {
+      @include button-group-tokens.inner-corner-sm;
+    }
+
+    &:has(> :is([size='md'], .btn-md)) {
+      @include button-group-tokens.inner-corner-md;
+    }
+
+    &:has(> :is([size='lg'], .btn-lg)) {
+      @include button-group-tokens.inner-corner-lg;
+    }
+
+    &:has(> :is([size='xl'], .btn-xl)) {
+      @include button-group-tokens.inner-corner-xl;
+    }
+  }
+
+  // Default corners for all buttons in connected group:
+  .btn-group-connected > .btn,
+  .btn-group-connected > *::part(btn) {
+    --outer-corner-size: calc(var(--container-height) / 2);
+    border-radius: var(--inner-corner-size);
+    transition:
+      border-radius var(--motion-spring-fast-spatial-duration)
+        var(--motion-spring-fast-spatial),
+      var(--ripple-transition);
+
+    &.btn-xs,
+    &:is([size='xs'], .btn-xs)::part(btn) {
+      @include button-group-tokens.inner-corner-xs;
+    }
+
+    &.btn-sm,
+    &:is([size='sm'], .btn-sm)::part(btn) {
+      @include button-group-tokens.inner-corner-sm;
+    }
+
+    &.btn-md,
+    &:is([size='md'], .btn-md)::part(btn) {
+      @include button-group-tokens.inner-corner-md;
+    }
+
+    &.btn-lg,
+    &:is([size='lg'], .btn-lg)::part(btn) {
+      @include button-group-tokens.inner-corner-lg;
+    }
+
+    &.btn-xl,
+    &:is([size='xl'], .btn-xl)::part(btn) {
+      @include button-group-tokens.inner-corner-xl;
+    }
+  }
+
+  // Square outer corner override for unselected buttons in connected group
+  .btn-group-connected
+    > [square]:not([selected]):not([aria-pressed='true'])::part(btn),
+  .btn-group-connected
+    > .btn.btn-square:not(.btn-selected):not([aria-pressed='true']) {
+    --outer-corner-size: var(--outer-corner-square-size);
+  }
+
+  // Child button square size overrides
+  .btn-group-connected
+    > [size='xs'][square]:not([selected]):not([aria-pressed='true'])::part(btn),
+  .btn-group-connected
+    > .btn-xs.btn-square:not(.btn-selected):not([aria-pressed='true']) {
+    --outer-corner-size: var(--md-sys-shape-corner-xs);
+  }
+
+  .btn-group-connected
+    > [size='sm'][square]:not([selected]):not([aria-pressed='true'])::part(btn),
+  .btn-group-connected
+    > .btn-sm.btn-square:not(.btn-selected):not([aria-pressed='true']) {
+    --outer-corner-size: var(--md-sys-shape-corner-sm);
+  }
+
+  .btn-group-connected
+    > [size='md'][square]:not([selected]):not([aria-pressed='true'])::part(btn),
+  .btn-group-connected
+    > .btn-md.btn-square:not(.btn-selected):not([aria-pressed='true']) {
+    --outer-corner-size: var(--md-sys-shape-corner-sm);
+  }
+
+  .btn-group-connected
+    > [size='lg'][square]:not([selected]):not([aria-pressed='true'])::part(btn),
+  .btn-group-connected
+    > .btn-lg.btn-square:not(.btn-selected):not([aria-pressed='true']) {
+    --outer-corner-size: var(--md-sys-shape-corner-lg);
+  }
+
+  .btn-group-connected
+    > [size='xl'][square]:not([selected]):not([aria-pressed='true'])::part(btn),
+  .btn-group-connected
+    > .btn-xl.btn-square:not(.btn-selected):not([aria-pressed='true']) {
+    --outer-corner-size: var(--md-sys-shape-corner-lg-increased);
+  }
+
+  // Selected button in connected group blooms all corners to full pill in any position
+  .btn-group-connected > .btn:is(.btn-selected, [aria-pressed='true']),
+  .btn-group-connected > :is([selected], [aria-pressed='true'])::part(btn) {
+    --inner-corner-size: calc(var(--container-height) / 2);
+    --outer-corner-size: calc(var(--container-height) / 2);
+  }
+
+  // Pressed button in connected group tightens inner corners to pressed token (declared last so it wins over selected)
+  .btn-group-connected > .btn:active:not(:disabled, .disabled),
+  .btn-group-connected > :active:not([disabled], [soft-disabled])::part(btn) {
+    --inner-corner-size: var(--pressed-inner-corner-size);
+  }
+
+  // First child outer start corners (logical properties ensure correct LTR and RTL rendering)
+  .btn-group-connected
+    > .btn:is(:first-child, :nth-child(1 of .btn:not([hidden]))):not(
+      :only-child
+    ),
+  .btn-group-connected
+    > :is(:first-child, :nth-child(1 of :not([hidden]))):not(:only-child)::part(
+      btn
+    ) {
+    border-start-start-radius: var(--outer-corner-size);
+    border-end-start-radius: var(--outer-corner-size);
+    border-start-end-radius: var(--inner-corner-size);
+    border-end-end-radius: var(--inner-corner-size);
+  }
+
+  // Last child outer end corners (logical properties ensure correct LTR and RTL rendering)
+  .btn-group-connected
+    > .btn:is(:last-child, :nth-last-child(1 of .btn:not([hidden]))):not(
+      :only-child
+    ),
+  .btn-group-connected
+    > :is(:last-child, :nth-last-child(1 of :not([hidden]))):not(
+      :only-child
+    )::part(btn) {
+    border-start-start-radius: var(--inner-corner-size);
+    border-end-start-radius: var(--inner-corner-size);
+    border-start-end-radius: var(--outer-corner-size);
+    border-end-end-radius: var(--outer-corner-size);
+  }
+
+  // Single-child group (both first and last)
+  .btn-group-connected > .btn:only-child,
+  .btn-group-connected > :only-child::part(btn) {
+    border-radius: var(--outer-corner-size);
+    border-start-start-radius: var(--outer-corner-size);
+    border-end-start-radius: var(--outer-corner-size);
+    border-start-end-radius: var(--outer-corner-size);
+    border-end-end-radius: var(--outer-corner-size);
+  }
+
+  // Outlined selected button has no outline in both standard and connected variants
+  .btn-group > .btn.btn-outlined:is(.btn-selected, [aria-pressed='true']),
+  .btn-group
+    > [color='outlined']:is([selected], [aria-pressed='true'])::part(btn) {
+    --outline-color: transparent;
+    border-color: transparent;
+    background-color: var(--md-sys-color-inverse-surface);
+    color: var(--md-sys-color-inverse-on-surface);
+  }
+
+  // Connected XS and SM 48px min-inline-size
+  .btn-group-connected > .btn:is(.btn-xs, .btn-sm),
+  .btn-group-connected > :is([size='xs'], [size='sm']) {
+    min-inline-size: 48px;
+  }
+
+  // Focus ring stacking
+  .btn-group > .btn:focus-within,
+  .btn-group > :focus-within {
+    z-index: 1;
+  }
+
+  // Standard press width expansion
+  @supports (width: calc-size(auto, size)) {
+    .btn-group:not(.btn-group-connected) > .btn,
+    .btn-group:not(.btn-group-connected) > * {
+      transition: width var(--motion-spring-fast-spatial-duration)
+        var(--motion-spring-fast-spatial);
+
+      &:active:not(:disabled, .disabled),
+      &:active:not([disabled], [soft-disabled]) {
+        width: calc-size(
+          auto,
+          max(size, size * var(--pressed-item-width-multiplier))
+        );
+      }
+    }
+  }
+
+  // Button positioning for touch target anchoring
+  .btn-group > .btn:is(.btn-xs, .btn-sm),
+  .btn-group > :is([size='xs'], [size='sm']) {
+    position: relative;
+
+    &::before,
+    &::part(btn)::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 48px;
+      min-height: 48px;
+      z-index: 0;
+    }
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    .btn-group > .btn,
+    .btn-group > *::part(btn),
+    .btn-group > * {
+      transition-duration: 0s;
+    }
+  }
+}
