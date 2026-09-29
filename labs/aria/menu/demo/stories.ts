@@ -5,6 +5,7 @@
  */
 
 import '@material/web/labs/aria/menu/md-aria-fieldset.js';
+import '@material/web/labs/aria/menu/md-aria-menubar.js';
 import '@material/web/labs/aria/menu/md-aria-menuitem.js';
 import '@material/web/labs/aria/menu/md-aria-menulist.js';
 
@@ -12,6 +13,21 @@ import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';
 
 export interface StoryKnobs {}
+
+const menubar: MaterialStoryInit<StoryKnobs> = {
+  name: 'Menubar',
+  styles: css``,
+  render(knobs) {
+    return html`
+      <md-aria-menubar>
+        <md-aria-menuitem>Item 1</md-aria-menuitem>
+        <md-aria-menuitem>Item 2</md-aria-menuitem>
+        <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
+        <md-aria-menuitem>Item 4</md-aria-menuitem>
+      </md-aria-menubar>
+    `;
+  },
+};
 
 const menu: MaterialStoryInit<StoryKnobs> = {
   name: 'Menu',
@@ -217,6 +233,7 @@ const menuWithStyles: MaterialStoryInit<StoryKnobs> = {
 };
 
 export const stories = [
+  menubar,
   menu,
   menuWithDialog,
   menuWithPopover,
