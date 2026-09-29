@@ -41,6 +41,10 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       }),
     }),
     new Knob('docked', {ui: boolInput()}),
+    new Knob('hideLabels', {ui: boolInput()}),
+    new Knob('disabledLeadingSlot', {ui: boolInput()}),
+    new Knob('disabledDefaultSlot', {ui: boolInput()}),
+    new Knob('disabledTrailingSlot', {ui: boolInput()}),
   ],
 );
 
