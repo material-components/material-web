@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LitElement, PropertyValues, html, nothing} from 'lit';
+import {LitElement, PropertyValues, html, isServer, nothing} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {live} from 'lit/directives/live.js';
@@ -15,6 +15,10 @@ import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
+import {
+  afterDispatch,
+  setupDispatchHooks,
+} from '../../internal/events/dispatch-hooks.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
   createValidator,
@@ -99,6 +103,31 @@ export abstract class TextField extends textFieldBaseClass {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
+
+  constructor() {
+    super();
+    if (isServer) {
+      return;
+    }
+
+    setupDispatchHooks(this, 'keydown');
+    this.addEventListener('keydown', (event: KeyboardEvent) => {
+      afterDispatch(event, () => {
+        const ignoreEvent =
+          event.defaultPrevented ||
+          event.key !== 'Enter' ||
+          event.isComposing ||
+          this.disabled ||
+          this.type === 'textarea' ||
+          event.composedPath()[0] !== this.inputOrTextarea;
+        if (ignoreEvent) {
+          return;
+        }
+
+        this.form?.requestSubmit();
+      });
+    });
+  }
 
   /**
    * Gets or sets whether or not the text field is in a visually invalid state.
