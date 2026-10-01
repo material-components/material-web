@@ -29,6 +29,8 @@ const baseClass = mixinDelegatesAria(mixinElementInternals(LitElement));
 /**
  * A Material Design list item component.
  *
+ * @customElement md-gb-list-item
+ *
  * @slot - Used to display the item's primary label.
  * @slot avatar - Used to display a circular avatar before the item's content.
  * @slot leading - Used to display icons and content before the item's main content.

@@ -25,6 +25,8 @@ const baseClass = mixinElementInternals(LitElement);
 /**
  * A Material Design menu group component.
  *
+ * @customElement md-gb-menu-group
+ *
  * @slot - Used to display the menu group's items.
  */
 export class MenuGroupElement extends baseClass {

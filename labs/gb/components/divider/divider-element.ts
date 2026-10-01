@@ -15,6 +15,8 @@ import {divider} from './divider.js';
 /**
  * A Material Design divider component.
  *
+ * @customElement md-gb-divider
+ *
  * @csspart divider - The divider element.
  * @cssprop --color
  * @cssprop --thickness

@@ -13,6 +13,7 @@ import {styles as appBarStyles} from './app-bar.cssresult.js';
 /**
  * A Material Design Expressive App Bar component (`md-gb-app-bar`).
  *
+ * @customElement md-gb-app-bar
  * @slot - Used to display the primary title text of the app bar.
  * @slot subtitle - Used to display an optional subtitle below the title in medium/large bars.
  * @slot leading - Used to display the leading navigation icon button (e.g. menu or back).

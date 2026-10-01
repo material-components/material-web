@@ -45,7 +45,9 @@ interface ElementTableSection {
 async function updateApiDocs() {
   const packagePath = path.resolve('.');
   // Analyzes the entire material-web repository.
-  const analyzer = createPackageAnalyzer(packagePath as AbsolutePath);
+  const analyzer = createPackageAnalyzer(packagePath as AbsolutePath, {
+    exclude: ['**/demo/**', 'testing/**', '**/harness*']
+  });
   const documentationFileNames = Object.keys(docsToElementMapping);
 
   const filesWritten: Array<Promise<void>> = [];

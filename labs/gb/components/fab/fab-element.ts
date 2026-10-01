@@ -19,6 +19,8 @@ import {fab, type FabColor, type FabSize} from './fab.js';
 /**
  * A Material Design fab component.
  *
+ * @customElement md-gb-fab
+ *
  * @slot - Used to display an icon and optional label.
  * @csspart fab - The FAB's root element.
  * @cssprop --container-color

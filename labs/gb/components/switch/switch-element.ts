@@ -47,6 +47,8 @@ const baseClass = mixinDelegatesAria(
 /**
  * A Material Design switch component.
  *
+ * @customElement md-gb-switch
+ *
  * @slot off-icon - Used to show an icon when the switch is unselected.
  * @slot on-icon - Used to show an icon when the switch is selected.
  * @fires {InputEvent} input - Fired when the switch is selected or unselected. --bubbles --composed

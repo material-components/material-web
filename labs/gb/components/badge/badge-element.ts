@@ -11,6 +11,8 @@ import {styles as badgeStyles} from './badge.cssresult.js';
 
 /**
  * A Material Design badge component.
+ *
+ * @customElement md-gb-badge
  */
 export class BadgeElement extends LitElement {
   /** @nocollapse */

@@ -12,6 +12,8 @@ import {generateManifest} from '@lit-labs/gen-manifest';
 import {writeFileTree} from '@lit-labs/gen-utils/lib/file-utils.js';
 import type {Package as Manifest, Module} from 'custom-elements-manifest';
 import * as path from 'path';
+import {updateCemInheritance} from 'custom-elements-manifest-inheritance';
+import {generateJetBrainsWebTypes} from 'custom-element-jet-brains-integration';
 
 const ROOT = process.cwd() as AbsolutePath;
 
@@ -52,6 +54,10 @@ await writeFileTree(ROOT, {
   'custom-elements.json': JSON.stringify(manifest, null, 2),
 });
 console.log('Generated custom-elements.json');
+updateCemInheritance(manifest as any);
+
+generateJetBrainsWebTypes(manifest as any, {packageJson: true});
+console.log('Generated JetBrains Web Types');
 
 async function generateManifestFromTsconfig(basePath: AbsolutePath) {
   const analyzer = createPackageAnalyzer(basePath);

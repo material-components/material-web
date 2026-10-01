@@ -22,6 +22,8 @@ const baseClass = mixinElementInternals(LitElement);
 /**
  * A Material Design list component.
  *
+ * @customElement md-gb-list
+ *
  * @slot - Used to display list items.
  * @csspart list - The list's root element.
  * @cssprop --container-shape
