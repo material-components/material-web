@@ -108,8 +108,7 @@ $supported-tokens: (
   'with-label-bottom-space',
   'with-label-top-space',
   'with-leading-content-leading-space',
-  'with-trailing-content-trailing-space',
-  // go/keep-sorted end
+  'with-trailing-content-trailing-space' // go/keep-sorted end
 );
 
 $_default: (
@@ -133,138 +132,233 @@ $_default: (
     // go/keep-sorted start
     'active-indicator-color': map.get($text-field, 'active-indicator-color'),
     'active-indicator-height': map.get($text-field, 'active-indicator-height'),
-    'bottom-space': if($exclude-hardcoded-values, null, 16px),
+    'bottom-space': if(not sass($exclude-hardcoded-values): 16px),
     'container-color': map.get($text-field, 'container-color'),
     'container-shape': map.get($text-field, 'container-shape'),
     'content-color': map.get($text-field, 'input-text-color'),
     'content-font': map.get($text-field, 'input-text-font'),
     'content-line-height': map.get($text-field, 'input-text-line-height'),
     'content-size': map.get($text-field, 'input-text-size'),
-    'content-space': if($exclude-hardcoded-values, null, 16px),
+    'content-space': if(not sass($exclude-hardcoded-values): 16px),
     'content-weight': map.get($text-field, 'input-text-weight'),
-    'disabled-active-indicator-color':
-      map.get($text-field, 'disabled-active-indicator-color'),
-    'disabled-active-indicator-height':
-      map.get($text-field, 'disabled-active-indicator-height'),
-    'disabled-active-indicator-opacity':
-      map.get($text-field, 'disabled-active-indicator-opacity'),
+    'disabled-active-indicator-color': map.get(
+        $text-field,
+        'disabled-active-indicator-color'
+      ),
+    'disabled-active-indicator-height': map.get(
+        $text-field,
+        'disabled-active-indicator-height'
+      ),
+    'disabled-active-indicator-opacity': map.get(
+        $text-field,
+        'disabled-active-indicator-opacity'
+      ),
     'disabled-container-color': map.get($text-field, 'disabled-container-color'),
-    'disabled-container-opacity':
-      map.get($text-field, 'disabled-container-opacity'),
+    'disabled-container-opacity': map.get(
+        $text-field,
+        'disabled-container-opacity'
+      ),
     'disabled-content-color': map.get($text-field, 'disabled-input-text-color'),
-    'disabled-content-opacity':
-      map.get($text-field, 'disabled-input-text-opacity'),
-    'disabled-label-text-color':
-      map.get($text-field, 'disabled-label-text-color'),
-    'disabled-label-text-opacity':
-      map.get($text-field, 'disabled-label-text-opacity'),
-    'disabled-leading-content-color':
-      map.get($text-field, 'disabled-leading-icon-color'),
-    'disabled-leading-content-opacity':
-      map.get($text-field, 'disabled-leading-icon-opacity'),
-    'disabled-supporting-text-color':
-      map.get($text-field, 'disabled-supporting-text-color'),
-    'disabled-supporting-text-opacity':
-      map.get($text-field, 'disabled-supporting-text-opacity'),
-    'disabled-trailing-content-color':
-      map.get($text-field, 'disabled-trailing-icon-color'),
-    'disabled-trailing-content-opacity':
-      map.get($text-field, 'disabled-trailing-icon-opacity'),
-    'error-active-indicator-color':
-      map.get($text-field, 'error-active-indicator-color'),
+    'disabled-content-opacity': map.get(
+        $text-field,
+        'disabled-input-text-opacity'
+      ),
+    'disabled-label-text-color': map.get(
+        $text-field,
+        'disabled-label-text-color'
+      ),
+    'disabled-label-text-opacity': map.get(
+        $text-field,
+        'disabled-label-text-opacity'
+      ),
+    'disabled-leading-content-color': map.get(
+        $text-field,
+        'disabled-leading-icon-color'
+      ),
+    'disabled-leading-content-opacity': map.get(
+        $text-field,
+        'disabled-leading-icon-opacity'
+      ),
+    'disabled-supporting-text-color': map.get(
+        $text-field,
+        'disabled-supporting-text-color'
+      ),
+    'disabled-supporting-text-opacity': map.get(
+        $text-field,
+        'disabled-supporting-text-opacity'
+      ),
+    'disabled-trailing-content-color': map.get(
+        $text-field,
+        'disabled-trailing-icon-color'
+      ),
+    'disabled-trailing-content-opacity': map.get(
+        $text-field,
+        'disabled-trailing-icon-opacity'
+      ),
+    'error-active-indicator-color': map.get(
+        $text-field,
+        'error-active-indicator-color'
+      ),
     'error-content-color': map.get($text-field, 'error-input-text-color'),
-    'error-focus-active-indicator-color':
-      map.get($text-field, 'error-focus-active-indicator-color'),
-    'error-focus-content-color':
-      map.get($text-field, 'error-focus-leading-icon-color'),
-    'error-focus-label-text-color':
-      map.get($text-field, 'error-focus-label-text-color'),
-    'error-focus-leading-content-color':
-      map.get($text-field, 'error-focus-leading-icon-color'),
-    'error-focus-supporting-text-color':
-      map.get($text-field, 'error-focus-supporting-text-color'),
-    'error-focus-trailing-content-color':
-      map.get($text-field, 'error-focus-trailing-icon-color'),
-    'error-hover-active-indicator-color':
-      map.get($text-field, 'error-hover-active-indicator-color'),
-    'error-hover-content-color':
-      map.get($text-field, 'error-hover-input-text-color'),
-    'error-hover-label-text-color':
-      map.get($text-field, 'error-hover-label-text-color'),
-    'error-hover-leading-content-color':
-      map.get($text-field, 'error-hover-leading-icon-color'),
-    'error-hover-state-layer-color':
-      map.get($text-field, 'error-hover-state-layer-color'),
-    'error-hover-state-layer-opacity':
-      map.get($text-field, 'error-hover-state-layer-opacity'),
-    'error-hover-supporting-text-color':
-      map.get($text-field, 'error-hover-supporting-text-color'),
-    'error-hover-trailing-content-color':
-      map.get($text-field, 'error-hover-trailing-icon-color'),
+    'error-focus-active-indicator-color': map.get(
+        $text-field,
+        'error-focus-active-indicator-color'
+      ),
+    'error-focus-content-color': map.get(
+        $text-field,
+        'error-focus-leading-icon-color'
+      ),
+    'error-focus-label-text-color': map.get(
+        $text-field,
+        'error-focus-label-text-color'
+      ),
+    'error-focus-leading-content-color': map.get(
+        $text-field,
+        'error-focus-leading-icon-color'
+      ),
+    'error-focus-supporting-text-color': map.get(
+        $text-field,
+        'error-focus-supporting-text-color'
+      ),
+    'error-focus-trailing-content-color': map.get(
+        $text-field,
+        'error-focus-trailing-icon-color'
+      ),
+    'error-hover-active-indicator-color': map.get(
+        $text-field,
+        'error-hover-active-indicator-color'
+      ),
+    'error-hover-content-color': map.get(
+        $text-field,
+        'error-hover-input-text-color'
+      ),
+    'error-hover-label-text-color': map.get(
+        $text-field,
+        'error-hover-label-text-color'
+      ),
+    'error-hover-leading-content-color': map.get(
+        $text-field,
+        'error-hover-leading-icon-color'
+      ),
+    'error-hover-state-layer-color': map.get(
+        $text-field,
+        'error-hover-state-layer-color'
+      ),
+    'error-hover-state-layer-opacity': map.get(
+        $text-field,
+        'error-hover-state-layer-opacity'
+      ),
+    'error-hover-supporting-text-color': map.get(
+        $text-field,
+        'error-hover-supporting-text-color'
+      ),
+    'error-hover-trailing-content-color': map.get(
+        $text-field,
+        'error-hover-trailing-icon-color'
+      ),
     'error-label-text-color': map.get($text-field, 'error-label-text-color'),
-    'error-leading-content-color':
-      map.get($text-field, 'error-leading-icon-color'),
-    'error-supporting-text-color':
-      map.get($text-field, 'error-supporting-text-color'),
-    'error-trailing-content-color':
-      map.get($text-field, 'error-trailing-icon-color'),
-    'focus-active-indicator-color':
-      map.get($text-field, 'focus-active-indicator-color'),
+    'error-leading-content-color': map.get(
+        $text-field,
+        'error-leading-icon-color'
+      ),
+    'error-supporting-text-color': map.get(
+        $text-field,
+        'error-supporting-text-color'
+      ),
+    'error-trailing-content-color': map.get(
+        $text-field,
+        'error-trailing-icon-color'
+      ),
+    'focus-active-indicator-color': map.get(
+        $text-field,
+        'focus-active-indicator-color'
+      ),
     // TODO(b/259455114): remove when focus tokens update to 3px
-    'focus-active-indicator-height': if($exclude-hardcoded-values, null, 3px),
+    'focus-active-indicator-height': if(
+        not sass($exclude-hardcoded-values): 3px
+      ),
     'focus-content-color': map.get($text-field, 'focus-input-text-color'),
     'focus-label-text-color': map.get($text-field, 'focus-label-text-color'),
-    'focus-leading-content-color':
-      map.get($text-field, 'focus-leading-icon-color'),
-    'focus-supporting-text-color':
-      map.get($text-field, 'focus-supporting-text-color'),
-    'focus-trailing-content-color':
-      map.get($text-field, 'focus-trailing-icon-color'),
-    'hover-active-indicator-color':
-      map.get($text-field, 'hover-active-indicator-color'),
-    'hover-active-indicator-height':
-      map.get($text-field, 'hover-active-indicator-height'),
+    'focus-leading-content-color': map.get(
+        $text-field,
+        'focus-leading-icon-color'
+      ),
+    'focus-supporting-text-color': map.get(
+        $text-field,
+        'focus-supporting-text-color'
+      ),
+    'focus-trailing-content-color': map.get(
+        $text-field,
+        'focus-trailing-icon-color'
+      ),
+    'hover-active-indicator-color': map.get(
+        $text-field,
+        'hover-active-indicator-color'
+      ),
+    'hover-active-indicator-height': map.get(
+        $text-field,
+        'hover-active-indicator-height'
+      ),
     'hover-content-color': map.get($text-field, 'hover-input-text-color'),
     'hover-label-text-color': map.get($text-field, 'hover-label-text-color'),
-    'hover-leading-content-color':
-      map.get($text-field, 'hover-leading-icon-color'),
+    'hover-leading-content-color': map.get(
+        $text-field,
+        'hover-leading-icon-color'
+      ),
     'hover-state-layer-color': map.get($text-field, 'hover-state-layer-color'),
-    'hover-state-layer-opacity':
-      map.get($text-field, 'hover-state-layer-opacity'),
-    'hover-supporting-text-color':
-      map.get($text-field, 'hover-supporting-text-color'),
-    'hover-trailing-content-color':
-      map.get($text-field, 'hover-trailing-icon-color'),
+    'hover-state-layer-opacity': map.get(
+        $text-field,
+        'hover-state-layer-opacity'
+      ),
+    'hover-supporting-text-color': map.get(
+        $text-field,
+        'hover-supporting-text-color'
+      ),
+    'hover-trailing-content-color': map.get(
+        $text-field,
+        'hover-trailing-icon-color'
+      ),
     'label-text-color': map.get($text-field, 'label-text-color'),
     'label-text-font': map.get($text-field, 'label-text-font'),
     'label-text-line-height': map.get($text-field, 'label-text-line-height'),
-    'label-text-populated-line-height':
-      map.get($text-field, 'label-text-populated-line-height'),
-    'label-text-populated-size':
-      map.get($text-field, 'label-text-populated-size'),
+    'label-text-populated-line-height': map.get(
+        $text-field,
+        'label-text-populated-line-height'
+      ),
+    'label-text-populated-size': map.get(
+        $text-field,
+        'label-text-populated-size'
+      ),
     'label-text-size': map.get($text-field, 'label-text-size'),
     'label-text-weight': map.get($text-field, 'label-text-weight'),
     'leading-content-color': map.get($text-field, 'leading-icon-color'),
-    'leading-space': if($exclude-hardcoded-values, null, 16px),
+    'leading-space': if(not sass($exclude-hardcoded-values): 16px),
     'supporting-text-color': map.get($text-field, 'supporting-text-color'),
     'supporting-text-font': map.get($text-field, 'supporting-text-font'),
-    'supporting-text-leading-space': if($exclude-hardcoded-values, null, 16px),
-    'supporting-text-line-height':
-      map.get($text-field, 'supporting-text-line-height'),
+    'supporting-text-leading-space': if(
+        not sass($exclude-hardcoded-values): 16px
+      ),
+    'supporting-text-line-height': map.get(
+        $text-field,
+        'supporting-text-line-height'
+      ),
     'supporting-text-size': map.get($text-field, 'supporting-text-size'),
-    'supporting-text-top-space': if($exclude-hardcoded-values, null, 4px),
-    'supporting-text-trailing-space': if($exclude-hardcoded-values, null, 16px),
+    'supporting-text-top-space': if(not sass($exclude-hardcoded-values): 4px),
+    'supporting-text-trailing-space': if(
+        not sass($exclude-hardcoded-values): 16px
+      ),
     'supporting-text-weight': map.get($text-field, 'supporting-text-weight'),
-    'top-space': if($exclude-hardcoded-values, null, 16px),
+    'top-space': if(not sass($exclude-hardcoded-values): 16px),
     'trailing-content-color': map.get($text-field, 'trailing-icon-color'),
-    'trailing-space': if($exclude-hardcoded-values, null, 16px),
-    'with-label-bottom-space': if($exclude-hardcoded-values, null, 8px),
-    'with-label-top-space': if($exclude-hardcoded-values, null, 8px),
-    'with-leading-content-leading-space':
-      if($exclude-hardcoded-values, null, 12px),
-    'with-trailing-content-trailing-space':
-      if($exclude-hardcoded-values, null, 12px),
-    // go/keep-sorted end
+    'trailing-space': if(not sass($exclude-hardcoded-values): 16px),
+    'with-label-bottom-space': if(not sass($exclude-hardcoded-values): 8px),
+    'with-label-top-space': if(not sass($exclude-hardcoded-values): 8px),
+    'with-leading-content-leading-space': if(
+        not sass($exclude-hardcoded-values): 12px
+      ),
+    'with-trailing-content-trailing-space': if(
+        not sass($exclude-hardcoded-values): 12px
+      ) // go/keep-sorted end
   );
 
   $new-tokens: shape.get-new-logical-shape-tokens($tokens, 'container-shape');

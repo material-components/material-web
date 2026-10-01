@@ -99,8 +99,7 @@ $supported-tokens: (
   'text-field-supporting-text-size',
   'text-field-supporting-text-weight',
   'text-field-trailing-icon-color',
-  'text-field-trailing-icon-size',
-  // go/keep-sorted end
+  'text-field-trailing-icon-size' // go/keep-sorted end
 );
 
 $unsupported-tokens: (
@@ -131,8 +130,7 @@ $unsupported-tokens: (
   'text-field-label-text-tracking',
   'text-field-label-text-type',
   'text-field-supporting-text-tracking',
-  'text-field-supporting-text-type',
-  // go/keep-sorted end
+  'text-field-supporting-text-type' // go/keep-sorted end
 );
 
 $_default: (
@@ -148,9 +146,9 @@ $_default: (
   @return (
     // go/keep-sorted start
     // TODO(b/259455114): remove when focus tokens update to 3px
-    'text-field-focus-active-indicator-height':
-      if($exclude-hardcoded-values, null, 3px),
-    // go/keep-sorted end
+    'text-field-focus-active-indicator-height': if(
+        not sass($exclude-hardcoded-values): 3px
+      ) // go/keep-sorted end
   );
 }
 

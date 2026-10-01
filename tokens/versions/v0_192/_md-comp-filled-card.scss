@@ -31,32 +31,50 @@ $_default: (
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
-    'container-color':
-      map.get($deps, 'md-sys-color', 'surface-container-highest'),
+    'container-color': map.get(
+        $deps,
+        'md-sys-color',
+        'surface-container-highest'
+      ),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
     'container-shadow-color': map.get($deps, 'md-sys-color', 'shadow'),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-medium'),
-    'disabled-container-color':
-      map.get($deps, 'md-sys-color', 'surface-variant'),
+    'disabled-container-color': map.get(
+        $deps,
+        'md-sys-color',
+        'surface-variant'
+      ),
     'disabled-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'disabled-container-opacity': if($exclude-hardcoded-values, null, 0.38),
+    'disabled-container-opacity': if(not sass($exclude-hardcoded-values): 0.38),
     'dragged-container-elevation': map.get($deps, 'md-sys-elevation', 'level3'),
     'dragged-state-layer-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'dragged-state-layer-opacity':
-      map.get($deps, 'md-sys-state', 'dragged-state-layer-opacity'),
+    'dragged-state-layer-opacity': map.get(
+        $deps,
+        'md-sys-state',
+        'dragged-state-layer-opacity'
+      ),
     'focus-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
     'focus-state-layer-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'focus-state-layer-opacity':
-      map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
+    'focus-state-layer-opacity': map.get(
+        $deps,
+        'md-sys-state',
+        'focus-state-layer-opacity'
+      ),
     'hover-container-elevation': map.get($deps, 'md-sys-elevation', 'level1'),
     'hover-state-layer-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'hover-state-layer-opacity':
-      map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
+    'hover-state-layer-opacity': map.get(
+        $deps,
+        'md-sys-state',
+        'hover-state-layer-opacity'
+      ),
     'icon-color': map.get($deps, 'md-sys-color', 'primary'),
-    'icon-size': if($exclude-hardcoded-values, null, 24px),
+    'icon-size': if(not sass($exclude-hardcoded-values): 24px),
     'pressed-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
     'pressed-state-layer-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'pressed-state-layer-opacity':
-      map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity')
+    'pressed-state-layer-opacity': map.get(
+        $deps,
+        'md-sys-state',
+        'pressed-state-layer-opacity'
+      )
   );
 }
