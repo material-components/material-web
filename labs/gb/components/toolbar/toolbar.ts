@@ -5,6 +5,7 @@
  */
 
 import {type ClassInfo} from 'lit/directives/class-map.js';
+
 import {createClassMapDirective} from '../shared/directives.js';
 
 /** Toolbar color configuration types. */
@@ -25,6 +26,15 @@ export const TOOLBAR_ORIENTATIONS = {
   vertical: 'vertical',
 } as const;
 
+/** Toolbar alignment types for vertical layout. */
+export type ToolbarAlign = 'start' | 'end';
+
+/** Toolbar alignment configurations. */
+export const TOOLBAR_ALIGNS = {
+  start: 'start',
+  end: 'end',
+} as const;
+
 /** Toolbar classes constants. */
 export const TOOLBAR_CLASSES = {
   toolbar: 'toolbar',
@@ -33,6 +43,10 @@ export const TOOLBAR_CLASSES = {
   toolbarHorizontal: 'toolbar-horizontal',
   toolbarVertical: 'toolbar-vertical',
   toolbarDocked: 'toolbar-docked',
+  toolbarAlignStart: 'toolbar-align-start',
+  toolbarAlignEnd: 'toolbar-align-end',
+  toolbarHideLabels: 'toolbar-hide-labels',
+  disabled: 'disabled',
 } as const;
 
 /** The state provided to the `toolbarClasses()` function. */
@@ -43,6 +57,12 @@ export interface ToolbarClassesState {
   orientation?: ToolbarOrientation;
   /** Whether the toolbar is docked across the container width. */
   docked?: boolean;
+  /** Whether the toolbar is disabled. */
+  disabled?: boolean;
+  /** The alignment of items in vertical orientation. */
+  align?: ToolbarAlign;
+  /** Whether text labels on buttons should be hidden. */
+  hideLabels?: boolean;
 }
 
 /**
@@ -55,11 +75,15 @@ export function toolbarClasses({
   color = TOOLBAR_COLORS.standard,
   orientation = TOOLBAR_ORIENTATIONS.horizontal,
   docked = false,
+  disabled = false,
+  align,
+  hideLabels = false,
 }: ToolbarClassesState = {}): ClassInfo {
   const isDocked = Boolean(docked);
   const effectiveOrientation = isDocked
     ? TOOLBAR_ORIENTATIONS.horizontal
     : orientation;
+  const isVertical = effectiveOrientation === TOOLBAR_ORIENTATIONS.vertical;
   return {
     [TOOLBAR_CLASSES.toolbar]: true,
     [TOOLBAR_CLASSES.toolbarStandard]:
@@ -68,9 +92,14 @@ export function toolbarClasses({
     [TOOLBAR_CLASSES.toolbarHorizontal]:
       effectiveOrientation === TOOLBAR_ORIENTATIONS.horizontal ||
       !effectiveOrientation,
-    [TOOLBAR_CLASSES.toolbarVertical]:
-      effectiveOrientation === TOOLBAR_ORIENTATIONS.vertical,
+    [TOOLBAR_CLASSES.toolbarVertical]: isVertical,
     [TOOLBAR_CLASSES.toolbarDocked]: isDocked,
+    [TOOLBAR_CLASSES.toolbarAlignStart]:
+      isVertical && align === TOOLBAR_ALIGNS.start,
+    [TOOLBAR_CLASSES.toolbarAlignEnd]:
+      isVertical && align === TOOLBAR_ALIGNS.end,
+    [TOOLBAR_CLASSES.toolbarHideLabels]: Boolean(hideLabels),
+    [TOOLBAR_CLASSES.disabled]: Boolean(disabled),
   };
 }
 
