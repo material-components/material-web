@@ -1,0 +1,59 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Hand-authored from tokens/versions/latest/sass/_md-comp-outlined-segmented-button.scss.
+
+@mixin set-root {
+  // LINT.IfChange
+  --container-height: 40px;
+  --container-shape: var(--md-sys-shape-corner-full);
+  --outline-color: var(--md-sys-color-outline);
+  --outline-width: 1px;
+  --touch-target-size: 48px; // EDIT: Material 48px minimum touch target (exceeds WCAG 2.5.8); no upstream design token exists
+  // LINT.ThenChange(segmented-button-set-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin dense-1 {
+  --container-height: 36px; // EDIT: density -1 reduces default 40px height by 4px per M3 density scale
+}
+
+@mixin dense-2 {
+  --container-height: 32px; // EDIT: density -2 reduces default 40px height by 8px per M3 density scale
+}
+
+@mixin dense-3 {
+  --container-height: 28px; // EDIT: density -3 reduces default 40px height by 12px per M3 density scale
+}
+
+@mixin root {
+  // LINT.IfChange
+  --container-color: transparent; // EDIT: unselected outlined segment has no background fill; transparent container matches M3 outlined button
+  --icon-color: var(--md-sys-color-on-surface);
+  --icon-label-space: 8px; // EDIT: 8px space between leading icon/checkmark and label text per M3 spec spacing
+  --icon-size: 18px;
+  --label-text: var(--md-sys-typescale-label-lg);
+  --label-text-axes: var(--md-sys-typescale-label-lg-axes);
+  --label-text-color: var(--md-sys-color-on-surface);
+  --label-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+  --leading-space: 12px; // EDIT: 12px leading padding for selected and icon+label segments per M3 spec
+  --state-layer-color: var(--md-sys-color-on-surface);
+  --trailing-space: 12px; // EDIT: 12px trailing padding for selected and icon+label segments per M3 spec
+  // LINT.ThenChange(segmented-button-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin selected {
+  --container-color: var(--md-sys-color-secondary-container);
+  --icon-color: var(--md-sys-color-on-secondary-container);
+  --label-text-color: var(--md-sys-color-on-secondary-container);
+  --state-layer-color: var(--md-sys-color-on-secondary-container);
+}
+
+@mixin disabled {
+  --container-color: transparent;
+  --icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --label-text-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --outline-color: hsl(from var(--md-sys-color-on-surface) h s l / 12%);
+  --state-layer-color: transparent;
+}
