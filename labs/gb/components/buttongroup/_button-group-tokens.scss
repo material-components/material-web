@@ -6,6 +6,7 @@
 @mixin root {
   // LINT.IfChange
   --between-space: 8px;
+  --pressed-item-size: size;
   --pressed-item-width-multiplier: 1.15;
   --motion-spring-fast-spatial: linear(
     0,

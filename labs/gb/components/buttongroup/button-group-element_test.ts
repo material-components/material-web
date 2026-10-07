@@ -27,6 +27,7 @@ describe('ButtonGroupElement', () => {
   beforeAll(() => {
     const noTransitions = new CSSStyleSheet();
     noTransitions.replaceSync(`
+      md-gb-button,
       md-gb-button::part(btn),
       md-gb-button-group {
         transition: none !important;
@@ -191,6 +192,44 @@ describe('ButtonGroupElement', () => {
 
       expect(linkBtn.type).toBe('link');
       expect(actionBtn.type).toBe('toggle');
+    });
+
+    it('defaults uncolored child buttons to tonal and preserves explicit color', async () => {
+      const root = env.render(html`
+        <md-gb-button-group>
+          <md-gb-button id="default-btn">Default</md-gb-button>
+          <md-gb-button id="filled-btn" color="filled">Filled</md-gb-button>
+          <md-gb-button id="outlined-btn" color="outlined"
+            >Outlined</md-gb-button
+          >
+        </md-gb-button-group>
+      `);
+      await env.waitForStability();
+      const defaultBtn = root.querySelector('#default-btn') as ButtonElement;
+      const filledBtn = root.querySelector('#filled-btn') as ButtonElement;
+      const outlinedBtn = root.querySelector('#outlined-btn') as ButtonElement;
+
+      expect(defaultBtn.getAttribute('color')).toBe('tonal');
+      expect(defaultBtn.color).toBe('tonal');
+      expect(filledBtn.getAttribute('color')).toBe('filled');
+      expect(filledBtn.color).toBe('filled');
+      expect(outlinedBtn.getAttribute('color')).toBe('outlined');
+      expect(outlinedBtn.color).toBe('outlined');
+    });
+
+    it('coerces explicit color="text" to tonal and logs a console warning', async () => {
+      const warnSpy = spyOn(console, 'warn');
+      const root = env.render(html`
+        <md-gb-button-group>
+          <md-gb-button id="text-btn" color="text">Text</md-gb-button>
+        </md-gb-button-group>
+      `);
+      await env.waitForStability();
+      const textBtn = root.querySelector('#text-btn') as ButtonElement;
+
+      expect(textBtn.getAttribute('color')).toBe('tonal');
+      expect(textBtn.color).toBe('tonal');
+      expect(warnSpy).toHaveBeenCalled();
     });
 
     it('cascades selection type to newly appended children', async () => {
@@ -1454,5 +1493,74 @@ describe('ButtonGroupElement', () => {
       expect(s1.borderBottomLeftRadius).toBe('20px');
       expect(s1.borderBottomRightRadius).toBe('20px');
     });
+
+    it(
+      'expands pressed button and shrinks adjacent buttons relative to the ' +
+        'pressed button growth in standard variant',
+      async () => {
+        if (!CSS.supports('width', 'calc-size(auto, size)')) {
+          return;
+        }
+        const root = env.render(html`
+          <md-gb-button-group variant="standard">
+            <md-gb-button id="p1" size="sm">Short</md-gb-button>
+            <md-gb-button id="p2" size="sm"
+              >Much Wider Middle Button</md-gb-button
+            >
+            <md-gb-button id="p3" size="sm">End</md-gb-button>
+          </md-gb-button-group>
+        `);
+        await env.waitForStability();
+
+        const p1 = root.querySelector('#p1') as ButtonElement;
+        const p2 = root.querySelector('#p2') as ButtonElement;
+        const p3 = root.querySelector('#p3') as ButtonElement;
+
+        const w1Base = p1.getBoundingClientRect().width;
+        const w2Base = p2.getBoundingClientRect().width;
+        const w3Base = p3.getBoundingClientRect().width;
+
+        // Press middle button (p2): p2 grows by 15% of w2Base, and both
+        // adjacent buttons (p1, p3) shrink by half of p2's growth.
+        p2.classList.add('active');
+        await env.waitForStability();
+
+        const p2Growth = w2Base * 0.15;
+        expect(p2.getBoundingClientRect().width).toBeCloseTo(
+          w2Base + p2Growth,
+          0,
+        );
+        expect(p1.getBoundingClientRect().width).toBeCloseTo(
+          w1Base - p2Growth / 2,
+          0,
+        );
+        expect(p3.getBoundingClientRect().width).toBeCloseTo(
+          w3Base - p2Growth / 2,
+          0,
+        );
+
+        p2.classList.remove('active');
+        await env.waitForStability();
+
+        // Press first button (p1): p1 grows by 15% of w1Base, and its single
+        // adjacent neighbor (p2) shrinks by the full growth of p1.
+        p1.classList.add('active');
+        await env.waitForStability();
+
+        const p1Growth = w1Base * 0.15;
+        expect(p1.getBoundingClientRect().width).toBeCloseTo(
+          w1Base + p1Growth,
+          0,
+        );
+        expect(p2.getBoundingClientRect().width).toBeCloseTo(
+          w2Base - p1Growth,
+          0,
+        );
+        expect(p3.getBoundingClientRect().width).toBeCloseTo(w3Base, 0);
+
+        p1.classList.remove('active');
+        await env.waitForStability();
+      },
+    );
   });
 });
