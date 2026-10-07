@@ -74,7 +74,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
         : nothing;
 
     const size = knobs.size ?? 'sm';
-    const color = knobs.color ?? 'filled';
+    const color = knobs.color ?? 'tonal';
     const square = knobs.square ?? false;
 
     return html`

@@ -34,6 +34,7 @@ const baseClass = mixinElementInternals(LitElement);
  * @fires {InputEvent} input - Fired when selection changes. --bubbles --composed
  * @fires {Event} change - Fired when selection changes. --bubbles
  * @cssprop --between-space
+ * @cssprop --pressed-item-size
  * @cssprop --pressed-item-width-multiplier
  * @cssprop --motion-spring-fast-spatial
  * @cssprop --motion-spring-fast-spatial-duration
@@ -49,6 +50,16 @@ export class ButtonGroupElement extends baseClass {
   constructor() {
     super();
     this[internals].role = 'toolbar';
+
+    const handlePointerDown = (event: PointerEvent): void => {
+      const path = event.composedPath();
+      const button = this.buttons.find((b) => path.includes(b));
+      this.syncPressedButtonSize(button ?? null);
+    };
+
+    const handlePointerEnd = (): void => {
+      this.syncPressedButtonSize(null);
+    };
 
     const handleClick = (event: MouseEvent): void => {
       const path = event.composedPath();
@@ -98,6 +109,10 @@ export class ButtonGroupElement extends baseClass {
       this.dispatchEvent(new Event('change', {bubbles: true}));
     };
 
+    this.addEventListener('pointerdown', handlePointerDown);
+    this.addEventListener('pointerup', handlePointerEnd);
+    this.addEventListener('pointercancel', handlePointerEnd);
+    this.addEventListener('pointerleave', handlePointerEnd);
     this.addEventListener('click', handleClick);
     this.addEventListener('input', handleInput);
     this.addEventListener('change', handleChange);
@@ -120,9 +135,16 @@ export class ButtonGroupElement extends baseClass {
 
   private readonly groupDisabledButtons = new WeakSet<HTMLElement>();
 
+  private readonly pressedSizeStyleSheet = new CSSStyleSheet();
+
   private readonly childObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
-      if (mutation.attributeName === 'selected') {
+      if (mutation.attributeName === 'color') {
+        this.syncButtonsDisabledAndType();
+        this.childObserver.takeRecords();
+      } else if (mutation.attributeName === 'class') {
+        this.syncPressedButtonSize();
+      } else if (mutation.attributeName === 'selected') {
         const target = mutation.target as ButtonElement;
         if (this.selection === 'single') {
           if (target.selected) {
@@ -189,6 +211,7 @@ export class ButtonGroupElement extends baseClass {
   override connectedCallback(): void {
     super.connectedCallback();
     adoptStyles(this, buttonGroupStyles);
+    adoptStyles(this.shadowRoot, this.pressedSizeStyleSheet);
     updateClassList(
       this,
       buttonGroupClasses({
@@ -210,6 +233,7 @@ export class ButtonGroupElement extends baseClass {
     changedProperties: PropertyValues<this>,
   ): void {
     super.firstUpdated(changedProperties);
+    adoptStyles(this.shadowRoot, this.pressedSizeStyleSheet);
     this.syncButtonsDisabledAndType();
     this.normalizeGroupSelection();
     this.observeChildren();
@@ -274,6 +298,24 @@ export class ButtonGroupElement extends baseClass {
   private syncButtonsDisabledAndType(): void {
     const buttons = this.buttons;
     for (const button of buttons) {
+      const isExplicitText =
+        button.getAttribute('color') === 'text' ||
+        (button.hasAttribute('color') && button.color === 'text');
+      if (isExplicitText) {
+        console.warn(
+          '<md-gb-button-group> does not support color="text" on child ' +
+            '<md-gb-button> elements. Falling back to color="tonal".',
+        );
+      }
+      if (
+        !button.hasAttribute('color') ||
+        button.getAttribute('color') === 'text' ||
+        button.color === 'text'
+      ) {
+        button.setAttribute('color', 'tonal');
+        button.color = 'tonal';
+      }
+
       const hasHref = button.hasAttribute('href') || Boolean(button.href);
       if (!hasHref) {
         const targetType = this.selection === 'none' ? 'button' : 'toggle';
@@ -305,12 +347,44 @@ export class ButtonGroupElement extends baseClass {
     this.childObserver.takeRecords();
   }
 
+  private syncPressedButtonSize(pressedButton?: ButtonElement | null): void {
+    if (this.variant === 'connected' || this.disabled) {
+      this.pressedSizeStyleSheet.replaceSync('');
+      return;
+    }
+    const activeButton =
+      pressedButton !== undefined
+        ? pressedButton
+        : (this.buttons.find(
+            (b) =>
+              !b.disabled &&
+              !b.softDisabled &&
+              (b.classList.contains('active') || b.matches(':active')),
+          ) ?? null);
+    if (!activeButton || activeButton.disabled || activeButton.softDisabled) {
+      this.pressedSizeStyleSheet.replaceSync('');
+      return;
+    }
+    this.pressedSizeStyleSheet.replaceSync(
+      ':host { --pressed-item-width-multiplier: 1 !important; ' +
+        '--motion-spring-fast-spatial-duration: 0s !important; }',
+    );
+    const width = activeButton.getBoundingClientRect().width;
+    if (width > 0) {
+      this.pressedSizeStyleSheet.replaceSync(
+        `:host { --pressed-item-size: ${width}px !important; }`,
+      );
+    } else {
+      this.pressedSizeStyleSheet.replaceSync('');
+    }
+  }
+
   private observeChildren(): void {
     this.childObserver.disconnect();
     for (const button of this.buttons) {
       this.childObserver.observe(button, {
         attributes: true,
-        attributeFilter: ['selected'],
+        attributeFilter: ['selected', 'color', 'class'],
       });
     }
   }

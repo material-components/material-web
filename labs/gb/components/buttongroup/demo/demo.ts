@@ -55,7 +55,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       }),
     }),
     new Knob<ButtonColor | undefined, 'color'>('color', {
-      defaultValue: 'filled',
+      defaultValue: 'tonal',
       ui: selectDropdown<ButtonColor>({
         options: [
           {value: 'filled', label: 'Filled'},
