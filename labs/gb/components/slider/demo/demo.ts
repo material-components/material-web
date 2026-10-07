@@ -64,6 +64,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
     new Knob('centered', {ui: boolInput(), defaultValue: false}),
     new Knob('stops', {ui: boolInput(), defaultValue: false}),
     new Knob('value indicator', {ui: boolInput(), defaultValue: false}),
+    new Knob('icon', {ui: boolInput(), defaultValue: false}),
     new Knob('disabled', {ui: boolInput(), defaultValue: false}),
     new Knob('valueLabel', {ui: textInput(), defaultValue: ''}),
   ] as unknown as KnobTypesToKnobs<StoryKnobs>,

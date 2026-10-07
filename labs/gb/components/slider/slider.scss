@@ -26,6 +26,7 @@
 
   :host(:is(:disabled, [disabled], .disabled)) {
     cursor: default;
+    pointer-events: none;
   }
 
   :host([orientation='vertical']) {
@@ -171,6 +172,19 @@
 
   .slider:not(.disabled) .slider-icon {
     z-index: 1;
+  }
+
+  :host(:is([size='xs'], [size='sm'], [size='s'])) .slider-icon,
+  .slider:is(
+      [size='xs'],
+      [size='sm'],
+      [size='s'],
+      .slider-ranged,
+      .slider-centered,
+      .slider-vertical
+    )
+    .slider-icon {
+    display: none;
   }
 
   .slider-icon,
@@ -352,6 +366,7 @@
 
   input:disabled {
     cursor: default;
+    pointer-events: none;
   }
 
   input::-webkit-slider-runnable-track {
@@ -400,19 +415,15 @@
   .slider.slider-ranged input.slider-start {
     clip-path: inset(0 #{$_clip-to-end} 0 0);
   }
+
   .slider.slider-ranged input.slider-end {
     clip-path: inset(0 0 0 #{$_clip-to-start});
-  }
-  .slider.slider-ranged.slider-vertical input.slider-start {
-    clip-path: inset(#{$_clip-to-end} 0 0 0);
-  }
-  .slider.slider-ranged.slider-vertical input.slider-end {
-    clip-path: inset(0 0 #{$_clip-to-start} 0);
   }
 
   .slider.slider-ranged:not(.slider-vertical) input.slider-start:dir(rtl) {
     clip-path: inset(0 0 0 #{$_clip-to-end});
   }
+
   .slider.slider-ranged:not(.slider-vertical) input.slider-end:dir(rtl) {
     clip-path: inset(0 #{$_clip-to-start} 0 0);
   }
@@ -493,35 +504,43 @@
     }
   }
 
-  :host(:active) .slider:not(.slider-ranged) .slider-handle-nub,
-  :host(.active) .slider-handle.slider-end .slider-handle-nub,
-  .slider-handle:is(.focus-visible, .active) .slider-handle-nub,
-  input.slider-end:focus-visible
+  :host(:active:not(:is(:disabled, [disabled], .disabled)))
+    .slider:not(.slider-ranged):not(.disabled)
+    .slider-handle:not(.disabled)
+    .slider-handle-nub,
+  :host(.active:not(:is(:disabled, [disabled], .disabled)))
+    .slider:not(.disabled)
+    .slider-handle.slider-end:not(.disabled)
+    .slider-handle-nub,
+  .slider:not(.disabled)
+    .slider-handle:is(.focus-visible, .active):not(.disabled)
+    .slider-handle-nub,
+  input.slider-end:focus-visible:not(:disabled)
     ~ .slider-handles
-    .slider-handle.slider-end
+    .slider-handle.slider-end:not(.disabled)
     .slider-handle-nub,
-  input.slider-start:focus-visible
+  input.slider-start:focus-visible:not(:disabled)
     ~ .slider-handles
-    .slider-handle.slider-start
+    .slider-handle.slider-start:not(.disabled)
     .slider-handle-nub,
-  input.slider-end:active
+  input.slider-end:active:not(:disabled)
     ~ .slider-handles:not(:has(.slider-handle.active))
-    .slider-handle.slider-end
+    .slider-handle.slider-end:not(.disabled)
     .slider-handle-nub,
-  input.slider-start:active
+  input.slider-start:active:not(:disabled)
     ~ .slider-handles:not(:has(.slider-handle.active))
-    .slider-handle.slider-start
+    .slider-handle.slider-start:not(.disabled)
     .slider-handle-nub {
     --_handle-nub-width: var(--focus-handle-width);
   }
 
-  input.slider-end:focus-visible
+  input.slider-end:focus-visible:not(:disabled)
     ~ .slider-handles
-    .slider-handle.slider-end
+    .slider-handle.slider-end:not(.disabled)
     .slider-handle-nub,
-  input.slider-start:focus-visible
+  input.slider-start:focus-visible:not(:disabled)
     ~ .slider-handles
-    .slider-handle.slider-start
+    .slider-handle.slider-start:not(.disabled)
     .slider-handle-nub {
     --focus-ring-outline: 3px solid var(--md-sys-color-secondary);
     --focus-ring-offset: 2px;
@@ -576,16 +595,24 @@
     z-index: 1;
   }
 
-  :host(.hover) .slider-handle.slider-end .slider-label,
-  :host(.active) .slider-handle.slider-end .slider-label,
-  .slider-handle:is(.hover, .active, .focus-visible) .slider-label,
-  input.slider-end:focus-visible
-    ~ .slider-handles
-    .slider-handle.slider-end
+  :host(.hover:not(:is(:disabled, [disabled], .disabled)))
+    .slider:not(.disabled)
+    .slider-handle.slider-end:not(.disabled)
     .slider-label,
-  input.slider-start:focus-visible
+  :host(.active:not(:is(:disabled, [disabled], .disabled)))
+    .slider:not(.disabled)
+    .slider-handle.slider-end:not(.disabled)
+    .slider-label,
+  .slider:not(.disabled)
+    .slider-handle:is(.hover, .active, .focus-visible):not(.disabled)
+    .slider-label,
+  input.slider-end:focus-visible:not(:disabled)
     ~ .slider-handles
-    .slider-handle.slider-start
+    .slider-handle.slider-end:not(.disabled)
+    .slider-label,
+  input.slider-start:focus-visible:not(:disabled)
+    ~ .slider-handles
+    .slider-handle.slider-start:not(.disabled)
     .slider-label {
     opacity: 1;
     transform: scale(1);

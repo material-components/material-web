@@ -75,11 +75,12 @@ export function sliderClasses({
   centered = false,
   vertical = false,
 }: SliderClassesState = {}): ClassInfo {
+  const isRanged = ranged && !vertical;
   return {
     [SLIDER_CLASSES.slider]: true,
-    [SLIDER_CLASSES.ranged]: ranged,
+    [SLIDER_CLASSES.ranged]: isRanged,
     [SLIDER_CLASSES.disabled]: disabled,
-    [SLIDER_CLASSES.centered]: !ranged && centered,
+    [SLIDER_CLASSES.centered]: !isRanged && centered,
     [SLIDER_CLASSES.vertical]: vertical,
   };
 }
@@ -153,8 +154,10 @@ export interface SliderStateValues {
   value?: number;
   valueStart?: number;
   valueEnd?: number;
+  size?: SliderSize;
   range?: boolean;
   centered?: boolean;
+  vertical?: boolean;
   trackLength?: number;
   minSpacing?: number;
 }
@@ -235,7 +238,7 @@ export function computeSliderProperties(
     values.step !== undefined && values.step !== 'any' && values.step > 0
       ? values.step
       : 1;
-  const range = Boolean(values.range);
+  const range = Boolean(values.range) && !values.vertical;
   const centered = Boolean(values.centered);
   const span = Math.max(max - min, step);
 
@@ -244,8 +247,10 @@ export function computeSliderProperties(
     ? values.valueEnd
     : (values.value ?? values.valueEnd);
 
-  const startF = range ? ((renderValueStart ?? min) - min) / span : 0;
-  const endF = ((renderValueEnd ?? min) - min) / span;
+  const rawStartF = range ? ((renderValueStart ?? min) - min) / span : 0;
+  const rawEndF = ((renderValueEnd ?? min) - min) / span;
+  const startF = range ? Math.min(rawStartF, rawEndF) : 0;
+  const endF = range ? Math.max(rawStartF, rawEndF) : rawEndF;
   const originF = range ? startF : centered ? 0.5 : 0;
 
   const trackLen = values.trackLength ?? 200;
@@ -399,8 +404,15 @@ export function computeSliderProperties(
   // This is a deliberate simplification.
   const activeEndPx =
     endF > 0 ? HANDLE_HALF_WIDTH_PX + travel * endF - SLIDER_GAP_PX : 0;
-  const iconOverActive =
-    !range && !centered && activeEndPx >= ICON_CROSSOVER_PX;
+  const supportsIcon =
+    !range &&
+    !centered &&
+    !values.vertical &&
+    (!values.size ||
+      values.size === 'md' ||
+      values.size === 'lg' ||
+      values.size === 'xl');
+  const iconOverActive = supportsIcon && activeEndPx >= ICON_CROSSOVER_PX;
 
   return {
     '--__start-fraction': String(startF),
@@ -451,15 +463,46 @@ export function setupSlider(
   if (!inputEnd) return;
 
   let trackLength: number | undefined;
+  let activeTarget: HTMLInputElement | undefined;
+  let pivotValue: number | undefined;
+
+  const startRawAction = (event: Event) => {
+    if (!inputStart) return;
+    const target = event.target as HTMLInputElement;
+    const fixed = target === inputStart ? inputEnd : inputStart;
+    activeTarget = target;
+    pivotValue = fixed.valueAsNumber;
+  };
+
+  const endRawAction = () => {
+    activeTarget = undefined;
+    pivotValue = undefined;
+  };
 
   const update = () => {
+    const isVertical =
+      rootEl.classList.contains('slider-vertical') ||
+      rootEl.getAttribute('orientation') === 'vertical';
     const isRange =
-      rootEl.classList.contains('slider-ranged') ||
-      rootEl.hasAttribute('range') ||
-      Boolean(inputStart);
+      !isVertical &&
+      (rootEl.classList.contains('slider-ranged') ||
+        rootEl.hasAttribute('range') ||
+        Boolean(inputStart));
     const isCentered =
       rootEl.classList.contains('slider-centered') ||
       rootEl.hasAttribute('centered');
+    if (isRange && inputStart) {
+      if (activeTarget && pivotValue !== undefined) {
+        const rawVal = activeTarget.valueAsNumber;
+        inputStart.valueAsNumber = Math.min(rawVal, pivotValue);
+        inputEnd.valueAsNumber = Math.max(rawVal, pivotValue);
+      } else if (inputStart.valueAsNumber > inputEnd.valueAsNumber) {
+        const low = Math.min(inputStart.valueAsNumber, inputEnd.valueAsNumber);
+        const high = Math.max(inputStart.valueAsNumber, inputEnd.valueAsNumber);
+        inputStart.valueAsNumber = low;
+        inputEnd.valueAsNumber = high;
+      }
+    }
     const minSpacingRaw = getComputedStyle(rootEl).getPropertyValue(
       '--stop-indicator-min-spacing',
     );
@@ -469,12 +512,15 @@ export function setupSlider(
         ? parsedMinSpacing
         : undefined;
 
+    const rawSize = rootEl.getAttribute('size') as SliderSize | null;
     const props = computeSliderProperties({
       min: Number(inputEnd.min || 0),
       max: Number(inputEnd.max || 100),
       step: inputEnd.step === 'any' ? 'any' : Number(inputEnd.step || 1),
+      size: rawSize ?? undefined,
       range: isRange,
       centered: isCentered,
+      vertical: isVertical,
       valueStart: inputStart ? inputStart.valueAsNumber : undefined,
       valueEnd: inputEnd.valueAsNumber,
       value: inputEnd.valueAsNumber,
@@ -516,8 +562,18 @@ export function setupSlider(
     }
   };
 
+  inputEnd.addEventListener('pointerdown', startRawAction, opts);
+  inputEnd.addEventListener('pointerup', endRawAction, opts);
+  inputEnd.addEventListener('pointercancel', endRawAction, opts);
+  inputEnd.addEventListener('keydown', startRawAction, opts);
+  inputEnd.addEventListener('keyup', endRawAction, opts);
   inputEnd.addEventListener('input', update, opts);
   inputEnd.addEventListener('change', update, opts);
+  inputStart?.addEventListener('pointerdown', startRawAction, opts);
+  inputStart?.addEventListener('pointerup', endRawAction, opts);
+  inputStart?.addEventListener('pointercancel', endRawAction, opts);
+  inputStart?.addEventListener('keydown', startRawAction, opts);
+  inputStart?.addEventListener('keyup', endRawAction, opts);
   inputStart?.addEventListener('input', update, opts);
   inputStart?.addEventListener('change', update, opts);
 
