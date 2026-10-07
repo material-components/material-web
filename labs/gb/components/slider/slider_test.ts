@@ -84,12 +84,51 @@ describe('md-gb-slider', () => {
 
       const sliderRoot = el.shadowRoot!.querySelector('.slider')!;
       expect(sliderRoot.classList.contains('slider-vertical')).toBeTrue();
-      expect(sliderRoot.classList.contains('slider-ranged')).toBeTrue();
+      expect(sliderRoot.classList.contains('slider-ranged')).toBeFalse();
       expect(sliderRoot.classList.contains('disabled')).toBeTrue();
+      expect(el.shadowRoot!.querySelector('input.slider-start')).toBeNull();
+      expect(
+        el.shadowRoot!.querySelector('.slider-handle.slider-start'),
+      ).toBeNull();
 
       const inputEnd = el.shadowRoot!.querySelector('input.slider-end')!;
       expect(inputEnd.getAttribute('orient')).toBe('vertical');
       expect((inputEnd as HTMLInputElement).disabled).toBeTrue();
+    });
+
+    it('does not react to pointer, keyboard, or focus interactions when disabled', async () => {
+      const root = env.render(
+        html`<md-gb-slider
+          disabled
+          labeled
+          min="0"
+          max="100"
+          value="50"></md-gb-slider>`,
+      );
+      await env.waitForStability();
+      const el = root.querySelector('md-gb-slider')!;
+      const inputEnd =
+        el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-end')!;
+      const handleEnd = el.shadowRoot!.querySelector(
+        '.slider-handle.slider-end',
+      )!;
+
+      inputEnd.dispatchEvent(
+        new PointerEvent('pointerdown', {
+          bubbles: true,
+          composed: true,
+          button: 0,
+        }),
+      );
+      inputEnd.dispatchEvent(
+        new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}),
+      );
+      inputEnd.dispatchEvent(new FocusEvent('focus', {bubbles: true}));
+      await env.waitForStability();
+
+      expect(handleEnd.classList.contains('active')).toBeFalse();
+      expect(handleEnd.classList.contains('hover')).toBeFalse();
+      expect(handleEnd.classList.contains('focus-visible')).toBeFalse();
     });
 
     it('updates value and dispatches input and change events on interaction', async () => {
@@ -200,31 +239,48 @@ describe('md-gb-slider', () => {
       expect(handleEnd).not.toBeNull();
     });
 
-    it('clamps range valueStart so it does not exceed valueEnd', async () => {
+    it('swaps range handles seamlessly when one handle is dragged past the other', async () => {
       const root = env.render(html`
         <md-gb-slider
           range
           min="0"
           max="100"
-          value-start="30"
-          value-end="60"></md-gb-slider>
+          value-start="20"
+          value-end="40"></md-gb-slider>
       `);
       await env.waitForStability();
       const el = root.querySelector('md-gb-slider')!;
 
       const inputStart =
         el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-start')!;
+      const inputEnd =
+        el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-end')!;
+      const handleStart = el.shadowRoot!.querySelector(
+        '.slider-handle.slider-start',
+      )!;
+      const handleEnd = el.shadowRoot!.querySelector(
+        '.slider-handle.slider-end',
+      )!;
+
       inputStart.dispatchEvent(
-        new PointerEvent('pointerdown', {bubbles: true, composed: true}),
+        new PointerEvent('pointerdown', {
+          bubbles: true,
+          composed: true,
+          button: 0,
+        }),
       );
-      inputStart.value = '70';
+      inputStart.value = '60';
       inputStart.dispatchEvent(
         new InputEvent('input', {bubbles: true, composed: true}),
       );
       await env.waitForStability();
 
-      expect(el.valueStart).toBe(60);
-      expect(inputStart.valueAsNumber).toBe(60);
+      expect(el.valueStart).toBe(40);
+      expect(el.valueEnd).toBe(60);
+      expect(inputStart.valueAsNumber).toBe(40);
+      expect(inputEnd.valueAsNumber).toBe(60);
+      expect(handleStart.classList.contains('active')).toBeFalse();
+      expect(handleEnd.classList.contains('active')).toBeTrue();
     });
 
     it('marks coincident range handles with slider-is-coincident class', async () => {
@@ -387,29 +443,55 @@ describe('md-gb-slider', () => {
     });
 
     it('renders slotted md-gb-icon on md, lg, and xl horizontal sliders', async () => {
-      const root = env.render(html`
-        <md-gb-slider min="0" max="100" value="30" size="md">
-          <md-gb-icon slot="icon">volume_up</md-gb-icon>
-        </md-gb-slider>
-      `);
-      await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      for (const size of ['md', 'lg', 'xl'] as const) {
+        const root = env.render(html`
+          <md-gb-slider min="0" max="100" value="30" .size=${size}>
+            <md-gb-icon slot="icon">volume_up</md-gb-icon>
+          </md-gb-slider>
+        `);
+        await env.waitForStability();
+        const el = root.querySelector('md-gb-slider')!;
 
-      const iconSlot = el.shadowRoot!.querySelector('.slider-icon slot')!;
-      expect(iconSlot).not.toBeNull();
-      expect(iconSlot.getAttribute('name')).toBe('icon');
+        const iconSlot = el.shadowRoot!.querySelector('.slider-icon slot')!;
+        expect(iconSlot).not.toBeNull();
+        expect(iconSlot.getAttribute('name')).toBe('icon');
+      }
     });
 
-    it('does not render slotted icon on xs, vertical, or range sliders', async () => {
-      const root = env.render(html`
-        <md-gb-slider min="0" max="100" value="30" size="xs">
+    it('does not render slotted icon on xs, sm, vertical, centered, or range sliders', async () => {
+      for (const size of ['xs', 'sm'] as const) {
+        const root = env.render(html`
+          <md-gb-slider min="0" max="100" value="30" .size=${size}>
+            <md-gb-icon slot="icon">volume_up</md-gb-icon>
+          </md-gb-slider>
+        `);
+        await env.waitForStability();
+        const el = root.querySelector('md-gb-slider')!;
+
+        expect(el.shadowRoot!.querySelector('.slider-icon')).toBeNull();
+      }
+
+      const incompatible = env.render(html`
+        <md-gb-slider id="vertical" orientation="vertical" size="md" value="30">
+          <md-gb-icon slot="icon">volume_up</md-gb-icon>
+        </md-gb-slider>
+        <md-gb-slider id="centered" centered size="md" value="0">
+          <md-gb-icon slot="icon">volume_up</md-gb-icon>
+        </md-gb-slider>
+        <md-gb-slider
+          id="range"
+          range
+          size="md"
+          value-start="20"
+          value-end="80">
           <md-gb-icon slot="icon">volume_up</md-gb-icon>
         </md-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
-
-      expect(el.shadowRoot!.querySelector('.slider-icon')).toBeNull();
+      for (const id of ['#vertical', '#centered', '#range']) {
+        const el = incompatible.querySelector<HTMLElement>(id)!;
+        expect(el.shadowRoot!.querySelector('.slider-icon')).toBeNull();
+      }
     });
 
     it('toggles slider-over-active class on icon when active track crosses icon crossover distance', async () => {
@@ -494,7 +576,7 @@ describe('md-gb-slider', () => {
   });
 
   describe('helper functions', () => {
-    it('sliderClasses() applies state flags with slider- prefix', () => {
+    it('sliderClasses() applies state flags with slider- prefix and suppresses ranged when vertical', () => {
       const classes = sliderClasses({
         disabled: true,
         ranged: true,
@@ -503,10 +585,16 @@ describe('md-gb-slider', () => {
       });
 
       expect(classes[SLIDER_CLASSES.slider]).toBeTrue();
-      expect(classes[SLIDER_CLASSES.ranged]).toBeTrue();
+      expect(classes[SLIDER_CLASSES.ranged]).toBeFalse();
       expect(classes[SLIDER_CLASSES.disabled]).toBeTrue();
       expect(classes[SLIDER_CLASSES.centered]).toBeFalse();
       expect(classes[SLIDER_CLASSES.vertical]).toBeTrue();
+
+      const horizontalRanged = sliderClasses({
+        ranged: true,
+        vertical: false,
+      });
+      expect(horizontalRanged[SLIDER_CLASSES.ranged]).toBeTrue();
     });
 
     it('handleClasses() applies handle state flags with slider- prefix', () => {

@@ -13,7 +13,7 @@ import {
 import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
 import '@material/web/labs/gb/styles/icon/md-gb-icon.js';
 import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
-import {css, html} from 'lit';
+import {css, html, nothing} from 'lit';
 
 export {type SliderOrientation, type SliderSize};
 
@@ -31,18 +31,19 @@ export interface StoryKnobs {
   centered: boolean;
   stops: boolean;
   'value indicator': boolean;
+  icon: boolean;
   disabled: boolean;
   valueLabel: string;
 }
 
 const storyStyles = css`
   .story-column {
+    box-sizing: content-box;
     display: flex;
     flex-direction: column;
     gap: 24px;
     padding: 24px;
     width: 280px;
-    box-sizing: content-box;
   }
 
   .story-column.vertical,
@@ -66,10 +67,14 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   styles: storyStyles,
   render(knobs) {
     const isVertical = knobs.orientation === 'vertical';
+    const size = knobs.size ?? 'xs';
+    const supportsIcon =
+      !isVertical &&
+      !knobs.range &&
+      !knobs.centered &&
+      (size === 'md' || size === 'lg' || size === 'xl');
     return html`
-      <div
-        class="story-column ${isVertical ? 'vertical' : ''}"
-        style="${isVertical ? 'padding-left: 72px;' : ''}">
+      <div class="story-column ${isVertical ? 'vertical' : ''}">
         <md-gb-slider
           .value=${knobs.value}
           .valueStart=${knobs.valueStart}
@@ -77,14 +82,17 @@ const playground: MaterialStoryInit<StoryKnobs> = {
           .min=${knobs.min}
           .max=${knobs.max}
           .step=${knobs.stops ? knobs.step || 10 : 'any'}
-          .size=${knobs.size ?? 'xs'}
-          ?range=${knobs.range}
+          .size=${size}
+          ?range=${knobs.range && !isVertical}
           ?centered=${knobs.centered}
           ?ticks=${knobs.stops}
           ?labeled=${knobs['value indicator']}
           ?disabled=${knobs.disabled}
           .valueLabel=${knobs.valueLabel}
           .orientation=${knobs.orientation ?? 'horizontal'}>
+          ${knobs.icon && supportsIcon
+            ? html`<md-gb-icon slot="icon">volume_up</md-gb-icon>`
+            : nothing}
         </md-gb-slider>
       </div>
     `;
