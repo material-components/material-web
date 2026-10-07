@@ -1,0 +1,385 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:math';
+@use '../../../../tokens/versions/latest/sass/md-sys-state';
+@use '../../../../tokens/versions/latest/sass/md-sys-state-focus-indicator';
+@use 'snackbar-tokens';
+// go/keep-sorted end
+
+// Margin around the 40px close `.icon-btn` that fills the 48px close slot.
+$close-touch-margin: 4px;
+
+// Figma 44:43679 layout dimensions.
+$content-padding-inline: 16px;
+$action-gap: 4px;
+$close-slot-size: 48px;
+// End margins of the actions group, pulling it into the content padding: 8px
+// visual end padding after an action alone, flush close slot otherwise.
+$action-only-end-margin: 8px - $content-padding-inline;
+$close-end-margin: -$content-padding-inline;
+
+// Action / close presence on the row. An action is either slotted or the
+// built-in `.snackbar-action` fallback, which doesn't set `has-slotted` on
+// its slot; likewise for the close button.
+$has-action: ":has(slot[name='action'].has-slotted), :has(.snackbar-action)";
+$has-close: ":has(slot[name='dismiss'].has-slotted), :has(.snackbar-dismiss)";
+
+// Figma 44:43654: the action text button has 12px horizontal padding.
+$action-padding-inline: 12px;
+
+// GM3 state layer opacities. Figma 44:43651 draws no focus state layer, only
+// the focus ring.
+$hover-opacity: math.percentage(md-sys-state.$hover-state-layer-opacity);
+$pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
+
+// Cascade layer order follows first declaration. Declaring the shared layers
+// here pins `md.comp.snackbar` above them, whatever order the element's
+// `styles` array uses, so snackbar overrides beat the button and icon-button
+// defaults.
+@layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.icon-btn,
+  md.comp.button;
+@layer md.comp.snackbar {
+  // The token and positioning root: the `md-gb-snackbar` host, or a
+  // `.snackbar` used in Light DOM without the element.
+  :host,
+  .snackbar {
+    @include snackbar-tokens.root;
+    // `.icon-btn` redefines `--icon-color` and `--icon-size` on the close
+    // button. Forward the public values through private names so consumer
+    // overrides still reach the close icon.
+    --_close-icon-color: var(--icon-color);
+    --_close-icon-size: var(--icon-size);
+    position: var(--position);
+    inset-block-end: var(--bottom-offset);
+    inset-inline: 0;
+    inline-size: 100%;
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: var(--z-index);
+  }
+
+  :host([fixed]),
+  .snackbar.snackbar-fixed {
+    position: fixed;
+  }
+
+  // The container queries below resolve against `.snackbar`, which fills the
+  // host inside the element.
+  .snackbar {
+    container: snackbar / inline-size;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Inside the element, the host is the token and positioning root. The inner
+  // `.snackbar` inherits the host's tokens, so values set on the host element
+  // still apply, and stays in normal flow. This must follow
+  // `.snackbar.snackbar-fixed`, which has the same specificity.
+  :host > .snackbar {
+    @include snackbar-tokens.inherit;
+    position: static;
+    z-index: auto;
+  }
+
+  .snackbar.snackbar-opening,
+  .snackbar.snackbar-open,
+  .snackbar.snackbar-closing {
+    display: flex;
+  }
+
+  .snackbar-surface {
+    position: relative;
+    background-color: var(--container-color);
+    box-shadow: var(--container-elevation);
+    border-radius: var(--container-shape);
+    min-block-size: var(--min-height);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    // Enter scales vertically, growing out of the surface's bottom edge.
+    transform: scaleY(0);
+    transform-origin: center bottom;
+    pointer-events: none;
+    transition:
+      opacity 75ms cubic-bezier(0.4, 0, 1, 1),
+      transform 75ms cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  .snackbar.snackbar-open .snackbar-surface {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition:
+      opacity 150ms cubic-bezier(0, 0, 0.2, 1),
+      transform 150ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  // `.snackbar` leaves `display: none` in the same render that adds
+  // `-open`, so there is no prior style to transition from. Start the enter
+  // transition from the collapsed state.
+  @starting-style {
+    .snackbar.snackbar-open .snackbar-surface {
+      opacity: 0;
+      transform: scaleY(0);
+    }
+  }
+
+  // Exit is a fade only, at full size.
+  .snackbar.snackbar-closing .snackbar-surface {
+    opacity: 0;
+    transform: none;
+    pointer-events: none;
+    transition: opacity 75ms cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .snackbar-surface {
+      transition-duration: 0.001ms;
+    }
+  }
+
+  // The wrapping flex row: content box W = surface - 32px (312px at a 344px compact surface).
+  // Row padding-block is 0 4px per the Figma 44:43679 vertical metrics.
+  .snackbar-content {
+    --_actions-chrome: 0px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 0;
+    padding-inline: $content-padding-inline;
+    padding-block: 0 4px;
+    inline-size: 100%;
+    box-sizing: border-box;
+  }
+
+  // Detect action / close presence on the row to configure --_actions-chrome,
+  // the inline space the actions group adds beyond the label's row share:
+  // the action gap plus the actions group's end margin, plus the close slot.
+  // 1) Action present, no close: 4px gap - 8px end margin = -4px.
+  .snackbar-content:is(#{$has-action}):not(#{$has-close}) {
+    --_actions-chrome: #{$action-gap + $action-only-end-margin};
+  }
+
+  // 2) Action present with close: 4px gap + 48px close slot - 16px end margin = 36px.
+  .snackbar-content:is(#{$has-action}):is(#{$has-close}) {
+    --_actions-chrome: #{$action-gap + $close-slot-size + $close-end-margin};
+  }
+
+  // Label: 14px padding-block with -4px bottom margin per the Figma 44:43679
+  // vertical metrics. In compact mode, wraps if action exceeds 30% of W
+  // (~93.6px at W=312).
+  .snackbar-label {
+    color: var(--supporting-text-color);
+    font: var(--supporting-text);
+    letter-spacing: var(--supporting-text-tracking);
+    font-variation-settings: var(--supporting-text-axes);
+    box-sizing: border-box;
+    padding-block: 14px;
+    margin: 0;
+    margin-block-end: -4px;
+    overflow-wrap: anywhere;
+  }
+
+  .snackbar-actions {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-inline-start: auto;
+    box-sizing: border-box;
+  }
+
+  // Action present, no close: 8px visual end padding, +4px top margin for
+  // 40px height alignment.
+  .snackbar-actions:is(#{$has-action}):not(#{$has-close}) {
+    margin-inline-end: $action-only-end-margin;
+    margin-block-start: 4px;
+  }
+
+  // Close present: close touch target flush with surface end, -4px bottom
+  // margin for 48px height alignment.
+  .snackbar-actions:is(#{$has-close}) {
+    margin-inline-end: $close-end-margin;
+    margin-block-end: -4px;
+  }
+
+  // Empty actions group contributes 0 inline size
+  .snackbar-actions:not(#{$has-action}, #{$has-close}) {
+    display: none;
+  }
+
+  @container snackbar (inline-size < 600px) {
+    .snackbar-surface {
+      inline-size: calc(100% - 32px);
+      margin-inline: 16px;
+    }
+
+    .snackbar-label {
+      flex: 1 1 0;
+      min-inline-size: calc(70% - var(--_actions-chrome));
+    }
+  }
+
+  @container snackbar (inline-size >= 600px) {
+    .snackbar-surface {
+      inline-size: fit-content;
+      min-inline-size: var(--min-width);
+      max-inline-size: min(var(--max-width), calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    // The label reserves the lesser of its text width and 70% of the widest
+    // surface's content box (~448px at the 672px default), so a long action
+    // wraps to its own line instead of squeezing the message. Unlike compact,
+    // this is measured against the max width through `cqi` rather than `%`:
+    // the fit-content surface's width includes the action, so a percentage
+    // would size the label from the action it's meant to limit. Capping at
+    // `max-content` keeps short messages from widening the surface.
+    .snackbar-label {
+      flex: 1 1
+        calc(
+          0.7 *
+            (
+              min(var(--max-width), 100cqi - 32px) - #{$content-padding-inline *
+                2}
+            ) - var(--_actions-chrome)
+        );
+      max-inline-size: max-content;
+      min-inline-size: 0;
+    }
+  }
+
+  .snackbar-actions ::slotted([slot='action']) {
+    margin-inline-start: $action-gap;
+  }
+
+  // Built-in action: a text `.btn` rendered from `action-label`. The shared
+  // button, ripple and focus-ring styles draw the container, state layers and
+  // focus ring; point the button's component tokens at the action tokens.
+  .snackbar-action {
+    --leading-space: #{$action-padding-inline};
+    --trailing-space: #{$action-padding-inline};
+    // The text button's outline is transparent. Drop its width so the 12px
+    // padding measures from the container edge.
+    --outline-width: 0;
+    --label-text-color: var(--action-label-text-color);
+    --icon-color: var(--action-label-text-color);
+    // The shared ripple draws with `currentColor` (the label color); this
+    // keeps the documented state layer token consistent with it.
+    --state-layer-color: var(--action-label-text-color);
+    --label-text: var(--action-label-text);
+    --label-text-axes: var(--action-label-text-axes);
+    --label-text-tracking: var(--action-label-text-tracking);
+    margin-inline-start: $action-gap;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  // Figma 44:43660 / 44:43675: pressed keeps the pill / circle shape, instead
+  // of the shared buttons' pressed shape morph.
+  .snackbar-action:is(:active, .active),
+  .snackbar-dismiss:is(:active, .active) {
+    --container-shape: calc(var(--container-height) / 2);
+  }
+
+  // Slotted text `<md-gb-button>`: best effort. Its shadow DOM owns the
+  // container, ripple and focus ring, and it redefines `--container-*` and
+  // `--icon-*` on its inner button, so the snackbar's values don't leak in,
+  // and its padding and pressed shape can't be set from here. The text
+  // variant colors its label, icon and state layer with
+  // `--md-sys-color-primary` and uses the label-lg typescale; point those at
+  // the snackbar's action tokens.
+  .snackbar-actions ::slotted(md-gb-button[slot='action']) {
+    --md-sys-color-primary: var(--action-label-text-color);
+    --md-sys-typescale-label-lg: var(--action-label-text);
+    --md-sys-typescale-label-lg-axes: var(--action-label-text-axes);
+    --md-sys-typescale-label-lg-tracking: var(--action-label-text-tracking);
+  }
+
+  // Slotted plain element such as `<button>`. It is light DOM, so it can't
+  // use the shared ripple or focus ring; draw the Figma states here.
+  .snackbar-actions ::slotted([slot='action']:not(md-gb-button)) {
+    color: var(--action-label-text-color);
+    background: transparent;
+    border: none;
+    font: var(--action-label-text);
+    letter-spacing: var(--action-label-text-tracking);
+    font-variation-settings: var(--action-label-text-axes);
+    cursor: pointer;
+    padding-inline: $action-padding-inline;
+    block-size: 40px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    text-transform: none;
+    outline: none;
+    white-space: nowrap;
+  }
+
+  .snackbar-actions ::slotted([slot='action']:not(md-gb-button):disabled) {
+    cursor: default;
+  }
+
+  .snackbar-actions
+    ::slotted([slot='action']:not(md-gb-button):not(:disabled):hover) {
+    background-color: hsl(
+      from var(--action-label-text-color) h s l / #{$hover-opacity}
+    );
+  }
+
+  // Figma 44:43651 draws a focus ring and no focus state layer. Matches the
+  // shared `.focus-ring-outer` color and geometry.
+  .snackbar-actions ::slotted([slot='action']:not(md-gb-button):focus-visible) {
+    outline: md-sys-state-focus-indicator.$thickness solid
+      var(--md-sys-color-secondary);
+    outline-offset: md-sys-state-focus-indicator.$outer-offset;
+  }
+
+  .snackbar-actions
+    ::slotted([slot='action']:not(md-gb-button):not(:disabled):active) {
+    background-color: hsl(
+      from var(--action-label-text-color) h s l / #{$pressed-opacity}
+    );
+  }
+
+  // Close button: a 40px standard `.icon-btn` whose margin fills the 48px
+  // close slot flush with the surface end. The shared icon-button, ripple and
+  // focus-ring styles draw the container, state layers and focus ring.
+  .snackbar-dismiss {
+    --icon-color: var(--_close-icon-color);
+    --icon-size: var(--_close-icon-size);
+    // The standard icon button's outline is transparent. Drop its width so
+    // the touch target inset below measures from the 40px border box.
+    --outline-width: 0;
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    margin: $close-touch-margin;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  // Extends the touch target to the full 48px close slot, like
+  // md-icon-button's touch target.
+  .snackbar-dismiss::after {
+    content: '';
+    position: absolute;
+    inset: -$close-touch-margin;
+  }
+
+  .snackbar-dismiss svg {
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    fill: currentColor;
+  }
+}
