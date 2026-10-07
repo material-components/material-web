@@ -53,6 +53,43 @@ be set with the
 [`font-variation-settings`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings)<!-- {.external} -->
 property.
 
+## Font size optimization
+
+#### Optimize the icon font
+
+To avoid large network transfer costs, subset the font to only
+include the icons your application is using via the
+`&icon_names` query parameter, using an alphabetically sorted
+comma-separated list of icon names (ligatures.)
+
+> [!WARNING]
+> `https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined` loads
+> all 3,000+ icons. Not specifying axes loads the default static configuration
+> (weight 400, optical size 24, round 50, grade 0, fill 0) which may or may
+> not be your application desired settings. Font payload: **255 KB**
+
+> [!TIP]
+> `https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=home,palette,settings&display=block`
+> loads only 3 icons. Font payload: **2 KB**
+
+Then, instance the variable font axes to only include the ones your application
+will use. Most applications only need a few variations of the axes.
+
+> [!CAUTION]
+> `https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200`
+> Including all variable font axes is usually unnecessary and increases the
+> payload. Font payload: **3.2 MB**
+
+> [!TIP]
+> `https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0..1&icon_names=home,palette,settings&display=block`
+> A specific combination of axes is used. Just as an example, the full 'FILL'
+> axis provides CSS transitions between states, and 'ROND' 100 is the desired
+> design. Font payload: **2 KB**
+
+> [!IMPORTANT]
+> Ensure the CSS request includes `&display=block` to prevent a flash
+> of unstyled text content (FOUC) showing the ligatures until the font loads.
+
 ### Outlined
 
 Outlined symbols use stroke and fill attributes for a light, clean style that
