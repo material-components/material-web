@@ -18,7 +18,7 @@ that helps build beautiful and accessible web applications. It uses
 open-source design system.
 
 **Note:
-[MWC is in maintenance mode pending new maintainers](https://github.com/material-components/material-web/discussions/5642).**
+[Material Web is in maintenance mode pending new maintainers](https://github.com/material-components/material-web/discussions/5642).**
 
 ## Resources
 
