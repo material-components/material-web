@@ -34,6 +34,7 @@ const styles = css`
     padding: 16px;
     font: var(--md-sys-typescale-body-md);
     letter-spacing: var(--md-sys-typescale-body-md-tracking);
+    color: var(--md-sys-color-on-surface);
   }
 
   .layout-card {
