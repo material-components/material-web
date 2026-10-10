@@ -44,8 +44,7 @@ $supported-tokens: (
   'trailing-supporting-text-line-height',
   'trailing-supporting-text-size',
   'trailing-supporting-text-weight',
-  'two-line-container-height',
-  // go/keep-sorted end
+  'two-line-container-height' // go/keep-sorted end
 );
 
 $unsupported-tokens: (
@@ -114,8 +113,7 @@ $unsupported-tokens: (
   'trailing-icon-size',
   'trailing-supporting-text-tracking',
   'trailing-supporting-text-type',
-  'unselected-trailing-icon-color',
-  // go/keep-sorted end
+  'unselected-trailing-icon-color' // go/keep-sorted end
 );
 
 $_default: (
@@ -136,10 +134,12 @@ $_default: (
     $supported-tokens: $supported-tokens,
     $unsupported-tokens: $unsupported-tokens,
     $new-tokens: (
-      'top-space': if($exclude-hardcoded-values, null, 12px),
-      'bottom-space': if($exclude-hardcoded-values, null, 12px),
-      'disabled-opacity':
-        map.get($original-tokens, 'list-item-disabled-label-text-opacity'),
+      'top-space': if(not sass($exclude-hardcoded-values): 12px),
+      'bottom-space': if(not sass($exclude-hardcoded-values): 12px),
+      'disabled-opacity': map.get(
+          $original-tokens,
+          'list-item-disabled-label-text-opacity'
+        ),
     ),
     $renamed-tokens: _get-renamed-tokens($original-tokens)
   );

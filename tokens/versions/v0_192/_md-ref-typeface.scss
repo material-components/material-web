@@ -14,10 +14,10 @@
 
 @function values($exclude-hardcoded-values: false) {
   @return (
-    'brand': if($exclude-hardcoded-values, null, (Roboto)),
-    'plain': if($exclude-hardcoded-values, null, (Roboto)),
-    'weight-bold': if($exclude-hardcoded-values, null, 700),
-    'weight-medium': if($exclude-hardcoded-values, null, 500),
-    'weight-regular': if($exclude-hardcoded-values, null, 400)
+    'brand': if(not sass($exclude-hardcoded-values): (Roboto)),
+    'plain': if(not sass($exclude-hardcoded-values): (Roboto)),
+    'weight-bold': if(not sass($exclude-hardcoded-values): 700),
+    'weight-medium': if(not sass($exclude-hardcoded-values): 500),
+    'weight-regular': if(not sass($exclude-hardcoded-values): 400)
   );
 }
