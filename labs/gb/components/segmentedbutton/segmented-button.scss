@@ -1,0 +1,404 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use 'segmented-button-tokens' as tokens;
+
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
+@layer md.comp.segmented-button {
+  .segmented-btn-set {
+    @include tokens.set-root;
+
+    --_enabled-outline-color: var(--outline-color);
+
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    isolation: isolate;
+
+    &.segmented-btn-set-dense-1 {
+      @include tokens.dense-1;
+    }
+
+    &.segmented-btn-set-dense-2 {
+      @include tokens.dense-2;
+    }
+
+    &.segmented-btn-set-dense-3 {
+      @include tokens.dense-3;
+    }
+
+    &:is(.disabled, [aria-disabled='true']) > .segmented-btn {
+      @include tokens.disabled;
+      pointer-events: none;
+      cursor: default;
+
+      &:is(.segmented-btn-selected, [aria-checked='true']) {
+        @include tokens.disabled;
+      }
+    }
+
+    &:not(.disabled, [aria-disabled='true']) {
+      > :not([disabled], :disabled, .disabled, [aria-disabled='true'], [hidden])
+        + .segmented-btn:is(:disabled, .disabled, [aria-disabled='true']),
+      > :not([disabled], :disabled, .disabled, [aria-disabled='true'], [hidden])
+        + [hidden]
+        + .segmented-btn:is(:disabled, .disabled, [aria-disabled='true']),
+      > :not([disabled], :disabled, .disabled, [aria-disabled='true'], [hidden])
+        + :is([disabled], :disabled, .disabled, [aria-disabled='true'])::part(
+          segmented-btn
+        ),
+      > :not([disabled], :disabled, .disabled, [aria-disabled='true'], [hidden])
+        + [hidden]
+        + :is([disabled], :disabled, .disabled, [aria-disabled='true'])::part(
+          segmented-btn
+        ) {
+        border-inline-start-color: var(--_enabled-outline-color);
+      }
+    }
+
+    > [hidden] {
+      display: none;
+    }
+
+    > .segmented-btn:not(:nth-last-child(1 of :not([hidden]))),
+    > :not(:nth-last-child(1 of :not([hidden])))::part(segmented-btn) {
+      border-inline-end-width: 0;
+    }
+
+    > .segmented-btn:nth-child(1 of :not([hidden])),
+    > :nth-child(1 of :not([hidden]))::part(segmented-btn) {
+      border-start-start-radius: var(--container-shape);
+      border-end-start-radius: var(--container-shape);
+    }
+
+    > .segmented-btn:nth-last-child(1 of :not([hidden])),
+    > :nth-last-child(1 of :not([hidden]))::part(segmented-btn) {
+      border-start-end-radius: var(--container-shape);
+      border-end-end-radius: var(--container-shape);
+    }
+
+    // Elevates the focused segment host above sibling borders and focus rings
+    // so the focus indicator renders unclipped in element mode.
+    > :focus-within {
+      z-index: 1;
+    }
+  }
+
+  .segmented-btn {
+    @include tokens.root;
+
+    position: relative;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    min-inline-size: 0;
+    block-size: var(--container-height);
+    border: var(--outline-width) solid var(--outline-color);
+    border-radius: 0;
+    background-color: var(--container-color);
+    color: var(--label-text-color);
+    font: var(--label-text);
+    letter-spacing: var(--label-text-tracking);
+    font-variation-settings: var(--label-text-axes);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    --md-icon-color: var(--icon-color);
+    --md-icon-size: var(--icon-size);
+    --ripple-color: var(--state-layer-color);
+
+    // Default width-stability padding (unselected label-only and unselected icon-only)
+    padding-inline: calc(
+      var(--leading-space) + (var(--icon-size) + var(--icon-label-space)) / 2
+    );
+    gap: 0;
+    transition:
+      padding-inline 150ms cubic-bezier(0.2, 0, 0, 1),
+      gap 150ms cubic-bezier(0.2, 0, 0, 1);
+
+    // Elevates the segment button above adjacent segment borders during focus.
+    // In plain-markup mode, this applies directly to the focused <button>.
+    &:focus-visible,
+    &:focus {
+      z-index: 1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      inset-block: min(
+        0px,
+        calc((var(--container-height) - var(--touch-target-size)) / 2)
+      );
+    }
+
+    // Selected or label+icon segments use standard padding
+    &:is(.segmented-btn-selected, [aria-checked='true']):not(
+        :disabled,
+        .disabled,
+        [aria-disabled='true']
+      ) {
+      @include tokens.selected;
+      padding-inline: var(--leading-space) var(--trailing-space);
+
+      &:not(.segmented-btn-icon-only) {
+        gap: var(--icon-label-space);
+      }
+    }
+
+    &.segmented-btn-with-icon:not(.segmented-btn-icon-only) {
+      gap: var(--icon-label-space);
+      padding-inline: var(--leading-space) var(--trailing-space);
+    }
+
+    &:is(:disabled, .disabled, [aria-disabled='true']) {
+      @include tokens.disabled;
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+
+  .segmented-btn-label {
+    display: block;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .segmented-btn-graphic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    inline-size: 0;
+    block-size: var(--icon-size);
+    gap: 0;
+    color: var(--icon-color);
+    transition:
+      inline-size 150ms cubic-bezier(0.2, 0, 0, 1),
+      gap 150ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .segmented-btn:is(.segmented-btn-selected, [aria-checked='true']):not(
+      :disabled,
+      .disabled,
+      [aria-disabled='true']
+    ):not(.segmented-btn-icon-only)
+    .segmented-btn-graphic {
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+  }
+
+  .segmented-btn-set:is(.disabled, [aria-disabled='true'])
+    .segmented-btn:is(.segmented-btn-selected, [aria-checked='true']):not(
+      .segmented-btn-with-icon
+    )
+    .segmented-btn-graphic,
+  .segmented-btn-set:is(.disabled, [aria-disabled='true'])
+    .segmented-btn:not(.segmented-btn-with-icon)
+    .segmented-btn-graphic,
+  .segmented-btn:is(:disabled, .disabled, [aria-disabled='true']):not(
+      .segmented-btn-with-icon
+    )
+    .segmented-btn-graphic {
+    inline-size: 0;
+  }
+
+  .segmented-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    font-size: var(--icon-size);
+    color: var(--icon-color);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .segmented-btn-checkmark {
+    flex-shrink: 0;
+    inline-size: 0;
+    block-size: var(--icon-size);
+    opacity: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    box-sizing: border-box;
+    pointer-events: none;
+    transition:
+      opacity 50ms linear,
+      stroke-dashoffset 0s linear 50ms,
+      inline-size 150ms cubic-bezier(0.2, 0, 0, 1);
+
+    path {
+      pointer-events: none;
+    }
+  }
+
+  .segmented-btn:is(.segmented-btn-selected, [aria-checked='true']):not(
+      :disabled,
+      .disabled,
+      [aria-disabled='true']
+    )
+    .segmented-btn-checkmark {
+    inline-size: var(--icon-size);
+    opacity: 1;
+    stroke-dashoffset: 0;
+    pointer-events: auto;
+    transition:
+      stroke-dashoffset 150ms cubic-bezier(0.2, 0, 0, 1) 50ms,
+      inline-size 150ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .segmented-btn-set:is(.disabled, [aria-disabled='true'])
+    .segmented-btn:is(.segmented-btn-selected, [aria-checked='true'])
+    .segmented-btn-checkmark,
+  .segmented-btn-set:is(.disabled, [aria-disabled='true'])
+    .segmented-btn
+    .segmented-btn-checkmark,
+  .segmented-btn:is(:disabled, .disabled, [aria-disabled='true'])
+    .segmented-btn-checkmark {
+    inline-size: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .segmented-btn-set:is(.disabled, [aria-disabled='true'])
+    > .segmented-btn:not(.segmented-btn-with-icon) {
+    padding-inline: calc(
+      var(--leading-space) + (var(--icon-size) + var(--icon-label-space)) / 2
+    );
+    gap: 0;
+  }
+
+  // Label + icon: icon and checkmark share 18px cell, checkmark replaces icon
+  .segmented-btn-with-icon:not(.segmented-btn-icon-only)
+    .segmented-btn-graphic {
+    display: inline-grid;
+    grid-template-columns: var(--icon-size);
+    grid-template-rows: var(--icon-size);
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    place-items: center;
+  }
+
+  .segmented-btn-with-icon:not(.segmented-btn-icon-only)
+    .segmented-btn-checkmark {
+    grid-area: 1 / 1;
+    inline-size: var(--icon-size);
+  }
+
+  .segmented-btn-with-icon:not(.segmented-btn-icon-only) .segmented-btn-icon {
+    grid-area: 1 / 1;
+    opacity: 1;
+    transition: opacity 150ms linear 50ms;
+  }
+
+  .segmented-btn-with-icon:not(.segmented-btn-icon-only):is(
+      .segmented-btn-selected,
+      [aria-checked='true']
+    )
+    .segmented-btn-icon {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 75ms linear;
+  }
+
+  // Icon only: checkmark appears at inline-start with gap
+  .segmented-btn-icon-only {
+    .segmented-btn-label {
+      display: none;
+    }
+
+    .segmented-btn-graphic {
+      inline-size: auto;
+      gap: 0;
+    }
+
+    &:is(.segmented-btn-selected, [aria-checked='true']):not(
+        :disabled,
+        .disabled,
+        [aria-disabled='true']
+      )
+      .segmented-btn-graphic {
+      gap: var(--icon-label-space);
+    }
+
+    &:is(:disabled, .disabled, [aria-disabled='true']) .segmented-btn-graphic {
+      gap: 0;
+    }
+  }
+
+  .segmented-btn-set:is(.disabled, [aria-disabled='true'])
+    .segmented-btn-icon-only
+    .segmented-btn-graphic {
+    gap: 0;
+  }
+
+  @media (forced-colors: active) {
+    .segmented-btn {
+      border-color: ButtonText;
+
+      &:is(.segmented-btn-selected, [aria-checked='true']):not(
+          :disabled,
+          .disabled,
+          [aria-disabled='true']
+        ) {
+        --icon-color: HighlightText;
+        forced-color-adjust: none;
+        background-color: Highlight;
+        color: HighlightText;
+
+        &:is(:focus-visible, .focus-visible) {
+          outline-color: CanvasText;
+        }
+      }
+
+      &:is(:disabled, .disabled, [aria-disabled='true']) {
+        --icon-color: GrayText;
+        border-color: GrayText;
+        color: GrayText;
+      }
+    }
+
+    // A selected child of a disabled plain-markup set isn't itself disabled,
+    // so it still matches the selected rule; this rule (same specificity, later)
+    // must reset the background too.
+    .segmented-btn-set:is(.disabled, [aria-disabled='true']) > .segmented-btn {
+      --icon-color: GrayText;
+      background-color: Canvas;
+      border-color: GrayText;
+      color: GrayText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .segmented-btn,
+    .segmented-btn-graphic,
+    .segmented-btn-checkmark,
+    .segmented-btn-icon,
+    ::slotted(*) {
+      // stylelint-disable-next-line declaration-no-important -- Reduced motion must unconditionally override all transition durations.
+      transition-duration: 0s !important;
+      // stylelint-disable-next-line declaration-no-important -- Reduced motion must unconditionally override all transition delays.
+      transition-delay: 0s !important;
+    }
+  }
+}
