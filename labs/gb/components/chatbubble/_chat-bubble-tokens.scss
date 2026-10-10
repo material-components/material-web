@@ -1,0 +1,78 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  // LINT.IfChange(tokens)
+  --actions-width: 100px;
+  --actions-width-compact: 48px;
+  --container-color: var(--md-sys-color-surface-container);
+  --container-shape: var(--md-sys-shape-corner-xl, 28px);
+  --container-shape-top-leading: var(--md-sys-shape-corner-xl, 28px);
+  --container-shape-top-trailing: var(--md-sys-shape-corner-xl, 28px);
+  --container-shape-bottom-leading: var(--md-sys-shape-corner-xl, 28px);
+  --container-shape-bottom-trailing: var(--md-sys-shape-corner-xl, 28px);
+  --editing-actions-gap: var(--md-sys-space-100, 8px);
+  --editing-caret-color: var(--md-sys-color-primary);
+  --editing-container-color: var(--md-sys-color-surface-bright);
+  --editing-max-height: 320px;
+  --editing-motion-duration: var(--md-sys-motion-duration-short4, 200ms);
+  --editing-motion-easing: var(
+    --md-sys-motion-easing-standard,
+    cubic-bezier(0.2, 0, 0, 1)
+  );
+  --editing-outline-color: var(--md-sys-color-primary);
+  --editing-shape: var(--md-sys-shape-corner-xl, 28px);
+  --editing-text-color: var(--md-sys-color-on-surface);
+  --expand-button-color: var(--md-sys-color-surface-bright);
+  --expand-button-icon-color: var(--md-sys-color-on-surface);
+  --max-width: 720px;
+  --padding-bottom: var(--md-sys-space-200, 16px);
+  --padding-leading: var(--md-sys-space-250, 20px);
+  --padding-top: var(--md-sys-space-200, 16px);
+  --padding-trailing: var(--md-sys-space-250, 20px);
+  --text-color: var(--md-sys-color-on-surface);
+  --text-font: var(
+    --md-sys-typescale-body-large,
+    var(
+      --md-sys-typescale-body-lg,
+      400 1rem / 1.5rem 'Google Sans Text',
+      'Google Sans',
+      'Google Sans Flex',
+      'Noto Sans',
+      system-ui,
+      sans-serif
+    )
+  );
+  --text-font-axes: var(--md-sys-typescale-body-lg-axes, normal);
+  --text-line-height: var(
+    --md-sys-typescale-body-large-line-height,
+    var(--md-sys-typescale-body-lg-line-height, 1.5rem)
+  );
+  --text-tracking: var(
+    --md-sys-typescale-body-large-tracking,
+    var(--md-sys-typescale-body-lg-tracking, 0)
+  );
+  --text-font-compact: var(
+    --md-sys-typescale-body-medium,
+    var(
+      --md-sys-typescale-body-md,
+      400 0.875rem / 1.25rem 'Google Sans Text',
+      'Google Sans',
+      'Google Sans Flex',
+      'Noto Sans',
+      system-ui,
+      sans-serif
+    )
+  );
+  --text-tracking-compact: var(
+    --md-sys-typescale-body-medium-tracking,
+    var(--md-sys-typescale-body-md-tracking, 0)
+  );
+  --text-line-height-compact: var(
+    --md-sys-typescale-body-medium-line-height,
+    var(--md-sys-typescale-body-md-line-height, 1.25rem)
+  );
+  // LINT.ThenChange(chat-bubble-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
