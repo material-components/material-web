@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
+import {css, type CSSResultOrNative, html, LitElement, nothing} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {button} from '../button/button.js';

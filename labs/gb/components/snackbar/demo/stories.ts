@@ -62,32 +62,32 @@ const styles = css`
    * edge across the grid.
    */
   .cell-stage {
-    width: 376px;
+    background-color: var(--md-sys-color-surface-container-low);
     block-size: 176px;
-    outline: 1px dashed var(--md-sys-color-outline-variant);
     border: none;
     border-radius: 8px;
-    background-color: var(--md-sys-color-surface-container-low);
     box-sizing: border-box;
+    inline-size: 376px;
+    outline: 1px dashed var(--md-sys-color-outline-variant);
     position: relative;
   }
 
   .interactive-stage {
-    resize: horizontal;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    min-width: 360px;
-    min-height: 240px;
+    align-items: center;
+    background-color: var(--md-sys-color-surface-container-low);
     border: 2px dashed var(--md-sys-color-outline-variant);
     border-radius: 16px;
-    background-color: var(--md-sys-color-surface-container-low);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    inline-size: 100%;
     justify-content: center;
-    box-sizing: border-box;
+    min-block-size: 240px;
+    min-inline-size: 360px;
+    overflow: hidden;
     padding: 24px;
+    position: relative;
+    resize: horizontal;
   }
 
   .demo-controls {

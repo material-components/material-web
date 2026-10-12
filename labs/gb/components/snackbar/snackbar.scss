@@ -15,12 +15,9 @@ $close-touch-margin: 4px;
 
 // Figma 44:43679 layout dimensions.
 $content-padding-inline: 16px;
+$action-only-padding-inline-end: 8px;
 $action-gap: 4px;
 $close-slot-size: 48px;
-// End margins of the actions group, pulling it into the content padding: 8px
-// visual end padding after an action alone, flush close slot otherwise.
-$action-only-end-margin: 8px - $content-padding-inline;
-$close-end-margin: -$content-padding-inline;
 
 // Action / close presence on the row. An action is either slotted or the
 // built-in `.snackbar-action` fallback, which doesn't set `has-slotted` on
@@ -160,22 +157,29 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
     box-sizing: border-box;
   }
 
-  // Detect action / close presence on the row to configure --_actions-chrome,
-  // the inline space the actions group adds beyond the label's row share:
-  // the action gap plus the actions group's end margin, plus the close slot.
-  // 1) Action present, no close: 4px gap - 8px end margin = -4px.
+  // Detect action / close presence on the row to configure padding-inline-end
+  // and --_actions-chrome (the inline space the actions group adds beyond the
+  // label's row share: the action gap plus the close slot).
+  // 1) Action present, no close: 8px end padding and 4px action gap.
   .snackbar-content:is(#{$has-action}):not(#{$has-close}) {
-    --_actions-chrome: #{$action-gap + $action-only-end-margin};
+    --_actions-chrome: #{$action-gap};
+    padding-inline-end: $action-only-padding-inline-end;
   }
 
-  // 2) Action present with close: 4px gap + 48px close slot - 16px end margin = 36px.
+  // 2) Close present: 0 end padding so the close slot aligns flush with the
+  // surface end.
+  .snackbar-content:is(#{$has-close}) {
+    padding-inline-end: 0;
+  }
+
+  // 3) Action present with close: 4px gap + 48px close slot - 4px end margin =
+  // 48px.
   .snackbar-content:is(#{$has-action}):is(#{$has-close}) {
-    --_actions-chrome: #{$action-gap + $close-slot-size + $close-end-margin};
+    --_actions-chrome: #{$action-gap + $close-slot-size - $close-touch-margin};
   }
 
   // Label: 14px padding-block with -4px bottom margin per the Figma 44:43679
-  // vertical metrics. In compact mode, wraps if action exceeds 30% of W
-  // (~93.6px at W=312).
+  // vertical metrics. In compact mode, wraps if action exceeds 30% of W.
   .snackbar-label {
     color: var(--supporting-text-color);
     font: var(--supporting-text);
@@ -197,18 +201,16 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
     box-sizing: border-box;
   }
 
-  // Action present, no close: 8px visual end padding, +4px top margin for
-  // 40px height alignment.
+  // Action present, no close: +4px top margin for 40px height alignment.
   .snackbar-actions:is(#{$has-action}):not(#{$has-close}) {
-    margin-inline-end: $action-only-end-margin;
     margin-block-start: 4px;
   }
 
-  // Close present: close touch target flush with surface end, -4px bottom
-  // margin for 48px height alignment.
+  // Close present: -4px bottom and end margin for 48px height and 12px icon
+  // alignment.
   .snackbar-actions:is(#{$has-close}) {
-    margin-inline-end: $close-end-margin;
     margin-block-end: -4px;
+    margin-inline-end: -$close-touch-margin;
   }
 
   // Empty actions group contributes 0 inline size
@@ -272,9 +274,6 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
     --outline-width: 0;
     --label-text-color: var(--action-label-text-color);
     --icon-color: var(--action-label-text-color);
-    // The shared ripple draws with `currentColor` (the label color); this
-    // keeps the documented state layer token consistent with it.
-    --state-layer-color: var(--action-label-text-color);
     --label-text: var(--action-label-text);
     --label-text-axes: var(--action-label-text-axes);
     --label-text-tracking: var(--action-label-text-tracking);

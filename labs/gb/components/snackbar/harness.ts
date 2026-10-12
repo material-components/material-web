@@ -5,7 +5,7 @@
  */
 
 import {Harness} from '../../../../testing/harness.js';
-import {SnackbarElement} from './snackbar-element.js';
+import {type SnackbarElement} from './snackbar-element.js';
 
 /**
  * Test harness for snackbar.

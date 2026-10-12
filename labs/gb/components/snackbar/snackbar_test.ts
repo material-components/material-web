@@ -856,4 +856,38 @@ describe('<md-gb-snackbar>', () => {
       expect(snackbar.timeoutMs).toBe(5000);
     });
   });
+
+  describe('container end-padding', () => {
+    it('sets end-padding to 0 and actions end-margin to -4px with close button', async () => {
+      const {snackbar} = await setupTest(
+        html`<md-gb-snackbar
+          open
+          label-text="Close present"
+          has-close-button
+          quick></md-gb-snackbar>`,
+      );
+      const content =
+        snackbar.shadowRoot!.querySelector<HTMLElement>('.snackbar-content')!;
+      const actions =
+        snackbar.shadowRoot!.querySelector<HTMLElement>('.snackbar-actions')!;
+      expect(getComputedStyle(content).paddingInlineEnd).toBe('0px');
+      expect(getComputedStyle(actions).marginInlineEnd).toBe('-4px');
+    });
+
+    it('sets end-padding to 8px when action is present without close button', async () => {
+      const {snackbar} = await setupTest(
+        html`<md-gb-snackbar
+          open
+          label-text="Action only"
+          action-label="Undo"
+          quick></md-gb-snackbar>`,
+      );
+      const content =
+        snackbar.shadowRoot!.querySelector<HTMLElement>('.snackbar-content')!;
+      const actions =
+        snackbar.shadowRoot!.querySelector<HTMLElement>('.snackbar-actions')!;
+      expect(getComputedStyle(content).paddingInlineEnd).toBe('8px');
+      expect(getComputedStyle(actions).marginInlineEnd).toBe('0px');
+    });
+  });
 });
