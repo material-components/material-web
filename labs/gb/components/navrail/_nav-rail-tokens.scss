@@ -1,0 +1,123 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin root {
+  // LINT.IfChange
+  --container-color: var(--md-sys-color-surface);
+  --container-elevation: var(--md-sys-elevation-shadow-0);
+  --container-shape: var(--md-sys-shape-corner-none);
+  --container-vertical-padding: var(--md-sys-space-500);
+  --container-width: 96px;
+  --expanded-container-color: var(--md-sys-color-surface);
+  --expanded-container-width-maximum: 360px;
+  --expanded-container-width-minimum: 220px;
+  --expanded-modal-container-color: var(--md-sys-color-surface-container);
+  --header-space-minimum: 40px;
+  --item-active-focused-icon-color: var(--md-sys-color-on-secondary-container);
+  --item-active-focused-label-text-color: var(--md-sys-color-secondary);
+  --item-active-hovered-icon-color: var(--md-sys-color-on-secondary-container);
+  --item-active-hovered-label-text-color: var(--md-sys-color-secondary);
+  --item-active-icon-color: var(--md-sys-color-on-secondary-container);
+  --item-active-indicator-color: var(--md-sys-color-secondary-container);
+  --item-active-indicator-height: 32px;
+  --item-active-indicator-shape: var(--md-sys-shape-corner-full);
+  --item-active-indicator-width: 56px;
+  --item-active-label-text-color: var(--md-sys-color-secondary);
+  --item-active-pressed-icon-color: var(--md-sys-color-on-secondary-container);
+  --item-active-pressed-label-text-color: var(--md-sys-color-secondary);
+  --item-active-state-layer-color: var(--md-sys-color-on-secondary-container);
+  --item-container-height: 64px;
+  --item-container-vertical-space: 4px;
+  --item-full-width-leading-space: 20px;
+  --item-full-width-trailing-space: 20px;
+  --item-horizontal-active-indicator-height: 56px;
+  --item-horizontal-icon-label-space: 8px;
+  --item-icon-size: 24px;
+  --item-inactive-focused-icon-color: var(--md-sys-color-on-surface);
+  --item-inactive-focused-label-text-color: var(--md-sys-color-on-surface);
+  --item-inactive-hovered-icon-color: var(--md-sys-color-on-surface);
+  --item-inactive-hovered-label-text-color: var(--md-sys-color-on-surface);
+  --item-inactive-icon-color: var(--md-sys-color-on-surface-variant);
+  --item-inactive-label-text-color: var(--md-sys-color-on-surface-variant);
+  --item-inactive-pressed-icon-color: var(--md-sys-color-on-surface);
+  --item-inactive-pressed-label-text-color: var(--md-sys-color-on-surface);
+  --item-inactive-state-layer-color: var(--md-sys-color-on-secondary-container);
+  --item-label-text: var(--md-sys-typescale-label-md);
+  --item-label-text-axes: var(--md-sys-typescale-label-md-axes);
+  --item-label-text-tracking: var(--md-sys-typescale-label-md-tracking);
+  --item-vertical-icon-label-space: 4px;
+  --item-vertical-leading-space: 16px;
+  --item-vertical-trailing-space: 16px;
+  --modal-container-elevation: var(--md-sys-elevation-shadow-2);
+  --modal-container-shape: var(--md-sys-shape-corner-lg);
+  --motion-duration: var(--md-sys-motion-duration-short4);
+  --motion-easing: var(--md-sys-motion-easing-emphasized);
+  // LINT.ThenChange(nav-rail-element.ts) keep in sync with `@cssprop` jsdoc tags
+}
+
+@mixin expanded {
+  --container-color: var(--expanded-container-color);
+  --item-active-focused-label-text-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-active-hovered-label-text-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-active-indicator-height: var(
+    --item-horizontal-active-indicator-height
+  );
+  --item-active-indicator-width: auto;
+  --item-active-label-text-color: var(--md-sys-color-on-secondary-container);
+  --item-active-pressed-label-text-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-container-height: var(--item-horizontal-active-indicator-height);
+  --item-container-vertical-space: 0px;
+  --item-label-text: var(--md-sys-typescale-label-lg);
+  --item-label-text-axes: var(--md-sys-typescale-label-lg-axes);
+  --item-label-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+}
+
+@mixin modal {
+  --container-color: var(--expanded-modal-container-color);
+  --container-elevation: var(--modal-container-elevation);
+  --container-shape: var(--modal-container-shape);
+}
+
+@mixin vertical-item {
+  --item-active-focused-label-text-color: var(--md-sys-color-secondary);
+  --item-active-hovered-label-text-color: var(--md-sys-color-secondary);
+  --item-active-indicator-height: 32px;
+  --item-active-indicator-width: 56px;
+  --item-active-label-text-color: var(--md-sys-color-secondary);
+  --item-active-pressed-label-text-color: var(--md-sys-color-secondary);
+  --item-container-height: 64px;
+  --item-container-vertical-space: 4px;
+  --item-label-text: var(--md-sys-typescale-label-md);
+  --item-label-text-axes: var(--md-sys-typescale-label-md-axes);
+  --item-label-text-tracking: var(--md-sys-typescale-label-md-tracking);
+}
+
+@mixin horizontal-item {
+  --item-active-focused-label-text-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-active-hovered-label-text-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-active-indicator-height: var(
+    --item-horizontal-active-indicator-height
+  );
+  --item-active-indicator-width: auto;
+  --item-active-label-text-color: var(--md-sys-color-on-secondary-container);
+  --item-active-pressed-label-text-color: var(
+    --md-sys-color-on-secondary-container
+  );
+  --item-container-height: var(--item-horizontal-active-indicator-height);
+  --item-container-vertical-space: 0px;
+  --item-label-text: var(--md-sys-typescale-label-lg);
+  --item-label-text-axes: var(--md-sys-typescale-label-lg-axes);
+  --item-label-text-tracking: var(--md-sys-typescale-label-lg-tracking);
+}
