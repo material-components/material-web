@@ -38,6 +38,11 @@
       display: none;
     }
 
+    // Remove built-in reveal icon on MS Edge when type='password'
+    &::-ms-reveal {
+      display: none;
+    }
+
     @media (forced-colors: active) {
       background: none; // Remove background in Firefox HCM
     }
