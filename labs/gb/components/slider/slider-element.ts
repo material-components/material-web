@@ -46,8 +46,12 @@ import sliderStyles from './slider.css' with {type: 'css'}; // github-only
 interface Action {
   canFlip: boolean;
   flipped: boolean;
+  changeDispatched: boolean;
   target: HTMLInputElement;
   fixed: HTMLInputElement;
+  fixedValue: number;
+  initialStart: number;
+  initialEnd: number;
   values: Map<HTMLInputElement, number>;
 }
 
@@ -128,8 +132,8 @@ export class SliderElement extends baseClass {
   /**
    * The orientation of the slider.
    *
-   * Vertical orientation applies to all variants (standard, discrete, range,
-   * and centered).
+   * Vertical orientation applies to standard, discrete, and centered variants
+   * (range is not supported in vertical orientation).
    */
   @property({type: String, reflect: true})
   orientation: SliderOrientation = 'horizontal';
@@ -145,6 +149,10 @@ export class SliderElement extends baseClass {
   @property({attribute: 'aria-label-end'}) ariaLabelEnd = '';
   @property({attribute: 'aria-valuetext-start'}) ariaValueTextStart = '';
   @property({attribute: 'aria-valuetext-end'}) ariaValueTextEnd = '';
+
+  private get isRange(): boolean {
+    return this.range && this.orientation !== 'vertical';
+  }
 
   get nameStart() {
     return this.getAttribute('name-start') ?? this.name;
@@ -184,17 +192,21 @@ export class SliderElement extends baseClass {
   private action?: Action;
   private pointerDownPending = false;
   private isPointerDragging = false;
+  private get activeInput(): HTMLInputElement | undefined {
+    if (!this.action) {
+      return undefined;
+    }
+    return this.action.flipped ? this.action.fixed : this.action.target;
+  }
   private get dragTarget(): HTMLInputElement | undefined {
-    return this.isPointerDragging
-      ? (this.action?.target as HTMLInputElement | undefined)
-      : undefined;
+    return this.isPointerDragging ? this.activeInput : undefined;
   }
 
   constructor() {
     super();
     if (!isServer) {
       this.addEventListener('click', (event: MouseEvent) => {
-        if (!isActivationClick(event) || !this.inputEnd) {
+        if (this.disabled || !isActivationClick(event) || !this.inputEnd) {
           return;
         }
         this.focus();
@@ -223,7 +235,7 @@ export class SliderElement extends baseClass {
 
   private get renderAriaLabelEnd() {
     const {ariaLabel} = this as ARIAMixinStrict;
-    if (this.range) {
+    if (this.isRange) {
       return (
         this.ariaLabelEnd ||
         (ariaLabel && `${ariaLabel} end`) ||
@@ -239,7 +251,7 @@ export class SliderElement extends baseClass {
   }
 
   private get renderAriaValueTextEnd() {
-    if (this.range) {
+    if (this.isRange) {
       return (
         this.ariaValueTextEnd ||
         this.valueLabelEnd ||
@@ -255,6 +267,9 @@ export class SliderElement extends baseClass {
   }
 
   override focus() {
+    if (this.disabled) {
+      return;
+    }
     this.inputEnd?.focus();
   }
 
@@ -299,32 +314,53 @@ export class SliderElement extends baseClass {
   }
 
   protected override willUpdate(changed: PropertyValues) {
+    if (changed.has('disabled') && this.disabled) {
+      this.isPointerDragging = false;
+      this.pointerDownPending = false;
+      this.handleStartHover = false;
+      this.handleEndHover = false;
+      this.startFocusVisible = false;
+      this.endFocusVisible = false;
+      this.action = undefined;
+    }
+    const rangeModeChanged = changed.has('range') || changed.has('orientation');
     this.renderValueStart =
-      changed.has('valueStart') || changed.has('range')
+      changed.has('valueStart') || rangeModeChanged
         ? this.valueStart
         : this.inputStart?.valueAsNumber;
     const endValueChanged =
-      (changed.has('valueEnd') && this.range) ||
+      (changed.has('valueEnd') && this.isRange) ||
       changed.has('value') ||
-      changed.has('range');
+      rangeModeChanged;
     this.renderValueEnd = endValueChanged
-      ? this.range
+      ? this.isRange
         ? this.valueEnd
         : this.value
       : this.inputEnd?.valueAsNumber;
+    if (
+      this.isRange &&
+      this.renderValueStart !== undefined &&
+      this.renderValueEnd !== undefined &&
+      this.renderValueStart > this.renderValueEnd
+    ) {
+      const low = Math.min(this.renderValueStart, this.renderValueEnd);
+      const high = Math.max(this.renderValueStart, this.renderValueEnd);
+      this.renderValueStart = low;
+      this.renderValueEnd = high;
+    }
   }
 
   protected override updated(changed: PropertyValues) {
-    if (this.range) {
-      this.renderValueStart = this.inputStart!.valueAsNumber;
+    if (this.isRange && this.inputStart) {
+      this.renderValueStart = this.inputStart.valueAsNumber;
     }
     this.renderValueEnd = this.inputEnd!.valueAsNumber;
 
-    if (this.range) {
+    if (this.isRange && this.inputStart) {
       const segment = (this.max - this.min) / 3;
       if (this.valueStart === undefined) {
-        this.inputStart!.valueAsNumber = this.min + segment;
-        const v = this.inputStart!.valueAsNumber;
+        this.inputStart.valueAsNumber = this.min + segment;
+        const v = this.inputStart.valueAsNumber;
         this.valueStart = this.renderValueStart = v;
       }
       if (this.valueEnd === undefined) {
@@ -332,19 +368,32 @@ export class SliderElement extends baseClass {
         const v = this.inputEnd!.valueAsNumber;
         this.valueEnd = this.renderValueEnd = v;
       }
+      if (
+        this.valueStart !== undefined &&
+        this.valueEnd !== undefined &&
+        this.valueStart > this.valueEnd
+      ) {
+        const low = Math.min(this.valueStart, this.valueEnd);
+        const high = Math.max(this.valueStart, this.valueEnd);
+        this.inputStart.valueAsNumber = low;
+        this.inputEnd!.valueAsNumber = high;
+        this.valueStart = this.renderValueStart = this.inputStart.valueAsNumber;
+        this.valueEnd = this.renderValueEnd = this.inputEnd!.valueAsNumber;
+      }
     } else {
       this.value ??= this.renderValueEnd;
     }
 
     if (
       changed.has('range') ||
+      changed.has('orientation') ||
       changed.has('renderValueStart') ||
       changed.has('renderValueEnd') ||
       this.isUpdatePending
     ) {
       const startNub = this.handleStart?.querySelector('.slider-handle-nub');
       const endNub = this.handleEnd?.querySelector('.slider-handle-nub');
-      this.handlesOverlapping = isOverlapping(startNub, endNub);
+      this.handlesOverlapping = this.isRange && isOverlapping(startNub, endNub);
     }
 
     this.performUpdate();
@@ -354,11 +403,23 @@ export class SliderElement extends baseClass {
     const target = event.target as HTMLInputElement;
     const fixed =
       target === this.inputStart ? this.inputEnd! : this.inputStart!;
+    const fixedValue =
+      (fixed === this.inputStart ? this.valueStart : this.valueEnd) ??
+      fixed?.valueAsNumber ??
+      0;
+    const initialStart =
+      this.valueStart ?? this.inputStart?.valueAsNumber ?? this.min;
+    const initialEnd =
+      this.valueEnd ?? this.inputEnd?.valueAsNumber ?? this.max;
     this.action = {
       canFlip: event.type === 'pointerdown',
       flipped: false,
+      changeDispatched: false,
       target,
       fixed,
+      fixedValue,
+      initialStart,
+      initialEnd,
       values: new Map([
         [target, target.valueAsNumber],
         [fixed, fixed?.valueAsNumber],
@@ -377,7 +438,7 @@ export class SliderElement extends baseClass {
   }
 
   private handleKeydown(event: KeyboardEvent) {
-    if (event.key === 'Tab' || event.defaultPrevented) {
+    if (this.disabled || event.key === 'Tab' || event.defaultPrevented) {
       return;
     }
     this.startAction(event);
@@ -439,6 +500,9 @@ export class SliderElement extends baseClass {
   }
 
   private handleDown(event: PointerEvent) {
+    if (this.disabled) {
+      return;
+    }
     this.pointerDownPending = true;
     this.isPointerDragging = event.isPrimary && event.button === 0;
     try {
@@ -485,7 +549,7 @@ export class SliderElement extends baseClass {
     this.isPointerDragging = false;
     this.pointerDownPending = false;
     this.handleLeave();
-    this.startOnTop = this.action?.target === this.inputStart;
+    this.startOnTop = this.activeInput === this.inputStart;
     this.finishAction();
   }
 
@@ -547,13 +611,20 @@ export class SliderElement extends baseClass {
       return;
     }
 
-    const {target, values, flipped} = this.action;
+    const action = this.action;
+    const active = this.activeInput;
     await new Promise(requestAnimationFrame);
-    if (target !== undefined) {
-      target.focus();
-      if (flipped && target.valueAsNumber !== values.get(target)!) {
-        target.dispatchEvent(new Event('change', {bubbles: true}));
-      }
+    if (active !== undefined) {
+      active.focus();
+    }
+    if (
+      this.isRange &&
+      !action.changeDispatched &&
+      (this.valueStart !== action.initialStart ||
+        this.valueEnd !== action.initialEnd)
+    ) {
+      action.changeDispatched = true;
+      this.dispatchEvent(new Event('change', {bubbles: true}));
     }
     this.finishAction();
   }
@@ -563,6 +634,11 @@ export class SliderElement extends baseClass {
   }
 
   private handleFocus(event: FocusEvent) {
+    if (this.disabled) {
+      this.startFocusVisible = false;
+      this.endFocusVisible = false;
+      return;
+    }
     const target = event.target as HTMLInputElement;
     this.updateOnTop(target);
     const isStart = target === this.inputStart;
@@ -575,115 +651,102 @@ export class SliderElement extends baseClass {
   }
 
   private handleBlur(event: FocusEvent) {
-    this.pointerDownPending = false;
     const isStart = (event.target as HTMLInputElement) === this.inputStart;
     if (isStart) {
       this.startFocusVisible = false;
     } else {
       this.endFocusVisible = false;
     }
-    this.finishAction();
-  }
-
-  private needsClamping() {
-    if (!this.action) {
-      return false;
+    if (!this.isPointerDragging) {
+      this.pointerDownPending = false;
+      this.finishAction();
     }
-
-    const {target, fixed} = this.action;
-    const isStart = target === this.inputStart;
-    return isStart
-      ? target.valueAsNumber > fixed.valueAsNumber
-      : target.valueAsNumber < fixed.valueAsNumber;
-  }
-
-  private isActionFlipped() {
-    const {action} = this;
-    if (!action) {
-      return false;
-    }
-
-    const {target, fixed, values} = action;
-    if (action.canFlip) {
-      const coincident = values.get(target) === values.get(fixed);
-      if (coincident && this.needsClamping()) {
-        action.canFlip = false;
-        action.flipped = true;
-        action.target = fixed;
-        action.fixed = target;
-      }
-    }
-    return action.flipped;
-  }
-
-  private flipAction() {
-    if (!this.action) {
-      return false;
-    }
-
-    const {target, fixed, values} = this.action;
-    const changed = target.valueAsNumber !== fixed.valueAsNumber;
-    target.valueAsNumber = fixed.valueAsNumber;
-    fixed.valueAsNumber = values.get(fixed)!;
-    return changed;
-  }
-
-  private clampAction() {
-    if (!this.needsClamping() || !this.action) {
-      return false;
-    }
-    const {target, fixed} = this.action;
-    target.valueAsNumber = fixed.valueAsNumber;
-    return true;
   }
 
   private handleInput(event: InputEvent) {
-    if (this.isRedispatchingEvent) {
+    if (this.isRedispatchingEvent || this.disabled) {
       return;
     }
-    let stopPropagation = false;
-    let redispatch = false;
-    if (this.range) {
-      if (this.isActionFlipped()) {
-        stopPropagation = true;
-        redispatch = this.flipAction();
-      }
-      if (this.clampAction()) {
-        stopPropagation = true;
-        redispatch = false;
-      }
-    }
     const target = event.target as HTMLInputElement;
+    if (this.isRange && this.inputStart && this.inputEnd) {
+      const action = this.action;
+      const sourceInput = action?.target ?? target;
+      const isStartTarget = sourceInput === this.inputStart;
+      const rawValue = sourceInput.valueAsNumber;
+      const pivotValue =
+        action !== undefined
+          ? action.fixedValue
+          : isStartTarget
+            ? (this.valueEnd ?? this.inputEnd.valueAsNumber)
+            : (this.valueStart ?? this.inputStart.valueAsNumber);
+      const flipped = isStartTarget
+        ? rawValue > pivotValue
+        : rawValue < pivotValue;
+      if (action) {
+        action.flipped = flipped;
+      }
+      const nextStart = Math.min(rawValue, pivotValue);
+      const nextEnd = Math.max(rawValue, pivotValue);
+      if (
+        action &&
+        nextStart === this.valueStart &&
+        nextEnd === this.valueEnd
+      ) {
+        this.inputStart.valueAsNumber = nextStart;
+        this.inputEnd.valueAsNumber = nextEnd;
+        event.stopPropagation();
+        return;
+      }
+      this.inputStart.valueAsNumber = nextStart;
+      this.inputEnd.valueAsNumber = nextEnd;
+      this.valueStart = nextStart;
+      this.valueEnd = nextEnd;
+      const active =
+        this.activeInput ??
+        (flipped ? (isStartTarget ? this.inputEnd : this.inputStart) : target);
+      this.updateOnTop(active);
+      if (this.isPointerDragging) {
+        const activeIsStart = active === this.inputStart;
+        this.handleStartHover = activeIsStart && Boolean(this.handleStart);
+        this.handleEndHover = !activeIsStart && Boolean(this.handleEnd);
+      } else if (flipped) {
+        const wasFocusVisible = isStartTarget
+          ? this.startFocusVisible
+          : this.endFocusVisible;
+        active.focus();
+        if (wasFocusVisible) {
+          this.startFocusVisible = active === this.inputStart;
+          this.endFocusVisible = active === this.inputEnd;
+        }
+      }
+      return;
+    }
     this.updateOnTop(target);
-    if (this.range) {
-      this.valueStart = this.inputStart!.valueAsNumber;
-      this.valueEnd = this.inputEnd!.valueAsNumber;
-    } else {
-      this.value = this.inputEnd!.valueAsNumber;
-    }
-    if (stopPropagation) {
-      event.stopPropagation();
-    }
-    if (redispatch) {
-      this.isRedispatchingEvent = true;
-      redispatchEvent(target, event);
-      this.isRedispatchingEvent = false;
-    }
+    this.value = this.inputEnd!.valueAsNumber;
   }
 
   private handleChange(event: Event) {
     const changeTarget = event.target as HTMLInputElement;
-    const {target, values} = this.action ?? {};
-    const squelch =
-      target && target.valueAsNumber === values?.get(changeTarget);
-    if (!squelch) {
-      redispatchEvent(this, event);
+    const action = this.action;
+    if (action) {
+      const changed = this.isRange
+        ? this.valueStart !== action.initialStart ||
+          this.valueEnd !== action.initialEnd
+        : changeTarget.valueAsNumber !== action.values.get(changeTarget);
+      if (changed && !action.changeDispatched) {
+        action.changeDispatched = true;
+        redispatchEvent(this, event);
+      }
+      if (!this.isPointerDragging) {
+        this.finishAction();
+      }
+      return;
     }
-    this.finishAction();
+    redispatchEvent(this, event);
   }
 
   override [getFormValue]() {
-    if (this.range) {
+    if (this.isRange) {
       const data = new FormData();
       data.append(
         this.nameStart,
@@ -700,7 +763,7 @@ export class SliderElement extends baseClass {
   }
 
   override formResetCallback() {
-    if (this.range) {
+    if (this.isRange) {
       const valueStart = this.getAttribute('value-start');
       this.valueStart = valueStart !== null ? Number(valueStart) : undefined;
       const valueEnd = this.getAttribute('value-end');
@@ -744,12 +807,17 @@ export class SliderElement extends baseClass {
       }
     }
 
+    const isVertical = this.orientation === 'vertical';
+    const isRange = this.isRange;
+
     const styles = computeSliderProperties({
       min: this.min,
       max: this.max,
       step: this.step,
-      range: this.range,
+      size: this.size,
+      range: isRange,
       centered: this.centered,
+      vertical: isVertical,
       valueStart: this.renderValueStart,
       valueEnd: this.renderValueEnd,
       value: this.renderValueEnd,
@@ -760,21 +828,24 @@ export class SliderElement extends baseClass {
     const labelStart =
       this.valueLabelStart || formatValueIndicatorLabel(this.renderValueStart);
     const labelEnd =
-      (this.range ? this.valueLabelEnd : this.valueLabel) ||
+      (isRange ? this.valueLabelEnd : this.valueLabel) ||
       formatValueIndicatorLabel(this.renderValueEnd);
 
-    const isVertical = this.orientation === 'vertical';
-
+    const activeInput = this.activeInput;
     const dragTarget = this.dragTarget;
     const startOnTop = dragTarget
       ? dragTarget === this.inputStart
       : this.startOnTop;
     const handleStartHover =
-      this.handleStartHover && (!dragTarget || dragTarget === this.inputStart);
+      !this.disabled &&
+      this.handleStartHover &&
+      (!dragTarget || dragTarget === this.inputStart);
     const handleEndHover =
-      this.handleEndHover && (!dragTarget || dragTarget === this.inputEnd);
+      !this.disabled &&
+      this.handleEndHover &&
+      (!dragTarget || dragTarget === this.inputEnd);
     const isCoincident =
-      this.range &&
+      isRange &&
       this.renderValueStart !== undefined &&
       this.renderValueStart === this.renderValueEnd;
 
@@ -790,14 +861,14 @@ export class SliderElement extends baseClass {
         class="${classMap(
           sliderClasses({
             disabled: this.disabled,
-            ranged: this.range,
+            ranged: isRange,
             centered: this.centered,
             vertical: isVertical,
           }),
         )}"
         style=${styleMap(cssStyles)}>
         ${when(
-          this.range,
+          isRange,
           () => html`
             <input
               type="range"
@@ -840,7 +911,7 @@ export class SliderElement extends baseClass {
           .value=${String(this.renderValueEnd)}
           aria-label=${this.renderAriaLabelEnd || nothing}
           aria-valuetext=${this.renderAriaValueTextEnd || nothing}
-          aria-valuemin=${this.range ? (this.valueStart ?? this.min) : this.min}
+          aria-valuemin=${isRange ? (this.valueStart ?? this.min) : this.min}
           aria-valuemax=${this.max}
           @keydown=${this.handleKeydown}
           @keyup=${this.handleKeyup}
@@ -873,7 +944,7 @@ export class SliderElement extends baseClass {
             !this.ticks,
             () => html`
               ${when(
-                this.range || this.centered,
+                isRange || this.centered,
                 () =>
                   html`<div
                     class="slider-boundary-stop slider-start ${classMap({
@@ -888,9 +959,9 @@ export class SliderElement extends baseClass {
             `,
           )}
           ${when(
-            !this.range &&
+            !isRange &&
               !this.centered &&
-              this.orientation !== 'vertical' &&
+              !isVertical &&
               (this.size === 'md' || this.size === 'lg' || this.size === 'xl'),
             () => html`
               <div
@@ -906,7 +977,7 @@ export class SliderElement extends baseClass {
 
         <div class="slider-handles">
           ${when(
-            this.range,
+            isRange,
             () => html`
               <div
                 class="${classMap({
@@ -914,21 +985,19 @@ export class SliderElement extends baseClass {
                     start: true,
                     hover: handleStartHover,
                     active: Boolean(
-                      !this.disabled &&
-                        this.action &&
-                        this.action.target === this.inputStart,
+                      !this.disabled && activeInput === this.inputStart,
                     ),
-                    focusVisible: this.startFocusVisible,
+                    focusVisible: !this.disabled && this.startFocusVisible,
                     disabled: this.disabled,
                     onTop: !this.disabled && startOnTop,
-                    isOverlapping: this.range && this.handlesOverlapping,
+                    isOverlapping: isRange && this.handlesOverlapping,
                   }),
                   'slider-is-coincident': isCoincident,
                 })}">
                 <div
                   class="${classMap(
                     handleNubClasses({
-                      focusVisible: this.startFocusVisible,
+                      focusVisible: !this.disabled && this.startFocusVisible,
                     }),
                   )}"></div>
                 ${when(
@@ -947,21 +1016,19 @@ export class SliderElement extends baseClass {
                 end: true,
                 hover: handleEndHover,
                 active: Boolean(
-                  !this.disabled &&
-                    this.action &&
-                    this.action.target === this.inputEnd,
+                  !this.disabled && activeInput === this.inputEnd,
                 ),
-                focusVisible: this.endFocusVisible,
+                focusVisible: !this.disabled && this.endFocusVisible,
                 disabled: this.disabled,
                 onTop: !this.disabled && !startOnTop,
-                isOverlapping: this.range && this.handlesOverlapping,
+                isOverlapping: isRange && this.handlesOverlapping,
               }),
               'slider-is-coincident': isCoincident,
             })}">
             <div
               class="${classMap(
                 handleNubClasses({
-                  focusVisible: this.endFocusVisible,
+                  focusVisible: !this.disabled && this.endFocusVisible,
                 }),
               )}"></div>
             ${when(
