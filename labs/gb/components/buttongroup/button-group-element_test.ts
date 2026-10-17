@@ -27,6 +27,7 @@ describe('ButtonGroupElement', () => {
   beforeAll(() => {
     const noTransitions = new CSSStyleSheet();
     noTransitions.replaceSync(`
+      md-gb-button,
       md-gb-button::part(btn),
       md-gb-button-group {
         transition: none !important;
@@ -1454,5 +1455,136 @@ describe('ButtonGroupElement', () => {
       expect(s1.borderBottomLeftRadius).toBe('20px');
       expect(s1.borderBottomRightRadius).toBe('20px');
     });
+
+    it('computes transparent background on unselected disabled outlined button and disabled container fill on selected disabled outlined button at button and group levels', async () => {
+      const root = env.render(html`
+        <md-gb-button id="standalone-unsel" color="outlined" disabled>
+          Standalone Unselected
+        </md-gb-button>
+        <md-gb-button
+          id="standalone-sel"
+          type="toggle"
+          color="outlined"
+          selected
+          disabled>
+          Standalone Selected
+        </md-gb-button>
+        <md-gb-button-group variant="standard" selection="multiple" disabled>
+          <md-gb-button id="grp-unsel" color="outlined">
+            Group Unselected
+          </md-gb-button>
+          <md-gb-button id="grp-sel" color="outlined" selected>
+            Group Selected
+          </md-gb-button>
+        </md-gb-button-group>
+      `);
+      await env.waitForStability();
+
+      const isOutlineInvisible = (style: CSSStyleDeclaration) =>
+        style.borderTopColor === 'transparent' ||
+        style.borderTopColor === 'rgba(0, 0, 0, 0)';
+
+      const isOutlineVisible = (style: CSSStyleDeclaration) =>
+        style.borderTopWidth !== '0px' &&
+        style.borderTopColor !== 'transparent' &&
+        style.borderTopColor !== 'rgba(0, 0, 0, 0)';
+
+      const sStandaloneUnsel = getComputedStyle(
+        inner(root.querySelector('#standalone-unsel') as ButtonElement),
+      );
+      const sStandaloneSel = getComputedStyle(
+        inner(root.querySelector('#standalone-sel') as ButtonElement),
+      );
+      const sGrpUnsel = getComputedStyle(
+        inner(root.querySelector('#grp-unsel') as ButtonElement),
+      );
+      const sGrpSel = getComputedStyle(
+        inner(root.querySelector('#grp-sel') as ButtonElement),
+      );
+
+      // Unselected disabled outlined buttons have transparent background and visible outline
+      expect(sStandaloneUnsel.backgroundColor).toBe('rgba(0, 0, 0, 0)');
+      expect(isOutlineVisible(sStandaloneUnsel)).toBeTrue();
+      expect(sGrpUnsel.backgroundColor).toBe('rgba(0, 0, 0, 0)');
+      expect(isOutlineVisible(sGrpUnsel)).toBeTrue();
+
+      // Selected disabled outlined buttons use disabled container fill (not inverse-surface) and invisible outline
+      expect(sStandaloneSel.backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
+      expect(sStandaloneSel.backgroundColor).not.toBe('rgb(50, 47, 53)');
+      expect(isOutlineInvisible(sStandaloneSel)).toBeTrue();
+
+      expect(sGrpSel.backgroundColor).toBe(sStandaloneSel.backgroundColor);
+      expect(sGrpSel.color).toBe(sStandaloneSel.color);
+      expect(isOutlineInvisible(sGrpSel)).toBeTrue();
+    });
+
+    it(
+      'expands pressed button and shrinks adjacent buttons relative to the ' +
+        'pressed button growth in standard variant',
+      async () => {
+        if (!CSS.supports('width', 'calc-size(auto, size)')) {
+          return;
+        }
+        const root = env.render(html`
+          <md-gb-button-group variant="standard">
+            <md-gb-button id="p1" size="sm">Short</md-gb-button>
+            <md-gb-button id="p2" size="sm"
+              >Much Wider Middle Button</md-gb-button
+            >
+            <md-gb-button id="p3" size="sm">End</md-gb-button>
+          </md-gb-button-group>
+        `);
+        await env.waitForStability();
+
+        const p1 = root.querySelector('#p1') as ButtonElement;
+        const p2 = root.querySelector('#p2') as ButtonElement;
+        const p3 = root.querySelector('#p3') as ButtonElement;
+
+        const w1Base = p1.getBoundingClientRect().width;
+        const w2Base = p2.getBoundingClientRect().width;
+        const w3Base = p3.getBoundingClientRect().width;
+
+        // Press middle button (p2): p2 grows by 15% of w2Base, and both
+        // adjacent buttons (p1, p3) shrink by half of p2's growth.
+        p2.classList.add('active');
+        await env.waitForStability();
+
+        const p2Growth = w2Base * 0.15;
+        expect(p2.getBoundingClientRect().width).toBeCloseTo(
+          w2Base + p2Growth,
+          0,
+        );
+        expect(p1.getBoundingClientRect().width).toBeCloseTo(
+          w1Base - p2Growth / 2,
+          0,
+        );
+        expect(p3.getBoundingClientRect().width).toBeCloseTo(
+          w3Base - p2Growth / 2,
+          0,
+        );
+
+        p2.classList.remove('active');
+        await env.waitForStability();
+
+        // Press first button (p1): p1 grows by 15% of w1Base, and its single
+        // adjacent neighbor (p2) shrinks by the full growth of p1.
+        p1.classList.add('active');
+        await env.waitForStability();
+
+        const p1Growth = w1Base * 0.15;
+        expect(p1.getBoundingClientRect().width).toBeCloseTo(
+          w1Base + p1Growth,
+          0,
+        );
+        expect(p2.getBoundingClientRect().width).toBeCloseTo(
+          w2Base - p1Growth,
+          0,
+        );
+        expect(p3.getBoundingClientRect().width).toBeCloseTo(w3Base, 0);
+
+        p1.classList.remove('active');
+        await env.waitForStability();
+      },
+    );
   });
 });
