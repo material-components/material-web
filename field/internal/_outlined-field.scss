@@ -130,6 +130,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     .outline-notch {
       align-items: flex-start;
       border: inherit;
+      border-color: inherit !important;
       display: flex;
       margin-inline-start: calc(-1 * var(--_outline-label-padding));
       margin-inline-end: var(--_outline-label-padding);
@@ -244,7 +245,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
     // States
 
-    :hover .outline {
+    :hover .outline,
+    :hover .outline-notch {
       border-color: var(--_hover-outline-color);
       color: var(--_hover-outline-color); // Needed for Firefox HCM
     }
@@ -257,7 +259,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       border-width: var(--_hover-outline-width);
     }
 
-    .focused .outline {
+    .focused .outline,
+    .focused .outline-notch {
       border-color: var(--_focus-outline-color);
       color: var(--_focus-outline-color); // Needed for Firefox HCM
     }
@@ -270,7 +273,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       border-width: var(--_focus-outline-width);
     }
 
-    .disabled .outline {
+    .disabled .outline,
+    .disabled .outline-notch {
       border-color: var(--_disabled-outline-color);
       color: var(--_disabled-outline-color); // Needed for Firefox HCM
     }
@@ -289,18 +293,21 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       border-width: var(--_disabled-outline-width);
     }
 
-    .error .outline {
+    .error .outline,
+    .error .outline-notch {
       border-color: var(--_error-outline-color);
       color: var(--_error-outline-color); // Needed for Firefox HCM
     }
 
-    .error:hover .outline {
+    .error:hover .outline,
+    .error:hover .outline-notch {
       border-color: var(--_error-hover-outline-color);
       // Needed for Firefox HCM
       color: var(--_error-hover-outline-color);
     }
 
-    .error.focused .outline {
+    .error.focused .outline,
+    .error.focused .outline-notch {
       border-color: var(--_error-focus-outline-color);
       // Needed for Firefox HCM
       color: var(--_error-focus-outline-color);
