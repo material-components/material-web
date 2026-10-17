@@ -90,4 +90,14 @@ export class List extends LitElement {
   activatePreviousItem(): ListItem | null {
     return this.listController.activatePreviousItem();
   }
+
+  /**
+   * Retrieves the first activated item of the array of items.
+   *
+   * @return A record of the first activated item including the item and the
+   *     index of the item or `null` if none are activated.
+   */
+  get activeItem() {
+    return this.listController.activeItem;
+  }
 }
