@@ -32,6 +32,7 @@
   --state-layer-size: inherit;
   --with-overlap-handle-outline-color: var(--md-sys-color-surface);
   --with-overlap-handle-outline-width: 1px;
+  --icon-size: 24px;
   // LINT.ThenChange(slider-element.ts) keep in sync with `@cssprop` jsdoc tags
 }
 
@@ -52,6 +53,7 @@
 
 @mixin medium {
   --handle-height: 52px;
+  --icon-size: 24px;
   --track-height: 40px;
   --track-shape: 12px;
   --inactive-track-shape-trailing: 12px;
@@ -59,6 +61,7 @@
 
 @mixin large {
   --handle-height: 68px;
+  --icon-size: 24px;
   --track-height: 56px;
   --track-shape: 16px;
   --inactive-track-shape-trailing: 16px;
@@ -66,6 +69,7 @@
 
 @mixin xlarge {
   --handle-height: 108px;
+  --icon-size: 32px;
   --track-height: 96px;
   --track-shape: 28px;
   --inactive-track-shape-trailing: 28px;
