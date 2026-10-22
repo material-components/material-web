@@ -202,11 +202,11 @@ available](images/textfield/usage-icons.webp)
 <!-- catalog-include "figures/textfield/usage-icons.html" -->
 
 ```html
-<md-outlined-text-field placeholder="Search for messages">
+<md-outlined-text-field placeholder="Search for messages" has-leading-icon>
   <md-icon slot="leading-icon">search</md-icon>
 </md-outlined-text-field>
 
-<md-outlined-text-field label="Password" type="password">
+<md-outlined-text-field label="Password" type="password" has-trailing-icon>
   <md-icon-button toggle slot="trailing-icon">
     <md-icon>visibility</md-icon>
     <md-icon slot="selected">visibility_off</md-icon>
@@ -216,7 +216,8 @@ available](images/textfield/usage-icons.webp)
 <md-outlined-text-field
     label="Username"
     error
-    error-text="Username not available">
+    error-text="Username not available"
+    has-trailing-icon>
   <md-icon slot="trailing-icon">error</md-icon>
 </md-outlined-text-field>
 ```
