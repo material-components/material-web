@@ -7,13 +7,23 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      WIF_PROVIDER: 'projects/305452601764/locations/global/workloadIdentityPools/builders/providers/github'
+      EXIT_GATE_AR_URL: 'https://us-npm.pkg.dev/oss-exit-gate-prod/material-web--npm/'
+      EXIT_GATE_MANIFEST_GCS: 'gs://oss-exit-gate-prod-projects-bucket/material-web/npm/manifests'
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -25,10 +35,44 @@ jobs:
         env:
           WIREIT_FAILURES: continue
 
-      - uses: actions/setup-node@v3
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
         with:
-          node-version: 18
-          registry-url: 'https://wombat-dressing-room.appspot.com/'
-      - run: npm publish
+          token_format: 'access_token'
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3
+
+      - name: Stage package to OSS Exit Gate Artifact Registry
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
+        run: |
+          cat << 'NPMRC_EOF' > "$HOME/.npmrc"
+          registry=https://us-npm.pkg.dev/oss-exit-gate-prod/material-web--npm/
+          //us-npm.pkg.dev/oss-exit-gate-prod/material-web--npm/:always-auth=true
+          NPMRC_EOF
+          echo "//us-npm.pkg.dev/oss-exit-gate-prod/material-web--npm/:_authToken=${ACCESS_TOKEN}" >> "$HOME/.npmrc"
+          trap 'rm -f "$HOME/.npmrc"' EXIT
+          npm publish --registry="${EXIT_GATE_AR_URL}"
+
+      - name: Trigger OSS Exit Gate release
+        env:
+          MANIFEST_NAME: manifest-${{ github.run_id }}-${{ github.run_attempt }}.json
+        run: |
+          VERSION="$(jq -r .version package.json)"
+          jq -n --arg ver "${VERSION}" '{
+            publish_all: false,
+            publishing_groups: [
+              {
+                packages: [
+                  {
+                    name: "@material/web",
+                    version: $ver
+                  }
+                ]
+              }
+            ]
+          }' > manifest.json
+          gcloud storage cp manifest.json "${EXIT_GATE_MANIFEST_GCS}/${MANIFEST_NAME}"
