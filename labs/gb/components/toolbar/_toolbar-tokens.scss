@@ -6,20 +6,22 @@
 @mixin root {
   // LINT.IfChange
   --button-container-color: var(--md-sys-color-surface-container);
+  --button-shape: 9999px;
   --container-color: var(--md-sys-color-surface-container);
   --container-elevation: var(--md-sys-elevation-shadow-3);
   --container-leading-space: var(--md-sys-space-100);
   --container-shape: calc(var(--horizontal-container-height) / 2);
-  --container-spacing: var(--md-sys-space-50);
+  --container-spacing: var(--target-area-gap);
   --container-trailing-space: var(--md-sys-space-100);
   --docked-container-elevation: var(--md-sys-elevation-shadow-0);
   --docked-container-height: 64px;
   --docked-container-leading-space: var(--md-sys-space-200);
   --docked-container-max-spacing: 32px;
-  --docked-container-min-spacing: 4px;
+  --docked-container-min-spacing: var(--target-area-gap);
   --docked-container-shape: var(--md-sys-shape-corner-none);
   --docked-container-trailing-space: var(--md-sys-space-200);
   --horizontal-container-height: 64px;
+  --icon-button-shape: 50%;
   --icon-color: var(--md-sys-color-on-surface-variant);
   --label-text-color: var(--md-sys-color-on-surface-variant);
   --min-button-size: 40px;
@@ -28,6 +30,8 @@
   --selected-button-container-color: var(--md-sys-color-secondary-container);
   --selected-icon-color: var(--md-sys-color-on-secondary-container);
   --selected-label-text-color: var(--md-sys-color-on-secondary-container);
+  --target-area-gap: var(--md-sys-space-50);
+  --touch-target-size: 48px;
   --vertical-container-width: 64px;
   // LINT.ThenChange(toolbar-element.ts) keep in sync with `@cssprop` jsdoc tags
 }
@@ -40,6 +44,22 @@
   --selected-button-container-color: var(--md-sys-color-secondary-container);
   --selected-icon-color: var(--md-sys-color-on-secondary-container);
   --selected-label-text-color: var(--md-sys-color-on-secondary-container);
+}
+
+@mixin disabled {
+  @include standard;
+  --button-container-color: hsl(
+    from var(--md-sys-color-on-surface) h s l / 12%
+  );
+  --selected-button-container-color: hsl(
+    from var(--md-sys-color-on-surface) h s l / 12%
+  );
+  --icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --label-text-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --selected-icon-color: hsl(from var(--md-sys-color-on-surface) h s l / 38%);
+  --selected-label-text-color: hsl(
+    from var(--md-sys-color-on-surface) h s l / 38%
+  );
 }
 
 @mixin vibrant {

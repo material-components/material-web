@@ -53,6 +53,14 @@
     @include toolbar-tokens.vertical;
   }
 
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='start']) {
+    margin-inline: 0 auto;
+  }
+
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='end']) {
+    margin-inline: auto 0;
+  }
+
   :host(md-gb-toolbar[orientation='vertical']:not([docked])) [part='toolbar'],
   :host(md-gb-toolbar[orientation='vertical']:not([docked])) .toolbar {
     @include toolbar-tokens.vertical;
@@ -64,6 +72,36 @@
       var(--container-trailing-space);
     padding-inline: var(--container-leading-space);
     width: fit-content;
+  }
+
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='start'])
+    [part='toolbar'],
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='start'])
+    .toolbar {
+    align-items: flex-start;
+  }
+
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='end'])
+    [part='toolbar'],
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='end'])
+    .toolbar {
+    align-items: flex-end;
+  }
+
+  :host(md-gb-toolbar[disabled]),
+  :host([disabled]),
+  :host(md-gb-toolbar[color='vibrant'][disabled]),
+  :host(md-gb-toolbar[color='standard'][disabled]) {
+    @include toolbar-tokens.disabled;
+
+    pointer-events: none !important;
+    cursor: default !important;
+    --md-icon-fill: 0 !important;
+    --toolbar-icon-color: var(--icon-color) !important;
+    --toolbar-label-text-color: var(--label-text-color) !important;
+    --ripple-hover-opacity: 0 !important;
+    --ripple-press-opacity: 0 !important;
+    --state-layer-color: transparent !important;
   }
 
   md-gb-toolbar {
@@ -88,6 +126,14 @@
 
     &[orientation='vertical']:not([docked]) {
       @include toolbar-tokens.vertical;
+
+      &[align='start'] {
+        margin-inline: 0 auto;
+      }
+
+      &[align='end'] {
+        margin-inline: auto 0;
+      }
     }
 
     &[docked] {
@@ -96,6 +142,68 @@
       display: flex;
       width: 100%;
     }
+
+    &[disabled],
+    &[color='vibrant'][disabled],
+    &[color='standard'][disabled] {
+      @include toolbar-tokens.disabled;
+
+      pointer-events: none !important;
+      cursor: default !important;
+      --md-icon-fill: 0 !important;
+      --toolbar-icon-color: var(--icon-color) !important;
+      --toolbar-label-text-color: var(--label-text-color) !important;
+      --ripple-hover-opacity: 0 !important;
+      --ripple-press-opacity: 0 !important;
+      --state-layer-color: transparent !important;
+    }
+  }
+
+  :host(md-gb-toolbar[disabled]),
+  :host(md-gb-toolbar[color='vibrant'][disabled]),
+  md-gb-toolbar[disabled],
+  md-gb-toolbar[color='vibrant'][disabled],
+  .toolbar.disabled,
+  .toolbar.toolbar-vibrant.disabled {
+    &,
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+    }
+  }
+
+  [part='toolbar'] > slot,
+  .toolbar > slot {
+    display: flex;
+    align-items: center;
+    gap: var(--container-spacing);
+  }
+
+  [part='toolbar'] > slot:not(.has-slotted),
+  .toolbar > slot:not(.has-slotted) {
+    display: none;
+  }
+
+  :host(md-gb-toolbar[orientation='vertical']:not([docked]))
+    [part='toolbar']
+    > slot,
+  .toolbar.toolbar-vertical:not(.toolbar-docked) > slot {
+    flex-direction: column;
+  }
+
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='start'])
+    [part='toolbar']
+    > slot,
+  .toolbar.toolbar-vertical:not(.toolbar-docked).toolbar-align-start > slot {
+    align-items: flex-start;
+  }
+
+  :host(md-gb-toolbar[orientation='vertical']:not([docked])[align='end'])
+    [part='toolbar']
+    > slot,
+  .toolbar.toolbar-vertical:not(.toolbar-docked).toolbar-align-end > slot {
+    align-items: flex-end;
   }
 
   .toolbar {
@@ -135,6 +243,21 @@
       --toolbar-label-text-color: var(--label-text-color);
     }
 
+    &.disabled,
+    &.toolbar-vibrant.disabled,
+    &.toolbar-standard.disabled {
+      @include toolbar-tokens.disabled;
+
+      pointer-events: none !important;
+      cursor: default !important;
+      --md-icon-fill: 0 !important;
+      --toolbar-icon-color: var(--icon-color) !important;
+      --toolbar-label-text-color: var(--label-text-color) !important;
+      --ripple-hover-opacity: 0 !important;
+      --ripple-press-opacity: 0 !important;
+      --state-layer-color: transparent !important;
+    }
+
     &.toolbar-docked {
       @include toolbar-tokens.docked;
 
@@ -165,42 +288,155 @@
         var(--container-trailing-space);
       padding-inline: var(--container-leading-space);
       width: fit-content;
+
+      &.toolbar-align-start {
+        align-items: flex-start;
+        margin-inline: 0 auto;
+      }
+
+      &.toolbar-align-end {
+        align-items: flex-end;
+        margin-inline: auto 0;
+      }
     }
 
     .btn,
     ::slotted(.btn) {
       --container-color: var(--button-container-color);
+      --container-shape: var(--button-shape);
       --icon-color: var(--toolbar-icon-color);
       --label-text-color: var(--toolbar-label-text-color);
+      transition:
+        border-radius 0s,
+        var(--ripple-transition) !important;
+
+      &:is(:active, .active) {
+        --container-shape: var(--button-shape);
+      }
     }
 
     .btn:is(.btn-selected, [aria-pressed='true']),
     ::slotted(.btn:is(.btn-selected, [aria-pressed='true'])) {
       --container-color: var(--selected-button-container-color);
+      --container-shape: var(--button-shape);
       --icon-color: var(--selected-icon-color);
       --label-text-color: var(--selected-label-text-color);
+    }
+
+    .btn:is(:disabled, [disabled]),
+    ::slotted(.btn:is(:disabled, [disabled])) {
+      @include toolbar-tokens.disabled;
+
+      --container-color: var(--button-container-color) !important;
+      --md-icon-fill: 0 !important;
+      --md-icon-color: var(--icon-color) !important;
+    }
+
+    .btn:is(:disabled, [disabled]):is(.btn-selected, [aria-pressed='true']),
+    ::slotted(
+      .btn:is(:disabled, [disabled]):is(.btn-selected, [aria-pressed='true'])
+    ) {
+      @include toolbar-tokens.disabled;
+
+      --container-color: var(--button-container-color) !important;
+      --md-icon-fill: 0 !important;
+      --md-icon-color: var(--icon-color) !important;
     }
 
     .icon-btn,
     ::slotted(.icon-btn) {
       --container-color: var(--button-container-color);
+      --container-shape: var(--icon-button-shape);
       --icon-color: var(--toolbar-icon-color);
+      position: relative;
+
+      &:is(:active, .active) {
+        --container-shape: var(--icon-button-shape);
+      }
+    }
+
+    .icon-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: var(--touch-target-size);
+      height: var(--touch-target-size);
+      min-width: var(--touch-target-size);
+      min-height: var(--touch-target-size);
     }
 
     .icon-btn:is(.icon-btn-selected, [aria-pressed='true']),
     ::slotted(.icon-btn:is(.icon-btn-selected, [aria-pressed='true'])) {
       --container-color: var(--selected-button-container-color);
+      --container-shape: var(--icon-button-shape);
       --icon-color: var(--selected-icon-color);
+    }
+
+    .icon-btn:is(:disabled, [disabled]),
+    ::slotted(.icon-btn:is(:disabled, [disabled])) {
+      @include toolbar-tokens.disabled;
+
+      --container-color: transparent !important;
+      --md-icon-fill: 0 !important;
+      --md-icon-color: var(--icon-color) !important;
+    }
+
+    .icon-btn:is(:disabled, [disabled]):is(
+        .icon-btn-selected,
+        [aria-pressed='true']
+      ),
+    ::slotted(
+      .icon-btn:is(:disabled, [disabled]):is(
+          .icon-btn-selected,
+          [aria-pressed='true']
+        )
+    ) {
+      @include toolbar-tokens.disabled;
+
+      --container-color: transparent !important;
+      --md-icon-fill: 0 !important;
+      --md-icon-color: var(--icon-color) !important;
     }
   }
 
+  ::slotted(md-gb-button),
   md-gb-toolbar md-gb-button,
-  md-gb-toolbar md-gb-icon-button,
-  .toolbar md-gb-button,
-  .toolbar md-gb-icon-button {
+  .toolbar md-gb-button {
+    --container-shape: var(--button-shape);
     --md-icon-color: var(--toolbar-icon-color);
   }
 
+  ::slotted(md-gb-button:is([selected], [aria-pressed='true'])),
+  ::slotted(md-gb-button:is(:active, .active)),
+  md-gb-toolbar md-gb-button:is([selected], [aria-pressed='true']),
+  md-gb-toolbar md-gb-button:is(:active, .active),
+  .toolbar md-gb-button:is([selected], [aria-pressed='true']),
+  .toolbar md-gb-button:is(:active, .active) {
+    --container-shape: var(--button-shape);
+  }
+
+  ::slotted(md-gb-icon-button),
+  md-gb-toolbar md-gb-icon-button,
+  .toolbar md-gb-icon-button {
+    --container-shape: var(--icon-button-shape);
+    --md-icon-color: var(--toolbar-icon-color);
+    inline-size: var(--min-button-size);
+    block-size: var(--min-button-size);
+  }
+
+  ::slotted(md-gb-icon-button:is([selected], [aria-pressed='true'])),
+  ::slotted(md-gb-icon-button:is(:active, .active)),
+  md-gb-toolbar md-gb-icon-button:is([selected], [aria-pressed='true']),
+  md-gb-toolbar md-gb-icon-button:is(:active, .active),
+  .toolbar md-gb-icon-button:is([selected], [aria-pressed='true']),
+  .toolbar md-gb-icon-button:is(:active, .active) {
+    --container-shape: var(--icon-button-shape);
+  }
+
+  ::slotted(md-gb-button:is([selected], [aria-pressed='true'])),
+  ::slotted(md-gb-icon-button:is([selected], [aria-pressed='true'])),
   md-gb-toolbar md-gb-button[selected],
   md-gb-toolbar md-gb-icon-button[selected],
   .toolbar md-gb-button[selected],
@@ -211,30 +447,455 @@
   md-gb-toolbar md-gb-button::part(btn),
   .toolbar md-gb-button::part(btn) {
     --container-color: var(--button-container-color);
+    --container-shape: var(--button-shape);
     --icon-color: var(--toolbar-icon-color);
     --label-text-color: var(--toolbar-label-text-color);
     --md-icon-color: var(--toolbar-icon-color);
+    position: relative;
+    transition:
+      border-radius 0s,
+      var(--ripple-transition) !important;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: var(--touch-target-size);
+      min-height: var(--touch-target-size);
+    }
   }
 
-  md-gb-toolbar md-gb-button[selected]::part(btn),
-  .toolbar md-gb-button[selected]::part(btn) {
+  md-gb-toolbar md-gb-button:is(:active, .active)::part(btn),
+  .toolbar md-gb-button:is(:active, .active)::part(btn),
+  md-gb-toolbar md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  .toolbar md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  md-gb-toolbar
+    md-gb-button::part(btn):is(
+      :active,
+      .active,
+      .btn-selected,
+      [aria-pressed='true']
+    ),
+  .toolbar
+    md-gb-button::part(btn):is(
+      :active,
+      .active,
+      .btn-selected,
+      [aria-pressed='true']
+    ) {
+    --container-shape: var(--button-shape);
+  }
+
+  md-gb-toolbar md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  .toolbar md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  md-gb-toolbar
+    md-gb-button::part(btn):is(.btn-selected, [aria-pressed='true']),
+  .toolbar md-gb-button::part(btn):is(.btn-selected, [aria-pressed='true']) {
     --container-color: var(--selected-button-container-color);
     --icon-color: var(--selected-icon-color);
     --label-text-color: var(--selected-label-text-color);
     --md-icon-color: var(--selected-icon-color);
   }
 
+  md-gb-toolbar md-gb-button:is(:disabled, [disabled])::part(btn),
+  .toolbar md-gb-button:is(:disabled, [disabled])::part(btn),
+  md-gb-toolbar md-gb-button::part(btn):is(:disabled, .disabled),
+  .toolbar md-gb-button::part(btn):is(:disabled, .disabled) {
+    @include toolbar-tokens.disabled;
+
+    --container-color: var(--button-container-color) !important;
+    --md-icon-fill: 0 !important;
+    --md-icon-color: var(--icon-color) !important;
+  }
+
+  md-gb-toolbar
+    md-gb-button:is(:disabled, [disabled]):is(
+      [selected],
+      [aria-pressed='true']
+    )::part(btn),
+  .toolbar
+    md-gb-button:is(:disabled, [disabled]):is(
+      [selected],
+      [aria-pressed='true']
+    )::part(btn),
+  md-gb-toolbar
+    md-gb-button::part(btn):is(:disabled, .disabled):is(
+      .btn-selected,
+      [aria-pressed='true']
+    ),
+  .toolbar
+    md-gb-button::part(btn):is(:disabled, .disabled):is(
+      .btn-selected,
+      [aria-pressed='true']
+    ) {
+    @include toolbar-tokens.disabled;
+
+    --container-color: var(--button-container-color) !important;
+    --md-icon-fill: 0 !important;
+    --md-icon-color: var(--icon-color) !important;
+  }
+
   md-gb-toolbar md-gb-icon-button::part(icon-btn),
   .toolbar md-gb-icon-button::part(icon-btn) {
     --container-color: var(--button-container-color);
+    --container-shape: var(--icon-button-shape);
     --icon-color: var(--toolbar-icon-color);
     --md-icon-color: var(--toolbar-icon-color);
+    position: relative;
+    transition:
+      border-radius 0s,
+      var(--ripple-transition) !important;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: var(--touch-target-size);
+      height: var(--touch-target-size);
+      min-width: var(--touch-target-size);
+      min-height: var(--touch-target-size);
+    }
   }
 
-  md-gb-toolbar md-gb-icon-button[selected]::part(icon-btn),
-  .toolbar md-gb-icon-button[selected]::part(icon-btn) {
+  md-gb-toolbar md-gb-icon-button:is(:active, .active)::part(icon-btn),
+  .toolbar md-gb-icon-button:is(:active, .active)::part(icon-btn),
+  md-gb-toolbar
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn),
+  .toolbar
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn),
+  md-gb-toolbar
+    md-gb-icon-button::part(icon-btn):is(
+      :active,
+      .active,
+      .icon-btn-selected,
+      [aria-pressed='true']
+    ),
+  .toolbar
+    md-gb-icon-button::part(icon-btn):is(
+      :active,
+      .active,
+      .icon-btn-selected,
+      [aria-pressed='true']
+    ) {
+    --container-shape: var(--icon-button-shape);
+  }
+
+  md-gb-toolbar
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn),
+  .toolbar
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn),
+  md-gb-toolbar
+    md-gb-icon-button::part(icon-btn):is(
+      .icon-btn-selected,
+      [aria-pressed='true']
+    ),
+  .toolbar
+    md-gb-icon-button::part(icon-btn):is(
+      .icon-btn-selected,
+      [aria-pressed='true']
+    ) {
     --container-color: var(--selected-button-container-color);
     --icon-color: var(--selected-icon-color);
     --md-icon-color: var(--selected-icon-color);
+  }
+
+  :host(md-gb-toolbar[disabled]),
+  :host([disabled]),
+  md-gb-toolbar[disabled],
+  .toolbar.disabled {
+    &,
+    [part='toolbar'],
+    slot,
+    ::slotted(*),
+    * {
+      pointer-events: none !important;
+      cursor: default !important;
+      --ripple-hover-opacity: 0 !important;
+      --ripple-press-opacity: 0 !important;
+      --state-layer-color: transparent !important;
+    }
+
+    &:hover,
+    &:active,
+    &.active,
+    *:hover,
+    *:active,
+    *.active,
+    ::slotted(*:hover),
+    ::slotted(*:active),
+    ::slotted(*.active) {
+      transform: none !important;
+      --ripple-hover-opacity: 0 !important;
+      --ripple-press-opacity: 0 !important;
+      --state-layer-color: transparent !important;
+    }
+
+    // Contained buttons and contained slot backgrounds
+    ::slotted(md-gb-button),
+    ::slotted(.btn),
+    md-gb-button,
+    .btn,
+    [part='toolbar'] > slot,
+    & > slot {
+      --container-color: var(--button-container-color) !important;
+      --icon-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --label-text-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --md-icon-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+    }
+
+    // Uncontained icon buttons
+    ::slotted(md-gb-icon-button),
+    ::slotted(.icon-btn),
+    md-gb-icon-button,
+    .icon-btn {
+      --container-color: transparent !important;
+      --md-icon-fill: 0 !important;
+      --icon-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --label-text-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --md-icon-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+    }
+
+    // All icons and labels apply 38% opacity token
+    --icon-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --label-text-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --toolbar-icon-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --toolbar-label-text-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --md-icon-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+
+    ::slotted(*),
+    * {
+      --icon-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --label-text-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --toolbar-icon-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --toolbar-label-text-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+      --md-icon-color: hsl(
+        from var(--md-sys-color-on-surface) h s l / 38%
+      ) !important;
+    }
+  }
+
+  .icon-btn:is(:disabled, [disabled]),
+  ::slotted(.icon-btn:is(:disabled, [disabled])),
+  md-gb-icon-button:is(:disabled, [disabled]),
+  ::slotted(md-gb-icon-button:is(:disabled, [disabled])) {
+    --container-color: transparent !important;
+    --md-icon-fill: 0 !important;
+  }
+
+  .btn:is(:disabled, [disabled]),
+  ::slotted(.btn:is(:disabled, [disabled])),
+  md-gb-button:is(:disabled, [disabled]),
+  ::slotted(md-gb-button:is(:disabled, [disabled])) {
+    --container-color: var(--button-container-color) !important;
+    --md-icon-fill: 0 !important;
+  }
+
+  md-gb-toolbar md-gb-icon-button:is(:disabled, [disabled])::part(icon-btn),
+  .toolbar md-gb-icon-button:is(:disabled, [disabled])::part(icon-btn),
+  md-gb-toolbar md-gb-icon-button::part(icon-btn):is(:disabled, .disabled),
+  .toolbar md-gb-icon-button::part(icon-btn):is(:disabled, .disabled) {
+    @include toolbar-tokens.disabled;
+
+    --container-color: transparent !important;
+    --md-icon-fill: 0 !important;
+    --md-icon-color: var(--icon-color) !important;
+  }
+
+  md-gb-toolbar
+    md-gb-icon-button:is(:disabled, [disabled]):is(
+      [selected],
+      [aria-pressed='true']
+    )::part(icon-btn),
+  .toolbar
+    md-gb-icon-button:is(:disabled, [disabled]):is(
+      [selected],
+      [aria-pressed='true']
+    )::part(icon-btn),
+  md-gb-toolbar
+    md-gb-icon-button::part(icon-btn):is(:disabled, .disabled):is(
+      .icon-btn-selected,
+      [aria-pressed='true']
+    ),
+  .toolbar
+    md-gb-icon-button::part(icon-btn):is(:disabled, .disabled):is(
+      .icon-btn-selected,
+      [aria-pressed='true']
+    ) {
+    @include toolbar-tokens.disabled;
+
+    --container-color: transparent !important;
+    --md-icon-fill: 0 !important;
+    --md-icon-color: var(--icon-color) !important;
+  }
+
+  :host(md-gb-toolbar[disabled]) md-gb-icon-button::part(icon-btn),
+  :host([disabled]) md-gb-icon-button::part(icon-btn),
+  md-gb-toolbar[disabled] md-gb-icon-button::part(icon-btn),
+  .toolbar.disabled md-gb-icon-button::part(icon-btn),
+  :host(md-gb-toolbar[disabled])
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn),
+  :host([disabled])
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn),
+  md-gb-toolbar[disabled]
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn),
+  .toolbar.disabled
+    md-gb-icon-button:is([selected], [aria-pressed='true'])::part(icon-btn) {
+    --container-color: transparent !important;
+    --md-icon-fill: 0 !important;
+    --icon-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --label-text-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --md-icon-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+  }
+
+  :host(md-gb-toolbar[disabled]) md-gb-button::part(btn),
+  :host([disabled]) md-gb-button::part(btn),
+  md-gb-toolbar[disabled] md-gb-button::part(btn),
+  .toolbar.disabled md-gb-button::part(btn),
+  :host(md-gb-toolbar[disabled])
+    md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  :host([disabled])
+    md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  md-gb-toolbar[disabled]
+    md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  .toolbar.disabled
+    md-gb-button:is([selected], [aria-pressed='true'])::part(btn) {
+    --container-color: var(--button-container-color) !important;
+    --icon-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --label-text-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+    --md-icon-color: hsl(
+      from var(--md-sys-color-on-surface) h s l / 38%
+    ) !important;
+  }
+
+  // Hide labels (R6)
+  :host(md-gb-toolbar[hide-labels]) ::slotted(md-gb-button),
+  md-gb-toolbar[hide-labels] md-gb-button,
+  .toolbar.toolbar-hide-labels md-gb-button,
+  .toolbar.toolbar-hide-labels .btn,
+  .toolbar.toolbar-hide-labels ::slotted(.btn) {
+    --container-shape: var(--button-shape);
+    --icon-label-space: 0;
+    --leading-space: 0;
+    --trailing-space: 0;
+    aspect-ratio: 1;
+    block-size: var(--min-button-size);
+    font-size: 0;
+    height: var(--min-button-size);
+    inline-size: var(--min-button-size);
+    line-height: 0;
+    overflow: hidden;
+    padding-inline: 0;
+    width: var(--min-button-size);
+  }
+
+  md-gb-toolbar[hide-labels] md-gb-button::part(btn),
+  .toolbar.toolbar-hide-labels md-gb-button::part(btn) {
+    --container-shape: var(--button-shape);
+    --icon-label-space: 0;
+    --leading-space: 0;
+    --trailing-space: 0;
+    aspect-ratio: 1;
+    block-size: var(--min-button-size);
+    font-size: 0;
+    height: var(--min-button-size);
+    inline-size: var(--min-button-size);
+    line-height: 0;
+    overflow: hidden;
+    padding-inline: 0;
+    position: relative;
+    width: var(--min-button-size);
+  }
+
+  // F4: Touch target for collapsed button in hide-labels mode
+  md-gb-toolbar[hide-labels] md-gb-button::part(btn)::before,
+  .toolbar.toolbar-hide-labels md-gb-button::part(btn)::before,
+  .toolbar.toolbar-hide-labels .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--touch-target-size);
+    height: var(--touch-target-size);
+    min-width: var(--touch-target-size);
+    min-height: var(--touch-target-size);
+  }
+
+  :host(md-gb-toolbar[hide-labels])
+    ::slotted(md-gb-button:is(:active, .active)),
+  :host(md-gb-toolbar[hide-labels])
+    ::slotted(md-gb-button:is([selected], [aria-pressed='true'])),
+  md-gb-toolbar[hide-labels] md-gb-button:is(:active, .active)::part(btn),
+  md-gb-toolbar[hide-labels]
+    md-gb-button:is([selected], [aria-pressed='true'])::part(btn),
+  .toolbar.toolbar-hide-labels md-gb-button:is(:active, .active)::part(btn),
+  .toolbar.toolbar-hide-labels
+    md-gb-button:is([selected], [aria-pressed='true'])::part(btn) {
+    --container-shape: var(--button-shape);
+  }
+
+  md-gb-toolbar[hide-labels]
+    md-gb-button
+    > :not(md-gb-icon, [slot='container']),
+  .toolbar.toolbar-hide-labels
+    md-gb-button
+    > :not(md-gb-icon, [slot='container']),
+  .toolbar.toolbar-hide-labels
+    .btn
+    > :not(md-gb-icon, .icon, [slot='container']) {
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    border: 0;
   }
 }
