@@ -1,0 +1,53 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin tokens-expressive {
+  --motion-duration: var(--md-sys-motion-duration-long2);
+  --motion-easing: var(--md-sys-motion-easing-emphasized);
+}
+
+@mixin colors {
+  --active-indicator-color: var(--md-sys-color-primary);
+  --four-color-1: var(--md-sys-color-primary);
+  --four-color-2: var(--md-sys-color-tertiary);
+  --four-color-3: var(--md-sys-color-error);
+  --four-color-4: var(--md-sys-color-secondary);
+  --track-color: var(--md-sys-color-secondary-container);
+}
+
+@mixin normal-size {
+  --active-indicator-thickness: 4px;
+  --size: 40px;
+  --track-active-indicator-space: 4px;
+  --track-thickness: 4px;
+  --wave-amplitude: 1.6px;
+  --wave-wavelength: 15px;
+  --with-wave-size: 48px;
+}
+
+@mixin thick-size {
+  --active-indicator-thickness: 8px;
+  --size: 52px;
+  --track-active-indicator-space: 4px;
+  --track-thickness: 8px;
+  --wave-amplitude: 2.4px;
+  --wave-wavelength: 15px;
+  --with-wave-size: 60px;
+}
+
+@mixin root {
+  // LINT.IfChange
+  @include colors;
+  @include normal-size;
+  @include tokens-expressive;
+  --active-indicator-shape: var(--md-sys-shape-corner-full);
+  --track-shape: var(--md-sys-shape-corner-full);
+  --wave-speed: 1;
+  // LINT.ThenChange(circular-progress-element.ts)
+}
+
+@mixin thick {
+  @include thick-size;
+}
