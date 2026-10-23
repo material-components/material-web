@@ -1,0 +1,23 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Token set: 'md.comp.loading'
+// Version: 34.0.21
+
+@mixin root {
+  // LINT.IfChange
+  --active-indicator-color: var(--md-sys-color-primary);
+  --active-indicator-size: 38px;
+  --container-color: transparent;
+  --container-height: 48px;
+  --container-shape: var(--md-sys-shape-corner-full);
+  --container-width: 48px;
+  // LINT.ThenChange(loading-element.ts) keep in sync with '@cssprop'
+}
+
+@mixin contained {
+  --active-indicator-color: var(--md-sys-color-on-primary-container);
+  --container-color: var(--md-sys-color-primary-container);
+}
