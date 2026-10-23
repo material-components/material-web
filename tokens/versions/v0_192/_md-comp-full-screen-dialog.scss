@@ -37,78 +37,139 @@ $_default: (
     'container-color': map.get($deps, 'md-sys-color', 'surface'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
-    'header-action-focus-label-text-color':
-      map.get($deps, 'md-sys-color', 'primary'),
-    'header-action-focus-state-layer-color':
-      map.get($deps, 'md-sys-color', 'primary'),
-    'header-action-focus-state-layer-opacity':
-      map.get($deps, 'md-sys-state', 'focus-state-layer-opacity'),
-    'header-action-hover-label-text-color':
-      map.get($deps, 'md-sys-color', 'primary'),
-    'header-action-hover-state-layer-color':
-      map.get($deps, 'md-sys-color', 'primary'),
-    'header-action-hover-state-layer-opacity':
-      map.get($deps, 'md-sys-state', 'hover-state-layer-opacity'),
+    'header-action-focus-label-text-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary'
+      ),
+    'header-action-focus-state-layer-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary'
+      ),
+    'header-action-focus-state-layer-opacity': map.get(
+        $deps,
+        'md-sys-state',
+        'focus-state-layer-opacity'
+      ),
+    'header-action-hover-label-text-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary'
+      ),
+    'header-action-hover-state-layer-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary'
+      ),
+    'header-action-hover-state-layer-opacity': map.get(
+        $deps,
+        'md-sys-state',
+        'hover-state-layer-opacity'
+      ),
     'header-action-label-text-color': map.get($deps, 'md-sys-color', 'primary'),
-    'header-action-label-text-font':
-      map.get($deps, 'md-sys-typescale', 'label-large-font'),
-    'header-action-label-text-line-height':
-      map.get($deps, 'md-sys-typescale', 'label-large-line-height'),
-    'header-action-label-text-size':
-      map.get($deps, 'md-sys-typescale', 'label-large-size'),
-    'header-action-label-text-tracking':
-      map.get($deps, 'md-sys-typescale', 'label-large-tracking'),
-    'header-action-label-text-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.full-screen-dialog.header.action.label-text.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
-          map.get($deps, 'md-sys-typescale', 'label-large-weight')
-          map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'} map.get(
+    'header-action-label-text-font': map.get(
+        $deps,
+        'md-sys-typescale',
+        'label-large-font'
+      ),
+    'header-action-label-text-line-height': map.get(
+        $deps,
+        'md-sys-typescale',
+        'label-large-line-height'
+      ),
+    'header-action-label-text-size': map.get(
+        $deps,
+        'md-sys-typescale',
+        'label-large-size'
+      ),
+    'header-action-label-text-tracking': map.get(
+        $deps,
+        'md-sys-typescale',
+        'label-large-tracking'
+      ),
+    'header-action-label-text-type': if(
+        not
+          sass($exclude-hardcoded-values): map.get(
             $deps,
             'md-sys-typescale',
-            'label-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'label-large-font')
+            'label-large-weight'
+          )
+          map.get($deps, 'md-sys-typescale', 'label-large-size') #{'/'}
+          map.get($deps, 'md-sys-typescale', 'label-large-line-height')
+          map.get($deps, 'md-sys-typescale', 'label-large-font')
       ),
-    'header-action-label-text-weight':
-      map.get($deps, 'md-sys-typescale', 'label-large-weight'),
-    'header-action-pressed-label-text-color':
-      map.get($deps, 'md-sys-color', 'primary'),
-    'header-action-pressed-state-layer-color':
-      map.get($deps, 'md-sys-color', 'primary'),
-    'header-action-pressed-state-layer-opacity':
-      map.get($deps, 'md-sys-state', 'pressed-state-layer-opacity'),
+    'header-action-label-text-weight': map.get(
+        $deps,
+        'md-sys-typescale',
+        'label-large-weight'
+      ),
+    'header-action-pressed-label-text-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary'
+      ),
+    'header-action-pressed-state-layer-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary'
+      ),
+    'header-action-pressed-state-layer-opacity': map.get(
+        $deps,
+        'md-sys-state',
+        'pressed-state-layer-opacity'
+      ),
     'header-container-color': map.get($deps, 'md-sys-color', 'surface'),
     'header-container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'header-container-height': if($exclude-hardcoded-values, null, 56px),
+    'header-container-height': if(not sass($exclude-hardcoded-values): 56px),
     'header-headline-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'header-headline-font':
-      map.get($deps, 'md-sys-typescale', 'title-large-font'),
-    'header-headline-line-height':
-      map.get($deps, 'md-sys-typescale', 'title-large-line-height'),
-    'header-headline-size':
-      map.get($deps, 'md-sys-typescale', 'title-large-size'),
-    'header-headline-tracking':
-      map.get($deps, 'md-sys-typescale', 'title-large-tracking'),
-    'header-headline-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.full-screen-dialog.header.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
-          map.get($deps, 'md-sys-typescale', 'title-large-weight')
-          map.get($deps, 'md-sys-typescale', 'title-large-size') #{'/'} map.get(
+    'header-headline-font': map.get(
+        $deps,
+        'md-sys-typescale',
+        'title-large-font'
+      ),
+    'header-headline-line-height': map.get(
+        $deps,
+        'md-sys-typescale',
+        'title-large-line-height'
+      ),
+    'header-headline-size': map.get(
+        $deps,
+        'md-sys-typescale',
+        'title-large-size'
+      ),
+    'header-headline-tracking': map.get(
+        $deps,
+        'md-sys-typescale',
+        'title-large-tracking'
+      ),
+    'header-headline-type': if(
+        not
+          sass($exclude-hardcoded-values): map.get(
             $deps,
             'md-sys-typescale',
-            'title-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-large-font')
+            'title-large-weight'
+          )
+          map.get($deps, 'md-sys-typescale', 'title-large-size') #{'/'}
+          map.get($deps, 'md-sys-typescale', 'title-large-line-height')
+          map.get($deps, 'md-sys-typescale', 'title-large-font')
       ),
-    'header-headline-weight':
-      map.get($deps, 'md-sys-typescale', 'title-large-weight'),
+    'header-headline-weight': map.get(
+        $deps,
+        'md-sys-typescale',
+        'title-large-weight'
+      ),
     'header-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'header-icon-size': if($exclude-hardcoded-values, null, 24px),
-    'header-on-scroll-container-color':
-      map.get($deps, 'md-sys-color', 'surface-container'),
-    'header-on-scroll-container-elevation':
-      map.get($deps, 'md-sys-elevation', 'level2')
+    'header-icon-size': if(not sass($exclude-hardcoded-values): 24px),
+    'header-on-scroll-container-color': map.get(
+        $deps,
+        'md-sys-color',
+        'surface-container'
+      ),
+    'header-on-scroll-container-elevation': map.get(
+        $deps,
+        'md-sys-elevation',
+        'level2'
+      )
   );
 }
