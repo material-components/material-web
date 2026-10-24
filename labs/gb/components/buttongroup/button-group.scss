@@ -213,16 +213,6 @@
     border-end-end-radius: var(--outer-corner-size);
   }
 
-  // Outlined selected button has no outline in both standard and connected variants
-  .btn-group > .btn.btn-outlined:is(.btn-selected, [aria-pressed='true']),
-  .btn-group
-    > [color='outlined']:is([selected], [aria-pressed='true'])::part(btn) {
-    --outline-color: transparent;
-    border-color: transparent;
-    background-color: var(--md-sys-color-inverse-surface);
-    color: var(--md-sys-color-inverse-on-surface);
-  }
-
   // Connected XS and SM 48px min-inline-size
   .btn-group-connected > .btn:is(.btn-xs, .btn-sm),
   .btn-group-connected > :is([size='xs'], [size='sm']) {
@@ -235,15 +225,78 @@
     z-index: 1;
   }
 
-  // Standard press width expansion
+  // Standard press width expansion and adjacent button contraction
   @supports (width: calc-size(auto, size)) {
-    .btn-group:not(.btn-group-connected) > .btn,
-    .btn-group:not(.btn-group-connected) > * {
-      transition: width var(--motion-spring-fast-spatial-duration)
-        var(--motion-spring-fast-spatial);
+    .btn-group:not(.btn-group-connected) {
+      > *::part(btn) {
+        min-inline-size: 0;
+      }
 
-      &:active:not(:disabled, .disabled),
-      &:active:not([disabled], [soft-disabled]) {
+      > .btn,
+      > * {
+        min-inline-size: 0;
+        transition: width var(--motion-spring-fast-spatial-duration)
+          var(--motion-spring-fast-spatial);
+      }
+
+      > :not(:active, .active):has(
+          + :is(:active, .active):not(
+              :disabled,
+              .disabled,
+              [disabled],
+              [soft-disabled]
+            )
+        ),
+      > :is(:active, .active):not(
+          :disabled,
+          .disabled,
+          [disabled],
+          [soft-disabled]
+        )
+        + :not(:active, .active) {
+        width: calc-size(
+          auto,
+          min(
+            size,
+            max(
+              0px,
+              size - var(--pressed-item-size) *
+                (var(--pressed-item-width-multiplier) - 1) / 2
+            )
+          )
+        );
+      }
+
+      > :not(:active, .active):has(
+          + :is(:last-child, :nth-last-child(1 of :not([hidden]))):is(
+              :active,
+              .active
+            ):not(:disabled, .disabled, [disabled], [soft-disabled])
+        ),
+      > :is(:first-child, :nth-child(1 of :not([hidden]))):is(
+          :active,
+          .active
+        ):not(:disabled, .disabled, [disabled], [soft-disabled])
+        + :not(:active, .active) {
+        width: calc-size(
+          auto,
+          min(
+            size,
+            max(
+              0px,
+              size - var(--pressed-item-size) *
+                (var(--pressed-item-width-multiplier) - 1)
+            )
+          )
+        );
+      }
+
+      > :is(:active, .active):not(
+          :disabled,
+          .disabled,
+          [disabled],
+          [soft-disabled]
+        ) {
         width: calc-size(
           auto,
           max(size, size * var(--pressed-item-width-multiplier))
