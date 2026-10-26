@@ -30,8 +30,11 @@
   }
 
   .trailing.icon {
+    align-items: center;
     color: var(--_trailing-icon-color);
+    display: flex;
     height: var(--_icon-size);
+    justify-content: center;
     width: var(--_icon-size);
   }
 
