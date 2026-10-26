@@ -23,6 +23,11 @@ import {
   getValidityAnchor,
   mixinConstraintValidation,
 } from '../../labs/behaviors/constraint-validation.js';
+import {
+  hasState,
+  mixinCustomStateSet,
+  toggleState,
+} from '../../labs/behaviors/custom-state-set.js';
 import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {
   getFormState,
@@ -34,7 +39,7 @@ import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-valida
 // Separate variable needed for closure.
 const checkboxBaseClass = mixinDelegatesAria(
   mixinConstraintValidation(
-    mixinFormAssociated(mixinElementInternals(LitElement)),
+    mixinFormAssociated(mixinCustomStateSet(mixinElementInternals(LitElement))),
   ),
 );
 
@@ -59,14 +64,26 @@ export class Checkbox extends checkboxBaseClass {
   /**
    * Whether or not the checkbox is selected.
    */
-  @property({type: Boolean}) checked = false;
+  @property({type: Boolean})
+  get checked(): boolean {
+    return this[hasState]('checked');
+  }
+  set checked(checked: boolean) {
+    this[toggleState]('checked', checked);
+  }
 
   /**
    * Whether or not the checkbox is indeterminate.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes
    */
-  @property({type: Boolean}) indeterminate = false;
+  @property({type: Boolean})
+  get indeterminate(): boolean {
+    return this[hasState]('indeterminate');
+  }
+  set indeterminate(indeterminate: boolean) {
+    this[toggleState]('indeterminate', indeterminate);
+  }
 
   /**
    * When true, require the checkbox to be selected when participating in
