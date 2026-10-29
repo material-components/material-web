@@ -47,6 +47,11 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ steps.auth.outputs.auth_token }}
         run: |
+          gcloud artifacts packages delete "@material/web" \
+            --repository="material-web--npm" \
+            --location="us" \
+            --project="oss-exit-gate-prod" \
+            --quiet 2>/dev/null || true
           cat << 'NPMRC_EOF' > "$HOME/.npmrc"
           registry=https://us-npm.pkg.dev/oss-exit-gate-prod/material-web--npm/
           //us-npm.pkg.dev/oss-exit-gate-prod/material-web--npm/:always-auth=true
@@ -64,9 +69,10 @@ jobs:
             publish_all: false,
             publishing_groups: [
               {
+                namespace: "@material",
                 packages: [
                   {
-                    name: "@material/web",
+                    name: "web",
                     version: $ver
                   }
                 ]
