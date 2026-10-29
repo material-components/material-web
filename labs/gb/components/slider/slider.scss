@@ -100,6 +100,7 @@
   :host(:is(:disabled, [disabled], .disabled)) .slider,
   .slider:is(.disabled, :has(input:disabled)) {
     @include slider-tokens.disabled;
+    --disabled: true;
   }
 
   // Track boxes

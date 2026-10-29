@@ -115,7 +115,9 @@
         @include icon-button-tokens.square-selected;
       }
     }
-    &:is(:active, .active):where(:not(:disabled, .disabled)) {
+    &:is(:active, .active):where(
+        :not(:disabled, .disabled, [aria-disabled='true'])
+      ) {
       @include icon-button-tokens.pressed;
       &:where(.icon-btn-md) {
         @include icon-button-tokens.pressed-md;
@@ -127,8 +129,9 @@
         @include icon-button-tokens.pressed-xl;
       }
     }
-    &:is(:disabled, .disabled) {
+    &:is(:disabled, .disabled, [aria-disabled='true']) {
       @include icon-button-tokens.disabled;
+      --disabled: true;
     }
 
     & {
@@ -154,7 +157,7 @@
       padding-inline: var(--leading-space) var(--trailing-space);
     }
 
-    &:not(:disabled, .disabled) {
+    &:not(:disabled, .disabled, [aria-disabled='true']) {
       cursor: pointer;
     }
   }

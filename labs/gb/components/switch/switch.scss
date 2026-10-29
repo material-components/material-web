@@ -27,6 +27,8 @@
     }
     &:is(:disabled, .disabled) {
       @include switch-tokens.disabled;
+      --disabled: true;
+
       &:where(:checked, .checked, [aria-checked='true']) {
         @include switch-tokens.disabled-selected;
       }
@@ -57,8 +59,8 @@
 
       &::before {
         --_handle-size: if(
-          style(--icon: ''): var(--handle-size);
-          else: max(var(--handle-size), var(--with-icon-handle-size));
+          style(--icon: ''): var(--handle-size) ;
+            else: max(var(--handle-size), var(--with-icon-handle-size)) ;
         );
         content: var(--icon);
         font: var(--md-icon-size) var(--md-icon-font);

@@ -87,6 +87,7 @@
 
     &:is(:disabled, .disabled) {
       @include menu-tokens.item-disabled;
+      --disabled: true;
       @container style(--menu-vibrant: true) {
         @include menu-tokens.item-disabled-vibrant;
       }

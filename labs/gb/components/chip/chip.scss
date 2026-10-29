@@ -43,6 +43,7 @@
     }
     &:is(:disabled, .disabled, [aria-disabled='true']) {
       @include chip-tokens.disabled;
+      --disabled: true;
     }
 
     & {

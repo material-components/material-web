@@ -167,7 +167,7 @@ export class IconButtonElement extends baseClass {
       width: this.width,
       square: this.square,
       selected: this.type === 'toggle' ? this.selected : undefined,
-      disabled: this.softDisabled,
+      disabled: this.disabled || this.softDisabled,
     });
 
     const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;

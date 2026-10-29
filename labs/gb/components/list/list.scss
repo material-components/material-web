@@ -92,6 +92,7 @@
 
     &:is(:disabled, .disabled) {
       @include list-tokens.item-disabled;
+      --disabled: true;
     }
 
     & {

@@ -48,6 +48,7 @@
 
     &:is(:disabled, .disabled) {
       @include checkbox-tokens.disabled;
+      --disabled: true;
 
       &:where(:checked, .checked, :indeterminate, .indeterminate) {
         @include checkbox-tokens.disabled-selected;
