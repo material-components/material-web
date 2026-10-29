@@ -29,10 +29,11 @@ function applyTheme(theme: string) {
 }
 
 /**
- * Apply the theme every time a postdoc pessage is received.
+ * Apply the theme every time a postdoc message is received.
  */
 const onMessage = (e: MessageEvent<string>) => {
-  if (e.origin !== window.location.origin) {
+  // PostDoc messages arrive over a MessagePort where `e.origin` is ''.
+  if (e.origin && e.origin !== window.location.origin) {
     return;
   }
   applyTheme(e.data);
