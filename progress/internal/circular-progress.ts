@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html} from 'lit';
+import {html, PropertyValues} from 'lit';
+import {query} from 'lit/decorators/query.js';
 
 import {Progress} from './progress.js';
 
@@ -12,6 +13,17 @@ import {Progress} from './progress.js';
  * A circular progress component.
  */
 export class CircularProgress extends Progress {
+  @query('.active-track') private readonly activeTrack!: HTMLElement | null;
+
+  protected override willUpdate(changed: PropertyValues) {
+    if (changed.has('value') && changed.get('value')! > 0 && this.value === 0) {
+      this.activeTrack.style.setProperty('transition', 'none');
+      requestAnimationFrame(() => {
+        this.activeTrack.style.removeProperty('transition');
+      });
+    }
+  }
+
   protected override renderIndicator() {
     if (this.indeterminate) {
       return this.renderIndeterminateContainer();
