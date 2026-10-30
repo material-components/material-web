@@ -4,15 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  css,
-  CSSResultOrNative,
-  html,
-  LitElement,
-  nothing,
-  PropertyValues,
-} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
+import {property} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../../../internal/events/redispatch-event.js';
@@ -26,6 +19,7 @@ import rippleStyles from '../ripple/ripple.css' with {type: 'css'}; // github-on
 // import rippleStyles from '../ripple/ripple.cssresult.js'; // google3-only
 
 import {safeHref} from '../../../../internal/directives/safe-href.js';
+import {fxSlot} from '../shared/fx.js';
 import {hasSlotted} from '../shared/has-slotted.js';
 
 import buttonStyles from './button.css' with {type: 'css'}; // github-only
@@ -98,10 +92,6 @@ export class ButtonElement extends baseClass {
       .btn:has([name='container'].has-slotted) {
         background-color: transparent;
       }
-      .btn.btn-hide-outline {
-        --outline-color: transparent;
-        --container-elevation: var(--md-sys-elevation-shadow-0);
-      }
       slot[name='container'] {
         display: block;
         position: absolute;
@@ -118,8 +108,6 @@ export class ButtonElement extends baseClass {
       }
     `,
   ];
-
-  @state() private hideOutline = false;
 
   /**
    * The color of the button.
@@ -205,56 +193,6 @@ export class ButtonElement extends baseClass {
    */
   @property() referrerPolicy = '';
 
-  private lastFiredEnabledState?: boolean;
-
-  override connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('md-gb:set-show-outline', this.handleSetShowOutline);
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener(
-      'md-gb:set-show-outline',
-      this.handleSetShowOutline,
-    );
-  }
-
-  private readonly handleSetShowOutline = (event: Event) => {
-    const customEvent = event as CustomEvent<{shown: boolean}>;
-    this.hideOutline = !customEvent.detail.shown;
-  };
-
-  protected override updated(changedProperties: PropertyValues) {
-    super.updated(changedProperties);
-    if (
-      changedProperties.has('disabled') ||
-      changedProperties.has('softDisabled')
-    ) {
-      this.dispatchSetEnabledEvent();
-    }
-  }
-
-  private dispatchSetEnabledEvent() {
-    const enabled = !(this.disabled || this.softDisabled);
-
-    if (this.lastFiredEnabledState === enabled) return;
-
-    const slot = this.shadowRoot?.querySelector(
-      'slot[name="container"]',
-    ) as HTMLSlotElement;
-    if (slot) {
-      for (const element of slot.assignedElements({flatten: true})) {
-        element.dispatchEvent(
-          new CustomEvent('md-gb:set-enabled', {
-            detail: {enabled},
-          }),
-        );
-      }
-    }
-    this.lastFiredEnabledState = enabled;
-  }
-
   protected override render() {
     const classes = button({
       color: this.color,
@@ -262,10 +200,7 @@ export class ButtonElement extends baseClass {
       square: this.square,
       selected: this.type === 'toggle' ? this.selected : undefined,
       // Emulate `:disabled` when soft-disabled
-      disabled: this.softDisabled,
-      classes: {
-        'btn-hide-outline': this.hideOutline,
-      },
+      disabled: this.disabled || this.softDisabled,
     });
 
     // Needed for closure conformance
@@ -285,10 +220,7 @@ export class ButtonElement extends baseClass {
         aria-disabled=${this.disabled || this.softDisabled || nothing}
         tabindex=${this.disabled && !this.softDisabled ? -1 : nothing}>
         <slot></slot>
-        <slot
-          name="container"
-          ${hasSlotted()}
-          @slotchange=${this.handleContainerSlotChange}></slot>
+        <slot name="container" ${hasSlotted()} ${fxSlot()}></slot>
       </a>`;
     }
 
@@ -303,26 +235,8 @@ export class ButtonElement extends baseClass {
       aria-expanded=${ariaExpanded || nothing}
       @change=${this.handleChange}>
       <slot></slot>
-      <slot
-        name="container"
-        ${hasSlotted()}
-        @slotchange=${this.handleContainerSlotChange}></slot>
+      <slot name="container" ${hasSlotted()} ${fxSlot()}></slot>
     </button>`;
-  }
-
-  private handleContainerSlotChange(event: Event) {
-    const slot = event.target as HTMLSlotElement;
-
-    const enabled = !(this.disabled || this.softDisabled);
-
-    for (const element of slot.assignedElements({flatten: true})) {
-      element.dispatchEvent(new CustomEvent('md-gb:change-container-slot'));
-      element.dispatchEvent(
-        new CustomEvent('md-gb:set-enabled', {
-          detail: {enabled},
-        }),
-      );
-    }
   }
 
   private handleChange(event: Event) {

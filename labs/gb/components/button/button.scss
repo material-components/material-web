@@ -86,7 +86,9 @@
         @include button-tokens.square-selected;
       }
     }
-    &:is(:active, .active):where(:not(:disabled, .disabled)) {
+    &:is(:active, .active):where(
+        :not(:disabled, .disabled, [aria-disabled='true'])
+      ) {
       @include button-tokens.pressed;
       &:where(.btn-md) {
         @include button-tokens.pressed-md;
@@ -98,8 +100,9 @@
         @include button-tokens.pressed-xl;
       }
     }
-    &:is(:disabled, .disabled) {
+    &:is(:disabled, .disabled, [aria-disabled='true']) {
       @include button-tokens.disabled;
+      --disabled: true;
     }
 
     & {
@@ -124,8 +127,12 @@
       --md-icon-color: var(--icon-color);
       --md-icon-size: var(--icon-size);
     }
-    &:not(:disabled, .disabled) {
+    &:not(:disabled, .disabled, [aria-disabled='true']) {
       cursor: pointer;
+    }
+    &:has(.fx-playing) {
+      --outline-color: transparent;
+      --container-elevation: none;
     }
   }
 }

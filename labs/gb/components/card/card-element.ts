@@ -4,18 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  css,
-  CSSResultOrNative,
-  html,
-  LitElement,
-  nothing,
-  PropertyValues,
-} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
+import {property} from 'lit/decorators.js';
 import {ARIAMixinStrict} from '../../../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../../../internal/aria/delegate.js';
 import {ripple} from '../ripple/ripple.js';
+import {fxSlot} from '../shared/fx.js';
 import {hasSlotted} from '../shared/has-slotted.js';
 
 import focusRingStyles from '../focus/focus-ring.css' with {type: 'css'}; // github-only
@@ -68,10 +62,6 @@ export class CardElement extends baseClass {
       .card:has([name='container'].has-slotted) {
         background-color: transparent;
       }
-      .card.card-hide-outline {
-        --outline-color: transparent;
-        --container-elevation: var(--md-sys-elevation-shadow-0);
-      }
       slot[name='container'] {
         display: block;
         position: absolute;
@@ -89,10 +79,6 @@ export class CardElement extends baseClass {
     `,
   ];
 
-  @state() private hideOutline = false;
-
-  private lastFiredEnabledState?: boolean;
-
   /** The color of the card. */
   @property() color: CardColor = 'outlined';
 
@@ -102,51 +88,6 @@ export class CardElement extends baseClass {
   /** Whether the card is interactive. */
   @property({type: Boolean}) interactive = false;
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('md-gb:set-show-outline', this.handleSetShowOutline);
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener(
-      'md-gb:set-show-outline',
-      this.handleSetShowOutline,
-    );
-  }
-
-  private readonly handleSetShowOutline = (event: Event) => {
-    const customEvent = event as CustomEvent<{shown: boolean}>;
-    this.hideOutline = !customEvent.detail.shown;
-  };
-
-  protected override updated(changedProperties: PropertyValues) {
-    super.updated(changedProperties);
-    if (changedProperties.has('disabled')) {
-      this.dispatchSetEnabledEvent();
-    }
-  }
-
-  private dispatchSetEnabledEvent() {
-    const enabled = !this.disabled;
-
-    if (this.lastFiredEnabledState === enabled) return;
-
-    const slot = this.shadowRoot?.querySelector(
-      'slot[name="container"]',
-    ) as HTMLSlotElement;
-    if (slot) {
-      for (const element of slot.assignedElements({flatten: true})) {
-        element.dispatchEvent(
-          new CustomEvent('md-gb:set-enabled', {
-            detail: {enabled},
-          }),
-        );
-      }
-    }
-    this.lastFiredEnabledState = enabled;
-  }
-
   protected override render() {
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`<div
@@ -155,9 +96,6 @@ export class CardElement extends baseClass {
         color: this.color,
         disabled: this.disabled,
         interactive: this.interactive,
-        classes: {
-          'card-hide-outline': this.hideOutline,
-        },
       })}">
       ${this.interactive
         ? html`<button
@@ -168,25 +106,7 @@ export class CardElement extends baseClass {
             aria-label="${ariaLabel || nothing}"></button>`
         : nothing}
       <slot></slot>
-      <slot
-        name="container"
-        ${hasSlotted()}
-        @slotchange=${this.handleContainerSlotChange}></slot>
+      <slot name="container" ${hasSlotted()} ${fxSlot()}></slot>
     </div>`;
-  }
-
-  private handleContainerSlotChange(event: Event) {
-    const slot = event.target as HTMLSlotElement;
-
-    const enabled = !this.disabled;
-
-    for (const element of slot.assignedElements({flatten: true})) {
-      element.dispatchEvent(new CustomEvent('md-gb:change-container-slot'));
-      element.dispatchEvent(
-        new CustomEvent('md-gb:set-enabled', {
-          detail: {enabled},
-        }),
-      );
-    }
   }
 }

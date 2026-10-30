@@ -14,14 +14,20 @@
       @include card-tokens.root;
     }
 
-    &:is(:hover, .hover):where(:has(.card-btn:not(:disabled, .disabled))) {
+    &:is(:hover, .hover):where(
+        :has(.card-btn:not(:disabled, .disabled, [aria-disabled='true']))
+      ) {
       @include card-tokens.hover;
+    }
+
+    &:is(:disabled, .disabled, [aria-disabled='true']) {
+      --disabled: true;
     }
 
     &.card-filled {
       @include card-tokens.filled;
 
-      &:where(:disabled, .disabled) {
+      &:where(:disabled, .disabled, [aria-disabled='true']) {
         @include card-tokens.filled-disabled;
       }
     }
@@ -33,7 +39,7 @@
         @include card-tokens.outlined-focus;
       }
 
-      &:where(:disabled, .disabled) {
+      &:where(:disabled, .disabled, [aria-disabled='true']) {
         @include card-tokens.outlined-disabled;
       }
     }
@@ -41,11 +47,13 @@
     &.card-elevated {
       @include card-tokens.elevated;
 
-      &:is(:hover, .hover):where(:has(.card-btn:not(:disabled, .disabled))) {
+      &:where(:hover, .hover):where(
+          :has(.card-btn:not(:disabled, .disabled, [aria-disabled='true']))
+        ) {
         @include card-tokens.elevated-hover;
       }
 
-      &:where(:disabled, .disabled) {
+      &:where(:disabled, .disabled, [aria-disabled='true']) {
         @include card-tokens.elevated-disabled;
       }
     }
@@ -59,6 +67,11 @@
       border-radius: var(--container-shape);
       box-shadow: var(--container-elevation);
       border: var(--outline-width) solid var(--outline-color);
+    }
+
+    &:has(> .fx-playing) {
+      --outline-color: transparent;
+      --container-elevation: none;
     }
 
     .card-btn {
