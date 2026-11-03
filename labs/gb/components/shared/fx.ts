@@ -36,13 +36,17 @@ export interface FxChangeEventInit extends EventInit, FxState {}
 
 /**
  * Event dispatched by visual effects elements when their state changes.
+ *
+ * Bubbles through the element's tree (including assigned `<slot>` elements)
+ * without crossing enclosing shadow roots (`composed: false`), keeping
+ * shadow-internal effects encapsulated by default.
  */
 export class FxChangeEvent extends Event implements Required<FxState> {
   static readonly type = 'fx-change';
   readonly playing: boolean;
 
   constructor(opts?: FxChangeEventInit) {
-    super(FxChangeEvent.type, {bubbles: true, composed: true, ...opts});
+    super(FxChangeEvent.type, {bubbles: true, composed: false, ...opts});
     this.playing = opts?.playing ?? false;
   }
 }
