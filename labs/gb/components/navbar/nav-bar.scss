@@ -37,6 +37,10 @@
 
   :host(md-gb-nav-bar-item[item-layout='horizontal']) {
     @include nav-bar-tokens.item-horizontal;
+
+    // Horizontal items size to their content; extra space goes to the ends of
+    // the navigation bar instead of stretching each item.
+    flex: 0 1 auto;
   }
 
   :host(md-gb-nav-bar-item[item-layout='vertical']) {
@@ -78,6 +82,8 @@
     justify-content: space-around;
     margin: 0;
     padding: 0;
+    padding-inline: var(--container-leading-space)
+      var(--container-trailing-space);
     position: relative;
     transition: all var(--motion-duration) var(--motion-easing);
     user-select: none;
@@ -90,6 +96,8 @@
 
     &.nav-bar-horizontal {
       @include nav-bar-tokens.item-horizontal;
+
+      justify-content: center;
     }
 
     &.nav-bar-vertical {
@@ -130,6 +138,24 @@
     user-select: none;
     width: 100%;
     -webkit-tap-highlight-color: transparent;
+    // The item's positioned descendants (the active indicator and badges)
+    // paint after the item's own outline, so they covered the focus ring.
+    // Draw the ring on `::after` above them instead; it inherits the
+    // `--focus-ring-*` values set by the focus ring classes.
+    isolation: isolate;
+    outline: none;
+
+    &::after {
+      animation: var(--focus-ring-animation, none);
+      border-radius: inherit;
+      content: '';
+      inset: 0;
+      outline: var(--focus-ring-outline, none);
+      outline-offset: var(--focus-ring-offset, 0);
+      pointer-events: none;
+      position: absolute;
+      z-index: 3;
+    }
 
     &:disabled,
     &[disabled],
@@ -160,6 +186,7 @@
     border-radius: var(--item-active-indicator-shape);
     color: var(--item-inactive-icon-color);
     display: flex;
+    flex-shrink: 0;
     height: var(--item-active-indicator-height);
     isolation: isolate;
     justify-content: center;
@@ -203,6 +230,11 @@
   }
 
   .nav-bar-item-badge {
+    // The badge is positioned inside the icon container, which centers the
+    // icon. These locate the icon's block-start and inline-end edges so badges
+    // anchor to the icon's top corner in both item layouts.
+    --_icon-block-start: calc((100% - var(--item-icon-size)) / 2);
+    --_icon-inline-end: calc(50% + var(--item-icon-size) / 2);
     align-items: center;
     background-color: var(--md-sys-color-error);
     border-radius: var(--md-sys-shape-corner-full);
@@ -211,8 +243,10 @@
     display: inline-flex;
     font: var(--md-sys-typescale-label-sm);
     height: 16px;
-    inset-block-start: -4px;
-    inset-inline-start: calc(50% + 2px);
+    // Large badges overlap the icon's top corner: they start 12px before the
+    // icon's inline-end edge and 2px above its block-start edge.
+    inset-block-start: calc(var(--_icon-block-start) - 2px);
+    inset-inline-start: calc(var(--_icon-inline-end) - 12px);
     justify-content: center;
     min-width: 16px;
     padding-inline: 4px;
@@ -224,8 +258,9 @@
 
   .nav-bar-item-badge-dot {
     height: 6px;
-    inset-block-start: 0;
-    inset-inline-start: calc(50% + 6px);
+    // Small badges sit inside the icon's top corner, touching both edges.
+    inset-block-start: var(--_icon-block-start);
+    inset-inline-start: calc(var(--_icon-inline-end) - 6px);
     min-width: 6px;
     padding-inline: 0;
     width: 6px;
@@ -254,12 +289,21 @@
   .nav-bar-item-horizontal {
     @include nav-bar-tokens.item-horizontal;
 
+    // Horizontal items size to their content; extra space goes to the ends of
+    // the navigation bar instead of stretching each item. This covers the
+    // CSS-only class API, where items are direct children of the bar.
+    .nav-bar-horizontal > & {
+      flex: 0 1 auto;
+      width: auto;
+    }
+
     .nav-bar-item-content {
       display: inline-flex;
       flex-direction: row;
       gap: var(--item-active-indicator-icon-label-space);
       height: var(--item-active-indicator-height);
       isolation: isolate;
+      max-inline-size: 100%;
       padding-block: 0;
       padding-inline: var(--item-active-indicator-leading-space)
         var(--item-active-indicator-trailing-space);
