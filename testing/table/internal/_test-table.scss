@@ -55,14 +55,12 @@ $dark-theme: tokens.md-comp-test-table-values(
     border: 1px solid;
     padding: 16px;
     position: var(--_cell-position);
+    color: var(--_cell-text-color);
 
     &::before {
       background-color: var(--_cell-color);
-      background-image: linear-gradient(
-          to right,
-          var(--_cell-grid-color) 1px,
-          transparent 1px
-        ),
+      background-image:
+        linear-gradient(to right, var(--_cell-grid-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--_cell-grid-color) 1px, transparent 1px);
       background-size: 16px 16px;
       inset: -1px 0 0 -1px;
