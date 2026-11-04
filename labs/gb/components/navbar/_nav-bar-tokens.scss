@@ -8,8 +8,10 @@
   --container-color: var(--md-sys-color-surface-container);
   --container-elevation: var(--md-sys-elevation-shadow-2);
   --container-height: 64px;
+  --container-leading-space: 0px;
   --container-shadow-color: var(--md-sys-color-shadow);
   --container-shape: var(--md-sys-shape-corner-none);
+  --container-trailing-space: 0px;
   --item-active-icon-color: var(--md-sys-color-on-secondary-container);
   --item-active-indicator-color: var(--md-sys-color-secondary-container);
   --item-active-indicator-height: 32px;
@@ -43,8 +45,10 @@
 }
 
 @mixin item-horizontal {
+  --container-leading-space: 16px;
+  --container-trailing-space: 16px;
   --item-active-indicator-height: 40px;
-  --item-active-indicator-icon-label-space: 8px;
+  --item-active-indicator-icon-label-space: 4px;
   --item-active-indicator-leading-space: 16px;
   --item-active-indicator-trailing-space: 16px;
   --item-active-indicator-width: auto;
