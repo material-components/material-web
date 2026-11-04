@@ -705,12 +705,14 @@ export abstract class Select extends selectBaseClass {
     this.open = false;
     let hasChanged = false;
 
-    if (reason.kind === 'click-selection') {
-      hasChanged = this.selectItem(item);
-    } else if (reason.kind === 'keydown' && isSelectableKey(reason.key)) {
+    if (
+      !this.disabled &&
+      (reason.kind === 'click-selection' ||
+        (reason.kind === 'keydown' && isSelectableKey(reason.key)))
+    ) {
       hasChanged = this.selectItem(item);
     } else {
-      // This can happen on ESC being pressed
+      // Dismiss without selecting.
       item.tabIndex = -1;
       item.blur();
     }
