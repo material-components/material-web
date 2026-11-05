@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2026 Google LLC
+  SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Material 3 Expressive Loading</title>
+
+  <!-- Google Material 3 stylesheet -->
+  <link rel="stylesheet"
+        href="https://static.corp.google.com/material-web/gbreeze/latest/styles/gm3.css">
+  <!-- Fonts -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-10..0,25..151,1..1000,0..100,0..100&display=swap">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Google+Symbols:opsz,wght,FILL,GRAD,ROND@20..48,100..700,0..1,-50..200,0..100">
+
+  <style>
+    :root {
+      --md-icon-font: "Google Symbols";
+    }
+
+    body {
+      background-color: var(--md-sys-color-surface);
+      box-sizing: border-box;
+      color: var(--md-sys-color-on-surface);
+      display: flex;
+      flex-direction: column;
+      font-family: "Google Sans Flex", sans-serif;
+      gap: 32px;
+      margin: 0;
+      min-block-size: 100vh;
+      padding: 32px;
+      transition: all;
+    }
+
+    .demo-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all;
+    }
+
+    .demo-title {
+      color: var(--md-sys-color-on-surface);
+      font: var(--md-sys-typescale-headline-medium);
+      margin: 0;
+      transition: all;
+    }
+
+    .demo-subtitle {
+      color: var(--md-sys-color-on-surface-variant);
+      font: var(--md-sys-typescale-body-large);
+      margin: 0;
+      transition: all;
+    }
+
+    .demo-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      inline-size: 100%;
+      max-inline-size: 960px;
+      transition: all;
+    }
+
+    .demo-card {
+      align-items: center;
+      background-color: var(--md-sys-color-surface-container);
+      border-radius: var(--md-sys-shape-corner-extra-large);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+      min-block-size: 200px;
+      padding: 24px;
+      position: relative;
+      transition: all;
+    }
+
+    .demo-card-heading {
+      color: var(--md-sys-color-on-surface);
+      font: var(--md-sys-typescale-title-medium);
+      margin: 0;
+      text-align: center;
+      transition: all;
+    }
+
+    .demo-card-desc {
+      color: var(--md-sys-color-on-surface-variant);
+      font: var(--md-sys-typescale-body-medium);
+      margin: 0;
+      text-align: center;
+      transition: all;
+    }
+  </style>
+
+  <script type="module" src="./demo.js"></script>
+</head>
+<body>
+  <header class="demo-header">
+    <h1 class="demo-title">Loading</h1>
+    <p class="demo-subtitle">
+      Material 3 Expressive short-duration indeterminate loading component
+      with 7-shape morphing animation.
+    </p>
+  </header>
+
+  <main class="demo-grid">
+    <section class="demo-card">
+      <h2 class="demo-card-heading">Default (Uncontained)</h2>
+      <md-gb-loading
+        aria-label="Loading content"></md-gb-loading>
+      <p class="demo-card-desc">
+        Primary color active indicator on transparent background.
+      </p>
+    </section>
+
+    <section class="demo-card">
+      <h2 class="demo-card-heading">Contained</h2>
+      <md-gb-loading
+        contained
+        aria-label="Loading content"></md-gb-loading>
+      <p class="demo-card-desc">
+        On-primary-container active indicator on primary-container pill.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

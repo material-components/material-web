@@ -1,0 +1,67 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'loading-tokens';
+// go/keep-sorted end
+
+@layer md.sys;
+@layer md.comp.loading {
+  md-gb-loading,
+  .loading {
+    @include loading-tokens.root;
+
+    align-items: center;
+    block-size: var(--container-height);
+    box-sizing: border-box;
+    display: inline-flex;
+    inline-size: var(--container-width);
+    justify-content: center;
+    line-height: 0;
+    overflow: hidden;
+    position: relative;
+    transition: all;
+    vertical-align: middle;
+  }
+
+  md-gb-loading[contained],
+  .loading.loading-contained {
+    @include loading-tokens.contained;
+  }
+
+  md-gb-loading[closed],
+  .loading.loading-closed {
+    display: none;
+  }
+
+  .loading-container {
+    align-items: center;
+    background-color: var(--container-color);
+    block-size: 100%;
+    border-radius: var(--container-shape);
+    box-sizing: border-box;
+    display: inline-flex;
+    inline-size: 100%;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    transition: all;
+  }
+
+  .loading-graphic {
+    block-size: var(--active-indicator-size);
+    fill: var(--active-indicator-color);
+    inline-size: var(--active-indicator-size);
+    overflow: visible;
+    pointer-events: none;
+    transition: all;
+    will-change: transform;
+  }
+
+  .loading-shape {
+    fill: inherit;
+    transition: all;
+  }
+}
