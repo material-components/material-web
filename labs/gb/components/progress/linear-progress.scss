@@ -1,0 +1,168 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'linear-progress-tokens';
+// go/keep-sorted end
+
+@layer md.sys, md.comp.linear-progress;
+
+@layer md.comp.linear-progress {
+  :host {
+    display: inline-flex;
+    inline-size: 100%;
+    vertical-align: middle;
+  }
+
+  .linear-progress {
+    @include linear-progress-tokens.root;
+
+    align-items: center;
+    block-size: var(--block-size);
+    box-sizing: border-box;
+    display: flex;
+    inline-size: 100%;
+    isolation: isolate;
+    position: relative;
+    transition: all var(--motion-duration) var(--motion-easing);
+
+    &.linear-progress-thick {
+      @include linear-progress-tokens.thick;
+
+      block-size: var(--block-size);
+    }
+
+    &.linear-progress-wavy {
+      block-size: var(--with-wave-block-size);
+    }
+
+    &.linear-progress-wavy.linear-progress-thick {
+      block-size: var(--with-wave-block-size);
+    }
+  }
+
+  .linear-progress-svg {
+    block-size: 100%;
+    fill: none;
+    inline-size: 100%;
+    overflow: visible;
+    position: absolute;
+  }
+
+  .linear-progress-active {
+    fill: none;
+    stroke: var(--active-indicator-color);
+    stroke-linecap: round;
+    stroke-width: var(--active-indicator-thickness);
+    transition: all var(--motion-duration) var(--motion-easing);
+    transition-property: stroke, stroke-width;
+
+    @media (forced-colors: active) {
+      stroke: CanvasText;
+    }
+  }
+
+  .linear-progress-track {
+    fill: none;
+    stroke: var(--track-color);
+    stroke-linecap: round;
+    stroke-width: var(--track-thickness);
+    transition: all var(--motion-duration) var(--motion-easing);
+    transition-property: stroke, stroke-width;
+
+    @media (forced-colors: active) {
+      stroke: Canvas;
+    }
+  }
+
+  .linear-progress-stop-indicator {
+    background-color: var(--stop-indicator-color);
+    block-size: var(--stop-indicator-size);
+    border-radius: var(--stop-indicator-shape);
+    box-sizing: border-box;
+    display: block;
+    inline-size: var(--stop-indicator-size);
+    inset-block-start: 50%;
+    inset-inline-end: var(--stop-indicator-trailing-space);
+    position: absolute;
+    transform: translateY(-50%);
+    transition: all var(--motion-duration) var(--motion-easing);
+
+    @media (forced-colors: active) {
+      background-color: CanvasText;
+    }
+  }
+
+  .linear-progress-indeterminate:not(.linear-progress-wavy)
+    .linear-progress-active {
+    animation: linear-progress-standard-indeterminate 2000ms
+      cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .linear-progress-indeterminate.linear-progress-wavy .linear-progress-active {
+    animation: linear-progress-wavy-indeterminate 2000ms
+      cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .linear-progress-four-color .linear-progress-active {
+    animation:
+      linear-progress-standard-indeterminate 2000ms cubic-bezier(0.4, 0, 0.2, 1)
+        infinite,
+      linear-progress-four-color 4000ms linear infinite;
+  }
+
+  @keyframes linear-progress-standard-indeterminate {
+    0% {
+      stroke-dasharray: 1 100;
+      stroke-dashoffset: 0;
+    }
+
+    50% {
+      stroke-dasharray: 60 100;
+      stroke-dashoffset: -30;
+    }
+
+    100% {
+      stroke-dasharray: 1 100;
+      stroke-dashoffset: -100;
+    }
+  }
+
+  @keyframes linear-progress-wavy-indeterminate {
+    0% {
+      stroke-dasharray: 10 100;
+      stroke-dashoffset: 0;
+    }
+
+    50% {
+      stroke-dasharray: 60 100;
+      stroke-dashoffset: -30;
+    }
+
+    100% {
+      stroke-dasharray: 10 100;
+      stroke-dashoffset: -100;
+    }
+  }
+
+  @keyframes linear-progress-four-color {
+    0%,
+    100% {
+      stroke: var(--four-color-1);
+    }
+
+    25% {
+      stroke: var(--four-color-2);
+    }
+
+    50% {
+      stroke: var(--four-color-3);
+    }
+
+    75% {
+      stroke: var(--four-color-4);
+    }
+  }
+}
