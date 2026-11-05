@@ -1,0 +1,94 @@
+/*!
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'circular-progress-tokens';
+// go/keep-sorted end
+
+$determinate-easing: cubic-bezier(0, 0, 0.2, 1);
+$rotate-duration: 1568ms;
+$dash-duration: 1333ms;
+
+@layer md.sys;
+@layer md.comp.circular-progress {
+  .circular-progress {
+    @include circular-progress-tokens.root;
+
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    contain: strict;
+    content-visibility: auto;
+  }
+
+  .circular-progress svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+
+  .circular-progress path {
+    fill: none;
+    stroke-linecap: round;
+    stroke-width: var(--active-indicator-thickness);
+  }
+
+  .circular-progress-track {
+    stroke: var(--track-color);
+  }
+
+  .circular-progress-active {
+    stroke: var(--active-indicator-color);
+    stroke-dasharray: 100;
+    transition: stroke-dashoffset 500ms $determinate-easing;
+  }
+
+  .circular-progress.indeterminate svg {
+    animation: circular-rotate $rotate-duration linear infinite;
+  }
+
+  .circular-progress.indeterminate .circular-progress-active {
+    transition: none;
+    animation: circular-dash $dash-duration ease-in-out infinite;
+  }
+
+  @media (forced-colors: active) {
+    .circular-progress-active {
+      stroke: CanvasText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .circular-progress.indeterminate svg,
+    .circular-progress.indeterminate .circular-progress-active {
+      animation-duration: 6s;
+    }
+  }
+
+  @keyframes circular-rotate {
+    from {
+      transform: rotate(-90deg);
+    }
+    to {
+      transform: rotate(270deg);
+    }
+  }
+
+  @keyframes circular-dash {
+    0% {
+      stroke-dasharray: 2 100;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 55 100;
+      stroke-dashoffset: -20;
+    }
+    100% {
+      stroke-dasharray: 2 100;
+      stroke-dashoffset: -100;
+    }
+  }
+}
