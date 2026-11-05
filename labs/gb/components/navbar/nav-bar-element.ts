@@ -24,8 +24,10 @@ import {NavBarItemElement} from './nav-bar-item-element.js';
  * @cssprop --container-color
  * @cssprop --container-elevation
  * @cssprop --container-height
+ * @cssprop --container-leading-space
  * @cssprop --container-shadow-color
  * @cssprop --container-shape
+ * @cssprop --container-trailing-space
  * @cssprop --item-active-icon-color
  * @cssprop --item-active-indicator-color
  * @cssprop --item-active-indicator-height
@@ -83,6 +85,13 @@ export class NavBarElement extends AriaTablistElement {
 
   protected override updated(changedProperties: PropertyValues<this>) {
     super.updated(changedProperties);
+    // GM3 navigation bars move between items with Tab (not arrow keys), so
+    // opt out of the `tablist` focusgroup that AriaTablistElement sets. In
+    // browsers with native focusgroup support, that would otherwise collapse
+    // each bar to a single Tab stop.
+    if (this.getAttribute('focusgroup') !== 'none') {
+      this.setAttribute('focusgroup', 'none');
+    }
     if (changedProperties.has('itemLayout')) {
       this.syncItemsLayout();
     }
