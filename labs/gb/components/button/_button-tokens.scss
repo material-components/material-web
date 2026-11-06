@@ -87,6 +87,11 @@
   --container-color: var(--md-sys-color-inverse-surface);
   --icon-color: var(--md-sys-color-inverse-on-surface);
   --label-text-color: var(--md-sys-color-inverse-on-surface);
+  --outline-color: transparent;
+}
+
+@mixin outlined-disabled {
+  --container-color: transparent;
 }
 
 @mixin text {
