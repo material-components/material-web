@@ -10,6 +10,7 @@
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../tokens';
+@use '../../ripple/ripple';
 @use './handle';
 @use './icon';
 @use './track';
@@ -29,6 +30,8 @@
 }
 
 @mixin styles() {
+  @include ripple.controls;
+
   $tokens: tokens.md-comp-switch-values();
 
   @layer styles, hcm;
