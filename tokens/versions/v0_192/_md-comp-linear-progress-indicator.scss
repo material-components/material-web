@@ -26,18 +26,30 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'active-indicator-color': map.get($deps, 'md-sys-color', 'primary'),
-    'active-indicator-height': if($exclude-hardcoded-values, null, 4px),
+    'active-indicator-height': if(not sass($exclude-hardcoded-values): 4px),
     'active-indicator-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
-    'four-color-active-indicator-four-color':
-      map.get($deps, 'md-sys-color', 'tertiary-container'),
-    'four-color-active-indicator-one-color':
-      map.get($deps, 'md-sys-color', 'primary'),
-    'four-color-active-indicator-three-color':
-      map.get($deps, 'md-sys-color', 'tertiary'),
-    'four-color-active-indicator-two-color':
-      map.get($deps, 'md-sys-color', 'primary-container'),
+    'four-color-active-indicator-four-color': map.get(
+        $deps,
+        'md-sys-color',
+        'tertiary-container'
+      ),
+    'four-color-active-indicator-one-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary'
+      ),
+    'four-color-active-indicator-three-color': map.get(
+        $deps,
+        'md-sys-color',
+        'tertiary'
+      ),
+    'four-color-active-indicator-two-color': map.get(
+        $deps,
+        'md-sys-color',
+        'primary-container'
+      ),
     'track-color': map.get($deps, 'md-sys-color', 'surface-container-highest'),
-    'track-height': if($exclude-hardcoded-values, null, 4px),
+    'track-height': if(not sass($exclude-hardcoded-values): 4px),
     'track-shape': map.get($deps, 'md-sys-shape', 'corner-none')
   );
 }

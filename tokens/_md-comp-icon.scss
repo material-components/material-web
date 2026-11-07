@@ -13,16 +13,14 @@
 $supported-tokens: (
   // go/keep-sorted start
   'font',
-  'size',
-  // go/keep-sorted end
+  'size' // go/keep-sorted end
 );
 
 @function _get-new-tokens($exclude-hardcoded-values) {
   @return (
     // go/keep-sorted start
-    font: if($exclude-hardcoded-values, null, 'Material Symbols Outlined'),
-    size: if($exclude-hardcoded-values, null, 24px),
-    // go/keep-sorted end
+    font: if(not sass($exclude-hardcoded-values): 'Material Symbols Outlined'),
+    size: if(not sass($exclude-hardcoded-values): 24px) // go/keep-sorted end
   );
 }
 
