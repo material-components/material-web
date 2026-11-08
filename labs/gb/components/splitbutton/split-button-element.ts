@@ -52,6 +52,15 @@ export class SplitButtonElement extends LitElement {
       }
       .split-btn {
         flex: 1;
+        /* Contains the slots' touch targets (::before, absolute). The leading
+           slot is display: contents, so without this its touch target sizes
+           against the viewport and covers the page. */
+        position: relative;
+      }
+      /* The menu icon is the trailing slot's ::after, painted over the
+         slotted button: clicks pass through to the button. */
+      [name='trailing']::after {
+        pointer-events: none;
       }
       [name='leading'] {
         display: contents;
@@ -90,7 +99,8 @@ export class SplitButtonElement extends LitElement {
         part="leading-btn"
         class="${button(buttonConfig)}"
         @focusin=${this.updateSlotFocusVisible}
-        @focusout=${this.updateSlotFocusVisible}>
+        @focusout=${this.updateSlotFocusVisible}
+        @click=${this.forwardSlotClick}>
       </slot>
       <slot
         name="trailing"
@@ -98,10 +108,27 @@ export class SplitButtonElement extends LitElement {
         class="${button(buttonConfig)}"
         @focusin=${this.updateSlotFocusVisible}
         @focusout=${this.updateSlotFocusVisible}
+        @click=${this.forwardSlotClick}
         @slotchange=${this.handleTrailingSlotchange}>
       </slot>
       <slot></slot>
     </div>`;
+  }
+
+  /**
+   * A click on a slot's own box (its 48dp touch target, outside the slotted
+   * button) activates that slot's button, as a tap on the touch target of a
+   * button does.
+   */
+  private forwardSlotClick(event: MouseEvent) {
+    const slot = event.currentTarget as HTMLSlotElement;
+    if (event.target !== slot) return;
+    const target = slot
+      .assignedElements()
+      .find((el): el is HTMLButtonElement => el.matches('button'));
+    if (!target || target.disabled) return;
+    event.stopPropagation();
+    target.click();
   }
 
   private updateSlotFocusVisible(event: Event) {
