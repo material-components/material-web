@@ -103,6 +103,10 @@
     &:is(:disabled, .disabled, [aria-disabled='true']) {
       @include button-tokens.disabled;
       --disabled: true;
+
+      &:where(.btn-outlined:not(.btn-selected, [aria-pressed='true'])) {
+        @include button-tokens.outlined-disabled;
+      }
     }
 
     & {

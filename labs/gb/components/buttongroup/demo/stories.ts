@@ -132,13 +132,26 @@ const icons: MaterialStoryInit<StoryKnobs> = {
           variant="connected"
           selection="single"
           ?disabled=${disabled}>
-          <md-gb-button value="left" aria-label="Align left" size="sm" selected>
+          <md-gb-button
+            value="left"
+            aria-label="Align left"
+            size="sm"
+            color="tonal"
+            selected>
             <md-gb-icon>format_align_left</md-gb-icon>
           </md-gb-button>
-          <md-gb-button value="center" aria-label="Align center" size="sm">
+          <md-gb-button
+            value="center"
+            aria-label="Align center"
+            size="sm"
+            color="tonal">
             <md-gb-icon>format_align_center</md-gb-icon>
           </md-gb-button>
-          <md-gb-button value="right" aria-label="Align right" size="sm">
+          <md-gb-button
+            value="right"
+            aria-label="Align right"
+            size="sm"
+            color="tonal">
             <md-gb-icon>format_align_right</md-gb-icon>
           </md-gb-button>
         </md-gb-button-group>
@@ -149,15 +162,15 @@ const icons: MaterialStoryInit<StoryKnobs> = {
           variant="connected"
           selection="single"
           ?disabled=${disabled}>
-          <md-gb-button value="play" size="sm">
+          <md-gb-button value="play" size="sm" color="outlined">
             <md-gb-icon>play_arrow</md-gb-icon>
             Play
           </md-gb-button>
-          <md-gb-button value="pause" size="sm">
+          <md-gb-button value="pause" size="sm" color="outlined">
             <md-gb-icon>pause</md-gb-icon>
             Pause
           </md-gb-button>
-          <md-gb-button value="stop" size="sm">
+          <md-gb-button value="stop" size="sm" color="outlined">
             <md-gb-icon>stop</md-gb-icon>
             Stop
           </md-gb-button>
@@ -168,12 +181,14 @@ const icons: MaterialStoryInit<StoryKnobs> = {
           aria-label="Mixed icon and text actions"
           variant="connected"
           ?disabled=${disabled}>
-          <md-gb-button value="starred" size="sm">
+          <md-gb-button value="starred" size="sm" color="elevated">
             <md-gb-icon>star</md-gb-icon>
             Starred
           </md-gb-button>
-          <md-gb-button value="all" size="sm">All</md-gb-button>
-          <md-gb-button value="archive" size="sm">
+          <md-gb-button value="all" size="sm" color="elevated">
+            All
+          </md-gb-button>
+          <md-gb-button value="archive" size="sm" color="elevated">
             <md-gb-icon>archive</md-gb-icon>
             Archive
           </md-gb-button>
