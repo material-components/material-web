@@ -1,0 +1,61 @@
+//
+// Copyright 2026 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+@mixin tokens-expressive {
+  --motion-duration: var(--md-sys-motion-duration-long2);
+  --motion-easing: var(--md-sys-motion-easing-emphasized);
+}
+
+@mixin colors {
+  --active-indicator-color: var(--md-sys-color-primary);
+  --four-color-1: var(--md-sys-color-primary);
+  --four-color-2: var(--md-sys-color-tertiary);
+  --four-color-3: var(--md-sys-color-error);
+  --four-color-4: var(--md-sys-color-secondary);
+  --stop-indicator-color: var(--md-sys-color-primary);
+  --track-color: var(--md-sys-color-secondary-container);
+}
+
+@mixin normal-size {
+  --active-indicator-thickness: 4px;
+  --block-size: 4px;
+  --stop-indicator-size: 4px;
+  --stop-indicator-trailing-space: 0px;
+  --track-active-indicator-space: 4px;
+  --track-thickness: 4px;
+  --wave-amplitude: 3px;
+  --wave-wavelength: 40px;
+  --wave-wavelength-indeterminate: 20px;
+  --with-wave-block-size: 16px;
+}
+
+@mixin thick-size {
+  --active-indicator-thickness: 8px;
+  --block-size: 8px;
+  --stop-indicator-size: 4px;
+  --stop-indicator-trailing-space: 2px;
+  --track-active-indicator-space: 4px;
+  --track-thickness: 8px;
+  --wave-amplitude: 3px;
+  --wave-wavelength: 40px;
+  --wave-wavelength-indeterminate: 20px;
+  --with-wave-block-size: 24px;
+}
+
+@mixin root {
+  // LINT.IfChange
+  @include colors;
+  @include normal-size;
+  @include tokens-expressive;
+  --active-indicator-shape: var(--md-sys-shape-corner-full);
+  --stop-indicator-shape: var(--md-sys-shape-corner-full);
+  --track-shape: var(--md-sys-shape-corner-full);
+  --wave-speed: 1;
+  // LINT.ThenChange(linear-progress-element.ts)
+}
+
+@mixin thick {
+  @include thick-size;
+}
