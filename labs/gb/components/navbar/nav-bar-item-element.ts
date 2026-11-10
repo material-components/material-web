@@ -44,6 +44,10 @@ export class NavBarItemElement extends AriaTabElement {
         min-width: 48px;
         outline: none;
       }
+
+      :host([item-layout='horizontal']) {
+        flex: 0 1 auto;
+      }
     `,
   ];
 
