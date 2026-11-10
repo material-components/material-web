@@ -126,6 +126,13 @@
       --md-icon-color: var(--item-inactive-pressed-icon-color);
       color: var(--item-inactive-pressed-icon-color);
     }
+
+    // The menu button discloses the expanded rail; it isn't a menu's
+    // invoker, so it doesn't hold the ripple's pressed layer while expanded
+    // (the icon changes instead: navigation-rail.md, Menu).
+    &[aria-expanded='true']:not(:active, .active) {
+      --ripple-press-opacity: 0%;
+    }
   }
 
   .nav-rail-items {
