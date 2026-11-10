@@ -107,12 +107,36 @@ when either handle is selected.
 <md-slider labeled></md-slider>
 ```
 
-<!-- TODO(b/318567101): ## Accessibility -->
+## Accessibility
+
+Add an
+[`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)<!-- {.external} -->
+attribute to single-handle sliders. For range sliders, provide
+`aria-label-start` and `aria-label-end` for each respective handle.
+
+Use `aria-valuetext` (or `aria-valuetext-start` and `aria-valuetext-end` for
+range sliders) to supply human-readable values to assistive technologies when
+the numeric value requires unit context (such as currency or temperature).
+
+```html
+<md-slider aria-label="Volume" value="50"></md-slider>
+
+<md-slider
+  range
+  aria-label-start="Minimum price"
+  aria-label-end="Maximum price"
+  aria-valuetext-start="$20"
+  aria-valuetext-end="$100"
+  value-start="20"
+  value-end="100">
+</md-slider>
+```
 
 ## Theming
 
-Slider supports [Material theming](../theming/README.md) and can be customized
-in terms of color and shape.
+Slider supports
+[Material theming](/third_party/javascript/material/web/g3doc/docs/theming/README.md)
+and can be customized in terms of color and shape.
 
 ### Tokens
 
@@ -160,8 +184,7 @@ Token                              | Default value
 
 ## API
 
-
-### MdSlider <code>&lt;md-slider&gt;</code>
+### MdSlider `<md-slider>`
 
 #### Properties
 
