@@ -1,0 +1,37 @@
+//
+// Copyright 2023 Google LLC
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use 'sass:list';
+// go/keep-sorted end
+
+@mixin styles() {
+  .host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
+  slot {
+    width: 100%;
+    height: 100%;
+  }
+
+  :host([variant='expanded']) {
+    flex-direction: row;
+  }
+
+  :host([variant='expanded']) slot[name='supporting'] {
+    max-width: var(--md-supporting-pane-width, 360px);
+    margin-left: 24px;
+  }
+
+  :host([variant='compact']) slot[name='supporting'] {
+    max-height: calc(100% / 2);
+    position: absolute;
+    bottom: 0;
+  }
+}
