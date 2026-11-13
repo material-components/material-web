@@ -110,6 +110,28 @@ describe('Button', () => {
     expect(clicked).toBeFalse();
   });
 
+  it('should only add the clicked button name/value to form data', async () => {
+    const root = env.render(html`
+      <form>
+        <test-button name="deny" value="no"></test-button>
+        <test-button name="accept" value="yes"></test-button>
+      </form>
+    `);
+    const form = root.querySelector('form')!;
+    const accept = root.querySelector<TestButton>('test-button[name=accept]')!;
+    let formData: Array<[string, FormDataEntryValue]> = [];
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      formData = Array.from(new FormData(form));
+    });
+    await env.waitForStability();
+
+    await new ButtonHarness(accept).clickWithMouse();
+    await env.waitForStability();
+
+    expect(formData).toEqual([['accept', 'yes']]);
+  });
+
   describe('links', () => {
     it('omits rel and referrerpolicy when unset', async () => {
       const {button} = await setupTest();

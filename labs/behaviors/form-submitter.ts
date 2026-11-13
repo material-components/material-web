@@ -12,6 +12,7 @@ import {
   setupDispatchHooks,
 } from '../../internal/events/dispatch-hooks.js';
 import {internals, WithElementInternals} from './element-internals.js';
+import {FormValue, getFormValue} from './form-associated.js';
 import {MixinBase, MixinReturn} from './mixin.js';
 
 /**
@@ -86,6 +87,11 @@ export function mixinFormSubmitter<
     }
     set name(name: string) {
       this.setAttribute('name', name);
+    }
+
+    // Only the submitter adds its name/value, which is set on click.
+    [getFormValue](): FormValue | null {
+      return null;
     }
 
     // Mixins must have a constructor with `...args: any[]`
