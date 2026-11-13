@@ -160,7 +160,7 @@ Multi-line text fields behave like
 elements.
 
 Textareas can specify the initial number of `rows`. Use CSS `width`, `height`,
-and `resize` to control the resize behavior of a textarea.
+`resize`, and `field-sizing` to control the resize behavior of a textarea.
 
 <!-- no-catalog-start -->
 
@@ -180,6 +180,25 @@ resize](images/textfield/usage-textarea.webp)
     type="textarea"
     label="Vertical resize"
     rows="3">
+</md-filled-text-field>
+```
+
+Set `field-sizing: content` on a textarea to automatically grow with its content
+in supporting browsers. When `field-sizing: content` is used, `rows` and `cols`
+no longer set default dimensions, so use CSS `width`, `min-height`, and
+`max-height` to bound the size.
+
+```html
+<style>
+  md-filled-text-field {
+    field-sizing: content;
+    width: 300px;
+    max-height: 200px;
+  }
+</style>
+<md-filled-text-field
+    type="textarea"
+    label="Auto-growing">
 </md-filled-text-field>
 ```
 
