@@ -50,7 +50,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      height: var(--height);
+      min-height: var(--height);
       gap: var(--gap-horizontal);
       padding-inline: var(--padding-leading) var(--padding-trailing);
       padding-block: var(--padding-top) var(--padding-bottom);
