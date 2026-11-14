@@ -40,6 +40,12 @@
     }
     &.btn-outlined {
       @include button-tokens.outlined;
+      &:where(.btn-lg) {
+        @include button-tokens.outlined-lg;
+      }
+      &:where(.btn-xl) {
+        @include button-tokens.outlined-xl;
+      }
       &:where(.btn-selected, [aria-pressed='true']) {
         @include button-tokens.outlined-selected;
       }

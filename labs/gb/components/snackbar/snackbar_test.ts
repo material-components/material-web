@@ -890,4 +890,36 @@ describe('<md-gb-snackbar>', () => {
       expect(getComputedStyle(actions).marginInlineEnd).toBe('0px');
     });
   });
+
+  describe('shadow parts', () => {
+    it('exposes part="label" on .snackbar-label and part="action" on .snackbar-action for external ::part styling', async () => {
+      const {snackbar} = await setupTest(html`
+        <style>
+          #part-styled::part(label) {
+            letter-spacing: 0.25px;
+          }
+          #part-styled::part(action) {
+            letter-spacing: 0.5px;
+            font-weight: 600;
+          }
+        </style>
+        <md-gb-snackbar
+          id="part-styled"
+          open
+          label-text="Styled message"
+          action-label="Undo"
+          quick></md-gb-snackbar>
+      `);
+      const label =
+        snackbar.shadowRoot!.querySelector<HTMLElement>('.snackbar-label')!;
+      const action =
+        snackbar.shadowRoot!.querySelector<HTMLElement>('.snackbar-action')!;
+
+      expect(label.getAttribute('part')).toBe('label');
+      expect(action.getAttribute('part')).toBe('action');
+      expect(getComputedStyle(label).letterSpacing).toBe('0.25px');
+      expect(getComputedStyle(action).letterSpacing).toBe('0.5px');
+      expect(getComputedStyle(action).fontWeight).toBe('600');
+    });
+  });
 });
