@@ -81,6 +81,15 @@
   --icon-color: var(--md-sys-color-on-surface-variant);
   --label-text-color: var(--md-sys-color-on-surface-variant);
   --outline-color: var(--md-sys-color-outline-variant);
+  --outline-width: 1px;
+}
+
+@mixin outlined-lg {
+  --outline-width: 2px;
+}
+
+@mixin outlined-xl {
+  --outline-width: 3px;
 }
 
 @mixin outlined-selected {
@@ -103,14 +112,12 @@
 @mixin xs {
   --container-height: 32px;
   --leading-space: 12px;
-  --outline-width: 1px;
   --trailing-space: 12px;
 }
 
 @mixin sm {
   --container-height: 40px;
   --leading-space: 16px;
-  --outline-width: 1px;
   --trailing-space: 16px;
 }
 
@@ -121,7 +128,6 @@
   --label-text-axes: var(--md-sys-typescale-title-md-axes);
   --label-text-tracking: var(--md-sys-typescale-title-md-tracking);
   --leading-space: 24px;
-  --outline-width: 1px;
   --trailing-space: 24px;
 }
 
@@ -137,7 +143,6 @@
   --label-text-axes: var(--md-sys-typescale-headline-sm-axes);
   --label-text-tracking: var(--md-sys-typescale-headline-sm-tracking);
   --leading-space: 48px;
-  --outline-width: 2px;
   --trailing-space: 48px;
 }
 
@@ -153,7 +158,6 @@
   --label-text-axes: var(--md-sys-typescale-headline-lg-axes);
   --label-text-tracking: var(--md-sys-typescale-headline-lg-tracking);
   --leading-space: 64px;
-  --outline-width: 3px;
   --trailing-space: 64px;
 }
 
