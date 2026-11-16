@@ -114,6 +114,10 @@ $_enter-delay: $_label-duration - $_visible-duration;
       // Use margin for textareas since they will scroll over the label if not.
       margin-top: var(--_top-space);
       margin-bottom: var(--_bottom-space);
+      // Allow unbroken strings to wrap within explicit widths when using
+      // `field-sizing: content` (since `.container` has
+      // `min-width: min-content`).
+      overflow-wrap: anywhere;
     }
 
     :hover .content {

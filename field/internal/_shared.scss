@@ -57,6 +57,18 @@
     resize: inherit;
   }
 
+  // Inherit field-sizing down through slotted content so that it can be
+  // customized on the host.
+  .field,
+  .container-overflow,
+  .container,
+  .middle,
+  .content,
+  .content slot,
+  .content ::slotted(*) {
+    field-sizing: inherit;
+  }
+
   .resizable:not(.disabled) .container {
     // `resize` is inherited from the host, but only applies to the container
     // when resizable.
