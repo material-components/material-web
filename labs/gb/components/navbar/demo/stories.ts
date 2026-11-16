@@ -38,22 +38,23 @@ const styles = css`
     border: 1px solid var(--md-sys-color-outline-variant);
     border-radius: 16px;
     box-shadow: var(--md-sys-elevation-shadow-1);
+    box-sizing: border-box;
     display: flex;
+    inline-size: 412px;
     justify-content: center;
     margin-bottom: 24px;
     min-height: 160px;
+    min-inline-size: 320px;
     overflow: hidden;
     padding: 0;
-    width: 100%;
-    max-width: 640px;
+    resize: horizontal;
   }
 
   .demo-stack {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    width: 100%;
-    max-width: 640px;
   }
 `;
 

@@ -24,8 +24,10 @@ import {NavBarItemElement} from './nav-bar-item-element.js';
  * @cssprop --container-color
  * @cssprop --container-elevation
  * @cssprop --container-height
+ * @cssprop --container-leading-space
  * @cssprop --container-shadow-color
  * @cssprop --container-shape
+ * @cssprop --container-trailing-space
  * @cssprop --item-active-icon-color
  * @cssprop --item-active-indicator-color
  * @cssprop --item-active-indicator-height
