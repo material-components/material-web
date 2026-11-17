@@ -36,10 +36,20 @@ export const ICON_SIZE_PX = 24;
 export const ICON_SIZE_XL_PX = 32;
 
 /**
- * Crossover distance from leading track edge in pixels where the icon color
- * flips between inactive and active track colors.
+ * Returns the minimum active track length in pixels that fits the inset icon
+ * with padding on both sides. Below this, the icon moves to the inactive track
+ * on the other side of the handle so the handle never covers it.
+ *
+ * Note: Assumes the default handle (`--handle-width`,
+ * `--active-handle-leading-space`) and `--icon-size` tokens, like the other
+ * pixel constants in this file.
+ *
+ * @param iconSizePx The inset icon size in pixels.
+ * @return The minimum active track length in pixels.
  */
-export const ICON_CROSSOVER_PX = ICON_PADDING_PX + ICON_SIZE_PX / 2; // 22px
+export function iconMinActiveTrackPx(iconSizePx = ICON_SIZE_PX): number {
+  return iconSizePx + 2 * ICON_PADDING_PX;
+}
 
 /** Handle classes. */
 export const HANDLE_CLASSES = {
@@ -400,11 +410,10 @@ export function computeSliderProperties(
   const startStopSelected = activeStartF <= 1e-6 && activeEndF >= -1e-6;
   const endStopSelected = activeEndF >= 1 - 1e-6;
 
-  // Inset icon crossover calculation (standard horizontal slider only).
-  // Sourced from Android M3E Slider.md:101-107.
-  // Note: Android clips per-track-box so an icon straddling the boundary is
-  // bicoloured; our single-element version switches colour at the crossover instead.
-  // This is a deliberate simplification.
+  // Inset icon placement (standard horizontal slider only). Like Android
+  // (`BaseSlider.calculateTrackIconBounds`), the icon sits on the active track
+  // only when that track fits the icon plus padding on both sides. Otherwise it
+  // moves to the start of the inactive track, past the handle.
   const activeEndPx =
     endF > 0 ? HANDLE_HALF_WIDTH_PX + travel * endF - SLIDER_GAP_PX : 0;
   const size = values.size as string | undefined;
@@ -419,8 +428,8 @@ export function computeSliderProperties(
       size === 'l' ||
       size === 'xl');
   const iconSizePx = size === 'xl' ? ICON_SIZE_XL_PX : ICON_SIZE_PX;
-  const iconCrossoverPx = ICON_PADDING_PX + iconSizePx / 2;
-  const iconOverActive = supportsIcon && activeEndPx >= iconCrossoverPx;
+  const iconOverActive =
+    supportsIcon && activeEndPx >= iconMinActiveTrackPx(iconSizePx);
 
   return {
     '--__start-fraction': String(startF),

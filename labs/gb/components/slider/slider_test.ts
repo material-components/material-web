@@ -16,10 +16,13 @@ import {
   computeStopIntervals,
   formatValueIndicatorLabel,
   HANDLE_CLASSES,
+  HANDLE_HALF_WIDTH_PX,
   handleClasses,
   handleNubClasses,
+  iconMinActiveTrackPx,
   setupSlider,
   SLIDER_CLASSES,
+  SLIDER_GAP_PX,
   sliderClasses,
 } from './slider.js';
 
@@ -563,7 +566,27 @@ describe('md-gb-slider', () => {
       }
     });
 
-    it('toggles slider-over-active class on icon when active track crosses icon crossover distance', async () => {
+    it('keeps the end stop dot square and centered 6px from the track end', async () => {
+      const root = env.render(
+        html`<md-gb-slider min="0" max="100" value="50"></md-gb-slider>`,
+      );
+      await env.waitForStability();
+      const el = root.querySelector('md-gb-slider')!;
+      const track = el
+        .shadowRoot!.querySelector<HTMLElement>('.slider-track')!
+        .getBoundingClientRect();
+      const stop = el
+        .shadowRoot!.querySelector<HTMLElement>(
+          '.slider-boundary-stop.slider-end',
+        )!
+        .getBoundingClientRect();
+
+      expect(stop.width).toBe(stop.height);
+      // handle-width / 2 (2px) + 4px inset.
+      expect(track.right - (stop.left + stop.width / 2)).toBeCloseTo(6, 1);
+    });
+
+    it('sets slider-over-active on the icon when the active track fits it', async () => {
       const root = env.render(html`
         <md-gb-slider min="0" max="100" value="90" size="lg">
           <md-gb-icon slot="icon">volume_up</md-gb-icon>
@@ -574,6 +597,165 @@ describe('md-gb-slider', () => {
       const iconEl = el.shadowRoot!.querySelector('.slider-icon')!;
 
       expect(iconEl.classList.contains('slider-over-active')).toBeTrue();
+    });
+
+    describe('inset icon placement', () => {
+      // Default host inline-size is 280px, so travel = 280 - 4 = 276px.
+      async function renderIconSlider(
+        value: number,
+        size: 'md' | 'lg' | 'xl' = 'md',
+        dir: 'ltr' | 'rtl' = 'ltr',
+      ) {
+        const root = env.render(html`
+          <div dir=${dir}>
+            <md-gb-slider min="0" max="100" .value=${value} .size=${size}>
+              <md-gb-icon slot="icon">volume_up</md-gb-icon>
+            </md-gb-slider>
+          </div>
+        `);
+        await env.waitForStability();
+        const el = root.querySelector('md-gb-slider')!;
+        await el.updateComplete;
+        const track =
+          el.shadowRoot!.querySelector<HTMLElement>('.slider-track')!;
+        const icon = el.shadowRoot!.querySelector<HTMLElement>('.slider-icon')!;
+        return {
+          icon,
+          trackRect: track.getBoundingClientRect(),
+          iconRect: icon.getBoundingClientRect(),
+        };
+      }
+
+      it('keeps the icon on the active track with 10px padding when it fits', async () => {
+        const {icon, trackRect, iconRect} = await renderIconSlider(50);
+
+        expect(icon.classList.contains('slider-over-active')).toBeTrue();
+        expect(iconRect.left - trackRect.left).toBeCloseTo(10, 0);
+      });
+
+      it('moves the icon past the handle onto the inactive track at low values', async () => {
+        // value 5: handle center = 2 + 276 * 0.05 = 15.8px; active track ends
+        // at 7.8px (< 44px), so the icon starts at 15.8 + 8 + 10 = 33.8px.
+        const {icon, trackRect, iconRect} = await renderIconSlider(5);
+
+        expect(icon.classList.contains('slider-over-active')).toBeFalse();
+        expect(iconRect.left - trackRect.left).toBeCloseTo(33.8, 0);
+      });
+
+      it('moves the icon past the handle at the minimum value', async () => {
+        // value 0: handle center = 2px, icon starts at 2 + 8 + 10 = 20px.
+        const {icon, trackRect, iconRect} = await renderIconSlider(0);
+
+        expect(icon.classList.contains('slider-over-active')).toBeFalse();
+        expect(iconRect.left - trackRect.left).toBeCloseTo(20, 0);
+      });
+
+      it('moves the icon past the handle for lg', async () => {
+        const {icon, trackRect, iconRect} = await renderIconSlider(5, 'lg');
+
+        expect(icon.classList.contains('slider-over-active')).toBeFalse();
+        expect(iconRect.left - trackRect.left).toBeCloseTo(33.8, 0);
+      });
+
+      it('switches sides at the md threshold', async () => {
+        // value 18: active track ends at 43.68px (< 44px); value 19: 46.44px.
+        const below = await renderIconSlider(18);
+        const above = await renderIconSlider(19);
+
+        expect(below.icon.classList.contains('slider-over-active')).toBeFalse();
+        expect(above.icon.classList.contains('slider-over-active')).toBeTrue();
+        expect(above.iconRect.left - above.trackRect.left).toBeCloseTo(10, 0);
+      });
+
+      it('never lets the handle and its gaps overlap the icon', async () => {
+        const travel = 280 - 2 * HANDLE_HALF_WIDTH_PX;
+        for (const value of [0, 1, 5, 10, 17, 18, 19, 20, 30, 50, 90, 100]) {
+          const {icon, trackRect, iconRect} = await renderIconSlider(value);
+          const handleCenter =
+            trackRect.left + HANDLE_HALF_WIDTH_PX + travel * (value / 100);
+          const gapStart = handleCenter - SLIDER_GAP_PX;
+          const gapEnd = handleCenter + SLIDER_GAP_PX;
+          const overlaps = iconRect.right > gapStart && iconRect.left < gapEnd;
+
+          expect(overlaps)
+            .withContext(
+              `value=${value} over-active=${icon.classList.contains(
+                'slider-over-active',
+              )}`,
+            )
+            .toBeFalse();
+        }
+      });
+
+      it('uses the inactive icon color on the inactive track', async () => {
+        const root = env.render(html`
+          <md-gb-slider
+            id="active"
+            size="md"
+            value="50"
+            style="--icon-color: rgb(1, 2, 3); --icon-color-active: rgb(4, 5, 6)">
+            <md-gb-icon slot="icon">volume_up</md-gb-icon>
+          </md-gb-slider>
+          <md-gb-slider
+            id="inactive"
+            size="md"
+            value="5"
+            style="--icon-color: rgb(1, 2, 3); --icon-color-active: rgb(4, 5, 6)">
+            <md-gb-icon slot="icon">volume_up</md-gb-icon>
+          </md-gb-slider>
+        `);
+        await env.waitForStability();
+        const iconColor = (id: string) =>
+          getComputedStyle(
+            root
+              .querySelector(id)!
+              .shadowRoot!.querySelector<HTMLElement>('.slider-icon')!,
+          ).color;
+
+        expect(iconColor('#active')).toBe('rgb(4, 5, 6)');
+        expect(iconColor('#inactive')).toBe('rgb(1, 2, 3)');
+      });
+
+      it('uses a larger threshold for the 32px xl icon', async () => {
+        // value 20: active track ends at 2 + 55.2 - 8 = 49.2px, which fits a
+        // 24px icon (44px) but not a 32px icon (52px).
+        const md = await renderIconSlider(20, 'md');
+        const xl = await renderIconSlider(20, 'xl');
+
+        expect(md.icon.classList.contains('slider-over-active')).toBeTrue();
+        expect(xl.icon.classList.contains('slider-over-active')).toBeFalse();
+      });
+
+      it('mirrors the inactive track placement in RTL', async () => {
+        const {icon, trackRect, iconRect} = await renderIconSlider(
+          5,
+          'md',
+          'rtl',
+        );
+
+        expect(icon.classList.contains('slider-over-active')).toBeFalse();
+        expect(trackRect.right - iconRect.right).toBeCloseTo(33.8, 0);
+      });
+    });
+
+    it('computes icon placement from active track length', () => {
+      const props = (value: number, size: 'md' | 'xl') =>
+        computeSliderProperties({
+          min: 0,
+          max: 100,
+          value,
+          size,
+          trackLength: 280,
+        })['--__icon-over-active'];
+
+      expect(iconMinActiveTrackPx()).toBe(44);
+      expect(iconMinActiveTrackPx(32)).toBe(52);
+      // Active track end = 2 + 276 * fraction - 8.
+      expect(props(5, 'md')).toBe('0'); // 7.8px
+      expect(props(18, 'md')).toBe('0'); // 43.68px < 44px
+      expect(props(19, 'md')).toBe('1'); // 46.44px
+      expect(props(20, 'xl')).toBe('0'); // 49.2px < 52px
+      expect(props(22, 'xl')).toBe('1'); // 54.72px
     });
 
     it('delegates ARIA attributes to native input elements', async () => {

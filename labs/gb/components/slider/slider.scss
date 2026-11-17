@@ -57,6 +57,8 @@
       var(--active-handle-leading-space) + var(--handle-width) / 2
     );
     --_slider-origin-split: 3px;
+    // Half-width of the anti-aliased edge on gradient-drawn stop dots.
+    --_stop-feather: 0.25px;
   }
 
   .slider.slider-vertical {
@@ -114,25 +116,36 @@
 
   // Note: Boundary stops are inset by an additional 4px from track ends.
   // Tick indicators remain value-aligned (offset by var(--handle-width) / 2).
+  // The dot is drawn with a radial-gradient inside a larger box (like tick
+  // stops) instead of a `border-radius: 50%` box the size of the dot. Chrome
+  // snaps each edge of a tiny box to device pixels on its own, so at
+  // fractional zoom levels a 4px round box renders as an oval. The gradient
+  // fades over 0.5px (1 device pixel at 2x) so the edge is anti-aliased
+  // instead of stair-stepped.
   .slider-boundary-stop {
+    --_stop-box-size: calc(var(--stop-indicator-size) * 2);
     position: absolute;
     inset-block: 0;
     margin-block: auto;
-    inline-size: var(--stop-indicator-size);
-    block-size: var(--stop-indicator-size);
-    border-radius: 50%;
-    background-color: var(--stop-indicator-color);
+    inline-size: var(--_stop-box-size);
+    block-size: var(--_stop-box-size);
+    background-image: radial-gradient(
+      circle at center,
+      var(--stop-indicator-color)
+        calc(var(--stop-indicator-size) / 2 - var(--_stop-feather)),
+      transparent calc(var(--stop-indicator-size) / 2 + var(--_stop-feather))
+    );
     pointer-events: none;
 
     &.slider-start {
       inset-inline-start: calc(
-        var(--handle-width) / 2 - var(--stop-indicator-size) / 2 + 4px
+        var(--handle-width) / 2 - var(--_stop-box-size) / 2 + 4px
       );
     }
 
     &.slider-end {
       inset-inline-end: calc(
-        var(--handle-width) / 2 - var(--stop-indicator-size) / 2 + 4px
+        var(--handle-width) / 2 - var(--_stop-box-size) / 2 + 4px
       );
     }
 
@@ -142,11 +155,14 @@
   }
 
   // Inset icon (standard horizontal slider only).
-  // Sourced from Android M3E Slider.md:101-107.
-  // Note: Android clips per-track-box so an icon straddling the boundary is
-  // bicoloured; our single-element version switches colour at the crossover instead.
-  // This is a deliberate simplification.
+  // The icon sits on the active track when that track fits the icon plus
+  // padding on both sides (`.slider-over-active`). Otherwise it moves to the
+  // start of the inactive track, on the other side of the handle, so the
+  // handle never covers it. Matches Android `BaseSlider.calculateTrackIconBounds`.
   .slider-icon {
+    // LINT.IfChange(icon_padding)
+    --_icon-padding: 10px;
+    // LINT.ThenChange(slider.ts:icon_padding)
     --md-icon-color: var(--_icon-color);
     --md-icon-size: var(--icon-size);
     align-items: center;
@@ -157,9 +173,11 @@
     font-size: var(--icon-size);
     inline-size: var(--icon-size);
     inset-block: 0;
-    // LINT.IfChange(icon_padding)
-    inset-inline-start: 10px;
-    // LINT.ThenChange(slider.ts:icon_padding)
+    // Inactive track start: handle center + handle gap + icon padding.
+    inset-inline-start: calc(
+      var(--handle-width) / 2 + var(--_slider-travel) *
+        var(--__end-fraction, 0) + var(--_slider-gap) + var(--_icon-padding)
+    );
     justify-content: center;
     margin-block: auto;
     pointer-events: none;
@@ -168,6 +186,7 @@
     &.slider-over-active {
       --md-icon-color: var(--_icon-color-active);
       color: var(--_icon-color-active);
+      inset-inline-start: var(--_icon-padding);
     }
   }
 
@@ -637,16 +656,18 @@
     --_stop-indicator-offset: calc(var(--handle-width) / 2 + 4px);
     background-image: radial-gradient(
       circle at var(--_stop-indicator-offset) center,
-      var(--_stop-indicator-current-color) 0 var(--_stop-indicator-radius),
-      transparent var(--_stop-indicator-radius)
+      var(--_stop-indicator-current-color)
+        calc(var(--_stop-indicator-radius) - var(--_stop-feather)),
+      transparent calc(var(--_stop-indicator-radius) + var(--_stop-feather))
     );
     background-size: var(--_stop-pitch) 100%;
   }
   .slider.slider-vertical .slider-track-box.slider-ticks {
     background-image: radial-gradient(
       circle at center var(--_stop-indicator-offset),
-      var(--_stop-indicator-current-color) 0 var(--_stop-indicator-radius),
-      transparent var(--_stop-indicator-radius)
+      var(--_stop-indicator-current-color)
+        calc(var(--_stop-indicator-radius) - var(--_stop-feather)),
+      transparent calc(var(--_stop-indicator-radius) + var(--_stop-feather))
     );
     background-size: 100% var(--_stop-pitch);
   }
