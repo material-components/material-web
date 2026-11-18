@@ -69,6 +69,7 @@ const baseClass = mixinDelegatesAria(
  *
  * @fires {InputEvent} input - Fired when the slider value changes from user interaction. --bubbles --composed
  * @fires {Event} change - Fired when the slider value commit changes from user interaction. --bubbles
+ * @csspart slider - The slider's root element, which holds its tokens.
  * @cssprop --active-track-color
  * @cssprop --inactive-track-color
  * @cssprop --handle-color
@@ -841,6 +842,7 @@ export class SliderElement extends baseClass {
 
     return html`
       <div
+        part="slider"
         class="${classMap(
           sliderClasses({
             disabled: this.disabled,

@@ -17,6 +17,10 @@ import {
   mixinConstraintValidation,
 } from '../../../behaviors/constraint-validation.js';
 import {
+  mixinCustomStateSet,
+  toggleState,
+} from '../../../behaviors/custom-state-set.js';
+import {
   internals,
   mixinElementInternals,
 } from '../../../behaviors/element-internals.js';
@@ -39,7 +43,9 @@ import {radio} from './radio.js';
 
 // Separate variable needed for closure.
 const radioBaseClass = mixinConstraintValidation(
-  mixinFormAssociated(mixinElementInternals(mixinFocusable(LitElement))),
+  mixinFormAssociated(
+    mixinCustomStateSet(mixinElementInternals(mixinFocusable(LitElement))),
+  ),
 );
 
 /**
@@ -48,6 +54,7 @@ const radioBaseClass = mixinConstraintValidation(
  * @fires {InputEvent} input - Fired when the radio is checked (but not unchecked). --bubbles --composed
  * @fires {Event} change - Fired when the radio is checked (but not unchecked). --bubbles
  * @csspart radio - The radio's root element.
+ * @cssstate checked - Whether the radio is checked.
  * @cssprop --icon-color
  * @cssprop --icon-size
  * @cssprop --state-layer-color
@@ -85,6 +92,7 @@ export class RadioElement extends radioBaseClass {
     }
 
     this[internals].ariaChecked = String(checked);
+    this[toggleState]('checked', checked);
     this.requestUpdate('checked', wasChecked);
     this.selectionController.handleCheckedChange();
   }
