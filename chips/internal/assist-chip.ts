@@ -59,13 +59,14 @@ export class AssistChip extends Chip {
   }
 
   protected override renderPrimaryAction(content: unknown) {
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     if (this.href) {
       return html`
         <a
           class="primary action"
           id="link"
           aria-label=${ariaLabel || nothing}
+          aria-description=${ariaDescription || nothing}
           href=${safeHref(this.href)}
           download=${this.download || nothing}
           target=${this.target || nothing}
@@ -81,6 +82,7 @@ export class AssistChip extends Chip {
         class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-disabled=${this.softDisabled || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}
         type="button"

@@ -132,7 +132,7 @@ export class CheckboxElement extends baseClass {
 
   protected override render() {
     // Needed for closure conformance
-    const {ariaLabel, ariaInvalid} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaInvalid} = this as ARIAMixinStrict;
     return html`
       <input
         part="checkbox"
@@ -140,6 +140,7 @@ export class CheckboxElement extends baseClass {
         type="checkbox"
         aria-checked=${this.indeterminate ? 'mixed' : nothing}
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-invalid=${ariaInvalid || this.error || nothing}
         ?disabled=${this.disabled}
         ?required=${this.required}

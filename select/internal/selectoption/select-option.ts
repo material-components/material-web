@@ -166,6 +166,7 @@ export class SelectOptionEl
         tabindex=${this.disabled ? -1 : 0}
         role=${this.selectOptionController.role}
         aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
+        aria-description=${(this as ARIAMixinStrict).ariaDescription || nothing}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
         aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}

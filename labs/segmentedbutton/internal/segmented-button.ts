@@ -73,11 +73,12 @@ export class SegmentedButton extends segmentedButtonBaseClass {
 
   protected override render() {
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <button
         tabindex="${this.disabled ? '-1' : '0'}"
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-pressed=${this.selected}
         ?disabled=${this.disabled}
         @click="${this.handleClick}"

@@ -89,7 +89,7 @@ export class CardElement extends baseClass {
   @property({type: Boolean}) interactive = false;
 
   protected override render() {
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`<div
       part="card"
       class="${card({
@@ -103,7 +103,8 @@ export class CardElement extends baseClass {
             class="card-btn ripple focus-ring-target"
             ${ripple()}
             ?disabled="${this.disabled}"
-            aria-label="${ariaLabel || nothing}"></button>`
+            aria-label="${ariaLabel || nothing}"
+            aria-description="${ariaDescription || nothing}"></button>`
         : nothing}
       <slot></slot>
       <slot name="container" ${hasSlotted()} ${fxSlot()}></slot>

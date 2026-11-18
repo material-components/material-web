@@ -490,6 +490,7 @@ export class Slider extends sliderBaseClass {
       .value=${String(value)}
       .tabIndex=${start ? 1 : 0}
       aria-label=${ariaLabel || nothing}
+      aria-description=${(this as ARIAMixinStrict).ariaDescription || nothing}
       aria-valuetext=${ariaValueText} />`;
   }
 

@@ -22,6 +22,7 @@ export const ARIA_PROPERTIES: ARIAProperty[] = [
   'ariaColIndex',
   'ariaColSpan',
   'ariaCurrent',
+  'ariaDescription',
   'ariaDisabled',
   'ariaExpanded',
   'ariaHasPopup',
@@ -136,6 +137,7 @@ export interface ARIAMixinStrict extends ARIAMixin {
     | 'true'
     | 'false'
     | null;
+  ariaDescription: string | null;
   ariaDisabled: 'true' | 'false' | null;
   ariaExpanded: 'true' | 'false' | null;
   ariaHasPopup:

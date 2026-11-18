@@ -136,12 +136,13 @@ export class ListItemElement extends baseClass {
     }
 
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`<button
       part="list-item"
       class="${listItem(state)}"
       ?disabled=${this.disabled}
-      aria-label=${ariaLabel || nothing}>
+      aria-label=${ariaLabel || nothing}
+      aria-description=${ariaDescription || nothing}>
       ${this.renderContent()}
     </button>`;
   }

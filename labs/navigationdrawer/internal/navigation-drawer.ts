@@ -30,12 +30,13 @@ export class NavigationDrawer extends navigationDrawerBaseClass {
     const ariaExpanded = this.opened ? 'true' : 'false';
     const ariaHidden = !this.opened ? 'true' : 'false';
     // Needed for closure conformance
-    const {ariaLabel, ariaModal} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaModal} = this as ARIAMixinStrict;
     return html`
       <div
         aria-expanded="${ariaExpanded}"
         aria-hidden="${ariaHidden}"
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-modal="${ariaModal || nothing}"
         class="md3-navigation-drawer ${this.getRenderClasses()}"
         role="dialog">

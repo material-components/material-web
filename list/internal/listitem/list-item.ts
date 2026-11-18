@@ -141,6 +141,7 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
         tabindex="${this.isDisabled || !isInteractive ? -1 : 0}"
         ?disabled=${this.isDisabled}
         role="listitem"
+        aria-description=${(this as ARIAMixinStrict).ariaDescription || nothing}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
         aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}

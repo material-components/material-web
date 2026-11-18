@@ -98,12 +98,13 @@ export class SegmentedButtonSet extends segmentedButtonSetBaseClass {
 
   protected override render() {
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <span
         role="group"
         @segmented-button-interaction="${this.handleSegmentedButtonInteraction}"
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         class="md3-segmented-button-set">
         <slot></slot>
       </span>

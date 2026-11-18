@@ -28,7 +28,7 @@ export class NavigationDrawerModal extends navigationDrawerModalBaseClass {
     const ariaExpanded = this.opened ? 'true' : 'false';
     const ariaHidden = !this.opened ? 'true' : 'false';
     // Needed for closure conformance
-    const {ariaLabel, ariaModal} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaModal} = this as ARIAMixinStrict;
     return html`
       <div
         class="md3-navigation-drawer-modal__scrim ${this.getScrimClasses()}"
@@ -38,6 +38,7 @@ export class NavigationDrawerModal extends navigationDrawerModalBaseClass {
         aria-expanded=${ariaExpanded}
         aria-hidden=${ariaHidden}
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-modal=${ariaModal || nothing}
         class="md3-navigation-drawer-modal ${this.getRenderClasses()}"
         @keydown="${this.handleKeyDown}"

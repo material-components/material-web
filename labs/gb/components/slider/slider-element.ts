@@ -791,6 +791,7 @@ export class SliderElement extends baseClass {
     }
 
     const isVertical = this.orientation === 'vertical';
+    const {ariaDescription} = this as ARIAMixinStrict;
     const isRange = this.isRange;
 
     const styles = computeSliderProperties({
@@ -863,6 +864,7 @@ export class SliderElement extends baseClass {
               .step=${String(this.step)}
               .value=${String(this.renderValueStart)}
               aria-label=${this.renderAriaLabelStart || nothing}
+              aria-description=${ariaDescription || nothing}
               aria-valuetext=${this.renderAriaValueTextStart || nothing}
               aria-valuemin=${this.min}
               aria-valuemax=${this.valueEnd ?? this.max}
@@ -892,6 +894,7 @@ export class SliderElement extends baseClass {
           .step=${String(this.step)}
           .value=${String(this.renderValueEnd)}
           aria-label=${this.renderAriaLabelEnd || nothing}
+          aria-description=${ariaDescription || nothing}
           aria-valuetext=${this.renderAriaValueTextEnd || nothing}
           aria-valuemin=${isRange ? (this.valueStart ?? this.min) : this.min}
           aria-valuemax=${this.max}

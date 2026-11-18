@@ -162,6 +162,7 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         tabindex=${this.disabled && !isAnchor ? -1 : 0}
         role=${this.menuItemController.role}
         aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
+        aria-description=${(this as ARIAMixinStrict).ariaDescription || nothing}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
         aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}

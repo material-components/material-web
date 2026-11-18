@@ -54,12 +54,13 @@ export class FilterChip extends MultiActionChip {
   }
 
   protected override renderPrimaryAction(content: unknown) {
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <button
         class="primary action"
         id="button"
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-pressed=${this.selected}
         aria-disabled=${this.softDisabled || nothing}
         ?disabled=${this.disabled && !this.alwaysFocusable}

@@ -287,12 +287,13 @@ export class Dialog extends dialogBaseClass {
         @focus=${this.handleFocusTrapFocus}></div>
     `;
 
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <div class="scrim"></div>
       <dialog
         class=${classMap(classes)}
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-labelledby=${this.hasHeadline ? 'headline' : nothing}
         role=${this.type === 'alert' ? 'alertdialog' : nothing}
         @cancel=${this.handleCancel}

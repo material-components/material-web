@@ -159,7 +159,8 @@ export class IconButton extends iconButtonBaseClass {
   protected override render() {
     const tag = this.href ? literal`div` : literal`button`;
     // Needed for closure conformance
-    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaHasPopup, ariaExpanded} =
+      this as ARIAMixinStrict;
     const hasToggledAriaLabel = ariaLabel && this.ariaLabelSelected;
     const ariaPressedValue = !this.toggle ? nothing : this.selected;
     let ariaLabelValue: string | null | typeof nothing = nothing;
@@ -173,6 +174,7 @@ export class IconButton extends iconButtonBaseClass {
         class="icon-button ${classMap(this.getRenderClasses())}"
         id="button"
         aria-label="${ariaLabelValue || nothing}"
+        aria-description="${(!this.href && ariaDescription) || nothing}"
         aria-haspopup="${(!this.href && ariaHasPopup) || nothing}"
         aria-expanded="${(!this.href && ariaExpanded) || nothing}"
         aria-pressed="${ariaPressedValue}"
@@ -188,7 +190,7 @@ export class IconButton extends iconButtonBaseClass {
 
   private renderLink() {
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <a
         class="link"
@@ -198,7 +200,8 @@ export class IconButton extends iconButtonBaseClass {
         target="${this.target || nothing}"
         rel=${this.rel || nothing}
         referrerpolicy=${this.referrerPolicy || nothing}
-        aria-label="${ariaLabel || nothing}">
+        aria-label="${ariaLabel || nothing}"
+        aria-description="${ariaDescription || nothing}">
         ${this.renderTouchTarget()}
       </a>
     `;

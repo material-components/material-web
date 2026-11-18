@@ -136,7 +136,7 @@ export class Checkbox extends checkboxBaseClass {
     });
 
     // Needed for closure conformance
-    const {ariaLabel, ariaInvalid} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaInvalid} = this as ARIAMixinStrict;
     // Note: <input> needs to be rendered before the <svg> for
     // form.reportValidity() to work in Chrome.
     return html`
@@ -146,6 +146,7 @@ export class Checkbox extends checkboxBaseClass {
           id="input"
           aria-checked=${isIndeterminate ? 'mixed' : nothing}
           aria-label=${ariaLabel || nothing}
+          aria-description=${ariaDescription || nothing}
           aria-invalid=${ariaInvalid || nothing}
           ?disabled=${this.disabled}
           ?required=${this.required}

@@ -22,6 +22,12 @@ describe('aria', () => {
         .toBeFalse();
     });
 
+    it('should return true for aria-description', () => {
+      expect(isAriaAttribute('aria-description'))
+        .withContext('aria-description input')
+        .toBeTrue();
+    });
+
     it('should return true for role', () => {
       expect(isAriaAttribute('role')).withContext('role input').toBeTrue();
     });

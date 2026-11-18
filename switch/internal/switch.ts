@@ -128,6 +128,7 @@ export class Switch extends switchBaseClass {
           type="checkbox"
           role="switch"
           aria-label=${(this as ARIAMixin).ariaLabel || nothing}
+          aria-description=${(this as ARIAMixin).ariaDescription || nothing}
           ?checked=${this.selected}
           ?disabled=${this.disabled}
           ?required=${this.required}

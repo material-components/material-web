@@ -170,7 +170,8 @@ export class IconButtonElement extends baseClass {
       disabled: this.disabled || this.softDisabled,
     });
 
-    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaHasPopup, ariaExpanded} =
+      this as ARIAMixinStrict;
     if (this.type === 'link') {
       return html`<a
         part="icon-btn"
@@ -181,6 +182,7 @@ export class IconButtonElement extends baseClass {
         rel=${this.rel || nothing}
         referrerpolicy=${this.referrerPolicy || nothing}
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         aria-haspopup=${ariaHasPopup || nothing}
         aria-expanded=${ariaExpanded || nothing}
         aria-disabled=${this.disabled || this.softDisabled || nothing}
@@ -196,6 +198,7 @@ export class IconButtonElement extends baseClass {
       ?disabled=${this.disabled}
       aria-disabled=${this.softDisabled || nothing}
       aria-label=${ariaLabel || nothing}
+      aria-description=${ariaDescription || nothing}
       aria-pressed=${this.type === 'toggle' ? this.selected : nothing}
       aria-haspopup=${ariaHasPopup || nothing}
       aria-expanded=${ariaExpanded || nothing}

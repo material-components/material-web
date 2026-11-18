@@ -42,11 +42,12 @@ export class NavigationBar
 
   protected override render() {
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`<div
       class="md3-navigation-bar"
       role="tablist"
       aria-label=${ariaLabel || nothing}
+      aria-description=${ariaDescription || nothing}
       @keydown="${this.handleKeydown}"
       @navigation-tab-interaction="${this.handleNavigationTabInteraction}"
       @navigation-tab-rendered=${this.handleNavigationTabConnected}

@@ -41,12 +41,13 @@ export abstract class Progress extends progressBaseClass {
 
   protected override render() {
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <div
         class="progress ${classMap(this.getRenderClasses())}"
         role="progressbar"
         aria-label="${ariaLabel || nothing}"
+        aria-description="${ariaDescription || nothing}"
         aria-valuemin="0"
         aria-valuemax=${this.max}
         aria-valuenow=${this.indeterminate ? nothing : this.value}

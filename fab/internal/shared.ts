@@ -51,11 +51,12 @@ export abstract class SharedFab extends fabBaseClass {
 
   protected override render() {
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <button
         class="fab ${classMap(this.getRenderClasses())}"
-        aria-label=${ariaLabel || nothing}>
+        aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}>
         <md-elevation part="elevation"></md-elevation>
         <md-focus-ring part="focus-ring"></md-focus-ring>
         <md-ripple class="ripple"></md-ripple>

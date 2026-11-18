@@ -139,7 +139,7 @@ export class SwitchElement extends baseClass {
   private dirtyCheckedness = false;
 
   protected override render() {
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html`
       <button
         role="switch"
@@ -147,6 +147,7 @@ export class SwitchElement extends baseClass {
         class="${switchToggle()}"
         aria-checked="${this.selected ? 'true' : 'false'}"
         aria-label=${ariaLabel || nothing}
+        aria-description=${ariaDescription || nothing}
         ?disabled=${this.disabled}
         @change=${this.handleChange}>
         <slot name="off-icon" class="switch-icon-off" ${hasSlotted()}></slot>

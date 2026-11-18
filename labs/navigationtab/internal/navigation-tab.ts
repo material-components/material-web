@@ -45,12 +45,13 @@ export class NavigationTab
 
   protected override render() {
     // Needed for closure conformance
-    const {ariaLabel} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription} = this as ARIAMixinStrict;
     return html` <button
       class="md3-navigation-tab ${classMap(this.getRenderClasses())}"
       role="tab"
       aria-selected="${this.active}"
       aria-label=${ariaLabel || nothing}
+      aria-description=${ariaDescription || nothing}
       tabindex="${this.active ? 0 : -1}"
       @click="${this.handleClick}">
       <md-focus-ring part="focus-ring" inward></md-focus-ring>

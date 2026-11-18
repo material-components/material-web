@@ -140,13 +140,15 @@ export abstract class Button extends buttonBaseClass {
 
   private renderButton() {
     // Needed for closure conformance
-    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaHasPopup, ariaExpanded} =
+      this as ARIAMixinStrict;
     return html`<button
       id="button"
       class="button"
       ?disabled=${this.disabled}
       aria-disabled=${this.softDisabled || nothing}
       aria-label="${ariaLabel || nothing}"
+      aria-description="${ariaDescription || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}">
       ${this.renderContent()}
@@ -155,11 +157,13 @@ export abstract class Button extends buttonBaseClass {
 
   private renderLink() {
     // Needed for closure conformance
-    const {ariaLabel, ariaHasPopup, ariaExpanded} = this as ARIAMixinStrict;
+    const {ariaLabel, ariaDescription, ariaHasPopup, ariaExpanded} =
+      this as ARIAMixinStrict;
     return html`<a
       id="link"
       class="button"
       aria-label="${ariaLabel || nothing}"
+      aria-description="${ariaDescription || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
       aria-expanded="${ariaExpanded || nothing}"
       aria-disabled=${this.disabled || this.softDisabled || nothing}
