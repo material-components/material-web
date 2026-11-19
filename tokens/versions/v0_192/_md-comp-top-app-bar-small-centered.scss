@@ -32,40 +32,54 @@ $_default: (
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
   @return (
     'avatar-shape': map.get($deps, 'md-sys-shape', 'corner-full'),
-    'avatar-size': if($exclude-hardcoded-values, null, 30px),
+    'avatar-size': if(not sass($exclude-hardcoded-values): 30px),
     'container-color': map.get($deps, 'md-sys-color', 'surface'),
     'container-elevation': map.get($deps, 'md-sys-elevation', 'level0'),
-    'container-height': if($exclude-hardcoded-values, null, 64px),
+    'container-height': if(not sass($exclude-hardcoded-values): 64px),
     'container-shape': map.get($deps, 'md-sys-shape', 'corner-none'),
-    'container-surface-tint-layer-color':
-      map.get($deps, 'md-sys-color', 'surface-tint'),
+    'container-surface-tint-layer-color': map.get(
+        $deps,
+        'md-sys-color',
+        'surface-tint'
+      ),
     'headline-color': map.get($deps, 'md-sys-color', 'on-surface'),
     'headline-font': map.get($deps, 'md-sys-typescale', 'title-large-font'),
-    'headline-line-height':
-      map.get($deps, 'md-sys-typescale', 'title-large-line-height'),
+    'headline-line-height': map.get(
+        $deps,
+        'md-sys-typescale',
+        'title-large-line-height'
+      ),
     'headline-size': map.get($deps, 'md-sys-typescale', 'title-large-size'),
-    'headline-tracking':
-      map.get($deps, 'md-sys-typescale', 'title-large-tracking'),
-    'headline-type':
-      if(
-        $exclude-hardcoded-values,
-        null,
-        /** Warning: risk of reduced fidelity from using this composite typography token. Tokens md.comp.top-app-bar.small.centered.headline.tracking cannot be represented in the "font" property shorthand. Consider using the discrete properties instead. */
-          map.get($deps, 'md-sys-typescale', 'title-large-weight')
-          map.get($deps, 'md-sys-typescale', 'title-large-size') #{'/'} map.get(
+    'headline-tracking': map.get(
+        $deps,
+        'md-sys-typescale',
+        'title-large-tracking'
+      ),
+    'headline-type': if(
+        not
+          sass($exclude-hardcoded-values): map.get(
             $deps,
             'md-sys-typescale',
-            'title-large-line-height'
-          ) map.get($deps, 'md-sys-typescale', 'title-large-font')
+            'title-large-weight'
+          )
+          map.get($deps, 'md-sys-typescale', 'title-large-size') #{'/'}
+          map.get($deps, 'md-sys-typescale', 'title-large-line-height')
+          map.get($deps, 'md-sys-typescale', 'title-large-font')
       ),
     'headline-weight': map.get($deps, 'md-sys-typescale', 'title-large-weight'),
     'leading-icon-color': map.get($deps, 'md-sys-color', 'on-surface'),
-    'leading-icon-size': if($exclude-hardcoded-values, null, 24px),
-    'on-scroll-container-color':
-      map.get($deps, 'md-sys-color', 'surface-container'),
-    'on-scroll-container-elevation':
-      map.get($deps, 'md-sys-elevation', 'level2'),
+    'leading-icon-size': if(not sass($exclude-hardcoded-values): 24px),
+    'on-scroll-container-color': map.get(
+        $deps,
+        'md-sys-color',
+        'surface-container'
+      ),
+    'on-scroll-container-elevation': map.get(
+        $deps,
+        'md-sys-elevation',
+        'level2'
+      ),
     'trailing-icon-color': map.get($deps, 'md-sys-color', 'on-surface-variant'),
-    'trailing-icon-size': if($exclude-hardcoded-values, null, 24px)
+    'trailing-icon-size': if(not sass($exclude-hardcoded-values): 24px)
   );
 }
