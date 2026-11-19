@@ -7,8 +7,7 @@
 @use 'fab-tokens';
 // go/keep-sorted end
 
-// TODO: add any md.comp dependencies (e.g. md.comp.ripple)
-@layer md.sys, md.comp.dependencies;
+@layer md.sys, md.comp.ripple, md.comp.focus-ring;
 @layer md.comp.fab {
   .fab {
     & {
