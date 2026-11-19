@@ -1,6 +1,6 @@
 # Material Web
 
-<img src="./docs/images/material-web.gif"
+<img src="./g3doc/docs/images/material-web.gif"
   title="Material web components"
   alt="A collection of Material web components"
   style="border-radius: 32px">
@@ -22,11 +22,11 @@ open-source design system.
 
 ## Resources
 
--   [Introduction](./docs/intro.md)
--   [Roadmap](./docs/roadmap.md)
--   [Component docs](./docs/components/)
--   [Bundle size](./docs/size.md)
--   [Browser support and FAQ](./docs/support.md)
+-   [Introduction](./g3doc/docs/intro.md)
+-   [Roadmap](./g3doc/docs/roadmap.md)
+-   [Component docs](https://material-web.dev/components/)<!-- {.external} -->
+-   [Bundle size](./g3doc/docs/size.md)
+-   [Browser support and FAQ](./g3doc/docs/support.md)
 
 ## Quick start
 
@@ -35,7 +35,7 @@ open-source design system.
 > instead.
 
 This code snippet is a buildless example that loads `@material/web` from a CDN.
-Check out the [quick start](./docs/quick-start.md) guide to install and build
+Check out the [quick start](./g3doc/docs/quick-start.md) guide to install and build
 for production.
 
 <!-- LINT.IfChange -->
