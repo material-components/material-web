@@ -223,11 +223,12 @@
     pointer-events: none;
   }
 
+  // Don't transition clip-path: handles are positioned without a transition,
+  // so animating the track makes it lag behind the handle while dragging.
   .slider-track-box {
     position: absolute;
     inset-inline: 0;
     block-size: 100%;
-    transition: clip-path 80ms ease;
   }
 
   .slider-inactive-lead {

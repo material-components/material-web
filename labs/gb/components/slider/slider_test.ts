@@ -599,6 +599,31 @@ describe('md-gb-slider', () => {
       expect(iconEl.classList.contains('slider-over-active')).toBeTrue();
     });
 
+    it('does not animate the track or handle when the value changes', async () => {
+      const root = env.render(html`<md-gb-slider value="20"></md-gb-slider>`);
+      await env.waitForStability();
+      const el = root.querySelector('md-gb-slider')!;
+      const tracks = [...el.shadowRoot!.querySelectorAll('.slider-track-box')];
+      const handle = el.shadowRoot!.querySelector('.slider-handle.slider-end')!;
+      const hasNoDuration = (target: Element) =>
+        getComputedStyle(target)
+          .transitionDuration.split(',')
+          .every((duration) => duration.trim() === '0s');
+
+      el.value = 80;
+      await env.waitForStability();
+
+      expect(tracks.length).toBe(3);
+      // The handle is positioned without a transition, so the track must not
+      // animate either or it lags behind the handle while dragging.
+      for (const target of [...tracks, handle]) {
+        expect(hasNoDuration(target)).withContext(target.className).toBeTrue();
+        expect(target.getAnimations())
+          .withContext(target.className)
+          .toEqual([]);
+      }
+    });
+
     describe('inset icon placement', () => {
       // Default host inline-size is 280px, so travel = 280 - 4 = 276px.
       async function renderIconSlider(
