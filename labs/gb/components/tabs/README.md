@@ -48,6 +48,11 @@ widget.
 Add `class="tabs-secondary"` alongside `.tabs` for the secondary variant. Tabs
 scroll when the container overflows; there is no scrollable modifier.
 
+Tabs split the container into equal sections, with 16px of inline padding on
+each tab. In baseline DOM, tabs are equal only while every label fits. Once the
+bar scrolls, each tab is its label width plus padding. `<md-gb-tabs>` keeps all
+tabs the same width when scrolling too, sized to the widest tab.
+
 ### Overflow scroll setup
 
 Hand-authored baseline DOM does not automatically scroll partially-visible tabs

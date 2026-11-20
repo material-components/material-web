@@ -71,6 +71,27 @@ $stacked: ':has(> .md-icon):has(> :is(.tab-label, [slot="label"]))';
     anchor-scope: --tab, --tab-content-start, --tab-content-end;
   }
 
+  // Element mode: every tab gets the same width, even when the bar overflows
+  // and scrolls. Flex alone can't do this in baseline DOM: once the labels stop
+  // fitting, each tab shrinks back to its own label width. The `<md-gb-tabs>`
+  // default slot (rendered by `AriaTablistElement` in
+  // `labs/aria/tabs/tablist.ts` as a direct shadow-root child) is a box between
+  // the scroll container and the tabs, so it can be a grid that is as wide as
+  // its content. Each `1fr` column is sized from the widest tab's max-content,
+  // so this grid's max-content width is N × the widest tab.
+  // `min-inline-size: 100%` stretches the columns to fill the bar when they
+  // fit; otherwise the grid overflows `.tabs`, which scrolls. `:host(.tabs)`
+  // only matches inside a shadow root whose host is a `.tabs` container, so it
+  // matches nothing in the document scope this sheet is also adopted into.
+  :host(.tabs) > slot:not([name]) {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    flex: none;
+    inline-size: max-content;
+    min-inline-size: 100%;
+  }
+
   .tab {
     // Deliberately no `@include tabs-tokens.root`: the tab reads the
     // container's custom properties by inheritance, which is what lets
@@ -79,6 +100,8 @@ $stacked: ':has(> .md-icon):has(> :is(.tab-label, [slot="label"]))';
     // Containing block for the `::before` focus ring and out-of-flow `.tab-badge`.
     position: relative;
     anchor-scope: --tab-icon;
+    // Baseline DOM: tabs split the bar equally while their labels fit. In
+    // element mode the slot grid above sizes the tab and `flex` has no effect.
     flex: 1 1 0;
     align-items: center;
     justify-content: center;
