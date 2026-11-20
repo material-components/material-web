@@ -52,6 +52,39 @@ describe('<md-outlined-select>', () => {
     expect(changed).toBeTrue();
   });
 
+  it('ignores a selection event after becoming disabled', async () => {
+    let changed = false;
+    render(
+      html`<md-outlined-select @change=${() => (changed = true)}>
+        <md-select-option value="apple" selected>Apple</md-select-option>
+        <md-select-option value="orange">Orange</md-select-option>
+      </md-outlined-select>`,
+      root,
+    );
+    const select = root.querySelector('md-outlined-select')!;
+    await select.updateComplete;
+    const harness = new SelectHarness(select);
+    await harness.clickWithMouse();
+    await select.updateComplete;
+    const menu = select.renderRoot.querySelector('md-menu')!;
+    await menu.updateComplete;
+    select.disabled = true;
+    await select.updateComplete;
+    menu.dispatchEvent(
+      new CustomEvent('close-menu', {
+        detail: {
+          reason: {kind: 'keydown', key: 'Enter'},
+          itemPath: [select.options[1]],
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    await select.updateComplete;
+    expect(select.value).toBe('apple');
+    expect(changed).toBeFalse();
+  });
+
   it('typeahead selects an option', async () => {
     let changed = false;
     render(
