@@ -388,6 +388,7 @@ export class SubMenu extends LitElement {
       case arrowEnterKey:
       case SelectionKey.SPACE:
       case SelectionKey.ENTER:
+      case 'NumpadEnter':
         return true;
       default:
         return false;
