@@ -110,12 +110,12 @@ export class ListItemElement extends baseClass {
   /**
    * Whether the list item is selected.
    */
-  @property({type: Boolean}) checked = false;
+  @property({type: Boolean, reflect: true}) checked = false;
 
   /**
    * Whether the list item is disabled.
    */
-  @property({type: Boolean}) disabled = false;
+  @property({type: Boolean, reflect: true}) disabled = false;
 
   /**
    * Whether the list item is non-interactive.
