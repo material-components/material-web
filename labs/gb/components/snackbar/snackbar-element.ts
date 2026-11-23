@@ -46,6 +46,8 @@ export const CLOSE_DURATION_MS = 75;
  * @csspart surface - The surface container of the snackbar.
  * @csspart label - The container wrapping the label content.
  * @csspart actions - The container wrapping action and dismiss slots.
+ * @csspart action - The built-in action button rendered when `action-label` is set.
+ * @csspart dismiss - The built-in dismiss button rendered when `has-close-button` is set.
  * @cssprop --action-label-text-color - Action button label text color.
  * @cssprop --action-label-text - Action button label typography.
  * @cssprop --action-label-text-axes - Action button label typography font variation settings.
@@ -431,6 +433,7 @@ export class SnackbarElement extends LitElement {
                   ? html`
                       <button
                         type="button"
+                        part="action"
                         class="${button({
                           color: 'text',
                           size: 'sm',
@@ -446,6 +449,7 @@ export class SnackbarElement extends LitElement {
                   ? html`
                       <button
                         type="button"
+                        part="dismiss"
                         class="${iconButton({
                           color: 'standard',
                           size: 'sm',
