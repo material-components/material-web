@@ -851,6 +851,51 @@ describe('md-gb-slider', () => {
     });
   });
 
+  describe('slider part', () => {
+    it('exposes part="slider" on the token root', async () => {
+      const root = env.render(html`<md-gb-slider></md-gb-slider>`);
+      await env.waitForStability();
+      const el = root.querySelector('md-gb-slider')!;
+
+      const sliderRoot = el.shadowRoot!.querySelector('.slider')!;
+      expect(sliderRoot.getAttribute('part')).toBe('slider');
+    });
+
+    it('applies tokens set through ::part(slider) over size defaults', async () => {
+      const root = env.render(html`
+        <style>
+          #part-styled::part(slider) {
+            --track-height: 4px;
+            --handle-height: 20px;
+            --active-track-color: rgb(1, 2, 3);
+          }
+        </style>
+        <md-gb-slider id="part-styled" size="md"></md-gb-slider>
+        <md-gb-slider id="stock" size="md"></md-gb-slider>
+      `);
+      await env.waitForStability();
+      const inner = (id: string, selector: string) =>
+        root
+          .querySelector(id)!
+          .shadowRoot!.querySelector<HTMLElement>(selector)!;
+
+      expect(getComputedStyle(inner('#part-styled', '.slider')).height).toBe(
+        '20px',
+      );
+      expect(
+        getComputedStyle(inner('#part-styled', '.slider-track')).height,
+      ).toBe('4px');
+      expect(
+        getComputedStyle(inner('#part-styled', '.slider-active'))
+          .backgroundColor,
+      ).toBe('rgb(1, 2, 3)');
+      expect(getComputedStyle(inner('#stock', '.slider')).height).toBe('52px');
+      expect(getComputedStyle(inner('#stock', '.slider-track')).height).toBe(
+        '40px',
+      );
+    });
+  });
+
   describe('helper functions', () => {
     it('sliderClasses() applies state flags with slider- prefix and suppresses ranged when vertical', () => {
       const classes = sliderClasses({
