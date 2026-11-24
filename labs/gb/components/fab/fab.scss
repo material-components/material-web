@@ -74,5 +74,9 @@
       --md-icon-color: var(--icon-color);
       --md-icon-size: var(--icon-size);
     }
+
+    &:not(:disabled, .disabled, [aria-disabled='true']) {
+      cursor: pointer;
+    }
   }
 }
