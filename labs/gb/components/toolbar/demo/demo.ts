@@ -8,7 +8,7 @@ import './material-collection.js';
 import './index.js';
 
 import {
-  KnobTypesToKnobs,
+  type KnobTypesToKnobs,
   MaterialCollection,
   materialInitsToStoryInits,
   setUpDemo,
@@ -19,7 +19,7 @@ import {
 } from '@material/web/labs/gb/components/toolbar/toolbar.js';
 import {boolInput, Knob, selectDropdown} from './index.js';
 
-import {stories, StoryKnobs} from './stories.js';
+import {stories, type StoryKnobs} from './stories.js';
 
 const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
   'Toolbar',
@@ -41,6 +41,10 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       }),
     }),
     new Knob('docked', {ui: boolInput()}),
+    new Knob('hideLabels', {ui: boolInput()}),
+    new Knob('disableUndo', {ui: boolInput()}),
+    new Knob('disableEdit', {ui: boolInput()}),
+    new Knob('disableOptions', {ui: boolInput()}),
   ],
 );
 
