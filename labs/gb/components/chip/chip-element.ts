@@ -23,6 +23,7 @@ import {styles as chipStyles} from './chip.cssresult.js';
  * @fires {Event} change - Fired when a filter/toggle chip's selection state changes. --bubbles
  * @fires {InputEvent} input - Fired when a filter/toggle chip's selection state changes. --bubbles --composed
  * @csspart chip - The root container element.
+ * @csspart icon - The leading icon wrapper element.
  * @cssprop --avatar-opacity
  * @cssprop --avatar-shape
  * @cssprop --avatar-size
@@ -193,6 +194,7 @@ export class ChipElement extends LitElement {
     isFilterSelected: boolean,
   ) {
     return html`<span
+      part="icon"
       class="chip-icon"
       style="${withLeadingIcon ? '' : 'display: none;'}">
       <slot name="icon" @slotchange=${this.handleIconSlotChange}>
