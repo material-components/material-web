@@ -141,9 +141,14 @@ export class TypeaheadController {
     // middle of a typeahead
     if (
       event.code === 'Space' ||
+      event.key === ' ' ||
       event.code === 'Enter' ||
+      event.code === 'NumpadEnter' ||
+      event.key === 'Enter' ||
       event.code.startsWith('Arrow') ||
-      event.code === 'Escape'
+      event.key.startsWith('Arrow') ||
+      event.code === 'Escape' ||
+      event.key === 'Escape'
     ) {
       return;
     }
@@ -209,8 +214,12 @@ export class TypeaheadController {
     // Space) are pressed
     if (
       event.code === 'Enter' ||
+      event.code === 'NumpadEnter' ||
+      event.key === 'Enter' ||
       event.code.startsWith('Arrow') ||
-      event.code === 'Escape'
+      event.key.startsWith('Arrow') ||
+      event.code === 'Escape' ||
+      event.key === 'Escape'
     ) {
       this.endTypeahead();
       if (this.lastActiveRecord) {
@@ -220,7 +229,7 @@ export class TypeaheadController {
     }
 
     // If Space is pressed, prevent it from selecting and closing the menu
-    if (event.code === 'Space') {
+    if (event.code === 'Space' || event.key === ' ') {
       event.preventDefault();
     }
 

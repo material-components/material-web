@@ -117,6 +117,7 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
       return this.defaultElements;
     },
     getInteractiveElement: () => this.listItemRoot,
+    activateOnKeydown: true,
   });
 
   protected override render() {
