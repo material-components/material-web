@@ -250,6 +250,58 @@ describe('<md-slider>', () => {
     });
   });
 
+  describe('bounds changes during dragging', () => {
+    for (const scenario of [
+      {name: 'maximum decreases', value: 80, min: 0, max: 60, expected: 60},
+      {name: 'minimum increases', value: 20, min: 40, max: 100, expected: 40},
+    ]) {
+      it(`commits the current value when the ${scenario.name}`, async () => {
+        const {harness} = await setupTest({value: 50});
+        const slider = harness.element;
+        const input = harness.getInputs()[0];
+        input.dispatchEvent(
+          new Event('pointerdown', {bubbles: true, composed: true}),
+        );
+        input.value = String(scenario.value);
+        input.dispatchEvent(
+          new Event('input', {bubbles: true, composed: true}),
+        );
+        slider.min = scenario.min;
+        slider.max = scenario.max;
+        await slider.updateComplete;
+        let committed: number | undefined;
+        slider.addEventListener('change', () => {
+          committed = slider.value;
+        });
+        input.dispatchEvent(new Event('change', {bubbles: true}));
+        expect(committed).toEqual(scenario.expected);
+        expect(slider.value).toEqual(scenario.expected);
+      });
+    }
+
+    it('commits both range values within the current bounds', async () => {
+      const {harness} = await setupTest({range: true, valueStart: 20, valueEnd: 80});
+      const slider = harness.element;
+      const input = harness.getInputs()[0];
+      input.dispatchEvent(
+        new Event('pointerdown', {bubbles: true, composed: true}),
+      );
+      input.value = '90';
+      input.dispatchEvent(
+        new Event('input', {bubbles: true, composed: true}),
+      );
+      slider.min = 30;
+      slider.max = 60;
+      await slider.updateComplete;
+      let committed: Array<number | undefined> = [];
+      slider.addEventListener('change', () => {
+        committed = [slider.valueStart, slider.valueEnd];
+      });
+      input.dispatchEvent(new Event('change', {bubbles: true}));
+      expect(committed).toEqual([30, 60]);
+    });
+  });
+
   describe('dispatches input and change events', () => {
     it('when range = false', async () => {
       const {harness} = await setupTest();

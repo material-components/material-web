@@ -720,6 +720,13 @@ export class Slider extends sliderBaseClass {
     const squelch =
       target && target.valueAsNumber === values!.get(changeTarget)!;
     if (!squelch) {
+      // Bounds can change after the last input event during a drag.
+      if (this.range) {
+        this.valueStart = this.inputStart!.valueAsNumber;
+        this.valueEnd = this.inputEnd!.valueAsNumber;
+      } else {
+        this.value = this.inputEnd!.valueAsNumber;
+      }
       redispatchEvent(this, event);
     }
     // ensure keyboard triggered change clears action.
