@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.6.0](https://github.com/material-components/material-web/compare/v2.5.0...v2.6.0) (2026-08-21)
+
+
+### Features
+
+* **labs:** add appbar utility classes to component ([69bdcde](https://github.com/material-components/material-web/commit/69bdcde346337472e5eef71b4b01ffd56d43dab1))
+* **labs:** add aria menu elements ([23b638c](https://github.com/material-components/material-web/commit/23b638c1d2338b9fcaccef81cf54298cce9c27ed))
+* **labs:** add aria tab elements ([70e259d](https://github.com/material-components/material-web/commit/70e259d464f627a21c7831cb4e871e0061bc0644))
+* **labs:** add chips utility classes to component ([efaa189](https://github.com/material-components/material-web/commit/efaa1896c366ab8edf7f4bafb15876932ebd45b1))
+
+
+### Bug Fixes
+
+* **labs:** add font variation settings to gb components ([4fe8478](https://github.com/material-components/material-web/commit/4fe847865bd217cf1428d23e5d616252e9e393ce))
+* **labs:** add icon fill state token to button and iconbutton ([e7b4db6](https://github.com/material-components/material-web/commit/e7b4db67ab6e9adc6e4ad42f725ea288fe419be4))
+* **labs:** add pointer cursor to enabled iconbutton ([e1195a9](https://github.com/material-components/material-web/commit/e1195a92c07c3eedffd394ce878c4116b06a40e5))
+* **labs:** align outline width tokens to size mixins for button ([cac9767](https://github.com/material-components/material-web/commit/cac97678831d48d4eb4a606ca50f92673a1dc20c))
+* **labs:** align outline width tokens to size mixins for iconbutton ([bddf3b4](https://github.com/material-components/material-web/commit/bddf3b46d26a59844083f08ee186741c9f651223))
+* **labs:** ensure the closure compiler doesn't collapse styles code ([22cc244](https://github.com/material-components/material-web/commit/22cc24473e58be3616aad0e6e5aea0f41e33ecc8))
+
 ## [2.5.0](https://github.com/material-components/material-web/compare/v2.4.1...v2.5.0) (2026-07-14)
 
 
